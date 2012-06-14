@@ -113,6 +113,16 @@ import java.util.List;
 import javax.swing.event.EventListenerList;
 
 import org.jfree.chart.HashUtilities;
+import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.common.util.BooleanList;
+import org.jfree.chart.common.util.BooleanUtilities;
+import org.jfree.chart.common.util.ObjectList;
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PaintList;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.ShapeList;
+import org.jfree.chart.common.util.ShapeUtilities;
+import org.jfree.chart.common.util.StrokeList;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.event.RendererChangeListener;
 import org.jfree.chart.labels.ItemLabelAnchor;
@@ -121,16 +131,6 @@ import org.jfree.chart.plot.DrawingSupplier;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.TextAnchor;
-import org.jfree.util.BooleanList;
-import org.jfree.util.BooleanUtilities;
-import org.jfree.util.ObjectList;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PaintList;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.ShapeList;
-import org.jfree.util.ShapeUtilities;
-import org.jfree.util.StrokeList;
 
 /**
  * Base class providing common services for renderers.  Most methods that update

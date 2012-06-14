@@ -1,28 +1,28 @@
-/* ========================================================================
- * JCommon : a free general purpose class library for the Java(tm) platform
- * ========================================================================
+/* ===========================================================
+ * JFreeChart : a free chart library for the Java(tm) platform
+ * ===========================================================
  *
- * (C) Copyright 2000-2005, by Object Refinery Limited and Contributors.
- * 
- * Project Info:  http://www.jfree.org/jcommon/index.html
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
- * This library is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Lesser General Public License as published by 
- * the Free Software Foundation; either version 2.1 of the License, or 
+ * Project Info:  http://www.jfree.org/jfreechart/index.html
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public 
+ * This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, 
- * USA.  
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc. 
- * in the United States and other countries.]
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * Other names may be trademarks of their respective owners.]
  * 
  * ------------------------
  * ExtensionFileFilter.java
@@ -39,9 +39,10 @@
  * 26-Oct-2001 : Changed package to com.jrefinery.ui.* (DG);
  * 26-Jun-2002 : Updated imports (DG);
  * 14-Oct-2002 : Fixed errors reported by Checkstyle (DG);
- *
+ * 14-Jun-2012 : Moved from JCommon to JFreeChart (DG);
+ * 
  */
-package org.jfree.ui;
+package org.jfree.chart.common.ui;
 
 import java.io.File;
 import javax.swing.filechooser.FileFilter;
@@ -78,7 +79,6 @@ public class ExtensionFileFilter extends FileFilter {
      * @return A boolean that indicates whether or not the file is accepted by the filter.
      */
     public boolean accept(final File file) {
-
         if (file.isDirectory()) {
             return true;
         }
@@ -87,10 +87,7 @@ public class ExtensionFileFilter extends FileFilter {
         if (name.endsWith(this.extension)) {
             return true;
         }
-        else {
-            return false;
-        }
-
+        return false;
     }
 
     /**

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * JFreeChart.java
  * ---------------
- * (C) Copyright 2000-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Andrzej Porebski;
@@ -188,6 +188,18 @@ import org.jfree.chart.block.EntityBlockResult;
 import org.jfree.chart.block.LengthConstraintType;
 import org.jfree.chart.block.LineBorder;
 import org.jfree.chart.block.RectangleConstraint;
+import org.jfree.chart.common.ui.Align;
+import org.jfree.chart.common.ui.Drawable;
+import org.jfree.chart.common.ui.HorizontalAlignment;
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.ui.Size2D;
+import org.jfree.chart.common.ui.VerticalAlignment;
+import org.jfree.chart.common.ui.about.Contributor;
+import org.jfree.chart.common.ui.about.Licences;
+import org.jfree.chart.common.ui.about.ProjectInfo;
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PaintUtilities;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.JFreeChartEntity;
 import org.jfree.chart.event.ChartChangeEvent;
@@ -206,20 +218,8 @@ import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.chart.title.Title;
 import org.jfree.chart.util.ResourceBundleWrapper;
-import org.jfree.data.Range;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.Align;
-import org.jfree.ui.Drawable;
-import org.jfree.ui.HorizontalAlignment;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.Size2D;
-import org.jfree.ui.VerticalAlignment;
-import org.jfree.ui.about.Contributor;
-import org.jfree.ui.about.Licences;
-import org.jfree.ui.about.ProjectInfo;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PaintUtilities;
+import org.jfree.data.Range;
 
 /**
  * A chart class implemented using the Java 2D APIs.  The current version
