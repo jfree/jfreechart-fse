@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------
  * Block.java
  * ----------
- * (C) Copyright 2004-2008, by Object Refinery Limited.
+ * (C) Copyright 2004-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -38,6 +38,7 @@
  * 08-Feb-2005 : Added ID (DG);
  * 20-Apr-2005 : Added a new draw() method that can accept params
  *               and return results (DG);
+ * 15-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -46,8 +47,8 @@ package org.jfree.chart.block;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-import org.jfree.ui.Drawable;
-import org.jfree.ui.Size2D;
+import org.jfree.chart.common.ui.Drawable;
+import org.jfree.chart.common.ui.Size2D;
 
 /**
  * A block is an arbitrary item that can be drawn (in Java2D space) within a

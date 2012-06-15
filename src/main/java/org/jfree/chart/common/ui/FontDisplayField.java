@@ -1,10 +1,10 @@
-/* ========================================================================
- * JCommon : a free general purpose class library for the Java(tm) platform
- * ========================================================================
+/* ===========================================================
+ * JFreeChart : a free chart library for the Java(tm) platform
+ * ===========================================================
  *
- * (C) Copyright 2000-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
- * Project Info:  http://www.jfree.org/jcommon/index.html
+ * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -21,18 +21,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
- *
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * Other names may be trademarks of their respective owners.]
+ * 
  * ---------------------
  * FontDisplayField.java
  * ---------------------
- * (C) Copyright 2000-2008, by Object Refinery Limited.
+ * (C) Copyright 2000-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Arnaud Lelievre;
- *
- * $Id: FontDisplayField.java,v 1.6 2008/12/18 09:57:32 mungady Exp $
  *
  * Changes (from 26-Oct-2001)
  * ----------------------------------
@@ -45,25 +43,25 @@
  *
  */
 
-package org.jfree.ui;
+package org.jfree.chart.common.ui;
 
 import java.awt.Font;
 import java.util.ResourceBundle;
 
 import javax.swing.JTextField;
 
-import org.jfree.util.ResourceBundleWrapper;
+import org.jfree.chart.util.ResourceBundleWrapper;
 
 /**
  * A field for displaying a font selection.  The display field itself is
  * read-only, to the developer must provide another mechanism to allow the
  * user to change the font.
- *
- * @author David Gilbert
  */
 public class FontDisplayField extends JTextField {
 
-    /** The current font. */
+    private static final long serialVersionUID = 1L;
+
+	/** The current font. */
     private Font displayFont;
 
     /** The resourceBundle for the localization. */

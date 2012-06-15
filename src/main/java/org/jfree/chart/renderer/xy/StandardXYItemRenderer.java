@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------
  * StandardXYItemRenderer.java
  * ---------------------------
- * (C) Copyright 2001-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2001-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Mark Watson (www.markwatson.com);
@@ -125,6 +125,13 @@ import java.io.Serializable;
 
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.util.BooleanList;
+import org.jfree.chart.common.util.BooleanUtilities;
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.common.util.ShapeUtilities;
+import org.jfree.chart.common.util.UnitType;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.XYToolTipGenerator;
@@ -134,15 +141,8 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.urls.XYURLGenerator;
-import org.jfree.data.xy.XYDataset;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.util.BooleanList;
-import org.jfree.util.BooleanUtilities;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PublicCloneable;
-import org.jfree.util.ShapeUtilities;
-import org.jfree.util.UnitType;
+import org.jfree.data.xy.XYDataset;
 
 /**
  * Standard item renderer for an {@link XYPlot}.  This class can draw (a)

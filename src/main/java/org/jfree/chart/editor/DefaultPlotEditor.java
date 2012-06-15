@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * DefaultPlotEditor.java
  * ----------------------
- * (C) Copyright 2005-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Andrzej Porebski;
@@ -41,6 +41,7 @@
  *               Jess Thrysoee (DG);
  * 27-Feb-2009 : Fixed bug 2612649, NullPointerException (DG);
  * 03-Nov-2011 : Added support for DefaultPolarPlotEditor (MH);
+ * 15-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -67,6 +68,12 @@ import javax.swing.JTabbedPane;
 
 import org.jfree.chart.axis.Axis;
 import org.jfree.chart.axis.ColorBar;
+import org.jfree.chart.common.ui.LCBLayout;
+import org.jfree.chart.common.ui.PaintSample;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.ui.StrokeChooserPanel;
+import org.jfree.chart.common.ui.StrokeSample;
+import org.jfree.chart.common.util.BooleanUtilities;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.ContourPlot;
 import org.jfree.chart.plot.Plot;
@@ -78,12 +85,6 @@ import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.util.ResourceBundleWrapper;
-import org.jfree.chart.common.ui.LCBLayout;
-import org.jfree.ui.PaintSample;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.StrokeChooserPanel;
-import org.jfree.ui.StrokeSample;
-import org.jfree.util.BooleanUtilities;
 
 /**
  * A panel for editing the properties of a {@link Plot}.

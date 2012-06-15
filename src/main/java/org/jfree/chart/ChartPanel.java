@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * ChartPanel.java
  * ---------------
- * (C) Copyright 2000-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Andrzej Porebski;
@@ -165,6 +165,8 @@
  * 08-Jun-2009 : Fixed bug in setMouseWheelEnabled() (DG);
  * 06-Jul-2009 : Clear off-screen buffer to fully transparent (DG);
  * 10-Oct-2011 : localization fix: bug #3353913 (MH);
+ * 15-Jun-2012 : Removed JCommon dependencies (DG);
+ * 
  */
 
 package org.jfree.chart;
@@ -223,6 +225,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.event.EventListenerList;
 
+import org.jfree.chart.common.ui.ExtensionFileFilter;
 import org.jfree.chart.editor.ChartEditor;
 import org.jfree.chart.editor.ChartEditorManager;
 import org.jfree.chart.entity.ChartEntity;
@@ -231,9 +234,9 @@ import org.jfree.chart.event.ChartChangeEvent;
 import org.jfree.chart.event.ChartChangeListener;
 import org.jfree.chart.event.ChartProgressEvent;
 import org.jfree.chart.event.ChartProgressListener;
-import org.jfree.chart.panel.Overlay;
 import org.jfree.chart.event.OverlayChangeEvent;
 import org.jfree.chart.event.OverlayChangeListener;
+import org.jfree.chart.panel.Overlay;
 import org.jfree.chart.plot.Pannable;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
@@ -241,7 +244,6 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.Zoomable;
 import org.jfree.chart.util.ResourceBundleWrapper;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.ExtensionFileFilter;
 
 /**
  * A Swing GUI component for displaying a {@link JFreeChart} object.

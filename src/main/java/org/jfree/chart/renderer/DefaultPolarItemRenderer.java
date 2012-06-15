@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------------
  * DefaultPolarItemRenderer.java
  * -----------------------------
- * (C) Copyright 2004-2011, by Solution Engineering, Inc. and
+ * (C) Copyright 2004-2012, by Solution Engineering, Inc. and
  *     Contributors.
  *
  * Original Author:  Daniel Bridenbecker, Solution Engineering, Inc.;
@@ -55,6 +55,8 @@
  * 03-Oct-2011 : Added some configuration options for the legend (MH);
  * 03-Oct-2011 : Added support for PolarPlot's angleOffset and direction (MH);
  * 16-Oct-2011 : Fixed serialization problems with fillComposite (MH);
+ * 15-Jun-2012 : Remove JCommon dependencies (DG);
+ * 
  */
 
 package org.jfree.chart.renderer;
@@ -80,6 +82,12 @@ import java.util.List;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.NumberTick;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.util.BooleanList;
+import org.jfree.chart.common.util.BooleanUtilities;
+import org.jfree.chart.common.util.ObjectList;
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.common.util.ShapeUtilities;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.XYItemEntity;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -90,16 +98,10 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.PolarPlot;
 import org.jfree.chart.renderer.xy.AbstractXYItemRenderer;
-import org.jfree.chart.urls.XYURLGenerator;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.chart.util.SerialUtilities;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.util.BooleanList;
-import org.jfree.util.BooleanUtilities;
-import org.jfree.util.ObjectList;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PublicCloneable;
-import org.jfree.util.ShapeUtilities;
+import org.jfree.chart.urls.XYURLGenerator;
+import org.jfree.chart.util.SerialUtilities;
+import org.jfree.data.xy.XYDataset;
 
 /**
  * A renderer that can be used with the {@link PolarPlot} class.
@@ -107,7 +109,9 @@ import org.jfree.util.ShapeUtilities;
 public class DefaultPolarItemRenderer extends AbstractRenderer
         implements PolarItemRenderer {
 
-    /** The plot that the renderer is assigned to. */
+    private static final long serialVersionUID = 1L;
+
+	/** The plot that the renderer is assigned to. */
     private PolarPlot plot;
 
     /** Flags that control whether the renderer fills each series or not. */

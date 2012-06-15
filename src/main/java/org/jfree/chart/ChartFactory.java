@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -119,6 +119,7 @@
  * 23-Oct-2008 : Check for legacy theme in setChartTheme() and reset default
  *               bar painters (DG);
  * 20-Dec-2008 : In createStackedAreaChart(), set category margin to 0.0 (DG);
+ * 15-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -139,6 +140,12 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberAxis3D;
 import org.jfree.chart.axis.Timeline;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.ui.Layer;
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.common.util.SortOrder;
+import org.jfree.chart.common.util.TableOrder;
 import org.jfree.chart.labels.BoxAndWhiskerToolTipGenerator;
 import org.jfree.chart.labels.HighLowItemLabelGenerator;
 import org.jfree.chart.labels.IntervalCategoryToolTipGenerator;
@@ -212,12 +219,6 @@ import org.jfree.data.xy.TableXYDataset;
 import org.jfree.data.xy.WindDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
-import org.jfree.ui.Layer;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.TextAnchor;
-import org.jfree.util.SortOrder;
-import org.jfree.util.TableOrder;
 
 /**
  * A collection of utility methods for creating some standard charts with

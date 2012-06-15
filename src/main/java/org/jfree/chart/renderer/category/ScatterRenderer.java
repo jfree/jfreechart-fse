@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * ScatterRenderer.java
  * --------------------
- * (C) Copyright 2007-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2007-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   David Forslund;
@@ -40,6 +40,7 @@
  * 17-Jun-2008 : Apply legend shape, font and paint attributes (DG);
  * 14-Jan-2009 : Added support for seriesVisible flags (PK);
  * 16-May-2009 : Patch 2791407 - findRangeBounds() override (PK);
+ * 15-Jun-2012 : Removed JCommon dependency (DG);
  *
  */
 
@@ -60,17 +61,17 @@ import java.util.List;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.util.BooleanList;
+import org.jfree.chart.common.util.BooleanUtilities;
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.common.util.ShapeUtilities;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.statistics.MultiValueCategoryDataset;
-import org.jfree.util.BooleanList;
-import org.jfree.util.BooleanUtilities;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PublicCloneable;
-import org.jfree.util.ShapeUtilities;
 
 /**
  * A renderer that handles the multiple values from a

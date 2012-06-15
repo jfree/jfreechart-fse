@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------
  * HashUtilities.java
  * ------------------
- * (C) Copyright 2006, 2007, by Object Refinery Limited;
+ * (C) Copyright 2006-2012, by Object Refinery Limited;
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -40,6 +40,7 @@
  * 22-Nov-2007 : Added hashCode() method for 'int' (DG);
  * 05-Dec-2007 : Added special methods to handle BooleanList, PaintList,
  *               and StrokeList (DG);
+ * 15-Jun-2012 : Removed JCommon dependency (DG);
  *
  */
 
@@ -49,9 +50,9 @@ import java.awt.GradientPaint;
 import java.awt.Paint;
 import java.awt.Stroke;
 
-import org.jfree.util.BooleanList;
-import org.jfree.util.PaintList;
-import org.jfree.util.StrokeList;
+import org.jfree.chart.common.util.BooleanList;
+import org.jfree.chart.common.util.PaintList;
+import org.jfree.chart.common.util.StrokeList;
 
 /**
  * Some utility methods for calculating hash codes.  

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * LegendItem.java
  * ---------------
- * (C) Copyright 2000-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Andrzej Porebski;
@@ -58,6 +58,7 @@
  * 17-Jun-2008 : Added optional labelFont and labelPaint attributes (DG);
  * 15-Oct-2008 : Added new constructor (DG);
  * 28-Apr-2009 : Added various setter methods (DG);
+ * 15-Jun-2012 : Removed JCommon dependency (DG);
  *
  */
 
@@ -78,15 +79,15 @@ import java.io.Serializable;
 import java.text.AttributedString;
 import java.text.CharacterIterator;
 
-import org.jfree.data.general.Dataset;
+import org.jfree.chart.common.ui.GradientPaintTransformer;
+import org.jfree.chart.common.ui.StandardGradientPaintTransformer;
+import org.jfree.chart.common.util.AttributedStringUtilities;
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.common.util.ShapeUtilities;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.GradientPaintTransformer;
-import org.jfree.ui.StandardGradientPaintTransformer;
-import org.jfree.util.AttributedStringUtilities;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.PublicCloneable;
-import org.jfree.util.ShapeUtilities;
+import org.jfree.data.general.Dataset;
 
 /**
  * A temporary storage object for recording the properties of a legend item,

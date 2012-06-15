@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * DatasetUtilities.java
  * ---------------------
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Andrzej Porebski (bug fix);
@@ -131,6 +131,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jfree.chart.common.util.ArrayUtilities;
 import org.jfree.data.DomainInfo;
 import org.jfree.data.KeyToGroupMap;
 import org.jfree.data.KeyedValues;
@@ -154,7 +155,7 @@ import org.jfree.data.xy.XYRangeInfo;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.data.xy.XYZDataset;
-import org.jfree.util.ArrayUtilities;
+
 
 /**
  * A collection of useful static methods relating to datasets.
