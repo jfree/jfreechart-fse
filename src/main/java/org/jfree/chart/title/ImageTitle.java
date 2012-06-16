@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * ImageTitle.java
  * ---------------
- * (C) Copyright 2000-2008, by David Berry and Contributors;
+ * (C) Copyright 2000-2012, by David Berry and Contributors;
  *
  * Original Author:  David Berry;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -53,6 +53,7 @@
  * 11-Apr-2008 : Added arrange() method override to account for margin, border
  *               and padding (DG);
  * 21-Apr-2008 : Added equals() method override (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -63,13 +64,13 @@ import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.block.RectangleConstraint;
+import org.jfree.chart.common.ui.HorizontalAlignment;
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.ui.Size2D;
+import org.jfree.chart.common.ui.VerticalAlignment;
+import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.chart.event.TitleChangeEvent;
-import org.jfree.ui.HorizontalAlignment;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.Size2D;
-import org.jfree.ui.VerticalAlignment;
-import org.jfree.util.ObjectUtilities;
 
 /**
  * A chart title that displays an image.  This is useful, for example, if you

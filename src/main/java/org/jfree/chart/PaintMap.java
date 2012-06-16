@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------
  * PaintMap.java
  * -------------
- * (C) Copyright 2006-2008, by Object Refinery Limited.
+ * (C) Copyright 2006-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -37,6 +37,7 @@
  * 27-Sep-2006 : Version 1 (DG);
  * 17-Jan-2007 : Changed TreeMap to HashMap, so that different classes that
  *               implement Comparable can be used as keys (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -52,8 +53,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.jfree.chart.common.util.PaintUtilities;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.util.PaintUtilities;
 
 /**
  * A storage structure that maps <code>Comparable</code> instances with

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * DefaultAxisEditor.java
  * ----------------------
- * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert;
  * Contributor(s):   Andrzej Porebski;
@@ -38,6 +38,7 @@
  * 24-Nov-2005 : Version 1, based on AxisPropertyEditPanel.java (DG);
  * 18-Dec-2008 : Use ResourceBundleWrapper - see patch 1607918 by
  *               Jess Thrysoee (DG);
+ * 15-Jun-2012 : Remove JCommon dependencies (DG);
  *
  */
 
@@ -64,12 +65,12 @@ import javax.swing.JTextField;
 import org.jfree.chart.axis.Axis;
 import org.jfree.chart.axis.LogAxis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.util.ResourceBundleWrapper;
+import org.jfree.chart.common.ui.FontChooserPanel;
+import org.jfree.chart.common.ui.FontDisplayField;
 import org.jfree.chart.common.ui.LCBLayout;
-import org.jfree.ui.FontChooserPanel;
-import org.jfree.ui.FontDisplayField;
-import org.jfree.ui.PaintSample;
-import org.jfree.ui.RectangleInsets;
+import org.jfree.chart.common.ui.PaintSample;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.util.ResourceBundleWrapper;
 
 /**
  * A panel for editing the properties of an axis.
