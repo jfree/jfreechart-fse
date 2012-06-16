@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------
  * AreaRenderer.java
  * -----------------
- * (C) Copyright 2002-2009, by Jon Iles and Contributors.
+ * (C) Copyright 2002-2012, by Jon Iles and Contributors.
  *
  * Original Author:  Jon Iles;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -68,6 +68,7 @@
  * 26-Jun-2008 : Added crosshair support (DG);
  * 26-May-2009 : Support AreaRendererEndType.LEVEL (DG);
  * 27-May-2009 : Fixed item label anchor for horizontal orientation (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  * 
  */
 
@@ -84,14 +85,14 @@ import java.io.Serializable;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.AreaRendererEndType;
 import org.jfree.data.category.CategoryDataset;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.util.PublicCloneable;
 
 /**
  * A category item renderer that draws area charts.  You can use this renderer

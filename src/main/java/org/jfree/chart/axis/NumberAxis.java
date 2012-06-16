@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * NumberAxis.java
  * ---------------
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Laurence Vanhelsuwe;
@@ -95,6 +95,7 @@
  * 21-Jan-2009 : Default minor tick counts will now come from the tick unit
  *               collection (DG);
  * 19-Mar-2009 : Added entity support - see patch 2603321 by Peter Kolb (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  * 
  */
 
@@ -112,16 +113,16 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.chart.event.AxisChangeEvent;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.ValueAxisPlot;
 import org.jfree.data.Range;
 import org.jfree.data.RangeType;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.TextAnchor;
-import org.jfree.util.ObjectUtilities;
 
 /**
  * An axis for displaying numerical data.

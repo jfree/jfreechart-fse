@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------
  * Tick.java
  * ---------
- * (C) Copyright 2000-2008, by Object Refinery Limited.
+ * (C) Copyright 2000-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Nicolas Brodu;
@@ -40,6 +40,7 @@
  * 26-Mar-2003 : Implemented Serializable (DG);
  * 12-Sep-2003 : Implemented Cloneable (NB);
  * 07-Nov-2003 : Added subclasses for particular types of ticks (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -47,8 +48,8 @@ package org.jfree.chart.axis;
 
 import java.io.Serializable;
 
-import org.jfree.ui.TextAnchor;
-import org.jfree.util.ObjectUtilities;
+import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.common.util.ObjectUtilities;
 
 /**
  * The base class used to represent labelled ticks along an axis.

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------
  * XYBarDataset.java
  * -----------------
- * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -44,14 +44,15 @@
  * 30-Jan-2007 : Added method overrides to prevent unnecessary object
  *               creation (DG);
  * 22-Apr-2008 : Implemented PublicCloneable (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
 package org.jfree.data.xy;
 
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetChangeListener;
-import org.jfree.util.PublicCloneable;
 
 /**
  * A dataset wrapper class that converts a standard {@link XYDataset} into an

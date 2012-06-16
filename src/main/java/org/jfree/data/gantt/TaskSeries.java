@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * TaskSeries.java
  * ---------------
- * (C) Copyright 2002-2008, by Object Refinery Limited.
+ * (C) Copyright 2002-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -40,6 +40,7 @@
  * 10-Jan-2003 : Renamed GanttSeries --> TaskSeries (DG);
  * 30-Jul-2004 : Added equals() method (DG);
  * 09-May-2008 : Fixed cloning bug (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -48,8 +49,8 @@ package org.jfree.data.gantt;
 import java.util.Collections;
 import java.util.List;
 
+import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.data.general.Series;
-import org.jfree.util.ObjectUtilities;
 
 /**
  * A series that contains zero, one or many {@link Task} objects.

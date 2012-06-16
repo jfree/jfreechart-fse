@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * LegendItemCollection.java
  * -------------------------
- * (C) Copyright 2002-2009, by Object Refinery Limited.
+ * (C) Copyright 2002-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -40,7 +40,8 @@
  * 18-Apr-2005 : Added equals() method and implemented Cloneable and
  *               Serializable (DG);
  * 23-Apr-2008 : Fixed clone() method (DG);
- *
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 
  */
 
 package org.jfree.chart;
@@ -49,7 +50,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jfree.util.ObjectUtilities;
+import org.jfree.chart.common.util.ObjectUtilities;
 
 /**
  * A collection of legend items.
