@@ -82,7 +82,8 @@
  * 09-Jun-2009 : Apply some short-cuts to series value lookups (DG);
  * 26-Jun-2009 : Fixed clone() (DG);
  * 08-Jan-2012 : Fixed getRangeBounds() method (bug 3445507) (DG);
- *
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 
  */
 
 package org.jfree.data.time;
@@ -95,6 +96,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.data.DomainInfo;
 import org.jfree.data.DomainOrder;
 import org.jfree.data.Range;
@@ -104,7 +106,6 @@ import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYDomainInfo;
 import org.jfree.data.xy.XYRangeInfo;
-import org.jfree.util.ObjectUtilities;
 
 /**
  * A collection of time series objects.  This class implements the

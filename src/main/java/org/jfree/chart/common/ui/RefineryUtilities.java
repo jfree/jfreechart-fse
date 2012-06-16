@@ -1,10 +1,10 @@
-/* ========================================================================
- * JCommon : a free general purpose class library for the Java(tm) platform
- * ========================================================================
+/* ===========================================================
+ * JFreeChart : a free chart library for the Java(tm) platform
+ * ===========================================================
  *
- * (C) Copyright 2000-2005, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
- * Project Info:  http://www.jfree.org/jcommon/index.html
+ * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -21,18 +21,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
  * RefineryUtilities.java
  * ----------------------
- * (C) Copyright 2000-2005, by Object Refinery Limited.
+ * (C) Copyright 2000-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Jon Iles;
- *
- * $Id: RefineryUtilities.java,v 1.12 2010/08/19 13:09:51 taqua Exp $
  *
  * Changes (from 26-Oct-2001)
  * --------------------------
@@ -60,10 +58,11 @@
  * 30-Sep-2004 : Deprecated and moved a number of methods to the TextUtilities class (DG);
  * 04-Oct-2004 : Renamed ShapeUtils --> ShapeUtilities (DG);
  * 11-Jan-2005 : Removed deprecated code in preparation for the 1.0.0 release (DG);
- *
+ * 16-Jun-2012 : Moved from JCommon to JFreeChart (DG);
+ * 
  */
 
-package org.jfree.ui;
+package org.jfree.chart.common.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -87,8 +86,6 @@ import javax.swing.table.TableModel;
 
 /**
  * A collection of utility methods relating to user interfaces.
- *
- * @author David Gilbert
  */
 public class RefineryUtilities {
 

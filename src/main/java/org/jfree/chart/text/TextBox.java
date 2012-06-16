@@ -1,10 +1,10 @@
-/* ========================================================================
- * JCommon : a free general purpose class library for the Java(tm) platform
- * ========================================================================
+/* ===========================================================
+ * JFreeChart : a free chart library for the Java(tm) platform
+ * ===========================================================
  *
- * (C) Copyright 2000-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
- * Project Info:  http://www.jfree.org/jcommon/index.html
+ * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -21,18 +21,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * Other names may be trademarks of their respective owners.]
  *
  * ------------
  * TextBox.java
  * ------------
- * (C) Copyright 2004, 2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
- *
- * $Id: TextBox.java,v 1.14 2008/09/01 16:00:42 mungady Exp $
  *
  * Changes
  * -------
@@ -42,7 +40,8 @@
  *               Spacer class (DG);
  * 22-Feb-2005 : Replaced Spacer with RectangleInsets (DG);
  * 14-Feb-2008 : Fixed alignment of text content with respect to insets (DG);
- *
+ * 16-Jun-2012 : Moved from JCommon to JFreeChart (DG);
+ * 
  */
 
 package org.jfree.chart.text;
@@ -59,11 +58,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import org.jfree.chart.common.ui.RectangleAnchor;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.ui.Size2D;
+import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.RectangleAnchor;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.Size2D;
-import org.jfree.util.ObjectUtilities;
 
 /**
  * A box containing a text block.

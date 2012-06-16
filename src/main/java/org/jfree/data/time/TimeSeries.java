@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * TimeSeries.java
  * ---------------
- * (C) Copyright 2001-2011, by Object Refinery Limited.
+ * (C) Copyright 2001-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Bryan Scott;
@@ -84,6 +84,7 @@
  * 31-Aug-2009 : Clear minY and maxY cache values in createCopy (DG);
  * 03-Dec-2011 : Fixed bug 3446965 which affects the y-range calculation for 
  *               the series (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  * 
  */
 
@@ -99,10 +100,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.data.general.Series;
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesException;
-import org.jfree.util.ObjectUtilities;
 
 /**
  * Represents a sequence of zero or more data items in the form (period, value)
