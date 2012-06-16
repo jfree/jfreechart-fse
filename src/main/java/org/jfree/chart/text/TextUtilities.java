@@ -1,10 +1,10 @@
-/* ========================================================================
- * JCommon : a free general purpose class library for the Java(tm) platform
- * ========================================================================
+/* ===========================================================
+ * JFreeChart : a free chart library for the Java(tm) platform
+ * ===========================================================
  *
- * (C) Copyright 2000-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
- * Project Info:  http://www.jfree.org/jcommon/index.html
+ * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -21,18 +21,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * Other names may be trademarks of their respective owners.]
  *
  * ------------------
  * TextUtilities.java
  * ------------------
- * (C) Copyright 2004-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
- *
- * $Id: TextUtilities.java,v 1.26 2009/07/27 09:48:29 mungady Exp $
  *
  * Changes
  * -------
@@ -54,6 +52,7 @@
  * 06-Jan-2006 : Reformatted (DG);
  * 27-Apr-2009 : Fix text wrapping with new lines (DG);
  * 27-Jul-2009 : Use AttributedString in drawRotatedString() (DG);
+ * 16-Jun-2012 : Moved from JCommon to JFreeChart (DG);
  *
  */
 
@@ -72,13 +71,11 @@ import java.awt.geom.Rectangle2D;
 import java.text.AttributedString;
 import java.text.BreakIterator;
 
-import org.jfree.ui.TextAnchor;
-import org.jfree.util.ObjectUtilities;
+import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.common.util.ObjectUtilities;
 
 /**
  * Some utility methods for working with text.
- *
- * @author David Gilbert
  */
 public class TextUtilities {
 

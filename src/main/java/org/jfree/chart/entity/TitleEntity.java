@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------
  * TitleEntity.java
  * ----------------
- * (C) Copyright 2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2009-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  Peter Kolb;
  * Contributor(s):   ;
@@ -35,6 +35,7 @@
  * Changes:
  * --------
  * 15-Feb-2009 : Version 1 (PK);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -46,9 +47,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.jfree.chart.HashUtilities;
+import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.chart.title.Title;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.util.ObjectUtilities;
 
 /**
  * A class that captures information about a Title of a chart.
