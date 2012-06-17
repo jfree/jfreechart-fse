@@ -1,10 +1,10 @@
-/* ========================================================================
- * JCommon : a free general purpose class library for the Java(tm) platform
- * ========================================================================
+/* ===========================================================
+ * JFreeChart : a free chart library for the Java(tm) platform
+ * ===========================================================
  *
- * (C) Copyright 2000-2005, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
- * Project Info:  http://www.jfree.org/jcommon/index.html
+ * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * Other names may be trademarks of their respective owners.]
  *
  * --------------------------
  * LibraryReferencePanel.java
  * --------------------------
- * (C) Copyright 2002-2004, by Object Refinery Limited.
+ * (C) Copyright 2002-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -38,14 +38,16 @@
  * -------
  * 28-Feb-2002 : Version 1 (DG);
  * 08-Oct-2002 : Fixed errors reported by Checkstyle (DG);
+ * 17-Jun-2012 : Moved from JCommon to JFreeChart (DG);
  *
  */
 
-package org.jfree.ui.about;
+package org.jfree.chart.common.ui.about;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -54,8 +56,6 @@ import javax.swing.JTable;
  * A panel containing a table that lists the libraries used in a project.
  * <P>
  * Used in the AboutFrame class.
- *
- * @author David Gilbert
  */
 public class LibraryPanel extends JPanel {
 
@@ -99,9 +99,9 @@ public class LibraryPanel extends JPanel {
 
     private static void collectLibraries (final ProjectInfo info,
                                           final List list) {
-        org.jfree.base.Library[] libs = info.getLibraries();
+        Library[] libs = info.getLibraries();
         for (int i = 0; i < libs.length; i++) {
-            final org.jfree.base.Library lib = libs[i];
+            final Library lib = libs[i];
             if (list.contains(lib) == false) {
                 // prevent duplicates, they look ugly ..
                 list.add(lib);
@@ -113,7 +113,7 @@ public class LibraryPanel extends JPanel {
 
         libs = info.getOptionalLibraries();
         for (int i = 0; i < libs.length; i++) {
-            final org.jfree.base.Library lib = libs[i];
+            final Library lib = libs[i];
             if (list.contains(lib) == false) {
                 // prevent duplicates, they look ugly ..
                 list.add(lib);
