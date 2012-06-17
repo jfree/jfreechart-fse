@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * ThermometerPlotTests.java
  * -------------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -38,6 +38,7 @@
  * 30-Apr-2007 : Added new serialization test (DG);
  * 03-May-2007 : Added cloning test (DG);
  * 08-Oct-2007 : Updated testEquals() for new fields (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -59,8 +60,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.common.ui.RectangleInsets;
 import org.jfree.chart.plot.ThermometerPlot;
-import org.jfree.ui.RectangleInsets;
 
 /**
  * Tests for the {@link ThermometerPlot} class.

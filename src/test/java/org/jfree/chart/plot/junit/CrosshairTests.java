@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------
  * CrosshairTests.java
  * -------------------
- * (C) Copyright 2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2009-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -35,6 +35,7 @@
  * Changes
  * -------
  * 09-Apr-2009 : Version 1 (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -42,7 +43,6 @@ package org.jfree.chart.plot.junit;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-
 import java.awt.Font;
 import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
@@ -52,14 +52,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.text.NumberFormat;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.plot.Crosshair;
+import org.jfree.chart.common.ui.RectangleAnchor;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.labels.StandardCrosshairLabelGenerator;
-import org.jfree.ui.RectangleAnchor;
-import org.jfree.util.PublicCloneable;
+import org.jfree.chart.plot.Crosshair;
 
 /**
  * Tests for the {@link Crosshair} class.

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * AbstractBlockTests.java
  * -----------------------
- * (C) Copyright 2007, 2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2007-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -35,7 +35,8 @@
  * Changes
  * -------
  * 16-Mar-2007 : Version 1 (DG);
- *
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 
  */
 
 package org.jfree.chart.block.junit;
@@ -56,7 +57,7 @@ import junit.framework.TestSuite;
 import org.jfree.chart.block.AbstractBlock;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.block.EmptyBlock;
-import org.jfree.ui.RectangleInsets;
+import org.jfree.chart.common.ui.RectangleInsets;
 
 /**
  * Tests for the {@link AbstractBlock} class.

@@ -65,10 +65,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.date.MonthConstants;
 import org.jfree.data.time.Month;
 import org.jfree.data.time.TimePeriodFormatException;
 import org.jfree.data.time.Year;
-import org.jfree.chart.date.MonthConstants;
 
 /**
  * Tests for the {@link Month} class.

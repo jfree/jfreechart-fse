@@ -55,14 +55,14 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.renderer.GrayPaintScale;
 import org.jfree.chart.renderer.LookupPaintScale;
 import org.jfree.chart.renderer.xy.XYBlockRenderer;
 import org.jfree.data.Range;
 import org.jfree.data.xy.DefaultXYZDataset;
-import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.data.xy.XYSeries;
-import org.jfree.util.PublicCloneable;
+import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  * Tests for the {@link XYBlockRenderer} class.

@@ -55,19 +55,18 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-
-import java.util.ArrayList;
 import java.util.Date;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.renderer.xy.XYBoxAndWhiskerRenderer;
 import org.jfree.data.statistics.BoxAndWhiskerItem;
 import org.jfree.data.statistics.DefaultBoxAndWhiskerXYDataset;
-import org.jfree.util.PublicCloneable;
 
 /**
  * Tests for the {@link XYBoxAndWhiskerRenderer} class.

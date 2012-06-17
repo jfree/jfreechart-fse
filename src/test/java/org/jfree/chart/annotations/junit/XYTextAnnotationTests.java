@@ -60,8 +60,8 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.annotations.XYTextAnnotation;
-import org.jfree.ui.TextAnchor;
-import org.jfree.util.PublicCloneable;
+import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.common.util.PublicCloneable;
 
 /**
  * Tests for the {@link XYTextAnnotation} class.

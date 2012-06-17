@@ -66,6 +66,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.date.MonthConstants;
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesChangeListener;
 import org.jfree.data.general.SeriesException;
@@ -76,7 +77,6 @@ import org.jfree.data.time.RegularTimePeriod;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesDataItem;
 import org.jfree.data.time.Year;
-import org.jfree.chart.date.MonthConstants;
 
 /**
  * A collection of test cases for the {@link TimeSeries} class.

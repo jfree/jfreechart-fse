@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * LogarithmicAxisTests.java
  * -------------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -36,6 +36,7 @@
  * -------
  * 26-Mar-2003 : Version 1 (DG);
  * 02-Mar-2007 : Added tests from bug report 880597 (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -54,7 +55,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.axis.LogarithmicAxis;
-import org.jfree.ui.RectangleEdge;
+import org.jfree.chart.common.ui.RectangleEdge;
 
 /**
  * Tests for the {@link LogarithmicAxis} class.

@@ -40,18 +40,20 @@
 
 package org.jfree.data.general.junit;
 
-import org.jfree.data.general.DefaultHeatMapDataset;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetChangeListener;
+import org.jfree.data.general.DefaultHeatMapDataset;
 
 /**
  * Somes tests for the {@link DefaultHeatMapDataset} class.

@@ -49,17 +49,17 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-
 import java.util.Arrays;
 import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.renderer.category.ScatterRenderer;
 import org.jfree.data.Range;
 import org.jfree.data.statistics.DefaultMultiValueCategoryDataset;
-import org.jfree.util.PublicCloneable;
 
 /**
  * Tests for the {@link ScatterRenderer} class.

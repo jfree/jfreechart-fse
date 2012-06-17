@@ -51,7 +51,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.data.function.LineFunction2D;
 import org.jfree.data.function.PowerFunction2D;
 
 /**

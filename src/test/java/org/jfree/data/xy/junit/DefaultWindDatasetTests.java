@@ -52,10 +52,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.RegularTimePeriod;
 import org.jfree.data.xy.DefaultWindDataset;
-import org.jfree.util.PublicCloneable;
 
 /**
  * Tests for {@link DefaultWindDataset}.

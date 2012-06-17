@@ -57,9 +57,9 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
-import org.jfree.util.PublicCloneable;
 
 /**
  * Tests for the {@link StandardCategoryToolTipGenerator} class.

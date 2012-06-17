@@ -53,9 +53,9 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.data.xy.XIntervalSeries;
 import org.jfree.data.xy.XIntervalSeriesCollection;
-import org.jfree.util.PublicCloneable;
 
 /**
  * Tests for the {@link XIntervalSeriesCollection} class.

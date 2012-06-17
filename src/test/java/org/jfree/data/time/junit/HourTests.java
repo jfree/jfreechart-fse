@@ -62,9 +62,9 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.date.MonthConstants;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.Hour;
-import org.jfree.chart.date.MonthConstants;
 
 /**
  * Tests for the {@link Hour} class.

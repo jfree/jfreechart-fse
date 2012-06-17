@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------------
  * DefaultKeyedValuesTests.java
  * ----------------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited.
+ * (C) Copyright 2003-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -41,6 +41,7 @@
  * 30-Apr-2007 : Added some new tests (DG);
  * 03-Oct-2007 : Updated testRemoveValue() (DG);
  * 21-Nov-2007 : Added testGetIndex2() method (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -58,9 +59,9 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.common.util.SortOrder;
 import org.jfree.data.DefaultKeyedValues;
 import org.jfree.data.UnknownKeyException;
-import org.jfree.util.SortOrder;
 
 /**
  * Tests for the {@link DefaultKeyedValues} class.

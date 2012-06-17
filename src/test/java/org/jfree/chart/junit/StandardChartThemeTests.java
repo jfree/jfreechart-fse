@@ -61,11 +61,11 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.StandardChartTheme;
+import org.jfree.chart.common.ui.RectangleInsets;
 import org.jfree.chart.plot.DefaultDrawingSupplier;
 import org.jfree.chart.plot.PieLabelLinkStyle;
 import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.chart.renderer.xy.StandardXYBarPainter;
-import org.jfree.ui.RectangleInsets;
 
 /**
  * Tests for the {@link StandardChartTheme} class.

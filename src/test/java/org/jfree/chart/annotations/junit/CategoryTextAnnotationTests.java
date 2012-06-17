@@ -55,7 +55,7 @@ import junit.framework.TestSuite;
 
 import org.jfree.chart.annotations.CategoryTextAnnotation;
 import org.jfree.chart.axis.CategoryAnchor;
-import org.jfree.util.PublicCloneable;
+import org.jfree.chart.common.util.PublicCloneable;
 
 /**
  * Tests for the {@link CategoryTextAnnotation} class.

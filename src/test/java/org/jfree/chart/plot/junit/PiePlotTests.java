@@ -70,6 +70,7 @@ import junit.framework.TestSuite;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.common.util.Rotation;
 import org.jfree.chart.labels.PieSectionLabelGenerator;
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.labels.StandardPieToolTipGenerator;
@@ -80,7 +81,6 @@ import org.jfree.chart.urls.StandardPieURLGenerator;
 import org.jfree.chart.util.DefaultShadowGenerator;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
-import org.jfree.util.Rotation;
 
 /**
  * Some tests for the {@link PiePlot} class.
