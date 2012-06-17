@@ -1,10 +1,10 @@
-/* ========================================================================
- * JCommon : a free general purpose class library for the Java(tm) platform
- * ========================================================================
+/* ===========================================================
+ * JFreeChart : a free chart library for the Java(tm) platform
+ * ===========================================================
  *
- * (C) Copyright 2000-2005, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
- * Project Info:  http://www.jfree.org/jcommon/index.html
+ * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
  * SortButtonRenderer.java
  * -----------------------
- * (C) Copyright 2000-2004, by Nobuo Tamemasa and Contributors.
+ * (C) Copyright 2000-2012, by Nobuo Tamemasa and Contributors.
  *
  * Original Author:  Nobuo Tamemasa;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -40,13 +40,15 @@
  * 26-Oct-2001 : Changed package to com.jrefinery.ui.* (DG);
  * 26-Jun-2002 : Removed unnecessary import (DG);
  * 14-Oct-2002 : Fixed errors reported by Checkstyle (DG);
+ * 17-Jun-2012 : Moved from JCommon to JFreeChart (DG);
  *
  */
 
-package org.jfree.ui;
+package org.jfree.chart.common.ui;
 
 import java.awt.Component;
 import java.awt.Insets;
+
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;

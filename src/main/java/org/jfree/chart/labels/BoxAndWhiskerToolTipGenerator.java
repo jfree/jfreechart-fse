@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------------------------
  * BoxAndWhiskerToolTipGenerator.java
  * ------------------------------------
- * (C) Copyright 2004-2008, by David Browning and Contributors.
+ * (C) Copyright 2004-2012, by David Browning and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -36,6 +36,7 @@
  * -------
  * 02-Jun-2004 : Version 1 (DG);
  * 23-Mar-2005 : Implemented PublicCloneable (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -45,9 +46,9 @@ import java.io.Serializable;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.statistics.BoxAndWhiskerCategoryDataset;
-import org.jfree.util.PublicCloneable;
 
 /**
  * An item label generator for plots that use data from a

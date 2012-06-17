@@ -1,10 +1,10 @@
-/* ========================================================================
- * JCommon : a free general purpose class library for the Java(tm) platform
- * ========================================================================
+/* ===========================================================
+ * JFreeChart : a free chart library for the Java(tm) platform
+ * ===========================================================
  *
- * (C) Copyright 2000-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
- * Project Info:  http://www.jfree.org/jcommon/index.html
+ * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -21,18 +21,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
  * ContributorsTableModel.java
  * ---------------------------
- * (C) Copyright 2001-2008, by Object Refinery Limited.
+ * (C) Copyright 2001-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
- *
- * $Id: ContributorsTableModel.java,v 1.6 2008/12/18 09:57:32 mungady Exp $
  *
  * Changes
  * -------
@@ -42,17 +40,18 @@
  * 08-Oct-2002 : Fixed errors reported by Checkstyle (DG);
  * 18-Dec-2008 : Use ResourceBundleWrapper - see JFreeChart patch 1607918 by
  *               Jess Thrysoee (DG);
+ * 17-Jun-2012 : Moved from JCommon to JFreeChart (DG);
  *
  */
 
-package org.jfree.ui.about;
+package org.jfree.chart.common.ui.about;
 
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.jfree.util.ResourceBundleWrapper;
+import org.jfree.chart.util.ResourceBundleWrapper;
 
 /**
  * A table model containing a list of contributors to a project.

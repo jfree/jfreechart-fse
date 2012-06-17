@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------
  * GrayPaintScale.java
  * -------------------
- * (C) Copyright 2006-2009, by Object Refinery Limited.
+ * (C) Copyright 2006-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -38,6 +38,7 @@
  * 31-Jan-2007 : Renamed min and max to lowerBound and upperBound (DG);
  * 26-Sep-2007 : Fixed bug 1767315, problem in getPaint() method (DG);
  * 29-Jan-2009 : Added alpha transparency field and hashCode() method (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -48,7 +49,7 @@ import java.awt.Paint;
 import java.io.Serializable;
 
 import org.jfree.chart.HashUtilities;
-import org.jfree.util.PublicCloneable;
+import org.jfree.chart.common.util.PublicCloneable;
 
 /**
  * A paint scale that returns shades of gray.

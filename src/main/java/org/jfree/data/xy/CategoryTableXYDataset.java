@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------
  * CategoryTableXYDataset.java
  * ---------------------------
- * (C) Copyright 2004-2011, by Andreas Schroeder and Contributors.
+ * (C) Copyright 2004-2012, by Andreas Schroeder and Contributors.
  *
  * Original Author:  Andreas Schroeder;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -44,17 +44,18 @@
  * 02-Feb-2007 : Removed author tags all over JFreeChart sources (DG);
  * 22-Apr-2008 : Implemented PublicCloneable, and fixed clone() method (DG);
  * 18-Oct-2011 : Fixed bug 3190615 - added clear() method (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
 package org.jfree.data.xy;
 
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.data.DefaultKeyedValues2D;
 import org.jfree.data.DomainInfo;
 import org.jfree.data.Range;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetUtilities;
-import org.jfree.util.PublicCloneable;
 
 /**
  * An implementation variant of the {@link TableXYDataset} where every series

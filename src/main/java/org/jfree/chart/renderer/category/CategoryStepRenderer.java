@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -28,7 +28,7 @@
  * CategoryStepRenderer.java
  * -------------------------
  *
- * (C) Copyright 2004-2008, by Brian Cole and Contributors.
+ * (C) Copyright 2004-2012, by Brian Cole and Contributors.
  *
  * Original Author:  Brian Cole;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -46,6 +46,7 @@
  * 20-Apr-2007 : Updated getLegendItem() for renderer change (DG);
  * 18-May-2007 : Set dataset and seriesKey for LegendItem (DG);
  * 17-Jun-2008 : Apply legend shape, font and paint attributes (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -61,6 +62,7 @@ import java.io.Serializable;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CategoryPlot;
@@ -68,7 +70,6 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.renderer.xy.XYStepRenderer;
 import org.jfree.data.category.CategoryDataset;
-import org.jfree.util.PublicCloneable;
 
 /**
  * A "step" renderer similar to {@link XYStepRenderer} but
