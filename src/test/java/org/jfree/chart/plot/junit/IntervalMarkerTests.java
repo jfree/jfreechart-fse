@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------------
  * IntervalMarkerTests.java
  * ------------------------
- * (C) Copyright 2004-2007, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -36,6 +36,7 @@
  * -------
  * 14-Jun-2004 : Version 1 (DG);
  * 05-Sep-2006 : Added checks for MarkerChangeEvents (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -52,12 +53,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.common.ui.GradientPaintTransformType;
+import org.jfree.chart.common.ui.GradientPaintTransformer;
+import org.jfree.chart.common.ui.StandardGradientPaintTransformer;
 import org.jfree.chart.event.MarkerChangeEvent;
 import org.jfree.chart.event.MarkerChangeListener;
 import org.jfree.chart.plot.IntervalMarker;
-import org.jfree.ui.GradientPaintTransformType;
-import org.jfree.ui.GradientPaintTransformer;
-import org.jfree.ui.StandardGradientPaintTransformer;
 
 /**
  * Tests for the {@link IntervalMarker} class.

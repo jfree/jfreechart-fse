@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------------------
  * XYDrawableAnnotationTests.java
  * ------------------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited.
+ * (C) Copyright 2003-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -38,6 +38,7 @@
  * 01-Oct-2004 : Fixed bugs in tests (DG);
  * 07-Jan-2005 : Added hashCode() test (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -58,8 +59,8 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.annotations.XYDrawableAnnotation;
-import org.jfree.ui.Drawable;
-import org.jfree.util.PublicCloneable;
+import org.jfree.chart.common.ui.Drawable;
+import org.jfree.chart.common.util.PublicCloneable;
 
 /**
  * Tests for the {@link XYDrawableAnnotation} class.

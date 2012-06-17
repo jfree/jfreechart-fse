@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * GridArrangementTests.java
  * -------------------------
- * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -36,6 +36,7 @@
  * -------
  * 08-Mar-2005 : Version 1 (DG);
  * 03-Dec-2008 : Added more tests (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -58,8 +59,8 @@ import org.jfree.chart.block.EmptyBlock;
 import org.jfree.chart.block.GridArrangement;
 import org.jfree.chart.block.LengthConstraintType;
 import org.jfree.chart.block.RectangleConstraint;
+import org.jfree.chart.common.ui.Size2D;
 import org.jfree.data.Range;
-import org.jfree.ui.Size2D;
 
 /**
  * Tests for the {@link GridArrangement} class.

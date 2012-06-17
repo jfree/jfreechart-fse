@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------
  * DateAxisTests.java
  * ------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -44,6 +44,7 @@
  *               next standard date do in fact span the reference date (DG);
  * 25-Nov-2008 : Added testBug2201869 (DG);
  * 08-Feb-2012 : Added testBug3484403 (MH);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -77,6 +78,7 @@ import org.jfree.chart.axis.DateTick;
 import org.jfree.chart.axis.DateTickMarkPosition;
 import org.jfree.chart.axis.DateTickUnit;
 import org.jfree.chart.axis.SegmentedTimeline;
+import org.jfree.chart.common.ui.RectangleEdge;
 import org.jfree.data.time.DateRange;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.Hour;
@@ -84,7 +86,6 @@ import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.Month;
 import org.jfree.data.time.Second;
 import org.jfree.data.time.Year;
-import org.jfree.ui.RectangleEdge;
 
 /**
  * Tests for the {@link DateAxis} class.

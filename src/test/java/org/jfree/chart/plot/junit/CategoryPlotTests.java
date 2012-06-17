@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * CategoryPlotTests.java
  * ----------------------
- * (C) Copyright 2003-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -46,6 +46,7 @@
  * 26-Jun-2008 : Updated testEquals() (DG);
  * 21-Jan-2009 : Updated testEquals() for new fields (DG);
  * 10-Jul-2009 : Updated testEquals() for new field (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -83,6 +84,9 @@ import org.jfree.chart.axis.AxisSpace;
 import org.jfree.chart.axis.CategoryAnchor;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.common.ui.Layer;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.util.SortOrder;
 import org.jfree.chart.event.MarkerChangeListener;
 import org.jfree.chart.plot.CategoryMarker;
 import org.jfree.chart.plot.CategoryPlot;
@@ -100,9 +104,6 @@ import org.jfree.chart.util.DefaultShadowGenerator;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.ui.Layer;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.util.SortOrder;
 
 /**
  * Tests for the {@link CategoryPlot} class.

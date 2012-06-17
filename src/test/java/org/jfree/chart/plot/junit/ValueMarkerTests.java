@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * ValueMarkerTests.java
  * ---------------------
- * (C) Copyright 2003-2007, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -40,6 +40,7 @@
  * 05-Sep-2006 : Added checks for MarkerChangeEvent generation (DG);
  * 26-Sep-2007 : Added test1802195() method (DG);
  * 08-Oct-2007 : Added test1808376() method (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -61,14 +62,14 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.common.ui.LengthAdjustmentType;
+import org.jfree.chart.common.ui.RectangleAnchor;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.ui.TextAnchor;
 import org.jfree.chart.event.MarkerChangeEvent;
 import org.jfree.chart.event.MarkerChangeListener;
 import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.ValueMarker;
-import org.jfree.ui.LengthAdjustmentType;
-import org.jfree.ui.RectangleAnchor;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.TextAnchor;
 
 /**
  * Tests for the {@link ValueMarker} class.

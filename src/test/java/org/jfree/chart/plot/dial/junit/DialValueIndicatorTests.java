@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------------
  * DialValueIndicatorTests.java
  * ----------------------------
- * (C) Copyright 2006-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2006-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -36,6 +36,7 @@
  * -------
  * 03-Nov-2006 : Version 1 (DG);
  * 24-Oct-2007 : Updated for API changes (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -56,10 +57,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.common.ui.RectangleAnchor;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.ui.TextAnchor;
 import org.jfree.chart.plot.dial.DialValueIndicator;
-import org.jfree.ui.RectangleAnchor;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.TextAnchor;
 
 /**
  * Tests for the {@link DialValueIndicator} class.

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------
  * YIntervalRendererTests.java
  * ---------------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -39,6 +39,7 @@
  * 17-May-2007 : Added testGetLegendItemSeriesIndex() (DG);
  * 22-Apr-2008 : Added testPublicCloneable() (DG);
  * 26-May-2008 : Extended testEquals() (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -59,6 +60,8 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.annotations.XYTextAnnotation;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.common.ui.Layer;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.labels.IntervalXYItemLabelGenerator;
 import org.jfree.chart.labels.StandardXYItemLabelGenerator;
 import org.jfree.chart.labels.StandardXYSeriesLabelGenerator;
@@ -68,8 +71,6 @@ import org.jfree.chart.renderer.xy.YIntervalRenderer;
 import org.jfree.chart.urls.StandardXYURLGenerator;
 import org.jfree.data.xy.YIntervalSeries;
 import org.jfree.data.xy.YIntervalSeriesCollection;
-import org.jfree.ui.Layer;
-import org.jfree.util.PublicCloneable;
 
 /**
  * Tests for the {@link YIntervalRenderer} class.
