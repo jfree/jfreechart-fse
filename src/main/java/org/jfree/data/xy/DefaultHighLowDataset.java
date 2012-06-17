@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------------
  * DefaultHighLowDataset.java
  * --------------------------
- * (C) Copyright 2002-2008, by Object Refinery Limited.
+ * (C) Copyright 2002-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -43,6 +43,7 @@
  * ------------- JFREECHART 1.0.x ---------------------------------------------
  * 28-Nov-2006 : Added equals() method override (DG);
  * 22-Apr-2008 : Implemented PublicCloneable (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -51,7 +52,7 @@ package org.jfree.data.xy;
 import java.util.Arrays;
 import java.util.Date;
 
-import org.jfree.util.PublicCloneable;
+import org.jfree.chart.common.util.PublicCloneable;
 
 /**
  * A simple implementation of the {@link OHLCDataset} interface.  See also

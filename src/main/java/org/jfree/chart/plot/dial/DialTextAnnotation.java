@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * DialTextAnnotation.java
  * -----------------------
- * (C) Copyright 2006-2008, by Object Refinery Limited.
+ * (C) Copyright 2006-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -38,6 +38,7 @@
  * 08-Mar-2007 : Fix in hashCode() (DG);
  * 17-Oct-2007 : Updated equals() (DG);
  * 24-Oct-2007 : Added getAnchor() and setAnchor() methods (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -56,11 +57,11 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import org.jfree.chart.HashUtilities;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.ui.TextAnchor;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.PublicCloneable;
+import org.jfree.chart.util.SerialUtilities;
 
 /**
  * A text annotation for a {@link DialPlot}.

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------------------------
  * DefaultBoxAndWhiskerCategoryDataset.java
  * ----------------------------------------
- * (C) Copyright 2003-2008, by David Browning and Contributors.
+ * (C) Copyright 2003-2012, by David Browning and Contributors.
  *
  * Original Author:  David Browning (for Australian Institute of Marine
  *                   Science);
@@ -51,20 +51,21 @@
  * 02-Oct-2007 : Fixed bug in updating cached bounds (DG);
  * 03-Oct-2007 : Fixed another bug in updating cached bounds, added removal
  *               methods (DG);
- *
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 
  */
 
 package org.jfree.data.statistics;
 
 import java.util.List;
 
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.data.KeyedObjects2D;
 import org.jfree.data.Range;
 import org.jfree.data.RangeInfo;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DatasetChangeEvent;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PublicCloneable;
 
 /**
  * A convenience class that provides a default implementation of the

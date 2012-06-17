@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------
  * CompositeTitle.java
  * -------------------
- * (C) Copyright 2005-2008, by David Gilbert and Contributors.
+ * (C) Copyright 2005-2012, by David Gilbert and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Eric Penfold (patch 2006826);
@@ -42,6 +42,7 @@
  * 02-Jul-2008 : Applied patch 2006826 by Eric Penfold, to enable chart
  *               entities to be generated (DG);
  * 09-Jul-2008 : Added backgroundPaint field (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -58,10 +59,10 @@ import java.io.Serializable;
 import org.jfree.chart.block.BlockContainer;
 import org.jfree.chart.block.BorderArrangement;
 import org.jfree.chart.block.RectangleConstraint;
+import org.jfree.chart.common.ui.Size2D;
+import org.jfree.chart.common.util.PaintUtilities;
 import org.jfree.chart.event.TitleChangeEvent;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.Size2D;
-import org.jfree.util.PaintUtilities;
 
 /**
  * A title that contains multiple titles within a {@link BlockContainer}.

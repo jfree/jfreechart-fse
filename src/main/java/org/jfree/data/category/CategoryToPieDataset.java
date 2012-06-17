@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * CategoryToPieDataset.java
  * -------------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited.
+ * (C) Copyright 2003-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Christian W. Zuckschwerdt;
@@ -43,6 +43,7 @@
  * 26-Jul-2006 : Added serialVersionUID, changed constructor to allow null
  *               for source, and added getSource(), getExtractType() and
  *               getExtractIndex() methods - see feature request 1477915 (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -51,11 +52,11 @@ package org.jfree.data.category;
 import java.util.Collections;
 import java.util.List;
 
+import org.jfree.chart.common.util.TableOrder;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.general.PieDataset;
-import org.jfree.util.TableOrder;
 
 /**
  * A {@link PieDataset} implementation that obtains its data from one row or

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * WaterfallBarRenderer.java
  * -------------------------
- * (C) Copyright 2003-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  Darshan Shah;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -54,6 +54,7 @@
  * 04-Feb-2009 : Updated findRangeBounds to handle null dataset consistently
  *               with other renderers (DG);
  * 19-May-2009 : Fixed FindBugs warnings, patch by Michal Wozniak (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -71,19 +72,19 @@ import java.io.ObjectOutputStream;
 
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.ui.GradientPaintTransformType;
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.ui.StandardGradientPaintTransformer;
+import org.jfree.chart.common.util.PaintUtilities;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.CategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.AbstractRenderer;
+import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.GradientPaintTransformType;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.StandardGradientPaintTransformer;
-import org.jfree.util.PaintUtilities;
 
 /**
  * A renderer that handles the drawing of waterfall bar charts, for use with

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------------
  * BubbleXYItemLabelGenerator.java
  * -------------------------------
- * (C) Copyright 2005-2008, by Object Refinery Limited.
+ * (C) Copyright 2005-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -39,6 +39,7 @@
  *               --> BubbleXYItemLabelGenerator (DG);
  * 23-Nov-2007 : Implemented hashCode() (DG);
  * 23-Apr-2008 : Implemented PublicCloneable (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -50,11 +51,11 @@ import java.text.MessageFormat;
 import java.text.NumberFormat;
 
 import org.jfree.chart.HashUtilities;
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.renderer.xy.XYBubbleRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PublicCloneable;
 
 /**
  * An item label generator defined for use with the {@link XYBubbleRenderer}

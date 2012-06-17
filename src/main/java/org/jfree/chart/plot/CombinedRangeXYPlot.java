@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------------
  * CombinedRangeXYPlot.java
  * ------------------------
- * (C) Copyright 2001-2008, by Bill Kelemen and Contributors.
+ * (C) Copyright 2001-2012, by Bill Kelemen and Contributors.
  *
  * Original Author:  Bill Kelemen;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -94,6 +94,7 @@
  * 11-Aug-2008 : Don't store totalWeight of subplots, calculate it as
  *               required (DG);
  * 21-Dec-2011 : Apply patch 3447161 by Ulrich Voigt and Martin Hoeller (MH);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -111,13 +112,13 @@ import org.jfree.chart.axis.AxisSpace;
 import org.jfree.chart.axis.AxisState;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.event.PlotChangeListener;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.Range;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.util.ObjectUtilities;
 
 /**
  * An extension of {@link XYPlot} that contains multiple subplots that share a

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------
  * ColorBar.java
  * -------------
- * (C) Copyright 2002-2008, by David M. O'Donnell and Contributors.
+ * (C) Copyright 2002-2012, by David M. O'Donnell and Contributors.
  *
  * Original Author:  David M. O'Donnell;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -61,13 +61,13 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
+import org.jfree.chart.common.ui.RectangleEdge;
 import org.jfree.chart.plot.ColorPalette;
 import org.jfree.chart.plot.ContourPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.RainbowPalette;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYBlockRenderer;
-import org.jfree.ui.RectangleEdge;
 
 /**
  * A color bar.

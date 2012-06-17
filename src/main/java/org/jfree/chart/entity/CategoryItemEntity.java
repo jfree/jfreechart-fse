@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * CategoryItemEntity.java
  * -----------------------
- * (C) Copyright 2002-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2002-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Richard Atkinson;
@@ -47,6 +47,7 @@
  * 11-Jan-2005 : Removed deprecated code in preparation for 1.0.0 release (DG);
  * ------------- JFREECHART 1.0.x ---------------------------------------------
  * 18-May-2007 : Updated to use row and column keys to identify item (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -55,8 +56,8 @@ package org.jfree.chart.entity;
 import java.awt.Shape;
 import java.io.Serializable;
 
+import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.data.category.CategoryDataset;
-import org.jfree.util.ObjectUtilities;
 
 /**
  * A chart entity that represents one item within a category plot.

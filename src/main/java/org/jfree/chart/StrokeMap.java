@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------
  * StrokeMap.java
  * --------------
- * (C) Copyright 2006-2008, by Object Refinery Limited.
+ * (C) Copyright 2006-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -35,6 +35,7 @@
  * Changes:
  * --------
  * 27-Sep-2006 : Version 1 (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -50,8 +51,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.util.ObjectUtilities;
 
 /**
  * A storage structure that maps <code>Comparable</code> instances with

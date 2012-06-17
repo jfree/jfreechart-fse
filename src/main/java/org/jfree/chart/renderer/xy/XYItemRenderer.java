@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------
  * XYItemRenderer.java
  * -------------------
- * (C) Copyright 2001-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2001-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Mark Watson (www.markwatson.com);
@@ -81,6 +81,7 @@
  *               itemLabelPaint, positiveItemLabelPosition,
  *               negativeItemLabelPosition and createEntities override
  *               fields (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -97,6 +98,7 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemSource;
 import org.jfree.chart.annotations.XYAnnotation;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.ui.Layer;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.event.RendererChangeListener;
 import org.jfree.chart.labels.ItemLabelPosition;
@@ -110,7 +112,6 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.urls.XYURLGenerator;
 import org.jfree.data.Range;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.ui.Layer;
 
 /**
  * Interface for rendering the visual representation of a single (x, y) item on

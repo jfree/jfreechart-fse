@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------
  * XYDotRenderer.java
  * ------------------
- * (C) Copyright 2002-2008, by Object Refinery Limited.
+ * (C) Copyright 2002-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Christian W. Zuckschwerdt;
@@ -48,6 +48,7 @@
  * 09-Nov-2007 : Added legend shape attribute, plus override for
  *               getLegendItem() (DG);
  * 17-Jun-2008 : Apply legend shape, font and paint attributes (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -63,16 +64,16 @@ import java.io.ObjectOutputStream;
 
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.common.util.ShapeUtilities;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CrosshairState;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.xy.XYDataset;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.util.PublicCloneable;
-import org.jfree.util.ShapeUtilities;
+import org.jfree.data.xy.XYDataset;
 
 /**
  * A renderer that draws a small dot at each data point for an {@link XYPlot}.

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * XYShapeRenderer.java
  * --------------------
- * (C) Copyright 2008-2011 by Andreas Haumer, xS+S and Contributors.
+ * (C) Copyright 2008-2012 by Andreas Haumer, xS+S and Contributors.
  *
  * Original Author:  Martin Hoeller (x Software + Systeme  xS+S - Andreas
  *                       Haumer);
@@ -39,6 +39,7 @@
  *               amendments by David Gilbert (DG);
  * 16-Feb-2010 : Added findZBounds() (patch 2952086) (MH);
  * 19-Oct-2011 : Fixed NPE in findRangeBounds() (bug 3026341) (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -59,6 +60,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.common.util.ShapeUtilities;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CrosshairState;
@@ -67,13 +70,11 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.LookupPaintScale;
 import org.jfree.chart.renderer.PaintScale;
+import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
 import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.util.PublicCloneable;
-import org.jfree.util.ShapeUtilities;
 
 /**
  * A renderer that draws shapes at (x, y) coordinates and, if the dataset

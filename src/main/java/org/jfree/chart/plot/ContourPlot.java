@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------
  * ContourPlot.java
  * ----------------
- * (C) Copyright 2002-2009, by David M. O'Donnell and Contributors.
+ * (C) Copyright 2002-2012, by David M. O'Donnell and Contributors.
  *
  * Original Author:  David M. O'Donnell;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -65,6 +65,7 @@
  * 18-Dec-2008 : Use ResourceBundleWrapper - see patch 1607918 by
  *               Jess Thrysoee (DG);
  * 19-May-2009 : Fixed FindBugs warnings, patch by Michal Wozniak (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -96,6 +97,9 @@ import org.jfree.chart.axis.AxisSpace;
 import org.jfree.chart.axis.ColorBar;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.chart.entity.ContourEntity;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.AxisChangeEvent;
@@ -109,9 +113,6 @@ import org.jfree.data.Range;
 import org.jfree.data.contour.ContourDataset;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetUtilities;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.util.ObjectUtilities;
 
 /**
  * A class for creating shaded contours.
