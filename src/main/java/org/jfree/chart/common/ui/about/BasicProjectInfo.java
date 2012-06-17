@@ -1,10 +1,10 @@
-/* ========================================================================
- * JCommon : a free general purpose class library for the Java(tm) platform
- * ========================================================================
+/* ===========================================================
+ * JFreeChart : a free chart library for the Java(tm) platform
+ * ===========================================================
  *
- * (C) Copyright 2000-2005, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
- * Project Info:  http://www.jfree.org/jcommon/index.html
+ * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
  * BasicProjectInfo.java
  * ---------------------
- * (C)opyright 2004, by Thomas Morgner and Contributors.
+ * (C)opyright 2004-2012, by Thomas Morgner and Contributors.
  *
  * Original Author:  Thomas Morgner;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -37,21 +37,20 @@
  * Changes
  * -------
  * 07-Jun-2004 : Added source headers (DG);
+ * 17-Jun-2012 : Moved from JCommon to JFreeChart (DG);
  *
  */
 
-package org.jfree.base;
+package org.jfree.chart.common.ui.about;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jfree.util.ObjectUtilities;
+import org.jfree.chart.common.util.ObjectUtilities;
 
 /**
  * Basic project info.
- *
- * @author Thomas Morgner
  */
 public class BasicProjectInfo extends Library {
     /**

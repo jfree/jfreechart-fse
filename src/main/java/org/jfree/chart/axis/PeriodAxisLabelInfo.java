@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------------
  * PeriodAxisLabelInfo.java
  * ------------------------
- * (C) Copyright 2004-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -40,6 +40,7 @@
  * 20-May-2005 : Added default constants and null argument checks in the
  *               constructor (DG);
  * 02-Mar-2009 : Updated createInstance to use locale (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -60,9 +61,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import org.jfree.data.time.RegularTimePeriod;
+import org.jfree.chart.common.ui.RectangleInsets;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.RectangleInsets;
+import org.jfree.data.time.RegularTimePeriod;
 
 /**
  * A record that contains information for one "band" of date labels in

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * PaintScaleLegend.java
  * ---------------------
- * (C) Copyright 2007-2009, by Object Refinery Limited.
+ * (C) Copyright 2007-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Peter Kolb - see patch 2686872;
@@ -38,6 +38,7 @@
  * 18-Jun-2008 : Fixed bug drawing scale with log axis (DG);
  * 16-Apr-2009 : Patch 2686872 implementing AxisChangeListener, and fix for
  *               ignored stripOutlineVisible flag (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -58,18 +59,18 @@ import org.jfree.chart.axis.AxisSpace;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.block.LengthConstraintType;
 import org.jfree.chart.block.RectangleConstraint;
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.ui.Size2D;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.event.AxisChangeEvent;
 import org.jfree.chart.event.AxisChangeListener;
 import org.jfree.chart.event.TitleChangeEvent;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.PaintScale;
-import org.jfree.data.Range;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.Size2D;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.PublicCloneable;
+import org.jfree.data.Range;
 
 /**
  * A legend that shows a range of values and their associated colors, driven

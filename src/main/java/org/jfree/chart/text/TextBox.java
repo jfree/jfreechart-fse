@@ -66,8 +66,6 @@ import org.jfree.chart.util.SerialUtilities;
 
 /**
  * A box containing a text block.
- *
- * @author David Gilbert
  */
 public class TextBox implements Serializable {
 

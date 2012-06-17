@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * LabelBlock.java
  * ---------------
- * (C) Copyright 2004-2009, by Object Refinery Limited.
+ * (C) Copyright 2004-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Pierre-Marie Le Biot;
@@ -45,6 +45,7 @@
  * 20-Jul-2006 : Fixed entity area in draw() method (DG);
  * 16-Mar-2007 : Fixed serialization when using GradientPaint (DG);
  * 10-Feb-2009 : Added alignment fields (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -61,17 +62,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import org.jfree.chart.common.ui.RectangleAnchor;
+import org.jfree.chart.common.ui.Size2D;
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.entity.ChartEntity;
 import org.jfree.chart.entity.StandardEntityCollection;
-import org.jfree.chart.util.SerialUtilities;
 import org.jfree.chart.text.TextBlock;
 import org.jfree.chart.text.TextBlockAnchor;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.ui.RectangleAnchor;
-import org.jfree.ui.Size2D;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.PublicCloneable;
+import org.jfree.chart.util.SerialUtilities;
 
 /**
  * A block containing a label.

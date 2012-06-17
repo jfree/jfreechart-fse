@@ -41,6 +41,7 @@
  * 27-Feb-2009 : Fixed bug 2617557: tickLabelPaint ignored (DG);
  * 09-Feb-2010 : Fixed bug 2946521 (DG);
  * 08-Jan-2012 : Added missing angleToValue() implementation (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -63,11 +64,11 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.ui.TextAnchor;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.PublicCloneable;
+import org.jfree.chart.util.SerialUtilities;
 
 /**
  * A scale for a {@link DialPlot}.

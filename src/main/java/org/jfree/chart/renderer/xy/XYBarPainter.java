@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------
  * XYBarPainter.java
  * -----------------
- * (C) Copyright 2008, by Object Refinery Limited.
+ * (C) Copyright 2008-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -35,6 +35,7 @@
  * Changes:
  * --------
  * 19-Jun-2008 : Version 1 (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -43,7 +44,7 @@ package org.jfree.chart.renderer.xy;
 import java.awt.Graphics2D;
 import java.awt.geom.RectangularShape;
 
-import org.jfree.ui.RectangleEdge;
+import org.jfree.chart.common.ui.RectangleEdge;
 
 /**
  * The interface for plugin painter for the {@link XYBarRenderer} class.  When

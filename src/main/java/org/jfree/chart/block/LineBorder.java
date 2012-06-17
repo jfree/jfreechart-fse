@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * LineBorder.java
  * ---------------
- * (C) Copyright 2007, 2008, by Christo Zietsman and Contributors.
+ * (C) Copyright 2007-2012, by Christo Zietsman and Contributors.
  *
  * Original Author:  Christo Zietsman;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -37,6 +37,7 @@
  * 16-Mar-2007 : Version 1, contributed by Christo Zietsman with
  *               modifications by DG (DG);
  * 13-Jun-2007 : Don't draw if area doesn't have positive dimensions (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -54,10 +55,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PaintUtilities;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PaintUtilities;
 
 /**
  * A line border for any {@link AbstractBlock}.

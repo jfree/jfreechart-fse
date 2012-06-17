@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------
  * MinMaxCategoryRenderer.java
  * ---------------------------
- * (C) Copyright 2002-2008, by Object Refinery Limited.
+ * (C) Copyright 2002-2012, by Object Refinery Limited.
  *
  * Original Author:  Tomer Peretz;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -54,6 +54,7 @@
  * 02-Feb-2007 : Removed author tags all over JFreeChart sources (DG);
  * 09-Mar-2007 : Fixed problem with horizontal rendering (DG);
  * 28-Sep-2007 : Added equals() method override (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -80,13 +81,13 @@ import javax.swing.Icon;
 
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.util.PaintUtilities;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.CategoryDataset;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.util.PaintUtilities;
+import org.jfree.data.category.CategoryDataset;
 
 /**
  * Renderer for drawing min max plot. This renderer draws all the series under

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * KeyedValueComparator.java
  * -------------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited.
+ * (C) Copyright 2003-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -37,6 +37,7 @@
  * 05-Mar-2003 : Version 1 (DG);
  * 27-Aug-2003 : Moved SortOrder from org.jfree.data --> org.jfree.util (DG);
  * 12-Jan-2005 : Added accessor methods (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -44,7 +45,7 @@ package org.jfree.data;
 
 import java.util.Comparator;
 
-import org.jfree.util.SortOrder;
+import org.jfree.chart.common.util.SortOrder;
 
 /**
  * A utility class that can compare and order two {@link KeyedValue} instances

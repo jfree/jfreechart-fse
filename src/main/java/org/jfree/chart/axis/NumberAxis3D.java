@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------
  * NumberAxis3D.java
  * -----------------
- * (C) Copyright 2001-2009, by Serge V. Grachov and Contributors.
+ * (C) Copyright 2001-2012, by Serge V. Grachov and Contributors.
  *
  * Original Author:  Serge V. Grachov;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -64,6 +64,7 @@
  * ------------- JFREECHART 1.0.x ---------------------------------------------
  * 18-Jan-2006 : Fixed bug 1408904 (axis assumes CategoryPlot) (DG):
  * 16-Apr-2009 : Changed axis line visibility default (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -75,11 +76,11 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jfree.chart.Effect3D;
+import org.jfree.chart.common.ui.RectangleEdge;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
-import org.jfree.ui.RectangleEdge;
 
 /**
  * A standard linear value axis with a 3D effect corresponding to the

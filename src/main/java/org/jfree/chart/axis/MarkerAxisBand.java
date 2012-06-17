@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------
  * MarkerAxisBand.java
  * -------------------
- * (C) Copyright 2000-2008, by Object Refinery Limited.
+ * (C) Copyright 2000-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -42,6 +42,7 @@
  * 29-Oct-2003 : Added workaround for font alignment in PDF output (DG);
  * 21-Jan-2004 : Update for renamed method in ValueAxis (DG);
  * 07-Apr-2004 : Changed text bounds calculation (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -59,10 +60,10 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.util.ObjectUtilities;
 
 /**
  * A band that can be added to a number axis to display regions.
