@@ -114,7 +114,7 @@ public class TextBox implements Serializable {
             this.textBlock = new TextBlock();
             this.textBlock.addLine(
                 text, new Font("SansSerif", Font.PLAIN, 10),
-                Color.black
+                Color.BLACK
             );
         }
     }
@@ -125,11 +125,11 @@ public class TextBox implements Serializable {
      * @param block  the text block.
      */
     public TextBox(final TextBlock block) {
-        this.outlinePaint = Color.black;
+        this.outlinePaint = Color.BLACK;
         this.outlineStroke = new BasicStroke(1.0f);
         this.interiorGap = new RectangleInsets(1.0, 3.0, 1.0, 3.0);
         this.backgroundPaint = new Color(255, 255, 192);
-        this.shadowPaint = Color.gray;
+        this.shadowPaint = Color.GRAY;
         this.shadowXOffset = 2.0;
         this.shadowYOffset = 2.0;
         this.textBlock = block;

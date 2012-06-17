@@ -127,7 +127,7 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame,
      * @param extent  the extent of the arc (in degrees, counter-clockwise).
      */
     public ArcDialFrame(double startAngle, double extent) {
-        this.backgroundPaint = Color.gray;
+        this.backgroundPaint = Color.GRAY;
         this.foregroundPaint = new Color(100, 100, 150);
         this.stroke = new BasicStroke(2.0f);
         this.innerRadius = 0.25;
@@ -394,7 +394,7 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame,
         Area area1 = new Area(outerWindow);
         Area area2 = new Area(window);
         area1.subtract(area2);
-        g2.setPaint(Color.lightGray);
+        g2.setPaint(Color.LIGHT_GRAY);
         g2.fill(area1);
 
         g2.setStroke(this.stroke);

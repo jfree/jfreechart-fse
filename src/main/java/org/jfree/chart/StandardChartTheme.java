@@ -120,7 +120,9 @@ import org.jfree.chart.util.ShadowGenerator;
 public class StandardChartTheme implements ChartTheme, Cloneable,
         PublicCloneable, Serializable {
 
-    /** The name of this theme. */
+    private static final long serialVersionUID = 6387476296773755770L;
+
+	/** The name of this theme. */
     private String name;
 
     /**
@@ -259,20 +261,20 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      */
     public static ChartTheme createDarknessTheme() {
         StandardChartTheme theme = new StandardChartTheme("Darkness");
-        theme.titlePaint = Color.white;
-        theme.subtitlePaint = Color.white;
-        theme.legendBackgroundPaint = Color.black;
-        theme.legendItemPaint = Color.white;
-        theme.chartBackgroundPaint = Color.black;
-        theme.plotBackgroundPaint = Color.black;
-        theme.plotOutlinePaint = Color.yellow;
-        theme.baselinePaint = Color.white;
-        theme.crosshairPaint = Color.red;
-        theme.labelLinkPaint = Color.lightGray;
-        theme.tickLabelPaint = Color.white;
-        theme.axisLabelPaint = Color.white;
-        theme.shadowPaint = Color.darkGray;
-        theme.itemLabelPaint = Color.white;
+        theme.titlePaint = Color.WHITE;
+        theme.subtitlePaint = Color.WHITE;
+        theme.legendBackgroundPaint = Color.BLACK;
+        theme.legendItemPaint = Color.WHITE;
+        theme.chartBackgroundPaint = Color.BLACK;
+        theme.plotBackgroundPaint = Color.BLACK;
+        theme.plotOutlinePaint = Color.YELLOW;
+        theme.baselinePaint = Color.WHITE;
+        theme.crosshairPaint = Color.RED;
+        theme.labelLinkPaint = Color.LIGHT_GRAY;
+        theme.tickLabelPaint = Color.WHITE;
+        theme.axisLabelPaint = Color.WHITE;
+        theme.shadowPaint = Color.DARK_GRAY;
+        theme.itemLabelPaint = Color.WHITE;
         theme.drawingSupplier = new DefaultDrawingSupplier(
                 new Paint[] {Color.decode("0xFFFF00"),
                         Color.decode("0x0036CC"), Color.decode("0xFF0000"),
@@ -285,8 +287,8 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
                 new Stroke[] {new BasicStroke(2.0f)},
                 new Stroke[] {new BasicStroke(0.5f)},
                 DefaultDrawingSupplier.DEFAULT_SHAPE_SEQUENCE);
-        theme.wallPaint = Color.darkGray;
-        theme.errorIndicatorPaint = Color.lightGray;
+        theme.wallPaint = Color.DARK_GRAY;
+        theme.errorIndicatorPaint = Color.LIGHT_GRAY;
         theme.gridBandPaint = new Color(255, 255, 255, 20);
         theme.gridBandAlternatePaint = new Color(255, 255, 255, 40);
         theme.shadowGenerator = null;
@@ -336,31 +338,31 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         this.largeFont = new Font("Tahoma", Font.BOLD, 14);
         this.regularFont = new Font("Tahoma", Font.PLAIN, 12);
         this.smallFont = new Font("Tahoma", Font.PLAIN, 10);
-        this.titlePaint = Color.black;
-        this.subtitlePaint = Color.black;
-        this.legendBackgroundPaint = Color.white;
-        this.legendItemPaint = Color.darkGray;
-        this.chartBackgroundPaint = Color.white;
+        this.titlePaint = Color.BLACK;
+        this.subtitlePaint = Color.BLACK;
+        this.legendBackgroundPaint = Color.WHITE;
+        this.legendItemPaint = Color.DARK_GRAY;
+        this.chartBackgroundPaint = Color.WHITE;
         this.drawingSupplier = new DefaultDrawingSupplier();
-        this.plotBackgroundPaint = Color.lightGray;
-        this.plotOutlinePaint = Color.black;
-        this.labelLinkPaint = Color.black;
+        this.plotBackgroundPaint = Color.LIGHT_GRAY;
+        this.plotOutlinePaint = Color.BLACK;
+        this.labelLinkPaint = Color.BLACK;
         this.labelLinkStyle = PieLabelLinkStyle.CUBIC_CURVE;
         this.axisOffset = new RectangleInsets(4, 4, 4, 4);
-        this.domainGridlinePaint = Color.white;
-        this.rangeGridlinePaint = Color.white;
-        this.baselinePaint = Color.black;
-        this.crosshairPaint = Color.blue;
-        this.axisLabelPaint = Color.darkGray;
-        this.tickLabelPaint = Color.darkGray;
+        this.domainGridlinePaint = Color.WHITE;
+        this.rangeGridlinePaint = Color.WHITE;
+        this.baselinePaint = Color.BLACK;
+        this.crosshairPaint = Color.BLUE;
+        this.axisLabelPaint = Color.DARK_GRAY;
+        this.tickLabelPaint = Color.DARK_GRAY;
         this.barPainter = new GradientBarPainter();
         this.xyBarPainter = new GradientXYBarPainter();
         this.shadowVisible = false;
-        this.shadowPaint = Color.gray;
-        this.itemLabelPaint = Color.black;
-        this.thermometerPaint = Color.white;
+        this.shadowPaint = Color.GRAY;
+        this.itemLabelPaint = Color.BLACK;
+        this.thermometerPaint = Color.WHITE;
         this.wallPaint = BarRenderer3D.DEFAULT_WALL_PAINT;
-        this.errorIndicatorPaint = Color.black;
+        this.errorIndicatorPaint = Color.BLACK;
         this.shadowGenerator = shadow ? new DefaultShadowGenerator() : null;
     }
 

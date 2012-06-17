@@ -217,7 +217,7 @@ public class MarkerAxisBand implements Serializable {
             g2.draw(r);
             g2.setComposite(originalComposite);
 
-            g2.setPaint(Color.black);
+            g2.setPaint(Color.BLACK);
             drawStringInRect(g2, r, this.font, marker.getLabel());
         }
 

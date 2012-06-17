@@ -138,16 +138,16 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
     private static final long serialVersionUID = 2987472457734470962L;
 
     /** The default background paint. */
-    static final Paint DEFAULT_DIAL_BACKGROUND_PAINT = Color.black;
+    static final Paint DEFAULT_DIAL_BACKGROUND_PAINT = Color.BLACK;
 
     /** The default needle paint. */
-    static final Paint DEFAULT_NEEDLE_PAINT = Color.green;
+    static final Paint DEFAULT_NEEDLE_PAINT = Color.GREEN;
 
     /** The default value font. */
     static final Font DEFAULT_VALUE_FONT = new Font("SansSerif", Font.BOLD, 12);
 
     /** The default value paint. */
-    static final Paint DEFAULT_VALUE_PAINT = Color.yellow;
+    static final Paint DEFAULT_VALUE_PAINT = Color.YELLOW;
 
     /** The default meter angle. */
     public static final int DEFAULT_METER_ANGLE = 270;
@@ -243,12 +243,12 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
         this.meterAngle = DEFAULT_METER_ANGLE;
         this.range = new Range(0.0, 100.0);
         this.tickSize = 10.0;
-        this.tickPaint = Color.white;
+        this.tickPaint = Color.WHITE;
         this.units = "Units";
         this.needlePaint = MeterPlot.DEFAULT_NEEDLE_PAINT;
         this.tickLabelsVisible = true;
         this.tickLabelFont = MeterPlot.DEFAULT_LABEL_FONT;
-        this.tickLabelPaint = Color.black;
+        this.tickLabelPaint = Color.BLACK;
         this.tickLabelFormat = NumberFormat.getInstance();
         this.valueFont = MeterPlot.DEFAULT_VALUE_FONT;
         this.valuePaint = MeterPlot.DEFAULT_VALUE_PAINT;

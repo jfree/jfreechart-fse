@@ -89,7 +89,7 @@ public class WaferMapPlot extends Plot implements RendererChangeListener,
         0.0f);
 
     /** The default grid line paint. */
-    public static final Paint DEFAULT_GRIDLINE_PAINT = Color.lightGray;
+    public static final Paint DEFAULT_GRIDLINE_PAINT = Color.LIGHT_GRAY;
 
     /** The default crosshair visibility. */
     public static final boolean DEFAULT_CROSSHAIR_VISIBLE = false;
@@ -99,7 +99,7 @@ public class WaferMapPlot extends Plot implements RendererChangeListener,
             = DEFAULT_GRIDLINE_STROKE;
 
     /** The default crosshair paint. */
-    public static final Paint DEFAULT_CROSSHAIR_PAINT = Color.blue;
+    public static final Paint DEFAULT_CROSSHAIR_PAINT = Color.BLUE;
 
     /** The resourceBundle for the localization. */
     protected static ResourceBundle localizationResources
@@ -314,7 +314,7 @@ public class WaferMapPlot extends Plot implements RendererChangeListener,
                 double upperLeftY = (startY - chipHeight) + (chipHeight * y)
                     + (space * (y - 1));
                 chip.setFrame(upperLeftX, upperLeftY, chipWidth, chipHeight);
-                g2.setColor(Color.white);
+                g2.setColor(Color.WHITE);
                 if (this.dataset.getChipValue(x - 1, ychips - y - 1) != null) {
                     g2.setPaint(
                         this.renderer.getChipColor(
@@ -323,7 +323,7 @@ public class WaferMapPlot extends Plot implements RendererChangeListener,
                     );
                 }
                 g2.fill(chip);
-                g2.setColor(Color.lightGray);
+                g2.setColor(Color.LIGHT_GRAY);
                 g2.draw(chip);
             }
         }
@@ -377,7 +377,7 @@ public class WaferMapPlot extends Plot implements RendererChangeListener,
     protected void drawWaferEdge(Graphics2D g2, Rectangle2D plotArea) {
         // draw the wafer
         Ellipse2D waferEdge = getWaferEdge(plotArea);
-        g2.setColor(Color.black);
+        g2.setColor(Color.BLACK);
         g2.draw(waferEdge);
         // calculate and draw the notch
         // horizontal orientation is considered notch right
@@ -405,9 +405,9 @@ public class WaferMapPlot extends Plot implements RendererChangeListener,
                 );
             notch = new Arc2D.Double(notchFrame, 0d, 180d, Arc2D.OPEN);
         }
-        g2.setColor(Color.white);
+        g2.setColor(Color.WHITE);
         g2.fill(notch);
-        g2.setColor(Color.black);
+        g2.setColor(Color.BLACK);
         g2.draw(notch);
 
     }

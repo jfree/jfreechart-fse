@@ -98,8 +98,8 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame,
      * Creates a new instance of <code>StandardDialFrame</code>.
      */
     public StandardDialFrame() {
-        this.backgroundPaint = Color.gray;
-        this.foregroundPaint = Color.black;
+        this.backgroundPaint = Color.GRAY;
+        this.foregroundPaint = Color.BLACK;
         this.stroke = new BasicStroke(2.0f);
         this.radius = 0.95;
     }

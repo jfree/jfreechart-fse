@@ -77,7 +77,7 @@ public class CategoryMarker extends Marker implements Cloneable, Serializable {
      * @param key  the category key.
      */
     public CategoryMarker(Comparable key) {
-        this(key, Color.gray, new BasicStroke(1.0f));
+        this(key, Color.GRAY, new BasicStroke(1.0f));
     }
 
     /**

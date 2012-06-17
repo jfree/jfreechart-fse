@@ -105,7 +105,7 @@ public class XYBoxAnnotation extends AbstractXYAnnotation
      * @param y1  the upper y-coordinate of the box (in data space).
      */
     public XYBoxAnnotation(double x0, double y0, double x1, double y1) {
-        this(x0, y0, x1, y1, new BasicStroke(1.0f), Color.black);
+        this(x0, y0, x1, y1, new BasicStroke(1.0f), Color.BLACK);
     }
 
     /**

@@ -266,8 +266,8 @@ public class LineRenderer3D extends LineAndShapeRenderer
         g2.setPaint(getWallPaint());
         g2.fill(bottomWall);
 
-        // higlight the background corners...
-        g2.setPaint(Color.lightGray);
+        // highlight the background corners...
+        g2.setPaint(Color.LIGHT_GRAY);
         Line2D corner = new Line2D.Double(x0, y0, x1, y1);
         g2.draw(corner);
         corner.setLine(x1, y1, x1, y3);

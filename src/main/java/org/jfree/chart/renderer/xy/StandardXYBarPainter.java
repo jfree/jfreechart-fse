@@ -134,7 +134,7 @@ public class StandardXYBarPainter implements XYBarPainter, Serializable {
 
         RectangularShape shadow = createShadow(bar, renderer.getShadowXOffset(),
                 renderer.getShadowYOffset(), base, pegShadow);
-        g2.setPaint(Color.gray);
+        g2.setPaint(Color.GRAY);
         g2.fill(shadow);
 
     }

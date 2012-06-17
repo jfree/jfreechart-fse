@@ -98,12 +98,12 @@ public class DialCap extends AbstractDialLayer implements DialLayer, Cloneable,
 
     /**
      * Creates a new instance of <code>StandardDialBackground</code>.  The
-     * default background paint is <code>Color.white</code>.
+     * default background paint is <code>Color.WHITE</code>.
      */
     public DialCap() {
         this.radius = 0.05;
-        this.fillPaint = Color.white;
-        this.outlinePaint = Color.black;
+        this.fillPaint = Color.WHITE;
+        this.outlinePaint = Color.BLACK;
         this.outlineStroke = new BasicStroke(2.0f);
     }
 

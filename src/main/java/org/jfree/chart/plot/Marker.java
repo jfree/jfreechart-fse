@@ -141,7 +141,7 @@ public abstract class Marker implements Cloneable, Serializable {
      * Creates a new marker with default attributes.
      */
     protected Marker() {
-        this(Color.gray);
+        this(Color.GRAY);
     }
 
     /**
@@ -150,7 +150,7 @@ public abstract class Marker implements Cloneable, Serializable {
      * @param paint  the paint (<code>null</code> not permitted).
      */
     protected Marker(Paint paint) {
-        this(paint, new BasicStroke(0.5f), Color.gray, new BasicStroke(0.5f),
+        this(paint, new BasicStroke(0.5f), Color.GRAY, new BasicStroke(0.5f),
                 0.80f);
     }
 
@@ -189,7 +189,7 @@ public abstract class Marker implements Cloneable, Serializable {
         this.alpha = alpha;
 
         this.labelFont = new Font("SansSerif", Font.PLAIN, 9);
-        this.labelPaint = Color.black;
+        this.labelPaint = Color.BLACK;
         this.labelAnchor = RectangleAnchor.TOP_LEFT;
         this.labelOffset = new RectangleInsets(3.0, 3.0, 3.0, 3.0);
         this.labelOffsetType = LengthAdjustmentType.CONTRACT;

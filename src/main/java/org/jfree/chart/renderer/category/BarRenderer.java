@@ -318,7 +318,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
         setBaseLegendShape(new Rectangle2D.Double(-4.0, -4.0, 8.0, 8.0));
         this.barPainter = getDefaultBarPainter();
         this.shadowsVisible = getDefaultShadowsVisible();
-        this.shadowPaint = Color.gray;
+        this.shadowPaint = Color.GRAY;
         this.shadowXOffset = 4.0;
         this.shadowYOffset = 4.0;
     }
@@ -956,7 +956,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
         LegendItem result = new LegendItem(label, description, toolTipText,
                 urlText, true, shape, true, paint, isDrawBarOutline(),
                 outlinePaint, outlineStroke, false, new Line2D.Float(),
-                new BasicStroke(1.0f), Color.black);
+                new BasicStroke(1.0f), Color.BLACK);
         result.setLabelFont(lookupLegendTextFont(series));
         Paint labelPaint = lookupLegendTextPaint(series);
         if (labelPaint != null) {

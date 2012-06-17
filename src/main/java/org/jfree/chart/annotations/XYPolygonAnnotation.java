@@ -98,7 +98,7 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
      *     (<code>null</code> not permitted).
      */
     public XYPolygonAnnotation(double[] polygon) {
-        this(polygon, new BasicStroke(1.0f), Color.black);
+        this(polygon, new BasicStroke(1.0f), Color.BLACK);
     }
 
     /**

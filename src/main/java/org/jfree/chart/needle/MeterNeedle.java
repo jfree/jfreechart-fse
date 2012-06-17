@@ -78,7 +78,7 @@ public abstract class MeterNeedle implements Serializable {
     private static final long serialVersionUID = 5203064851510951052L;
 
     /** The outline paint. */
-    private transient Paint outlinePaint = Color.black;
+    private transient Paint outlinePaint = Color.BLACK;
 
     /** The outline stroke. */
     private transient Stroke outlineStroke = new BasicStroke(2);

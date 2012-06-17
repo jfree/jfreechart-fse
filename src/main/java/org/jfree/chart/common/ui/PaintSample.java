@@ -118,7 +118,7 @@ public class PaintSample extends JComponent {
         final Rectangle2D area = new Rectangle2D.Double(xx, yy, ww, hh);
         g2.setPaint(this.paint);
         g2.fill(area);
-        g2.setPaint(Color.black);
+        g2.setPaint(Color.BLACK);
         g2.draw(area);
 
     }

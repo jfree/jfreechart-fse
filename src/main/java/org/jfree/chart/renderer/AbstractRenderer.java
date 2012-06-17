@@ -147,10 +147,10 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     public static final Double ZERO = new Double(0.0);
 
     /** The default paint. */
-    public static final Paint DEFAULT_PAINT = Color.blue;
+    public static final Paint DEFAULT_PAINT = Color.BLUE;
 
     /** The default outline paint. */
-    public static final Paint DEFAULT_OUTLINE_PAINT = Color.gray;
+    public static final Paint DEFAULT_OUTLINE_PAINT = Color.GRAY;
 
     /** The default stroke. */
     public static final Stroke DEFAULT_STROKE = new BasicStroke(1.0f);
@@ -167,7 +167,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
             = new Font("SansSerif", Font.PLAIN, 10);
 
     /** The default value label paint. */
-    public static final Paint DEFAULT_VALUE_LABEL_PAINT = Color.black;
+    public static final Paint DEFAULT_VALUE_LABEL_PAINT = Color.BLACK;
 
     /** A list of flags that controls whether or not each series is visible. */
     private BooleanList seriesVisibleList;
@@ -403,7 +403,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
 
         this.fillPaint = null;
         this.fillPaintList = new PaintList();
-        this.baseFillPaint = Color.white;
+        this.baseFillPaint = Color.WHITE;
         this.autoPopulateSeriesFillPaint = false;
 
         this.outlinePaint = null;
@@ -436,7 +436,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
 
         this.itemLabelPaint = null;
         this.itemLabelPaintList = new PaintList();
-        this.baseItemLabelPaint = Color.black;
+        this.baseItemLabelPaint = Color.BLACK;
 
         this.positiveItemLabelPosition = null;
         this.positiveItemLabelPositionList = new ObjectList();

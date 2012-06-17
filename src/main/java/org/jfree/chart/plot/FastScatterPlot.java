@@ -114,7 +114,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
             {2.0f, 2.0f}, 0.0f);
 
     /** The default grid line paint. */
-    public static final Paint DEFAULT_GRIDLINE_PAINT = Color.lightGray;
+    public static final Paint DEFAULT_GRIDLINE_PAINT = Color.LIGHT_GRAY;
 
     /** The data. */
     private float[][] data;
@@ -211,7 +211,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
         this.rangeAxis.setPlot(this);
         this.rangeAxis.addChangeListener(this);
 
-        this.paint = Color.red;
+        this.paint = Color.RED;
 
         this.domainGridlinesVisible = true;
         this.domainGridlinePaint = FastScatterPlot.DEFAULT_GRIDLINE_PAINT;
@@ -325,7 +325,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
 
     /**
      * Returns the paint used to plot data points.  The default is
-     * <code>Color.red</code>.
+     * <code>Color.RED</code>.
      *
      * @return The paint.
      *

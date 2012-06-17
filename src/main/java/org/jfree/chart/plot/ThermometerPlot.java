@@ -318,7 +318,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
     private transient Stroke thermometerStroke = new BasicStroke(1.0f);
 
     /** Paint for drawing the thermometer */
-    private transient Paint thermometerPaint = Color.black;
+    private transient Paint thermometerPaint = Color.BLACK;
 
     /** The display units */
     private int units = UNITS_CELCIUS;
@@ -333,13 +333,13 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
     private Font valueFont = new Font("SansSerif", Font.BOLD, 16);
 
     /** Colour that the value is written in */
-    private transient Paint valuePaint = Color.white;
+    private transient Paint valuePaint = Color.WHITE;
 
     /** Number format for the value */
     private NumberFormat valueFormat = new DecimalFormat();
 
     /** The default paint for the mercury in the thermometer. */
-    private transient Paint mercuryPaint = Color.lightGray;
+    private transient Paint mercuryPaint = Color.LIGHT_GRAY;
 
     /** A flag that controls whether value lines are drawn. */
     private boolean showValueLines = false;
@@ -367,8 +367,8 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
     private boolean useSubrangePaint = true;
 
     /** Paint for each range */
-    private transient Paint[] subrangePaint = {Color.green, Color.orange,
-            Color.red};
+    private transient Paint[] subrangePaint = {Color.GREEN, Color.ORANGE,
+            Color.RED};
 
     /** A flag that controls whether the sub-range indicators are visible. */
     private boolean subrangeIndicatorsVisible = true;

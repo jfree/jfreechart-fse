@@ -88,13 +88,13 @@ public class PeriodAxisLabelInfo implements Cloneable, Serializable {
             = new Font("SansSerif", Font.PLAIN, 10);
 
     /** The default label paint. */
-    public static final Paint DEFAULT_LABEL_PAINT = Color.black;
+    public static final Paint DEFAULT_LABEL_PAINT = Color.BLACK;
 
     /** The default divider stroke. */
     public static final Stroke DEFAULT_DIVIDER_STROKE = new BasicStroke(0.5f);
 
     /** The default divider paint. */
-    public static final Paint DEFAULT_DIVIDER_PAINT = Color.gray;
+    public static final Paint DEFAULT_DIVIDER_PAINT = Color.GRAY;
 
     /** The subclass of {@link RegularTimePeriod} to use for this band. */
     private Class periodClass;

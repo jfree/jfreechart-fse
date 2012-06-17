@@ -146,7 +146,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
      * The paint used to draw various artifacts such as outliers, farout
      * symbol, average ellipse and median line.
      */
-    private transient Paint artifactPaint = Color.black;
+    private transient Paint artifactPaint = Color.BLACK;
 
     /**
      * Creates a new renderer for box and whisker charts.
@@ -166,7 +166,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
     public XYBoxAndWhiskerRenderer(double boxWidth) {
         super();
         this.boxWidth = boxWidth;
-        this.boxPaint = Color.green;
+        this.boxPaint = Color.GREEN;
         this.fillBox = true;
         setBaseToolTipGenerator(new BoxAndWhiskerXYToolTipGenerator());
     }

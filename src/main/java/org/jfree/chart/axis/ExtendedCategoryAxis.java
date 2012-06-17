@@ -90,7 +90,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
         super(label);
         this.sublabels = new HashMap();
         this.sublabelFont = new Font("SansSerif", Font.PLAIN, 10);
-        this.sublabelPaint = Color.black;
+        this.sublabelPaint = Color.BLACK;
     }
 
     /**

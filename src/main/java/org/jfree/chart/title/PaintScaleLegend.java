@@ -142,9 +142,9 @@ public class PaintScaleLegend extends Title implements AxisChangeListener,
         this.axis.setRange(scale.getLowerBound(), scale.getUpperBound());
         this.stripWidth = 15.0;
         this.stripOutlineVisible = true;
-        this.stripOutlinePaint = Color.gray;
+        this.stripOutlinePaint = Color.GRAY;
         this.stripOutlineStroke = new BasicStroke(0.5f);
-        this.backgroundPaint = Color.white;
+        this.backgroundPaint = Color.WHITE;
         this.subdivisions = 100;
     }
 

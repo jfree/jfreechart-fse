@@ -101,23 +101,23 @@ public class AboutPanel extends JPanel {
 
         final JPanel appPanel = new JPanel();
         final Font f1 = new Font("Dialog", Font.BOLD, 14);
-        final JLabel appLabel = RefineryUtilities.createJLabel(application, f1, Color.black);
+        final JLabel appLabel = RefineryUtilities.createJLabel(application, f1, Color.BLACK);
         appLabel.setHorizontalTextPosition(SwingConstants.CENTER);
         appPanel.add(appLabel);
 
         final JPanel verPanel = new JPanel();
         final Font f2 = new Font("Dialog", Font.PLAIN, 12);
-        final JLabel verLabel = RefineryUtilities.createJLabel(version, f2, Color.black);
+        final JLabel verLabel = RefineryUtilities.createJLabel(version, f2, Color.BLACK);
         verLabel.setHorizontalTextPosition(SwingConstants.CENTER);
         verPanel.add(verLabel);
 
         final JPanel copyrightPanel = new JPanel();
-        final JLabel copyrightLabel = RefineryUtilities.createJLabel(copyright, f2, Color.black);
+        final JLabel copyrightLabel = RefineryUtilities.createJLabel(copyright, f2, Color.BLACK);
         copyrightLabel.setHorizontalTextPosition(SwingConstants.CENTER);
         copyrightPanel.add(copyrightLabel);
 
         final JPanel infoPanel = new JPanel();
-        final JLabel infoLabel = RefineryUtilities.createJLabel(info, f2, Color.black);
+        final JLabel infoLabel = RefineryUtilities.createJLabel(info, f2, Color.BLACK);
         infoLabel.setHorizontalTextPosition(SwingConstants.CENTER);
         infoPanel.add(infoLabel);
 
@@ -131,7 +131,7 @@ public class AboutPanel extends JPanel {
         if (logo != null) {
             final JPanel imagePanel = new JPanel(new BorderLayout());
             imagePanel.add(new javax.swing.JLabel(new javax.swing.ImageIcon(logo)));
-            imagePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+            imagePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             final JPanel imageContainer = new JPanel(new BorderLayout());
             imageContainer.add(imagePanel, BorderLayout.NORTH);
             add(imageContainer, BorderLayout.WEST);

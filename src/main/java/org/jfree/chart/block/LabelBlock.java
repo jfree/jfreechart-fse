@@ -102,7 +102,7 @@ public class LabelBlock extends AbstractBlock
     private String urlText;
 
     /** The default color. */
-    public static final Paint DEFAULT_PAINT = Color.black;
+    public static final Paint DEFAULT_PAINT = Color.BLACK;
 
     /** The paint. */
     private transient Paint paint;

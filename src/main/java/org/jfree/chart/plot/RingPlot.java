@@ -134,7 +134,7 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
         super(dataset);
         this.separatorsVisible = true;
         this.separatorStroke = new BasicStroke(0.5f);
-        this.separatorPaint = Color.gray;
+        this.separatorPaint = Color.GRAY;
         this.innerSeparatorExtension = 0.20;  // twenty percent
         this.outerSeparatorExtension = 0.20;  // twenty percent
         this.sectionDepth = 0.20; // 20%

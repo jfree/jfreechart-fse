@@ -738,7 +738,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         this.ownToolTipReshowDelay = ttm.getReshowDelay();
 
         this.zoomAroundAnchor = false;
-        this.zoomOutlinePaint = Color.blue;
+        this.zoomOutlinePaint = Color.BLUE;
         this.zoomFillPaint = new Color(0, 0, 255, 63);
 
         this.panMask = InputEvent.CTRL_MASK;
@@ -2619,7 +2619,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         if (this.zoomRectangle != null) {
             if (xor) {
                  // Set XOR mode to draw the zoom rectangle
-                g2.setXORMode(Color.gray);
+                g2.setXORMode(Color.GRAY);
             }
             if (this.fillZoomRectangle) {
                 g2.setPaint(this.zoomFillPaint);
@@ -2647,7 +2647,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
         Rectangle2D dataArea = getScreenDataArea();
 
-        g2.setXORMode(Color.orange);
+        g2.setXORMode(Color.ORANGE);
         if (((int) dataArea.getMinX() < x) && (x < (int) dataArea.getMaxX())) {
 
             if (this.verticalTraceLine != null) {
@@ -2677,7 +2677,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
         Rectangle2D dataArea = getScreenDataArea();
 
-        g2.setXORMode(Color.orange);
+        g2.setXORMode(Color.ORANGE);
         if (((int) dataArea.getMinY() < y) && (y < (int) dataArea.getMaxY())) {
 
             if (this.horizontalTraceLine != null) {

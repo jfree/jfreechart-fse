@@ -191,7 +191,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      * Default constructor.
      */
     public BoxAndWhiskerRenderer() {
-        this.artifactPaint = Color.black;
+        this.artifactPaint = Color.BLACK;
         this.fillBox = true;
         this.itemMargin = 0.20;
         this.maximumBarWidth = 1.0;

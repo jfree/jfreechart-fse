@@ -81,7 +81,7 @@ public class IntervalMarker extends Marker implements Cloneable, Serializable {
      * @param end  the end of the interval.
      */
     public IntervalMarker(double start, double end) {
-        this(start, end, Color.gray, new BasicStroke(0.5f), Color.gray,
+        this(start, end, Color.GRAY, new BasicStroke(0.5f), Color.GRAY,
                 new BasicStroke(0.5f), 0.8f);
     }
 

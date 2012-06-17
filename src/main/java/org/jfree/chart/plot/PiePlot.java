@@ -276,14 +276,14 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             Font.PLAIN, 10);
 
     /** The default section label paint. */
-    public static final Paint DEFAULT_LABEL_PAINT = Color.black;
+    public static final Paint DEFAULT_LABEL_PAINT = Color.BLACK;
 
     /** The default section label background paint. */
     public static final Paint DEFAULT_LABEL_BACKGROUND_PAINT = new Color(255,
             255, 192);
 
     /** The default section label outline paint. */
-    public static final Paint DEFAULT_LABEL_OUTLINE_PAINT = Color.black;
+    public static final Paint DEFAULT_LABEL_OUTLINE_PAINT = Color.BLACK;
 
     /** The default section label outline stroke. */
     public static final Stroke DEFAULT_LABEL_OUTLINE_STROKE = new BasicStroke(
@@ -366,7 +366,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
     private boolean autoPopulateSectionOutlineStroke;
 
     /** The shadow paint. */
-    private transient Paint shadowPaint = Color.gray;
+    private transient Paint shadowPaint = Color.GRAY;
 
     /** The x-offset for the shadow effect. */
     private double shadowXOffset = 4.0f;
@@ -455,7 +455,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
     private double labelLinkMargin = 0.025;
 
     /** The paint used for the label linking lines. */
-    private transient Paint labelLinkPaint = Color.black;
+    private transient Paint labelLinkPaint = Color.BLACK;
 
     /** The stroke used for the label linking lines. */
     private transient Stroke labelLinkStroke = new BasicStroke(0.5f);
@@ -572,7 +572,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
 
         this.sectionPaint = null;
         this.sectionPaintMap = new PaintMap();
-        this.baseSectionPaint = Color.gray;
+        this.baseSectionPaint = Color.GRAY;
         this.autoPopulateSectionPaint = true;
 
         this.sectionOutlinesVisible = true;
@@ -1058,7 +1058,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
 
     /**
      * Returns the base section paint.  This is used when no other paint is
-     * defined, which is rare.  The default value is <code>Color.gray</code>.
+     * defined, which is rare.  The default value is <code>Color.GRAY</code>.
      *
      * @return The paint (never <code>null</code>).
      *
@@ -2508,7 +2508,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             double igx2 = plotArea.getMaxX() - hGap;
             double igy1 = plotArea.getY() + vGap;
             double igy2 = plotArea.getMaxY() - vGap;
-            g2.setPaint(Color.gray);
+            g2.setPaint(Color.GRAY);
             g2.draw(new Rectangle2D.Double(igx1, igy1, igx2 - igx1,
                     igy2 - igy1));
         }
@@ -2534,9 +2534,9 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         state.setLinkArea(linkArea);
 
         if (DEBUG_DRAW_LINK_AREA) {
-            g2.setPaint(Color.blue);
+            g2.setPaint(Color.BLUE);
             g2.draw(linkArea);
-            g2.setPaint(Color.yellow);
+            g2.setPaint(Color.YELLOW);
             g2.draw(new Ellipse2D.Double(linkArea.getX(), linkArea.getY(),
                     linkArea.getWidth(), linkArea.getHeight()));
         }
@@ -2568,7 +2568,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
                 explodeArea.getWidth() - h1, explodeArea.getHeight() - v1);
 
         if (DEBUG_DRAW_PIE_AREA) {
-            g2.setPaint(Color.green);
+            g2.setPaint(Color.GREEN);
             g2.draw(pieArea);
         }
         state.setPieArea(pieArea);
@@ -3047,7 +3047,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
                             toolTipText, urlText, true, shape, true, paint,
                             true, outlinePaint, outlineStroke,
                             false,          // line not visible
-                            new Line2D.Float(), new BasicStroke(), Color.black);
+                            new Line2D.Float(), new BasicStroke(), Color.BLACK);
                     item.setDataset(getDataset());
                     item.setSeriesIndex(this.dataset.getIndex(key));
                     item.setSeriesKey(key);

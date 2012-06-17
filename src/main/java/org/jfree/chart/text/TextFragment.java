@@ -81,7 +81,7 @@ public class TextFragment implements Serializable {
     public static final Font DEFAULT_FONT = new Font("Serif", Font.PLAIN, 12);
     
     /** The default text color. */
-    public static final Paint DEFAULT_PAINT = Color.black;
+    public static final Paint DEFAULT_PAINT = Color.BLACK;
     
     /** The text. */
     private String text;

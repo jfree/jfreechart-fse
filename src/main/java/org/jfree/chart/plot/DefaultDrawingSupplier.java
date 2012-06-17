@@ -85,11 +85,11 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
 
     /** The default outline paint sequence. */
     public static final Paint[] DEFAULT_OUTLINE_PAINT_SEQUENCE = new Paint[] {
-            Color.lightGray};
+            Color.LIGHT_GRAY};
 
     /** The default fill paint sequence. */
     public static final Paint[] DEFAULT_FILL_PAINT_SEQUENCE = new Paint[] {
-            Color.white};
+            Color.WHITE};
 
     /** The default stroke sequence. */
     public static final Stroke[] DEFAULT_STROKE_SEQUENCE = new Stroke[] {

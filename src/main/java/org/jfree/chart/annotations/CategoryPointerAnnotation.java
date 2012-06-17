@@ -156,7 +156,7 @@ public class CategoryPointerAnnotation extends CategoryTextAnnotation
         this.arrowWidth = DEFAULT_ARROW_WIDTH;
         this.labelOffset = DEFAULT_LABEL_OFFSET;
         this.arrowStroke = new BasicStroke(1.0f);
-        this.arrowPaint = Color.black;
+        this.arrowPaint = Color.BLACK;
 
     }
 

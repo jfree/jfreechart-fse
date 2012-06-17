@@ -102,7 +102,7 @@ public class StandardDialRange extends AbstractDialLayer implements DialLayer,
      * Creates a new instance of <code>StandardDialRange</code>.
      */
     public StandardDialRange() {
-        this(0.0, 100.0, Color.white);
+        this(0.0, 100.0, Color.WHITE);
     }
 
     /**

@@ -133,7 +133,7 @@ public class CyclicNumberAxis extends NumberAxis {
     public static Stroke DEFAULT_ADVANCE_LINE_STROKE = new BasicStroke(1.0f);
 
     /** The default axis line paint. */
-    public static final Paint DEFAULT_ADVANCE_LINE_PAINT = Color.gray;
+    public static final Paint DEFAULT_ADVANCE_LINE_PAINT = Color.GRAY;
 
     /** The offset. */
     protected double offset;

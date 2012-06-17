@@ -98,7 +98,7 @@ public class XYTextAnnotation extends AbstractXYAnnotation
             10);
 
     /** The default paint. */
-    public static final Paint DEFAULT_PAINT = Color.black;
+    public static final Paint DEFAULT_PAINT = Color.BLACK;
 
     /** The default text anchor. */
     public static final TextAnchor DEFAULT_TEXT_ANCHOR = TextAnchor.CENTER;
@@ -187,7 +187,7 @@ public class XYTextAnnotation extends AbstractXYAnnotation
         // by default the outline and background won't be visible
         this.backgroundPaint = null;
         this.outlineVisible = false;
-        this.outlinePaint = Color.black;
+        this.outlinePaint = Color.BLACK;
         this.outlineStroke = new BasicStroke(0.5f);
     }
 

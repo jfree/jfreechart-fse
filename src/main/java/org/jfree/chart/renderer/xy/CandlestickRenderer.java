@@ -240,9 +240,9 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
         setBaseToolTipGenerator(toolTipGenerator);
         this.candleWidth = candleWidth;
         this.drawVolume = drawVolume;
-        this.volumePaint = Color.gray;
-        this.upPaint = Color.green;
-        this.downPaint = Color.red;
+        this.volumePaint = Color.GRAY;
+        this.upPaint = Color.GREEN;
+        this.downPaint = Color.RED;
         this.useOutlinePaint = false;  // false preserves the old behaviour
                                        // prior to introducing this flag
     }

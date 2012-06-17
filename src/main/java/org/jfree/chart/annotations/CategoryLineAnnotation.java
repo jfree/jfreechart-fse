@@ -94,7 +94,7 @@ public class CategoryLineAnnotation extends AbstractAnnotation
     private double value2;
 
     /** The line color. */
-    private transient Paint paint = Color.black;
+    private transient Paint paint = Color.BLACK;
 
     /** The line stroke. */
     private transient Stroke stroke = new BasicStroke(1.0f);

@@ -116,8 +116,8 @@ public class GanttRenderer extends IntervalBarRenderer
     public GanttRenderer() {
         super();
         setIncludeBaseInRange(false);
-        this.completePaint = Color.green;
-        this.incompletePaint = Color.red;
+        this.completePaint = Color.GREEN;
+        this.incompletePaint = Color.RED;
         this.startPercent = 0.35;
         this.endPercent = 0.65;
     }

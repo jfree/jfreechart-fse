@@ -107,7 +107,7 @@ public class DialTextAnnotation extends AbstractDialLayer implements DialLayer,
         this.angle = -90.0;
         this.radius = 0.3;
         this.font = new Font("Dialog", Font.BOLD, 14);
-        this.paint = Color.black;
+        this.paint = Color.BLACK;
         this.label = label;
         this.anchor = TextAnchor.TOP_CENTER;
     }

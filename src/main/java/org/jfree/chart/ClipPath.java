@@ -142,8 +142,8 @@ public class ClipPath implements Cloneable {
         this.fillPath = fillPath;
         this.drawPath = drawPath;
 
-        this.fillPaint = java.awt.Color.gray;
-        this.drawPaint = java.awt.Color.blue;
+        this.fillPaint = java.awt.Color.GRAY;
+        this.drawPaint = java.awt.Color.BLUE;
         this.drawStroke = new BasicStroke(1);
         this.composite = java.awt.AlphaComposite.Src;
     }

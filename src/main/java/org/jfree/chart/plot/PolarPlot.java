@@ -153,7 +153,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
             0.0f, new float[]{2.0f, 2.0f}, 0.0f);
 
     /** The default grid line paint. */
-    public static final Paint DEFAULT_GRIDLINE_PAINT = Color.gray;
+    public static final Paint DEFAULT_GRIDLINE_PAINT = Color.GRAY;
 
     /** The resourceBundle for the localization. */
     protected static ResourceBundle localizationResources
@@ -204,7 +204,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
     private Font angleLabelFont = new Font("SansSerif", Font.PLAIN, 12);
 
     /** The paint used to display the angle labels. */
-    private transient Paint angleLabelPaint = Color.black;
+    private transient Paint angleLabelPaint = Color.BLACK;
 
     /** A flag that controls whether the angular grid-lines are visible. */
     private boolean angleGridlinesVisible;
@@ -1441,7 +1441,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
             return;
         }
 
-        g2.setColor(Color.black);
+        g2.setColor(Color.BLACK);
         double width = 0.0;
         double height = 0.0;
         for (Iterator it = this.cornerTextItems.iterator(); it.hasNext();) {

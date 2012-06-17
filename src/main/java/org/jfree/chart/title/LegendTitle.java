@@ -118,7 +118,7 @@ public class LegendTitle extends Title
             = new Font("SansSerif", Font.PLAIN, 12);
 
     /** The default item paint. */
-    public static final Paint DEFAULT_ITEM_PAINT = Color.black;
+    public static final Paint DEFAULT_ITEM_PAINT = Color.BLACK;
 
     /** The sources for legend items. */
     private LegendItemSource[] sources;

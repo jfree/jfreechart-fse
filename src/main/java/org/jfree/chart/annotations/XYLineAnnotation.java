@@ -114,7 +114,7 @@ public class XYLineAnnotation extends AbstractXYAnnotation
      * @param y2  the y-coordinate for the end of the line.
      */
     public XYLineAnnotation(double x1, double y1, double x2, double y2) {
-        this(x1, y1, x2, y2, new BasicStroke(1.0f), Color.black);
+        this(x1, y1, x2, y2, new BasicStroke(1.0f), Color.BLACK);
     }
 
     /**

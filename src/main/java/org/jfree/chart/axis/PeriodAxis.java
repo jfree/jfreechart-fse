@@ -172,7 +172,7 @@ public class PeriodAxis extends ValueAxis
     private transient Stroke minorTickMarkStroke = new BasicStroke(0.5f);
 
     /** The paint used to draw tick marks. */
-    private transient Paint minorTickMarkPaint = Color.black;
+    private transient Paint minorTickMarkPaint = Color.BLACK;
 
     /** Info for each labelling band. */
     private PeriodAxisLabelInfo[] labelInfo;

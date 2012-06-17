@@ -84,10 +84,10 @@ public class DialBackground extends AbstractDialLayer implements DialLayer,
 
     /**
      * Creates a new instance of <code>DialBackground</code>.  The
-     * default background paint is <code>Color.white</code>.
+     * default background paint is <code>Color.WHITE</code>.
      */
     public DialBackground() {
-        this(Color.white);
+        this(Color.WHITE);
     }
 
     /**

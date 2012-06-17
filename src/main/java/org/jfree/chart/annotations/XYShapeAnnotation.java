@@ -110,7 +110,7 @@ public class XYShapeAnnotation extends AbstractXYAnnotation
      *     not permitted).
      */
     public XYShapeAnnotation(Shape shape) {
-        this(shape, new BasicStroke(1.0f), Color.black);
+        this(shape, new BasicStroke(1.0f), Color.BLACK);
     }
 
     /**

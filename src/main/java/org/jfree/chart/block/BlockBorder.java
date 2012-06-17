@@ -69,7 +69,7 @@ public class BlockBorder implements BlockFrame, Serializable {
 
     /** An empty border. */
     public static final BlockBorder NONE = new BlockBorder(
-            RectangleInsets.ZERO_INSETS, Color.white);
+            RectangleInsets.ZERO_INSETS, Color.WHITE);
 
     /** The space reserved for the border. */
     private RectangleInsets insets;
@@ -81,7 +81,7 @@ public class BlockBorder implements BlockFrame, Serializable {
      * Creates a default border.
      */
     public BlockBorder() {
-        this(Color.black);
+        this(Color.BLACK);
     }
 
     /**
@@ -102,7 +102,7 @@ public class BlockBorder implements BlockFrame, Serializable {
      * @param right  the width of the right border.
      */
     public BlockBorder(double top, double left, double bottom, double right) {
-        this(new RectangleInsets(top, left, bottom, right), Color.black);
+        this(new RectangleInsets(top, left, bottom, right), Color.BLACK);
     }
 
     /**

@@ -126,7 +126,7 @@ public class StatisticalBarRenderer extends BarRenderer
      */
     public StatisticalBarRenderer() {
         super();
-        this.errorIndicatorPaint = Color.gray;
+        this.errorIndicatorPaint = Color.GRAY;
         this.errorIndicatorStroke = new BasicStroke(1.0f);
     }
 

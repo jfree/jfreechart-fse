@@ -157,7 +157,7 @@ public class BarChartDemo1 extends ApplicationFrame {
         // NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
 
         // set the background color for the chart...
-        chart.setBackgroundPaint(Color.white);
+        chart.setBackgroundPaint(Color.WHITE);
 
         // get a reference to the plot for further customisation...
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
@@ -179,11 +179,11 @@ public class BarChartDemo1 extends ApplicationFrame {
         renderer.setDrawBarOutline(false);
 
         // set up gradient paints for series...
-        GradientPaint gp0 = new GradientPaint(0.0f, 0.0f, Color.blue,
+        GradientPaint gp0 = new GradientPaint(0.0f, 0.0f, Color.BLUE,
                 0.0f, 0.0f, new Color(0, 0, 64));
-        GradientPaint gp1 = new GradientPaint(0.0f, 0.0f, Color.green,
+        GradientPaint gp1 = new GradientPaint(0.0f, 0.0f, Color.GREEN,
                 0.0f, 0.0f, new Color(0, 64, 0));
-        GradientPaint gp2 = new GradientPaint(0.0f, 0.0f, Color.red,
+        GradientPaint gp2 = new GradientPaint(0.0f, 0.0f, Color.RED,
                 0.0f, 0.0f, new Color(64, 0, 0));
         renderer.setSeriesPaint(0, gp0);
         renderer.setSeriesPaint(1, gp1);
