@@ -1,10 +1,10 @@
-/* ========================================================================
- * JCommon : a free general purpose class library for the Java(tm) platform
- * ========================================================================
+/* ===========================================================
+ * JFreeChart : a free chart library for the Java(tm) platform
+ * ===========================================================
  *
- * (C) Copyright 2000-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
- * Project Info:  http://www.jfree.org/jcommon/index.html
+ * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -21,18 +21,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
  * StrokeChooserPanel.java
  * -----------------------
- * (C) Copyright 2000-2009, by Object Refinery Limited.
+ * (C) Copyright 2000-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Dirk Zeitz;
- *
- * $Id: StrokeChooserPanel.java,v 1.8 2009/02/27 13:58:41 mungady Exp $
  *
  * Changes (from 26-Oct-2001)
  * --------------------------
@@ -40,10 +38,11 @@
  * 14-Oct-2002 : Fixed errors reported by Checkstyle (DG);
  * 16-Mar-2004 : Fix for focus problems (DZ);
  * 27-Feb-2009 : Fixed bug 2612649, NullPointerException (DG);
+ * 17-Jun-2012 : Moved from JCommon to JFreeChart (DG);
  *
  */
 
-package org.jfree.ui;
+package org.jfree.chart.common.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Stroke;
@@ -57,8 +56,6 @@ import javax.swing.JPanel;
 /**
  * A component for choosing a stroke from a list of available strokes.  This
  * class needs work.
- *
- * @author David Gilbert
  */
 public class StrokeChooserPanel extends JPanel {
 
