@@ -94,7 +94,7 @@
  * 19-Mar-2009 : Added entity support - see patch 2603321 by Peter Kolb (DG);
  * 16-Apr-2009 : Added tick mark drawing (DG);
  * 29-Jun-2009 : Fixed bug where axis entity is hiding label entities (DG);
- * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies, deprecated method (DG);
  * 
  */
 
@@ -941,34 +941,6 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         state = drawLabel(getLabel(), g2, plotArea, dataArea, edge, state);
         return state;
 
-    }
-
-    /**
-     * Draws the category labels and returns the updated axis state.
-     *
-     * @param g2  the graphics device (<code>null</code> not permitted).
-     * @param dataArea  the area inside the axes (<code>null</code> not
-     *                  permitted).
-     * @param edge  the axis location (<code>null</code> not permitted).
-     * @param state  the axis state (<code>null</code> not permitted).
-     * @param plotState  collects information about the plot (<code>null</code>
-     *                   permitted).
-     *
-     * @return The updated axis state (never <code>null</code>).
-     *
-     * @deprecated Use {@link #drawCategoryLabels(Graphics2D, Rectangle2D,
-     *     Rectangle2D, RectangleEdge, AxisState, PlotRenderingInfo)}.
-     */
-    protected AxisState drawCategoryLabels(Graphics2D g2,
-                                           Rectangle2D dataArea,
-                                           RectangleEdge edge,
-                                           AxisState state,
-                                           PlotRenderingInfo plotState) {
-
-        // this method is deprecated because we really need the plotArea
-        // when drawing the labels - see bug 1277726
-        return drawCategoryLabels(g2, dataArea, dataArea, edge, state,
-                plotState);
     }
 
     /**
