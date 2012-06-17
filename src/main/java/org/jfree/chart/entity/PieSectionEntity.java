@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * PieSectionEntity.java
  * ---------------------
- * (C) Copyright 2002-2008, by Object Refinery Limited.
+ * (C) Copyright 2002-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Richard Atkinson;
@@ -49,6 +49,7 @@
  * 30-Jul-2003 : Added PieDataset reference (CZ);
  * 11-Jan-2005 : Removed deprecated code in preparation for 1.0.0 release (DG);
  * 13-Nov-2007 : Implemented equals() and hashCode() (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -58,8 +59,8 @@ import java.awt.Shape;
 import java.io.Serializable;
 
 import org.jfree.chart.HashUtilities;
+import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.data.general.PieDataset;
-import org.jfree.util.ObjectUtilities;
 
 /**
  * A chart entity that represents one section within a pie plot.

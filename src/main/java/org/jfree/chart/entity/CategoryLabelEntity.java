@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------------
  * CategoryLabelEntity.java
  * ------------------------
- * (C) Copyright 2006-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2006-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -36,6 +36,7 @@
  * --------
  * 02-Oct-2006 : Version 1 (DG);
  * 13-Nov-2007 : Added equals() and hashCode() methods (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -45,7 +46,7 @@ import java.awt.Shape;
 
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.util.ObjectUtilities;
+import org.jfree.chart.common.util.ObjectUtilities;
 
 /**
  * An entity to represent the labels on a {@link CategoryAxis}.

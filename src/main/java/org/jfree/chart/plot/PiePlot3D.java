@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------
  * PiePlot3D.java
  * --------------
- * (C) Copyright 2000-2009, by Object Refinery and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery and Contributors.
  *
  * Original Author:  Tomer Peretz;
  * Contributor(s):   Richard Atkinson;
@@ -83,6 +83,7 @@
  * 10-Jul-2009 : Added drop shaow support (DG);
  * 10-Oct-2011 : Localization fix: bug #3353913 (MH);
  * 18-Oct-2011 : Fix tooltip offset with shadow generator (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  * 
  */
 
@@ -96,7 +97,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.Polygon;
-import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Arc2D;
@@ -110,13 +110,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jfree.chart.common.ui.RectangleInsets;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.PieSectionEntity;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.labels.PieToolTipGenerator;
 import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.general.PieDataset;
-import org.jfree.ui.RectangleInsets;
 
 /**
  * A plot that displays data in the form of a 3D pie chart, using data from
