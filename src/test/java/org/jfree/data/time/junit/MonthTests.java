@@ -141,8 +141,9 @@ public class MonthTests extends TestCase {
     public void testDateConstructor1() {
 
         TimeZone zone = TimeZone.getTimeZone("GMT");
-        Month m1 = new Month(new Date(951868799999L), zone);
-        Month m2 = new Month(new Date(951868800000L), zone);
+        Locale locale = Locale.UK;
+        Month m1 = new Month(new Date(951868799999L), zone, locale);
+        Month m2 = new Month(new Date(951868800000L), zone, locale);
 
         assertEquals(MonthConstants.FEBRUARY, m1.getMonth());
         assertEquals(951868799999L, m1.getLastMillisecond(zone));
@@ -159,8 +160,8 @@ public class MonthTests extends TestCase {
     public void testDateConstructor2() {
 
         TimeZone zone = TimeZone.getTimeZone("Pacific/Auckland");
-        Month m1 = new Month(new Date(951821999999L), zone);
-        Month m2 = new Month(new Date(951822000000L), zone);
+        Month m1 = new Month(new Date(951821999999L), zone, Locale.UK);
+        Month m2 = new Month(new Date(951822000000L), zone, Locale.UK);
 
         assertEquals(MonthConstants.FEBRUARY, m1.getMonth());
         assertEquals(951821999999L, m1.getLastMillisecond(zone));

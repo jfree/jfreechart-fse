@@ -294,7 +294,7 @@ public class WeekTests extends TestCase {
         Locale.setDefault(Locale.UK);
         try {
             Week w = new Week(new Date(1136109830000l),
-                    TimeZone.getTimeZone("GMT"));
+                    TimeZone.getTimeZone("GMT"), Locale.UK);
             assertEquals(2005, w.getYearValue());
             assertEquals(52, w.getWeek());
         }
@@ -313,7 +313,7 @@ public class WeekTests extends TestCase {
             TimeZone zone = TimeZone.getTimeZone("GMT");
             GregorianCalendar gc = new GregorianCalendar(zone);
             gc.set(2005, Calendar.JANUARY, 1, 12, 0, 0);
-            Week w = new Week(gc.getTime(), zone);
+            Week w = new Week(gc.getTime(), zone, Locale.UK);
             assertEquals(53, w.getWeek());
             assertEquals(new Year(2004), w.getYear());
         }
@@ -508,7 +508,7 @@ public class WeekTests extends TestCase {
         cal.set(2007, Calendar.AUGUST, 26, 1, 0, 0);
         cal.set(Calendar.MILLISECOND, 0);
         Date t = cal.getTime();
-        Week w = new Week(t, TimeZone.getTimeZone("Europe/Copenhagen"));
+        Week w = new Week(t, TimeZone.getTimeZone("Europe/Copenhagen"), Locale.getDefault());
         assertEquals(34, w.getWeek());
 
         Locale.setDefault(Locale.US);
@@ -520,7 +520,7 @@ public class WeekTests extends TestCase {
         cal.set(Calendar.MILLISECOND, 0);
 
         t = cal.getTime();
-        w = new Week(t, TimeZone.getTimeZone("Europe/Copenhagen"));
+        w = new Week(t, TimeZone.getTimeZone("Europe/Copenhagen"), Locale.getDefault());
         assertEquals(35, w.getWeek());
         w = new Week(t, TimeZone.getTimeZone("Europe/Copenhagen"),
                 new Locale("da", "DK"));

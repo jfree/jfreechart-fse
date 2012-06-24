@@ -244,20 +244,6 @@ public class LookupPaintScale
      * to but not including the next value in the table take on the specified
      * <code>paint</code>.
      *
-     * @param value  the data value (<code>null</code> not permitted).
-     * @param paint  the paint.
-     *
-     * @deprecated Use {@link #add(double, Paint)}.
-     */
-    public void add(Number value, Paint paint) {
-        add(value.doubleValue(), paint);
-    }
-
-    /**
-     * Adds an entry to the lookup table.  Any values from <code>n</code> up
-     * to but not including the next value in the table take on the specified
-     * <code>paint</code>.
-     *
      * @param value  the data value.
      * @param paint  the paint.
      *

@@ -136,8 +136,8 @@ public class QuarterTests extends TestCase {
     public void testDateConstructor1() {
 
         TimeZone zone = TimeZone.getTimeZone("GMT");
-        Quarter q1 = new Quarter(new Date(1017619199999L), zone);
-        Quarter q2 = new Quarter(new Date(1017619200000L), zone);
+        Quarter q1 = new Quarter(new Date(1017619199999L), zone, Locale.getDefault());
+        Quarter q2 = new Quarter(new Date(1017619200000L), zone, Locale.getDefault());
 
         assertEquals(1, q1.getQuarter());
         assertEquals(1017619199999L, q1.getLastMillisecond(zone));
@@ -154,8 +154,8 @@ public class QuarterTests extends TestCase {
     public void testDateConstructor2() {
 
         TimeZone zone = TimeZone.getTimeZone("Europe/Istanbul");
-        Quarter q1 = new Quarter(new Date(1017608399999L), zone);
-        Quarter q2 = new Quarter(new Date(1017608400000L), zone);
+        Quarter q1 = new Quarter(new Date(1017608399999L), zone, Locale.getDefault());
+        Quarter q2 = new Quarter(new Date(1017608400000L), zone, Locale.getDefault());
 
         assertEquals(1, q1.getQuarter());
         assertEquals(1017608399999L, q1.getLastMillisecond(zone));
