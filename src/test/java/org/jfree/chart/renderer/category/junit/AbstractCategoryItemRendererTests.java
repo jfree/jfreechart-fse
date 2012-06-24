@@ -87,11 +87,6 @@ public class AbstractCategoryItemRendererTests extends TestCase {
 
         // the plot field is NOT tested
 
-        // toolTipGenerator
-        r1.setToolTipGenerator(new StandardCategoryToolTipGenerator());
-        assertFalse(r1.equals(r2));
-        r2.setToolTipGenerator(new StandardCategoryToolTipGenerator());
-        assertTrue(r1.equals(r2));
 
         // toolTipGeneratorList
         r1.setSeriesToolTipGenerator(1, new StandardCategoryToolTipGenerator());
@@ -105,12 +100,6 @@ public class AbstractCategoryItemRendererTests extends TestCase {
         assertFalse(r1.equals(r2));
         r2.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator("{2}",
                 NumberFormat.getInstance()));
-        assertTrue(r1.equals(r2));
-
-        // itemLabelGenerator
-        r1.setItemLabelGenerator(new StandardCategoryItemLabelGenerator());
-        assertFalse(r1.equals(r2));
-        r2.setItemLabelGenerator(new StandardCategoryItemLabelGenerator());
         assertTrue(r1.equals(r2));
 
         // itemLabelGeneratorList
@@ -127,12 +116,6 @@ public class AbstractCategoryItemRendererTests extends TestCase {
         assertFalse(r1.equals(r2));
         r2.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator(
                 "{2}", NumberFormat.getInstance()));
-        assertTrue(r1.equals(r2));
-
-        // urlGenerator
-        r1.setItemURLGenerator(new StandardCategoryURLGenerator());
-        assertFalse(r1.equals(r2));
-        r2.setItemURLGenerator(new StandardCategoryURLGenerator());
         assertTrue(r1.equals(r2));
 
         // urlGeneratorList
@@ -179,19 +162,7 @@ public class AbstractCategoryItemRendererTests extends TestCase {
      */
     public void testCloning1() {
         AbstractCategoryItemRenderer r1 = new BarRenderer();
-        r1.setItemLabelGenerator(new StandardCategoryItemLabelGenerator());
         AbstractCategoryItemRenderer r2 = null;
-        try {
-            r2 = (BarRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
-
-        r1 = new BarRenderer();
         r1.setSeriesItemLabelGenerator(0,
                 new StandardCategoryItemLabelGenerator());
         r2 = null;
@@ -224,19 +195,7 @@ public class AbstractCategoryItemRendererTests extends TestCase {
      */
     public void testCloning2() {
         BarRenderer r1 = new BarRenderer();
-        r1.setItemLabelGenerator(new IntervalCategoryItemLabelGenerator());
         BarRenderer r2 = null;
-        try {
-            r2 = (BarRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
-
-        r1 = new BarRenderer();
         r1.setSeriesItemLabelGenerator(0,
                 new IntervalCategoryItemLabelGenerator());
         r2 = null;

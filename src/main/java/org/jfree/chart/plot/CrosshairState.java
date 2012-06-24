@@ -169,31 +169,6 @@ public class CrosshairState {
      *
      * @param x  x coordinate (measured against the domain axis).
      * @param y  y coordinate (measured against the range axis).
-     * @param transX  x translated into Java2D space.
-     * @param transY  y translated into Java2D space.
-     * @param orientation  the plot orientation.
-     *
-     * @deprecated Use {@link #updateCrosshairPoint(double, double, int, int,
-     *     double, double, PlotOrientation)}.  See bug report 1086307.
-     */
-    public void updateCrosshairPoint(double x, double y,
-                                     double transX, double transY,
-                                     PlotOrientation orientation) {
-        updateCrosshairPoint(x, y, 0, 0, transX, transY, orientation);
-    }
-
-    /**
-     * Evaluates a data point and if it is the closest to the anchor point it
-     * becomes the new crosshair point.
-     * <P>
-     * To understand this method, you need to know the context in which it will
-     * be called.  An instance of this class is passed to an
-     * {@link org.jfree.chart.renderer.xy.XYItemRenderer} as
-     * each data point is plotted.  As the point is plotted, it is passed to
-     * this method to see if it should be the new crosshair point.
-     *
-     * @param x  x coordinate (measured against the domain axis).
-     * @param y  y coordinate (measured against the range axis).
      * @param domainAxisIndex  the index of the domain axis for this point.
      * @param rangeAxisIndex  the index of the range axis for this point.
      * @param transX  x translated into Java2D space.
@@ -243,22 +218,6 @@ public class CrosshairState {
      *
      * @param candidateX  x position of the candidate for the new crosshair
      *                    point.
-     *
-     * @deprecated Use {@link #updateCrosshairX(double, int)}.  See bug report
-     *     1086307.
-     */
-    public void updateCrosshairX(double candidateX) {
-        updateCrosshairX(candidateX, 0);
-    }
-
-    /**
-     * Evaluates an x-value and if it is the closest to the anchor x-value it
-     * becomes the new crosshair value.
-     * <P>
-     * Used in cases where only the x-axis is numerical.
-     *
-     * @param candidateX  x position of the candidate for the new crosshair
-     *                    point.
      * @param domainAxisIndex  the index of the domain axis for this x-value.
      *
      * @since 1.0.4
@@ -272,22 +231,6 @@ public class CrosshairState {
             this.distance = d;
         }
 
-    }
-
-    /**
-     * Evaluates a y-value and if it is the closest to the anchor y-value it
-     * becomes the new crosshair value.
-     * <P>
-     * Used in cases where only the y-axis is numerical.
-     *
-     * @param candidateY  y position of the candidate for the new crosshair
-     *                    point.
-     *
-     * @deprecated Use {@link #updateCrosshairY(double, int)}.  See bug report
-     *     1086307.
-     */
-    public void updateCrosshairY(double candidateY) {
-        updateCrosshairY(candidateY, 0);
     }
 
     /**

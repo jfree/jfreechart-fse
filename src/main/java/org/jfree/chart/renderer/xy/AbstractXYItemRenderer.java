@@ -238,9 +238,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     protected AbstractXYItemRenderer() {
         super();
-        this.itemLabelGenerator = null;
         this.itemLabelGeneratorList = new ObjectList();
-        this.toolTipGenerator = null;
         this.toolTipGeneratorList = new ObjectList();
         this.urlGenerator = null;
         this.backgroundAnnotations = new java.util.ArrayList();
@@ -320,12 +318,6 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @return The generator (possibly <code>null</code>).
      */
     public XYItemLabelGenerator getItemLabelGenerator(int series, int item) {
-        // return the generator for ALL series, if there is one...
-        if (this.itemLabelGenerator != null) {
-            return this.itemLabelGenerator;
-        }
-
-        // otherwise look up the generator table
         XYItemLabelGenerator generator
             = (XYItemLabelGenerator) this.itemLabelGeneratorList.get(series);
         if (generator == null) {
@@ -391,12 +383,6 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @return The generator (possibly <code>null</code>).
      */
     public XYToolTipGenerator getToolTipGenerator(int series, int item) {
-        // return the generator for ALL series, if there is one...
-        if (this.toolTipGenerator != null) {
-            return this.toolTipGenerator;
-        }
-
-        // otherwise look up the generator table
         XYToolTipGenerator generator
                 = (XYToolTipGenerator) this.toolTipGeneratorList.get(series);
         if (generator == null) {
@@ -1463,11 +1449,6 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         AbstractXYItemRenderer clone = (AbstractXYItemRenderer) super.clone();
         // 'plot' : just retain reference, not a deep copy
 
-        if (this.itemLabelGenerator != null
-                && this.itemLabelGenerator instanceof PublicCloneable) {
-            PublicCloneable pc = (PublicCloneable) this.itemLabelGenerator;
-            clone.itemLabelGenerator = (XYItemLabelGenerator) pc.clone();
-        }
         clone.itemLabelGeneratorList
                 = (ObjectList) this.itemLabelGeneratorList.clone();
         if (this.baseItemLabelGenerator != null
@@ -1476,11 +1457,6 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             clone.baseItemLabelGenerator = (XYItemLabelGenerator) pc.clone();
         }
 
-        if (this.toolTipGenerator != null
-                && this.toolTipGenerator instanceof PublicCloneable) {
-            PublicCloneable pc = (PublicCloneable) this.toolTipGenerator;
-            clone.toolTipGenerator = (XYToolTipGenerator) pc.clone();
-        }
         clone.toolTipGeneratorList
                 = (ObjectList) this.toolTipGeneratorList.clone();
         if (this.baseToolTipGenerator != null
@@ -1517,6 +1493,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @return <code>true</code> or <code>false</code>.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -1525,19 +1502,11 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             return false;
         }
         AbstractXYItemRenderer that = (AbstractXYItemRenderer) obj;
-        if (!ObjectUtilities.equal(this.itemLabelGenerator,
-                that.itemLabelGenerator)) {
-            return false;
-        }
         if (!this.itemLabelGeneratorList.equals(that.itemLabelGeneratorList)) {
             return false;
         }
         if (!ObjectUtilities.equal(this.baseItemLabelGenerator,
                 that.baseItemLabelGenerator)) {
-            return false;
-        }
-        if (!ObjectUtilities.equal(this.toolTipGenerator,
-                that.toolTipGenerator)) {
             return false;
         }
         if (!this.toolTipGeneratorList.equals(that.toolTipGeneratorList)) {
@@ -1809,117 +1778,5 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     protected static void lineTo(GeneralPath hotspot, double x, double y) {
         hotspot.lineTo((float) x, (float) y);
     }
-
-    // === DEPRECATED CODE ===
-
-    /**
-     * The item label generator for ALL series.
-     *
-     * @deprecated This field is redundant, use itemLabelGeneratorList and
-     *     baseItemLabelGenerator instead.  Deprecated as of version 1.0.6.
-     */
-    private XYItemLabelGenerator itemLabelGenerator;
-
-    /**
-     * The tool tip generator for ALL series.
-     *
-     * @deprecated This field is redundant, use tooltipGeneratorList and
-     *     baseToolTipGenerator instead.  Deprecated as of version 1.0.6.
-     */
-    private XYToolTipGenerator toolTipGenerator;
-
-    /**
-     * Returns the item label generator override.
-     *
-     * @return The generator (possibly <code>null</code>).
-     *
-     * @since 1.0.5
-     *
-     * @see #setItemLabelGenerator(XYItemLabelGenerator)
-     *
-     * @deprecated As of version 1.0.6, this override setting should not be
-     *     used.  You can use the base setting instead
-     *     ({@link #getBaseItemLabelGenerator()}).
-     */
-    public XYItemLabelGenerator getItemLabelGenerator() {
-        return this.itemLabelGenerator;
-    }
-
-    /**
-     * Sets the item label generator for ALL series and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param generator  the generator (<code>null</code> permitted).
-     *
-     * @see #getItemLabelGenerator()
-     *
-     * @deprecated As of version 1.0.6, this override setting should not be
-     *     used.  You can use the base setting instead
-     *     ({@link #setBaseItemLabelGenerator(XYItemLabelGenerator)}).
-     */
-    public void setItemLabelGenerator(XYItemLabelGenerator generator) {
-        this.itemLabelGenerator = generator;
-        fireChangeEvent();
-    }
-
-    /**
-     * Returns the override tool tip generator.
-     *
-     * @return The tool tip generator (possible <code>null</code>).
-     *
-     * @since 1.0.5
-     *
-     * @see #setToolTipGenerator(XYToolTipGenerator)
-     *
-     * @deprecated As of version 1.0.6, this override setting should not be
-     *     used.  You can use the base setting instead
-     *     ({@link #getBaseToolTipGenerator()}).
-     */
-    public XYToolTipGenerator getToolTipGenerator() {
-        return this.toolTipGenerator;
-    }
-
-    /**
-     * Sets the tool tip generator for ALL series and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param generator  the generator (<code>null</code> permitted).
-     *
-     * @see #getToolTipGenerator()
-     *
-     * @deprecated As of version 1.0.6, this override setting should not be
-     *     used.  You can use the base setting instead
-     *     ({@link #setBaseToolTipGenerator(XYToolTipGenerator)}).
-     */
-    public void setToolTipGenerator(XYToolTipGenerator generator) {
-        this.toolTipGenerator = generator;
-        fireChangeEvent();
-    }
-
-    /**
-     * Considers the current (x, y) coordinate and updates the crosshair point
-     * if it meets the criteria (usually means the (x, y) coordinate is the
-     * closest to the anchor point so far).
-     *
-     * @param crosshairState  the crosshair state (<code>null</code> permitted,
-     *                        but the method does nothing in that case).
-     * @param x  the x-value (in data space).
-     * @param y  the y-value (in data space).
-     * @param transX  the x-value translated to Java2D space.
-     * @param transY  the y-value translated to Java2D space.
-     * @param orientation  the plot orientation (<code>null</code> not
-     *                     permitted).
-     *
-     * @deprecated Use {@link #updateCrosshairValues(CrosshairState, double,
-     *         double, int, int, double, double, PlotOrientation)} -- see bug
-     *         report 1086307.
-     */
-    protected void updateCrosshairValues(CrosshairState crosshairState,
-            double x, double y, double transX, double transY,
-            PlotOrientation orientation) {
-        updateCrosshairValues(crosshairState, x, y, 0, 0, transX, transY,
-                orientation);
-    }
-
 
 }

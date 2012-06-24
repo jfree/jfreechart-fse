@@ -744,6 +744,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
      *
      * @return The renderer state.
      */
+    @Override
     public CategoryItemRendererState initialise(Graphics2D g2,
                                                 Rectangle2D dataArea,
                                                 CategoryPlot plot,
@@ -836,7 +837,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
                                     int row,
                                     int column) {
         // calculate bar width...
-        double space = 0.0;
+        double space;
         if (orientation == PlotOrientation.HORIZONTAL) {
             space = dataArea.getHeight();
         }
@@ -900,6 +901,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
      * @return The range (or <code>null</code> if the dataset is
      *         <code>null</code> or empty).
      */
+    @Override
     public Range findRangeBounds(CategoryDataset dataset,
             boolean includeInterval) {
         if (dataset == null) {
@@ -922,6 +924,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
      *
      * @return The legend item (possibly <code>null</code>).
      */
+    @Override
     public LegendItem getLegendItem(int datasetIndex, int series) {
 
         CategoryPlot cp = getPlot();
@@ -1059,7 +1062,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
         }
 
         // draw the bar...
-        Rectangle2D bar = null;
+        Rectangle2D bar;
         if (orientation == PlotOrientation.HORIZONTAL) {
             bar = new Rectangle2D.Double(barL0 - barL0Adj, barW0,
                     barLength + barLengthAdj, state.getBarWidth());
@@ -1148,7 +1151,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
         g2.setPaint(paint);
 
         // find out where to place the label...
-        ItemLabelPosition position = null;
+        ItemLabelPosition position;
         if (!negative) {
             position = getPositiveItemLabelPosition(row, column);
         }
@@ -1333,6 +1336,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
      *
      * @return A boolean.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;

@@ -67,7 +67,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import org.jfree.chart.axis.Axis;
-import org.jfree.chart.axis.ColorBar;
 import org.jfree.chart.common.ui.LCBLayout;
 import org.jfree.chart.common.ui.PaintSample;
 import org.jfree.chart.common.ui.RectangleInsets;
@@ -75,7 +74,6 @@ import org.jfree.chart.common.ui.StrokeChooserPanel;
 import org.jfree.chart.common.ui.StrokeSample;
 import org.jfree.chart.common.util.BooleanUtilities;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.ContourPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PolarPlot;
@@ -114,12 +112,6 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
      * A panel used to display/edit the properties of the range axis (if any).
      */
     private DefaultAxisEditor rangeAxisPropertyPanel;
-
-    /**
-     * A panel used to display/edit the properties of the colorbar axis (if
-     * any).
-     */
-    private DefaultColorBarEditor colorBarAxisPropertyPanel;
 
     /** An array of stroke samples to choose from. */
     private StrokeSample[] availableStrokeSamples;
@@ -361,22 +353,6 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
             tabs.add(localizationResources.getString("Range_Axis"),
                     this.rangeAxisPropertyPanel);
         }
-
-//dmo: added this panel for colorbar control. (start dmo additions)
-        ColorBar colorBar = null;
-        if (plot instanceof ContourPlot) {
-            colorBar = ((ContourPlot) plot).getColorBar();
-        }
-
-        this.colorBarAxisPropertyPanel = DefaultColorBarEditor.getInstance(
-                colorBar);
-        if (this.colorBarAxisPropertyPanel != null) {
-            this.colorBarAxisPropertyPanel.setBorder(
-                    BorderFactory.createEmptyBorder(2, 2, 2, 2));
-            tabs.add(localizationResources.getString("Color_Bar"),
-                    this.colorBarAxisPropertyPanel);
-        }
-//dmo: (end dmo additions)
 
         return tabs;
     }
@@ -657,19 +633,6 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
                 }
             }
         }
-
-//dmo: added this panel for colorbar control. (start dmo additions)
-        if (this.colorBarAxisPropertyPanel != null) {
-            ColorBar colorBar = null;
-            if (plot instanceof  ContourPlot) {
-                ContourPlot p = (ContourPlot) plot;
-                colorBar = p.getColorBar();
-            }
-            if (colorBar != null) {
-                this.colorBarAxisPropertyPanel.setAxisProperties(colorBar);
-            }
-        }
-//dmo: (end dmo additions)
 
     }
 

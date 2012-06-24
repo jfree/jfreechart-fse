@@ -108,9 +108,9 @@ public class CompositeTitleTests extends TestCase {
         assertTrue(t1.equals(t2));
 
         // border
-        t1.setBorder(new BlockBorder(Color.red));
+        t1.setFrame(new BlockBorder(Color.red));
         assertFalse(t1.equals(t2));
-        t2.setBorder(new BlockBorder(Color.red));
+        t2.setFrame(new BlockBorder(Color.red));
         assertTrue(t1.equals(t2));
 
         // padding

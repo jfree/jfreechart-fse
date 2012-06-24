@@ -75,7 +75,6 @@ public class AxisPackageTests extends TestCase {
         suite.addTestSuite(CategoryLabelPositionsTests.class);
         suite.addTestSuite(CategoryLabelWidthTypeTests.class);
         suite.addTestSuite(CategoryTickTests.class);
-        suite.addTestSuite(ColorBarTests.class);
         suite.addTestSuite(CyclicNumberAxisTests.class);
         suite.addTestSuite(DateAxisTests.class);
         suite.addTestSuite(DateTickTests.class);
