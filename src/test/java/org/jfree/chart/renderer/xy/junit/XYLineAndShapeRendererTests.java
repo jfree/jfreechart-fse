@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------------------
  * XYLineAndShapeRendererTests.java
  * --------------------------------
- * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -104,11 +104,6 @@ public class XYLineAndShapeRendererTests extends TestCase {
         assertEquals(r1, r2);
         assertEquals(r2, r1);
 
-        r1.setLinesVisible(true);
-        assertFalse(r1.equals(r2));
-        r2.setLinesVisible(true);
-        assertTrue(r1.equals(r2));
-
         r1.setSeriesLinesVisible(3, true);
         assertFalse(r1.equals(r2));
         r2.setSeriesLinesVisible(3, true);
@@ -124,11 +119,6 @@ public class XYLineAndShapeRendererTests extends TestCase {
         r2.setLegendLine(new Line2D.Double(1.0, 2.0, 3.0, 4.0));
         assertTrue(r1.equals(r2));
 
-        r1.setShapesVisible(true);
-        assertFalse(r1.equals(r2));
-        r2.setShapesVisible(true);
-        assertTrue(r1.equals(r2));
-
         r1.setSeriesShapesVisible(3, true);
         assertFalse(r1.equals(r2));
         r2.setSeriesShapesVisible(3, true);
@@ -137,11 +127,6 @@ public class XYLineAndShapeRendererTests extends TestCase {
         r1.setBaseShapesVisible(false);
         assertFalse(r1.equals(r2));
         r2.setBaseShapesVisible(false);
-        assertTrue(r1.equals(r2));
-
-        r1.setShapesFilled(true);
-        assertFalse(r1.equals(r2));
-        r2.setShapesFilled(true);
         assertTrue(r1.equals(r2));
 
         r1.setSeriesShapesFilled(3, true);
