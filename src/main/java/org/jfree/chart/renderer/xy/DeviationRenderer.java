@@ -165,6 +165,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
      *
      * @param flag  ignored.
      */
+    @Override
     public void setDrawSeriesLineAsPath(boolean flag) {
         // ignore
     }
@@ -178,6 +179,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
      * @return The range (<code>null</code> if the dataset is <code>null</code>
      *         or empty).
      */
+    @Override
     public Range findRangeBounds(XYDataset dataset) {
         return findRangeBounds(dataset, true);
     }
@@ -194,6 +196,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
      *
      * @return A newly initialised state object.
      */
+    @Override
     public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
             XYPlot plot, XYDataset dataset, PlotRenderingInfo info) {
         State state = new State(info);
@@ -208,6 +211,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
      *
      * @return <code>3</code>.
      */
+    @Override
     public int getPassCount() {
         return 3;
     }
@@ -222,6 +226,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
      *
      * @see #isLinePass(int)
      */
+    @Override
     protected boolean isItemPass(int pass) {
         return (pass == 2);
     }
@@ -236,6 +241,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
      *
      * @see #isItemPass(int)
      */
+    @Override
     protected boolean isLinePass(int pass) {
         return (pass == 1);
     }
@@ -258,6 +264,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
      *                        (<code>null</code> permitted).
      * @param pass  the pass index.
      */
+    @Override
     public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
@@ -311,7 +318,9 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
                 g2.setComposite(AlphaComposite.getInstance(
                         AlphaComposite.SRC_OVER, this.alpha));
                 g2.setPaint(getItemFillPaint(series, item));
-                GeneralPath area = new GeneralPath();
+                GeneralPath area = new GeneralPath(GeneralPath.WIND_NON_ZERO,
+                        drState.lowerCoordinates.size() 
+                        + drState.upperCoordinates.size());
                 double[] coords = (double[]) drState.lowerCoordinates.get(0);
                 area.moveTo((float) coords[0], (float) coords[1]);
                 for (int i = 1; i < drState.lowerCoordinates.size(); i++) {
@@ -370,6 +379,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
      *
      * @return A boolean.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
