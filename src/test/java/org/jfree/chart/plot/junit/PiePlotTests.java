@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------
  * PiePlotTests.java
  * -----------------
- * (C) Copyright 2003-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -159,14 +159,6 @@ public class PiePlotTests extends TestCase {
         plot2.setIgnoreNullValues(true);
         assertTrue(plot1.equals(plot2));
 
-        // sectionPaint
-        plot1.setSectionPaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.white));
-        assertFalse(plot1.equals(plot2));
-        plot2.setSectionPaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.white));
-        assertTrue(plot1.equals(plot2));
-
         // sectionPaintMap
         plot1.setSectionPaint("A", new GradientPaint(1.0f, 2.0f, Color.blue,
                 3.0f, 4.0f, Color.white));
@@ -189,14 +181,6 @@ public class PiePlotTests extends TestCase {
         plot2.setSectionOutlinesVisible(false);
         assertTrue(plot1.equals(plot2));
 
-        // sectionOutlinePaint
-        plot1.setSectionOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.cyan,
-                3.0f, 4.0f, Color.white));
-        assertFalse(plot1.equals(plot2));
-        plot2.setSectionOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.cyan,
-                3.0f, 4.0f, Color.white));
-        assertTrue(plot1.equals(plot2));
-
         // sectionOutlinePaintList
         plot1.setSectionOutlinePaint("A", new GradientPaint(1.0f, 2.0f,
                 Color.green, 3.0f, 4.0f, Color.white));
@@ -211,12 +195,6 @@ public class PiePlotTests extends TestCase {
         assertFalse(plot1.equals(plot2));
         plot2.setBaseSectionOutlinePaint(new GradientPaint(1.0f, 2.0f,
                 Color.gray, 3.0f, 4.0f, Color.white));
-        assertTrue(plot1.equals(plot2));
-
-        // sectionOutlineStroke
-        plot1.setSectionOutlineStroke(new BasicStroke(1.0f));
-        assertFalse(plot1.equals(plot2));
-        plot2.setSectionOutlineStroke(new BasicStroke(1.0f));
         assertTrue(plot1.equals(plot2));
 
         // sectionOutlineStrokeList
@@ -455,15 +433,9 @@ public class PiePlotTests extends TestCase {
     /**
      * Some basic checks for the clone() method.
      */
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         PiePlot p1 = new PiePlot();
-        PiePlot p2 = null;
-        try {
-            p2 = (PiePlot) p1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        PiePlot p2 = (PiePlot) p1.clone();
         assertTrue(p1 != p2);
         assertTrue(p1.getClass() == p2.getClass());
         assertTrue(p1.equals(p2));
