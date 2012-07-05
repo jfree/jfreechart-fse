@@ -146,7 +146,7 @@ public class LevelRenderer extends AbstractCategoryItemRenderer
      * @see #setMaximumItemWidth(double)
      */
     public double getMaximumItemWidth() {
-        return getMaxItemWidth();
+        return this.maxItemWidth;
     }
 
     /**
@@ -159,7 +159,8 @@ public class LevelRenderer extends AbstractCategoryItemRenderer
      * @see #getMaximumItemWidth()
      */
     public void setMaximumItemWidth(double percent) {
-        setMaxItemWidth(percent);
+        this.maxItemWidth = percent;
+        fireChangeEvent();
     }
 
     /**
@@ -177,6 +178,7 @@ public class LevelRenderer extends AbstractCategoryItemRenderer
      *
      * @return The renderer state.
      */
+    @Override
     public CategoryItemRendererState initialise(Graphics2D g2,
             Rectangle2D dataArea, CategoryPlot plot, int rendererIndex,
             PlotRenderingInfo info) {
@@ -258,7 +260,7 @@ public class LevelRenderer extends AbstractCategoryItemRenderer
                                     int row,
                                     int column) {
         // calculate bar width...
-        double space = 0.0;
+        double space;
         if (orientation == PlotOrientation.HORIZONTAL) {
             space = dataArea.getHeight();
         }
@@ -330,8 +332,8 @@ public class LevelRenderer extends AbstractCategoryItemRenderer
 
         // draw the bar...
         Line2D line = null;
-        double x = 0.0;
-        double y = 0.0;
+        double x;
+        double y;
         if (orientation == PlotOrientation.HORIZONTAL) {
             x = barL;
             y = barW0 + state.getBarWidth() / 2.0;
@@ -405,6 +407,7 @@ public class LevelRenderer extends AbstractCategoryItemRenderer
      *
      * @since 1.0.11
      */
+    @Override
     public double getItemMiddle(Comparable rowKey, Comparable columnKey,
             CategoryDataset dataset, CategoryAxis axis, Rectangle2D area,
             RectangleEdge edge) {
@@ -419,6 +422,7 @@ public class LevelRenderer extends AbstractCategoryItemRenderer
      *
      * @return A boolean.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -441,37 +445,12 @@ public class LevelRenderer extends AbstractCategoryItemRenderer
      *
      * @return A hash code.
      */
+    @Override
     public int hashCode() {
         int hash = super.hashCode();
         hash = HashUtilities.hashCode(hash, this.itemMargin);
         hash = HashUtilities.hashCode(hash, this.maxItemWidth);
         return hash;
-    }
-
-    /**
-     * Returns the maximum width, as a percentage of the available drawing
-     * space.
-     *
-     * @return The maximum width.
-     *
-     * @deprecated Use {@link #getMaximumItemWidth()} instead.
-     */
-    public double getMaxItemWidth() {
-        return this.maxItemWidth;
-    }
-
-    /**
-     * Sets the maximum item width, which is specified as a percentage of the
-     * available space for all items, and sends a {@link RendererChangeEvent}
-     * to all registered listeners.
-     *
-     * @param percent  the percent.
-     *
-     * @deprecated Use {@link #setMaximumItemWidth(double)} instead.
-     */
-    public void setMaxItemWidth(double percent) {
-        this.maxItemWidth = percent;
-        fireChangeEvent();
     }
 
 }

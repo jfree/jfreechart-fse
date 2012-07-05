@@ -345,24 +345,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @param label  the axis label (<code>null</code> permitted).
      */
     public DateAxis(String label) {
-        this(label, TimeZone.getDefault());
-    }
-
-    /**
-     * Creates a date axis. A timeline is specified for the axis. This allows
-     * special transformations to occur between a domain of values and the
-     * values included in the axis.
-     *
-     * @see org.jfree.chart.axis.SegmentedTimeline
-     *
-     * @param label  the axis label (<code>null</code> permitted).
-     * @param zone  the time zone.
-     *
-     * @deprecated From 1.0.11 onwards, use {@link #DateAxis(String, TimeZone,
-     *         Locale)} instead, to explicitly set the locale.
-     */
-    public DateAxis(String label, TimeZone zone) {
-        this(label, zone, Locale.getDefault());
+        this(label, TimeZone.getDefault(), Locale.getDefault());
     }
 
     /**
@@ -530,6 +513,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      *
      * @param range  the new range (<code>null</code> not permitted).
      */
+    @Override
     public void setRange(Range range) {
         setRange(range, true, true);
     }
@@ -545,6 +529,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @param notify  a flag that controls whether or not listeners are
      *                notified.
      */
+    @Override
     public void setRange(Range range, boolean turnOffAutoRange,
                          boolean notify) {
         if (range == null) {
@@ -579,6 +564,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @param lower  the lower bound for the axis.
      * @param upper  the upper bound for the axis.
      */
+    @Override
     public void setRange(double lower, double upper) {
         if (lower >= upper) {
             throw new IllegalArgumentException("Requires 'lower' < 'upper'.");
@@ -595,7 +581,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @see #getMaximumDate()
      */
     public Date getMinimumDate() {
-        Date result = null;
+        Date result;
         Range range = getRange();
         if (range instanceof DateRange) {
             DateRange r = (DateRange) range;
@@ -645,7 +631,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @see #getMinimumDate()
      */
     public Date getMaximumDate() {
-        Date result = null;
+        Date result;
         Range range = getRange();
         if (range instanceof DateRange) {
             DateRange r = (DateRange) range;
@@ -1463,8 +1449,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             DateRange range = (DateRange) getRange();
             Date lower = range.getLowerDate();
             Date upper = range.getUpperDate();
-            String lowerStr = null;
-            String upperStr = null;
+            String lowerStr;
+            String upperStr;
             DateFormat formatter = getDateFormatOverride();
             if (formatter != null) {
                 lowerStr = formatter.format(lower);
@@ -1516,8 +1502,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             DateRange range = (DateRange) getRange();
             Date lower = range.getLowerDate();
             Date upper = range.getUpperDate();
-            String lowerStr = null;
-            String upperStr = null;
+            String lowerStr;
+            String upperStr;
             DateFormat formatter = getDateFormatOverride();
             if (formatter != null) {
                 lowerStr = formatter.format(lower);
@@ -1658,8 +1644,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                 else {
                     tickLabel = this.tickUnit.dateToString(tickDate);
                 }
-                TextAnchor anchor = null;
-                TextAnchor rotationAnchor = null;
+                TextAnchor anchor;
+                TextAnchor rotationAnchor;
                 double angle = 0.0;
                 if (isVerticalTickLabels()) {
                     anchor = TextAnchor.CENTER_RIGHT;
@@ -1776,8 +1762,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                 else {
                     tickLabel = this.tickUnit.dateToString(tickDate);
                 }
-                TextAnchor anchor = null;
-                TextAnchor rotationAnchor = null;
+                TextAnchor anchor;
+                TextAnchor rotationAnchor;
                 double angle = 0.0;
                 if (isVerticalTickLabels()) {
                     anchor = TextAnchor.BOTTOM_CENTER;
@@ -1878,6 +1864,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @param lowerPercent  the new lower bound.
      * @param upperPercent  the new upper bound.
      */
+    @Override
     public void zoomRange(double lowerPercent, double upperPercent) {
         double start = this.timeline.toTimelineValue(
             (long) getRange().getLowerBound()
@@ -1886,7 +1873,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                 (long) getRange().getUpperBound())
                 - this.timeline.toTimelineValue(
                     (long) getRange().getLowerBound()));
-        Range adjusted = null;
+        Range adjusted;
         if (isInverted()) {
             adjusted = new DateRange(this.timeline.toMillisecond((long) (start
                     + (length * (1 - upperPercent)))),
@@ -1909,6 +1896,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      *
      * @return A boolean.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -1939,6 +1927,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      *
      * @return A hash code.
      */
+    @Override
     public int hashCode() {
         if (getLabel() != null) {
             return getLabel().hashCode();
@@ -1956,6 +1945,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @throws CloneNotSupportedException if some component of the axis does
      *         not support cloning.
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         DateAxis clone = (DateAxis) super.clone();
         // 'dateTickUnit' is immutable : no need to clone

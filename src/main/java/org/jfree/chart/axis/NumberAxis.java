@@ -653,7 +653,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
             Rectangle2D dataArea, RectangleEdge edge,
             PlotRenderingInfo plotState) {
 
-        AxisState state = null;
+        AxisState state;
         // if the axis is not visible, don't draw it...
         if (!isVisible()) {
             state = new AxisState(cursor);
@@ -1009,8 +1009,8 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
             Range range = getRange();
             double lower = range.getLowerBound();
             double upper = range.getUpperBound();
-            String lowerStr = "";
-            String upperStr = "";
+            String lowerStr;
+            String upperStr;
             NumberFormat formatter = getNumberFormatOverride();
             if (formatter != null) {
                 lowerStr = formatter.format(lower);
@@ -1203,8 +1203,8 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
                 else {
                     tickLabel = getTickUnit().valueToString(currentTickValue);
                 }
-                TextAnchor anchor = null;
-                TextAnchor rotationAnchor = null;
+                TextAnchor anchor;
+                TextAnchor rotationAnchor;
                 double angle = 0.0;
                 if (isVerticalTickLabels()) {
                     anchor = TextAnchor.CENTER_RIGHT;
@@ -1301,8 +1301,8 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
                     tickLabel = getTickUnit().valueToString(currentTickValue);
                 }
 
-                TextAnchor anchor = null;
-                TextAnchor rotationAnchor = null;
+                TextAnchor anchor;
+                TextAnchor rotationAnchor;
                 double angle = 0.0;
                 if (isVerticalTickLabels()) {
                     if (edge == RectangleEdge.LEFT) {
@@ -1373,6 +1373,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      *
      * @return A boolean.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -1405,6 +1406,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      *
      * @return A hash code.
      */
+    @Override
     public int hashCode() {
         if (getLabel() != null) {
             return getLabel().hashCode();
