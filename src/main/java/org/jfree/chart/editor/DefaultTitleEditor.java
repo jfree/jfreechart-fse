@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * DefaultTitleEditor.java
  * -----------------------
- * (C) Copyright 2005-2008, by Object Refinery Limited.
+ * (C) Copyright 2005-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Arnaud Lelievre;
@@ -38,6 +38,7 @@
  * 24-Nov-2005 : Version 1, based on TitlePropertyEditPanel.java (DG);
  * 18-Dec-2008 : Use ResourceBundleWrapper - see patch 1607918 by
  *               Jess Thrysoee (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -61,13 +62,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.common.ui.FontChooserPanel;
+import org.jfree.chart.common.ui.FontDisplayField;
+import org.jfree.chart.common.ui.LCBLayout;
+import org.jfree.chart.common.ui.PaintSample;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.chart.title.Title;
 import org.jfree.chart.util.ResourceBundleWrapper;
-import org.jfree.chart.common.ui.LCBLayout;
-import org.jfree.ui.FontChooserPanel;
-import org.jfree.ui.FontDisplayField;
-import org.jfree.ui.PaintSample;
 
 /**
  * A panel for editing the properties of a chart title.
@@ -249,7 +250,7 @@ class DefaultTitleEditor extends JPanel implements ActionListener {
      */
     public void attemptPaintSelection() {
         Paint p = this.titlePaint.getPaint();
-        Color defaultColor = (p instanceof Color ? (Color) p : Color.blue);
+        Color defaultColor = (p instanceof Color ? (Color) p : Color.BLUE);
         Color c = JColorChooser.showDialog(
             this, localizationResources.getString("Title_Color"), defaultColor
         );

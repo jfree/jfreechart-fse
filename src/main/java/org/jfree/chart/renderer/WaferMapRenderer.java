@@ -302,7 +302,7 @@ public class WaferMapRenderer extends AbstractRenderer {
                     Shape shape = new Rectangle2D.Double(1d, 1d, 1d, 1d);
                     Paint paint = lookupSeriesPaint(
                             ((Integer) entry.getValue()).intValue());
-                    Paint outlinePaint = Color.black;
+                    Paint outlinePaint = Color.BLACK;
                     Stroke outlineStroke = DEFAULT_STROKE;
 
                     result.add(new LegendItem(label, description, null,
@@ -326,7 +326,7 @@ public class WaferMapRenderer extends AbstractRenderer {
                         Paint paint = getSeriesPaint(
                             ((Integer) entry.getValue()).intValue()
                         );
-                        Paint outlinePaint = Color.black;
+                        Paint outlinePaint = Color.BLACK;
                         Stroke outlineStroke = DEFAULT_STROKE;
 
                         result.add(new LegendItem(label, description,

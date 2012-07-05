@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------
  * XYPlotTests.java
  * ----------------
- * (C) Copyright 2003-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -46,6 +46,7 @@
  *               testRemoveRangeMarker() (DG);
  * 10-May-2009 : Extended testEquals(), added testCloning3() (DG);
  * 06-Jul-2009 : Added testBug2817504() (DG);
+ * 17-Jul-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -80,6 +81,9 @@ import org.jfree.chart.annotations.XYTextAnnotation;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.common.ui.Layer;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.date.MonthConstants;
 import org.jfree.chart.event.MarkerChangeListener;
 import org.jfree.chart.labels.StandardXYToolTipGenerator;
 import org.jfree.chart.plot.IntervalMarker;
@@ -101,9 +105,6 @@ import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.chart.date.MonthConstants;
-import org.jfree.ui.Layer;
-import org.jfree.ui.RectangleInsets;
 
 /**
  * Tests for the {@link XYPlot} class.
@@ -681,16 +682,6 @@ public class XYPlotTests extends TestCase {
         p2.mapDatasetToRangeAxis(2, 1);
         assertTrue(p1.equals(p2));
 
-        p1.getRenderer().setOutlinePaint(Color.cyan);
-        assertFalse(p1.equals(p2));
-        p2.getRenderer().setOutlinePaint(Color.cyan);
-        assertTrue(p1.equals(p2));
-
-        p1.getRenderer(1).setOutlinePaint(Color.red);
-        assertFalse(p1.equals(p2));
-        p2.getRenderer(1).setOutlinePaint(Color.red);
-        assertTrue(p1.equals(p2));
-
     }
 
     /**
@@ -984,7 +975,7 @@ public class XYPlotTests extends TestCase {
     private IntervalXYDataset createDataset1() {
 
         // create dataset 1...
-        TimeSeries series1 = new TimeSeries("Series 1", Day.class);
+        TimeSeries series1 = new TimeSeries("Series 1");
         series1.add(new Day(1, MonthConstants.MARCH, 2002), 12353.3);
         series1.add(new Day(2, MonthConstants.MARCH, 2002), 13734.4);
         series1.add(new Day(3, MonthConstants.MARCH, 2002), 14525.3);

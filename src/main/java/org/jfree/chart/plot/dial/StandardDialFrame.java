@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * StandardDialFrame.java
  * ----------------------
- * (C) Copyright 2006-2008, by Object Refinery Limited.
+ * (C) Copyright 2006-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -37,6 +37,7 @@
  * 03-Nov-2006 : Version 1 (DG);
  * 08-Mar-2007 : Fix in hashCode() (DG);
  * 29-Oct-2007 : Renamed StandardDialFrame (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -57,9 +58,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import org.jfree.chart.HashUtilities;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.PublicCloneable;
 
 /**
  * A simple circular frame for the {@link DialPlot} class.
@@ -97,8 +98,8 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame,
      * Creates a new instance of <code>StandardDialFrame</code>.
      */
     public StandardDialFrame() {
-        this.backgroundPaint = Color.gray;
-        this.foregroundPaint = Color.black;
+        this.backgroundPaint = Color.GRAY;
+        this.foregroundPaint = Color.BLACK;
         this.stroke = new BasicStroke(2.0f);
         this.radius = 0.95;
     }

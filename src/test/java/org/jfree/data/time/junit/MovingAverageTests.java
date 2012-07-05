@@ -45,10 +45,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.date.MonthConstants;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.MovingAverage;
 import org.jfree.data.time.TimeSeries;
-import org.jfree.chart.date.MonthConstants;
 
 /**
  * Tests for the {@link MovingAverage} class.
@@ -110,7 +110,7 @@ public class MovingAverageTests extends TestCase {
      */
     private TimeSeries createDailyTimeSeries1() {
 
-        TimeSeries series = new TimeSeries("Series 1", Day.class);
+        TimeSeries series = new TimeSeries("Series 1");
         series.add(new Day(11, MonthConstants.AUGUST, 2003), 11.2);
         series.add(new Day(13, MonthConstants.AUGUST, 2003), 13.8);
         series.add(new Day(17, MonthConstants.AUGUST, 2003), 14.1);

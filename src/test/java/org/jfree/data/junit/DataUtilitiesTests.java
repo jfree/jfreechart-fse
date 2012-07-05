@@ -45,8 +45,8 @@ package org.jfree.data.junit;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
-
 import junit.framework.TestSuite;
+
 import org.jfree.data.DataUtilities;
 import org.jfree.data.DefaultKeyedValues2D;
 

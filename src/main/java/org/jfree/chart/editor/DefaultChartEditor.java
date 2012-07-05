@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * DefaultChartEditor.java
  * -----------------------
- * (C) Copyright 2000-2008, by Object Refinery Limited.
+ * (C) Copyright 2000-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Arnaud Lelievre;
@@ -60,12 +60,12 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.common.ui.LCBLayout;
+import org.jfree.chart.common.ui.PaintSample;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PolarPlot;
 import org.jfree.chart.title.Title;
 import org.jfree.chart.util.ResourceBundleWrapper;
-import org.jfree.chart.common.ui.LCBLayout;
-import org.jfree.ui.PaintSample;
 
 /**
  * A panel for editing chart properties (includes subpanels for the title,
@@ -253,7 +253,7 @@ class DefaultChartEditor extends JPanel implements ActionListener, ChartEditor {
     private void attemptModifyBackgroundPaint() {
         Color c;
         c = JColorChooser.showDialog(this, localizationResources.getString(
-                "Background_Color"), Color.blue);
+                "Background_Color"), Color.BLUE);
         if (c != null) {
             this.background.setPaint(c);
         }

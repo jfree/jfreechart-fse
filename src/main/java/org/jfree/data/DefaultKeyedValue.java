@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * DefaultKeyedValue.java
  * ----------------------
- * (C) Copyright 2002-2008, by Object Refinery Limited.
+ * (C) Copyright 2002-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -43,6 +43,7 @@
  * 11-Jun-2007 : Added toString() method to help with debugging (DG);
  * 15-Feb-2008 : Prevent null key (DG);
  * 07-Apr-2008 : Removed to-do item (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -50,7 +51,7 @@ package org.jfree.data;
 
 import java.io.Serializable;
 
-import org.jfree.util.PublicCloneable;
+import org.jfree.chart.common.util.PublicCloneable;
 
 /**
  * A (key, value) pair.  This class provides a default implementation

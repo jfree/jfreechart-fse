@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------
  * CategoryLineAnnotation.java
  * ---------------------------
- * (C) Copyright 2005-2011, by Object Refinery Limited.
+ * (C) Copyright 2005-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Peter Kolb (patch 2809117);
@@ -39,6 +39,7 @@
  * 06-Mar-2007 : Reimplemented hashCode() (DG);
  * 23-Apr-2008 : Implemented PublicCloneable (DG);
  * 24-Jun-2009 : Now extends AbstractAnnotation (see patch 2809117 by PK) (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -59,16 +60,16 @@ import org.jfree.chart.HashUtilities;
 import org.jfree.chart.axis.CategoryAnchor;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.event.AnnotationChangeEvent;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.CategoryDataset;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.PublicCloneable;
+import org.jfree.data.category.CategoryDataset;
 
 /**
  * A line annotation that can be placed on a {@link CategoryPlot}.
@@ -93,7 +94,7 @@ public class CategoryLineAnnotation extends AbstractAnnotation
     private double value2;
 
     /** The line color. */
-    private transient Paint paint = Color.black;
+    private transient Paint paint = Color.BLACK;
 
     /** The line stroke. */
     private transient Stroke stroke = new BasicStroke(1.0f);

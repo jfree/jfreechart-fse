@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------
  * PolarPlot.java
  * --------------
- * (C) Copyright 2004-2011, by Solution Engineering, Inc. and Contributors.
+ * (C) Copyright 2004-2012, by Solution Engineering, Inc. and Contributors.
  *
  * Original Author:  Daniel Bridenbecker, Solution Engineering, Inc.;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -55,10 +55,12 @@
  * 03-Oct-2011 : Added support for angleOffset and direction (MH);
  * 12-Nov-2011 : Fixed bug 3432721, log-axis doesn't work (MH);
  * 12-Dec-2011 : Added support for radiusMinorGridilnesVisible (MH);
- *
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 
  */
 
 package org.jfree.chart.plot;
+
 
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
@@ -95,25 +97,25 @@ import org.jfree.chart.axis.TickType;
 import org.jfree.chart.axis.TickUnit;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.axis.ValueTick;
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.common.util.ObjectList;
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.event.RendererChangeListener;
 import org.jfree.chart.renderer.PolarItemRenderer;
+import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.util.ResourceBundleWrapper;
+import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.chart.text.TextUtilities;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.TextAnchor;
-import org.jfree.util.ObjectList;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.PublicCloneable;
 
 /**
  * Plots data that is in (theta, radius) pairs where
@@ -151,7 +153,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
             0.0f, new float[]{2.0f, 2.0f}, 0.0f);
 
     /** The default grid line paint. */
-    public static final Paint DEFAULT_GRIDLINE_PAINT = Color.gray;
+    public static final Paint DEFAULT_GRIDLINE_PAINT = Color.GRAY;
 
     /** The resourceBundle for the localization. */
     protected static ResourceBundle localizationResources
@@ -202,7 +204,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
     private Font angleLabelFont = new Font("SansSerif", Font.PLAIN, 12);
 
     /** The paint used to display the angle labels. */
-    private transient Paint angleLabelPaint = Color.black;
+    private transient Paint angleLabelPaint = Color.BLACK;
 
     /** A flag that controls whether the angular grid-lines are visible. */
     private boolean angleGridlinesVisible;
@@ -1439,7 +1441,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
             return;
         }
 
-        g2.setColor(Color.black);
+        g2.setColor(Color.BLACK);
         double width = 0.0;
         double height = 0.0;
         for (Iterator it = this.cornerTextItems.iterator(); it.hasNext();) {

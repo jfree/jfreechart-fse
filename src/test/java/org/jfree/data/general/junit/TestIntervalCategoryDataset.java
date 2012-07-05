@@ -43,12 +43,12 @@ package org.jfree.data.general.junit;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.data.KeyedObjects2D;
 import org.jfree.data.UnknownKeyException;
 import org.jfree.data.category.IntervalCategoryDataset;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DatasetChangeEvent;
-import org.jfree.util.PublicCloneable;
 /**
  * A test implementation of the {@link IntervalCategoryDataset} interface.
  */

@@ -129,8 +129,8 @@ public class YearTests extends TestCase {
         TimeZone zone = TimeZone.getTimeZone("GMT");
         Date d1 = new Date(1009843199999L);
         Date d2 = new Date(1009843200000L);
-        Year y1 = new Year(d1, zone);
-        Year y2 = new Year(d2, zone);
+        Year y1 = new Year(d1, zone, Locale.getDefault());
+        Year y2 = new Year(d2, zone, Locale.getDefault());
 
         assertEquals(2001, y1.getYear());
         assertEquals(1009843199999L, y1.getLastMillisecond(zone));
@@ -147,8 +147,8 @@ public class YearTests extends TestCase {
     public void testDateConstructor2() {
 
         TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
-        Year y1 = new Year(new Date(1009871999999L), zone);
-        Year y2 = new Year(new Date(1009872000000L), zone);
+        Year y1 = new Year(new Date(1009871999999L), zone, Locale.getDefault());
+        Year y2 = new Year(new Date(1009872000000L), zone, Locale.getDefault());
 
         assertEquals(2001, y1.getYear());
         assertEquals(1009871999999L, y1.getLastMillisecond(zone));

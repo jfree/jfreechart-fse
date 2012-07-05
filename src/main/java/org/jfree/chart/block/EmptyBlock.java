@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * EmptyBlock.java
  * ---------------
- * (C) Copyright 2004-2008, by Object Refinery Limited.
+ * (C) Copyright 2004-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -38,8 +38,8 @@
  * 04-Feb-2005 : Now cloneable and serializable (DG);
  * 20-Apr-2005 : Added new draw() method (DG);
  * 08-Apr-2008 : Added support for margin and border (DG);
- * 08-May-2008 : Updated arrange() method to recognise
- *               incoming constraint (DG);
+ * 08-May-2008 : Updated arrange() method to recognise incoming constraint (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -49,8 +49,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
-import org.jfree.ui.Size2D;
-import org.jfree.util.PublicCloneable;
+import org.jfree.chart.common.ui.Size2D;
+import org.jfree.chart.common.util.PublicCloneable;
 
 /**
  * An empty block with a fixed size.

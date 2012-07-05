@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------
  * Arrangement.java
  * ----------------
- * (C) Copyright 2004-2008, by Object Refinery Limited.
+ * (C) Copyright 2004-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -37,6 +37,7 @@
  * 22-Oct-2004 : Version 1 (DG);
  * 11-Feb-2005 : Modified arrange() method to return Size2D (DG);
  * 22-Apr-2005 : Reordered arguments in arrange() method (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -44,7 +45,7 @@ package org.jfree.chart.block;
 
 import java.awt.Graphics2D;
 
-import org.jfree.ui.Size2D;
+import org.jfree.chart.common.ui.Size2D;
 
 /**
  * An object that is responsible for arranging a collection of {@link Block}s

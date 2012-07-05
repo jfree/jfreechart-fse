@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * DeviationRenderer.java
  * ----------------------
- * (C) Copyright 2007-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2007-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -38,6 +38,7 @@
  * 04-May-2007 : Set processVisibleItemsOnly flag to false (DG);
  * 11-Apr-2008 : New override for findRangeBounds() (DG);
  * 27-Mar-2009 : Updated findRangeBounds() to call new inherited method (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  * 
  */
 
@@ -51,6 +52,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.ui.RectangleEdge;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CrosshairState;
@@ -58,10 +60,8 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.Range;
-import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.ui.RectangleEdge;
 
 /**
  * A specialised subclass of the {@link XYLineAndShapeRenderer} that requires
@@ -165,6 +165,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
      *
      * @param flag  ignored.
      */
+    @Override
     public void setDrawSeriesLineAsPath(boolean flag) {
         // ignore
     }
@@ -178,6 +179,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
      * @return The range (<code>null</code> if the dataset is <code>null</code>
      *         or empty).
      */
+    @Override
     public Range findRangeBounds(XYDataset dataset) {
         return findRangeBounds(dataset, true);
     }
@@ -194,6 +196,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
      *
      * @return A newly initialised state object.
      */
+    @Override
     public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
             XYPlot plot, XYDataset dataset, PlotRenderingInfo info) {
         State state = new State(info);
@@ -208,6 +211,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
      *
      * @return <code>3</code>.
      */
+    @Override
     public int getPassCount() {
         return 3;
     }
@@ -222,6 +226,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
      *
      * @see #isLinePass(int)
      */
+    @Override
     protected boolean isItemPass(int pass) {
         return (pass == 2);
     }
@@ -236,6 +241,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
      *
      * @see #isItemPass(int)
      */
+    @Override
     protected boolean isLinePass(int pass) {
         return (pass == 1);
     }
@@ -258,6 +264,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
      *                        (<code>null</code> permitted).
      * @param pass  the pass index.
      */
+    @Override
     public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
@@ -311,7 +318,9 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
                 g2.setComposite(AlphaComposite.getInstance(
                         AlphaComposite.SRC_OVER, this.alpha));
                 g2.setPaint(getItemFillPaint(series, item));
-                GeneralPath area = new GeneralPath();
+                GeneralPath area = new GeneralPath(GeneralPath.WIND_NON_ZERO,
+                        drState.lowerCoordinates.size() 
+                        + drState.upperCoordinates.size());
                 double[] coords = (double[]) drState.lowerCoordinates.get(0);
                 area.moveTo((float) coords[0], (float) coords[1]);
                 for (int i = 1; i < drState.lowerCoordinates.size(); i++) {
@@ -370,6 +379,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
      *
      * @return A boolean.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;

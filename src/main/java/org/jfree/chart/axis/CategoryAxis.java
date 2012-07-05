@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------
  * CategoryAxis.java
  * -----------------
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert;
  * Contributor(s):   Pady Srinivasan (patch 1217634);
@@ -94,6 +94,7 @@
  * 19-Mar-2009 : Added entity support - see patch 2603321 by Peter Kolb (DG);
  * 16-Apr-2009 : Added tick mark drawing (DG);
  * 29-Jun-2009 : Fixed bug where axis entity is hiding label entities (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies, deprecated method (DG);
  * 
  */
 
@@ -116,24 +117,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jfree.chart.common.ui.RectangleAnchor;
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.ui.Size2D;
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.ShapeUtilities;
 import org.jfree.chart.entity.CategoryLabelEntity;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.AxisChangeEvent;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.chart.util.SerialUtilities;
 import org.jfree.chart.text.G2TextMeasurer;
 import org.jfree.chart.text.TextBlock;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.ui.RectangleAnchor;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.Size2D;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.ShapeUtilities;
+import org.jfree.chart.util.SerialUtilities;
+import org.jfree.data.category.CategoryDataset;
 
 /**
  * An axis that displays categories.
@@ -946,34 +947,6 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      * Draws the category labels and returns the updated axis state.
      *
      * @param g2  the graphics device (<code>null</code> not permitted).
-     * @param dataArea  the area inside the axes (<code>null</code> not
-     *                  permitted).
-     * @param edge  the axis location (<code>null</code> not permitted).
-     * @param state  the axis state (<code>null</code> not permitted).
-     * @param plotState  collects information about the plot (<code>null</code>
-     *                   permitted).
-     *
-     * @return The updated axis state (never <code>null</code>).
-     *
-     * @deprecated Use {@link #drawCategoryLabels(Graphics2D, Rectangle2D,
-     *     Rectangle2D, RectangleEdge, AxisState, PlotRenderingInfo)}.
-     */
-    protected AxisState drawCategoryLabels(Graphics2D g2,
-                                           Rectangle2D dataArea,
-                                           RectangleEdge edge,
-                                           AxisState state,
-                                           PlotRenderingInfo plotState) {
-
-        // this method is deprecated because we really need the plotArea
-        // when drawing the labels - see bug 1277726
-        return drawCategoryLabels(g2, dataArea, dataArea, edge, state,
-                plotState);
-    }
-
-    /**
-     * Draws the category labels and returns the updated axis state.
-     *
-     * @param g2  the graphics device (<code>null</code> not permitted).
      * @param plotArea  the plot area (<code>null</code> not permitted).
      * @param dataArea  the area inside the axes (<code>null</code> not
      *                  permitted).
@@ -995,98 +968,99 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
             throw new IllegalArgumentException("Null 'state' argument.");
         }
 
-        if (isTickLabelsVisible()) {
-            List ticks = refreshTicks(g2, state, plotArea, edge);
-            state.setTicks(ticks);
+        if (!isTickLabelsVisible()) {
+        	return state;
+        }
+        List ticks = refreshTicks(g2, state, plotArea, edge);
+        state.setTicks(ticks);
 
-            int categoryIndex = 0;
-            Iterator iterator = ticks.iterator();
-            while (iterator.hasNext()) {
+        int categoryIndex = 0;
+        Iterator iterator = ticks.iterator();
+        while (iterator.hasNext()) {
 
-                CategoryTick tick = (CategoryTick) iterator.next();
-                g2.setFont(getTickLabelFont(tick.getCategory()));
-                g2.setPaint(getTickLabelPaint(tick.getCategory()));
+            CategoryTick tick = (CategoryTick) iterator.next();
+            g2.setFont(getTickLabelFont(tick.getCategory()));
+            g2.setPaint(getTickLabelPaint(tick.getCategory()));
 
-                CategoryLabelPosition position
-                        = this.categoryLabelPositions.getLabelPosition(edge);
-                double x0 = 0.0;
-                double x1 = 0.0;
-                double y0 = 0.0;
-                double y1 = 0.0;
-                if (edge == RectangleEdge.TOP) {
-                    x0 = getCategoryStart(categoryIndex, ticks.size(),
-                            dataArea, edge);
-                    x1 = getCategoryEnd(categoryIndex, ticks.size(), dataArea,
-                            edge);
-                    y1 = state.getCursor() - this.categoryLabelPositionOffset;
-                    y0 = y1 - state.getMax();
-                }
-                else if (edge == RectangleEdge.BOTTOM) {
-                    x0 = getCategoryStart(categoryIndex, ticks.size(),
-                            dataArea, edge);
-                    x1 = getCategoryEnd(categoryIndex, ticks.size(), dataArea,
-                            edge);
-                    y0 = state.getCursor() + this.categoryLabelPositionOffset;
-                    y1 = y0 + state.getMax();
-                }
-                else if (edge == RectangleEdge.LEFT) {
-                    y0 = getCategoryStart(categoryIndex, ticks.size(),
-                            dataArea, edge);
-                    y1 = getCategoryEnd(categoryIndex, ticks.size(), dataArea,
-                            edge);
-                    x1 = state.getCursor() - this.categoryLabelPositionOffset;
-                    x0 = x1 - state.getMax();
-                }
-                else if (edge == RectangleEdge.RIGHT) {
-                    y0 = getCategoryStart(categoryIndex, ticks.size(),
-                            dataArea, edge);
-                    y1 = getCategoryEnd(categoryIndex, ticks.size(), dataArea,
-                            edge);
-                    x0 = state.getCursor() + this.categoryLabelPositionOffset;
-                    x1 = x0 - state.getMax();
-                }
-                Rectangle2D area = new Rectangle2D.Double(x0, y0, (x1 - x0),
-                        (y1 - y0));
-                Point2D anchorPoint = RectangleAnchor.coordinates(area,
-                        position.getCategoryAnchor());
-                TextBlock block = tick.getLabel();
-                block.draw(g2, (float) anchorPoint.getX(),
-                        (float) anchorPoint.getY(), position.getLabelAnchor(),
-                        (float) anchorPoint.getX(), (float) anchorPoint.getY(),
-                        position.getAngle());
-                Shape bounds = block.calculateBounds(g2,
-                        (float) anchorPoint.getX(), (float) anchorPoint.getY(),
-                        position.getLabelAnchor(), (float) anchorPoint.getX(),
-                        (float) anchorPoint.getY(), position.getAngle());
-                if (plotState != null && plotState.getOwner() != null) {
-                    EntityCollection entities
-                            = plotState.getOwner().getEntityCollection();
-                    if (entities != null) {
-                        String tooltip = getCategoryLabelToolTip(
-                                tick.getCategory());
-                        entities.add(new CategoryLabelEntity(tick.getCategory(),
-                                bounds, tooltip, null));
-                    }
-                }
-                categoryIndex++;
+            CategoryLabelPosition position
+                    = this.categoryLabelPositions.getLabelPosition(edge);
+            double x0 = 0.0;
+            double x1 = 0.0;
+            double y0 = 0.0;
+            double y1 = 0.0;
+            if (edge == RectangleEdge.TOP) {
+                x0 = getCategoryStart(categoryIndex, ticks.size(), dataArea, 
+                        edge);
+                x1 = getCategoryEnd(categoryIndex, ticks.size(), dataArea, 
+                        edge);
+                y1 = state.getCursor() - this.categoryLabelPositionOffset;
+                y0 = y1 - state.getMax();
             }
-
-            if (edge.equals(RectangleEdge.TOP)) {
-                double h = state.getMax() + this.categoryLabelPositionOffset;
-                state.cursorUp(h);
-            }
-            else if (edge.equals(RectangleEdge.BOTTOM)) {
-                double h = state.getMax() + this.categoryLabelPositionOffset;
-                state.cursorDown(h);
+            else if (edge == RectangleEdge.BOTTOM) {
+                x0 = getCategoryStart(categoryIndex, ticks.size(), dataArea, 
+                        edge);
+                x1 = getCategoryEnd(categoryIndex, ticks.size(), dataArea,
+                        edge);
+                y0 = state.getCursor() + this.categoryLabelPositionOffset;
+                y1 = y0 + state.getMax();
             }
             else if (edge == RectangleEdge.LEFT) {
-                double w = state.getMax() + this.categoryLabelPositionOffset;
-                state.cursorLeft(w);
+                y0 = getCategoryStart(categoryIndex, ticks.size(), dataArea, 
+                        edge);
+                y1 = getCategoryEnd(categoryIndex, ticks.size(), dataArea,
+                        edge);
+                x1 = state.getCursor() - this.categoryLabelPositionOffset;
+                x0 = x1 - state.getMax();
             }
             else if (edge == RectangleEdge.RIGHT) {
-                double w = state.getMax() + this.categoryLabelPositionOffset;
-                state.cursorRight(w);
+                y0 = getCategoryStart(categoryIndex, ticks.size(), dataArea, 
+                        edge);
+                y1 = getCategoryEnd(categoryIndex, ticks.size(), dataArea,
+                        edge);
+                x0 = state.getCursor() + this.categoryLabelPositionOffset;
+                x1 = x0 - state.getMax();
             }
+            Rectangle2D area = new Rectangle2D.Double(x0, y0, (x1 - x0),
+                    (y1 - y0));
+            Point2D anchorPoint = RectangleAnchor.coordinates(area,
+                    position.getCategoryAnchor());
+            TextBlock block = tick.getLabel();
+            block.draw(g2, (float) anchorPoint.getX(),
+                    (float) anchorPoint.getY(), position.getLabelAnchor(),
+                    (float) anchorPoint.getX(), (float) anchorPoint.getY(),
+                    position.getAngle());
+            Shape bounds = block.calculateBounds(g2,
+                    (float) anchorPoint.getX(), (float) anchorPoint.getY(),
+                    position.getLabelAnchor(), (float) anchorPoint.getX(),
+                    (float) anchorPoint.getY(), position.getAngle());
+            if (plotState != null && plotState.getOwner() != null) {
+                EntityCollection entities
+                        = plotState.getOwner().getEntityCollection();
+                if (entities != null) {
+                    String tooltip = getCategoryLabelToolTip(
+                            tick.getCategory());
+                    entities.add(new CategoryLabelEntity(tick.getCategory(),
+                            bounds, tooltip, null));
+                }
+            }
+            categoryIndex++;
+        }
+
+        if (edge.equals(RectangleEdge.TOP)) {
+            double h = state.getMax() + this.categoryLabelPositionOffset;
+            state.cursorUp(h);
+        }
+        else if (edge.equals(RectangleEdge.BOTTOM)) {
+            double h = state.getMax() + this.categoryLabelPositionOffset;
+            state.cursorDown(h);
+        }
+        else if (edge == RectangleEdge.LEFT) {
+            double w = state.getMax() + this.categoryLabelPositionOffset;
+            state.cursorLeft(w);
+        }
+        else if (edge == RectangleEdge.RIGHT) {
+            double w = state.getMax() + this.categoryLabelPositionOffset;
+            state.cursorRight(w);
         }
         return state;
     }

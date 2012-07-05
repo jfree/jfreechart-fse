@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * LookupPaintScale.java
  * ---------------------
- * (C) Copyright 2006-2009, by Object Refinery Limited.
+ * (C) Copyright 2006-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -39,7 +39,7 @@
  * 09-Mar-2007 : Fixed cloning (DG);
  * 14-Jun-2007 : Use double primitive in PaintItem (DG);
  * 28-Mar-2009 : Made PaintItem inner class static (DG);
- *
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  */
 
 package org.jfree.chart.renderer;
@@ -53,9 +53,9 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.PublicCloneable;
 
 /**
  * A paint scale that uses a lookup table to associate paint instances
@@ -182,7 +182,7 @@ public class LookupPaintScale
      * Creates a new paint scale.
      */
     public LookupPaintScale() {
-        this(0.0, 1.0, Color.lightGray);
+        this(0.0, 1.0, Color.LIGHT_GRAY);
     }
 
     /**
@@ -237,20 +237,6 @@ public class LookupPaintScale
      */
     public double getUpperBound() {
         return this.upperBound;
-    }
-
-    /**
-     * Adds an entry to the lookup table.  Any values from <code>n</code> up
-     * to but not including the next value in the table take on the specified
-     * <code>paint</code>.
-     *
-     * @param value  the data value (<code>null</code> not permitted).
-     * @param paint  the paint.
-     *
-     * @deprecated Use {@link #add(double, Paint)}.
-     */
-    public void add(Number value, Paint paint) {
-        add(value.doubleValue(), paint);
     }
 
     /**

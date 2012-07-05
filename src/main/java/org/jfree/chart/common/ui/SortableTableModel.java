@@ -1,10 +1,10 @@
-/* ========================================================================
- * JCommon : a free general purpose class library for the Java(tm) platform
- * ========================================================================
+/* ===========================================================
+ * JFreeChart : a free chart library for the Java(tm) platform
+ * ===========================================================
  *
- * (C) Copyright 2000-2005, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
- * Project Info:  http://www.jfree.org/jcommon/index.html
+ * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -21,35 +21,32 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
  * SortableTableModel.java
  * -----------------------
- * (C) Copyright 2000-2005, by Object Refinery Limited;
+ * (C) Copyright 2000-2012, by Object Refinery Limited;
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
- *
- * $Id: SortableTableModel.java,v 1.6 2008/09/10 09:26:11 mungady Exp $
  *
  * Changes (from 26-Oct-2001)
  * --------------------------
  * 26-Oct-2001 : Changed package to com.jrefinery.ui.* (DG);
  * 20-Nov-2001 : Made constructor protected (DG);
  * 14-Oct-2002 : Fixed errors reported by Checkstyle (DG);
+ * 17-Jun-2012 : Moved from JCommon to JFreeChart (DG);
  *
  */
 
-package org.jfree.ui;
+package org.jfree.chart.common.ui;
 
 import javax.swing.table.AbstractTableModel;
 
 /**
  * The base class for a sortable table model.
- *
- * @author David Gilbert
  */
 public abstract class SortableTableModel extends AbstractTableModel {
 

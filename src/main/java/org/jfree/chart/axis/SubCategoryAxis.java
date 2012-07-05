@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * SubCategoryAxis.java
  * --------------------
- * (C) Copyright 2004-2008, by Object Refinery Limited.
+ * (C) Copyright 2004-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert;
  * Contributor(s):   Adriaan Joubert;
@@ -45,6 +45,7 @@
  *               addSubCategory() (DG);
  * 13-Nov-2008 : Fix NullPointerException when dataset is null - see bug
  *               report 2275695 (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -63,15 +64,15 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.ui.TextAnchor;
 import org.jfree.chart.event.AxisChangeEvent;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.chart.util.SerialUtilities;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.TextAnchor;
+import org.jfree.chart.util.SerialUtilities;
+import org.jfree.data.category.CategoryDataset;
 
 /**
  * A specialised category axis that can display sub-categories.
@@ -89,7 +90,7 @@ public class SubCategoryAxis extends CategoryAxis
     private Font subLabelFont = new Font("SansSerif", Font.PLAIN, 10);
 
     /** The paint for the sub-category labels. */
-    private transient Paint subLabelPaint = Color.black;
+    private transient Paint subLabelPaint = Color.BLACK;
 
     /**
      * Creates a new axis.

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -55,9 +55,9 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.ui.RectangleEdge;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYBlockRenderer;
-import org.jfree.ui.RectangleEdge;
 
 /**
  * This class would typically be used with a
@@ -142,8 +142,8 @@ public class ClipPath implements Cloneable {
         this.fillPath = fillPath;
         this.drawPath = drawPath;
 
-        this.fillPaint = java.awt.Color.gray;
-        this.drawPaint = java.awt.Color.blue;
+        this.fillPaint = java.awt.Color.GRAY;
+        this.drawPaint = java.awt.Color.BLUE;
         this.drawStroke = new BasicStroke(1);
         this.composite = java.awt.AlphaComposite.Src;
     }

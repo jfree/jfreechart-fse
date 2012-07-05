@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * XYAreaRenderer2.java
  * --------------------
- * (C) Copyright 2004-2011, by Hari and Contributors.
+ * (C) Copyright 2004-2012, by Hari and Contributors.
  *
  * Original Author:  Hari (ourhari@hotmail.com);
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -77,6 +77,7 @@
  * 18-May-2007 : Set dataset and seriesKey for LegendItem (DG);
  * 17-Jun-2008 : Apply legend font and paint attributes (DG);
  * 06-Oct-2011 : Avoid GeneralPath methods requiring Java 1.5 (MK);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -94,6 +95,8 @@ import java.io.ObjectOutputStream;
 
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.common.util.ShapeUtilities;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.XYItemEntity;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -104,10 +107,8 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.urls.XYURLGenerator;
-import org.jfree.data.xy.XYDataset;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.util.PublicCloneable;
-import org.jfree.util.ShapeUtilities;
+import org.jfree.data.xy.XYDataset;
 
 /**
  * Area item renderer for an {@link XYPlot}. The example shown here is
@@ -186,19 +187,6 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
     public void setOutline(boolean show) {
         this.showOutline = show;
         fireChangeEvent();
-    }
-
-    /**
-     * This method should not be used.
-     *
-     * @return <code>false</code> always.
-     *
-     * @deprecated This method was included in the API by mistake and serves
-     *     no useful purpose.  It has always returned <code>false</code>.
-     *
-     */
-    public boolean getPlotLines() {
-        return false;
     }
 
     /**

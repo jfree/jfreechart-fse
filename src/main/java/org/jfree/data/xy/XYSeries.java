@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------
  * XYSeries.java
  * -------------
- * (C) Copyright 2001-2011, Object Refinery Limited and Contributors.
+ * (C) Copyright 2001-2012, Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Aaron Metzger;
@@ -74,6 +74,7 @@
  * 06-Mar-2009 : Added minX, maxX, minY and maxY fields (DG);
  * 10-Jun-2009 : Make clones to isolate XYDataItem instances used
  *               for data storage (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  * 
  */
 
@@ -84,10 +85,10 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.data.general.Series;
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesException;
-import org.jfree.util.ObjectUtilities;
 
 /**
  * Represents a sequence of zero or more data items in the form (x, y).  By
@@ -653,38 +654,6 @@ public class XYSeries extends Series implements Cloneable, Serializable {
      */
     public Number getY(int index) {
         return getRawDataItem(index).getY();
-    }
-
-    /**
-     * Updates the value of an item in the series and sends a
-     * {@link SeriesChangeEvent} to all registered listeners.
-     *
-     * @param index  the item (zero based index).
-     * @param y  the new value (<code>null</code> permitted).
-     *
-     * @deprecated Renamed {@link #updateByIndex(int, Number)} to avoid
-     *         confusion with the {@link #update(Number, Number)} method.
-     */
-    public void update(int index, Number y) {
-        XYDataItem item = getRawDataItem(index);
-
-        // figure out if we need to iterate through all the y-values
-        boolean iterate = false;
-        double oldY = item.getYValue();
-        if (!Double.isNaN(oldY)) {
-            iterate = oldY <= this.minY || oldY >= this.maxY;
-        }
-        item.setY(y);
-
-        if (iterate) {
-            findBoundsByIteration();
-        }
-        else if (y != null) {
-            double yy = y.doubleValue();
-            this.minY = minIgnoreNaN(this.minY, yy);
-            this.maxY = maxIgnoreNaN(this.maxY, yy);
-        }
-        fireSeriesChanged();
     }
 
     /**

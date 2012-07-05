@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------
  * DialCap.java
  * ------------
- * (C) Copyright 2006-2008, by Object Refinery Limited.
+ * (C) Copyright 2006-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -36,6 +36,7 @@
  * -------
  * 03-Nov-2006 : Version 1 (DG);
  * 17-Oct-2007 : Updated equals() method (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -54,9 +55,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import org.jfree.chart.HashUtilities;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.PublicCloneable;
 
 /**
  * A regular dial layer that can be used to draw a cap over the center of
@@ -97,12 +98,12 @@ public class DialCap extends AbstractDialLayer implements DialLayer, Cloneable,
 
     /**
      * Creates a new instance of <code>StandardDialBackground</code>.  The
-     * default background paint is <code>Color.white</code>.
+     * default background paint is <code>Color.WHITE</code>.
      */
     public DialCap() {
         this.radius = 0.05;
-        this.fillPaint = Color.white;
-        this.outlinePaint = Color.black;
+        this.fillPaint = Color.WHITE;
+        this.outlinePaint = Color.BLACK;
         this.outlineStroke = new BasicStroke(2.0f);
     }
 

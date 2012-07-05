@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------
  * TextTitleTests.java
  * -------------------
- * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -38,6 +38,7 @@
  * 06-Jun-2005 : Use GradientPaint in equals() test (DG);
  * 07-Oct-2005 : Updated testEquals() (DG);
  * 28-Apr-2008 : Extended testEquals() (DG);
+ * 17-Jun-2012 : Remove JCommon dependencies (DG);
  *
  */
 
@@ -57,8 +58,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.common.ui.HorizontalAlignment;
 import org.jfree.chart.title.TextTitle;
-import org.jfree.ui.HorizontalAlignment;
 
 /**
  * Tests for the {@link TextTitle} class.

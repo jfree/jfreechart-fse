@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------------
  * CompositeTitleTests.java
  * ------------------------
- * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -36,6 +36,7 @@
  * -------
  * 04-Feb-2005 : Version 1 (DG);
  * 09-Jul-2008 : Added new field into testEquals() (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -56,9 +57,9 @@ import junit.framework.TestSuite;
 
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.block.BlockContainer;
+import org.jfree.chart.common.ui.RectangleInsets;
 import org.jfree.chart.title.CompositeTitle;
 import org.jfree.chart.title.TextTitle;
-import org.jfree.ui.RectangleInsets;
 
 /**
  * Tests for the {@link CompositeTitle} class.
@@ -107,9 +108,9 @@ public class CompositeTitleTests extends TestCase {
         assertTrue(t1.equals(t2));
 
         // border
-        t1.setBorder(new BlockBorder(Color.red));
+        t1.setFrame(new BlockBorder(Color.red));
         assertFalse(t1.equals(t2));
-        t2.setBorder(new BlockBorder(Color.red));
+        t2.setFrame(new BlockBorder(Color.red));
         assertTrue(t1.equals(t2));
 
         // padding

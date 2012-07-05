@@ -54,8 +54,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.renderer.xy.XYLine3DRenderer;
-import org.jfree.util.PublicCloneable;
 
 /**
  * Tests for the {@link XYLine3DRenderer} class.

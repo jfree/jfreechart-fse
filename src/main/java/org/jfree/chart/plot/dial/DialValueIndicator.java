@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * DialValueIndicator.java
  * -----------------------
- * (C) Copyright 2006-2009, by Object Refinery Limited.
+ * (C) Copyright 2006-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -38,6 +38,7 @@
  * 17-Oct-2007 : Updated equals() (DG);
  * 24-Oct-2007 : Added default constructor and missing event notification (DG);
  * 09-Jun-2009 : Improved indicator resizing, fixes bug 2802014 (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -62,15 +63,15 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import org.jfree.chart.HashUtilities;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.common.ui.RectangleAnchor;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.ui.Size2D;
+import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.ui.RectangleAnchor;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.Size2D;
-import org.jfree.ui.TextAnchor;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.PublicCloneable;
+import org.jfree.chart.util.SerialUtilities;
 
 /**
  * A value indicator for a {@link DialPlot}.
@@ -155,10 +156,10 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
         this.maxTemplateValue = null;
         this.formatter = new DecimalFormat("0.0");
         this.font = new Font("Dialog", Font.BOLD, 14);
-        this.paint = Color.black;
-        this.backgroundPaint = Color.white;
+        this.paint = Color.BLACK;
+        this.backgroundPaint = Color.WHITE;
         this.outlineStroke = new BasicStroke(1.0f);
-        this.outlinePaint = Color.blue;
+        this.outlinePaint = Color.BLUE;
         this.insets = new RectangleInsets(4, 4, 4, 4);
         this.valueAnchor = RectangleAnchor.RIGHT;
         this.textAnchor = TextAnchor.CENTER_RIGHT;

@@ -67,13 +67,13 @@ import junit.framework.TestSuite;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.common.util.Rotation;
+import org.jfree.chart.common.util.TableOrder;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
 import org.jfree.chart.plot.SpiderWebPlot;
 import org.jfree.chart.urls.StandardCategoryURLGenerator;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.util.Rotation;
-import org.jfree.util.TableOrder;
 
 /**
  * Tests for the {@link SpiderWebPlot} class.

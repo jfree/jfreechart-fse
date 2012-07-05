@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------
  * ShortTextTitle.java
  * -------------------
- * (C) Copyright 2008, by Object Refinery Limited.
+ * (C) Copyright 2008-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -35,6 +35,7 @@
  * Changes
  * -------
  * 28-Apr-2008 : Version 1 (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -46,10 +47,10 @@ import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.block.LengthConstraintType;
 import org.jfree.chart.block.RectangleConstraint;
-import org.jfree.data.Range;
+import org.jfree.chart.common.ui.Size2D;
+import org.jfree.chart.common.ui.TextAnchor;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.ui.Size2D;
-import org.jfree.ui.TextAnchor;
+import org.jfree.data.Range;
 
 /**
  * A text title that is only displayed if the entire text will be visible

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * ItemLabelPosition.java
  * ----------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -38,6 +38,7 @@
  * 19-Feb-2004 : Moved to org.jfree.chart.labels, updated Javadocs and argument
  *               checking (DG);
  * 26-Feb-2004 : Added new constructor (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -45,7 +46,7 @@ package org.jfree.chart.labels;
 
 import java.io.Serializable;
 
-import org.jfree.ui.TextAnchor;
+import org.jfree.chart.common.ui.TextAnchor;
 
 /**
  * The attributes that control the position of the label for each data item on

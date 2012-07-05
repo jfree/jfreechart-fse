@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------
  * Crosshair.java
  * --------------
- * (C) Copyright 2009, by Object Refinery Limited.
+ * (C) Copyright 2009-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -35,6 +35,7 @@
  * Changes:
  * --------
  * 13-Feb-2009 : Version 1 (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -51,13 +52,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+
 import org.jfree.chart.HashUtilities;
+import org.jfree.chart.common.ui.RectangleAnchor;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.labels.CrosshairLabelGenerator;
 import org.jfree.chart.labels.StandardCrosshairLabelGenerator;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.RectangleAnchor;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.PublicCloneable;
 
 /**
  * A crosshair for display on a plot.
@@ -142,7 +144,7 @@ public class Crosshair implements Cloneable, PublicCloneable, Serializable {
      * @param value  the value.
      */
     public Crosshair(double value) {
-       this(value, Color.black, new BasicStroke(1.0f));
+       this(value, Color.BLACK, new BasicStroke(1.0f));
     }
 
     /**
@@ -169,10 +171,10 @@ public class Crosshair implements Cloneable, PublicCloneable, Serializable {
         this.labelXOffset = 3.0;
         this.labelYOffset = 3.0;
         this.labelFont = new Font("Tahoma", Font.PLAIN, 12);
-        this.labelPaint = Color.black;
+        this.labelPaint = Color.BLACK;
         this.labelBackgroundPaint = new Color(0, 0, 255, 63);
         this.labelOutlineVisible = true;
-        this.labelOutlinePaint = Color.black;
+        this.labelOutlinePaint = Color.BLACK;
         this.labelOutlineStroke = new BasicStroke(0.5f);
         this.pcs = new PropertyChangeSupport(this);
     }

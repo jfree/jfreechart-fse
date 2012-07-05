@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -29,7 +29,7 @@
  * -----------------
  * A plot that displays a single value in a thermometer type display.
  *
- * (C) Copyright 2000-2008, Australian Antarctic Division and Contributors.
+ * (C) Copyright 2000-2012, Australian Antarctic Division and Contributors.
  *
  * Original Author:  Bryan Scott.
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -41,6 +41,7 @@
  * 18-Sep-2003 : Integrated new methods contributed by Irv Thomae (DG);
  * 08-Jan-2004 : Renamed AbstractTitle --> Title and moved to new package (DG);
  * 31-May-2005 : Fixed typo in method name (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -58,10 +59,10 @@ import javax.swing.JPanel;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.ui.RectangleInsets;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.chart.title.Title;
 import org.jfree.data.general.DefaultValueDataset;
-import org.jfree.ui.RectangleInsets;
 
 /**
  * An initial quick and dirty.  The concept behind this class would be to

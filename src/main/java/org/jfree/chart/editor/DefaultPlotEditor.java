@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * DefaultPlotEditor.java
  * ----------------------
- * (C) Copyright 2005-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Andrzej Porebski;
@@ -41,6 +41,7 @@
  *               Jess Thrysoee (DG);
  * 27-Feb-2009 : Fixed bug 2612649, NullPointerException (DG);
  * 03-Nov-2011 : Added support for DefaultPolarPlotEditor (MH);
+ * 15-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -66,9 +67,13 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import org.jfree.chart.axis.Axis;
-import org.jfree.chart.axis.ColorBar;
+import org.jfree.chart.common.ui.LCBLayout;
+import org.jfree.chart.common.ui.PaintSample;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.ui.StrokeChooserPanel;
+import org.jfree.chart.common.ui.StrokeSample;
+import org.jfree.chart.common.util.BooleanUtilities;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.ContourPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PolarPlot;
@@ -78,12 +83,6 @@ import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.util.ResourceBundleWrapper;
-import org.jfree.chart.common.ui.LCBLayout;
-import org.jfree.ui.PaintSample;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.StrokeChooserPanel;
-import org.jfree.ui.StrokeSample;
-import org.jfree.util.BooleanUtilities;
 
 /**
  * A panel for editing the properties of a {@link Plot}.
@@ -113,12 +112,6 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
      * A panel used to display/edit the properties of the range axis (if any).
      */
     private DefaultAxisEditor rangeAxisPropertyPanel;
-
-    /**
-     * A panel used to display/edit the properties of the colorbar axis (if
-     * any).
-     */
-    private DefaultColorBarEditor colorBarAxisPropertyPanel;
 
     /** An array of stroke samples to choose from. */
     private StrokeSample[] availableStrokeSamples;
@@ -361,22 +354,6 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
                     this.rangeAxisPropertyPanel);
         }
 
-//dmo: added this panel for colorbar control. (start dmo additions)
-        ColorBar colorBar = null;
-        if (plot instanceof ContourPlot) {
-            colorBar = ((ContourPlot) plot).getColorBar();
-        }
-
-        this.colorBarAxisPropertyPanel = DefaultColorBarEditor.getInstance(
-                colorBar);
-        if (this.colorBarAxisPropertyPanel != null) {
-            this.colorBarAxisPropertyPanel.setBorder(
-                    BorderFactory.createEmptyBorder(2, 2, 2, 2));
-            tabs.add(localizationResources.getString("Color_Bar"),
-                    this.colorBarAxisPropertyPanel);
-        }
-//dmo: (end dmo additions)
-
         return tabs;
     }
 
@@ -474,7 +451,7 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
     private void attemptBackgroundPaintSelection() {
         Color c;
         c = JColorChooser.showDialog(this, localizationResources.getString(
-                "Background_Color"), Color.blue);
+                "Background_Color"), Color.BLUE);
         if (c != null) {
             this.backgroundPaintSample.setPaint(c);
         }
@@ -502,7 +479,7 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
     private void attemptOutlinePaintSelection() {
         Color c;
         c = JColorChooser.showDialog(this, localizationResources.getString(
-                "Outline_Color"), Color.blue);
+                "Outline_Color"), Color.BLUE);
         if (c != null) {
             this.outlinePaintSample.setPaint(c);
         }
@@ -656,19 +633,6 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
                 }
             }
         }
-
-//dmo: added this panel for colorbar control. (start dmo additions)
-        if (this.colorBarAxisPropertyPanel != null) {
-            ColorBar colorBar = null;
-            if (plot instanceof  ContourPlot) {
-                ContourPlot p = (ContourPlot) plot;
-                colorBar = p.getColorBar();
-            }
-            if (colorBar != null) {
-                this.colorBarAxisPropertyPanel.setAxisProperties(colorBar);
-            }
-        }
-//dmo: (end dmo additions)
 
     }
 

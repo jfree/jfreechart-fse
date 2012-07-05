@@ -154,19 +154,6 @@ public class Millisecond extends RegularTimePeriod implements Serializable {
     /**
      * Creates a millisecond.
      *
-     * @param time  the instant in time.
-     * @param zone  the time zone.
-     *
-     * @deprecated As of 1.0.13, use the constructor that specifies the locale
-     *     also.
-     */
-    public Millisecond(Date time, TimeZone zone) {
-        this(time, zone, Locale.getDefault());
-    }
-
-    /**
-     * Creates a millisecond.
-     *
      * @param time  the date-time (<code>null</code> not permitted).
      * @param zone  the time zone (<code>null</code> not permitted).
      * @param locale  the locale (<code>null</code> not permitted).

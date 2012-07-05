@@ -1,10 +1,10 @@
-/* ========================================================================
- * JCommon : a free general purpose class library for the Java(tm) platform
- * ========================================================================
+/* ===========================================================
+ * JFreeChart : a free chart library for the Java(tm) platform
+ * ===========================================================
  *
- * (C) Copyright 2000-2005, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
- * Project Info:  http://www.jfree.org/jcommon/index.html
+ * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -21,18 +21,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
  * ObjectUtilitiess.java
  * ---------------------
- * (C) Copyright 2003-2005, by Object Refinery Limited.
+ * (C) Copyright 2003-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
- *
- * $Id: ObjectUtilities.java,v 1.21 2008/09/10 09:24:41 mungady Exp $
  *
  * Changes
  * -------
@@ -44,10 +42,11 @@
  * 11-Jan-2005 : Removed deprecated code in preparation for 1.0.0 release (DG);
  * 18-Aug-2005 : Added casts to suppress compiler warnings, as suggested in
  *               patch 1260622 (DG);
+ * 16-Jun-2012 : Moved from JCommon to JFreeChart (DG);
  *
  */
 
-package org.jfree.util;
+package org.jfree.chart.common.util;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,8 +62,6 @@ import java.util.StringTokenizer;
 /**
  * A collection of useful static utility methods for handling classes and object
  * instantiation.
- *
- * @author Thomas Morgner
  */
 public final class ObjectUtilities {
 
@@ -81,6 +78,7 @@ public final class ObjectUtilities {
      * By default use the thread context.
      */
     private static String classLoaderSource = THREAD_CONTEXT;
+
     /**
      * The custom classloader to be used (if not null).
      */

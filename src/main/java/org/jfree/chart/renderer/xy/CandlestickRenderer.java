@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------------
  * CandlestickRenderer.java
  * ------------------------
- * (C) Copyright 2001-2009, by Object Refinery Limited.
+ * (C) Copyright 2001-2012, by Object Refinery Limited.
  *
  * Original Authors:  David Gilbert (for Object Refinery Limited);
  *                    Sylvain Vieujot;
@@ -82,6 +82,7 @@
  * 13-May-2008 : Fixed chart entity bugs (1962467 and 1962472) (DG);
  * 27-Mar-2009 : Updated findRangeBounds() to call new method in
  *               superclass (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -101,6 +102,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.HighLowItemLabelGenerator;
@@ -109,15 +113,11 @@ import org.jfree.chart.plot.CrosshairState;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
-import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.OHLCDataset;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.PublicCloneable;
 
 /**
  * A renderer that draws candlesticks on an {@link XYPlot} (requires a
@@ -240,9 +240,9 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
         setBaseToolTipGenerator(toolTipGenerator);
         this.candleWidth = candleWidth;
         this.drawVolume = drawVolume;
-        this.volumePaint = Color.gray;
-        this.upPaint = Color.green;
-        this.downPaint = Color.red;
+        this.volumePaint = Color.GRAY;
+        this.upPaint = Color.GREEN;
+        this.downPaint = Color.RED;
         this.useOutlinePaint = false;  // false preserves the old behaviour
                                        // prior to introducing this flag
     }
@@ -964,21 +964,6 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
         this.upPaint = SerialUtilities.readPaint(stream);
         this.downPaint = SerialUtilities.readPaint(stream);
         this.volumePaint = SerialUtilities.readPaint(stream);
-    }
-
-    // --- DEPRECATED CODE ----------------------------------------------------
-
-    /**
-     * Returns a flag indicating whether or not volume bars are drawn on the
-     * chart.
-     *
-     * @return <code>true</code> if volume bars are drawn on the chart.
-     *
-     * @deprecated As of 1.0.5, you should use the {@link #getDrawVolume()}
-     *         method.
-     */
-    public boolean drawVolume() {
-        return this.drawVolume;
     }
 
 }

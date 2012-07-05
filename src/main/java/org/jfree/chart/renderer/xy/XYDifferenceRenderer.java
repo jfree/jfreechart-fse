@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * XYDifferenceRenderer.java
  * -------------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Richard West, Advanced Micro Devices, Inc. (major rewrite
@@ -76,6 +76,7 @@
  * 17-Jun-2008 : Apply legend shape, font and paint attributes (DG);
  * 13-Feb-2012 : Applied patch 3450234 for bug 3425881 by Patrick Schlott and
  *               Christoph Schroeder (MH);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -97,6 +98,10 @@ import java.util.LinkedList;
 
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.common.util.ShapeUtilities;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.XYItemEntity;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -106,12 +111,8 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.urls.XYURLGenerator;
-import org.jfree.data.xy.XYDataset;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.PublicCloneable;
-import org.jfree.util.ShapeUtilities;
+import org.jfree.data.xy.XYDataset;
 
 /**
  * A renderer for an {@link XYPlot} that highlights the differences between two
@@ -155,7 +156,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * Creates a new renderer with default attributes.
      */
     public XYDifferenceRenderer() {
-        this(Color.green, Color.red, false);
+        this(Color.GREEN, Color.RED, false);
     }
 
     /**

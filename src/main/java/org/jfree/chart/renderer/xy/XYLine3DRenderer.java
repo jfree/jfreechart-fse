@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * XYLine3DRenderer.java
  * ---------------------
- * (C) Copyright 2005-2008, by Object Refinery Limited.
+ * (C) Copyright 2005-2012, by Object Refinery Limited.
  *
  * Original Author:  Thomas Morgner;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -36,6 +36,7 @@
  * -------
  * 14-Jan-2005 : Added standard header (DG);
  * 01-May-2007 : Fixed equals() and serialization bugs (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -51,9 +52,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import org.jfree.chart.Effect3D;
+import org.jfree.chart.common.util.PaintUtilities;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.util.PaintUtilities;
 
 /**
  * A XYLineAndShapeRenderer that adds a shadow line to the graph

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------
  * MeterPlot.java
  * --------------
- * (C) Copyright 2000-2008, by Hari and Contributors.
+ * (C) Copyright 2000-2012, by Hari and Contributors.
  *
  * Original Author:  Hari (ourhari@hotmail.com);
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -81,6 +81,7 @@
  * 29-Nov-2007 : Fixed serialization bug with dialOutlinePaint (DG);
  * 18-Dec-2008 : Use ResourceBundleWrapper - see patch 1607918 by
  *               Jess Thrysoee (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -114,17 +115,17 @@ import java.util.ResourceBundle;
 
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PaintUtilities;
 import org.jfree.chart.event.PlotChangeEvent;
+import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.util.ResourceBundleWrapper;
+import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.ValueDataset;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.chart.text.TextUtilities;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.TextAnchor;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PaintUtilities;
 
 /**
  * A plot that displays a single value in the form of a needle on a dial.
@@ -137,16 +138,16 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
     private static final long serialVersionUID = 2987472457734470962L;
 
     /** The default background paint. */
-    static final Paint DEFAULT_DIAL_BACKGROUND_PAINT = Color.black;
+    static final Paint DEFAULT_DIAL_BACKGROUND_PAINT = Color.BLACK;
 
     /** The default needle paint. */
-    static final Paint DEFAULT_NEEDLE_PAINT = Color.green;
+    static final Paint DEFAULT_NEEDLE_PAINT = Color.GREEN;
 
     /** The default value font. */
     static final Font DEFAULT_VALUE_FONT = new Font("SansSerif", Font.BOLD, 12);
 
     /** The default value paint. */
-    static final Paint DEFAULT_VALUE_PAINT = Color.yellow;
+    static final Paint DEFAULT_VALUE_PAINT = Color.YELLOW;
 
     /** The default meter angle. */
     public static final int DEFAULT_METER_ANGLE = 270;
@@ -242,12 +243,12 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
         this.meterAngle = DEFAULT_METER_ANGLE;
         this.range = new Range(0.0, 100.0);
         this.tickSize = 10.0;
-        this.tickPaint = Color.white;
+        this.tickPaint = Color.WHITE;
         this.units = "Units";
         this.needlePaint = MeterPlot.DEFAULT_NEEDLE_PAINT;
         this.tickLabelsVisible = true;
         this.tickLabelFont = MeterPlot.DEFAULT_LABEL_FONT;
-        this.tickLabelPaint = Color.black;
+        this.tickLabelPaint = Color.BLACK;
         this.tickLabelFormat = NumberFormat.getInstance();
         this.valueFont = MeterPlot.DEFAULT_VALUE_FONT;
         this.valuePaint = MeterPlot.DEFAULT_VALUE_PAINT;

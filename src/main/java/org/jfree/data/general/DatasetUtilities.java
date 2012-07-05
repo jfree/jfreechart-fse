@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * DatasetUtilities.java
  * ---------------------
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Andrzej Porebski (bug fix);
@@ -131,6 +131,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jfree.chart.common.util.ArrayUtilities;
 import org.jfree.data.DomainInfo;
 import org.jfree.data.KeyToGroupMap;
 import org.jfree.data.KeyedValues;
@@ -154,7 +155,7 @@ import org.jfree.data.xy.XYRangeInfo;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.data.xy.XYZDataset;
-import org.jfree.util.ArrayUtilities;
+
 
 /**
  * A collection of useful static methods relating to datasets.
@@ -936,24 +937,6 @@ public final class DatasetUtilities {
      * the range bounds.
      *
      * @param dataset  the dataset (<code>null</code> not permitted).
-     * @param includeInterval  a flag that determines whether or not the
-     *                         y-interval is taken into account.
-     *
-     * @return The range (possibly <code>null</code>).
-     *
-     * @deprecated As of 1.0.10, use
-     *         {@link #iterateRangeBounds(CategoryDataset, boolean)}.
-     */
-    public static Range iterateCategoryRangeBounds(CategoryDataset dataset,
-            boolean includeInterval) {
-        return iterateRangeBounds(dataset, includeInterval);
-    }
-
-    /**
-     * Iterates over the data item of the category dataset to find
-     * the range bounds.
-     *
-     * @param dataset  the dataset (<code>null</code> not permitted).
      *
      * @return The range (possibly <code>null</code>).
      *
@@ -1190,20 +1173,6 @@ public final class DatasetUtilities {
         else {
             return new Range(minimum, maximum);
         }
-    }
-
-    /**
-     * Iterates over the data item of the xy dataset to find
-     * the range bounds.
-     *
-     * @param dataset  the dataset (<code>null</code> not permitted).
-     *
-     * @return The range (possibly <code>null</code>).
-     *
-     * @deprecated As of 1.0.10, use {@link #iterateRangeBounds(XYDataset)}.
-     */
-    public static Range iterateXYRangeBounds(XYDataset dataset) {
-        return iterateRangeBounds(dataset);
     }
 
     /**

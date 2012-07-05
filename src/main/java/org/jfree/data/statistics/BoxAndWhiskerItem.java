@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * BoxAndWhiskerItem.java
  * ----------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -39,7 +39,8 @@
  * ------------- JFREECHART 1.0.x ---------------------------------------------
  * 15-Nov-2006 : Added toString() method override (DG);
  * 02-Oct-2007 : Added new constructor (for convenience) (DG);
- *
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 
  */
 
 package org.jfree.data.statistics;
@@ -48,7 +49,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-import org.jfree.util.ObjectUtilities;
+import org.jfree.chart.common.util.ObjectUtilities;
 
 /**
  * Represents one data item within a box-and-whisker dataset.  Instances of

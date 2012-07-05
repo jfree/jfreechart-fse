@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * DefaultKeyedValues.java
  * -----------------------
- * (C) Copyright 2002-2008, by Object Refinery Limited.
+ * (C) Copyright 2002-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Thomas Morgner;
@@ -54,6 +54,7 @@
  * 31-Oct-2007 : Performance improvements by using separate lists for keys and
  *               values (TM);
  * 21-Nov-2007 : Fixed bug in removeValue() method from previous patch (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -66,8 +67,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-import org.jfree.util.PublicCloneable;
-import org.jfree.util.SortOrder;
+import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.common.util.SortOrder;
 
 /**
  * An ordered list of (key, value) items.  This class provides a default

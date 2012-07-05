@@ -27,20 +27,20 @@
  * ------------------------
  * HorizontalAlignment.java
  * ------------------------
- * (C) Copyright 20042005, by Object Refinery Limited.
+
+ * (C) Copyright 2004-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
- * $Id: HorizontalAlignment.java,v 1.5 2005/10/18 13:18:34 mungady Exp $
- *
  * Changes:
  * --------
  * 08-Jan-2004 : Version 1 (DG);
+ * 12-Jun-2012 : Moved from JCommon to JFreeChart (DG);
  * 
  */
 
-package org.jfree.ui;
+package org.jfree.chart.common.ui;
 
 import java.io.ObjectStreamException;
 import java.io.Serializable;
@@ -48,8 +48,6 @@ import java.io.Serializable;
 /**
  * An enumeration of the horizontal alignment types (<code>LEFT</code>, 
  * <code>RIGHT</code> and <code>CENTER</code>).
- *
- * @author David Gilbert
  */
 public final class HorizontalAlignment implements Serializable {
 

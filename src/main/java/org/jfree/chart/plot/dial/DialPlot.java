@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------
  * DialPlot.java
  * -------------
- * (C) Copyright 2006-2008, by Object Refinery Limited.
+ * (C) Copyright 2006-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -40,6 +40,7 @@
  * 24-Oct-2007 : Maintain pointers in their own list, so they can be
  *               drawn after other layers (DG);
  * 15-Feb-2008 : Fixed clipping bug (1873160) (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -56,14 +57,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.common.util.ObjectList;
+import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.PlotState;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.ValueDataset;
-import org.jfree.util.ObjectList;
-import org.jfree.util.ObjectUtilities;
 
 /**
  * A dial plot composed of user-definable layers.

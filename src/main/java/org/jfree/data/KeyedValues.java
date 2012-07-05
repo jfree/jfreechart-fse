@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------
  * KeyedValues.java
  * ----------------
- * (C) Copyright 2002-2008, by Object Refinery Limited.
+ * (C) Copyright 2002-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -39,6 +39,7 @@
  *               is not recognised (DG);
  * ------------- JFREECHART 1.0.0 ---------------------------------------------
  * 02-May-2006 : Updated API docs (DG);
+ * 15-Jun-2012 : Added generic types (DG);
  *
  */
 
@@ -90,7 +91,7 @@ public interface KeyedValues extends Values {
      *
      * @return The keys (never <code>null</code>).
      */
-    public List getKeys();
+    public List<Comparable> getKeys();
 
     /**
      * Returns the value for a given key.

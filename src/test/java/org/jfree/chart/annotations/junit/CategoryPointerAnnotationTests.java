@@ -56,7 +56,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.annotations.CategoryPointerAnnotation;
-import org.jfree.util.PublicCloneable;
+import org.jfree.chart.common.util.PublicCloneable;
 
 /**
  * Tests for the {@link CategoryPointerAnnotation} class.

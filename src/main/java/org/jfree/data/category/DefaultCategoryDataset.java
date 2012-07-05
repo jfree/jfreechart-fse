@@ -43,6 +43,7 @@
  * 26-Feb-2007 : Updated API docs (DG);
  * 08-Mar-2007 : Implemented clone() (DG);
  * 09-May-2008 : Implemented PublicCloneable (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -51,11 +52,11 @@ package org.jfree.data.category;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.data.DefaultKeyedValues2D;
 import org.jfree.data.UnknownKeyException;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DatasetChangeEvent;
-import org.jfree.util.PublicCloneable;
 
 /**
  * A default implementation of the {@link CategoryDataset} interface.

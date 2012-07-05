@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -82,6 +82,7 @@
  * 25-Sep-2008 : Added minor tick support, see patch 1934255 by Peter Kolb (DG);
  * 26-Sep-2008 : Added fireChangeEvent() method (DG);
  * 19-Mar-2009 : Added entity support - see patch 2603321 by Peter Kolb (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -108,19 +109,19 @@ import java.util.List;
 
 import javax.swing.event.EventListenerList;
 
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PaintUtilities;
 import org.jfree.chart.entity.AxisEntity;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.AxisChangeEvent;
 import org.jfree.chart.event.AxisChangeListener;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.util.SerialUtilities;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.TextAnchor;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PaintUtilities;
+import org.jfree.chart.util.SerialUtilities;
 
 /**
  * The base class for all axes in JFreeChart.  Subclasses are divided into
@@ -140,14 +141,14 @@ public abstract class Axis implements Cloneable, Serializable {
             "SansSerif", Font.PLAIN, 12);
 
     /** The default axis label paint. */
-    public static final Paint DEFAULT_AXIS_LABEL_PAINT = Color.black;
+    public static final Paint DEFAULT_AXIS_LABEL_PAINT = Color.BLACK;
 
     /** The default axis label insets. */
     public static final RectangleInsets DEFAULT_AXIS_LABEL_INSETS
             = new RectangleInsets(3.0, 3.0, 3.0, 3.0);
 
     /** The default axis line paint. */
-    public static final Paint DEFAULT_AXIS_LINE_PAINT = Color.gray;
+    public static final Paint DEFAULT_AXIS_LINE_PAINT = Color.GRAY;
 
     /** The default axis line stroke. */
     public static final Stroke DEFAULT_AXIS_LINE_STROKE = new BasicStroke(1.0f);
@@ -160,7 +161,7 @@ public abstract class Axis implements Cloneable, Serializable {
             Font.PLAIN, 10);
 
     /** The default tick label paint. */
-    public static final Paint DEFAULT_TICK_LABEL_PAINT = Color.black;
+    public static final Paint DEFAULT_TICK_LABEL_PAINT = Color.BLACK;
 
     /** The default tick label insets. */
     public static final RectangleInsets DEFAULT_TICK_LABEL_INSETS
@@ -173,7 +174,7 @@ public abstract class Axis implements Cloneable, Serializable {
     public static final Stroke DEFAULT_TICK_MARK_STROKE = new BasicStroke(1);
 
     /** The default tick paint. */
-    public static final Paint DEFAULT_TICK_MARK_PAINT = Color.gray;
+    public static final Paint DEFAULT_TICK_MARK_PAINT = Color.GRAY;
 
     /** The default tick mark inside length. */
     public static final float DEFAULT_TICK_MARK_INSIDE_LENGTH = 0.0f;

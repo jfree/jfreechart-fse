@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------
  * DefaultDrawingSupplier.java
  * ---------------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited.
+ * (C) Copyright 2003-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Jeremy Bowman;
@@ -43,6 +43,7 @@
  * 20-Aug-2003 : Implemented Cloneable and PublicCloneable (DG);
  * ------------- JFREECHART 1.0.x ---------------------------------------------
  * 13-Jun-2007 : Added fillPaintSequence (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -63,9 +64,9 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 import org.jfree.chart.ChartColor;
+import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.common.util.ShapeUtilities;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.util.PublicCloneable;
-import org.jfree.util.ShapeUtilities;
 
 /**
  * A default implementation of the {@link DrawingSupplier} interface.  All
@@ -84,11 +85,11 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
 
     /** The default outline paint sequence. */
     public static final Paint[] DEFAULT_OUTLINE_PAINT_SEQUENCE = new Paint[] {
-            Color.lightGray};
+            Color.LIGHT_GRAY};
 
     /** The default fill paint sequence. */
     public static final Paint[] DEFAULT_FILL_PAINT_SEQUENCE = new Paint[] {
-            Color.white};
+            Color.WHITE};
 
     /** The default stroke sequence. */
     public static final Stroke[] DEFAULT_STROKE_SEQUENCE = new Stroke[] {

@@ -52,9 +52,9 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.data.xy.MatrixSeries;
 import org.jfree.data.xy.MatrixSeriesCollection;
-import org.jfree.util.PublicCloneable;
 
 /**
  * Tests for the {@link MatrixSeriesCollection} class.

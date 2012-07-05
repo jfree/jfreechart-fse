@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------
  * Title.java
  * ----------
- * (C) Copyright 2000-2008, by David Berry and Contributors.
+ * (C) Copyright 2000-2012, by David Berry and Contributors.
  *
  * Original Author:  David Berry;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -55,6 +55,7 @@
  * 02-Feb-2005 : Changed Spacer --> RectangleInsets for padding (DG);
  * 03-May-2005 : Fixed problem in equals() method (DG);
  * 19-Sep-2008 : Added visibility flag (DG);
+ * 15-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -71,13 +72,13 @@ import javax.swing.event.EventListenerList;
 
 import org.jfree.chart.block.AbstractBlock;
 import org.jfree.chart.block.Block;
+import org.jfree.chart.common.ui.HorizontalAlignment;
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.ui.VerticalAlignment;
+import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.chart.event.TitleChangeEvent;
 import org.jfree.chart.event.TitleChangeListener;
-import org.jfree.ui.HorizontalAlignment;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.VerticalAlignment;
-import org.jfree.util.ObjectUtilities;
 
 /**
  * The base class for all chart titles.  A chart can have multiple titles,

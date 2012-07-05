@@ -2,7 +2,7 @@
  * JFreeChart : a free Java chart library
  * ======================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------------
  * CustomCategoryURLGenerator.java
  * -------------------------------
- * (C) Copyright 2008, by Diego Pierangeli and Contributors.
+ * (C) Copyright 2008-2012, by Diego Pierangeli and Contributors.
  *
  * Original Author:  Diego Pierangeli;
  * Contributors:     David Gilbert (for Object Refinery Limited);
@@ -37,6 +37,7 @@
  * 23-Apr-2008 : Version 1, contributed by Diego Pierangeli based on
  *               CustomXYURLGenerator by Richard Atkinson, with some
  *               modifications by David Gilbert(DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 package org.jfree.chart.urls;
@@ -45,8 +46,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.data.category.CategoryDataset;
-import org.jfree.util.PublicCloneable;
 
 /**
  * A custom URL generator.

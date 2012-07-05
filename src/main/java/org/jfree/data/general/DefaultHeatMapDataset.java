@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------------
  * DefaultHeatMapDataset.java
  * --------------------------
- * (C) Copyright 2009, by Object Refinery Limited.
+ * (C) Copyright 2009-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -35,14 +35,16 @@
  * Changes:
  * --------
  * 28-Jan-2009 : Version 1 (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
 package org.jfree.data.general;
 
 import java.io.Serializable;
+
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.data.DataUtilities;
-import org.jfree.util.PublicCloneable;
 
 /**
  * A default implementation of the {@link HeatMapDataset} interface.

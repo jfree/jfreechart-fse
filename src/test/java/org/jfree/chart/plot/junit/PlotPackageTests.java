@@ -74,7 +74,6 @@ public class PlotPackageTests extends TestCase {
         suite.addTestSuite(CombinedRangeCategoryPlotTests.class);
         suite.addTestSuite(CombinedRangeXYPlotTests.class);
         suite.addTestSuite(CompassPlotTests.class);
-        suite.addTestSuite(ContourPlotTests.class);
         suite.addTestSuite(CrosshairTests.class);
         suite.addTestSuite(DefaultDrawingSupplierTests.class);
         suite.addTestSuite(FastScatterPlotTests.class);

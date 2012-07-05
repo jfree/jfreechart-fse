@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------
  * SpiderWebPlot.java
  * ------------------
- * (C) Copyright 2005-2008, by Heaps of Flavour Pty Ltd and Contributors.
+ * (C) Copyright 2005-2012, by Heaps of Flavour Pty Ltd and Contributors.
  *
  * Company Info:  http://www.i4-talent.com
  *
@@ -65,6 +65,7 @@
  * 02-Jun-2008 : Fixed bug with chart entities using TableOrder.BY_COLUMN (DG);
  * 02-Jun-2008 : Fixed bug with null dataset (DG);
  * 01-Jun-2009 : Set series key in getLegendItems() (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  * 
  */
 
@@ -97,6 +98,14 @@ import java.util.List;
 
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PaintList;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.Rotation;
+import org.jfree.chart.common.util.ShapeUtilities;
+import org.jfree.chart.common.util.StrokeList;
+import org.jfree.chart.common.util.TableOrder;
 import org.jfree.chart.entity.CategoryItemEntity;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.PlotChangeEvent;
@@ -104,18 +113,10 @@ import org.jfree.chart.labels.CategoryItemLabelGenerator;
 import org.jfree.chart.labels.CategoryToolTipGenerator;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.urls.CategoryURLGenerator;
+import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetUtilities;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PaintList;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.Rotation;
-import org.jfree.util.ShapeUtilities;
-import org.jfree.util.StrokeList;
-import org.jfree.util.TableOrder;
 
 /**
  * A plot that displays data from a {@link CategoryDataset} in the form of a
@@ -147,21 +148,21 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
             Font.PLAIN, 10);
 
     /** The default series label paint. */
-    public static final Paint  DEFAULT_LABEL_PAINT = Color.black;
+    public static final Paint  DEFAULT_LABEL_PAINT = Color.BLACK;
 
     /** The default series label background paint. */
     public static final Paint  DEFAULT_LABEL_BACKGROUND_PAINT
             = new Color(255, 255, 192);
 
     /** The default series label outline paint. */
-    public static final Paint  DEFAULT_LABEL_OUTLINE_PAINT = Color.black;
+    public static final Paint  DEFAULT_LABEL_OUTLINE_PAINT = Color.BLACK;
 
     /** The default series label outline stroke. */
     public static final Stroke DEFAULT_LABEL_OUTLINE_STROKE
             = new BasicStroke(0.5f);
 
     /** The default series label shadow paint. */
-    public static final Paint  DEFAULT_LABEL_SHADOW_PAINT = Color.lightGray;
+    public static final Paint  DEFAULT_LABEL_SHADOW_PAINT = Color.LIGHT_GRAY;
 
     /**
      * The default maximum value plotted - forces the plot to evaluate
@@ -297,7 +298,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
         this.dataExtractOrder = extract;
         this.headPercent = DEFAULT_HEAD;
         this.axisLabelGap = DEFAULT_AXIS_LABEL_GAP;
-        this.axisLinePaint = Color.black;
+        this.axisLinePaint = Color.BLACK;
         this.axisLineStroke = new BasicStroke(1.0f);
 
         this.interiorGap = DEFAULT_INTERIOR_GAP;

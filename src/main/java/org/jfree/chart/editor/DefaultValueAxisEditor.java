@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * DefaultValueAxisEditor.java
  * ----------------------
- * (C) Copyright 2005-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  Martin Hoeller (base on DefaultNumberAxisEditor
  *                                   by David Gilbert);
@@ -36,6 +36,7 @@
  * Changes
  * -------
  * 03-Nov-2011 : Version 1, based on DefaultNumberAxisEditor.java (MH);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -59,11 +60,11 @@ import javax.swing.JTextField;
 
 import org.jfree.chart.axis.Axis;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.util.ResourceBundleWrapper;
 import org.jfree.chart.common.ui.LCBLayout;
-import org.jfree.ui.PaintSample;
-import org.jfree.ui.StrokeChooserPanel;
-import org.jfree.ui.StrokeSample;
+import org.jfree.chart.common.ui.PaintSample;
+import org.jfree.chart.common.ui.StrokeChooserPanel;
+import org.jfree.chart.common.ui.StrokeSample;
+import org.jfree.chart.util.ResourceBundleWrapper;
 
 /**
  * A panel for editing properties of a {@link ValueAxis}.
@@ -129,7 +130,7 @@ class DefaultValueAxisEditor extends DefaultAxisEditor
         this.maximumValue = axis.getUpperBound();
         this.autoTickUnitSelection = axis.isAutoTickUnitSelection();
 
-        this.gridPaintSample = new PaintSample(Color.blue);
+        this.gridPaintSample = new PaintSample(Color.BLUE);
         this.gridStrokeSample = new StrokeSample(new BasicStroke(1.0f));
 
         this.availableStrokeSamples = new StrokeSample[3];
@@ -311,7 +312,7 @@ class DefaultValueAxisEditor extends DefaultAxisEditor
     protected void attemptGridPaintSelection() {
         Color c;
         c = JColorChooser.showDialog(this, localizationResources.getString(
-                "Grid_Color"), Color.blue);
+                "Grid_Color"), Color.BLUE);
         if (c != null) {
             this.gridPaintSample.setPaint(c);
         }

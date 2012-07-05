@@ -1,10 +1,10 @@
-/* ========================================================================
- * JCommon : a free general purpose class library for the Java(tm) platform
- * ========================================================================
+/* ===========================================================
+ * JFreeChart : a free chart library for the Java(tm) platform
+ * ===========================================================
  *
- * (C) Copyright 2000-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
- * Project Info:  http://www.jfree.org/jcommon/index.html
+ * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
- *
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * Other names may be trademarks of their respective owners.]
+ * 
  * ---------------------
  * FontChooserPanel.java
  * ---------------------
- * (C) Copyright 2000-2008, by Object Refinery Limited.
+ * (C) Copyright 2000-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Arnaud Lelievre;
@@ -42,10 +42,11 @@
  * 21-Feb-2004 : The FontParameter of the constructor was never used (TM);
  * 18-Dec-2008 : Use ResourceBundleWrapper - see JFreeChart patch 1607918 by
  *               Jess Thrysoee (DG);
+ * 15-Jun-2012 : Moved from JCommon to JFreeChart (DG);
  *
  */
 
-package org.jfree.ui;
+package org.jfree.chart.common.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -60,17 +61,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 
-import org.jfree.util.ResourceBundleWrapper;
+import org.jfree.chart.util.ResourceBundleWrapper;
 
 /**
  * A panel for choosing a font from the available system fonts - still a bit of
  * a hack at the moment, but good enough for demonstration applications.
- *
- * @author David Gilbert
  */
 public class FontChooserPanel extends JPanel {
 
-    /** The font sizes that can be selected. */
+    private static final long serialVersionUID = 1L;
+
+	/** The font sizes that can be selected. */
     public static final String[] SIZES = {"9", "10", "11", "12", "14", "16",
             "18", "20", "22", "24", "28", "36", "48", "72"};
 

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------------
  * SymbolicXYItemLabelGenerator.java
  * ---------------------------------
- * (C) Copyright 2001-2008, by Anthony Boulestreau and Contributors.
+ * (C) Copyright 2001-2012, by Anthony Boulestreau and Contributors.
  *
  * Original Author:  Anthony Boulestreau;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -44,6 +44,7 @@
  * 20-Apr-2005 : Renamed XYLabelGenerator --> XYItemLabelGenerator (DG);
  * 02-Feb-2007 : Removed author tags all over JFreeChart sources (DG);
  * 31-Mar-2008 : Added hashCode() method to appease FindBugs (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -51,12 +52,12 @@ package org.jfree.chart.labels;
 
 import java.io.Serializable;
 
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.data.time.RegularTimePeriod;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XisSymbolic;
 import org.jfree.data.xy.YisSymbolic;
-import org.jfree.util.PublicCloneable;
 
 /**
  * A standard item label generator for plots that use data from an

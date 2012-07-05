@@ -41,6 +41,7 @@
  * 27-Feb-2009 : Fixed bug 2617557: tickLabelPaint ignored (DG);
  * 09-Feb-2010 : Fixed bug 2946521 (DG);
  * 08-Jan-2012 : Added missing angleToValue() implementation (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -63,11 +64,11 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.ui.TextAnchor;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.PublicCloneable;
+import org.jfree.chart.util.SerialUtilities;
 
 /**
  * A scale for a {@link DialPlot}.
@@ -216,15 +217,15 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
         this.tickLabelFormatter = new DecimalFormat("0.0");
         this.firstTickLabelVisible = true;
         this.tickLabelFont = new Font("Dialog", Font.BOLD, 16);
-        this.tickLabelPaint = Color.blue;
+        this.tickLabelPaint = Color.BLUE;
         this.tickLabelOffset = 0.10;
         this.majorTickIncrement = majorTickIncrement;
         this.majorTickLength = 0.04;
-        this.majorTickPaint = Color.black;
+        this.majorTickPaint = Color.BLACK;
         this.majorTickStroke = new BasicStroke(3.0f);
         this.minorTickCount = minorTickCount;
         this.minorTickLength = 0.02;
-        this.minorTickPaint = Color.black;
+        this.minorTickPaint = Color.BLACK;
         this.minorTickStroke = new BasicStroke(1.0f);
     }
 

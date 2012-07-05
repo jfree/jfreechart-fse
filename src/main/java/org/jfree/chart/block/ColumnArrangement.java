@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * ColumnArrangement.java
  * ----------------------
- * (C) Copyright 2004-2008, by Object Refinery Limited.
+ * (C) Copyright 2004-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -36,6 +36,7 @@
  * --------
  * 22-Oct-2004 : Version 1 (DG);
  * 04-Feb-2005 : Added equals() and implemented Serializable (DG);
+ * 15-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -47,9 +48,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jfree.ui.HorizontalAlignment;
-import org.jfree.ui.Size2D;
-import org.jfree.ui.VerticalAlignment;
+import org.jfree.chart.common.ui.HorizontalAlignment;
+import org.jfree.chart.common.ui.Size2D;
+import org.jfree.chart.common.ui.VerticalAlignment;
 
 /**
  * Arranges blocks in a column layout.  This class is immutable.

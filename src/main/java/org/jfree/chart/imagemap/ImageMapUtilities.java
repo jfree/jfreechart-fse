@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * ImageMapUtilities.java
  * ----------------------
- * (C) Copyright 2004-2009, by Richard Atkinson and Contributors.
+ * (C) Copyright 2004-2012, by Richard Atkinson and Contributors.
  *
  * Original Author:  Richard Atkinson;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -45,6 +45,7 @@
  *               getImageMap() (DG);
  * 19-Mar-2009 : Added javascriptEscape() method - see bug 2690293 by FH (DG);
  * 25-Mar-2009 : Reimplemented javascriptEscape() (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -54,9 +55,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import org.jfree.chart.ChartRenderingInfo;
+import org.jfree.chart.common.util.StringUtils;
 import org.jfree.chart.entity.ChartEntity;
 import org.jfree.chart.entity.EntityCollection;
-import org.jfree.util.StringUtils;
 
 /**
  * Collection of utility methods related to producing image maps.

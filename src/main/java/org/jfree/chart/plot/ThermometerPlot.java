@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -28,7 +28,7 @@
  * ThermometerPlot.java
  * --------------------
  *
- * (C) Copyright 2000-2008, by Bryan Scott and Contributors.
+ * (C) Copyright 2000-2012, by Bryan Scott and Contributors.
  *
  * Original Author:  Bryan Scott (based on MeterPlot by Hari).
  * Contributor(s):   David Gilbert (for Object Refinery Limited).
@@ -87,6 +87,7 @@
  *               by Julien Henry (DG);
  * 18-Dec-2008 : Use ResourceBundleWrapper - see patch 1607918 by
  *               Jess Thrysoee (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -117,18 +118,18 @@ import java.util.ResourceBundle;
 import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.UnitType;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.util.ResourceBundleWrapper;
+import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DefaultValueDataset;
 import org.jfree.data.general.ValueDataset;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.UnitType;
 
 /**
  * A plot that displays a single value (from a {@link ValueDataset}) in a
@@ -317,7 +318,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
     private transient Stroke thermometerStroke = new BasicStroke(1.0f);
 
     /** Paint for drawing the thermometer */
-    private transient Paint thermometerPaint = Color.black;
+    private transient Paint thermometerPaint = Color.BLACK;
 
     /** The display units */
     private int units = UNITS_CELCIUS;
@@ -332,13 +333,13 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
     private Font valueFont = new Font("SansSerif", Font.BOLD, 16);
 
     /** Colour that the value is written in */
-    private transient Paint valuePaint = Color.white;
+    private transient Paint valuePaint = Color.WHITE;
 
     /** Number format for the value */
     private NumberFormat valueFormat = new DecimalFormat();
 
     /** The default paint for the mercury in the thermometer. */
-    private transient Paint mercuryPaint = Color.lightGray;
+    private transient Paint mercuryPaint = Color.LIGHT_GRAY;
 
     /** A flag that controls whether value lines are drawn. */
     private boolean showValueLines = false;
@@ -366,8 +367,8 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
     private boolean useSubrangePaint = true;
 
     /** Paint for each range */
-    private transient Paint[] subrangePaint = {Color.green, Color.orange,
-            Color.red};
+    private transient Paint[] subrangePaint = {Color.GREEN, Color.ORANGE,
+            Color.RED};
 
     /** A flag that controls whether the sub-range indicators are visible. */
     private boolean subrangeIndicatorsVisible = true;

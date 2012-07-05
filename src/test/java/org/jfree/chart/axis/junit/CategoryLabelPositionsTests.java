@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------------------
  * CategoryLabelPositionsTests.java
  * --------------------------------
- * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -36,6 +36,7 @@
  * -------
  * 17-Feb-2004 : Version 1 (DG);
  * 07-Jan-2005 : Added test for hashCode() (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -54,8 +55,8 @@ import junit.framework.TestSuite;
 
 import org.jfree.chart.axis.CategoryLabelPosition;
 import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.common.ui.RectangleAnchor;
 import org.jfree.chart.text.TextBlockAnchor;
-import org.jfree.ui.RectangleAnchor;
 
 /**
  * Tests for the {@link CategoryLabelPositions} class.

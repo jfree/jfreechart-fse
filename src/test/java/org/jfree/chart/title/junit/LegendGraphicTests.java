@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * LegendGraphicTests.java
  * -----------------------
- * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -35,6 +35,7 @@
  * Changes
  * -------
  * 01-Sep-2005 : Version 1 (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -57,10 +58,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.common.ui.GradientPaintTransformType;
+import org.jfree.chart.common.ui.RectangleAnchor;
+import org.jfree.chart.common.ui.StandardGradientPaintTransformer;
 import org.jfree.chart.title.LegendGraphic;
-import org.jfree.ui.GradientPaintTransformType;
-import org.jfree.ui.RectangleAnchor;
-import org.jfree.ui.StandardGradientPaintTransformer;
 
 /**
  * Tests for the {@link LegendGraphic} class.

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * PlotRenderingInfo.java
  * ----------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited.
+ * (C) Copyright 2003-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -41,6 +41,7 @@
  * ------------- JFREECHART 1.0.x ---------------------------------------------
  * 01-Dec-2006 : Implemented clone() method properly (DG);
  * 17-Apr-2007 : Fixed bug 1698965 (NPE in CombinedDomainXYPlot) (DG);
+ * 17-Jun-2012 : Removed from JCommon dependencies (DG);
  *
  */
 
@@ -55,8 +56,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jfree.chart.ChartRenderingInfo;
+import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.util.ObjectUtilities;
 
 /**
  * Stores information about the dimensions of a plot and its subplots.

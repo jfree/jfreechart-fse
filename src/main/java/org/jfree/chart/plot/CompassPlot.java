@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------
  * CompassPlot.java
  * ----------------
- * (C) Copyright 2002-2008, by the Australian Antarctic Division and
+ * (C) Copyright 2002-2012, by the Australian Antarctic Division and
  * Contributors.
  *
  * Original Author:  Bryan Scott (for the Australian Antarctic Division);
@@ -61,6 +61,7 @@
  * 18-Dec-2008 : Use ResourceBundleWrapper - see patch 1607918 by
  *               Jess Thrysoee (DG);
  * 10-Oct-2011 : localization fix: bug #3353913 (MH);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -85,6 +86,9 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.common.util.PaintUtilities;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.needle.ArrowNeedle;
 import org.jfree.chart.needle.LineNeedle;
@@ -97,12 +101,9 @@ import org.jfree.chart.needle.PointerNeedle;
 import org.jfree.chart.needle.ShipNeedle;
 import org.jfree.chart.needle.WindNeedle;
 import org.jfree.chart.util.ResourceBundleWrapper;
+import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.general.DefaultValueDataset;
 import org.jfree.data.general.ValueDataset;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.util.ObjectUtilities;
-import org.jfree.util.PaintUtilities;
 
 /**
  * A specialised plot that draws a compass to indicate a direction based on the
@@ -133,13 +134,13 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
     private boolean drawBorder = false;
 
     /** The rose highlight paint. */
-    private transient Paint roseHighlightPaint = Color.black;
+    private transient Paint roseHighlightPaint = Color.BLACK;
 
     /** The rose paint. */
-    private transient Paint rosePaint = Color.yellow;
+    private transient Paint rosePaint = Color.YELLOW;
 
     /** The rose center paint. */
-    private transient Paint roseCenterPaint = Color.white;
+    private transient Paint roseCenterPaint = Color.WHITE;
 
     /** The compass font. */
     private Font compassFont = new Font("Arial", Font.PLAIN, 10);
@@ -448,8 +449,8 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
         switch (type) {
             case 0:
                 setSeriesNeedle(index, new ArrowNeedle(true));
-                setSeriesPaint(index, Color.red);
-                this.seriesNeedle[index].setHighlightPaint(Color.white);
+                setSeriesPaint(index, Color.RED);
+                this.seriesNeedle[index].setHighlightPaint(Color.WHITE);
                 break;
             case 1:
                 setSeriesNeedle(index, new LineNeedle());
@@ -474,7 +475,7 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
                 setSeriesNeedle(index, new ShipNeedle());
                 break;
             case 7:
-                setSeriesPaint(index, Color.blue);
+                setSeriesPaint(index, Color.BLUE);
                 setSeriesNeedle(index, new WindNeedle());
                 break;
             case 8:

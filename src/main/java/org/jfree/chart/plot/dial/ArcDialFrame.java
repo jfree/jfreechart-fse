@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------
  * ArcDialFrame.java
  * -----------------
- * (C) Copyright 2006-2008, by Object Refinery Limited.
+ * (C) Copyright 2006-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -39,6 +39,7 @@
  * 17-Oct-2007 : Updated equals() (DG);
  * 24-Oct-2007 : Added argument checks and API docs, and renamed
  *               StandardDialFrame --> ArcDialFrame (DG);
+ * 16-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -61,9 +62,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import org.jfree.chart.HashUtilities;
+import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.PublicCloneable;
 
 /**
  * A standard frame for the {@link DialPlot} class.
@@ -126,7 +127,7 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame,
      * @param extent  the extent of the arc (in degrees, counter-clockwise).
      */
     public ArcDialFrame(double startAngle, double extent) {
-        this.backgroundPaint = Color.gray;
+        this.backgroundPaint = Color.GRAY;
         this.foregroundPaint = new Color(100, 100, 150);
         this.stroke = new BasicStroke(2.0f);
         this.innerRadius = 0.25;
@@ -393,7 +394,7 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame,
         Area area1 = new Area(outerWindow);
         Area area2 = new Area(window);
         area1.subtract(area2);
-        g2.setPaint(Color.lightGray);
+        g2.setPaint(Color.LIGHT_GRAY);
         g2.fill(area1);
 
         g2.setStroke(this.stroke);

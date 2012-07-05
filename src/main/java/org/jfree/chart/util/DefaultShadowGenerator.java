@@ -79,7 +79,7 @@ public class DefaultShadowGenerator implements ShadowGenerator, Serializable {
      * Creates a new instance with default attributes.
      */
     public DefaultShadowGenerator() {
-        this(5, Color.black, 0.5f, 5, -Math.PI / 4);
+        this(5, Color.BLACK, 0.5f, 5, -Math.PI / 4);
     }
 
     /**

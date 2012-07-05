@@ -49,8 +49,8 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.common.ui.Size2D;
 import org.jfree.chart.title.ImageTitle;
-import org.jfree.ui.Size2D;
 
 /**
  * Tests for the {@link ImageTitle} class.
