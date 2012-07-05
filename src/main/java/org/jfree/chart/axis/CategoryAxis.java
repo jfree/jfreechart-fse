@@ -183,13 +183,13 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     private CategoryLabelPositions categoryLabelPositions;
 
     /** Storage for tick label font overrides (if any). */
-    private Map tickLabelFontMap;
+    private Map<Comparable, Font> tickLabelFontMap;
 
     /** Storage for tick label paint overrides (if any). */
-    private transient Map tickLabelPaintMap;
+    private transient Map<Comparable, Paint> tickLabelPaintMap;
 
     /** Storage for the category label tooltips (if any). */
-    private Map categoryLabelToolTips;
+    private Map<Comparable, String> categoryLabelToolTips;
 
     /**
      * Creates a new category axis with no label.
@@ -215,9 +215,9 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
 
         this.categoryLabelPositionOffset = 4;
         this.categoryLabelPositions = CategoryLabelPositions.STANDARD;
-        this.tickLabelFontMap = new HashMap();
-        this.tickLabelPaintMap = new HashMap();
-        this.categoryLabelToolTips = new HashMap();
+        this.tickLabelFontMap = new HashMap<Comparable, Font>();
+        this.tickLabelPaintMap = new HashMap<Comparable, Paint>();
+        this.categoryLabelToolTips = new HashMap<Comparable, String>();
 
     }
 
@@ -413,7 +413,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         if (category == null) {
             throw new IllegalArgumentException("Null 'category' argument.");
         }
-        Font result = (Font) this.tickLabelFontMap.get(category);
+        Font result = this.tickLabelFontMap.get(category);
         // if there is no specific font, use the general one...
         if (result == null) {
             result = getTickLabelFont();
@@ -456,7 +456,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         if (category == null) {
             throw new IllegalArgumentException("Null 'category' argument.");
         }
-        Paint result = (Paint) this.tickLabelPaintMap.get(category);
+        Paint result = this.tickLabelPaintMap.get(category);
         // if there is no specific paint, use the general one...
         if (result == null) {
             result = getTickLabelPaint();
@@ -518,7 +518,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         if (category == null) {
             throw new IllegalArgumentException("Null 'category' argument.");
         }
-        return (String) this.categoryLabelToolTips.get(category);
+        return this.categoryLabelToolTips.get(category);
     }
 
     /**
@@ -680,7 +680,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      *     double, Rectangle2D, RectangleEdge)
      */
     public double getCategoryMiddle(Comparable category,
-            List categories, Rectangle2D area, RectangleEdge edge) {
+            List<Comparable> categories, Rectangle2D area, RectangleEdge edge) {
         if (categories == null) {
             throw new IllegalArgumentException("Null 'categories' argument.");
         }
@@ -719,11 +719,9 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         if (seriesCount == 1) {
             return start + width / 2.0;
         }
-        else {
-            double gap = (width * itemMargin) / (seriesCount - 1);
-            double ww = (width * (1 - itemMargin)) / seriesCount;
-            return start + (seriesIndex * (ww + gap)) + ww / 2.0;
-        }
+        double gap = (width * itemMargin) / (seriesCount - 1);
+        double ww = (width * (1 - itemMargin)) / seriesCount;
+        return start + (seriesIndex * (ww + gap)) + ww / 2.0;
     }
 
     /**
@@ -753,11 +751,9 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         if (seriesCount == 1) {
             return start + width / 2.0;
         }
-        else {
-            double gap = (width * itemMargin) / (seriesCount - 1);
-            double ww = (width * (1 - itemMargin)) / seriesCount;
-            return start + (seriesIndex * (ww + gap)) + ww / 2.0;
-        }
+        double gap = (width * itemMargin) / (seriesCount - 1);
+        double ww = (width * (1 - itemMargin)) / seriesCount;
+        return start + (seriesIndex * (ww + gap)) + ww / 2.0;
     }
 
     /**
@@ -839,6 +835,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      *
      * @return The space required to draw the axis.
      */
+    @Override
     public AxisSpace reserveSpace(Graphics2D g2, Plot plot,
                                   Rectangle2D plotArea,
                                   RectangleEdge edge, AxisSpace space) {
@@ -896,6 +893,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     /**
      * Configures the axis against the current plot.
      */
+    @Override
     public void configure() {
         // nothing required
     }
@@ -916,6 +914,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      *
      * @return The axis state (never <code>null</code>).
      */
+    @Override
     public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
             Rectangle2D dataArea, RectangleEdge edge,
             PlotRenderingInfo plotState) {
@@ -1075,12 +1074,13 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      *
      * @return A list of ticks.
      */
-    public List refreshTicks(Graphics2D g2,
+    @Override
+    public List<Tick> refreshTicks(Graphics2D g2,
                              AxisState state,
                              Rectangle2D dataArea,
                              RectangleEdge edge) {
 
-        List ticks = new java.util.ArrayList();
+        List<Tick> ticks = new java.util.ArrayList<Tick>();
 
         // sanity check for data area...
         if (dataArea.getHeight() <= 0.0 || dataArea.getWidth() < 0.0) {
@@ -1088,7 +1088,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         }
 
         CategoryPlot plot = (CategoryPlot) getPlot();
-        List categories = plot.getCategoriesForAxis(this);
+        List<Comparable> categories = plot.getCategoriesForAxis(this);
         double max = 0.0;
 
         if (categories != null) {
@@ -1113,9 +1113,9 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
                 }
             }
             int categoryIndex = 0;
-            Iterator iterator = categories.iterator();
+            Iterator<Comparable> iterator = categories.iterator();
             while (iterator.hasNext()) {
-                Comparable category = (Comparable) iterator.next();
+                Comparable category = iterator.next();
                 g2.setFont(getTickLabelFont(category));
                 TextBlock label = createLabel(category, l * r, edge, g2);
                 if (edge == RectangleEdge.TOP || edge == RectangleEdge.BOTTOM) {
@@ -1155,13 +1155,13 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         double il = getTickMarkInsideLength();
         double ol = getTickMarkOutsideLength();
         Line2D line = new Line2D.Double();
-        List categories = plot.getCategoriesForAxis(this);
+        List<Comparable> categories = plot.getCategoriesForAxis(this);
         g2.setPaint(getTickMarkPaint());
         g2.setStroke(getTickMarkStroke());
         if (edge.equals(RectangleEdge.TOP)) {
-            Iterator iterator = categories.iterator();
+            Iterator<Comparable> iterator = categories.iterator();
             while (iterator.hasNext()) {
-                Comparable key = (Comparable) iterator.next();
+                Comparable key = iterator.next();
                 double x = getCategoryMiddle(key, categories, dataArea, edge);
                 line.setLine(x, cursor, x, cursor + il);
                 g2.draw(line);
@@ -1171,9 +1171,9 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
             state.cursorUp(ol);
         }
         else if (edge.equals(RectangleEdge.BOTTOM)) {
-            Iterator iterator = categories.iterator();
+            Iterator<Comparable> iterator = categories.iterator();
             while (iterator.hasNext()) {
-                Comparable key = (Comparable) iterator.next();
+                Comparable key = iterator.next();
                 double x = getCategoryMiddle(key, categories, dataArea, edge);
                 line.setLine(x, cursor, x, cursor - il);
                 g2.draw(line);
@@ -1183,9 +1183,9 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
             state.cursorDown(ol);
         }
         else if (edge.equals(RectangleEdge.LEFT)) {
-            Iterator iterator = categories.iterator();
+            Iterator<Comparable> iterator = categories.iterator();
             while (iterator.hasNext()) {
-                Comparable key = (Comparable) iterator.next();
+                Comparable key = iterator.next();
                 double y = getCategoryMiddle(key, categories, dataArea, edge);
                 line.setLine(cursor, y, cursor + il, y);
                 g2.draw(line);
@@ -1195,9 +1195,9 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
             state.cursorLeft(ol);
         }
         else if (edge.equals(RectangleEdge.RIGHT)) {
-            Iterator iterator = categories.iterator();
+            Iterator<Comparable> iterator = categories.iterator();
             while (iterator.hasNext()) {
-                Comparable key = (Comparable) iterator.next();
+                Comparable key = iterator.next();
                 double y = getCategoryMiddle(key, categories, dataArea, edge);
                 line.setLine(cursor, y, cursor - il, y);
                 g2.draw(line);
@@ -1283,11 +1283,12 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      * @throws CloneNotSupportedException if some component of the axis does
      *         not support cloning.
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         CategoryAxis clone = (CategoryAxis) super.clone();
-        clone.tickLabelFontMap = new HashMap(this.tickLabelFontMap);
-        clone.tickLabelPaintMap = new HashMap(this.tickLabelPaintMap);
-        clone.categoryLabelToolTips = new HashMap(this.categoryLabelToolTips);
+        clone.tickLabelFontMap = new HashMap<Comparable, Font>(this.tickLabelFontMap);
+        clone.tickLabelPaintMap = new HashMap<Comparable, Paint>(this.tickLabelPaintMap);
+        clone.categoryLabelToolTips = new HashMap<Comparable, String>(this.categoryLabelToolTips);
         return clone;
     }
 
@@ -1298,6 +1299,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      *
      * @return A boolean.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -1353,9 +1355,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         if (getLabel() != null) {
             return getLabel().hashCode();
         }
-        else {
-            return 0;
-        }
+        return 0;
     }
 
     /**

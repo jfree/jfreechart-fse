@@ -3245,7 +3245,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
                  float radius = (new Float(state.getPieHRadius())).floatValue();
 
                  Paint radialPaint = (Paint) cc.newInstance(new Object[] {
-                         (Object) center, (Object) new Float(radius),
+                         center, new Float(radius),
                          fractions, clrs});
                  // return the new RadialGradientPaint
                  return radialPaint;

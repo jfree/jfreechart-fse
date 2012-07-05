@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -98,7 +98,7 @@ public class PolynomialFunction2D implements Function2D, Serializable {
      */
     public double getValue(double x) {
         double y = 0;
-        for(int i = 0; i < coefficients.length; i++){
+        for(int i = 0; i < this.coefficients.length; i++){
             y += coefficients[i] * Math.pow(x, i);
         }
         return y;

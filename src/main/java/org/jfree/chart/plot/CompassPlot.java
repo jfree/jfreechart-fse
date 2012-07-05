@@ -822,8 +822,8 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
         if (this.rect1 != null) {
             clone.rect1 = (Rectangle2D) this.rect1.clone();
         }
-        clone.datasets = (ValueDataset[]) this.datasets.clone();
-        clone.seriesNeedle = (MeterNeedle[]) this.seriesNeedle.clone();
+        clone.datasets = this.datasets.clone();
+        clone.seriesNeedle = this.seriesNeedle.clone();
 
         // clone share data sets => add the clone as listener to the dataset
         for (int i = 0; i < this.datasets.length; ++i) {

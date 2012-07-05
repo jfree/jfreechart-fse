@@ -353,6 +353,7 @@ public class AxisSpace implements Cloneable, PublicCloneable, Serializable {
      *
      * @return A hash code.
      */
+    @Override
     public int hashCode() {
         int result = 23;
         long l = Double.doubleToLongBits(this.top);

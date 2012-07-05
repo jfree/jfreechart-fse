@@ -122,6 +122,7 @@ public class XYBarDataset extends AbstractIntervalXYDataset
      *
      * @return The series count.
      */
+    @Override
     public int getSeriesCount() {
         return this.underlying.getSeriesCount();
     }
@@ -134,6 +135,7 @@ public class XYBarDataset extends AbstractIntervalXYDataset
      *
      * @return The series key.
      */
+    @Override
     public Comparable getSeriesKey(int series) {
         return this.underlying.getSeriesKey(series);
     }
@@ -173,6 +175,7 @@ public class XYBarDataset extends AbstractIntervalXYDataset
      *
      * @see #getX(int, int)
      */
+    @Override
     public double getXValue(int series, int item) {
         return this.underlying.getXValue(series, item);
     }
@@ -201,6 +204,7 @@ public class XYBarDataset extends AbstractIntervalXYDataset
      *
      * @see #getY(int, int)
      */
+    @Override
     public double getYValue(int series, int item) {
         return this.underlying.getYValue(series, item);
     }
@@ -233,6 +237,7 @@ public class XYBarDataset extends AbstractIntervalXYDataset
      *
      * @see #getXValue(int, int)
      */
+    @Override
     public double getStartXValue(int series, int item) {
         return getXValue(series, item) - this.barWidth / 2.0;
     }
@@ -265,6 +270,7 @@ public class XYBarDataset extends AbstractIntervalXYDataset
      *
      * @see #getXValue(int, int)
      */
+    @Override
     public double getEndXValue(int series, int item) {
         return getXValue(series, item) + this.barWidth / 2.0;
     }
@@ -292,6 +298,7 @@ public class XYBarDataset extends AbstractIntervalXYDataset
      *
      * @see #getYValue(int, int)
      */
+    @Override
     public double getStartYValue(int series, int item) {
         return getYValue(series, item);
     }
@@ -319,6 +326,7 @@ public class XYBarDataset extends AbstractIntervalXYDataset
      *
      * @see #getYValue(int, int)
      */
+    @Override
     public double getEndYValue(int series, int item) {
         return getYValue(series, item);
     }
@@ -339,6 +347,7 @@ public class XYBarDataset extends AbstractIntervalXYDataset
      *
      * @return A boolean.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -370,6 +379,7 @@ public class XYBarDataset extends AbstractIntervalXYDataset
      * @throws CloneNotSupportedException if the dataset cannot be cloned for
      *         any reason.
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         XYBarDataset clone = (XYBarDataset) super.clone();
         if (this.underlying instanceof PublicCloneable) {

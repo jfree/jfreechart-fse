@@ -1336,6 +1336,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @throws CloneNotSupportedException if some component of the axis does
      *         not support cloning.
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         Axis clone = (Axis) super.clone();
         // It's up to the plot which clones up to restore the correct references
@@ -1351,6 +1352,7 @@ public abstract class Axis implements Cloneable, Serializable {
      *
      * @return <code>true</code> or <code>false</code>.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
