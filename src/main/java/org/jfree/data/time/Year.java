@@ -209,9 +209,7 @@ public class Year extends RegularTimePeriod implements Serializable {
         if (this.year > Year.MINIMUM_YEAR) {
             return new Year(this.year - 1);
         }
-        else {
-            return null;
-        }
+        return null;
     }
 
     /**
@@ -254,9 +252,7 @@ public class Year extends RegularTimePeriod implements Serializable {
     public long getFirstMillisecond(Calendar calendar) {
         calendar.set(this.year, Calendar.JANUARY, 1, 0, 0, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        // in the following line, we'd rather call calendar.getTimeInMillis()
-        // to avoid object creation, but that isn't supported in Java 1.3.1
-        return calendar.getTime().getTime();
+        return calendar.getTimeInMillis();
     }
 
     /**
@@ -273,9 +269,7 @@ public class Year extends RegularTimePeriod implements Serializable {
     public long getLastMillisecond(Calendar calendar) {
         calendar.set(this.year, Calendar.DECEMBER, 31, 23, 59, 59);
         calendar.set(Calendar.MILLISECOND, 999);
-        // in the following line, we'd rather call calendar.getTimeInMillis()
-        // to avoid object creation, but that isn't supported in Java 1.3.1
-        return calendar.getTime().getTime();
+        return calendar.getTimeInMillis();
     }
 
     /**

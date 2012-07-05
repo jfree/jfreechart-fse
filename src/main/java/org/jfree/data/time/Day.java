@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -268,16 +268,12 @@ public class Day extends RegularTimePeriod implements Serializable {
      * @return The day preceding this one.
      */
     public RegularTimePeriod previous() {
-        Day result;
         int serial = this.serialDate.toSerial();
         if (serial > SerialDate.SERIAL_LOWER_BOUND) {
             SerialDate yesterday = SerialDate.createInstance(serial - 1);
             return new Day(yesterday);
         }
-        else {
-            result = null;
-        }
-        return result;
+        return null;
     }
 
     /**
@@ -288,16 +284,12 @@ public class Day extends RegularTimePeriod implements Serializable {
      *         has been reached.
      */
     public RegularTimePeriod next() {
-        Day result;
         int serial = this.serialDate.toSerial();
         if (serial < SerialDate.SERIAL_UPPER_BOUND) {
             SerialDate tomorrow = SerialDate.createInstance(serial + 1);
             return new Day(tomorrow);
         }
-        else {
-            result = null;
-        }
-        return result;
+        return null;
     }
 
     /**
@@ -327,8 +319,7 @@ public class Day extends RegularTimePeriod implements Serializable {
         calendar.clear();
         calendar.set(year, month - 1, day, 0, 0, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        //return calendar.getTimeInMillis();  // this won't work for JDK 1.3
-        return calendar.getTime().getTime();
+        return calendar.getTimeInMillis();
     }
 
     /**
@@ -349,8 +340,7 @@ public class Day extends RegularTimePeriod implements Serializable {
         calendar.clear();
         calendar.set(year, month - 1, day, 23, 59, 59);
         calendar.set(Calendar.MILLISECOND, 999);
-        //return calendar.getTimeInMillis();  // this won't work for JDK 1.3
-        return calendar.getTime().getTime();
+        return calendar.getTimeInMillis();
     }
 
     /**

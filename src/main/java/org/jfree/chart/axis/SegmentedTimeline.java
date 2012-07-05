@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -302,9 +302,7 @@ public class SegmentedTimeline implements Timeline, Cloneable, Serializable {
         while (cal.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
             cal.add(Calendar.DATE, 1);
         }
-        // FIRST_MONDAY_AFTER_1900 = cal.getTime().getTime();
-        // preceding code won't work with JDK 1.3
-        FIRST_MONDAY_AFTER_1900 = cal.getTime().getTime();
+        FIRST_MONDAY_AFTER_1900 = cal.getTimeInMillis();
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -363,9 +361,7 @@ public class SegmentedTimeline implements Timeline, Cloneable, Serializable {
         while (cal.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
             cal.add(Calendar.DATE, 1);
         }
-        //return cal.getTimeInMillis();
-        // preceding code won't work with JDK 1.3
-        return cal.getTime().getTime();
+        return cal.getTimeInMillis();
     }
 
     /**
@@ -727,9 +723,7 @@ public class SegmentedTimeline implements Timeline, Cloneable, Serializable {
             );
             this.workingCalendar.set(Calendar.MILLISECOND,
                     this.workingCalendarNoDST.get(Calendar.MILLISECOND));
-            // result = this.workingCalendar.getTimeInMillis();
-            // preceding code won't work with JDK 1.3
-            result = this.workingCalendar.getTime().getTime();
+            result = this.workingCalendar.getTimeInMillis();
         }
         return result;
     }

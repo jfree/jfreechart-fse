@@ -377,8 +377,7 @@ public class Week extends RegularTimePeriod implements Serializable {
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
-        //return c.getTimeInMillis();  // this won't work for JDK 1.3
-        return c.getTime().getTime();
+        return c.getTimeInMillis();
     }
 
     /**
@@ -402,8 +401,7 @@ public class Week extends RegularTimePeriod implements Serializable {
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
-        //return c.getTimeInMillis();  // this won't work for JDK 1.3
-        return c.getTime().getTime() - 1;
+        return c.getTimeInMillis() - 1;
     }
 
     /**

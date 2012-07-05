@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -340,8 +340,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
         int dom = this.day.getDayOfMonth();
         calendar.set(year, month, dom, this.hour, 0, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        //return calendar.getTimeInMillis();  // this won't work for JDK 1.3
-        return calendar.getTime().getTime();
+        return calendar.getTimeInMillis();
     }
 
     /**
@@ -360,8 +359,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
         int dom = this.day.getDayOfMonth();
         calendar.set(year, month, dom, this.hour, 59, 59);
         calendar.set(Calendar.MILLISECOND, 999);
-        //return calendar.getTimeInMillis();  // this won't work for JDK 1.3
-        return calendar.getTime().getTime();
+        return calendar.getTimeInMillis();
     }
 
     /**

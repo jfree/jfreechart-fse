@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -149,10 +149,10 @@ class MouseWheelHandler implements MouseWheelListener, Serializable {
         if (clicks < 0) {
             zf = 1.0 / zf;
         }
-        if (chartPanel.isDomainZoomable()) {
+        if (this.chartPanel.isDomainZoomable()) {
             zoomable.zoomDomainAxes(zf, pinfo, p, true);
         }
-        if (chartPanel.isRangeZoomable()) {
+        if (this.chartPanel.isRangeZoomable()) {
             zoomable.zoomRangeAxes(zf, pinfo, p, true);
         }
         plot.setNotify(notifyState);  // this generates the change event too

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -603,7 +603,7 @@ public class RelativeDateFormat extends DateFormat {
         c1.set(Calendar.MILLISECOND, 123);
 
         System.out.println("Default: ");
-        RelativeDateFormat rdf = new RelativeDateFormat(c0.getTime().getTime());
+        RelativeDateFormat rdf = new RelativeDateFormat(c0.getTimeInMillis());
         System.out.println(rdf.format(c1.getTime()));
         System.out.println();
 
