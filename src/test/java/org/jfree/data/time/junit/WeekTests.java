@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -107,6 +107,7 @@ public class WeekTests extends TestCase {
     /**
      * Common test setup.
      */
+    @Override
     protected void setUp() {
         this.w1Y1900 = new Week(1, 1900);
         this.w2Y1900 = new Week(2, 1900);
@@ -345,7 +346,8 @@ public class WeekTests extends TestCase {
         Locale.setDefault(Locale.US);
         try {
             TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
-            assertEquals(-603302400000L, w.getFirstMillisecond(zone));
+            Calendar c = new GregorianCalendar(zone);
+            assertEquals(-603302400000L, w.getFirstMillisecond(c));
         }
         finally {
             Locale.setDefault(saved);
@@ -354,7 +356,7 @@ public class WeekTests extends TestCase {
         // try null calendar
         boolean pass = false;
         try {
-            w.getFirstMillisecond((TimeZone) null);
+            w.getFirstMillisecond((Calendar) null);
         }
         catch (NullPointerException e) {
             pass = true;
@@ -405,7 +407,8 @@ public class WeekTests extends TestCase {
         Locale.setDefault(Locale.US);
         try {
             TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
-            assertEquals(-629913600001L, w.getLastMillisecond(zone));
+            Calendar c = new GregorianCalendar(zone);
+            assertEquals(-629913600001L, w.getLastMillisecond(c));
         }
         finally {
             Locale.setDefault(saved);
@@ -414,7 +417,7 @@ public class WeekTests extends TestCase {
         // try null zone
         boolean pass = false;
         try {
-            w.getLastMillisecond((TimeZone) null);
+            w.getLastMillisecond((Calendar) null);
         }
         catch (NullPointerException e) {
             pass = true;

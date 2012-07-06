@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -136,14 +136,15 @@ public class QuarterTests extends TestCase {
     public void testDateConstructor1() {
 
         TimeZone zone = TimeZone.getTimeZone("GMT");
+        Calendar c = new GregorianCalendar(zone);
         Quarter q1 = new Quarter(new Date(1017619199999L), zone, Locale.getDefault());
         Quarter q2 = new Quarter(new Date(1017619200000L), zone, Locale.getDefault());
 
         assertEquals(1, q1.getQuarter());
-        assertEquals(1017619199999L, q1.getLastMillisecond(zone));
+        assertEquals(1017619199999L, q1.getLastMillisecond(c));
 
         assertEquals(2, q2.getQuarter());
-        assertEquals(1017619200000L, q2.getFirstMillisecond(zone));
+        assertEquals(1017619200000L, q2.getFirstMillisecond(c));
 
     }
 
@@ -154,14 +155,15 @@ public class QuarterTests extends TestCase {
     public void testDateConstructor2() {
 
         TimeZone zone = TimeZone.getTimeZone("Europe/Istanbul");
+        Calendar c = new GregorianCalendar(zone);
         Quarter q1 = new Quarter(new Date(1017608399999L), zone, Locale.getDefault());
         Quarter q2 = new Quarter(new Date(1017608400000L), zone, Locale.getDefault());
 
         assertEquals(1, q1.getQuarter());
-        assertEquals(1017608399999L, q1.getLastMillisecond(zone));
+        assertEquals(1017608399999L, q1.getLastMillisecond(c));
 
         assertEquals(2, q2.getQuarter());
-        assertEquals(1017608400000L, q2.getFirstMillisecond(zone));
+        assertEquals(1017608400000L, q2.getFirstMillisecond(c));
 
     }
 
@@ -332,12 +334,13 @@ public class QuarterTests extends TestCase {
     public void testGetFirstMillisecondWithTimeZone() {
         Quarter q = new Quarter(2, 1950);
         TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
-        assertEquals(-623347200000L, q.getFirstMillisecond(zone));
+        Calendar c = new GregorianCalendar(zone);
+        assertEquals(-623347200000L, q.getFirstMillisecond(c));
 
         // try null calendar
         boolean pass = false;
         try {
-            q.getFirstMillisecond((TimeZone) null);
+            q.getFirstMillisecond((Calendar) null);
         }
         catch (NullPointerException e) {
             pass = true;
@@ -385,12 +388,13 @@ public class QuarterTests extends TestCase {
     public void testGetLastMillisecondWithTimeZone() {
         Quarter q = new Quarter(2, 1950);
         TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
-        assertEquals(-615488400001L, q.getLastMillisecond(zone));
+        Calendar c = new GregorianCalendar(zone);
+        assertEquals(-615488400001L, q.getLastMillisecond(c));
 
         // try null calendar
         boolean pass = false;
         try {
-            q.getLastMillisecond((TimeZone) null);
+            q.getLastMillisecond((Calendar) null);
         }
         catch (NullPointerException e) {
             pass = true;

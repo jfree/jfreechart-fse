@@ -152,7 +152,8 @@ public class YIntervalRenderer extends AbstractXYItemRenderer
      * @return The range (<code>null</code> if the dataset is <code>null</code>
      *         or empty).
      */
-    public Range findRangeBounds(XYDataset dataset) {
+    @Override
+	public Range findRangeBounds(XYDataset dataset) {
         return findRangeBounds(dataset, true);
     }
 
@@ -174,6 +175,7 @@ public class YIntervalRenderer extends AbstractXYItemRenderer
      *                        (<code>null</code> permitted).
      * @param pass  the pass index (ignored here).
      */
+    @Override
     public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
@@ -292,7 +294,8 @@ public class YIntervalRenderer extends AbstractXYItemRenderer
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -314,6 +317,7 @@ public class YIntervalRenderer extends AbstractXYItemRenderer
      *
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

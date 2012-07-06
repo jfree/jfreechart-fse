@@ -244,7 +244,8 @@ public class XYTitleAnnotation extends AbstractXYAnnotation
      * @param info  if supplied, this info object will be populated with
      *              entity information.
      */
-    public void draw(Graphics2D g2, XYPlot plot, Rectangle2D dataArea,
+    @Override
+	public void draw(Graphics2D g2, XYPlot plot, Rectangle2D dataArea,
                      ValueAxis domainAxis, ValueAxis rangeAxis,
                      int rendererIndex,
                      PlotRenderingInfo info) {
@@ -339,7 +340,8 @@ public class XYTitleAnnotation extends AbstractXYAnnotation
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -376,7 +378,8 @@ public class XYTitleAnnotation extends AbstractXYAnnotation
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 193;
         result = HashUtilities.hashCode(result, this.anchor);
         result = HashUtilities.hashCode(result, this.coordinateType);
@@ -395,7 +398,8 @@ public class XYTitleAnnotation extends AbstractXYAnnotation
      *
      * @throws CloneNotSupportedException  if the annotation can't be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
