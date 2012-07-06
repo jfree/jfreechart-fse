@@ -314,6 +314,7 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
      *
      * @return The number of passes required by the renderer.
      */
+    @Override
     public XYItemRendererState initialise(Graphics2D g2,
                                           Rectangle2D dataArea,
                                           XYPlot plot,
@@ -349,6 +350,7 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
      *                        (<code>null</code> permitted).
      * @param pass  the pass index.
      */
+    @Override
     public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
@@ -540,6 +542,7 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
      *
      * @return A boolean.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -573,6 +576,7 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
      *
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

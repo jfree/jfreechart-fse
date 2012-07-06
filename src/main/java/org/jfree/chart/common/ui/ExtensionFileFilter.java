@@ -78,6 +78,7 @@ public class ExtensionFileFilter extends FileFilter {
      *
      * @return A boolean that indicates whether or not the file is accepted by the filter.
      */
+    @Override
     public boolean accept(final File file) {
         if (file.isDirectory()) {
             return true;

@@ -238,6 +238,7 @@ class DefaultChartEditor extends JPanel implements ActionListener, ChartEditor {
      *
      * @param event  a BackgroundPaint action.
      */
+    @Override
     public void actionPerformed(ActionEvent event) {
         String command = event.getActionCommand();
         if (command.equals("BackgroundPaint")) {

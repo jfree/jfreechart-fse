@@ -711,7 +711,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
                 // check if the line segments intersect
                 if (((0 < l_slopeA) && (l_slopeA <= 1) && (0 < l_slopeB)
                         && (l_slopeB <= 1))|| b_vertical) {
-                	
+                    
                     // compute the point of intersection
                     double l_xi;
                     double l_yi;
@@ -722,7 +722,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
                     }
                     else{
                         l_xi = l_x1 + (l_slopeA * (l_x2 - l_x1));
-                        l_yi = l_y1 + (l_slopeA * (l_y2 - l_y1));                    		
+                        l_yi = l_y1 + (l_slopeA * (l_y2 - l_y1));                            
                     }
 
                     l_intersectX            = new Double(l_xi);

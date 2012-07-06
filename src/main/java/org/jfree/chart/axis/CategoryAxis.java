@@ -968,7 +968,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         }
 
         if (!isTickLabelsVisible()) {
-        	return state;
+            return state;
         }
         List ticks = refreshTicks(g2, state, plotArea, edge);
         state.setTicks(ticks);

@@ -122,7 +122,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
 
     private static final long serialVersionUID = 6387476296773755770L;
 
-	/** The name of this theme. */
+    /** The name of this theme. */
     private String name;
 
     /**

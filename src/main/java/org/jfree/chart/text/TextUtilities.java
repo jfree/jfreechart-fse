@@ -509,7 +509,7 @@ public class TextUtilities {
         else {
             AttributedString as = new AttributedString(text,
                     g2.getFont().getAttributes());
-        	g2.drawString(as.getIterator(), textX, textY);
+            g2.drawString(as.getIterator(), textX, textY);
         }
         g2.setTransform(saved);
 

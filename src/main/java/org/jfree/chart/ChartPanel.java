@@ -1689,6 +1689,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      *
      * @param event  the event.
      */
+    @Override
     public void actionPerformed(ActionEvent event) {
 
         String command = event.getActionCommand();

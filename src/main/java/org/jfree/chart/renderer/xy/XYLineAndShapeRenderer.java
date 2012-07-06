@@ -238,6 +238,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      *
      * @return The pass count.
      */
+    @Override
     public int getPassCount() {
         return 2;
     }
@@ -676,6 +677,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
          * @param pass  the current pass index.
          * @param passCount  the number of passes.
          */
+        @Override
         public void startSeriesPass(XYDataset dataset, int series,
                 int firstItem, int lastItem, int pass, int passCount) {
             this.seriesPath.reset();
@@ -702,6 +704,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      *
      * @return The renderer state.
      */
+    @Override
     public XYItemRendererState initialise(Graphics2D g2,
                                           Rectangle2D dataArea,
                                           XYPlot plot,
@@ -732,6 +735,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      *                        (<code>null</code> permitted).
      * @param pass  the pass index.
      */
+    @Override
     public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
@@ -1067,6 +1071,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      *
      * @return A legend item for the series (possibly <code>null</code).
      */
+    @Override
     public LegendItem getLegendItem(int datasetIndex, int series) {
         XYPlot plot = getPlot();
         if (plot == null) {
@@ -1130,6 +1135,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      *
      * @throws CloneNotSupportedException if the clone cannot be created.
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         XYLineAndShapeRenderer clone = (XYLineAndShapeRenderer) super.clone();
         clone.seriesLinesVisible
@@ -1151,6 +1157,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      *
      * @return <code>true</code> or <code>false</code>.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;

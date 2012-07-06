@@ -264,6 +264,7 @@ public class XYErrorRenderer extends XYLineAndShapeRenderer {
      * @return The range, or <code>null</code> if the dataset is
      *     <code>null</code>.
      */
+    @Override
     public Range findDomainBounds(XYDataset dataset) {
         // include the interval if there is one
         return findDomainBounds(dataset, true);
@@ -278,6 +279,7 @@ public class XYErrorRenderer extends XYLineAndShapeRenderer {
      * @return The range, or <code>null</code> if the dataset is
      *     <code>null</code>.
      */
+    @Override
     public Range findRangeBounds(XYDataset dataset) {
         // include the interval if there is one
         return findRangeBounds(dataset, true);
@@ -299,6 +301,7 @@ public class XYErrorRenderer extends XYLineAndShapeRenderer {
      * @param crosshairState  the crosshair state.
      * @param pass  the pass index.
      */
+    @Override
     public void drawItem(Graphics2D g2, XYItemRendererState state,
             Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
             ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
@@ -400,6 +403,7 @@ public class XYErrorRenderer extends XYLineAndShapeRenderer {
      *
      * @return A boolean.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;

@@ -341,6 +341,7 @@ public class XYSeries extends Series implements Cloneable, Serializable {
      *
      * @see #getItems()
      */
+    @Override
     public int getItemCount() {
         return this.data.size();
     }
@@ -876,6 +877,7 @@ public class XYSeries extends Series implements Cloneable, Serializable {
      *
      * @throws CloneNotSupportedException if there is a cloning problem.
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         XYSeries clone = (XYSeries) super.clone();
         clone.data = (List) ObjectUtilities.deepClone(this.data);
@@ -921,6 +923,7 @@ public class XYSeries extends Series implements Cloneable, Serializable {
      *
      * @return A boolean.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -952,6 +955,7 @@ public class XYSeries extends Series implements Cloneable, Serializable {
      *
      * @return A hash code.
      */
+    @Override
     public int hashCode() {
         int result = super.hashCode();
         // it is too slow to look at every data item, so let's just look at

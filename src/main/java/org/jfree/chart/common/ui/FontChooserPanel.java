@@ -71,7 +71,7 @@ public class FontChooserPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-	/** The font sizes that can be selected. */
+    /** The font sizes that can be selected. */
     public static final String[] SIZES = {"9", "10", "11", "12", "14", "16",
             "18", "20", "22", "24", "28", "36", "48", "72"};
 

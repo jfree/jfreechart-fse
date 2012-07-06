@@ -153,7 +153,7 @@ public class YIntervalRenderer extends AbstractXYItemRenderer
      *         or empty).
      */
     @Override
-	public Range findRangeBounds(XYDataset dataset) {
+    public Range findRangeBounds(XYDataset dataset) {
         return findRangeBounds(dataset, true);
     }
 
@@ -295,7 +295,7 @@ public class YIntervalRenderer extends AbstractXYItemRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

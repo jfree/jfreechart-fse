@@ -95,6 +95,7 @@ public class DefaultLogAxisEditor extends DefaultValueAxisEditor {
      * Handles actions from within the property panel.
      * @param event an event.
      */
+    @Override
     public void actionPerformed(ActionEvent event) {
         String command = event.getActionCommand();
         if (command.equals("TickUnitValue")) {

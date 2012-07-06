@@ -146,6 +146,7 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
      *
      * @return The renderer state.
      */
+    @Override
     public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
             XYPlot plot, XYDataset data, PlotRenderingInfo info) {
 
@@ -174,6 +175,7 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
      * @param rangeAxis  the range axis.
      * @param dataArea  the area within which the data is being drawn.
      */
+    @Override
     protected void drawPrimaryLineAsPath(XYItemRendererState state,
             Graphics2D g2, XYPlot plot, XYDataset dataset, int pass,
             int series, int item, ValueAxis domainAxis, ValueAxis rangeAxis,
@@ -306,6 +308,7 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
      *
      * @return A boolean.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -349,6 +352,7 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
          *
          * @return A boolean.
          */
+        @Override
         public boolean equals(Object obj) {
             if (obj == this) {
                 return true;

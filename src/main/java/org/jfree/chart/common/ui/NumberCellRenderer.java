@@ -55,7 +55,7 @@ public class NumberCellRenderer extends DefaultTableCellRenderer {
 
     private static final long serialVersionUID = 6141158525258247290L;
 
-	/**
+    /**
      * Default constructor - builds a renderer that right justifies the 
      * contents of a table cell.
      */

@@ -62,9 +62,9 @@ import javax.swing.ListCellRenderer;
  */
 public class StrokeSample extends JComponent implements ListCellRenderer {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/** The stroke being displayed (may be null). */
+    /** The stroke being displayed (may be null). */
     private Stroke stroke;
 
     /** The preferred size of the component. */

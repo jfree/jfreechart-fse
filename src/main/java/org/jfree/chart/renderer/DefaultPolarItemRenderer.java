@@ -111,7 +111,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
 
     private static final long serialVersionUID = 1L;
 
-	/** The plot that the renderer is assigned to. */
+    /** The plot that the renderer is assigned to. */
     private PolarPlot plot;
 
     /** Flags that control whether the renderer fills each series or not. */

@@ -61,7 +61,7 @@ public class FontDisplayField extends JTextField {
 
     private static final long serialVersionUID = 1L;
 
-	/** The current font. */
+    /** The current font. */
     private Font displayFont;
 
     /** The resourceBundle for the localization. */

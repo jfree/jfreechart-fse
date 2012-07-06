@@ -158,6 +158,7 @@ public class XYShapeAnnotation extends AbstractXYAnnotation
      * @param rendererIndex  the renderer index.
      * @param info  the plot rendering info.
      */
+    @Override
     public void draw(Graphics2D g2, XYPlot plot, Rectangle2D dataArea,
                      ValueAxis domainAxis, ValueAxis rangeAxis,
                      int rendererIndex,
@@ -222,6 +223,7 @@ public class XYShapeAnnotation extends AbstractXYAnnotation
      *
      * @return A boolean.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -255,6 +257,7 @@ public class XYShapeAnnotation extends AbstractXYAnnotation
      *
      * @return A hash code.
      */
+    @Override
     public int hashCode() {
         int result = 193;
         result = 37 * result + this.shape.hashCode();
@@ -274,6 +277,7 @@ public class XYShapeAnnotation extends AbstractXYAnnotation
      *
      * @throws CloneNotSupportedException ???.
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

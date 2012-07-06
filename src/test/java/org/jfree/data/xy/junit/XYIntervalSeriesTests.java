@@ -70,6 +70,7 @@ public class XYIntervalSeriesTests extends TestCase
      *
      * @param event  the event.
      */
+    @Override
     public void seriesChanged(SeriesChangeEvent event) {
         this.lastEvent = event;
     }

@@ -92,6 +92,7 @@ public class XYStepAreaChartTests extends TestCase {
     /**
      * Common test setup.
      */
+    @Override
     protected void setUp() {
         this.chart = createChart();
     }
@@ -201,6 +202,7 @@ public class XYStepAreaChartTests extends TestCase {
          *
          * @param event  the event.
          */
+        @Override
         public void chartChanged(ChartChangeEvent event) {
             this.flag = true;
         }

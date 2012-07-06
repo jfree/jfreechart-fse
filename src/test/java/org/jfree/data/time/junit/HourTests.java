@@ -93,7 +93,7 @@ public class HourTests extends TestCase {
      * Common test setup.
      */
     @Override
-	protected void setUp() {
+    protected void setUp() {
         // no setup
     }
 

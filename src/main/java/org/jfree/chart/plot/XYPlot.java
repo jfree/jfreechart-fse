@@ -721,6 +721,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @return A short string describing the type of plot.
      */
+    @Override
     public String getPlotType() {
         return localizationResources.getString("XY_Plot");
     }
@@ -732,6 +733,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @see #setOrientation(PlotOrientation)
      */
+    @Override
     public PlotOrientation getOrientation() {
         return this.orientation;
     }
@@ -3199,6 +3201,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * @param info  collects chart drawing information (<code>null</code>
      *              permitted).
      */
+    @Override
     public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
             PlotState parentState, PlotRenderingInfo info) {
 
@@ -3486,6 +3489,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * @param g2  the graphics device.
      * @param area  the area.
      */
+    @Override
     public void drawBackground(Graphics2D g2, Rectangle2D area) {
         fillBackground(g2, area, this.orientation);
         drawQuadrants(g2, area);
@@ -4362,6 +4366,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * @param y  the y-coordinate, where the click occurred, in Java2D space.
      * @param info  object containing information about the plot dimensions.
      */
+    @Override
     public void handleClick(int x, int y, PlotRenderingInfo info) {
 
         Rectangle2D dataArea = info.getDataArea();
@@ -4495,6 +4500,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @return The range.
      */
+    @Override
     public Range getDataRange(ValueAxis axis) {
 
         Range result = null;
@@ -4603,6 +4609,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @since 1.0.14
      */
+    @Override
     public void annotationChanged(AnnotationChangeEvent event) {
         if (getParent() != null) {
             getParent().annotationChanged(event);
@@ -4620,6 +4627,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @param event  information about the event (not used here).
      */
+    @Override
     public void datasetChanged(DatasetChangeEvent event) {
         configureDomainAxes();
         configureRangeAxes();
@@ -4638,6 +4646,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @param event  the event.
      */
+    @Override
     public void rendererChanged(RendererChangeEvent event) {
         // if the event was caused by a change to series visibility, then
         // the axis ranges might need updating...
@@ -5049,6 +5058,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @since 1.0.13
      */
+    @Override
     public boolean isDomainPannable() {
         return this.domainPannable;
     }
@@ -5073,6 +5083,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @since 1.0.13
      */
+    @Override
     public boolean isRangePannable() {
         return this.rangePannable;
     }
@@ -5098,6 +5109,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @since 1.0.13
      */
+    @Override
     public void panDomainAxes(double percent, PlotRenderingInfo info,
             Point2D source) {
         if (!isDomainPannable()) {
@@ -5125,6 +5137,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @since 1.0.13
      */
+    @Override
     public void panRangeAxes(double percent, PlotRenderingInfo info,
             Point2D source) {
         if (!isRangePannable()) {
@@ -5152,6 +5165,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @see #zoomRangeAxes(double, PlotRenderingInfo, Point2D)
      */
+    @Override
     public void zoomDomainAxes(double factor, PlotRenderingInfo info,
                                Point2D source) {
         // delegate to other method
@@ -5170,6 +5184,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @since 1.0.7
      */
+    @Override
     public void zoomDomainAxes(double factor, PlotRenderingInfo info,
                                Point2D source, boolean useAnchor) {
 
@@ -5209,6 +5224,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @see #zoomRangeAxes(double, double, PlotRenderingInfo, Point2D)
      */
+    @Override
     public void zoomDomainAxes(double lowerPercent, double upperPercent,
                                PlotRenderingInfo info, Point2D source) {
         for (int i = 0; i < this.domainAxes.size(); i++) {
@@ -5228,6 +5244,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @see #zoomDomainAxes(double, PlotRenderingInfo, Point2D, boolean)
      */
+    @Override
     public void zoomRangeAxes(double factor, PlotRenderingInfo info,
                               Point2D source) {
         // delegate to other method
@@ -5247,6 +5264,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @since 1.0.7
      */
+    @Override
     public void zoomRangeAxes(double factor, PlotRenderingInfo info,
                               Point2D source, boolean useAnchor) {
 
@@ -5282,6 +5300,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @see #zoomDomainAxes(double, double, PlotRenderingInfo, Point2D)
      */
+    @Override
     public void zoomRangeAxes(double lowerPercent, double upperPercent,
                               PlotRenderingInfo info, Point2D source) {
         for (int i = 0; i < this.rangeAxes.size(); i++) {
@@ -5300,6 +5319,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @see #isRangeZoomable()
      */
+    @Override
     public boolean isDomainZoomable() {
         return true;
     }
@@ -5312,6 +5332,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @see #isDomainZoomable()
      */
+    @Override
     public boolean isRangeZoomable() {
         return true;
     }
@@ -5363,6 +5384,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @return The legend items.
      */
+    @Override
     public LegendItemCollection getLegendItems() {
         if (this.fixedLegendItems != null) {
             return this.fixedLegendItems;
@@ -5401,6 +5423,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @return <code>true</code> or <code>false</code>.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -5616,6 +5639,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * @throws CloneNotSupportedException  this can occur if some component of
      *         the plot cannot be cloned.
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
 
         XYPlot clone = (XYPlot) super.clone();

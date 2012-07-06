@@ -78,6 +78,7 @@ public class XYDrawableAnnotationTests extends TestCase {
          * @param g2  the graphics device.
          * @param area  the area in which to draw.
          */
+        @Override
         public void draw(Graphics2D g2, Rectangle2D area) {
             // do nothing
         }
@@ -86,6 +87,7 @@ public class XYDrawableAnnotationTests extends TestCase {
          * @param obj  the object to test against (<code>null</code> permitted).
          * @return A boolean.
          */
+        @Override
         public boolean equals(Object obj) {
             if (obj == this) {
                 return true;
@@ -102,6 +104,7 @@ public class XYDrawableAnnotationTests extends TestCase {
          *
          * @throws CloneNotSupportedException if there is a problem cloning.
          */
+        @Override
         public Object clone() throws CloneNotSupportedException {
             return super.clone();
         }
