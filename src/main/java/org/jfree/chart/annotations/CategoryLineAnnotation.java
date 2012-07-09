@@ -299,7 +299,8 @@ public class CategoryLineAnnotation extends AbstractAnnotation
      * @param domainAxis  the domain axis.
      * @param rangeAxis  the range axis.
      */
-    public void draw(Graphics2D g2, CategoryPlot plot, Rectangle2D dataArea,
+    @Override
+	public void draw(Graphics2D g2, CategoryPlot plot, Rectangle2D dataArea,
                      CategoryAxis domainAxis, ValueAxis rangeAxis) {
 
         CategoryDataset dataset = plot.getDataset();
@@ -349,7 +350,8 @@ public class CategoryLineAnnotation extends AbstractAnnotation
      *
      * @return <code>true</code> or <code>false</code>.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -383,7 +385,8 @@ public class CategoryLineAnnotation extends AbstractAnnotation
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 193;
         result = 37 * result + this.category1.hashCode();
         long temp = Double.doubleToLongBits(this.value1);
@@ -404,7 +407,8 @@ public class CategoryLineAnnotation extends AbstractAnnotation
      * @throws CloneNotSupportedException  this class will not throw this
      *         exception, but subclasses (if any) might.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

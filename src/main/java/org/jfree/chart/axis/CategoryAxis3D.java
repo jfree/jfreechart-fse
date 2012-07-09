@@ -108,7 +108,8 @@ public class CategoryAxis3D extends CategoryAxis
      *
      * @return The axis state (never <code>null</code>).
      */
-    public AxisState draw(Graphics2D g2,
+    @Override
+	public AxisState draw(Graphics2D g2,
                           double cursor,
                           Rectangle2D plotArea,
                           Rectangle2D dataArea,
@@ -173,7 +174,8 @@ public class CategoryAxis3D extends CategoryAxis
      *
      * @return The coordinate.
      */
-    public double getCategoryJava2DCoordinate(CategoryAnchor anchor,
+    @Override
+	public double getCategoryJava2DCoordinate(CategoryAnchor anchor,
                                               int category,
                                               int categoryCount,
                                               Rectangle2D area,
@@ -224,7 +226,8 @@ public class CategoryAxis3D extends CategoryAxis
      * @throws CloneNotSupportedException If the axis is not cloneable for
      *         some reason.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

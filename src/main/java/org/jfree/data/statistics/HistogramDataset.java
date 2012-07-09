@@ -302,7 +302,8 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      *
      * @return The series count.
      */
-    public int getSeriesCount() {
+    @Override
+	public int getSeriesCount() {
         return this.list.size();
     }
 
@@ -317,7 +318,8 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      * @throws IndexOutOfBoundsException if <code>series</code> is outside the
      *     specified range.
      */
-    public Comparable getSeriesKey(int series) {
+    @Override
+	public Comparable getSeriesKey(int series) {
         Map map = (Map) this.list.get(series);
         return (Comparable) map.get("key");
     }
@@ -333,7 +335,8 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      * @throws IndexOutOfBoundsException if <code>series</code> is outside the
      *     specified range.
      */
-    public int getItemCount(int series) {
+    @Override
+	public int getItemCount(int series) {
         return getBins(series).size();
     }
 
@@ -352,7 +355,8 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      * @throws IndexOutOfBoundsException if <code>series</code> is outside the
      *     specified range.
      */
-    public Number getX(int series, int item) {
+    @Override
+	public Number getX(int series, int item) {
         List bins = getBins(series);
         HistogramBin bin = (HistogramBin) bins.get(item);
         double x = (bin.getStartBoundary() + bin.getEndBoundary()) / 2.;
@@ -372,7 +376,8 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      * @throws IndexOutOfBoundsException if <code>series</code> is outside the
      *     specified range.
      */
-    public Number getY(int series, int item) {
+    @Override
+	public Number getY(int series, int item) {
         List bins = getBins(series);
         HistogramBin bin = (HistogramBin) bins.get(item);
         double total = getTotal(series);
@@ -404,7 +409,8 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      * @throws IndexOutOfBoundsException if <code>series</code> is outside the
      *     specified range.
      */
-    public Number getStartX(int series, int item) {
+    @Override
+	public Number getStartX(int series, int item) {
         List bins = getBins(series);
         HistogramBin bin = (HistogramBin) bins.get(item);
         return new Double(bin.getStartBoundary());
@@ -422,7 +428,8 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      * @throws IndexOutOfBoundsException if <code>series</code> is outside the
      *     specified range.
      */
-    public Number getEndX(int series, int item) {
+    @Override
+	public Number getEndX(int series, int item) {
         List bins = getBins(series);
         HistogramBin bin = (HistogramBin) bins.get(item);
         return new Double(bin.getEndBoundary());
@@ -442,7 +449,8 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      * @throws IndexOutOfBoundsException if <code>series</code> is outside the
      *     specified range.
      */
-    public Number getStartY(int series, int item) {
+    @Override
+	public Number getStartY(int series, int item) {
         return getY(series, item);
     }
 
@@ -460,7 +468,8 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      * @throws IndexOutOfBoundsException if <code>series</code> is outside the
      *     specified range.
      */
-    public Number getEndY(int series, int item) {
+    @Override
+	public Number getEndY(int series, int item) {
         return getY(series, item);
     }
 
@@ -471,7 +480,8 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -495,7 +505,8 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      *
      * @throws CloneNotSupportedException if the object cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         HistogramDataset clone = (HistogramDataset) super.clone();
         int seriesCount = getSeriesCount();
         clone.list = new java.util.ArrayList(seriesCount);

@@ -109,7 +109,8 @@ public class NormalDistributionFunction2D implements Function2D, Serializable {
      *
      * @return The value.
      */
-    public double getValue(double x) {
+    @Override
+	public double getValue(double x) {
         double z = x - this.mean;
         return this.factor * Math.exp(-z * z / this.denominator);
     }
@@ -121,7 +122,8 @@ public class NormalDistributionFunction2D implements Function2D, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (!(obj instanceof NormalDistributionFunction2D)) {
             return false;
         }
@@ -140,7 +142,8 @@ public class NormalDistributionFunction2D implements Function2D, Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 29;
         result = HashUtilities.hashCode(result, this.mean);
         result = HashUtilities.hashCode(result, this.std);

@@ -116,7 +116,8 @@ public class GroupedStackedBarRenderer extends StackedBarRenderer
      * @return The range (or <code>null</code> if the dataset is
      *         <code>null</code> or empty).
      */
-    public Range findRangeBounds(CategoryDataset dataset) {
+    @Override
+	public Range findRangeBounds(CategoryDataset dataset) {
         if (dataset == null) {
             return null;
         }
@@ -135,7 +136,8 @@ public class GroupedStackedBarRenderer extends StackedBarRenderer
      * @param rendererIndex  the renderer index.
      * @param state  the renderer state.
      */
-    protected void calculateBarWidth(CategoryPlot plot,
+    @Override
+	protected void calculateBarWidth(CategoryPlot plot,
                                      Rectangle2D dataArea,
                                      int rendererIndex,
                                      CategoryItemRendererState state) {
@@ -193,7 +195,8 @@ public class GroupedStackedBarRenderer extends StackedBarRenderer
      *
      * @return The coordinate.
      */
-    protected double calculateBarW0(CategoryPlot plot,
+    @Override
+	protected double calculateBarW0(CategoryPlot plot,
                                     PlotOrientation orientation,
                                     Rectangle2D dataArea,
                                     CategoryAxis domainAxis,
@@ -245,7 +248,8 @@ public class GroupedStackedBarRenderer extends StackedBarRenderer
      * @param column  the column index (zero-based).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2,
+    @Override
+	public void drawItem(Graphics2D g2,
                          CategoryItemRendererState state,
                          Rectangle2D dataArea,
                          CategoryPlot plot,
@@ -361,7 +365,8 @@ public class GroupedStackedBarRenderer extends StackedBarRenderer
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

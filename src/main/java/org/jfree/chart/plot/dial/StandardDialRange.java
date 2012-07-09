@@ -302,7 +302,8 @@ public class StandardDialRange extends AbstractDialLayer implements DialLayer,
      *
      * @return <code>true</code>.
      */
-    public boolean isClippedToWindow() {
+    @Override
+	public boolean isClippedToWindow() {
         return true;
     }
 
@@ -314,7 +315,8 @@ public class StandardDialRange extends AbstractDialLayer implements DialLayer,
      * @param frame  the dial's reference frame (in Java2D space).
      * @param view  the dial's view rectangle (in Java2D space).
      */
-    public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
+    @Override
+	public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
             Rectangle2D view) {
 
         Rectangle2D arcRectInner = DialPlot.rectangleByRadius(frame,
@@ -348,7 +350,8 @@ public class StandardDialRange extends AbstractDialLayer implements DialLayer,
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -382,7 +385,8 @@ public class StandardDialRange extends AbstractDialLayer implements DialLayer,
      *
      * @return The hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 193;
         long temp = Double.doubleToLongBits(this.lowerBound);
         result = 37 * result + (int) (temp ^ (temp >>> 32));
@@ -404,7 +408,8 @@ public class StandardDialRange extends AbstractDialLayer implements DialLayer,
      * @throws CloneNotSupportedException if any of the attributes of this
      *     instance cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

@@ -216,7 +216,8 @@ public class Quarter extends RegularTimePeriod implements Serializable {
      *
      * @see #getLastMillisecond()
      */
-    public long getFirstMillisecond() {
+    @Override
+	public long getFirstMillisecond() {
         return this.firstMillisecond;
     }
 
@@ -230,7 +231,8 @@ public class Quarter extends RegularTimePeriod implements Serializable {
      *
      * @see #getFirstMillisecond()
      */
-    public long getLastMillisecond() {
+    @Override
+	public long getLastMillisecond() {
         return this.lastMillisecond;
     }
 
@@ -242,7 +244,8 @@ public class Quarter extends RegularTimePeriod implements Serializable {
      *
      * @since 1.0.3
      */
-    public void peg(Calendar calendar) {
+    @Override
+	public void peg(Calendar calendar) {
         this.firstMillisecond = getFirstMillisecond(calendar);
         this.lastMillisecond = getLastMillisecond(calendar);
     }
@@ -253,7 +256,8 @@ public class Quarter extends RegularTimePeriod implements Serializable {
      * @return The quarter preceding this one (or <code>null</code> if this is
      *     Q1 1900).
      */
-    public RegularTimePeriod previous() {
+    @Override
+	public RegularTimePeriod previous() {
         Quarter result;
         if (this.quarter > FIRST_QUARTER) {
             result = new Quarter(this.quarter - 1, this.year);
@@ -274,7 +278,8 @@ public class Quarter extends RegularTimePeriod implements Serializable {
      *
      * @return The quarter following this one (or null if this is Q4 9999).
      */
-    public RegularTimePeriod next() {
+    @Override
+	public RegularTimePeriod next() {
         Quarter result;
         if (this.quarter < LAST_QUARTER) {
             result = new Quarter(this.quarter + 1, this.year);
@@ -295,7 +300,8 @@ public class Quarter extends RegularTimePeriod implements Serializable {
      *
      * @return The serial index number.
      */
-    public long getSerialIndex() {
+    @Override
+	public long getSerialIndex() {
         return this.year * 4L + this.quarter;
     }
 
@@ -310,7 +316,8 @@ public class Quarter extends RegularTimePeriod implements Serializable {
      * @return <code>true</code> if quarter and year of this and the object are
      *         the same.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
 
         if (obj != null) {
             if (obj instanceof Quarter) {
@@ -333,7 +340,8 @@ public class Quarter extends RegularTimePeriod implements Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 17;
         result = 37 * result + this.quarter;
         result = 37 * result + this.year;
@@ -350,7 +358,8 @@ public class Quarter extends RegularTimePeriod implements Serializable {
      *
      * @return negative == before, zero == same, positive == after.
      */
-    public int compareTo(Object o1) {
+    @Override
+	public int compareTo(Object o1) {
 
         int result;
 
@@ -387,7 +396,8 @@ public class Quarter extends RegularTimePeriod implements Serializable {
      *
      * @return A string representing the quarter.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return "Q" + this.quarter + "/" + this.year;
     }
 
@@ -402,7 +412,8 @@ public class Quarter extends RegularTimePeriod implements Serializable {
      * @throws NullPointerException if <code>calendar</code> is
      *     <code>null</code>.
      */
-    public long getFirstMillisecond(Calendar calendar) {
+    @Override
+	public long getFirstMillisecond(Calendar calendar) {
         int month = Quarter.FIRST_MONTH_IN_QUARTER[this.quarter];
         calendar.set(this.year, month - 1, 1, 0, 0, 0);
         calendar.set(Calendar.MILLISECOND, 0);
@@ -420,7 +431,8 @@ public class Quarter extends RegularTimePeriod implements Serializable {
      * @throws NullPointerException if <code>calendar</code> is
      *     <code>null</code>.
      */
-    public long getLastMillisecond(Calendar calendar) {
+    @Override
+	public long getLastMillisecond(Calendar calendar) {
         int month = Quarter.LAST_MONTH_IN_QUARTER[this.quarter];
         int eom = SerialDate.lastDayOfMonth(month, this.year);
         calendar.set(this.year, month - 1, eom, 23, 59, 59);

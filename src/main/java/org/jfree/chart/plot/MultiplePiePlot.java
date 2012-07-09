@@ -346,7 +346,8 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
      *
      * @return The plot type.
      */
-    public String getPlotType() {
+    @Override
+	public String getPlotType() {
         return "Multiple Pie Plot";
          // TODO: need to fetch this from localised resources
     }
@@ -392,7 +393,8 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
      * @param parentState  the state from the parent plot, if there is one.
      * @param info  collects info about the drawing.
      */
-    public void draw(Graphics2D g2,
+    @Override
+	public void draw(Graphics2D g2,
                      Rectangle2D area,
                      Point2D anchor,
                      PlotState parentState,
@@ -557,7 +559,8 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
      *
      * @return The legend items.
      */
-    public LegendItemCollection getLegendItems() {
+    @Override
+	public LegendItemCollection getLegendItems() {
 
         LegendItemCollection result = new LegendItemCollection();
         if (this.dataset == null) {
@@ -610,7 +613,8 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
      * @return <code>true</code> if this plot is equal to <code>obj</code>, and
      *     <code>false</code> otherwise.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -651,7 +655,8 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
      * @throws CloneNotSupportedException if some component of the plot does
      *         not support cloning.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         MultiplePiePlot clone = (MultiplePiePlot) super.clone();
         clone.pieChart = (JFreeChart) this.pieChart.clone();
         clone.sectionPaints = new HashMap(this.sectionPaints);

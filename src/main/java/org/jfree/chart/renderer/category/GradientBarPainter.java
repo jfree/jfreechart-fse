@@ -102,7 +102,8 @@ public class GradientBarPainter implements BarPainter, Serializable {
      * @param base  indicates which side of the rectangle is the base of the
      *              bar.
      */
-    public void paintBar(Graphics2D g2, BarRenderer renderer, int row,
+    @Override
+	public void paintBar(Graphics2D g2, BarRenderer renderer, int row,
             int column, RectangularShape bar, RectangleEdge base) {
 
         Paint itemPaint = renderer.getItemPaint(row, column);
@@ -203,7 +204,8 @@ public class GradientBarPainter implements BarPainter, Serializable {
      *              bar.
      * @param pegShadow  peg the shadow to the base of the bar?
      */
-    public void paintBarShadow(Graphics2D g2, BarRenderer renderer, int row,
+    @Override
+	public void paintBarShadow(Graphics2D g2, BarRenderer renderer, int row,
             int column, RectangularShape bar, RectangleEdge base,
             boolean pegShadow) {
 
@@ -341,7 +343,8 @@ public class GradientBarPainter implements BarPainter, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -366,7 +369,8 @@ public class GradientBarPainter implements BarPainter, Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int hash = 37;
         hash = HashUtilities.hashCode(hash, this.g1);
         hash = HashUtilities.hashCode(hash, this.g2);

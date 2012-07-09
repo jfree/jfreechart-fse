@@ -164,7 +164,8 @@ public class StackedXYAreaRenderer2 extends XYAreaRenderer2
      * @return The range (or <code>null</code> if the dataset is
      *         <code>null</code> or empty).
      */
-    public Range findRangeBounds(XYDataset dataset) {
+    @Override
+	public Range findRangeBounds(XYDataset dataset) {
         if (dataset == null) {
             return null;
         }
@@ -189,7 +190,8 @@ public class StackedXYAreaRenderer2 extends XYAreaRenderer2
      *
      * @return 1.
      */
-    public int getPassCount() {
+    @Override
+	public int getPassCount() {
         return 1;
     }
 
@@ -210,7 +212,8 @@ public class StackedXYAreaRenderer2 extends XYAreaRenderer2
      * @param crosshairState  information about crosshairs on a plot.
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2,
+    @Override
+	public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
                          PlotRenderingInfo info,
@@ -540,7 +543,8 @@ public class StackedXYAreaRenderer2 extends XYAreaRenderer2
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -561,7 +565,8 @@ public class StackedXYAreaRenderer2 extends XYAreaRenderer2
      *
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

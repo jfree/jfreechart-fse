@@ -40,7 +40,6 @@
 
 package org.jfree.chart.plot;
 
-import java.awt.geom.Rectangle2D;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 
@@ -103,7 +102,8 @@ public final class PolarAxisLocation implements Serializable {
      *
      * @return The string.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return this.name;
     }
 
@@ -115,7 +115,8 @@ public final class PolarAxisLocation implements Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

@@ -328,7 +328,8 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      * @return A state object that should be passed to subsequent calls to the
      *         drawItem() method.
      */
-    public XYItemRendererState initialise(Graphics2D g2,
+    @Override
+	public XYItemRendererState initialise(Graphics2D g2,
                                           Rectangle2D dataArea,
                                           XYPlot plot,
                                           XYDataset data,
@@ -346,7 +347,8 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      *
      * @return 2.
      */
-    public int getPassCount() {
+    @Override
+	public int getPassCount() {
         return 2;
     }
 
@@ -362,7 +364,8 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      * @throws ClassCastException if <code>dataset</code> is not an instance
      *         of {@link TableXYDataset}.
      */
-    public Range findRangeBounds(XYDataset dataset) {
+    @Override
+	public Range findRangeBounds(XYDataset dataset) {
         if (dataset != null) {
             return DatasetUtilities.findStackedRangeBounds(
                 (TableXYDataset) dataset);
@@ -393,7 +396,8 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      *         <code>StackedXYAreaRendererState</code> or <code>dataset</code>
      *         is not an instance of {@link TableXYDataset}.
      */
-    public void drawItem(Graphics2D g2,
+    @Override
+	public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
                          PlotRenderingInfo info,
@@ -639,7 +643,8 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -663,7 +668,8 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      *
      * @throws CloneNotSupportedException if the renderer cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

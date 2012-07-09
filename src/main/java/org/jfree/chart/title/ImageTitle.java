@@ -181,7 +181,8 @@ public class ImageTitle extends Title {
      *
      * @return The block size (in Java2D units, never <code>null</code>).
      */
-    public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
+    @Override
+	public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
         Size2D s = new Size2D(this.image.getWidth(null),
                 this.image.getHeight(null));
         return new Size2D(calculateTotalWidth(s.getWidth()),
@@ -195,7 +196,8 @@ public class ImageTitle extends Title {
      * @param g2  the graphics device.
      * @param area  the area allocated for the title.
      */
-    public void draw(Graphics2D g2, Rectangle2D area) {
+    @Override
+	public void draw(Graphics2D g2, Rectangle2D area) {
         RectangleEdge position = getPosition();
         if (position == RectangleEdge.TOP || position == RectangleEdge.BOTTOM) {
             drawHorizontal(g2, area);
@@ -330,7 +332,8 @@ public class ImageTitle extends Title {
      *
      * @return Always <code>null</code>.
      */
-    public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
+    @Override
+	public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
         draw(g2, area);
         return null;
     }
@@ -349,7 +352,8 @@ public class ImageTitle extends Title {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

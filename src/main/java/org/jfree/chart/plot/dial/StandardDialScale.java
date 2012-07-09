@@ -752,7 +752,8 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
      *
      * @return <code>true</code>.
      */
-    public boolean isClippedToWindow() {
+    @Override
+	public boolean isClippedToWindow() {
         return true;
     }
 
@@ -766,7 +767,8 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
      * @param view  the visible part of the plot (<code>null</code> not
      *     permitted).
      */
-    public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
+    @Override
+	public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
             Rectangle2D view) {
 
         Rectangle2D arcRect = DialPlot.rectangleByRadius(frame,
@@ -853,7 +855,8 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
      *
      * @see #angleToValue(double)
      */
-    public double valueToAngle(double value) {
+    @Override
+	public double valueToAngle(double value) {
         double range = this.upperBound - this.lowerBound;
         double unit = this.extent / range;
         return this.startAngle + unit * (value - this.lowerBound);
@@ -868,7 +871,8 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
      *
      * @see #valueToAngle(double)
      */
-    public double angleToValue(double angle) {
+    @Override
+	public double angleToValue(double angle) {
         double range = this.upperBound - this.lowerBound;
         double unit = range / this.extent;
         return (angle - this.startAngle) * unit;
@@ -882,7 +886,8 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -949,7 +954,8 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 193;
         // lowerBound
         long temp = Double.doubleToLongBits(this.lowerBound);
@@ -989,7 +995,8 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
      *
      * @throws CloneNotSupportedException if this instance is not cloneable.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

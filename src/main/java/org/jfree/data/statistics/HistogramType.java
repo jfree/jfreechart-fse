@@ -81,7 +81,8 @@ public class HistogramType implements Serializable {
      *
      * @return The string.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return this.name;
     }
 
@@ -92,7 +93,8 @@ public class HistogramType implements Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
 
         if (obj == null) {
             return false;
@@ -120,7 +122,8 @@ public class HistogramType implements Serializable {
      *
      * @return The hashcode
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return this.name.hashCode();
     }
 

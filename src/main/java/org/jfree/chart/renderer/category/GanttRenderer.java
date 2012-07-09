@@ -242,7 +242,8 @@ public class GanttRenderer extends IntervalBarRenderer
      * @param column  the column index (zero-based).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2,
+    @Override
+	public void drawItem(Graphics2D g2,
                          CategoryItemRendererState state,
                          Rectangle2D dataArea,
                          CategoryPlot plot,
@@ -572,7 +573,8 @@ public class GanttRenderer extends IntervalBarRenderer
      *
      * @since 1.0.11
      */
-    public double getItemMiddle(Comparable rowKey, Comparable columnKey,
+    @Override
+	public double getItemMiddle(Comparable rowKey, Comparable columnKey,
             CategoryDataset dataset, CategoryAxis axis, Rectangle2D area,
             RectangleEdge edge) {
         return axis.getCategorySeriesMiddle(columnKey, rowKey, dataset,
@@ -586,7 +588,8 @@ public class GanttRenderer extends IntervalBarRenderer
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

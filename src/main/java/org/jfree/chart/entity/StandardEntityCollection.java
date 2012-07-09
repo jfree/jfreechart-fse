@@ -83,7 +83,8 @@ public class StandardEntityCollection implements EntityCollection,
      *
      * @return The entity count.
      */
-    public int getEntityCount() {
+    @Override
+	public int getEntityCount() {
         return this.entities.size();
     }
 
@@ -96,14 +97,16 @@ public class StandardEntityCollection implements EntityCollection,
      *
      * @see #add(ChartEntity)
      */
-    public ChartEntity getEntity(int index) {
+    @Override
+	public ChartEntity getEntity(int index) {
         return (ChartEntity) this.entities.get(index);
     }
 
     /**
      * Clears all the entities from the collection.
      */
-    public void clear() {
+    @Override
+	public void clear() {
         this.entities.clear();
     }
 
@@ -112,7 +115,8 @@ public class StandardEntityCollection implements EntityCollection,
      *
      * @param entity  the entity (<code>null</code> not permitted).
      */
-    public void add(ChartEntity entity) {
+    @Override
+	public void add(ChartEntity entity) {
         if (entity == null) {
             throw new IllegalArgumentException("Null 'entity' argument.");
         }
@@ -125,7 +129,8 @@ public class StandardEntityCollection implements EntityCollection,
      * @param collection  the collection of entities (<code>null</code> not
      *     permitted).
      */
-    public void addAll(EntityCollection collection) {
+    @Override
+	public void addAll(EntityCollection collection) {
         this.entities.addAll(collection.getEntities());
     }
 
@@ -138,7 +143,8 @@ public class StandardEntityCollection implements EntityCollection,
      *
      * @return The entity (possibly <code>null</code>).
      */
-    public ChartEntity getEntity(double x, double y) {
+    @Override
+	public ChartEntity getEntity(double x, double y) {
         int entityCount = this.entities.size();
         for (int i = entityCount - 1; i >= 0; i--) {
             ChartEntity entity = (ChartEntity) this.entities.get(i);
@@ -154,7 +160,8 @@ public class StandardEntityCollection implements EntityCollection,
      *
      * @return The entities.
      */
-    public Collection getEntities() {
+    @Override
+	public Collection getEntities() {
         return Collections.unmodifiableCollection(this.entities);
     }
 
@@ -163,7 +170,8 @@ public class StandardEntityCollection implements EntityCollection,
      *
      * @return An iterator.
      */
-    public Iterator iterator() {
+    @Override
+	public Iterator iterator() {
         return this.entities.iterator();
     }
 
@@ -174,7 +182,8 @@ public class StandardEntityCollection implements EntityCollection,
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -192,7 +201,8 @@ public class StandardEntityCollection implements EntityCollection,
      *
      * @throws CloneNotSupportedException if the object cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         StandardEntityCollection clone
                 = (StandardEntityCollection) super.clone();
         clone.entities = new java.util.ArrayList(this.entities.size());

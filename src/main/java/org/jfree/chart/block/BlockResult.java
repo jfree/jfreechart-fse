@@ -63,7 +63,8 @@ public class BlockResult implements EntityBlockResult {
      *
      * @return The entities.
      */
-    public EntityCollection getEntityCollection() {
+    @Override
+	public EntityCollection getEntityCollection() {
         return this.entities;
     }
 

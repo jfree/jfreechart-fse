@@ -106,7 +106,8 @@ public class StandardGradientPaintTransformer
      * 
      * @return The transformed paint.
      */
-    public GradientPaint transform(final GradientPaint paint, 
+    @Override
+	public GradientPaint transform(final GradientPaint paint, 
                                    final Shape target) {
         
         GradientPaint result = paint;
@@ -148,7 +149,8 @@ public class StandardGradientPaintTransformer
      * 
      * @return A boolean.
      */
-    public boolean equals(final Object obj) {
+    @Override
+	public boolean equals(final Object obj) {
         if (obj == this) {
             return true;   
         }
@@ -172,7 +174,8 @@ public class StandardGradientPaintTransformer
      * @throws CloneNotSupportedException not thrown by this class, but 
      *         subclasses (if any) might.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -181,7 +184,8 @@ public class StandardGradientPaintTransformer
      * 
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return (this.type != null ? this.type.hashCode() : 0);
     }
     

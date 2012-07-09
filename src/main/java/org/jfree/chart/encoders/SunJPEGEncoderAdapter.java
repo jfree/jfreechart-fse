@@ -83,7 +83,8 @@ public class SunJPEGEncoderAdapter implements ImageEncoder {
      *
      * @see #setQuality(float)
      */
-    public float getQuality() {
+    @Override
+	public float getQuality() {
         return this.quality;
     }
 
@@ -95,7 +96,8 @@ public class SunJPEGEncoderAdapter implements ImageEncoder {
      *
      * @see #getQuality()
      */
-    public void setQuality(float quality) {
+    @Override
+	public void setQuality(float quality) {
         if (quality < 0.0f || quality > 1.0f) {
             throw new IllegalArgumentException(
                     "The 'quality' must be in the range 0.0f to 1.0f");
@@ -109,7 +111,8 @@ public class SunJPEGEncoderAdapter implements ImageEncoder {
      *
      * @return <code>false</code>.
      */
-    public boolean isEncodingAlpha() {
+    @Override
+	public boolean isEncodingAlpha() {
         return false;
     }
 
@@ -119,7 +122,8 @@ public class SunJPEGEncoderAdapter implements ImageEncoder {
      *
      * @param encodingAlpha  ignored.
      */
-    public void setEncodingAlpha(boolean encodingAlpha) {
+    @Override
+	public void setEncodingAlpha(boolean encodingAlpha) {
         //  No op
     }
 
@@ -135,7 +139,8 @@ public class SunJPEGEncoderAdapter implements ImageEncoder {
      * @throws NullPointerException if <code>bufferedImage</code> is
      *     <code>null</code>.
      */
-    public byte[] encode(BufferedImage bufferedImage) throws IOException {
+    @Override
+	public byte[] encode(BufferedImage bufferedImage) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         encode(bufferedImage, outputStream);
         return outputStream.toByteArray();
@@ -153,7 +158,8 @@ public class SunJPEGEncoderAdapter implements ImageEncoder {
      * @throws NullPointerException if <code>bufferedImage</code> is
      *     <code>null</code>.
      */
-    public void encode(BufferedImage bufferedImage, OutputStream outputStream)
+    @Override
+	public void encode(BufferedImage bufferedImage, OutputStream outputStream)
             throws IOException {
         if (bufferedImage == null) {
             throw new IllegalArgumentException("Null 'image' argument.");

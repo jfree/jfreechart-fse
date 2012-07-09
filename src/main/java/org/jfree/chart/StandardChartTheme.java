@@ -304,7 +304,8 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      */
     public static ChartTheme createLegacyTheme() {
         StandardChartTheme theme = new StandardChartTheme("Legacy") {
-            public void apply(JFreeChart chart) {
+            @Override
+			public void apply(JFreeChart chart) {
                 // do nothing at all
             }
         };

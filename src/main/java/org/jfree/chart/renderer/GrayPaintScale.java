@@ -127,7 +127,8 @@ public class GrayPaintScale
      *
      * @see #getUpperBound()
      */
-    public double getLowerBound() {
+    @Override
+	public double getLowerBound() {
         return this.lowerBound;
     }
 
@@ -138,7 +139,8 @@ public class GrayPaintScale
      *
      * @see #getLowerBound()
      */
-    public double getUpperBound() {
+    @Override
+	public double getUpperBound() {
         return this.upperBound;
     }
 
@@ -161,7 +163,8 @@ public class GrayPaintScale
      *
      * @return A paint for the specified value.
      */
-    public Paint getPaint(double value) {
+    @Override
+	public Paint getPaint(double value) {
         double v = Math.max(value, this.lowerBound);
         v = Math.min(v, this.upperBound);
         int g = (int) ((v - this.lowerBound) / (this.upperBound
@@ -184,7 +187,8 @@ public class GrayPaintScale
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -209,7 +213,8 @@ public class GrayPaintScale
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int hash = 7;
         hash = HashUtilities.hashCode(hash, this.lowerBound);
         hash = HashUtilities.hashCode(hash, this.upperBound);
@@ -225,7 +230,8 @@ public class GrayPaintScale
      * @throws CloneNotSupportedException if there is a problem cloning this
      *     instance.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

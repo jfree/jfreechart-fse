@@ -78,7 +78,8 @@ public final class PlotOrientation implements Serializable {
      *
      * @return The string.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return this.name;
     }
 
@@ -90,7 +91,8 @@ public final class PlotOrientation implements Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -109,7 +111,8 @@ public final class PlotOrientation implements Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return this.name.hashCode();
     }
 

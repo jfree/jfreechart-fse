@@ -118,7 +118,8 @@ public class HighLowItemLabelGenerator implements XYItemLabelGenerator,
      *
      * @return The tooltip text.
      */
-    public String generateToolTip(XYDataset dataset, int series, int item) {
+    @Override
+	public String generateToolTip(XYDataset dataset, int series, int item) {
 
         String result = null;
 
@@ -169,7 +170,8 @@ public class HighLowItemLabelGenerator implements XYItemLabelGenerator,
      *
      * @return The label (possibly <code>null</code>).
      */
-    public String generateLabel(XYDataset dataset, int series, int category) {
+    @Override
+	public String generateLabel(XYDataset dataset, int series, int category) {
         return null;  //TODO: implement this method properly
     }
 
@@ -180,7 +182,8 @@ public class HighLowItemLabelGenerator implements XYItemLabelGenerator,
      * 
      * @throws CloneNotSupportedException if cloning is not supported.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         
         HighLowItemLabelGenerator clone 
             = (HighLowItemLabelGenerator) super.clone();
@@ -203,7 +206,8 @@ public class HighLowItemLabelGenerator implements XYItemLabelGenerator,
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -225,7 +229,8 @@ public class HighLowItemLabelGenerator implements XYItemLabelGenerator,
      * 
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 127;
         result = HashUtilities.hashCode(result, this.dateFormatter);
         result = HashUtilities.hashCode(result, this.numberFormatter);

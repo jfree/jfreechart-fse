@@ -69,7 +69,8 @@ public class PointerNeedle extends MeterNeedle
      * @param rotate  the rotation point.
      * @param angle  the angle.
      */
-    protected void drawNeedle(Graphics2D g2, Rectangle2D plotArea,
+    @Override
+	protected void drawNeedle(Graphics2D g2, Rectangle2D plotArea,
                               Point2D rotate, double angle) {
 
         GeneralPath shape1 = new GeneralPath();
@@ -123,7 +124,8 @@ public class PointerNeedle extends MeterNeedle
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -141,7 +143,8 @@ public class PointerNeedle extends MeterNeedle
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return super.hashCode();
     }
 
@@ -153,7 +156,8 @@ public class PointerNeedle extends MeterNeedle
      * @throws CloneNotSupportedException if the <code>PointerNeedle</code>
      *     cannot be cloned (in theory, this should not happen).
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

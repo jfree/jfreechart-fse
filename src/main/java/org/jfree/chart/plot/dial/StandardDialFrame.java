@@ -221,7 +221,8 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame,
      *
      * @return The shape of the dial's window.
      */
-    public Shape getWindow(Rectangle2D frame) {
+    @Override
+	public Shape getWindow(Rectangle2D frame) {
         Rectangle2D f = DialPlot.rectangleByRadius(frame, this.radius,
                 this.radius);
         return new Ellipse2D.Double(f.getX(), f.getY(), f.getWidth(),
@@ -234,7 +235,8 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame,
      *
      * @return A boolean.
      */
-    public boolean isClippedToWindow() {
+    @Override
+	public boolean isClippedToWindow() {
         return false;
     }
 
@@ -247,7 +249,8 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame,
      * @param frame  the frame (<code>null</code> not permitted).
      * @param view  the view (<code>null</code> not permitted).
      */
-    public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
+    @Override
+	public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
             Rectangle2D view) {
 
         Shape window = getWindow(frame);
@@ -276,7 +279,8 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame,
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -304,7 +308,8 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame,
      *
      * @return The hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 193;
         long temp = Double.doubleToLongBits(this.radius);
         result = 37 * result + (int) (temp ^ (temp >>> 32));
@@ -324,7 +329,8 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame,
      * @throws CloneNotSupportedException if any of the frame's attributes
      *     cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

@@ -330,7 +330,8 @@ public class TextBlock implements Serializable {
      * 
      * @return A boolean.
      */
-    public boolean equals(final Object obj) {
+    @Override
+	public boolean equals(final Object obj) {
         if (obj == this) {
             return true;   
         }
@@ -346,7 +347,8 @@ public class TextBlock implements Serializable {
      * 
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return (this.lines != null ? this.lines.hashCode() : 0);
     }
 }

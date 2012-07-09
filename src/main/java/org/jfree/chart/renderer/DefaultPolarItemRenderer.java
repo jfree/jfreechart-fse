@@ -224,7 +224,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      *
      * @see #getPlot()
      */
-    public void setPlot(PolarPlot plot) {
+    @Override
+	public void setPlot(PolarPlot plot) {
         this.plot = plot;
     }
 
@@ -235,7 +236,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      *
      * @see #setPlot(PolarPlot)
      */
-    public PolarPlot getPlot() {
+    @Override
+	public PolarPlot getPlot() {
         return this.plot;
     }
 
@@ -351,7 +353,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      *
      * @return The drawing supplier.
      */
-    public DrawingSupplier getDrawingSupplier() {
+    @Override
+	public DrawingSupplier getDrawingSupplier() {
         DrawingSupplier result = null;
         PolarPlot p = getPlot();
         if (p != null) {
@@ -499,7 +502,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @param dataset  the dataset.
      * @param seriesIndex  the series index.
      */
-    public void drawSeries(Graphics2D g2, Rectangle2D dataArea,
+    @Override
+	public void drawSeries(Graphics2D g2, Rectangle2D dataArea,
             PlotRenderingInfo info, PolarPlot plot, XYDataset dataset,
             int seriesIndex) {
 
@@ -595,7 +599,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @param ticks  the ticks.
      * @param dataArea  the data area.
      */
-    public void drawAngularGridLines(Graphics2D g2, PolarPlot plot,
+    @Override
+	public void drawAngularGridLines(Graphics2D g2, PolarPlot plot,
                 List ticks, Rectangle2D dataArea) {
 
         g2.setFont(plot.getAngleLabelFont());
@@ -633,7 +638,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @param ticks  the ticks.
      * @param dataArea  the data area.
      */
-    public void drawRadialGridLines(Graphics2D g2,
+    @Override
+	public void drawRadialGridLines(Graphics2D g2,
                                     PolarPlot plot,
                                     ValueAxis radialAxis,
                                     List ticks,
@@ -670,7 +676,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      *
      * @return The legend item.
      */
-    public LegendItem getLegendItem(int series) {
+    @Override
+	public LegendItem getLegendItem(int series) {
         LegendItem result = null;
         PolarPlot plot = getPlot();
         if (plot == null) {
@@ -721,7 +728,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     /**
      * @since 1.0.14
      */
-    public XYToolTipGenerator getToolTipGenerator(int series, int item)
+    @Override
+	public XYToolTipGenerator getToolTipGenerator(int series, int item)
     {
         XYToolTipGenerator generator
             = (XYToolTipGenerator) this.toolTipGeneratorList.get(series);
@@ -734,7 +742,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     /**
      * @since 1.0.14
      */
-    public XYToolTipGenerator getSeriesToolTipGenerator(int series)
+    @Override
+	public XYToolTipGenerator getSeriesToolTipGenerator(int series)
     {
         return (XYToolTipGenerator) this.toolTipGeneratorList.get(series);
     }
@@ -742,7 +751,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     /**
      * @since 1.0.14
      */
-    public void setSeriesToolTipGenerator(int series,
+    @Override
+	public void setSeriesToolTipGenerator(int series,
             XYToolTipGenerator generator)
     {
         this.toolTipGeneratorList.set(series, generator);
@@ -752,7 +762,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     /**
      * @since 1.0.14
      */
-    public XYToolTipGenerator getBaseToolTipGenerator()
+    @Override
+	public XYToolTipGenerator getBaseToolTipGenerator()
     {
         return this.baseToolTipGenerator;
     }
@@ -760,7 +771,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     /**
      * @since 1.0.14
      */
-    public void setBaseToolTipGenerator(XYToolTipGenerator generator)
+    @Override
+	public void setBaseToolTipGenerator(XYToolTipGenerator generator)
     {
         this.baseToolTipGenerator = generator;
         fireChangeEvent();
@@ -769,7 +781,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     /**
      * @since 1.0.14
      */
-    public XYURLGenerator getURLGenerator()
+    @Override
+	public XYURLGenerator getURLGenerator()
     {
         return this.urlGenerator;
     }
@@ -777,7 +790,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     /**
      * @since 1.0.14
      */
-    public void setURLGenerator(XYURLGenerator urlGenerator)
+    @Override
+	public void setURLGenerator(XYURLGenerator urlGenerator)
     {
         this.urlGenerator = urlGenerator;
         fireChangeEvent();
@@ -844,7 +858,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @return <code>true</code> if this renderer is equal to <code>obj</code>,
      *     and <code>false</code> otherwise.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
@@ -901,7 +916,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      *
      * @throws CloneNotSupportedException if the renderer cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         DefaultPolarItemRenderer clone
                 = (DefaultPolarItemRenderer) super.clone();
         if (this.legendLine != null) {

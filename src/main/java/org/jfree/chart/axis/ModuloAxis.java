@@ -126,7 +126,8 @@ public class ModuloAxis extends NumberAxis {
      * This method should calculate a range that will show all the data values.
      * For now, it just sets the axis range to the fixedRange.
      */
-    protected void autoAdjustRange() {
+    @Override
+	protected void autoAdjustRange() {
         setRange(this.fixedRange, false, false);
     }
 
@@ -139,7 +140,8 @@ public class ModuloAxis extends NumberAxis {
      *
      * @return A Java2D coordinate.
      */
-    public double valueToJava2D(double value, Rectangle2D area,
+    @Override
+	public double valueToJava2D(double value, Rectangle2D area,
                                 RectangleEdge edge) {
         double result = 0.0;
         double v = mapValueToFixedRange(value);
@@ -297,7 +299,8 @@ public class ModuloAxis extends NumberAxis {
      *
      * @return The Java2D coordinate.
      */
-    public double java2DToValue(double java2DValue, Rectangle2D area,
+    @Override
+	public double java2DToValue(double java2DValue, Rectangle2D area,
                                 RectangleEdge edge) {
         double result = 0.0;
         if (this.displayStart < this.displayEnd) {  // regular number axis
@@ -345,7 +348,8 @@ public class ModuloAxis extends NumberAxis {
      *
      * @param percent  the resize factor.
      */
-    public void resizeRange(double percent) {
+    @Override
+	public void resizeRange(double percent) {
         resizeRange(percent, getDisplayCentralValue());
     }
 
@@ -360,7 +364,8 @@ public class ModuloAxis extends NumberAxis {
      * @param percent  the resize factor.
      * @param anchorValue  the new central value after the resize.
      */
-    public void resizeRange(double percent, double anchorValue) {
+    @Override
+	public void resizeRange(double percent, double anchorValue) {
 
         if (percent > 0.0) {
             double halfLength = getDisplayLength() * percent / 2;
@@ -382,7 +387,8 @@ public class ModuloAxis extends NumberAxis {
      *
      * @return The length in Java2D coordinates.
      */
-    public double lengthToJava2D(double length, Rectangle2D area,
+    @Override
+	public double lengthToJava2D(double length, Rectangle2D area,
                                  RectangleEdge edge) {
         double axisLength = 0.0;
         if (this.displayEnd > this.displayStart) {
@@ -409,7 +415,8 @@ public class ModuloAxis extends NumberAxis {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

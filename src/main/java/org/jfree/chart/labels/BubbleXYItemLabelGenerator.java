@@ -163,7 +163,8 @@ public class BubbleXYItemLabelGenerator extends AbstractXYItemLabelGenerator
      *
      * @return The item label (possibly <code>null</code>).
      */
-    public String generateLabel(XYDataset dataset, int series, int item) {
+    @Override
+	public String generateLabel(XYDataset dataset, int series, int item) {
         return generateLabelString(dataset, series, item);
     }
 
@@ -176,7 +177,8 @@ public class BubbleXYItemLabelGenerator extends AbstractXYItemLabelGenerator
      *
      * @return The label (possibly <code>null</code>).
      */
-    public String generateLabelString(XYDataset dataset, int series, int item) {
+    @Override
+	public String generateLabelString(XYDataset dataset, int series, int item) {
         String result = null;
         Object[] items = null;
         if (dataset instanceof XYZDataset) {
@@ -242,7 +244,8 @@ public class BubbleXYItemLabelGenerator extends AbstractXYItemLabelGenerator
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -267,7 +270,8 @@ public class BubbleXYItemLabelGenerator extends AbstractXYItemLabelGenerator
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int h = super.hashCode();
         h = HashUtilities.hashCode(h, this.zFormat);
         h = HashUtilities.hashCode(h, this.zDateFormat);

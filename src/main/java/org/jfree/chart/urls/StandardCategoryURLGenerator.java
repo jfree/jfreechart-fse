@@ -137,7 +137,8 @@ public class StandardCategoryURLGenerator implements CategoryURLGenerator,
      *
      * @return The generated URL.
      */
-    public String generateURL(CategoryDataset dataset, int series,
+    @Override
+	public String generateURL(CategoryDataset dataset, int series,
                               int category) {
         String url = this.prefix;
         Comparable seriesKey = dataset.getRowKey(series);
@@ -159,7 +160,8 @@ public class StandardCategoryURLGenerator implements CategoryURLGenerator,
      * @throws CloneNotSupportedException not thrown by this class, but
      *         subclasses (if any) might.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         // all attributes are immutable, so we can just return the super.clone()
         // FIXME: in fact, the generator itself is immutable, so cloning is
         // not necessary
@@ -173,7 +175,8 @@ public class StandardCategoryURLGenerator implements CategoryURLGenerator,
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -201,7 +204,8 @@ public class StandardCategoryURLGenerator implements CategoryURLGenerator,
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result;
         result = (this.prefix != null ? this.prefix.hashCode() : 0);
         result = 29 * result

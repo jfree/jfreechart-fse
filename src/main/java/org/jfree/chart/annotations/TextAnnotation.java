@@ -296,7 +296,8 @@ public class TextAnnotation extends AbstractAnnotation implements Serializable {
      *
      * @return <code>true</code> or <code>false</code>.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -335,7 +336,8 @@ public class TextAnnotation extends AbstractAnnotation implements Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 193;
         result = 37 * result + this.font.hashCode();
         result = 37 * result + HashUtilities.hashCodeForPaint(this.paint);

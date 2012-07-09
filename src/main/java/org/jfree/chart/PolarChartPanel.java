@@ -139,7 +139,8 @@ public class PolarChartPanel extends ChartPanel {
      *
      * @return The popup menu.
      */
-    protected JPopupMenu createPopupMenu(boolean properties,
+    @Override
+	protected JPopupMenu createPopupMenu(boolean properties,
                                          boolean save,
                                          boolean print,
                                          boolean zoom) {

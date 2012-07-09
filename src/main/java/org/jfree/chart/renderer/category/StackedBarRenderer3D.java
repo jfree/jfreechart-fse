@@ -255,7 +255,8 @@ public class StackedBarRenderer3D extends BarRenderer3D
      *
      * @return The range (or <code>null</code> if the dataset is empty).
      */
-    public Range findRangeBounds(CategoryDataset dataset) {
+    @Override
+	public Range findRangeBounds(CategoryDataset dataset) {
         if (dataset == null) {
             return null;
         }
@@ -275,7 +276,8 @@ public class StackedBarRenderer3D extends BarRenderer3D
      * @param rendererIndex  the renderer index.
      * @param state  the renderer state.
      */
-    protected void calculateBarWidth(CategoryPlot plot,
+    @Override
+	protected void calculateBarWidth(CategoryPlot plot,
                                      Rectangle2D dataArea,
                                      int rendererIndex,
                                      CategoryItemRendererState state) {
@@ -418,7 +420,8 @@ public class StackedBarRenderer3D extends BarRenderer3D
      * @param column  the column index (zero-based).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2, CategoryItemRendererState state,
+    @Override
+	public void drawItem(Graphics2D g2, CategoryItemRendererState state,
             Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
             ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
             int pass) {
@@ -854,7 +857,8 @@ public class StackedBarRenderer3D extends BarRenderer3D
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -876,7 +880,8 @@ public class StackedBarRenderer3D extends BarRenderer3D
      * 
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int hash = super.hashCode();
         hash = HashUtilities.hashCode(hash, this.renderAsPercentages);
         hash = HashUtilities.hashCode(hash, this.ignoreZeroValues);

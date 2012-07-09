@@ -202,7 +202,8 @@ public class StackedXYBarRenderer extends XYBarRenderer {
      * @return The range (<code>null</code> if the dataset is <code>null</code>
      *         or empty).
      */
-    public Range findRangeBounds(XYDataset dataset) {
+    @Override
+	public Range findRangeBounds(XYDataset dataset) {
         if (dataset != null) {
             if (this.renderAsPercentages) {
                 return new Range(0.0, 1.0);

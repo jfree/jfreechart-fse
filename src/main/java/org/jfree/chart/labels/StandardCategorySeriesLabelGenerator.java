@@ -95,7 +95,8 @@ public class StandardCategorySeriesLabelGenerator implements
      *
      * @return A series label.
      */
-    public String generateLabel(CategoryDataset dataset, int series) {
+    @Override
+	public String generateLabel(CategoryDataset dataset, int series) {
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
         }
@@ -126,7 +127,8 @@ public class StandardCategorySeriesLabelGenerator implements
      *
      * @throws CloneNotSupportedException if cloning is not supported.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -137,7 +139,8 @@ public class StandardCategorySeriesLabelGenerator implements
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -157,7 +160,8 @@ public class StandardCategorySeriesLabelGenerator implements
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 127;
         result = HashUtilities.hashCode(result, this.formatPattern);
         return result;

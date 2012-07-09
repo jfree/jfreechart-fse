@@ -115,7 +115,8 @@ public class SystemPropertiesPanel extends JPanel {
         this.copyMenuItem.getAccessibleContext().setAccessibleDescription(
                 label);
         this.copyMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(final ActionEvent e) {
+            @Override
+			public void actionPerformed(final ActionEvent e) {
                 copySystemPropertiesToClipboard();
             }
         });
@@ -190,7 +191,8 @@ public class SystemPropertiesPanel extends JPanel {
          *
          * @param e  the event.
          */
-        public void mousePressed(final MouseEvent e) {
+        @Override
+		public void mousePressed(final MouseEvent e) {
             maybeShowPopup(e);
         }
 
@@ -199,7 +201,8 @@ public class SystemPropertiesPanel extends JPanel {
          *
          * @param e  the event.
          */
-        public void mouseReleased(final MouseEvent e) {
+        @Override
+		public void mouseReleased(final MouseEvent e) {
             maybeShowPopup(e);
         }
 
