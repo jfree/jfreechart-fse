@@ -93,7 +93,8 @@ public class BorderArrangement implements Arrangement, Serializable {
      * @param key  the edge (an instance of {@link RectangleEdge}) or
      *             <code>null</code> for the center block.
      */
-    public void add(Block block, Object key) {
+    @Override
+	public void add(Block block, Object key) {
 
         if (key == null) {
             this.centerBlock = block;
@@ -125,7 +126,8 @@ public class BorderArrangement implements Arrangement, Serializable {
      *
      * @return The block size.
      */
-    public Size2D arrange(BlockContainer container,
+    @Override
+	public Size2D arrange(BlockContainer container,
                           Graphics2D g2,
                           RectangleConstraint constraint) {
         RectangleConstraint contentConstraint
@@ -488,7 +490,8 @@ public class BorderArrangement implements Arrangement, Serializable {
     /**
      * Clears the layout.
      */
-    public void clear() {
+    @Override
+	public void clear() {
         this.centerBlock = null;
         this.topBlock = null;
         this.bottomBlock = null;
@@ -503,7 +506,8 @@ public class BorderArrangement implements Arrangement, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

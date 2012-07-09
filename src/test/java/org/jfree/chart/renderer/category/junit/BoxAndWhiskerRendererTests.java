@@ -246,7 +246,8 @@ public class BoxAndWhiskerRendererTests extends TestCase {
                 return null;
             }
 
-            public Number getQ1Value(Comparable rowKey, Comparable columnKey) {
+            @Override
+			public Number getQ1Value(Comparable rowKey, Comparable columnKey) {
                 return null;
             }
         };
@@ -284,11 +285,13 @@ public class BoxAndWhiskerRendererTests extends TestCase {
         DefaultBoxAndWhiskerCategoryDataset dataset
                 = new DefaultBoxAndWhiskerCategoryDataset() {
 
-            public Number getQ1Value(int row, int column) {
+            @Override
+			public Number getQ1Value(int row, int column) {
                 return null;
             }
 
-            public Number getQ1Value(Comparable rowKey, Comparable columnKey) {
+            @Override
+			public Number getQ1Value(Comparable rowKey, Comparable columnKey) {
                 return null;
             }
         };

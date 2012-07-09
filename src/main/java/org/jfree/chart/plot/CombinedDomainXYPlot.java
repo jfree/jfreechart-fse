@@ -170,7 +170,8 @@ public class CombinedDomainXYPlot extends XYPlot
      *
      * @return The type of plot.
      */
-    public String getPlotType() {
+    @Override
+	public String getPlotType() {
         return "Combined_Domain_XYPlot";
     }
 
@@ -180,7 +181,8 @@ public class CombinedDomainXYPlot extends XYPlot
      *
      * @param orientation  the orientation (<code>null</code> not allowed).
      */
-    public void setOrientation(PlotOrientation orientation) {
+    @Override
+	public void setOrientation(PlotOrientation orientation) {
 
         super.setOrientation(orientation);
         Iterator iterator = this.subplots.iterator();
@@ -204,7 +206,8 @@ public class CombinedDomainXYPlot extends XYPlot
      *
      * @return The range (possibly <code>null</code>).
      */
-    public Range getDataRange(ValueAxis axis) {
+    @Override
+	public Range getDataRange(ValueAxis axis) {
         Range result = null;
         if (this.subplots != null) {
             Iterator iterator = this.subplots.iterator();
@@ -340,7 +343,8 @@ public class CombinedDomainXYPlot extends XYPlot
      *
      * @return The space.
      */
-    protected AxisSpace calculateAxisSpace(Graphics2D g2,
+    @Override
+	protected AxisSpace calculateAxisSpace(Graphics2D g2,
                                            Rectangle2D plotArea) {
 
         AxisSpace space = new AxisSpace();
@@ -425,7 +429,8 @@ public class CombinedDomainXYPlot extends XYPlot
      * @param info  collects chart drawing information (<code>null</code>
      *              permitted).
      */
-    public void draw(Graphics2D g2,
+    @Override
+	public void draw(Graphics2D g2,
                      Rectangle2D area,
                      Point2D anchor,
                      PlotState parentState,
@@ -480,7 +485,8 @@ public class CombinedDomainXYPlot extends XYPlot
      *
      * @return The legend items.
      */
-    public LegendItemCollection getLegendItems() {
+    @Override
+	public LegendItemCollection getLegendItems() {
         LegendItemCollection result = getFixedLegendItems();
         if (result == null) {
             result = new LegendItemCollection();
@@ -503,7 +509,8 @@ public class CombinedDomainXYPlot extends XYPlot
      * @param info  the plot rendering info (<code>null</code> not permitted).
      * @param source  the source point (<code>null</code> not permitted).
      */
-    public void zoomRangeAxes(double factor, PlotRenderingInfo info,
+    @Override
+	public void zoomRangeAxes(double factor, PlotRenderingInfo info,
                               Point2D source) {
         zoomRangeAxes(factor, info, source, false);
     }
@@ -516,7 +523,8 @@ public class CombinedDomainXYPlot extends XYPlot
      * @param source  the source point (in Java2D coordinates).
      * @param useAnchor  use source point as zoom anchor?
      */
-    public void zoomRangeAxes(double factor, PlotRenderingInfo state,
+    @Override
+	public void zoomRangeAxes(double factor, PlotRenderingInfo state,
                               Point2D source, boolean useAnchor) {
         // delegate 'state' and 'source' argument checks...
         XYPlot subplot = findSubplot(state, source);
@@ -542,7 +550,8 @@ public class CombinedDomainXYPlot extends XYPlot
      * @param info  the plot rendering info (<code>null</code> not permitted).
      * @param source  the source point (<code>null</code> not permitted).
      */
-    public void zoomRangeAxes(double lowerPercent, double upperPercent,
+    @Override
+	public void zoomRangeAxes(double lowerPercent, double upperPercent,
                               PlotRenderingInfo info, Point2D source) {
         // delegate 'info' and 'source' argument checks...
         XYPlot subplot = findSubplot(info, source);
@@ -569,7 +578,8 @@ public class CombinedDomainXYPlot extends XYPlot
      *
      * @since 1.0.15
      */
-    public void panRangeAxes(double panRange, PlotRenderingInfo info,
+    @Override
+	public void panRangeAxes(double panRange, PlotRenderingInfo info,
             Point2D source) {
 
         XYPlot subplot = findSubplot(info, source);
@@ -620,7 +630,8 @@ public class CombinedDomainXYPlot extends XYPlot
      *
      * @param renderer the new renderer.
      */
-    public void setRenderer(XYItemRenderer renderer) {
+    @Override
+	public void setRenderer(XYItemRenderer renderer) {
 
         super.setRenderer(renderer);  // not strictly necessary, since the
                                       // renderer set for the
@@ -640,7 +651,8 @@ public class CombinedDomainXYPlot extends XYPlot
      *
      * @param space  the space (<code>null</code> permitted).
      */
-    public void setFixedRangeAxisSpace(AxisSpace space) {
+    @Override
+	public void setFixedRangeAxisSpace(AxisSpace space) {
         super.setFixedRangeAxisSpace(space);
         setFixedRangeAxisSpaceForSubplots(space);
         fireChangeEvent();
@@ -667,7 +679,8 @@ public class CombinedDomainXYPlot extends XYPlot
      * @param y  y-coordinate, where the click occured.
      * @param info  object containing information about the plot dimensions.
      */
-    public void handleClick(int x, int y, PlotRenderingInfo info) {
+    @Override
+	public void handleClick(int x, int y, PlotRenderingInfo info) {
         Rectangle2D dataArea = info.getDataArea();
         if (dataArea.contains(x, y)) {
             for (int i = 0; i < this.subplots.size(); i++) {
@@ -684,7 +697,8 @@ public class CombinedDomainXYPlot extends XYPlot
      *
      * @param event  the event.
      */
-    public void plotChanged(PlotChangeEvent event) {
+    @Override
+	public void plotChanged(PlotChangeEvent event) {
         notifyListeners(event);
     }
 
@@ -695,7 +709,8 @@ public class CombinedDomainXYPlot extends XYPlot
      *
      * @return <code>true</code> or <code>false</code>.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -720,7 +735,8 @@ public class CombinedDomainXYPlot extends XYPlot
      * @throws CloneNotSupportedException  this class will not throw this
      *         exception, but subclasses (if any) might.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
 
         CombinedDomainXYPlot result = (CombinedDomainXYPlot) super.clone();
         result.subplots = (List) ObjectUtilities.deepClone(this.subplots);

@@ -74,7 +74,8 @@ public final class UnitType implements Serializable {
      *
      * @return The string.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return this.name;
     }
 
@@ -86,7 +87,8 @@ public final class UnitType implements Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(final Object obj) {
+    @Override
+	public boolean equals(final Object obj) {
         if (obj == this) {
             return true;
         }
@@ -105,7 +107,8 @@ public final class UnitType implements Serializable {
      *
      * @return The hashcode
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return this.name.hashCode();
     }
 

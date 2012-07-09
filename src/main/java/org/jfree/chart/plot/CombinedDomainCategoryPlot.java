@@ -266,7 +266,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @param info  the plot rendering info (<code>null</code> not permitted).
      * @param source  the source point (<code>null</code> not permitted).
      */
-    public void zoomRangeAxes(double factor, PlotRenderingInfo info,
+    @Override
+	public void zoomRangeAxes(double factor, PlotRenderingInfo info,
                               Point2D source) {
         zoomRangeAxes(factor, info, source, false);
     }
@@ -279,7 +280,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @param source  the source point (<code>null</code> not permitted).
      * @param useAnchor  zoom about the anchor point?
      */
-    public void zoomRangeAxes(double factor, PlotRenderingInfo info,
+    @Override
+	public void zoomRangeAxes(double factor, PlotRenderingInfo info,
                               Point2D source, boolean useAnchor) {
         // delegate 'info' and 'source' argument checks...
         CategoryPlot subplot = findSubplot(info, source);
@@ -305,7 +307,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @param info  the plot rendering info (<code>null</code> not permitted).
      * @param source  the source point (<code>null</code> not permitted).
      */
-    public void zoomRangeAxes(double lowerPercent, double upperPercent,
+    @Override
+	public void zoomRangeAxes(double lowerPercent, double upperPercent,
                               PlotRenderingInfo info, Point2D source) {
         // delegate 'info' and 'source' argument checks...
         CategoryPlot subplot = findSubplot(info, source);
@@ -331,7 +334,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      *
      * @return The space required for the axes.
      */
-    protected AxisSpace calculateAxisSpace(Graphics2D g2,
+    @Override
+	protected AxisSpace calculateAxisSpace(Graphics2D g2,
                                            Rectangle2D plotArea) {
 
         AxisSpace space = new AxisSpace();
@@ -424,7 +428,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @param info  collects information about the drawing (<code>null</code>
      *              permitted).
      */
-    public void draw(Graphics2D g2,
+    @Override
+	public void draw(Graphics2D g2,
                      Rectangle2D area,
                      Point2D anchor,
                      PlotState parentState,
@@ -503,7 +508,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      *
      * @param orientation  the orientation (<code>null</code> not permitted).
      */
-    public void setOrientation(PlotOrientation orientation) {
+    @Override
+	public void setOrientation(PlotOrientation orientation) {
 
         super.setOrientation(orientation);
 
@@ -529,7 +535,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
       *
       * @return The range.
       */
-     public Range getDataRange(ValueAxis axis) {
+     @Override
+	public Range getDataRange(ValueAxis axis) {
          // override is only for documentation purposes
          return super.getDataRange(axis);
      }
@@ -539,7 +546,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      *
      * @return The legend items.
      */
-    public LegendItemCollection getLegendItems() {
+    @Override
+	public LegendItemCollection getLegendItems() {
         LegendItemCollection result = getFixedLegendItems();
         if (result == null) {
             result = new LegendItemCollection();
@@ -561,7 +569,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      *
      * @return The list.
      */
-    public List getCategories() {
+    @Override
+	public List getCategories() {
         List result = new java.util.ArrayList();
         if (this.subplots != null) {
             Iterator iterator = this.subplots.iterator();
@@ -589,7 +598,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      *
      * @since 1.0.3
      */
-    public List getCategoriesForAxis(CategoryAxis axis) {
+    @Override
+	public List getCategoriesForAxis(CategoryAxis axis) {
         // FIXME:  this code means that it is not possible to use more than
         // one domain axis for the combined plots...
         return getCategories();
@@ -603,7 +613,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @param info  information about the plot's dimensions.
      *
      */
-    public void handleClick(int x, int y, PlotRenderingInfo info) {
+    @Override
+	public void handleClick(int x, int y, PlotRenderingInfo info) {
 
         Rectangle2D dataArea = info.getDataArea();
         if (dataArea.contains(x, y)) {
@@ -622,7 +633,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      *
      * @param event  the event.
      */
-    public void plotChanged(PlotChangeEvent event) {
+    @Override
+	public void plotChanged(PlotChangeEvent event) {
         notifyListeners(event);
     }
 
@@ -633,7 +645,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -658,7 +671,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @throws CloneNotSupportedException  this class will not throw this
      *         exception, but subclasses (if any) might.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
 
         CombinedDomainCategoryPlot result
             = (CombinedDomainCategoryPlot) super.clone();

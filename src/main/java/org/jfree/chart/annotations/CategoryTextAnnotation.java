@@ -191,7 +191,8 @@ public class CategoryTextAnnotation extends TextAnnotation
      * @param domainAxis  the domain axis.
      * @param rangeAxis  the range axis.
      */
-    public void draw(Graphics2D g2, CategoryPlot plot, Rectangle2D dataArea,
+    @Override
+	public void draw(Graphics2D g2, CategoryPlot plot, Rectangle2D dataArea,
                      CategoryAxis domainAxis, ValueAxis rangeAxis) {
 
         CategoryDataset dataset = plot.getDataset();
@@ -234,7 +235,8 @@ public class CategoryTextAnnotation extends TextAnnotation
      *
      * @return <code>true</code> or <code>false</code>.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -262,7 +264,8 @@ public class CategoryTextAnnotation extends TextAnnotation
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = super.hashCode();
         result = 37 * result + this.category.hashCode();
         result = 37 * result + this.categoryAnchor.hashCode();
@@ -279,7 +282,8 @@ public class CategoryTextAnnotation extends TextAnnotation
      * @throws CloneNotSupportedException  this class will not throw this
      *         exception, but subclasses (if any) might.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

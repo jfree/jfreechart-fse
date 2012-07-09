@@ -116,7 +116,8 @@ public class TimeSeriesTests extends TestCase implements SeriesChangeListener {
     /**
      * Common test setup.
      */
-    protected void setUp() {
+    @Override
+	protected void setUp() {
 
         this.seriesA = new TimeSeries("Series A");
         try {
@@ -159,7 +160,8 @@ public class TimeSeriesTests extends TestCase implements SeriesChangeListener {
      *
      * @param event  the event.
      */
-    public void seriesChanged(SeriesChangeEvent event) {
+    @Override
+	public void seriesChanged(SeriesChangeEvent event) {
         this.gotSeriesChangeEvent = true;
     }
 

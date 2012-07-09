@@ -114,7 +114,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The high-value for the specified series and item.
      */
-    public Number getHigh(int series, int item) {
+    @Override
+	public Number getHigh(int series, int item) {
         return ((OHLCDataset) this.parent).getHigh(this.map[series], item);
     }
 
@@ -127,7 +128,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The high-value.
      */
-    public double getHighValue(int series, int item) {
+    @Override
+	public double getHighValue(int series, int item) {
         double result = Double.NaN;
         Number high = getHigh(series, item);
         if (high != null) {
@@ -147,7 +149,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The low-value for the specified series and item.
      */
-    public Number getLow(int series, int item) {
+    @Override
+	public Number getLow(int series, int item) {
         return ((OHLCDataset) this.parent).getLow(this.map[series], item);
     }
 
@@ -160,7 +163,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The low-value.
      */
-    public double getLowValue(int series, int item) {
+    @Override
+	public double getLowValue(int series, int item) {
         double result = Double.NaN;
         Number low = getLow(series, item);
         if (low != null) {
@@ -180,7 +184,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The open-value for the specified series and item.
      */
-    public Number getOpen(int series, int item) {
+    @Override
+	public Number getOpen(int series, int item) {
         return ((OHLCDataset) this.parent).getOpen(this.map[series], item);
     }
 
@@ -193,7 +198,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The open-value.
      */
-    public double getOpenValue(int series, int item) {
+    @Override
+	public double getOpenValue(int series, int item) {
         double result = Double.NaN;
         Number open = getOpen(series, item);
         if (open != null) {
@@ -213,7 +219,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The close-value for the specified series and item.
      */
-    public Number getClose(int series, int item) {
+    @Override
+	public Number getClose(int series, int item) {
         return ((OHLCDataset) this.parent).getClose(this.map[series], item);
     }
 
@@ -226,7 +233,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The close-value.
      */
-    public double getCloseValue(int series, int item) {
+    @Override
+	public double getCloseValue(int series, int item) {
         double result = Double.NaN;
         Number close = getClose(series, item);
         if (close != null) {
@@ -246,7 +254,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The volume.
      */
-    public Number getVolume(int series, int item) {
+    @Override
+	public Number getVolume(int series, int item) {
         return ((OHLCDataset) this.parent).getVolume(this.map[series], item);
     }
 
@@ -259,7 +268,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The volume-value.
      */
-    public double getVolumeValue(int series, int item) {
+    @Override
+	public double getVolumeValue(int series, int item) {
         double result = Double.NaN;
         Number volume = getVolume(series, item);
         if (volume != null) {
@@ -283,7 +293,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The X-value for the specified series and item.
      */
-    public Number getX(int series, int item) {
+    @Override
+	public Number getX(int series, int item) {
         return ((XYDataset) this.parent).getX(this.map[series], item);
     }
 
@@ -298,7 +309,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The Y-value for the specified series and item.
      */
-    public Number getY(int series, int item) {
+    @Override
+	public Number getY(int series, int item) {
         return ((XYDataset) this.parent).getY(this.map[series], item);
     }
 
@@ -312,7 +324,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The number of items in a series.
      */
-    public int getItemCount(int series) {
+    @Override
+	public int getItemCount(int series) {
         return ((XYDataset) this.parent).getItemCount(this.map[series]);
     }
 
@@ -325,7 +338,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The number of series in the dataset.
      */
-    public int getSeriesCount() {
+    @Override
+	public int getSeriesCount() {
         return this.map.length;
     }
 
@@ -336,7 +350,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The name of a series.
      */
-    public Comparable getSeriesKey(int series) {
+    @Override
+	public Comparable getSeriesKey(int series) {
         return this.parent.getSeriesKey(this.map[series]);
     }
 
@@ -352,7 +367,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The starting X value for the specified series and item.
      */
-    public Number getStartX(int series, int item) {
+    @Override
+	public Number getStartX(int series, int item) {
         if (this.parent instanceof IntervalXYDataset) {
             return ((IntervalXYDataset) this.parent).getStartX(
                 this.map[series], item
@@ -371,7 +387,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The ending X value for the specified series and item.
      */
-    public Number getEndX(int series, int item) {
+    @Override
+	public Number getEndX(int series, int item) {
         if (this.parent instanceof IntervalXYDataset) {
             return ((IntervalXYDataset) this.parent).getEndX(
                 this.map[series], item
@@ -390,7 +407,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The starting Y value for the specified series and item.
      */
-    public Number getStartY(int series, int item) {
+    @Override
+	public Number getStartY(int series, int item) {
         if (this.parent instanceof IntervalXYDataset) {
             return ((IntervalXYDataset) this.parent).getStartY(
                 this.map[series], item
@@ -409,7 +427,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The ending Y value for the specified series and item.
      */
-    public Number getEndY(int series,  int item) {
+    @Override
+	public Number getEndY(int series,  int item) {
         if (this.parent instanceof IntervalXYDataset) {
             return ((IntervalXYDataset) this.parent).getEndY(
                 this.map[series], item
@@ -429,7 +448,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return The parent Dataset of this combination.
      */
-    public SeriesDataset getParent() {
+    @Override
+	public SeriesDataset getParent() {
         return this.parent;
     }
 
@@ -438,7 +458,8 @@ public class SubSeriesDataset extends AbstractIntervalXYDataset
      *
      * @return A map or indirect indexing form our series into parent's series.
      */
-    public int[] getMap() {
+    @Override
+	public int[] getMap() {
         return (int[]) this.map.clone();
     }
 

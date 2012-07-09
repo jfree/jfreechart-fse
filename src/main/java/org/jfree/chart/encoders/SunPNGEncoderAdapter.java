@@ -60,7 +60,8 @@ public class SunPNGEncoderAdapter implements ImageEncoder {
      *
      * @return A float representing the quality.
      */
-    public float getQuality() {
+    @Override
+	public float getQuality() {
         return 0.0f;
     }
 
@@ -70,7 +71,8 @@ public class SunPNGEncoderAdapter implements ImageEncoder {
      *
      * @param quality  A float representing the quality.
      */
-    public void setQuality(float quality) {
+    @Override
+	public void setQuality(float quality) {
         //  No op
     }
 
@@ -79,7 +81,8 @@ public class SunPNGEncoderAdapter implements ImageEncoder {
      *
      * @return Whether the encoder is encoding alpha transparency.
      */
-    public boolean isEncodingAlpha() {
+    @Override
+	public boolean isEncodingAlpha() {
         return false;
     }
 
@@ -90,7 +93,8 @@ public class SunPNGEncoderAdapter implements ImageEncoder {
      * @param encodingAlpha  Whether the encoder should encode alpha
      *                       transparency.
      */
-    public void setEncodingAlpha(boolean encodingAlpha) {
+    @Override
+	public void setEncodingAlpha(boolean encodingAlpha) {
         //  No op
     }
 
@@ -103,7 +107,8 @@ public class SunPNGEncoderAdapter implements ImageEncoder {
      *
      * @throws IOException
      */
-    public byte[] encode(BufferedImage bufferedImage) throws IOException {
+    @Override
+	public byte[] encode(BufferedImage bufferedImage) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         encode(bufferedImage, outputStream);
         return outputStream.toByteArray();
@@ -116,7 +121,8 @@ public class SunPNGEncoderAdapter implements ImageEncoder {
      * @param outputStream  The OutputStream to write the encoded image to.
      * @throws IOException
      */
-    public void encode(BufferedImage bufferedImage, OutputStream outputStream)
+    @Override
+	public void encode(BufferedImage bufferedImage, OutputStream outputStream)
         throws IOException {
         if (bufferedImage == null) {
             throw new IllegalArgumentException("Null 'image' argument.");

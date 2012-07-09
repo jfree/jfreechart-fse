@@ -478,7 +478,8 @@ public class TextTitle extends Title
      *
      * @return The block size (in Java2D units, never <code>null</code>).
      */
-    public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
+    @Override
+	public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
         RectangleConstraint cc = toContentConstraint(constraint);
         LengthConstraintType w = cc.getWidthConstraintType();
         LengthConstraintType h = cc.getHeightConstraintType();
@@ -672,7 +673,8 @@ public class TextTitle extends Title
      * @param g2  the graphics device.
      * @param area  the area allocated for the title.
      */
-    public void draw(Graphics2D g2, Rectangle2D area) {
+    @Override
+	public void draw(Graphics2D g2, Rectangle2D area) {
         draw(g2, area, null);
     }
 
@@ -688,7 +690,8 @@ public class TextTitle extends Title
      * @return An {@link EntityCollection} containing a chart entity for the
      *         title, or <code>null</code>.
      */
-    public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
+    @Override
+	public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
         if (this.content == null) {
             return null;
         }
@@ -829,7 +832,8 @@ public class TextTitle extends Title
      *
      * @return <code>true</code> or <code>false</code>.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -872,7 +876,8 @@ public class TextTitle extends Title
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = super.hashCode();
         result = 29 * result + (this.text != null ? this.text.hashCode() : 0);
         result = 29 * result + (this.font != null ? this.font.hashCode() : 0);
@@ -889,7 +894,8 @@ public class TextTitle extends Title
      *
      * @throws CloneNotSupportedException never.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

@@ -159,7 +159,8 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
      *
      * @return The series count.
      */
-    public int getSeriesCount() {
+    @Override
+	public int getSeriesCount() {
         return this.values.getColumnCount();
     }
 
@@ -170,7 +171,8 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
      *
      * @return The key for a series.
      */
-    public Comparable getSeriesKey(int series) {
+    @Override
+	public Comparable getSeriesKey(int series) {
         return this.values.getColumnKey(series);
     }
 
@@ -179,7 +181,8 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
      *
      * @return The item count.
      */
-    public int getItemCount() {
+    @Override
+	public int getItemCount() {
         return this.values.getRowCount();
     }
 
@@ -191,7 +194,8 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
      *
      * @return The item count.
      */
-    public int getItemCount(int series) {
+    @Override
+	public int getItemCount(int series) {
         return getItemCount();  // all series have the same number of items in
                                 // this dataset
     }
@@ -204,7 +208,8 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
      *
      * @return The value.
      */
-    public Number getX(int series, int item) {
+    @Override
+	public Number getX(int series, int item) {
         return (Number) this.values.getRowKey(item);
     }
 
@@ -216,7 +221,8 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
      *
      * @return The starting X value.
      */
-    public Number getStartX(int series, int item) {
+    @Override
+	public Number getStartX(int series, int item) {
         return this.intervalDelegate.getStartX(series, item);
     }
 
@@ -228,7 +234,8 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
      *
      * @return The ending X value.
      */
-    public Number getEndX(int series, int item) {
+    @Override
+	public Number getEndX(int series, int item) {
         return this.intervalDelegate.getEndX(series, item);
     }
 
@@ -240,7 +247,8 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
      *
      * @return The y value (possibly <code>null</code>).
      */
-    public Number getY(int series, int item) {
+    @Override
+	public Number getY(int series, int item) {
         return this.values.getValue(item, series);
     }
 
@@ -252,7 +260,8 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
      *
      * @return The starting Y value.
      */
-    public Number getStartY(int series, int item) {
+    @Override
+	public Number getStartY(int series, int item) {
         return getY(series, item);
     }
 
@@ -264,7 +273,8 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
      *
      * @return The ending Y value.
      */
-    public Number getEndY(int series, int item) {
+    @Override
+	public Number getEndY(int series, int item) {
         return getY(series, item);
     }
 
@@ -276,7 +286,8 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
      *
      * @return The minimum value.
      */
-    public double getDomainLowerBound(boolean includeInterval) {
+    @Override
+	public double getDomainLowerBound(boolean includeInterval) {
         return this.intervalDelegate.getDomainLowerBound(includeInterval);
     }
 
@@ -288,7 +299,8 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
      *
      * @return The maximum value.
      */
-    public double getDomainUpperBound(boolean includeInterval) {
+    @Override
+	public double getDomainUpperBound(boolean includeInterval) {
         return this.intervalDelegate.getDomainUpperBound(includeInterval);
     }
 
@@ -300,7 +312,8 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
      *
      * @return The range.
      */
-    public Range getDomainBounds(boolean includeInterval) {
+    @Override
+	public Range getDomainBounds(boolean includeInterval) {
         if (includeInterval) {
             return this.intervalDelegate.getDomainBounds(includeInterval);
         }
@@ -378,7 +391,8 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (!(obj instanceof CategoryTableXYDataset)) {
             return false;
         }
@@ -400,7 +414,8 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
      * @throws CloneNotSupportedException if there is some reason that cloning
      *     cannot be performed.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         CategoryTableXYDataset clone = (CategoryTableXYDataset) super.clone();
         clone.values = (DefaultKeyedValues2D) this.values.clone();
         clone.intervalDelegate = new IntervalXYDelegate(clone);

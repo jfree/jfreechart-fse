@@ -155,7 +155,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The number of series in the dataset.
      */
-    public int getSeriesCount() {
+    @Override
+	public int getSeriesCount() {
         return this.datasetInfo.size();
     }
 
@@ -166,7 +167,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The key for a series.
      */
-    public Comparable getSeriesKey(int series) {
+    @Override
+	public Comparable getSeriesKey(int series) {
         DatasetInfo di = getDatasetInfo(series);
         return di.data.getSeriesKey(di.series);
     }
@@ -186,7 +188,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The X-value for the specified series and item.
      */
-    public Number getX(int series, int item) {
+    @Override
+	public Number getX(int series, int item) {
         DatasetInfo di = getDatasetInfo(series);
         return ((XYDataset) di.data).getX(di.series, item);
     }
@@ -202,7 +205,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The Y-value for the specified series and item.
      */
-    public Number getY(int series, int item) {
+    @Override
+	public Number getY(int series, int item) {
         DatasetInfo di = getDatasetInfo(series);
         return ((XYDataset) di.data).getY(di.series, item);
     }
@@ -217,7 +221,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The number of items in a series.
      */
-    public int getItemCount(int series) {
+    @Override
+	public int getItemCount(int series) {
         DatasetInfo di = getDatasetInfo(series);
         return ((XYDataset) di.data).getItemCount(di.series);
     }
@@ -237,7 +242,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The high-value for the specified series and item.
      */
-    public Number getHigh(int series, int item) {
+    @Override
+	public Number getHigh(int series, int item) {
         DatasetInfo di = getDatasetInfo(series);
         return ((OHLCDataset) di.data).getHigh(di.series, item);
     }
@@ -251,7 +257,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The high-value.
      */
-    public double getHighValue(int series, int item) {
+    @Override
+	public double getHighValue(int series, int item) {
         double result = Double.NaN;
         Number high = getHigh(series, item);
         if (high != null) {
@@ -271,7 +278,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The low-value for the specified series and item.
      */
-    public Number getLow(int series, int item) {
+    @Override
+	public Number getLow(int series, int item) {
         DatasetInfo di = getDatasetInfo(series);
         return ((OHLCDataset) di.data).getLow(di.series, item);
     }
@@ -285,7 +293,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The low-value.
      */
-    public double getLowValue(int series, int item) {
+    @Override
+	public double getLowValue(int series, int item) {
         double result = Double.NaN;
         Number low = getLow(series, item);
         if (low != null) {
@@ -305,7 +314,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The open-value for the specified series and item.
      */
-    public Number getOpen(int series, int item) {
+    @Override
+	public Number getOpen(int series, int item) {
         DatasetInfo di = getDatasetInfo(series);
         return ((OHLCDataset) di.data).getOpen(di.series, item);
     }
@@ -319,7 +329,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The open-value.
      */
-    public double getOpenValue(int series, int item) {
+    @Override
+	public double getOpenValue(int series, int item) {
         double result = Double.NaN;
         Number open = getOpen(series, item);
         if (open != null) {
@@ -339,7 +350,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The close-value for the specified series and item.
      */
-    public Number getClose(int series, int item) {
+    @Override
+	public Number getClose(int series, int item) {
         DatasetInfo di = getDatasetInfo(series);
         return ((OHLCDataset) di.data).getClose(di.series, item);
     }
@@ -353,7 +365,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The close-value.
      */
-    public double getCloseValue(int series, int item) {
+    @Override
+	public double getCloseValue(int series, int item) {
         double result = Double.NaN;
         Number close = getClose(series, item);
         if (close != null) {
@@ -373,7 +386,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The volume value for the specified series and item.
      */
-    public Number getVolume(int series, int item) {
+    @Override
+	public Number getVolume(int series, int item) {
         DatasetInfo di = getDatasetInfo(series);
         return ((OHLCDataset) di.data).getVolume(di.series, item);
     }
@@ -387,7 +401,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The volume-value.
      */
-    public double getVolumeValue(int series, int item) {
+    @Override
+	public double getVolumeValue(int series, int item) {
         double result = Double.NaN;
         Number volume = getVolume(series, item);
         if (volume != null) {
@@ -408,7 +423,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The value.
      */
-    public Number getStartX(int series, int item) {
+    @Override
+	public Number getStartX(int series, int item) {
         DatasetInfo di = getDatasetInfo(series);
         if (di.data instanceof IntervalXYDataset) {
             return ((IntervalXYDataset) di.data).getStartX(di.series, item);
@@ -426,7 +442,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The value.
      */
-    public Number getEndX(int series, int item) {
+    @Override
+	public Number getEndX(int series, int item) {
         DatasetInfo di = getDatasetInfo(series);
         if (di.data instanceof IntervalXYDataset) {
             return ((IntervalXYDataset) di.data).getEndX(di.series, item);
@@ -444,7 +461,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The starting Y value for the specified series and item.
      */
-    public Number getStartY(int series, int item) {
+    @Override
+	public Number getStartY(int series, int item) {
         DatasetInfo di = getDatasetInfo(series);
         if (di.data instanceof IntervalXYDataset) {
             return ((IntervalXYDataset) di.data).getStartY(di.series, item);
@@ -462,7 +480,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The ending Y value for the specified series and item.
      */
-    public Number getEndY(int series, int item) {
+    @Override
+	public Number getEndY(int series, int item) {
         DatasetInfo di = getDatasetInfo(series);
         if (di.data instanceof IntervalXYDataset) {
             return ((IntervalXYDataset) di.data).getEndY(di.series, item);
@@ -483,7 +502,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @return The parent Dataset of this combination or <code>null</code>.
      */
-    public SeriesDataset getParent() {
+    @Override
+	public SeriesDataset getParent() {
 
         SeriesDataset parent = null;
         for (int i = 0; i < this.datasetInfo.size(); i++) {
@@ -516,7 +536,8 @@ public class CombinedDataset extends AbstractIntervalXYDataset
      *
      * @see #getParent()
      */
-    public int[] getMap() {
+    @Override
+	public int[] getMap() {
 
         int[] map = null;
         for (int i = 0; i < this.datasetInfo.size(); i++) {

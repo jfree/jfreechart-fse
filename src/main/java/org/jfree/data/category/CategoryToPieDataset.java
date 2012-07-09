@@ -143,7 +143,8 @@ public class CategoryToPieDataset extends AbstractDataset
      *
      * @return The item count.
      */
-    public int getItemCount() {
+    @Override
+	public int getItemCount() {
         int result = 0;
         if (this.source != null) {
             if (this.extract == TableOrder.BY_ROW) {
@@ -166,7 +167,8 @@ public class CategoryToPieDataset extends AbstractDataset
      * @throws IndexOutOfBoundsException if <code>item</code> is not in the
      *     range <code>0</code> to <code>getItemCount() - 1</code>.
      */
-    public Number getValue(int item) {
+    @Override
+	public Number getValue(int item) {
         Number result = null;
         if (item < 0 || item >= getItemCount()) {
             // this will include the case where the underlying dataset is null
@@ -193,7 +195,8 @@ public class CategoryToPieDataset extends AbstractDataset
      * @throws IndexOutOfBoundsException if <code>index</code> is not in the
      *     specified range.
      */
-    public Comparable getKey(int index) {
+    @Override
+	public Comparable getKey(int index) {
         Comparable result = null;
         if (index < 0 || index >= getItemCount()) {
             // this includes the case where the underlying dataset is null
@@ -216,7 +219,8 @@ public class CategoryToPieDataset extends AbstractDataset
      *
      * @return The index for the key, or <code>-1</code>.
      */
-    public int getIndex(Comparable key) {
+    @Override
+	public int getIndex(Comparable key) {
         int result = -1;
         if (this.source != null) {
             if (this.extract == TableOrder.BY_ROW) {
@@ -237,7 +241,8 @@ public class CategoryToPieDataset extends AbstractDataset
      *
      * @return The keys.
      */
-    public List getKeys() {
+    @Override
+	public List getKeys() {
         List result = Collections.EMPTY_LIST;
         if (this.source != null) {
             if (this.extract == TableOrder.BY_ROW) {
@@ -259,7 +264,8 @@ public class CategoryToPieDataset extends AbstractDataset
      *
      * @return The value (possibly <code>null</code>).
      */
-    public Number getValue(Comparable key) {
+    @Override
+	public Number getValue(Comparable key) {
         Number result = null;
         int keyIndex = getIndex(key);
         if (keyIndex != -1) {
@@ -280,7 +286,8 @@ public class CategoryToPieDataset extends AbstractDataset
      * @param event  the event (ignored, a new event with this dataset as the
      *     source is sent to the listeners).
      */
-    public void datasetChanged(DatasetChangeEvent event) {
+    @Override
+	public void datasetChanged(DatasetChangeEvent event) {
         fireDatasetChanged();
     }
 
@@ -293,7 +300,8 @@ public class CategoryToPieDataset extends AbstractDataset
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

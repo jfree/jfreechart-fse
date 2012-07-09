@@ -245,7 +245,8 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
      *
      * @return The space required for the axes.
      */
-    protected AxisSpace calculateAxisSpace(Graphics2D g2,
+    @Override
+	protected AxisSpace calculateAxisSpace(Graphics2D g2,
                                            Rectangle2D plotArea) {
 
         AxisSpace space = new AxisSpace();
@@ -333,7 +334,8 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
      * @param info  collects information about the drawing (<code>null</code>
      *              permitted).
      */
-    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+    @Override
+	public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
                      PlotState parentState,
                      PlotRenderingInfo info) {
 
@@ -391,7 +393,8 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
      *
      * @param orientation  the orientation.
      */
-    public void setOrientation(PlotOrientation orientation) {
+    @Override
+	public void setOrientation(PlotOrientation orientation) {
 
         super.setOrientation(orientation);
 
@@ -416,7 +419,8 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
       *
       * @return The range.
       */
-     public Range getDataRange(ValueAxis axis) {
+     @Override
+	public Range getDataRange(ValueAxis axis) {
          Range result = null;
          if (this.subplots != null) {
              Iterator iterator = this.subplots.iterator();
@@ -433,7 +437,8 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
      *
      * @return The legend items.
      */
-    public LegendItemCollection getLegendItems() {
+    @Override
+	public LegendItemCollection getLegendItems() {
         LegendItemCollection result = getFixedLegendItems();
         if (result == null) {
             result = new LegendItemCollection();
@@ -471,7 +476,8 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
      * @param info  information about the plot's dimensions.
      *
      */
-    public void handleClick(int x, int y, PlotRenderingInfo info) {
+    @Override
+	public void handleClick(int x, int y, PlotRenderingInfo info) {
 
         Rectangle2D dataArea = info.getDataArea();
         if (dataArea.contains(x, y)) {
@@ -490,7 +496,8 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
      *
      * @param event  the event.
      */
-    public void plotChanged(PlotChangeEvent event) {
+    @Override
+	public void plotChanged(PlotChangeEvent event) {
         notifyListeners(event);
     }
 
@@ -501,7 +508,8 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
      *
      * @return <code>true</code> or <code>false</code>.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -526,7 +534,8 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
      * @throws CloneNotSupportedException  this class will not throw this
      *         exception, but subclasses (if any) might.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         CombinedRangeCategoryPlot result
             = (CombinedRangeCategoryPlot) super.clone();
         result.subplots = (List) ObjectUtilities.deepClone(this.subplots);

@@ -353,7 +353,8 @@ public class ChartEntity implements Cloneable, PublicCloneable, Serializable {
      *
      * @return A string.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuffer buf = new StringBuffer("ChartEntity: ");
         buf.append("tooltip = ");
         buf.append(this.toolTipText);
@@ -367,7 +368,8 @@ public class ChartEntity implements Cloneable, PublicCloneable, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -392,7 +394,8 @@ public class ChartEntity implements Cloneable, PublicCloneable, Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 37;
         result = HashUtilities.hashCode(result, this.toolTipText);
         result = HashUtilities.hashCode(result, this.urlText);
@@ -407,7 +410,8 @@ public class ChartEntity implements Cloneable, PublicCloneable, Serializable {
      * @throws CloneNotSupportedException if there is a problem cloning the
      *         entity.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

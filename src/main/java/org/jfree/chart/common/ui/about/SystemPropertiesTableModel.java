@@ -136,7 +136,8 @@ public class SystemPropertiesTableModel extends SortableTableModel {
          *
          * @return an integer that indicates the relative order of the objects.
          */
-        public int compare(final Object o1, final Object o2) {
+        @Override
+		public int compare(final Object o1, final Object o2) {
 
             if ((o1 instanceof SystemProperty)
                     && (o2 instanceof SystemProperty)) {
@@ -163,7 +164,8 @@ public class SystemPropertiesTableModel extends SortableTableModel {
          *
          * @return A boolean.
          */
-        public boolean equals(final Object o) {
+        @Override
+		public boolean equals(final Object o) {
             if (this == o) {
                 return true;
             }
@@ -186,7 +188,8 @@ public class SystemPropertiesTableModel extends SortableTableModel {
          *
          * @return the hashcode
          */
-        public int hashCode() {
+        @Override
+		public int hashCode() {
             return (this.ascending ? 1 : 0);
         }
     }
@@ -242,7 +245,8 @@ public class SystemPropertiesTableModel extends SortableTableModel {
      *
      * @return true for column 0, and false for all other columns.
      */
-    public boolean isSortable(final int column) {
+    @Override
+	public boolean isSortable(final int column) {
 
         if (column == 0) {
             return true;
@@ -259,7 +263,8 @@ public class SystemPropertiesTableModel extends SortableTableModel {
      *
      * @return the row count.
      */
-    public int getRowCount() {
+    @Override
+	public int getRowCount() {
         return this.properties.size();
     }
 
@@ -270,7 +275,8 @@ public class SystemPropertiesTableModel extends SortableTableModel {
      *
      * @return the column count (always 2 in this case).
      */
-    public int getColumnCount() {
+    @Override
+	public int getColumnCount() {
         return 2;
     }
 
@@ -281,7 +287,8 @@ public class SystemPropertiesTableModel extends SortableTableModel {
      *
      * @return the column name.
      */
-    public String getColumnName(final int column) {
+    @Override
+	public String getColumnName(final int column) {
 
         if (column == 0) {
             return this.nameColumnLabel;
@@ -301,7 +308,8 @@ public class SystemPropertiesTableModel extends SortableTableModel {
      *
      * @return the value.
      */
-    public Object getValueAt(final int row, final int column) {
+    @Override
+	public Object getValueAt(final int row, final int column) {
 
         final SystemProperty sp = (SystemProperty) this.properties.get(row);
         if (column == 0) {
@@ -325,7 +333,8 @@ public class SystemPropertiesTableModel extends SortableTableModel {
      * @param ascending  a flag that controls the sort order.
      *
      */
-    public void sortByColumn(final int column, final boolean ascending) {
+    @Override
+	public void sortByColumn(final int column, final boolean ascending) {
 
         if (isSortable(column)) {
             super.sortByColumn(column, ascending);

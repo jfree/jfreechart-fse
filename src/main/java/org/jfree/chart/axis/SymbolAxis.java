@@ -271,7 +271,8 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      * @param dataArea  the area in which the plot and axes should be drawn.
      * @param edge  the edge along which the axis is drawn.
      */
-    protected void selectAutoTickUnit(Graphics2D g2, Rectangle2D dataArea,
+    @Override
+	protected void selectAutoTickUnit(Graphics2D g2, Rectangle2D dataArea,
                                       RectangleEdge edge) {
         throw new UnsupportedOperationException();
     }
@@ -292,7 +293,8 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      *
      * @return The axis state (never <code>null</code>).
      */
-    public AxisState draw(Graphics2D g2,
+    @Override
+	public AxisState draw(Graphics2D g2,
                           double cursor,
                           Rectangle2D plotArea,
                           Rectangle2D dataArea,
@@ -457,7 +459,8 @@ public class SymbolAxis extends NumberAxis implements Serializable {
     /**
      * Rescales the axis to ensure that all data is visible.
      */
-    protected void autoAdjustRange() {
+    @Override
+	protected void autoAdjustRange() {
 
         Plot plot = getPlot();
         if (plot == null) {
@@ -540,7 +543,8 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      *
      * @return A list of ticks.
      */
-    public List refreshTicks(Graphics2D g2,
+    @Override
+	public List refreshTicks(Graphics2D g2,
                              AxisState state,
                              Rectangle2D dataArea,
                              RectangleEdge edge) {
@@ -564,7 +568,8 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      *
      * @return The ticks.
      */
-    protected List refreshTicksHorizontal(Graphics2D g2,
+    @Override
+	protected List refreshTicksHorizontal(Graphics2D g2,
                                           Rectangle2D dataArea,
                                           RectangleEdge edge) {
 
@@ -658,7 +663,8 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      *
      * @return The ticks.
      */
-    protected List refreshTicksVertical(Graphics2D g2,
+    @Override
+	protected List refreshTicksVertical(Graphics2D g2,
                                         Rectangle2D dataArea,
                                         RectangleEdge edge) {
 
@@ -767,7 +773,8 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

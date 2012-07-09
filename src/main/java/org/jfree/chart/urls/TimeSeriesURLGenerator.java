@@ -172,7 +172,8 @@ public class TimeSeriesURLGenerator implements XYURLGenerator, Serializable {
      *
      * @return The generated URL.
      */
-    public String generateURL(XYDataset dataset, int series, int item) {
+    @Override
+	public String generateURL(XYDataset dataset, int series, int item) {
         String result = this.prefix;
         boolean firstParameter = result.indexOf("?") == -1;
         Comparable seriesKey = dataset.getSeriesKey(series);
@@ -199,7 +200,8 @@ public class TimeSeriesURLGenerator implements XYURLGenerator, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

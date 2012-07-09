@@ -187,7 +187,8 @@ public class TimePeriodValues extends Series implements Serializable {
      *
      * @return The item count.
      */
-    public int getItemCount() {
+    @Override
+	public int getItemCount() {
         return this.data.size();
     }
 
@@ -409,7 +410,8 @@ public class TimePeriodValues extends Series implements Serializable {
      *
      * @return <code>true</code> or <code>false</code>.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -445,7 +447,8 @@ public class TimePeriodValues extends Series implements Serializable {
      *
      * @return The hashcode
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result;
         result = (this.domain != null ? this.domain.hashCode() : 0);
         result = 29 * result + (this.range != null ? this.range.hashCode() : 0);
@@ -474,7 +477,8 @@ public class TimePeriodValues extends Series implements Serializable {
      * 
      * @throws CloneNotSupportedException if there is a cloning problem.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         Object clone = createCopy(0, getItemCount() - 1);
         return clone;
     }

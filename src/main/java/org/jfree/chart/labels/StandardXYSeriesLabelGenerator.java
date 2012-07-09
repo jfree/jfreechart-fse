@@ -99,7 +99,8 @@ public class StandardXYSeriesLabelGenerator implements XYSeriesLabelGenerator,
      *
      * @return A series label.
      */
-    public String generateLabel(XYDataset dataset, int series) {
+    @Override
+	public String generateLabel(XYDataset dataset, int series) {
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
         }
@@ -133,7 +134,8 @@ public class StandardXYSeriesLabelGenerator implements XYSeriesLabelGenerator,
      *
      * @throws CloneNotSupportedException if cloning is not supported.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -144,7 +146,8 @@ public class StandardXYSeriesLabelGenerator implements XYSeriesLabelGenerator,
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -164,7 +167,8 @@ public class StandardXYSeriesLabelGenerator implements XYSeriesLabelGenerator,
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 127;
         result = HashUtilities.hashCode(result, this.formatPattern);
         return result;

@@ -250,7 +250,8 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
      *
      * @return The item count.
      */
-    public int getItemCount() {
+    @Override
+	public int getItemCount() {
         return this.data.size();
     }
 
@@ -1032,7 +1033,8 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
      * @throws CloneNotSupportedException not thrown by this class, but
      *         subclasses may differ.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         TimeSeries clone = (TimeSeries) super.clone();
         clone.data = (List) ObjectUtilities.deepClone(this.data);
         return clone;
@@ -1136,7 +1138,8 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -1177,7 +1180,8 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
      *
      * @return The hashcode
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = super.hashCode();
         result = 29 * result + (this.domain != null ? this.domain.hashCode()
                 : 0);

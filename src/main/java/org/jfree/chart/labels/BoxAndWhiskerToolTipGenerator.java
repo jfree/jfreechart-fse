@@ -108,7 +108,8 @@ public class BoxAndWhiskerToolTipGenerator
      *
      * @return The items (never <code>null</code>).
      */
-    protected Object[] createItemArray(CategoryDataset dataset, int series,
+    @Override
+	protected Object[] createItemArray(CategoryDataset dataset, int series,
                                        int item) {
         Object[] result = new Object[8];
         result[0] = dataset.getRowKey(series);
@@ -135,7 +136,8 @@ public class BoxAndWhiskerToolTipGenerator
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

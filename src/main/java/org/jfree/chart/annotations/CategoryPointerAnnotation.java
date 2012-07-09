@@ -368,7 +368,8 @@ public class CategoryPointerAnnotation extends CategoryTextAnnotation
      * @param domainAxis  the domain axis.
      * @param rangeAxis  the range axis.
      */
-    public void draw(Graphics2D g2, CategoryPlot plot, Rectangle2D dataArea,
+    @Override
+	public void draw(Graphics2D g2, CategoryPlot plot, Rectangle2D dataArea,
             CategoryAxis domainAxis, ValueAxis rangeAxis) {
 
         PlotOrientation orientation = plot.getOrientation();
@@ -438,7 +439,8 @@ public class CategoryPointerAnnotation extends CategoryTextAnnotation
      *
      * @return <code>true</code> or <code>false</code>.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
 
         if (obj == this) {
             return true;
@@ -482,7 +484,8 @@ public class CategoryPointerAnnotation extends CategoryTextAnnotation
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 193;
         long temp = Double.doubleToLongBits(this.angle);
         result = 37 * result + (int) (temp ^ (temp >>> 32));
@@ -508,7 +511,8 @@ public class CategoryPointerAnnotation extends CategoryTextAnnotation
      *
      * @throws CloneNotSupportedException  if the annotation can't be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

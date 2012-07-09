@@ -200,7 +200,8 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
      * @return The range (or <code>null</code> if the dataset is
      *         <code>null</code> or empty).
      */
-    public Range findRangeBounds(CategoryDataset dataset) {
+    @Override
+	public Range findRangeBounds(CategoryDataset dataset) {
         return findRangeBounds(dataset, true);
     }
 
@@ -219,7 +220,8 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
      * @param column  the column index (zero-based).
      * @param pass  the pass.
      */
-    public void drawItem(Graphics2D g2,
+    @Override
+	public void drawItem(Graphics2D g2,
                          CategoryItemRendererState state,
                          Rectangle2D dataArea,
                          CategoryPlot plot,
@@ -433,7 +435,8 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -458,7 +461,8 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int hash = super.hashCode();
         hash = HashUtilities.hashCode(hash, this.errorIndicatorPaint);
         return hash;

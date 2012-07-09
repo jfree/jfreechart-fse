@@ -101,7 +101,8 @@ public class TimeSeriesTableModel extends AbstractTableModel
      *
      * @return The column count.
      */
-    public int getColumnCount() {
+    @Override
+	public int getColumnCount() {
         return 2;
     }
 
@@ -112,7 +113,8 @@ public class TimeSeriesTableModel extends AbstractTableModel
      *
      * @return The column class in the table model.
      */
-    public Class getColumnClass(int column) {
+    @Override
+	public Class getColumnClass(int column) {
         if (column == 0) {
             return String.class;
         }
@@ -133,7 +135,8 @@ public class TimeSeriesTableModel extends AbstractTableModel
      *
      * @return The name of a column.
      */
-    public String getColumnName(int column) {
+    @Override
+	public String getColumnName(int column) {
 
         if (column == 0) {
             return "Period:";
@@ -154,7 +157,8 @@ public class TimeSeriesTableModel extends AbstractTableModel
      *
      * @return The row count.
      */
-    public int getRowCount() {
+    @Override
+	public int getRowCount() {
         return this.series.getItemCount();
     }
 
@@ -166,7 +170,8 @@ public class TimeSeriesTableModel extends AbstractTableModel
      *
      * @return The data value for a cell in the table model.
      */
-    public Object getValueAt(int row, int column) {
+    @Override
+	public Object getValueAt(int row, int column) {
 
         if (row < this.series.getItemCount()) {
             if (column == 0) {
@@ -205,7 +210,8 @@ public class TimeSeriesTableModel extends AbstractTableModel
      *
      * @return <code>true</code> if the specified cell is editable.
      */
-    public boolean isCellEditable(int row, int column) {
+    @Override
+	public boolean isCellEditable(int row, int column) {
         if (this.editable) {
             if ((column == 0) || (column == 1)) {
                 return true;
@@ -226,7 +232,8 @@ public class TimeSeriesTableModel extends AbstractTableModel
      * @param row  the row.
      * @param column  the column.
      */
-    public void setValueAt(Object value, int row, int column) {
+    @Override
+	public void setValueAt(Object value, int row, int column) {
 
         if (row < this.series.getItemCount()) {
 
@@ -259,7 +266,8 @@ public class TimeSeriesTableModel extends AbstractTableModel
      *
      * @param event  the event.
      */
-    public void seriesChanged(SeriesChangeEvent event) {
+    @Override
+	public void seriesChanged(SeriesChangeEvent event) {
         fireTableDataChanged();
     }
 

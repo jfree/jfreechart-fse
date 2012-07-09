@@ -670,7 +670,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @return The type.
      */
-    public String getPlotType() {
+    @Override
+	public String getPlotType() {
         return localizationResources.getString("Category_Plot");
     }
 
@@ -681,7 +682,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @see #setOrientation(PlotOrientation)
      */
-    public PlotOrientation getOrientation() {
+    @Override
+	public PlotOrientation getOrientation() {
         return this.orientation;
     }
 
@@ -2220,7 +2222,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @return The legend items.
      */
-    public LegendItemCollection getLegendItems() {
+    @Override
+	public LegendItemCollection getLegendItems() {
         if (this.fixedLegendItems != null) {
             return this.fixedLegendItems;
         }
@@ -2247,7 +2250,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      * @param info  information about the plot's dimensions.
      *
      */
-    public void handleClick(int x, int y, PlotRenderingInfo info) {
+    @Override
+	public void handleClick(int x, int y, PlotRenderingInfo info) {
 
         Rectangle2D dataArea = info.getDataArea();
         if (dataArea.contains(x, y)) {
@@ -2278,7 +2282,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @param percent  the zoom amount.
      */
-    public void zoom(double percent) {
+    @Override
+	public void zoom(double percent) {
 
         if (percent > 0.0) {
             double range = getRangeAxis().getRange().getLength();
@@ -2300,7 +2305,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @since 1.0.14
      */
-    public void annotationChanged(AnnotationChangeEvent event) {
+    @Override
+	public void annotationChanged(AnnotationChangeEvent event) {
         if (getParent() != null) {
             getParent().annotationChanged(event);
         }
@@ -2317,7 +2323,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @param event  information about the event (not used here).
      */
-    public void datasetChanged(DatasetChangeEvent event) {
+    @Override
+	public void datasetChanged(DatasetChangeEvent event) {
 
         int count = this.rangeAxes.size();
         for (int axisIndex = 0; axisIndex < count; axisIndex++) {
@@ -2342,7 +2349,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @param event  the event.
      */
-    public void rendererChanged(RendererChangeEvent event) {
+    @Override
+	public void rendererChanged(RendererChangeEvent event) {
         Plot parent = getParent();
         if (parent != null) {
             if (parent instanceof RendererChangeListener) {
@@ -3561,7 +3569,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      * @param state  collects info as the chart is drawn (possibly
      *               <code>null</code>).
      */
-    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+    @Override
+	public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
             PlotState parentState, PlotRenderingInfo state) {
 
         // if the plot area is too small, just return...
@@ -3785,7 +3794,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      * @param g2  the graphics device.
      * @param area  the area within which the plot should be drawn.
      */
-    public void drawBackground(Graphics2D g2, Rectangle2D area) {
+    @Override
+	public void drawBackground(Graphics2D g2, Rectangle2D area) {
         fillBackground(g2, area, this.orientation);
         drawBackgroundImage(g2, area);
     }
@@ -4292,7 +4302,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @return The data range.
      */
-    public Range getDataRange(ValueAxis axis) {
+    @Override
+	public Range getDataRange(ValueAxis axis) {
 
         Range result = null;
         List mappedDatasets = new ArrayList();
@@ -4567,7 +4578,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @since 1.0.13
      */
-    public boolean isDomainPannable() {
+    @Override
+	public boolean isDomainPannable() {
         return false;
     }
 
@@ -4582,7 +4594,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @since 1.0.13
      */
-    public boolean isRangePannable() {
+    @Override
+	public boolean isRangePannable() {
         return this.rangePannable;
     }
 
@@ -4609,7 +4622,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @since 1.0.13
      */
-    public void panDomainAxes(double percent, PlotRenderingInfo info,
+    @Override
+	public void panDomainAxes(double percent, PlotRenderingInfo info,
             Point2D source) {
         // do nothing, because the plot is not pannable along the domain axes
     }
@@ -4623,7 +4637,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @since 1.0.13
      */
-    public void panRangeAxes(double percent, PlotRenderingInfo info,
+    @Override
+	public void panRangeAxes(double percent, PlotRenderingInfo info,
             Point2D source) {
         if (!isRangePannable()) {
             return;
@@ -4652,7 +4667,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @see #isRangeZoomable()
      */
-    public boolean isDomainZoomable() {
+    @Override
+	public boolean isDomainZoomable() {
         return false;
     }
 
@@ -4663,7 +4679,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @see #isDomainZoomable()
      */
-    public boolean isRangeZoomable() {
+    @Override
+	public boolean isRangeZoomable() {
         return true;
     }
 
@@ -4675,7 +4692,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      * @param state  the plot state.
      * @param source  the source point (in Java2D space) for the zoom.
      */
-    public void zoomDomainAxes(double factor, PlotRenderingInfo state,
+    @Override
+	public void zoomDomainAxes(double factor, PlotRenderingInfo state,
                                Point2D source) {
         // can't zoom domain axis
     }
@@ -4689,7 +4707,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      * @param state  the plot state.
      * @param source  the source point (in Java2D space) for the zoom.
      */
-    public void zoomDomainAxes(double lowerPercent, double upperPercent,
+    @Override
+	public void zoomDomainAxes(double lowerPercent, double upperPercent,
                                PlotRenderingInfo state, Point2D source) {
         // can't zoom domain axis
     }
@@ -4707,7 +4726,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @since 1.0.7
      */
-    public void zoomDomainAxes(double factor, PlotRenderingInfo info,
+    @Override
+	public void zoomDomainAxes(double factor, PlotRenderingInfo info,
                                Point2D source, boolean useAnchor) {
         // can't zoom domain axis
     }
@@ -4719,7 +4739,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      * @param state  the plot state.
      * @param source  the source point (in Java2D space) for the zoom.
      */
-    public void zoomRangeAxes(double factor, PlotRenderingInfo state,
+    @Override
+	public void zoomRangeAxes(double factor, PlotRenderingInfo state,
                               Point2D source) {
         // delegate to other method
         zoomRangeAxes(factor, state, source, false);
@@ -4738,7 +4759,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @since 1.0.7
      */
-    public void zoomRangeAxes(double factor, PlotRenderingInfo info,
+    @Override
+	public void zoomRangeAxes(double factor, PlotRenderingInfo info,
                               Point2D source, boolean useAnchor) {
 
         // perform the zoom on each range axis
@@ -4771,7 +4793,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      * @param state  the plot state.
      * @param source  the source point (in Java2D space) for the zoom.
      */
-    public void zoomRangeAxes(double lowerPercent, double upperPercent,
+    @Override
+	public void zoomRangeAxes(double lowerPercent, double upperPercent,
                               PlotRenderingInfo state, Point2D source) {
         for (int i = 0; i < this.rangeAxes.size(); i++) {
             ValueAxis rangeAxis = (ValueAxis) this.rangeAxes.get(i);
@@ -4827,7 +4850,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -5015,7 +5039,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @throws CloneNotSupportedException  if the cloning is not supported.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
 
         CategoryPlot clone = (CategoryPlot) super.clone();
 

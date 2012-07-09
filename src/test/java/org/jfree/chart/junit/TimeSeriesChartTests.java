@@ -91,7 +91,8 @@ public class TimeSeriesChartTests extends TestCase {
     /**
      * Common test setup.
      */
-    protected void setUp() {
+    @Override
+	protected void setUp() {
         this.chart = createChart();
     }
 

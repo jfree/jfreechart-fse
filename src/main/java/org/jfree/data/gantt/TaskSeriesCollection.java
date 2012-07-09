@@ -131,7 +131,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The series count.
      */
-    public int getSeriesCount() {
+    @Override
+	public int getSeriesCount() {
         return getRowCount();
     }
 
@@ -142,7 +143,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The name of a series.
      */
-    public Comparable getSeriesKey(int series) {
+    @Override
+	public Comparable getSeriesKey(int series) {
         TaskSeries ts = (TaskSeries) this.data.get(series);
         return ts.getKey();
     }
@@ -152,7 +154,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The series count.
      */
-    public int getRowCount() {
+    @Override
+	public int getRowCount() {
         return this.data.size();
     }
 
@@ -161,7 +164,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The row keys.
      */
-    public List getRowKeys() {
+    @Override
+	public List getRowKeys() {
         return this.data;
     }
 
@@ -170,7 +174,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The column count.
      */
-    public int getColumnCount() {
+    @Override
+	public int getColumnCount() {
         return this.keys.size();
     }
 
@@ -179,7 +184,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The category list.
      */
-    public List getColumnKeys() {
+    @Override
+	public List getColumnKeys() {
         return this.keys;
     }
 
@@ -190,7 +196,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The column key.
      */
-    public Comparable getColumnKey(int index) {
+    @Override
+	public Comparable getColumnKey(int index) {
         return (Comparable) this.keys.get(index);
     }
 
@@ -201,7 +208,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The column index.
      */
-    public int getColumnIndex(Comparable columnKey) {
+    @Override
+	public int getColumnIndex(Comparable columnKey) {
         if (columnKey == null) {
             throw new IllegalArgumentException("Null 'columnKey' argument.");
         }
@@ -215,7 +223,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The index.
      */
-    public int getRowIndex(Comparable rowKey) {
+    @Override
+	public int getRowIndex(Comparable rowKey) {
         int result = -1;
         int count = this.data.size();
         for (int i = 0; i < count; i++) {
@@ -235,7 +244,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The key.
      */
-    public Comparable getRowKey(int index) {
+    @Override
+	public Comparable getRowKey(int index) {
         TaskSeries series = (TaskSeries) this.data.get(index);
         return series.getKey();
     }
@@ -335,7 +345,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The item value.
      */
-    public Number getValue(Comparable rowKey, Comparable columnKey) {
+    @Override
+	public Number getValue(Comparable rowKey, Comparable columnKey) {
         return getStartValue(rowKey, columnKey);
     }
 
@@ -347,7 +358,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The start value.
      */
-    public Number getValue(int row, int column) {
+    @Override
+	public Number getValue(int row, int column) {
         return getStartValue(row, column);
     }
 
@@ -360,7 +372,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The start value (possibly <code>null</code>).
      */
-    public Number getStartValue(Comparable rowKey, Comparable columnKey) {
+    @Override
+	public Number getStartValue(Comparable rowKey, Comparable columnKey) {
         Number result = null;
         int row = getRowIndex(rowKey);
         TaskSeries series = (TaskSeries) this.data.get(row);
@@ -382,7 +395,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The start value.
      */
-    public Number getStartValue(int row, int column) {
+    @Override
+	public Number getStartValue(int row, int column) {
         Comparable rowKey = getRowKey(row);
         Comparable columnKey = getColumnKey(column);
         return getStartValue(rowKey, columnKey);
@@ -397,7 +411,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The end value (possibly <code>null</code>).
      */
-    public Number getEndValue(Comparable rowKey, Comparable columnKey) {
+    @Override
+	public Number getEndValue(Comparable rowKey, Comparable columnKey) {
         Number result = null;
         int row = getRowIndex(rowKey);
         TaskSeries series = (TaskSeries) this.data.get(row);
@@ -419,7 +434,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The end value.
      */
-    public Number getEndValue(int row, int column) {
+    @Override
+	public Number getEndValue(int row, int column) {
         Comparable rowKey = getRowKey(row);
         Comparable columnKey = getColumnKey(column);
         return getEndValue(rowKey, columnKey);
@@ -433,7 +449,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The percent complete (possibly <code>null</code>).
      */
-    public Number getPercentComplete(int row, int column) {
+    @Override
+	public Number getPercentComplete(int row, int column) {
         Comparable rowKey = getRowKey(row);
         Comparable columnKey = getColumnKey(column);
         return getPercentComplete(rowKey, columnKey);
@@ -447,7 +464,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The percent complete.
      */
-    public Number getPercentComplete(Comparable rowKey, Comparable columnKey) {
+    @Override
+	public Number getPercentComplete(Comparable rowKey, Comparable columnKey) {
         Number result = null;
         int row = getRowIndex(rowKey);
         TaskSeries series = (TaskSeries) this.data.get(row);
@@ -466,7 +484,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The sub-interval count.
      */
-    public int getSubIntervalCount(int row, int column) {
+    @Override
+	public int getSubIntervalCount(int row, int column) {
         Comparable rowKey = getRowKey(row);
         Comparable columnKey = getColumnKey(column);
         return getSubIntervalCount(rowKey, columnKey);
@@ -480,7 +499,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The sub-interval count.
      */
-    public int getSubIntervalCount(Comparable rowKey, Comparable columnKey) {
+    @Override
+	public int getSubIntervalCount(Comparable rowKey, Comparable columnKey) {
         int result = 0;
         int row = getRowIndex(rowKey);
         TaskSeries series = (TaskSeries) this.data.get(row);
@@ -500,7 +520,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The start value (possibly <code>null</code>).
      */
-    public Number getStartValue(int row, int column, int subinterval) {
+    @Override
+	public Number getStartValue(int row, int column, int subinterval) {
         Comparable rowKey = getRowKey(row);
         Comparable columnKey = getColumnKey(column);
         return getStartValue(rowKey, columnKey, subinterval);
@@ -515,7 +536,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The start value (possibly <code>null</code>).
      */
-    public Number getStartValue(Comparable rowKey, Comparable columnKey,
+    @Override
+	public Number getStartValue(Comparable rowKey, Comparable columnKey,
                                 int subinterval) {
         Number result = null;
         int row = getRowIndex(rowKey);
@@ -540,7 +562,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The end value (possibly <code>null</code>).
      */
-    public Number getEndValue(int row, int column, int subinterval) {
+    @Override
+	public Number getEndValue(int row, int column, int subinterval) {
         Comparable rowKey = getRowKey(row);
         Comparable columnKey = getColumnKey(column);
         return getEndValue(rowKey, columnKey, subinterval);
@@ -555,7 +578,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The end value (possibly <code>null</code>).
      */
-    public Number getEndValue(Comparable rowKey, Comparable columnKey,
+    @Override
+	public Number getEndValue(Comparable rowKey, Comparable columnKey,
                               int subinterval) {
         Number result = null;
         int row = getRowIndex(rowKey);
@@ -580,7 +604,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The percent complete value (possibly <code>null</code>).
      */
-    public Number getPercentComplete(int row, int column, int subinterval) {
+    @Override
+	public Number getPercentComplete(int row, int column, int subinterval) {
         Comparable rowKey = getRowKey(row);
         Comparable columnKey = getColumnKey(column);
         return getPercentComplete(rowKey, columnKey, subinterval);
@@ -595,7 +620,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return The percent complete value (possibly <code>null</code>).
      */
-    public Number getPercentComplete(Comparable rowKey, Comparable columnKey,
+    @Override
+	public Number getPercentComplete(Comparable rowKey, Comparable columnKey,
                                      int subinterval) {
         Number result = null;
         int row = getRowIndex(rowKey);
@@ -615,7 +641,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @param event  information about the change.
      */
-    public void seriesChanged(SeriesChangeEvent event) {
+    @Override
+	public void seriesChanged(SeriesChangeEvent event) {
         refreshKeys();
         fireDatasetChanged();
     }
@@ -649,7 +676,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -671,7 +699,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      * @throws CloneNotSupportedException if there is some problem cloning
      *     the dataset.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         TaskSeriesCollection clone = (TaskSeriesCollection) super.clone();
         clone.data = (List) ObjectUtilities.deepClone(this.data);
         clone.keys = new java.util.ArrayList(this.keys);

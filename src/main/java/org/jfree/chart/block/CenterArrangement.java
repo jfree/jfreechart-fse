@@ -72,7 +72,8 @@ public class CenterArrangement implements Arrangement, Serializable {
      * @param block  the block.
      * @param key  a key that controls the position of the block.
      */
-    public void add(Block block, Object key) {
+    @Override
+	public void add(Block block, Object key) {
         // since the flow layout is relatively straightforward,
         // no information needs to be recorded here
     }
@@ -89,7 +90,8 @@ public class CenterArrangement implements Arrangement, Serializable {
      *
      * @return The size of the container after arrangement of the contents.
      */
-    public Size2D arrange(BlockContainer container, Graphics2D g2,
+    @Override
+	public Size2D arrange(BlockContainer container, Graphics2D g2,
                           RectangleConstraint constraint) {
 
         LengthConstraintType w = constraint.getWidthConstraintType();
@@ -306,7 +308,8 @@ public class CenterArrangement implements Arrangement, Serializable {
     /**
      * Clears any cached information.
      */
-    public void clear() {
+    @Override
+	public void clear() {
         // no action required.
     }
 
@@ -317,7 +320,8 @@ public class CenterArrangement implements Arrangement, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
