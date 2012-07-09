@@ -136,7 +136,8 @@ public abstract class AbstractXYAnnotation extends AbstractAnnotation
      * @param info  if supplied, this info object will be populated with
      *              entity information.
      */
-    public abstract void draw(Graphics2D g2, XYPlot plot, Rectangle2D dataArea,
+    @Override
+	public abstract void draw(Graphics2D g2, XYPlot plot, Rectangle2D dataArea,
                               ValueAxis domainAxis, ValueAxis rangeAxis,
                               int rendererIndex,
                               PlotRenderingInfo info);
@@ -173,7 +174,8 @@ public abstract class AbstractXYAnnotation extends AbstractAnnotation
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -195,7 +197,8 @@ public abstract class AbstractXYAnnotation extends AbstractAnnotation
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 193;
         if (this.toolTipText != null) {
             result = 37 * result + this.toolTipText.hashCode();

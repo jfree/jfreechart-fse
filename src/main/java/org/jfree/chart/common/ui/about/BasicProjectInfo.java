@@ -184,7 +184,8 @@ public class BasicProjectInfo extends Library {
      *
      * @param info  the info string.
      */
-    public void setInfo(final String info) {
+    @Override
+	public void setInfo(final String info) {
         super.setInfo(info);
     }
 
@@ -193,7 +194,8 @@ public class BasicProjectInfo extends Library {
      *
      * @param licence  the license name.
      */
-    public void setLicenceName(final String licence) {
+    @Override
+	public void setLicenceName(final String licence) {
         super.setLicenceName(licence);
     }
 
@@ -202,7 +204,8 @@ public class BasicProjectInfo extends Library {
      *
      * @param name  the project name.
      */
-    public void setName(final String name) {
+    @Override
+	public void setName(final String name) {
         super.setName(name);
     }
 
@@ -211,7 +214,8 @@ public class BasicProjectInfo extends Library {
      *
      * @param version  the version number.
      */
-    public void setVersion(final String version) {
+    @Override
+	public void setVersion(final String version) {
         super.setVersion(version);
     }
 

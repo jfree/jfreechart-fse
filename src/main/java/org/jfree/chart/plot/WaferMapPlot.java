@@ -167,7 +167,8 @@ public class WaferMapPlot extends Plot implements RendererChangeListener,
      *
      * @return A short string describing the type of plot.
      */
-    public String getPlotType() {
+    @Override
+	public String getPlotType() {
         return ("WMAP_Plot");
     }
 
@@ -231,7 +232,8 @@ public class WaferMapPlot extends Plot implements RendererChangeListener,
      * @param state  the plot state.
      * @param info  the plot rendering info.
      */
-    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+    @Override
+	public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
                      PlotState state,
                      PlotRenderingInfo info) {
 
@@ -417,7 +419,8 @@ public class WaferMapPlot extends Plot implements RendererChangeListener,
      *
      * @return The legend items.
      */
-    public LegendItemCollection getLegendItems() {
+    @Override
+	public LegendItemCollection getLegendItems() {
         return this.renderer.getLegendCollection();
     }
 
@@ -426,7 +429,8 @@ public class WaferMapPlot extends Plot implements RendererChangeListener,
      *
      * @param event  the event.
      */
-    public void rendererChanged(RendererChangeEvent event) {
+    @Override
+	public void rendererChanged(RendererChangeEvent event) {
         fireChangeEvent();
     }
 

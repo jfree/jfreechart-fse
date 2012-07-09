@@ -86,7 +86,8 @@ public abstract class AbstractAnnotation implements Annotation, Cloneable,
      *
      * @see #removeChangeListener(AnnotationChangeListener)
      */
-    public void addChangeListener(AnnotationChangeListener listener) {
+    @Override
+	public void addChangeListener(AnnotationChangeListener listener) {
         this.listenerList.add(AnnotationChangeListener.class, listener);
     }
 
@@ -98,7 +99,8 @@ public abstract class AbstractAnnotation implements Annotation, Cloneable,
      *
      * @see #addChangeListener(AnnotationChangeListener)
      */
-    public void removeChangeListener(AnnotationChangeListener listener) {
+    @Override
+	public void removeChangeListener(AnnotationChangeListener listener) {
         this.listenerList.remove(AnnotationChangeListener.class, listener);
     }
 
@@ -188,7 +190,8 @@ public abstract class AbstractAnnotation implements Annotation, Cloneable,
      * @throws CloneNotSupportedException  if the annotation does not support
      *                                     cloning.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         AbstractAnnotation clone = (AbstractAnnotation) super.clone();
         clone.listenerList = new EventListenerList();
         return clone;

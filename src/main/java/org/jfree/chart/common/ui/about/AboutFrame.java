@@ -172,7 +172,8 @@ public class AboutFrame extends JFrame {
      *
      * @return the preferred size.
      */
-    public Dimension getPreferredSize() {
+    @Override
+	public Dimension getPreferredSize() {
         return PREFERRED_SIZE;
     }
 

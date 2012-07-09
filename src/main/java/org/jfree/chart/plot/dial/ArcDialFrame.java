@@ -327,7 +327,8 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame,
      *
      * @return The shape of the dial's window.
      */
-    public Shape getWindow(Rectangle2D frame) {
+    @Override
+	public Shape getWindow(Rectangle2D frame) {
 
         Rectangle2D innerFrame = DialPlot.rectangleByRadius(frame,
                 this.innerRadius, this.innerRadius);
@@ -385,7 +386,8 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame,
      * @param frame  the dial's reference frame.
      * @param view  the dial's view rectangle.
      */
-    public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
+    @Override
+	public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
             Rectangle2D view) {
 
         Shape window = getWindow(frame);
@@ -410,7 +412,8 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame,
      *
      * @return <code>false</code>.
      */
-    public boolean isClippedToWindow() {
+    @Override
+	public boolean isClippedToWindow() {
         return false;
     }
 
@@ -421,7 +424,8 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame,
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -458,7 +462,8 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame,
      *
      * @return The hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 193;
         long temp = Double.doubleToLongBits(this.startAngle);
         result = 37 * result + (int) (temp ^ (temp >>> 32));
@@ -484,7 +489,8 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame,
      * @throws CloneNotSupportedException if any attribute of this instance
      *     cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

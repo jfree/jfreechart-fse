@@ -416,7 +416,8 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      *
      * @return A state object for use by the renderer.
      */
-    public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
+    @Override
+	public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
             XYPlot plot, XYDataset data, PlotRenderingInfo info) {
         XYAreaRendererState state = new XYAreaRendererState(info);
 
@@ -435,7 +436,8 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      *
      * @return A legend item for the series.
      */
-    public LegendItem getLegendItem(int datasetIndex, int series) {
+    @Override
+	public LegendItem getLegendItem(int datasetIndex, int series) {
         LegendItem result = null;
         XYPlot xyplot = getPlot();
         if (xyplot != null) {
@@ -489,7 +491,8 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      *                        (<code>null</code> permitted).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2, XYItemRendererState state,
+    @Override
+	public void drawItem(Graphics2D g2, XYItemRendererState state,
             Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
             ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
             int series, int item, CrosshairState crosshairState, int pass) {
@@ -689,7 +692,8 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      *
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         XYAreaRenderer clone = (XYAreaRenderer) super.clone();
         clone.legendArea = ShapeUtilities.clone(this.legendArea);
         return clone;
@@ -702,7 +706,8 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -739,7 +744,8 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = super.hashCode();
         result = HashUtilities.hashCode(result, this.plotArea);
         result = HashUtilities.hashCode(result, this.plotLines);

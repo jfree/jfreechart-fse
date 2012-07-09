@@ -90,7 +90,8 @@ public class BooleanList extends AbstractObjectList {
      *
      * @return A boolean.
      */
-    public boolean equals(final Object o) {
+    @Override
+	public boolean equals(final Object o) {
 
         if (o instanceof BooleanList) {
             return super.equals(o);
@@ -103,7 +104,8 @@ public class BooleanList extends AbstractObjectList {
      *
      * @return the hashcode
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return super.hashCode();
     }
 }

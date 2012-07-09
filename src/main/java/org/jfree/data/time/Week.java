@@ -249,7 +249,8 @@ public class Week extends RegularTimePeriod implements Serializable {
      *
      * @see #getLastMillisecond()
      */
-    public long getFirstMillisecond() {
+    @Override
+	public long getFirstMillisecond() {
         return this.firstMillisecond;
     }
 
@@ -263,7 +264,8 @@ public class Week extends RegularTimePeriod implements Serializable {
      *
      * @see #getFirstMillisecond()
      */
-    public long getLastMillisecond() {
+    @Override
+	public long getLastMillisecond() {
         return this.lastMillisecond;
     }
 
@@ -275,7 +277,8 @@ public class Week extends RegularTimePeriod implements Serializable {
      *
      * @since 1.0.3
      */
-    public void peg(Calendar calendar) {
+    @Override
+	public void peg(Calendar calendar) {
         this.firstMillisecond = getFirstMillisecond(calendar);
         this.lastMillisecond = getLastMillisecond(calendar);
     }
@@ -288,7 +291,8 @@ public class Week extends RegularTimePeriod implements Serializable {
      *
      * @return The preceding week (possibly <code>null</code>).
      */
-    public RegularTimePeriod previous() {
+    @Override
+	public RegularTimePeriod previous() {
 
         Week result;
         if (this.week != FIRST_WEEK_IN_YEAR) {
@@ -320,7 +324,8 @@ public class Week extends RegularTimePeriod implements Serializable {
      *
      * @return The following week (possibly <code>null</code>).
      */
-    public RegularTimePeriod next() {
+    @Override
+	public RegularTimePeriod next() {
 
         Week result;
         if (this.week < 52) {
@@ -352,7 +357,8 @@ public class Week extends RegularTimePeriod implements Serializable {
      *
      * @return The serial index number.
      */
-    public long getSerialIndex() {
+    @Override
+	public long getSerialIndex() {
         return this.year * 53L + this.week;
     }
 
@@ -367,7 +373,8 @@ public class Week extends RegularTimePeriod implements Serializable {
      * @throws NullPointerException if <code>calendar</code> is
      *     <code>null</code>.
      */
-    public long getFirstMillisecond(Calendar calendar) {
+    @Override
+	public long getFirstMillisecond(Calendar calendar) {
         Calendar c = (Calendar) calendar.clone();
         c.clear();
         c.set(Calendar.YEAR, this.year);
@@ -391,7 +398,8 @@ public class Week extends RegularTimePeriod implements Serializable {
      * @throws NullPointerException if <code>calendar</code> is
      *     <code>null</code>.
      */
-    public long getLastMillisecond(Calendar calendar) {
+    @Override
+	public long getLastMillisecond(Calendar calendar) {
         Calendar c = (Calendar) calendar.clone();
         c.clear();
         c.set(Calendar.YEAR, this.year);
@@ -411,7 +419,8 @@ public class Week extends RegularTimePeriod implements Serializable {
      *
      * @return A string representing the week.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return "Week " + this.week + ", " + this.year;
     }
 
@@ -425,7 +434,8 @@ public class Week extends RegularTimePeriod implements Serializable {
      * @return <code>true</code> if week and year of this and object are the
      *         same.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
 
         if (obj == this) {
             return true;
@@ -453,7 +463,8 @@ public class Week extends RegularTimePeriod implements Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 17;
         result = 37 * result + this.week;
         result = 37 * result + this.year;
@@ -470,7 +481,8 @@ public class Week extends RegularTimePeriod implements Serializable {
      *
      * @return negative == before, zero == same, positive == after.
      */
-    public int compareTo(Object o1) {
+    @Override
+	public int compareTo(Object o1) {
 
         int result;
 

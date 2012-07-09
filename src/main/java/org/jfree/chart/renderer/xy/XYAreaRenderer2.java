@@ -225,7 +225,8 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
      *
      * @return A legend item for the series.
      */
-    public LegendItem getLegendItem(int datasetIndex, int series) {
+    @Override
+	public LegendItem getLegendItem(int datasetIndex, int series) {
         LegendItem result = null;
         XYPlot xyplot = getPlot();
         if (xyplot != null) {
@@ -279,7 +280,8 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
      *                        (<code>null</code> permitted).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2,
+    @Override
+	public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
                          PlotRenderingInfo info,
@@ -405,7 +407,8 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -429,7 +432,8 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
      *
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         XYAreaRenderer2 clone = (XYAreaRenderer2) super.clone();
         clone.legendArea = ShapeUtilities.clone(this.legendArea);
         return clone;

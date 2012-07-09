@@ -174,7 +174,8 @@ public class AbstractObjectList implements Cloneable, Serializable {
      * 
      * @return A boolean.
      */
-    public boolean equals(final Object obj) {
+    @Override
+	public boolean equals(final Object obj) {
 
         if (obj == null) {
             return false;
@@ -203,7 +204,8 @@ public class AbstractObjectList implements Cloneable, Serializable {
      *
      * @return the hashcode
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return super.hashCode();
     }
 
@@ -216,7 +218,8 @@ public class AbstractObjectList implements Cloneable, Serializable {
      * @throws CloneNotSupportedException if an item in the list does not 
      *         support cloning.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
 
         final AbstractObjectList clone = (AbstractObjectList) super.clone();
         if (this.objects != null) {

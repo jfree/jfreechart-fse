@@ -176,7 +176,8 @@ public class BlockContainer extends AbstractBlock
      *
      * @return The block size (in Java2D units, never <code>null</code>).
      */
-    public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
+    @Override
+	public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
         return this.arrangement.arrange(this, g2, constraint);
     }
 
@@ -186,7 +187,8 @@ public class BlockContainer extends AbstractBlock
      * @param g2  the graphics device.
      * @param area  the area.
      */
-    public void draw(Graphics2D g2, Rectangle2D area) {
+    @Override
+	public void draw(Graphics2D g2, Rectangle2D area) {
         draw(g2, area, null);
     }
 
@@ -200,7 +202,8 @@ public class BlockContainer extends AbstractBlock
      *
      * @return An instance of {@link EntityBlockResult}, or <code>null</code>.
      */
-    public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
+    @Override
+	public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
         // check if we need to collect chart entities from the container
         EntityBlockParams ebp = null;
         StandardEntityCollection sec = null;
@@ -246,7 +249,8 @@ public class BlockContainer extends AbstractBlock
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -273,7 +277,8 @@ public class BlockContainer extends AbstractBlock
      *
      * @throws CloneNotSupportedException if there is a problem cloning.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         BlockContainer clone = (BlockContainer) super.clone();
         // TODO : complete this
         return clone;

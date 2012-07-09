@@ -290,7 +290,8 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      *
      * @see #findRangeBounds(XYDataset)
      */
-    public Range findDomainBounds(XYDataset dataset) {
+    @Override
+	public Range findDomainBounds(XYDataset dataset) {
         if (dataset == null) {
             return null;
         }
@@ -313,7 +314,8 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      *
      * @see #findDomainBounds(XYDataset)
      */
-    public Range findRangeBounds(XYDataset dataset) {
+    @Override
+	public Range findRangeBounds(XYDataset dataset) {
         if (dataset != null) {
             Range r = DatasetUtilities.findRangeBounds(dataset, false);
             if (r == null) {
@@ -345,7 +347,8 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      * @param crosshairState  the crosshair state.
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2, XYItemRendererState state,
+    @Override
+	public void drawItem(Graphics2D g2, XYItemRendererState state,
             Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
             ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
             int series, int item, CrosshairState crosshairState, int pass) {
@@ -403,7 +406,8 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -434,7 +438,8 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      * @throws CloneNotSupportedException if there is a problem creating the
      *     clone.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         XYBlockRenderer clone = (XYBlockRenderer) super.clone();
         if (this.paintScale instanceof PublicCloneable) {
             PublicCloneable pc = (PublicCloneable) this.paintScale;

@@ -274,7 +274,8 @@ public class WaterfallBarRenderer extends BarRenderer {
      *
      * @return The range (or <code>null</code> if the dataset is empty).
      */
-    public Range findRangeBounds(CategoryDataset dataset) {
+    @Override
+	public Range findRangeBounds(CategoryDataset dataset) {
         if (dataset == null) {
             return null;
         }
@@ -326,7 +327,8 @@ public class WaterfallBarRenderer extends BarRenderer {
      * @param column  the column index (zero-based).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2,
+    @Override
+	public void drawItem(Graphics2D g2,
                          CategoryItemRendererState state,
                          Rectangle2D dataArea,
                          CategoryPlot plot,
@@ -459,7 +461,8 @@ public class WaterfallBarRenderer extends BarRenderer {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
 
         if (obj == this) {
             return true;

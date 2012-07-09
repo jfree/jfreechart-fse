@@ -91,7 +91,8 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The series count.
      */
-    public int getSeriesCount() {
+    @Override
+	public int getSeriesCount() {
         return this.data.size();
     }
 
@@ -123,7 +124,8 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset
      * @throws IllegalArgumentException if <code>series</code> is not in the
      *     specified range.
      */
-    public Comparable getSeriesKey(int series) {
+    @Override
+	public Comparable getSeriesKey(int series) {
         // defer argument checking
         return getSeries(series).getKey();
     }
@@ -138,7 +140,8 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset
      * @throws IllegalArgumentException if <code>series</code> is not in the
      *     range <code>0</code> to <code>getSeriesCount() - 1</code>.
      */
-    public int getItemCount(int series) {
+    @Override
+	public int getItemCount(int series) {
         // defer argument checking
         return getSeries(series).getItemCount();
     }
@@ -151,7 +154,8 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The x-value.
      */
-    public Number getX(int series, int item) {
+    @Override
+	public Number getX(int series, int item) {
         XIntervalSeries s = (XIntervalSeries) this.data.get(series);
         XIntervalDataItem di = (XIntervalDataItem) s.getDataItem(item);
         return di.getX();
@@ -166,7 +170,8 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The value.
      */
-    public double getStartXValue(int series, int item) {
+    @Override
+	public double getStartXValue(int series, int item) {
         XIntervalSeries s = (XIntervalSeries) this.data.get(series);
         return s.getXLowValue(item);
     }
@@ -180,7 +185,8 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The value.
      */
-    public double getEndXValue(int series, int item) {
+    @Override
+	public double getEndXValue(int series, int item) {
         XIntervalSeries s = (XIntervalSeries) this.data.get(series);
         return s.getXHighValue(item);
     }
@@ -194,7 +200,8 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The value.
      */
-    public double getYValue(int series, int item) {
+    @Override
+	public double getYValue(int series, int item) {
         XIntervalSeries s = (XIntervalSeries) this.data.get(series);
         return s.getYValue(item);
     }
@@ -207,7 +214,8 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The y-value.
      */
-    public Number getY(int series, int item) {
+    @Override
+	public Number getY(int series, int item) {
         XIntervalSeries s = (XIntervalSeries) this.data.get(series);
         XIntervalDataItem di = (XIntervalDataItem) s.getDataItem(item);
         return new Double(di.getYValue());
@@ -221,7 +229,8 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The x-value.
      */
-    public Number getStartX(int series, int item) {
+    @Override
+	public Number getStartX(int series, int item) {
         XIntervalSeries s = (XIntervalSeries) this.data.get(series);
         XIntervalDataItem di = (XIntervalDataItem) s.getDataItem(item);
         return new Double(di.getXLowValue());
@@ -235,7 +244,8 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The x-value.
      */
-    public Number getEndX(int series, int item) {
+    @Override
+	public Number getEndX(int series, int item) {
         XIntervalSeries s = (XIntervalSeries) this.data.get(series);
         XIntervalDataItem di = (XIntervalDataItem) s.getDataItem(item);
         return new Double(di.getXHighValue());
@@ -250,7 +260,8 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The start y-value.
      */
-    public Number getStartY(int series, int item) {
+    @Override
+	public Number getStartY(int series, int item) {
         return getY(series, item);
     }
 
@@ -263,7 +274,8 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The end y-value.
      */
-    public Number getEndY(int series, int item) {
+    @Override
+	public Number getEndY(int series, int item) {
         return getY(series, item);
     }
 
@@ -328,7 +340,8 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -346,7 +359,8 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset
      *
      * @throws CloneNotSupportedException if there is a problem.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         XIntervalSeriesCollection clone
                 = (XIntervalSeriesCollection) super.clone();
         clone.data = (List) ObjectUtilities.deepClone(this.data);

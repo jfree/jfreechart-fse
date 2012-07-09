@@ -130,7 +130,8 @@ public class VectorSeriesCollection extends AbstractXYDataset
      *
      * @return The series count.
      */
-    public int getSeriesCount() {
+    @Override
+	public int getSeriesCount() {
         return this.data.size();
     }
 
@@ -162,7 +163,8 @@ public class VectorSeriesCollection extends AbstractXYDataset
      * @throws IllegalArgumentException if <code>series</code> is not in the
      *     specified range.
      */
-    public Comparable getSeriesKey(int series) {
+    @Override
+	public Comparable getSeriesKey(int series) {
         // defer argument checking
         return getSeries(series).getKey();
     }
@@ -192,7 +194,8 @@ public class VectorSeriesCollection extends AbstractXYDataset
      * @throws IllegalArgumentException if <code>series</code> is not in the
      *     range <code>0</code> to <code>getSeriesCount() - 1</code>.
      */
-    public int getItemCount(int series) {
+    @Override
+	public int getItemCount(int series) {
         // defer argument checking
         return getSeries(series).getItemCount();
     }
@@ -205,7 +208,8 @@ public class VectorSeriesCollection extends AbstractXYDataset
      *
      * @return The x-value.
      */
-    public double getXValue(int series, int item) {
+    @Override
+	public double getXValue(int series, int item) {
         VectorSeries s = (VectorSeries) this.data.get(series);
         VectorDataItem di = (VectorDataItem) s.getDataItem(item);
         return di.getXValue();
@@ -221,7 +225,8 @@ public class VectorSeriesCollection extends AbstractXYDataset
      *
      * @return The x-value.
      */
-    public Number getX(int series, int item) {
+    @Override
+	public Number getX(int series, int item) {
         return new Double(getXValue(series, item));
     }
 
@@ -233,7 +238,8 @@ public class VectorSeriesCollection extends AbstractXYDataset
      *
      * @return The y-value.
      */
-    public double getYValue(int series, int item) {
+    @Override
+	public double getYValue(int series, int item) {
         VectorSeries s = (VectorSeries) this.data.get(series);
         VectorDataItem di = (VectorDataItem) s.getDataItem(item);
         return di.getYValue();
@@ -249,7 +255,8 @@ public class VectorSeriesCollection extends AbstractXYDataset
      *
      * @return The y-value.
      */
-    public Number getY(int series, int item) {
+    @Override
+	public Number getY(int series, int item) {
         return new Double(getYValue(series, item));
     }
 
@@ -261,7 +268,8 @@ public class VectorSeriesCollection extends AbstractXYDataset
      *
      * @return The vector (possibly <code>null</code>).
      */
-    public Vector getVector(int series, int item) {
+    @Override
+	public Vector getVector(int series, int item) {
         VectorSeries s = (VectorSeries) this.data.get(series);
         VectorDataItem di = (VectorDataItem) s.getDataItem(item);
         return di.getVector();
@@ -275,7 +283,8 @@ public class VectorSeriesCollection extends AbstractXYDataset
      *
      * @return The x-component of the vector.
      */
-    public double getVectorXValue(int series, int item) {
+    @Override
+	public double getVectorXValue(int series, int item) {
         VectorSeries s = (VectorSeries) this.data.get(series);
         VectorDataItem di = (VectorDataItem) s.getDataItem(item);
         return di.getVectorX();
@@ -289,7 +298,8 @@ public class VectorSeriesCollection extends AbstractXYDataset
      *
      * @return The y-component of the vector.
      */
-    public double getVectorYValue(int series, int item) {
+    @Override
+	public double getVectorYValue(int series, int item) {
         VectorSeries s = (VectorSeries) this.data.get(series);
         VectorDataItem di = (VectorDataItem) s.getDataItem(item);
         return di.getVectorY();
@@ -302,7 +312,8 @@ public class VectorSeriesCollection extends AbstractXYDataset
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -320,7 +331,8 @@ public class VectorSeriesCollection extends AbstractXYDataset
      *
      * @throws CloneNotSupportedException if there is a problem.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         VectorSeriesCollection clone
                 = (VectorSeriesCollection) super.clone();
         clone.data = (List) ObjectUtilities.deepClone(this.data);

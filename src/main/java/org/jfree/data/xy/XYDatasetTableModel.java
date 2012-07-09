@@ -102,7 +102,8 @@ public class XYDatasetTableModel extends AbstractTableModel
      *
      * @return The row count.
      */
-    public int getRowCount() {
+    @Override
+	public int getRowCount() {
         if (this.model == null) {
             return 0;
         }
@@ -114,7 +115,8 @@ public class XYDatasetTableModel extends AbstractTableModel
      *
      * @return The number of columns in the model.
      */
-    public int getColumnCount() {
+    @Override
+	public int getColumnCount() {
         if (this.model == null) {
             return 0;
         }
@@ -128,7 +130,8 @@ public class XYDatasetTableModel extends AbstractTableModel
      *
      * @return The column name.
      */
-    public String getColumnName(int column) {
+    @Override
+	public String getColumnName(int column) {
         if (this.model == null) {
             return super.getColumnName(column);
         }
@@ -149,7 +152,8 @@ public class XYDatasetTableModel extends AbstractTableModel
      *
      * @return The value of the specified cell.
      */
-    public Object getValueAt(int row, int column) {
+    @Override
+	public Object getValueAt(int row, int column) {
         if (this.model == null) {
             return null;
         }
@@ -168,7 +172,8 @@ public class XYDatasetTableModel extends AbstractTableModel
      *
      * @see DatasetChangeListener
      */
-    public void datasetChanged(DatasetChangeEvent event) {
+    @Override
+	public void datasetChanged(DatasetChangeEvent event) {
         fireTableDataChanged();
     }
 
@@ -180,7 +185,8 @@ public class XYDatasetTableModel extends AbstractTableModel
      *
      * @return <code>true</code> if the specified cell is editable.
      */
-    public boolean isCellEditable(int row, int column) {
+    @Override
+	public boolean isCellEditable(int row, int column) {
         return false;
    }
 
@@ -191,7 +197,8 @@ public class XYDatasetTableModel extends AbstractTableModel
      * @param row  the row.
      * @param column  the column.
      */
-    public void setValueAt(Object value, int row, int column) {
+    @Override
+	public void setValueAt(Object value, int row, int column) {
         if (isCellEditable(row, column)) {
             // XYDataset only provides methods for reading a dataset...
         }

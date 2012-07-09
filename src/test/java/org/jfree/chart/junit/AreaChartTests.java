@@ -93,7 +93,8 @@ public class AreaChartTests extends TestCase {
     /**
      * Common test setup.
      */
-    protected void setUp() {
+    @Override
+	protected void setUp() {
         this.chart = createAreaChart();
     }
 

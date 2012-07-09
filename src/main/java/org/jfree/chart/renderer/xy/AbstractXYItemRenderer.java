@@ -254,7 +254,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @return The pass count.
      */
-    public int getPassCount() {
+    @Override
+	public int getPassCount() {
         return 1;
     }
 
@@ -263,7 +264,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @return The plot (possibly <code>null</code>).
      */
-    public XYPlot getPlot() {
+    @Override
+	public XYPlot getPlot() {
         return this.plot;
     }
 
@@ -272,7 +274,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @param plot  the plot (<code>null</code> permitted).
      */
-    public void setPlot(XYPlot plot) {
+    @Override
+	public void setPlot(XYPlot plot) {
         this.plot = plot;
     }
 
@@ -293,7 +296,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @return The renderer state (never <code>null</code>).
      */
-    public XYItemRendererState initialise(Graphics2D g2,
+    @Override
+	public XYItemRendererState initialise(Graphics2D g2,
                                           Rectangle2D dataArea,
                                           XYPlot plot,
                                           XYDataset data,
@@ -317,7 +321,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @return The generator (possibly <code>null</code>).
      */
-    public XYItemLabelGenerator getItemLabelGenerator(int series, int item) {
+    @Override
+	public XYItemLabelGenerator getItemLabelGenerator(int series, int item) {
         XYItemLabelGenerator generator
             = (XYItemLabelGenerator) this.itemLabelGeneratorList.get(series);
         if (generator == null) {
@@ -333,7 +338,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @return The generator (possibly <code>null</code>).
      */
-    public XYItemLabelGenerator getSeriesItemLabelGenerator(int series) {
+    @Override
+	public XYItemLabelGenerator getSeriesItemLabelGenerator(int series) {
         return (XYItemLabelGenerator) this.itemLabelGeneratorList.get(series);
     }
 
@@ -344,7 +350,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param series  the series index (zero based).
      * @param generator  the generator (<code>null</code> permitted).
      */
-    public void setSeriesItemLabelGenerator(int series,
+    @Override
+	public void setSeriesItemLabelGenerator(int series,
                                             XYItemLabelGenerator generator) {
         this.itemLabelGeneratorList.set(series, generator);
         fireChangeEvent();
@@ -355,7 +362,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @return The generator (possibly <code>null</code>).
      */
-    public XYItemLabelGenerator getBaseItemLabelGenerator() {
+    @Override
+	public XYItemLabelGenerator getBaseItemLabelGenerator() {
         return this.baseItemLabelGenerator;
     }
 
@@ -365,7 +373,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @param generator  the generator (<code>null</code> permitted).
      */
-    public void setBaseItemLabelGenerator(XYItemLabelGenerator generator) {
+    @Override
+	public void setBaseItemLabelGenerator(XYItemLabelGenerator generator) {
         this.baseItemLabelGenerator = generator;
         fireChangeEvent();
     }
@@ -382,7 +391,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @return The generator (possibly <code>null</code>).
      */
-    public XYToolTipGenerator getToolTipGenerator(int series, int item) {
+    @Override
+	public XYToolTipGenerator getToolTipGenerator(int series, int item) {
         XYToolTipGenerator generator
                 = (XYToolTipGenerator) this.toolTipGeneratorList.get(series);
         if (generator == null) {
@@ -398,7 +408,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @return The generator (possibly <code>null</code>).
      */
-    public XYToolTipGenerator getSeriesToolTipGenerator(int series) {
+    @Override
+	public XYToolTipGenerator getSeriesToolTipGenerator(int series) {
         return (XYToolTipGenerator) this.toolTipGeneratorList.get(series);
     }
 
@@ -409,7 +420,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param series  the series index (zero based).
      * @param generator  the generator (<code>null</code> permitted).
      */
-    public void setSeriesToolTipGenerator(int series,
+    @Override
+	public void setSeriesToolTipGenerator(int series,
                                           XYToolTipGenerator generator) {
         this.toolTipGeneratorList.set(series, generator);
         fireChangeEvent();
@@ -422,7 +434,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @see #setBaseToolTipGenerator(XYToolTipGenerator)
      */
-    public XYToolTipGenerator getBaseToolTipGenerator() {
+    @Override
+	public XYToolTipGenerator getBaseToolTipGenerator() {
         return this.baseToolTipGenerator;
     }
 
@@ -434,7 +447,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @see #getBaseToolTipGenerator()
      */
-    public void setBaseToolTipGenerator(XYToolTipGenerator generator) {
+    @Override
+	public void setBaseToolTipGenerator(XYToolTipGenerator generator) {
         this.baseToolTipGenerator = generator;
         fireChangeEvent();
     }
@@ -446,7 +460,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @return The URL generator (possibly <code>null</code>).
      */
-    public XYURLGenerator getURLGenerator() {
+    @Override
+	public XYURLGenerator getURLGenerator() {
         return this.urlGenerator;
     }
 
@@ -456,7 +471,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @param urlGenerator  the URL generator (<code>null</code> permitted).
      */
-    public void setURLGenerator(XYURLGenerator urlGenerator) {
+    @Override
+	public void setURLGenerator(XYURLGenerator urlGenerator) {
         this.urlGenerator = urlGenerator;
         fireChangeEvent();
     }
@@ -468,7 +484,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @param annotation  the annotation (<code>null</code> not permitted).
      */
-    public void addAnnotation(XYAnnotation annotation) {
+    @Override
+	public void addAnnotation(XYAnnotation annotation) {
         // defer argument checking
         addAnnotation(annotation, Layer.FOREGROUND);
     }
@@ -480,7 +497,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param annotation  the annotation (<code>null</code> not permitted).
      * @param layer  the layer (<code>null</code> not permitted).
      */
-    public void addAnnotation(XYAnnotation annotation, Layer layer) {
+    @Override
+	public void addAnnotation(XYAnnotation annotation, Layer layer) {
         if (annotation == null) {
             throw new IllegalArgumentException("Null 'annotation' argument.");
         }
@@ -509,7 +527,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @return A boolean to indicate whether or not the annotation was
      *         successfully removed.
      */
-    public boolean removeAnnotation(XYAnnotation annotation) {
+    @Override
+	public boolean removeAnnotation(XYAnnotation annotation) {
         boolean removed = this.foregroundAnnotations.remove(annotation);
         removed = removed & this.backgroundAnnotations.remove(annotation);
         annotation.removeChangeListener(this);
@@ -521,7 +540,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * Removes all annotations and sends a {@link RendererChangeEvent}
      * to all registered listeners.
      */
-    public void removeAnnotations() {
+    @Override
+	public void removeAnnotations() {
         for(int i = 0; i < this.foregroundAnnotations.size(); i++){
             XYAnnotation annotation 
                     = (XYAnnotation) this.foregroundAnnotations.get(i);
@@ -546,7 +566,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @since 1.0.14
      */
-    public void annotationChanged(AnnotationChangeEvent event) {
+    @Override
+	public void annotationChanged(AnnotationChangeEvent event) {
         fireChangeEvent();
     }
 
@@ -572,7 +593,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @see #setLegendItemLabelGenerator(XYSeriesLabelGenerator)
      */
-    public XYSeriesLabelGenerator getLegendItemLabelGenerator() {
+    @Override
+	public XYSeriesLabelGenerator getLegendItemLabelGenerator() {
         return this.legendItemLabelGenerator;
     }
 
@@ -584,7 +606,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @see #getLegendItemLabelGenerator()
      */
-    public void setLegendItemLabelGenerator(XYSeriesLabelGenerator generator) {
+    @Override
+	public void setLegendItemLabelGenerator(XYSeriesLabelGenerator generator) {
         if (generator == null) {
             throw new IllegalArgumentException("Null 'generator' argument.");
         }
@@ -652,7 +675,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @see #findRangeBounds(XYDataset)
      */
-    public Range findDomainBounds(XYDataset dataset) {
+    @Override
+	public Range findDomainBounds(XYDataset dataset) {
         return findDomainBounds(dataset, false);
     }
 
@@ -698,7 +722,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @see #findDomainBounds(XYDataset)
      */
-    public Range findRangeBounds(XYDataset dataset) {
+    @Override
+	public Range findRangeBounds(XYDataset dataset) {
         return findRangeBounds(dataset, false);
     }
 
@@ -757,7 +782,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @return The legend item collection (never <code>null</code>).
      */
-    public LegendItemCollection getLegendItems() {
+    @Override
+	public LegendItemCollection getLegendItems() {
         if (this.plot == null) {
             return new LegendItemCollection();
         }
@@ -788,7 +814,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @return A legend item for the series.
      */
-    public LegendItem getLegendItem(int datasetIndex, int series) {
+    @Override
+	public LegendItem getLegendItem(int datasetIndex, int series) {
         XYPlot xyplot = getPlot();
         if (xyplot == null) {
             return null;
@@ -851,7 +878,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param start  the start value.
      * @param end  the end value.
      */
-    public void fillDomainGridBand(Graphics2D g2, XYPlot plot, ValueAxis axis,
+    @Override
+	public void fillDomainGridBand(Graphics2D g2, XYPlot plot, ValueAxis axis,
             Rectangle2D dataArea, double start, double end) {
 
         double x1 = axis.valueToJava2D(start, dataArea,
@@ -887,7 +915,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param start  the start value.
      * @param end  the end value.
      */
-    public void fillRangeGridBand(Graphics2D g2, XYPlot plot, ValueAxis axis,
+    @Override
+	public void fillRangeGridBand(Graphics2D g2, XYPlot plot, ValueAxis axis,
             Rectangle2D dataArea, double start, double end) {
 
         double y1 = axis.valueToJava2D(start, dataArea,
@@ -921,7 +950,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *                  3D effect).
      * @param value  the value at which the grid line should be drawn.
      */
-    public void drawDomainGridLine(Graphics2D g2,
+    @Override
+	public void drawDomainGridLine(Graphics2D g2,
                                    XYPlot plot,
                                    ValueAxis axis,
                                    Rectangle2D dataArea,
@@ -1006,7 +1036,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param paint  the paint.
      * @param stroke  the stroke.
      */
-    public void drawRangeLine(Graphics2D g2,
+    @Override
+	public void drawRangeLine(Graphics2D g2,
                               XYPlot plot,
                               ValueAxis axis,
                               Rectangle2D dataArea,
@@ -1046,7 +1077,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param marker  the marker line.
      * @param dataArea  the axis data area.
      */
-    public void drawDomainMarker(Graphics2D g2,
+    @Override
+	public void drawDomainMarker(Graphics2D g2,
                                  XYPlot plot,
                                  ValueAxis domainAxis,
                                  Marker marker,
@@ -1246,7 +1278,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param marker  the marker line.
      * @param dataArea  the axis data area.
      */
-    public void drawRangeMarker(Graphics2D g2,
+    @Override
+	public void drawRangeMarker(Graphics2D g2,
                                 XYPlot plot,
                                 ValueAxis rangeAxis,
                                 Marker marker,
@@ -1445,7 +1478,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @throws CloneNotSupportedException if the renderer does not support
      *         cloning.
      */
-    protected Object clone() throws CloneNotSupportedException {
+    @Override
+	protected Object clone() throws CloneNotSupportedException {
         AbstractXYItemRenderer clone = (AbstractXYItemRenderer) super.clone();
         // 'plot' : just retain reference, not a deep copy
 
@@ -1545,7 +1579,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @return The drawing supplier (possibly <code>null</code>).
      */
-    public DrawingSupplier getDrawingSupplier() {
+    @Override
+	public DrawingSupplier getDrawingSupplier() {
         DrawingSupplier result = null;
         XYPlot p = getPlot();
         if (p != null) {
@@ -1658,7 +1693,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param layer  the layer.
      * @param info  the plot rendering info.
      */
-    public void drawAnnotations(Graphics2D g2,
+    @Override
+	public void drawAnnotations(Graphics2D g2,
                                 Rectangle2D dataArea,
                                 ValueAxis domainAxis,
                                 ValueAxis rangeAxis,

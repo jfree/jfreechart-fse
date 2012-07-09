@@ -100,7 +100,8 @@ public class VectorRenderer extends AbstractXYItemRenderer
      * @return The range (<code>null</code> if the dataset is <code>null</code>
      *         or empty).
      */
-    public Range findDomainBounds(XYDataset dataset) {
+    @Override
+	public Range findDomainBounds(XYDataset dataset) {
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
         }
@@ -156,7 +157,8 @@ public class VectorRenderer extends AbstractXYItemRenderer
      * @return The range (<code>null</code> if the dataset is <code>null</code>
      *         or empty).
      */
-    public Range findRangeBounds(XYDataset dataset) {
+    @Override
+	public Range findRangeBounds(XYDataset dataset) {
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
         }
@@ -219,7 +221,8 @@ public class VectorRenderer extends AbstractXYItemRenderer
      * @param crosshairState  the crosshair state.
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2, XYItemRendererState state,
+    @Override
+	public void drawItem(Graphics2D g2, XYItemRendererState state,
             Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
             ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
             int series, int item, CrosshairState crosshairState, int pass) {
@@ -315,7 +318,8 @@ public class VectorRenderer extends AbstractXYItemRenderer
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -340,7 +344,8 @@ public class VectorRenderer extends AbstractXYItemRenderer
      * @throws CloneNotSupportedException if there is a problem creating the
      *     clone.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

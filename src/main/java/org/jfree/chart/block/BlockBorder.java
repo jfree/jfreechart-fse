@@ -141,7 +141,8 @@ public class BlockBorder implements BlockFrame, Serializable {
      *
      * @return The space (never <code>null</code>).
      */
-    public RectangleInsets getInsets() {
+    @Override
+	public RectangleInsets getInsets() {
         return this.insets;
     }
 
@@ -160,7 +161,8 @@ public class BlockBorder implements BlockFrame, Serializable {
      * @param g2  the graphics device.
      * @param area  the area.
      */
-    public void draw(Graphics2D g2, Rectangle2D area) {
+    @Override
+	public void draw(Graphics2D g2, Rectangle2D area) {
         // this default implementation will just fill the available
         // border space with a single color
         double t = this.insets.calculateTopInset(area.getHeight());
@@ -198,7 +200,8 @@ public class BlockBorder implements BlockFrame, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

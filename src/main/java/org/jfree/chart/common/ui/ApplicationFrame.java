@@ -69,7 +69,8 @@ public class ApplicationFrame extends JFrame implements WindowListener {
      *
      * @param event  information about the window event.
      */
-    public void windowClosing(final WindowEvent event) {
+    @Override
+	public void windowClosing(final WindowEvent event) {
         if (event.getWindow() == this) {
             dispose();
             System.exit(0);
@@ -81,7 +82,8 @@ public class ApplicationFrame extends JFrame implements WindowListener {
      *
      * @param event  information about the window event.
      */
-    public void windowClosed(final WindowEvent event) {
+    @Override
+	public void windowClosed(final WindowEvent event) {
         // ignore
     }
 
@@ -90,7 +92,8 @@ public class ApplicationFrame extends JFrame implements WindowListener {
      *
      * @param event  information about the window event.
      */
-    public void windowActivated(final WindowEvent event) {
+    @Override
+	public void windowActivated(final WindowEvent event) {
         // ignore
     }
 
@@ -99,7 +102,8 @@ public class ApplicationFrame extends JFrame implements WindowListener {
      *
      * @param event  information about the window event.
      */
-    public void windowDeactivated(final WindowEvent event) {
+    @Override
+	public void windowDeactivated(final WindowEvent event) {
         // ignore
     }
 
@@ -108,7 +112,8 @@ public class ApplicationFrame extends JFrame implements WindowListener {
      *
      * @param event  information about the window event.
      */
-    public void windowDeiconified(final WindowEvent event) {
+    @Override
+	public void windowDeiconified(final WindowEvent event) {
         // ignore
     }
 
@@ -117,7 +122,8 @@ public class ApplicationFrame extends JFrame implements WindowListener {
      *
      * @param event  information about the window event.
      */
-    public void windowIconified(final WindowEvent event) {
+    @Override
+	public void windowIconified(final WindowEvent event) {
         // ignore
     }
 
@@ -126,7 +132,8 @@ public class ApplicationFrame extends JFrame implements WindowListener {
      *
      * @param event  information about the window event.
      */
-    public void windowOpened(final WindowEvent event) {
+    @Override
+	public void windowOpened(final WindowEvent event) {
         // ignore
     }
 

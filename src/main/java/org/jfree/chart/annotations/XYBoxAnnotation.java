@@ -160,7 +160,8 @@ public class XYBoxAnnotation extends AbstractXYAnnotation
      * @param rendererIndex  the renderer index.
      * @param info  the plot rendering info.
      */
-    public void draw(Graphics2D g2, XYPlot plot, Rectangle2D dataArea,
+    @Override
+	public void draw(Graphics2D g2, XYPlot plot, Rectangle2D dataArea,
                      ValueAxis domainAxis, ValueAxis rangeAxis,
                      int rendererIndex, PlotRenderingInfo info) {
 
@@ -208,7 +209,8 @@ public class XYBoxAnnotation extends AbstractXYAnnotation
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -250,7 +252,8 @@ public class XYBoxAnnotation extends AbstractXYAnnotation
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result;
         long temp;
         temp = Double.doubleToLongBits(this.x0);
@@ -272,7 +275,8 @@ public class XYBoxAnnotation extends AbstractXYAnnotation
      * @throws CloneNotSupportedException not thrown by this class, but may be
      *                                    by subclasses.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

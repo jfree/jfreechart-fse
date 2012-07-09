@@ -189,7 +189,8 @@ public class AbstractPieItemLabelGenerator implements Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -217,7 +218,8 @@ public class AbstractPieItemLabelGenerator implements Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 127;
         result = HashUtilities.hashCode(result, this.labelFormat);
         result = HashUtilities.hashCode(result, this.numberFormat);
@@ -232,7 +234,8 @@ public class AbstractPieItemLabelGenerator implements Serializable {
      *
      * @throws CloneNotSupportedException  should not happen.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         AbstractPieItemLabelGenerator clone
                 = (AbstractPieItemLabelGenerator) super.clone();
         if (this.numberFormat != null) {

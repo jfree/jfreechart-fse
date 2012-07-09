@@ -449,7 +449,8 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      *
      * @return The legend item (possibly <code>null</code>).
      */
-    public LegendItem getLegendItem(int datasetIndex, int series) {
+    @Override
+	public LegendItem getLegendItem(int datasetIndex, int series) {
 
         CategoryPlot cp = getPlot();
         if (cp == null) {
@@ -502,7 +503,8 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      *
      * @return The range.
      */
-    public Range findRangeBounds(CategoryDataset dataset) {
+    @Override
+	public Range findRangeBounds(CategoryDataset dataset) {
         return super.findRangeBounds(dataset, true);
     }
 
@@ -518,7 +520,8 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      *
      * @return The renderer state.
      */
-    public CategoryItemRendererState initialise(Graphics2D g2,
+    @Override
+	public CategoryItemRendererState initialise(Graphics2D g2,
                                                 Rectangle2D dataArea,
                                                 CategoryPlot plot,
                                                 int rendererIndex,
@@ -579,7 +582,8 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      * @param column  the column index (zero-based).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2, CategoryItemRendererState state,
+    @Override
+	public void drawItem(Graphics2D g2, CategoryItemRendererState state,
         Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
         ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
         int pass) {
@@ -1049,7 +1053,8 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      *
      * @return <code>true</code> or <code>false</code>.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

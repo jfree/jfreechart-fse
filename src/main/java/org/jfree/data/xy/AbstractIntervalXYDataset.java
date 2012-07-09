@@ -60,7 +60,8 @@ public abstract class AbstractIntervalXYDataset extends AbstractXYDataset
      *
      * @return The value.
      */
-    public double getStartXValue(int series, int item) {
+    @Override
+	public double getStartXValue(int series, int item) {
         double result = Double.NaN;
         Number x = getStartX(series, item);
         if (x != null) {
@@ -78,7 +79,8 @@ public abstract class AbstractIntervalXYDataset extends AbstractXYDataset
      *
      * @return The value.
      */
-    public double getEndXValue(int series, int item) {
+    @Override
+	public double getEndXValue(int series, int item) {
         double result = Double.NaN;
         Number x = getEndX(series, item);
         if (x != null) {
@@ -96,7 +98,8 @@ public abstract class AbstractIntervalXYDataset extends AbstractXYDataset
      *
      * @return The value.
      */
-    public double getStartYValue(int series, int item) {
+    @Override
+	public double getStartYValue(int series, int item) {
         double result = Double.NaN;
         Number y = getStartY(series, item);
         if (y != null) {
@@ -114,7 +117,8 @@ public abstract class AbstractIntervalXYDataset extends AbstractXYDataset
      *
      * @return The value.
      */
-    public double getEndYValue(int series, int item) {
+    @Override
+	public double getEndYValue(int series, int item) {
         double result = Double.NaN;
         Number y = getEndY(series, item);
         if (y != null) {

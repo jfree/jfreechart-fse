@@ -711,7 +711,8 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      *
      * @return A state object.
      */
-    public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
+    @Override
+	public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
             XYPlot plot, XYDataset dataset, PlotRenderingInfo info) {
 
         XYBarRendererState state = new XYBarRendererState(info);
@@ -732,7 +733,8 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      *
      * @return A legend item for the series.
      */
-    public LegendItem getLegendItem(int datasetIndex, int series) {
+    @Override
+	public LegendItem getLegendItem(int datasetIndex, int series) {
         XYPlot xyplot = getPlot();
         if (xyplot == null) {
             return null;
@@ -800,7 +802,8 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      *                        (<code>null</code> permitted).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2,
+    @Override
+	public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
                          PlotRenderingInfo info,
@@ -1180,7 +1183,8 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @return The range (<code>null</code> if the dataset is
      *         <code>null</code> or empty).
      */
-    public Range findDomainBounds(XYDataset dataset) {
+    @Override
+	public Range findDomainBounds(XYDataset dataset) {
         return findDomainBounds(dataset, true);
     }
 
@@ -1194,7 +1198,8 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @return The range (<code>null</code> if the dataset is
      *         <code>null</code> or empty).
      */
-    public Range findRangeBounds(XYDataset dataset) {
+    @Override
+	public Range findRangeBounds(XYDataset dataset) {
         return findRangeBounds(dataset, this.useYInterval);
     }
 
@@ -1205,7 +1210,8 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      *
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         XYBarRenderer result = (XYBarRenderer) super.clone();
         if (this.gradientPaintTransformer != null) {
             result.gradientPaintTransformer = (GradientPaintTransformer)
@@ -1222,7 +1228,8 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

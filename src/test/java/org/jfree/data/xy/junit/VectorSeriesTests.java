@@ -71,7 +71,8 @@ public class VectorSeriesTests extends TestCase
      *
      * @param event  the event.
      */
-    public void seriesChanged(SeriesChangeEvent event) {
+    @Override
+	public void seriesChanged(SeriesChangeEvent event) {
         this.lastEvent = event;
     }
 

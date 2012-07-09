@@ -209,7 +209,8 @@ public class BarRenderer3D extends BarRenderer
      *
      * @see #getYOffset()
      */
-    public double getXOffset() {
+    @Override
+	public double getXOffset() {
         return this.xOffset;
     }
 
@@ -218,7 +219,8 @@ public class BarRenderer3D extends BarRenderer
      *
      * @return The 3D effect.
      */
-    public double getYOffset() {
+    @Override
+	public double getYOffset() {
         return this.yOffset;
     }
 
@@ -265,7 +267,8 @@ public class BarRenderer3D extends BarRenderer
      *
      * @return The renderer state.
      */
-    public CategoryItemRendererState initialise(Graphics2D g2,
+    @Override
+	public CategoryItemRendererState initialise(Graphics2D g2,
                                                 Rectangle2D dataArea,
                                                 CategoryPlot plot,
                                                 int rendererIndex,
@@ -287,7 +290,8 @@ public class BarRenderer3D extends BarRenderer
      * @param plot  the plot.
      * @param dataArea  the area inside the axes.
      */
-    public void drawBackground(Graphics2D g2, CategoryPlot plot,
+    @Override
+	public void drawBackground(Graphics2D g2, CategoryPlot plot,
                                Rectangle2D dataArea) {
 
         float x0 = (float) dataArea.getX();
@@ -368,7 +372,8 @@ public class BarRenderer3D extends BarRenderer
      * @param plot  the plot.
      * @param dataArea  the area inside the axes.
      */
-    public void drawOutline(Graphics2D g2, CategoryPlot plot,
+    @Override
+	public void drawOutline(Graphics2D g2, CategoryPlot plot,
                             Rectangle2D dataArea) {
 
         float x0 = (float) dataArea.getX();
@@ -411,7 +416,8 @@ public class BarRenderer3D extends BarRenderer
      * @param value  the Java2D value at which the grid line should be drawn.
      *
      */
-    public void drawDomainGridline(Graphics2D g2,
+    @Override
+	public void drawDomainGridline(Graphics2D g2,
                                    CategoryPlot plot,
                                    Rectangle2D dataArea,
                                    double value) {
@@ -457,7 +463,8 @@ public class BarRenderer3D extends BarRenderer
      * @param value  the value at which the grid line should be drawn.
      *
      */
-    public void drawRangeGridline(Graphics2D g2, CategoryPlot plot,
+    @Override
+	public void drawRangeGridline(Graphics2D g2, CategoryPlot plot,
             ValueAxis axis, Rectangle2D dataArea, double value) {
 
         Range range = axis.getRange();
@@ -518,7 +525,8 @@ public class BarRenderer3D extends BarRenderer
      *
      * @since 1.0.13
      */
-    public void drawRangeLine(Graphics2D g2, CategoryPlot plot, ValueAxis axis,
+    @Override
+	public void drawRangeLine(Graphics2D g2, CategoryPlot plot, ValueAxis axis,
             Rectangle2D dataArea, double value, Paint paint, Stroke stroke) {
 
         Range range = axis.getRange();
@@ -569,7 +577,8 @@ public class BarRenderer3D extends BarRenderer
      * @param marker  the marker.
      * @param dataArea  the area for plotting data (not including 3D effect).
      */
-    public void drawRangeMarker(Graphics2D g2,
+    @Override
+	public void drawRangeMarker(Graphics2D g2,
                                 CategoryPlot plot,
                                 ValueAxis axis,
                                 Marker marker,
@@ -655,7 +664,8 @@ public class BarRenderer3D extends BarRenderer
      * @param column  the column index (zero-based).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2,
+    @Override
+	public void drawItem(Graphics2D g2,
                          CategoryItemRendererState state,
                          Rectangle2D dataArea,
                          CategoryPlot plot,
@@ -785,7 +795,8 @@ public class BarRenderer3D extends BarRenderer
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

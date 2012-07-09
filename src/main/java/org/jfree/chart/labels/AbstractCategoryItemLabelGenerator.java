@@ -275,7 +275,8 @@ public abstract class AbstractCategoryItemLabelGenerator
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -302,7 +303,8 @@ public abstract class AbstractCategoryItemLabelGenerator
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 127;
         result = HashUtilities.hashCode(result, this.labelFormat);
         result = HashUtilities.hashCode(result, this.nullValueString);
@@ -319,7 +321,8 @@ public abstract class AbstractCategoryItemLabelGenerator
      *
      * @throws CloneNotSupportedException  should not happen.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         AbstractCategoryItemLabelGenerator clone
             = (AbstractCategoryItemLabelGenerator) super.clone();
         if (this.numberFormat != null) {

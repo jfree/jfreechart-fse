@@ -241,7 +241,8 @@ public class BoxAndWhiskerRendererTests extends TestCase {
         DefaultBoxAndWhiskerCategoryDataset dataset
                 = new DefaultBoxAndWhiskerCategoryDataset() {
 
-            public Number getQ1Value(int row, int column) {
+            @Override
+			public Number getQ1Value(int row, int column) {
                 return null;
             }
 
