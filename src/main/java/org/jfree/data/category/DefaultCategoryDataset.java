@@ -84,7 +84,8 @@ public class DefaultCategoryDataset extends AbstractDataset
      *
      * @see #getColumnCount()
      */
-    public int getRowCount() {
+    @Override
+	public int getRowCount() {
         return this.data.getRowCount();
     }
 
@@ -95,7 +96,8 @@ public class DefaultCategoryDataset extends AbstractDataset
      *
      * @see #getRowCount()
      */
-    public int getColumnCount() {
+    @Override
+	public int getColumnCount() {
         return this.data.getColumnCount();
     }
 
@@ -110,7 +112,8 @@ public class DefaultCategoryDataset extends AbstractDataset
      * @see #addValue(Number, Comparable, Comparable)
      * @see #removeValue(Comparable, Comparable)
      */
-    public Number getValue(int row, int column) {
+    @Override
+	public Number getValue(int row, int column) {
         return this.data.getValue(row, column);
     }
 
@@ -125,7 +128,8 @@ public class DefaultCategoryDataset extends AbstractDataset
      * @see #getRowKeys()
      * @see #getColumnKey(int)
      */
-    public Comparable getRowKey(int row) {
+    @Override
+	public Comparable getRowKey(int row) {
         return this.data.getRowKey(row);
     }
 
@@ -138,7 +142,8 @@ public class DefaultCategoryDataset extends AbstractDataset
      *
      * @see #getRowKey(int)
      */
-    public int getRowIndex(Comparable key) {
+    @Override
+	public int getRowIndex(Comparable key) {
         // defer null argument check
         return this.data.getRowIndex(key);
     }
@@ -150,7 +155,8 @@ public class DefaultCategoryDataset extends AbstractDataset
      *
      * @see #getRowKey(int)
      */
-    public List getRowKeys() {
+    @Override
+	public List getRowKeys() {
         return this.data.getRowKeys();
     }
 
@@ -163,7 +169,8 @@ public class DefaultCategoryDataset extends AbstractDataset
      *
      * @see #getColumnIndex(Comparable)
      */
-    public Comparable getColumnKey(int column) {
+    @Override
+	public Comparable getColumnKey(int column) {
         return this.data.getColumnKey(column);
     }
 
@@ -176,7 +183,8 @@ public class DefaultCategoryDataset extends AbstractDataset
      *
      * @see #getColumnKey(int)
      */
-    public int getColumnIndex(Comparable key) {
+    @Override
+	public int getColumnIndex(Comparable key) {
         // defer null argument check
         return this.data.getColumnIndex(key);
     }
@@ -188,7 +196,8 @@ public class DefaultCategoryDataset extends AbstractDataset
      *
      * @see #getColumnKey(int)
      */
-    public List getColumnKeys() {
+    @Override
+	public List getColumnKeys() {
         return this.data.getColumnKeys();
     }
 
@@ -204,7 +213,8 @@ public class DefaultCategoryDataset extends AbstractDataset
      *
      * @see #addValue(Number, Comparable, Comparable)
      */
-    public Number getValue(Comparable rowKey, Comparable columnKey) {
+    @Override
+	public Number getValue(Comparable rowKey, Comparable columnKey) {
         return this.data.getValue(rowKey, columnKey);
     }
 

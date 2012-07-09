@@ -127,7 +127,8 @@ public class DefaultHeatMapDataset extends AbstractDataset
      *
      * @return The number of x-values (always > 0).
      */
-    public int getXSampleCount() {
+    @Override
+	public int getXSampleCount() {
         return this.xSamples;
     }
 
@@ -138,7 +139,8 @@ public class DefaultHeatMapDataset extends AbstractDataset
      *
      * @return The number of y-values (always > 0).
      */
-    public int getYSampleCount() {
+    @Override
+	public int getYSampleCount() {
         return this.ySamples;
     }
 
@@ -149,7 +151,8 @@ public class DefaultHeatMapDataset extends AbstractDataset
      *
      * @return The lowest x-value represented in this dataset.
      */
-    public double getMinimumXValue() {
+    @Override
+	public double getMinimumXValue() {
         return this.minX;
     }
 
@@ -160,7 +163,8 @@ public class DefaultHeatMapDataset extends AbstractDataset
      *
      * @return The highest x-value represented in this dataset.
      */
-    public double getMaximumXValue() {
+    @Override
+	public double getMaximumXValue() {
         return this.maxX;
     }
 
@@ -171,7 +175,8 @@ public class DefaultHeatMapDataset extends AbstractDataset
      *
      * @return The lowest y-value represented in this dataset.
      */
-    public double getMinimumYValue() {
+    @Override
+	public double getMinimumYValue() {
         return this.minY;
     }
 
@@ -182,7 +187,8 @@ public class DefaultHeatMapDataset extends AbstractDataset
      *
      * @return The highest y-value represented in this dataset.
      */
-    public double getMaximumYValue() {
+    @Override
+	public double getMaximumYValue() {
         return this.maxY;
     }
 
@@ -193,7 +199,8 @@ public class DefaultHeatMapDataset extends AbstractDataset
      *
      * @return The x-value.
      */
-    public double getXValue(int xIndex) {
+    @Override
+	public double getXValue(int xIndex) {
         double x = this.minX
                 + (this.maxX - this.minX) * (xIndex / (double) this.xSamples);
         return x;
@@ -206,7 +213,8 @@ public class DefaultHeatMapDataset extends AbstractDataset
      *
      * @return The y-value.
      */
-    public double getYValue(int yIndex) {
+    @Override
+	public double getYValue(int yIndex) {
         double y = this.minY
                 + (this.maxY - this.minY) * (yIndex / (double) this.ySamples);
         return y;
@@ -221,7 +229,8 @@ public class DefaultHeatMapDataset extends AbstractDataset
      *
      * @return The z-value.
      */
-    public double getZValue(int xIndex, int yIndex) {
+    @Override
+	public double getZValue(int xIndex, int yIndex) {
         return this.zValues[xIndex][yIndex];
     }
 
@@ -236,7 +245,8 @@ public class DefaultHeatMapDataset extends AbstractDataset
      *
      * @return The z-value.
      */
-    public Number getZ(int xIndex, int yIndex) {
+    @Override
+	public Number getZ(int xIndex, int yIndex) {
         return new Double(getZValue(xIndex, yIndex));
     }
 
@@ -275,7 +285,8 @@ public class DefaultHeatMapDataset extends AbstractDataset
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -315,7 +326,8 @@ public class DefaultHeatMapDataset extends AbstractDataset
      *
      * @throws java.lang.CloneNotSupportedException
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         DefaultHeatMapDataset clone = (DefaultHeatMapDataset) super.clone();
         clone.zValues = DataUtilities.clone(this.zValues);
         return clone;

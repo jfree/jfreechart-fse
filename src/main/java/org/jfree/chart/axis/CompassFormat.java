@@ -101,7 +101,8 @@ public class CompassFormat extends NumberFormat {
      *
      * @return The string buffer.
      */
-    public StringBuffer format(double number, StringBuffer toAppendTo,
+    @Override
+	public StringBuffer format(double number, StringBuffer toAppendTo,
                                FieldPosition pos) {
         return toAppendTo.append(getDirectionCode(number));
     }
@@ -115,7 +116,8 @@ public class CompassFormat extends NumberFormat {
      *
      * @return The string buffer.
      */
-    public StringBuffer format(long number, StringBuffer toAppendTo,
+    @Override
+	public StringBuffer format(long number, StringBuffer toAppendTo,
                                FieldPosition pos) {
         return toAppendTo.append(getDirectionCode(number));
     }
@@ -129,7 +131,8 @@ public class CompassFormat extends NumberFormat {
      *
      * @return <code>null</code>.
      */
-    public Number parse(String source, ParsePosition parsePosition) {
+    @Override
+	public Number parse(String source, ParsePosition parsePosition) {
         return null;
     }
 

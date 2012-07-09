@@ -97,7 +97,8 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
      *
      * @return The number of items in the specified series.
      */
-    public int getItemCount(int seriesIndex) {
+    @Override
+	public int getItemCount(int seriesIndex) {
         return getSeries(seriesIndex).getItemCount();
     }
 
@@ -127,7 +128,8 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
      *
      * @return The number of series in the collection.
      */
-    public int getSeriesCount() {
+    @Override
+	public int getSeriesCount() {
         return this.seriesList.size();
     }
 
@@ -139,7 +141,8 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
      *
      * @return The key for a series.
      */
-    public Comparable getSeriesKey(int seriesIndex) {
+    @Override
+	public Comparable getSeriesKey(int seriesIndex) {
         return getSeries(seriesIndex).getKey();
     }
 
@@ -155,7 +158,8 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
      *
      * @see org.jfree.data.xy.XYDataset#getXValue(int, int)
      */
-    public Number getX(int seriesIndex, int itemIndex) {
+    @Override
+	public Number getX(int seriesIndex, int itemIndex) {
         MatrixSeries series = (MatrixSeries) this.seriesList.get(seriesIndex);
         int x = series.getItemColumn(itemIndex);
 
@@ -174,7 +178,8 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
      *
      * @see org.jfree.data.xy.XYDataset#getYValue(int, int)
      */
-    public Number getY(int seriesIndex, int itemIndex) {
+    @Override
+	public Number getY(int seriesIndex, int itemIndex) {
         MatrixSeries series = (MatrixSeries) this.seriesList.get(seriesIndex);
         int y = series.getItemRow(itemIndex);
 
@@ -193,7 +198,8 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
      *
      * @see org.jfree.data.xy.XYZDataset#getZValue(int, int)
      */
-    public Number getZ(int seriesIndex, int itemIndex) {
+    @Override
+	public Number getZ(int seriesIndex, int itemIndex) {
         MatrixSeries series = (MatrixSeries) this.seriesList.get(seriesIndex);
         Number z = series.getItem(itemIndex);
         return z;
@@ -231,7 +237,8 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
@@ -254,7 +261,8 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return (this.seriesList != null ? this.seriesList.hashCode() : 0);
     }
 
@@ -265,7 +273,8 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
      *
      * @throws CloneNotSupportedException if there is a problem.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         MatrixSeriesCollection clone = (MatrixSeriesCollection) super.clone();
         clone.seriesList = (List) ObjectUtilities.deepClone(this.seriesList);
         return clone;

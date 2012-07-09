@@ -171,7 +171,8 @@ public class LogFormat extends NumberFormat {
      *
      * @return A string buffer containing the formatted value.
      */
-    public StringBuffer format(double number, StringBuffer toAppendTo,
+    @Override
+	public StringBuffer format(double number, StringBuffer toAppendTo,
             FieldPosition pos) {
         StringBuffer result = new StringBuffer();
         if (this.showBase) {
@@ -192,7 +193,8 @@ public class LogFormat extends NumberFormat {
      *
      * @return The string buffer.
      */
-    public StringBuffer format(long number, StringBuffer toAppendTo,
+    @Override
+	public StringBuffer format(long number, StringBuffer toAppendTo,
             FieldPosition pos) {
         StringBuffer result = new StringBuffer();
         if (this.showBase) {
@@ -212,7 +214,8 @@ public class LogFormat extends NumberFormat {
      *
      * @return Always <code>null</code>.
      */
-    public Number parse (String source, ParsePosition parsePosition) {
+    @Override
+	public Number parse (String source, ParsePosition parsePosition) {
         return null; // don't bother with parsing
     }
 
@@ -223,7 +226,8 @@ public class LogFormat extends NumberFormat {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -254,7 +258,8 @@ public class LogFormat extends NumberFormat {
      *
      * @return A clone.
      */
-    public Object clone() {
+    @Override
+	public Object clone() {
         LogFormat clone = (LogFormat) super.clone();
         clone.formatter = (NumberFormat) this.formatter.clone();
         return clone;

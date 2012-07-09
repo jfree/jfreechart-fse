@@ -98,7 +98,8 @@ public class LookupPaintScale
          *
          * @return An int defining the relative order of the objects.
          */
-        public int compareTo(Object obj) {
+        @Override
+		public int compareTo(Object obj) {
             PaintItem that = (PaintItem) obj;
             double d1 = this.value;
             double d2 = that.value;
@@ -118,7 +119,8 @@ public class LookupPaintScale
          *
          * @return A boolean.
          */
-        public boolean equals(Object obj) {
+        @Override
+		public boolean equals(Object obj) {
             if (obj == this) {
                 return true;
             }
@@ -224,7 +226,8 @@ public class LookupPaintScale
      *
      * @see #getUpperBound()
      */
-    public double getLowerBound() {
+    @Override
+	public double getLowerBound() {
         return this.lowerBound;
     }
 
@@ -235,7 +238,8 @@ public class LookupPaintScale
      *
      * @see #getLowerBound()
      */
-    public double getUpperBound() {
+    @Override
+	public double getUpperBound() {
         return this.upperBound;
     }
 
@@ -269,7 +273,8 @@ public class LookupPaintScale
      *
      * @see #getDefaultPaint()
      */
-    public Paint getPaint(double value) {
+    @Override
+	public Paint getPaint(double value) {
 
         // handle value outside bounds...
         if (value < this.lowerBound) {
@@ -320,7 +325,8 @@ public class LookupPaintScale
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -351,7 +357,8 @@ public class LookupPaintScale
      * @throws CloneNotSupportedException if there is a problem cloning the
      *     instance.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         LookupPaintScale clone = (LookupPaintScale) super.clone();
         clone.lookupTable = new java.util.ArrayList(this.lookupTable);
         return clone;

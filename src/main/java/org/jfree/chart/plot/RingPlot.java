@@ -319,7 +319,8 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
      * @return A state object (maintains state information relevant to one
      *         chart drawing).
      */
-    public PiePlotState initialise(Graphics2D g2, Rectangle2D plotArea,
+    @Override
+	public PiePlotState initialise(Graphics2D g2, Rectangle2D plotArea,
             PiePlot plot, Integer index, PlotRenderingInfo info) {
 
         PiePlotState state = super.initialise(g2, plotArea, plot, index, info);
@@ -337,7 +338,8 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
      * @param state  state information for one chart.
      * @param currentPass  the current pass index.
      */
-    protected void drawItem(Graphics2D g2,
+    @Override
+	protected void drawItem(Graphics2D g2,
                             int section,
                             Rectangle2D dataArea,
                             PiePlotState state,
@@ -467,7 +469,8 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
      *
      * @return The label link depth, as a percentage of the plot's radius.
      */
-    protected double getLabelLinkDepth() {
+    @Override
+	protected double getLabelLinkDepth() {
         return Math.min(super.getLabelLinkDepth(), getSectionDepth() / 2);
     }
 
@@ -478,7 +481,8 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }

@@ -218,7 +218,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          *
          * @return The timeline value.
          */
-        public long toTimelineValue(long millisecond) {
+        @Override
+		public long toTimelineValue(long millisecond) {
             return millisecond;
         }
 
@@ -229,7 +230,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          *
          * @return The timeline value.
          */
-        public long toTimelineValue(Date date) {
+        @Override
+		public long toTimelineValue(Date date) {
             return date.getTime();
         }
 
@@ -241,7 +243,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          *
          * @return The millisecond.
          */
-        public long toMillisecond(long value) {
+        @Override
+		public long toMillisecond(long value) {
             return value;
         }
 
@@ -253,7 +256,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          *
          * @return <code>true</code>.
          */
-        public boolean containsDomainValue(long millisecond) {
+        @Override
+		public boolean containsDomainValue(long millisecond) {
             return true;
         }
 
@@ -265,7 +269,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          *
          * @return <code>true</code>.
          */
-        public boolean containsDomainValue(Date date) {
+        @Override
+		public boolean containsDomainValue(Date date) {
             return true;
         }
 
@@ -278,7 +283,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          *
          * @return <code>true</code>.
          */
-        public boolean containsDomainRange(long from, long to) {
+        @Override
+		public boolean containsDomainRange(long from, long to) {
             return true;
         }
 
@@ -291,7 +297,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          *
          * @return <code>true</code>.
          */
-        public boolean containsDomainRange(Date from, Date to) {
+        @Override
+		public boolean containsDomainRange(Date from, Date to) {
             return true;
         }
 
@@ -302,7 +309,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          *
          * @return A boolean.
          */
-        public boolean equals(Object object) {
+        @Override
+		public boolean equals(Object object) {
             if (object == null) {
                 return false;
             }
@@ -699,7 +707,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * Configures the axis to work with the specified plot.  If the axis has
      * auto-scaling, then sets the maximum and minimum values.
      */
-    public void configure() {
+    @Override
+	public void configure() {
         if (isAutoRange()) {
             autoAdjustRange();
         }
@@ -728,7 +737,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      *
      * @return The coordinate corresponding to the supplied data value.
      */
-    public double valueToJava2D(double value, Rectangle2D area,
+    @Override
+	public double valueToJava2D(double value, Rectangle2D area,
                                 RectangleEdge edge) {
 
         value = this.timeline.toTimelineValue((long) value);
@@ -794,7 +804,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      *
      * @return A data value.
      */
-    public double java2DToValue(double java2DValue, Rectangle2D area,
+    @Override
+	public double java2DToValue(double java2DValue, Rectangle2D area,
                                 RectangleEdge edge) {
 
         DateRange range = (DateRange) getRange();
@@ -1258,7 +1269,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
     /**
      * Rescales the axis to ensure that all data is visible.
      */
-    protected void autoAdjustRange() {
+    @Override
+	protected void autoAdjustRange() {
 
         Plot plot = getPlot();
 
@@ -1534,7 +1546,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      *
      * @return A list of ticks.
      */
-    public List refreshTicks(Graphics2D g2,
+    @Override
+	public List refreshTicks(Graphics2D g2,
                              AxisState state,
                              Rectangle2D dataArea,
                              RectangleEdge edge) {
@@ -1832,7 +1845,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      *
      * @return The axis state (never <code>null</code>).
      */
-    public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
+    @Override
+	public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
             Rectangle2D dataArea, RectangleEdge edge,
             PlotRenderingInfo plotState) {
 

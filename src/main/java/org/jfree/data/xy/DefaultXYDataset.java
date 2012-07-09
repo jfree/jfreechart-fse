@@ -88,7 +88,8 @@ public class DefaultXYDataset extends AbstractXYDataset
      *
      * @return The series count.
      */
-    public int getSeriesCount() {
+    @Override
+	public int getSeriesCount() {
         return this.seriesList.size();
     }
 
@@ -103,7 +104,8 @@ public class DefaultXYDataset extends AbstractXYDataset
      * @throws IllegalArgumentException if <code>series</code> is not in the
      *     specified range.
      */
-    public Comparable getSeriesKey(int series) {
+    @Override
+	public Comparable getSeriesKey(int series) {
         if ((series < 0) || (series >= getSeriesCount())) {
             throw new IllegalArgumentException("Series index out of bounds");
         }
@@ -118,7 +120,8 @@ public class DefaultXYDataset extends AbstractXYDataset
      *
      * @return The index, or -1.
      */
-    public int indexOf(Comparable seriesKey) {
+    @Override
+	public int indexOf(Comparable seriesKey) {
         return this.seriesKeys.indexOf(seriesKey);
     }
 
@@ -129,7 +132,8 @@ public class DefaultXYDataset extends AbstractXYDataset
      *
      * @return <code>DomainOrder.NONE</code>.
      */
-    public DomainOrder getDomainOrder() {
+    @Override
+	public DomainOrder getDomainOrder() {
         return DomainOrder.NONE;
     }
 
@@ -144,7 +148,8 @@ public class DefaultXYDataset extends AbstractXYDataset
      * @throws IllegalArgumentException if <code>series</code> is not in the
      *     specified range.
      */
-    public int getItemCount(int series) {
+    @Override
+	public int getItemCount(int series) {
         if ((series < 0) || (series >= getSeriesCount())) {
             throw new IllegalArgumentException("Series index out of bounds");
         }
@@ -169,7 +174,8 @@ public class DefaultXYDataset extends AbstractXYDataset
      *
      * @see #getX(int, int)
      */
-    public double getXValue(int series, int item) {
+    @Override
+	public double getXValue(int series, int item) {
         double[][] seriesData = (double[][]) this.seriesList.get(series);
         return seriesData[0][item];
     }
@@ -191,7 +197,8 @@ public class DefaultXYDataset extends AbstractXYDataset
      *
      * @see #getXValue(int, int)
      */
-    public Number getX(int series, int item) {
+    @Override
+	public Number getX(int series, int item) {
         return new Double(getXValue(series, item));
     }
 
@@ -212,7 +219,8 @@ public class DefaultXYDataset extends AbstractXYDataset
      *
      * @see #getY(int, int)
      */
-    public double getYValue(int series, int item) {
+    @Override
+	public double getYValue(int series, int item) {
         double[][] seriesData = (double[][]) this.seriesList.get(series);
         return seriesData[1][item];
     }
@@ -234,7 +242,8 @@ public class DefaultXYDataset extends AbstractXYDataset
      *
      * @see #getX(int, int)
      */
-    public Number getY(int series, int item) {
+    @Override
+	public Number getY(int series, int item) {
         return new Double(getYValue(series, item));
     }
 
@@ -307,7 +316,8 @@ public class DefaultXYDataset extends AbstractXYDataset
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -340,7 +350,8 @@ public class DefaultXYDataset extends AbstractXYDataset
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result;
         result = this.seriesKeys.hashCode();
         result = 29 * result + this.seriesList.hashCode();
@@ -356,7 +367,8 @@ public class DefaultXYDataset extends AbstractXYDataset
      *     dataset (for instance, if a non-cloneable object is used for a
      *     series key).
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         DefaultXYDataset clone = (DefaultXYDataset) super.clone();
         clone.seriesKeys = new java.util.ArrayList(this.seriesKeys);
         clone.seriesList = new ArrayList(this.seriesList.size());

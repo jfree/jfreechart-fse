@@ -143,7 +143,8 @@ public class PaintMap implements Cloneable, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -174,7 +175,8 @@ public class PaintMap implements Cloneable, Serializable {
      *
      * @throws CloneNotSupportedException if any key is not cloneable.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         // TODO: I think we need to make sure the keys are actually cloned,
         // whereas the paint instances are always immutable so they're OK
         return super.clone();

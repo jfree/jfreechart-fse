@@ -73,7 +73,8 @@ public class DefaultLogAxisEditor extends DefaultValueAxisEditor {
         manualTickUnit.setText(Double.toString(this.manualTickUnitValue));
     }
     
-    protected JPanel createTickUnitPanel()
+    @Override
+	protected JPanel createTickUnitPanel()
     {
         JPanel tickUnitPanel = super.createTickUnitPanel();
 
@@ -107,14 +108,16 @@ public class DefaultLogAxisEditor extends DefaultValueAxisEditor {
         }
     }
 
-    public void focusLost(FocusEvent event) {
+    @Override
+	public void focusLost(FocusEvent event) {
         super.focusLost(event);
         if (event.getSource() == this.manualTickUnit) {
             validateTickUnit();
         }
     }
 
-    public void toggleAutoTick() {
+    @Override
+	public void toggleAutoTick() {
         super.toggleAutoTick();
         if (isAutoTickUnitSelection()) {
             this.manualTickUnit.setText(Double.toString(this.manualTickUnitValue));
@@ -146,7 +149,8 @@ public class DefaultLogAxisEditor extends DefaultValueAxisEditor {
      *
      * @param axis  the axis.
      */
-    public void setAxisProperties(Axis axis) {
+    @Override
+	public void setAxisProperties(Axis axis) {
         super.setAxisProperties(axis);
         LogAxis logAxis = (LogAxis) axis;
         if (!isAutoTickUnitSelection()) {

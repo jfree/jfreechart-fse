@@ -76,7 +76,8 @@ public class LogarithmicAxisTests extends TestCase {
         /* (non-Javadoc)
          * @see org.jfree.chart.axis.LogarithmicAxis#switchedLog10(double)
          */
-        protected double switchedLog10(double val) {
+        @Override
+		protected double switchedLog10(double val) {
             return super.switchedLog10(val);
         }
 
@@ -110,7 +111,8 @@ public class LogarithmicAxisTests extends TestCase {
      *
      * @throws Exception
      */
-    protected void setUp() throws Exception {
+    @Override
+	protected void setUp() throws Exception {
         this.axis = new MyLogarithmicAxis("Value (log)");
         this.axis.setAllowNegativesFlag(false);
         this.axis.setLog10TickLabelsFlag(false);

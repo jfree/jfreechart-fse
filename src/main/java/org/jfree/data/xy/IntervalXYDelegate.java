@@ -326,7 +326,8 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      *
      * @return The minimum value.
      */
-    public double getDomainLowerBound(boolean includeInterval) {
+    @Override
+	public double getDomainLowerBound(boolean includeInterval) {
         double result = Double.NaN;
         Range r = getDomainBounds(includeInterval);
         if (r != null) {
@@ -343,7 +344,8 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      *
      * @return The maximum value.
      */
-    public double getDomainUpperBound(boolean includeInterval) {
+    @Override
+	public double getDomainUpperBound(boolean includeInterval) {
         double result = Double.NaN;
         Range r = getDomainBounds(includeInterval);
         if (r != null) {
@@ -361,7 +363,8 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      *
      * @return The range.
      */
-    public Range getDomainBounds(boolean includeInterval) {
+    @Override
+	public Range getDomainBounds(boolean includeInterval) {
         // first get the range without the interval, then expand it for the
         // interval width
         Range range = DatasetUtilities.findDomainBounds(this.dataset, false);
@@ -380,7 +383,8 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      *
      * @param e  the event.
      */
-    public void datasetChanged(DatasetChangeEvent e) {
+    @Override
+	public void datasetChanged(DatasetChangeEvent e) {
         // TODO: by coding the event with some information about what changed
         // in the dataset, we could make the recalculation of the interval
         // more efficient in some cases (for instance, if the change is
@@ -437,7 +441,8 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -462,7 +467,8 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      *
      * @throws CloneNotSupportedException if the object cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -471,7 +477,8 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int hash = 5;
         hash = HashUtilities.hashCode(hash, this.autoWidth);
         hash = HashUtilities.hashCode(hash, this.intervalPositionFactor);

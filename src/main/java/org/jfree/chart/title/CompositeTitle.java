@@ -157,7 +157,8 @@ public class CompositeTitle extends Title implements Cloneable, Serializable {
      *
      * @return The block size (in Java2D units, never <code>null</code>).
      */
-    public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
+    @Override
+	public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
         RectangleConstraint contentConstraint = toContentConstraint(constraint);
         Size2D contentSize = this.container.arrange(g2, contentConstraint);
         return new Size2D(calculateTotalWidth(contentSize.getWidth()),
@@ -171,7 +172,8 @@ public class CompositeTitle extends Title implements Cloneable, Serializable {
      * @param g2  the graphics device.
      * @param area  the area allocated for the title.
      */
-    public void draw(Graphics2D g2, Rectangle2D area) {
+    @Override
+	public void draw(Graphics2D g2, Rectangle2D area) {
         draw(g2, area, null);
     }
 
@@ -184,7 +186,8 @@ public class CompositeTitle extends Title implements Cloneable, Serializable {
      *
      * @return Always <code>null</code>.
      */
-    public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
+    @Override
+	public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
         area = trimMargin(area);
         drawBorder(g2, area);
         area = trimBorder(area);
@@ -203,7 +206,8 @@ public class CompositeTitle extends Title implements Cloneable, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

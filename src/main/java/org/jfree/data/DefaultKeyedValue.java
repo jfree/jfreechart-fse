@@ -89,7 +89,8 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      *
      * @return The key (never <code>null</code>).
      */
-    public Comparable getKey() {
+    @Override
+	public Comparable getKey() {
         return this.key;
     }
 
@@ -98,7 +99,8 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      *
      * @return The value (possibly <code>null</code>).
      */
-    public Number getValue() {
+    @Override
+	public Number getValue() {
         return this.value;
     }
 
@@ -118,7 +120,8 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -142,7 +145,8 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result;
         result = (this.key != null ? this.key.hashCode() : 0);
         result = 29 * result + (this.value != null ? this.value.hashCode() : 0);
@@ -159,7 +163,8 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      * @throws CloneNotSupportedException Not thrown by this class, but
      *         subclasses (if any) might.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         DefaultKeyedValue clone = (DefaultKeyedValue) super.clone();
         return clone;
     }
@@ -170,7 +175,8 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      *
      * @return A string.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return "(" + this.key.toString() + ", " + this.value.toString() + ")";
     }
 

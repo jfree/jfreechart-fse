@@ -92,7 +92,8 @@ public class SortableTableHeaderListener implements MouseListener, MouseMotionLi
      *
      * @param e  the mouse event.
      */
-    public void mousePressed(final MouseEvent e) {
+    @Override
+	public void mousePressed(final MouseEvent e) {
 
         final JTableHeader header = (JTableHeader) e.getComponent();
 
@@ -122,7 +123,8 @@ public class SortableTableHeaderListener implements MouseListener, MouseMotionLi
      *
      * @param e  the mouse event.
      */
-    public void mouseDragged(final MouseEvent e) {
+    @Override
+	public void mouseDragged(final MouseEvent e) {
 
         final JTableHeader header = (JTableHeader) e.getComponent();
 
@@ -137,7 +139,8 @@ public class SortableTableHeaderListener implements MouseListener, MouseMotionLi
      *
      * @param e  the mouse event.
      */
-    public void mouseEntered(final MouseEvent e) {
+    @Override
+	public void mouseEntered(final MouseEvent e) {
         // not required
     }
 
@@ -146,7 +149,8 @@ public class SortableTableHeaderListener implements MouseListener, MouseMotionLi
      *
      * @param e  the mouse event.
      */
-    public void mouseClicked(final MouseEvent e) {
+    @Override
+	public void mouseClicked(final MouseEvent e) {
         // not required
     }
 
@@ -155,7 +159,8 @@ public class SortableTableHeaderListener implements MouseListener, MouseMotionLi
      *
      * @param e  the mouse event.
      */
-    public void mouseMoved(final MouseEvent e) {
+    @Override
+	public void mouseMoved(final MouseEvent e) {
         // not required
     }
 
@@ -164,7 +169,8 @@ public class SortableTableHeaderListener implements MouseListener, MouseMotionLi
      *
      * @param e  the mouse event.
      */
-    public void mouseExited(final MouseEvent e) {
+    @Override
+	public void mouseExited(final MouseEvent e) {
         // not required
     }
 
@@ -173,7 +179,8 @@ public class SortableTableHeaderListener implements MouseListener, MouseMotionLi
      *
      * @param e  the mouse event.
      */
-    public void mouseReleased(final MouseEvent e) {
+    @Override
+	public void mouseReleased(final MouseEvent e) {
 
         final JTableHeader header = (JTableHeader) e.getComponent();
 

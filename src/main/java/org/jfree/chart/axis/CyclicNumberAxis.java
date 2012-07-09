@@ -394,7 +394,8 @@ public class CyclicNumberAxis extends NumberAxis {
      *
      * @return The anchor point.
      */
-    protected float[] calculateAnchorPoint(ValueTick tick, double cursor,
+    @Override
+	protected float[] calculateAnchorPoint(ValueTick tick, double cursor,
                                            Rectangle2D dataArea,
                                            RectangleEdge edge) {
         if (tick instanceof CycleBoundTick) {
@@ -422,7 +423,8 @@ public class CyclicNumberAxis extends NumberAxis {
      *
      * @return A list of ticks.
      */
-    protected List refreshTicksHorizontal(Graphics2D g2,
+    @Override
+	protected List refreshTicksHorizontal(Graphics2D g2,
                                           Rectangle2D dataArea,
                                           RectangleEdge edge) {
 
@@ -746,7 +748,8 @@ public class CyclicNumberAxis extends NumberAxis {
      *
      * @return The data value.
      */
-    public double java2DToValue(double java2DValue, Rectangle2D dataArea,
+    @Override
+	public double java2DToValue(double java2DValue, Rectangle2D dataArea,
                                 RectangleEdge edge) {
         Range range = getRange();
 
@@ -793,7 +796,8 @@ public class CyclicNumberAxis extends NumberAxis {
      *
      * @return The Java 2D value.
      */
-    public double valueToJava2D(double value, Rectangle2D dataArea,
+    @Override
+	public double valueToJava2D(double value, Rectangle2D dataArea,
                                 RectangleEdge edge) {
         Range range = getRange();
 
@@ -846,7 +850,8 @@ public class CyclicNumberAxis extends NumberAxis {
      *
      * @param value  the data value.
      */
-    public void centerRange(double value) {
+    @Override
+	public void centerRange(double value) {
         setRange(value - this.period / 2.0, value + this.period / 2.0);
     }
 
@@ -861,7 +866,8 @@ public class CyclicNumberAxis extends NumberAxis {
      * @see org.jfree.chart.axis.ValueAxis#setAutoRangeMinimumSize(double,
      *      boolean)
      */
-    public void setAutoRangeMinimumSize(double size, boolean notify) {
+    @Override
+	public void setAutoRangeMinimumSize(double size, boolean notify) {
         if (size > this.period) {
             this.period = size;
         }
@@ -876,7 +882,8 @@ public class CyclicNumberAxis extends NumberAxis {
      *
      * @see org.jfree.chart.axis.ValueAxis#setFixedAutoRange(double)
      */
-    public void setFixedAutoRange(double length) {
+    @Override
+	public void setFixedAutoRange(double length) {
         this.period = length;
         super.setFixedAutoRange(length);
     }
@@ -891,7 +898,8 @@ public class CyclicNumberAxis extends NumberAxis {
      *
      * @see org.jfree.chart.axis.ValueAxis#setRange(Range, boolean, boolean)
      */
-    public void setRange(Range range, boolean turnOffAutoRange,
+    @Override
+	public void setRange(Range range, boolean turnOffAutoRange,
                          boolean notify) {
         double size = range.getUpperBound() - range.getLowerBound();
         if (size > this.period) {
@@ -983,7 +991,8 @@ public class CyclicNumberAxis extends NumberAxis {
      *
      * @return The axis state.
      */
-    protected AxisState drawTickMarksAndLabels(Graphics2D g2, double cursor,
+    @Override
+	protected AxisState drawTickMarksAndLabels(Graphics2D g2, double cursor,
             Rectangle2D plotArea, Rectangle2D dataArea, RectangleEdge edge) {
         this.internalMarkerWhenTicksOverlap = false;
         AxisState ret = super.drawTickMarksAndLabels(g2, cursor, plotArea,
@@ -1040,7 +1049,8 @@ public class CyclicNumberAxis extends NumberAxis {
      *
      * @return The axis state (never <code>null</code>).
      */
-    public AxisState draw(Graphics2D g2,
+    @Override
+	public AxisState draw(Graphics2D g2,
                           double cursor,
                           Rectangle2D plotArea,
                           Rectangle2D dataArea,
@@ -1094,7 +1104,8 @@ public class CyclicNumberAxis extends NumberAxis {
      *
      * @return The reserved space.
      */
-    public AxisSpace reserveSpace(Graphics2D g2,
+    @Override
+	public AxisSpace reserveSpace(Graphics2D g2,
                                   Plot plot,
                                   Rectangle2D plotArea,
                                   RectangleEdge edge,
@@ -1172,7 +1183,8 @@ public class CyclicNumberAxis extends NumberAxis {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

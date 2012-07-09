@@ -231,7 +231,8 @@ public class Day extends RegularTimePeriod implements Serializable {
      *
      * @see #getLastMillisecond()
      */
-    public long getFirstMillisecond() {
+    @Override
+	public long getFirstMillisecond() {
         return this.firstMillisecond;
     }
 
@@ -245,7 +246,8 @@ public class Day extends RegularTimePeriod implements Serializable {
      *
      * @see #getFirstMillisecond()
      */
-    public long getLastMillisecond() {
+    @Override
+	public long getLastMillisecond() {
         return this.lastMillisecond;
     }
 
@@ -257,7 +259,8 @@ public class Day extends RegularTimePeriod implements Serializable {
      *
      * @since 1.0.3
      */
-    public void peg(Calendar calendar) {
+    @Override
+	public void peg(Calendar calendar) {
         this.firstMillisecond = getFirstMillisecond(calendar);
         this.lastMillisecond = getLastMillisecond(calendar);
     }
@@ -267,7 +270,8 @@ public class Day extends RegularTimePeriod implements Serializable {
      *
      * @return The day preceding this one.
      */
-    public RegularTimePeriod previous() {
+    @Override
+	public RegularTimePeriod previous() {
         int serial = this.serialDate.toSerial();
         if (serial > SerialDate.SERIAL_LOWER_BOUND) {
             SerialDate yesterday = SerialDate.createInstance(serial - 1);
@@ -283,7 +287,8 @@ public class Day extends RegularTimePeriod implements Serializable {
      * @return The day following this one, or <code>null</code> if some limit
      *         has been reached.
      */
-    public RegularTimePeriod next() {
+    @Override
+	public RegularTimePeriod next() {
         int serial = this.serialDate.toSerial();
         if (serial < SerialDate.SERIAL_UPPER_BOUND) {
             SerialDate tomorrow = SerialDate.createInstance(serial + 1);
@@ -297,7 +302,8 @@ public class Day extends RegularTimePeriod implements Serializable {
      *
      * @return The serial index number.
      */
-    public long getSerialIndex() {
+    @Override
+	public long getSerialIndex() {
         return this.serialDate.toSerial();
     }
 
@@ -312,7 +318,8 @@ public class Day extends RegularTimePeriod implements Serializable {
      * @throws NullPointerException if <code>calendar</code> is
      *     <code>null</code>.
      */
-    public long getFirstMillisecond(Calendar calendar) {
+    @Override
+	public long getFirstMillisecond(Calendar calendar) {
         int year = this.serialDate.getYYYY();
         int month = this.serialDate.getMonth();
         int day = this.serialDate.getDayOfMonth();
@@ -333,7 +340,8 @@ public class Day extends RegularTimePeriod implements Serializable {
      * @throws NullPointerException if <code>calendar</code> is
      *     <code>null</code>.
      */
-    public long getLastMillisecond(Calendar calendar) {
+    @Override
+	public long getLastMillisecond(Calendar calendar) {
         int year = this.serialDate.getYYYY();
         int month = this.serialDate.getMonth();
         int day = this.serialDate.getDayOfMonth();
@@ -353,7 +361,8 @@ public class Day extends RegularTimePeriod implements Serializable {
      *
      * @return A flag indicating whether or not an object is equal to this day.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -376,7 +385,8 @@ public class Day extends RegularTimePeriod implements Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return this.serialDate.hashCode();
     }
 
@@ -390,7 +400,8 @@ public class Day extends RegularTimePeriod implements Serializable {
      *
      * @return negative == before, zero == same, positive == after.
      */
-    public int compareTo(Object o1) {
+    @Override
+	public int compareTo(Object o1) {
         int result;
 
         // CASE 1 : Comparing to another Day object
@@ -422,7 +433,8 @@ public class Day extends RegularTimePeriod implements Serializable {
      *
      * @return A string representing the day.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return this.serialDate.toString();
     }
 

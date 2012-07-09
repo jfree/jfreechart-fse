@@ -412,7 +412,8 @@ public class PaintScaleLegend extends Title implements AxisChangeListener,
      *
      * @since 1.0.13
      */
-    public void axisChanged(AxisChangeEvent event) {
+    @Override
+	public void axisChanged(AxisChangeEvent event) {
         if (this.axis == event.getAxis()) {
             notifyListeners(new TitleChangeEvent(this));
         }
@@ -427,7 +428,8 @@ public class PaintScaleLegend extends Title implements AxisChangeListener,
      *
      * @return The block size (in Java2D units, never <code>null</code>).
      */
-    public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
+    @Override
+	public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
         RectangleConstraint cc = toContentConstraint(constraint);
         LengthConstraintType w = cc.getWidthConstraintType();
         LengthConstraintType h = cc.getHeightConstraintType();
@@ -518,7 +520,8 @@ public class PaintScaleLegend extends Title implements AxisChangeListener,
      * @param g2  the graphics target (<code>null</code> not permitted).
      * @param area  the drawing area (<code>null</code> not permitted).
      */
-    public void draw(Graphics2D g2, Rectangle2D area) {
+    @Override
+	public void draw(Graphics2D g2, Rectangle2D area) {
         draw(g2, area, null);
     }
 
@@ -531,7 +534,8 @@ public class PaintScaleLegend extends Title implements AxisChangeListener,
      *
      * @return <code>null</code>.
      */
-    public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
+    @Override
+	public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
 
         Rectangle2D target = (Rectangle2D) area.clone();
         target = trimMargin(target);
@@ -664,7 +668,8 @@ public class PaintScaleLegend extends Title implements AxisChangeListener,
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (!(obj instanceof PaintScaleLegend)) {
             return false;
         }

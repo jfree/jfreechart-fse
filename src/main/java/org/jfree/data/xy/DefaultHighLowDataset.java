@@ -126,7 +126,8 @@ public class DefaultHighLowDataset extends AbstractXYDataset
      *
      * @return The series key (never <code>null</code>).
      */
-    public Comparable getSeriesKey(int series) {
+    @Override
+	public Comparable getSeriesKey(int series) {
         return this.seriesKey;
     }
 
@@ -144,7 +145,8 @@ public class DefaultHighLowDataset extends AbstractXYDataset
      * @see #getXValue(int, int)
      * @see #getXDate(int, int)
      */
-    public Number getX(int series, int item) {
+    @Override
+	public Number getX(int series, int item) {
         return new Long(this.date[item].getTime());
     }
 
@@ -177,7 +179,8 @@ public class DefaultHighLowDataset extends AbstractXYDataset
      *
      * @see #getYValue(int, int)
      */
-    public Number getY(int series, int item) {
+    @Override
+	public Number getY(int series, int item) {
         return getClose(series, item);
     }
 
@@ -191,7 +194,8 @@ public class DefaultHighLowDataset extends AbstractXYDataset
      *
      * @see #getHighValue(int, int)
      */
-    public Number getHigh(int series, int item) {
+    @Override
+	public Number getHigh(int series, int item) {
         return this.high[item];
     }
 
@@ -206,7 +210,8 @@ public class DefaultHighLowDataset extends AbstractXYDataset
      *
      * @see #getHigh(int, int)
      */
-    public double getHighValue(int series, int item) {
+    @Override
+	public double getHighValue(int series, int item) {
         double result = Double.NaN;
         Number high = getHigh(series, item);
         if (high != null) {
@@ -225,7 +230,8 @@ public class DefaultHighLowDataset extends AbstractXYDataset
      *
      * @see #getLowValue(int, int)
      */
-    public Number getLow(int series, int item) {
+    @Override
+	public Number getLow(int series, int item) {
         return this.low[item];
     }
 
@@ -240,7 +246,8 @@ public class DefaultHighLowDataset extends AbstractXYDataset
      *
      * @see #getLow(int, int)
      */
-    public double getLowValue(int series, int item) {
+    @Override
+	public double getLowValue(int series, int item) {
         double result = Double.NaN;
         Number low = getLow(series, item);
         if (low != null) {
@@ -259,7 +266,8 @@ public class DefaultHighLowDataset extends AbstractXYDataset
      *
      * @see #getOpenValue(int, int)
      */
-    public Number getOpen(int series, int item) {
+    @Override
+	public Number getOpen(int series, int item) {
         return this.open[item];
     }
 
@@ -274,7 +282,8 @@ public class DefaultHighLowDataset extends AbstractXYDataset
      *
      * @see #getOpen(int, int)
      */
-    public double getOpenValue(int series, int item) {
+    @Override
+	public double getOpenValue(int series, int item) {
         double result = Double.NaN;
         Number open = getOpen(series, item);
         if (open != null) {
@@ -293,7 +302,8 @@ public class DefaultHighLowDataset extends AbstractXYDataset
      *
      * @see #getCloseValue(int, int)
      */
-    public Number getClose(int series, int item) {
+    @Override
+	public Number getClose(int series, int item) {
         return this.close[item];
     }
 
@@ -308,7 +318,8 @@ public class DefaultHighLowDataset extends AbstractXYDataset
      *
      * @see #getClose(int, int)
      */
-    public double getCloseValue(int series, int item) {
+    @Override
+	public double getCloseValue(int series, int item) {
         double result = Double.NaN;
         Number close = getClose(series, item);
         if (close != null) {
@@ -327,7 +338,8 @@ public class DefaultHighLowDataset extends AbstractXYDataset
      *
      * @see #getVolumeValue(int, int)
      */
-    public Number getVolume(int series, int item) {
+    @Override
+	public Number getVolume(int series, int item) {
         return this.volume[item];
     }
 
@@ -342,7 +354,8 @@ public class DefaultHighLowDataset extends AbstractXYDataset
      *
      * @see #getVolume(int, int)
      */
-    public double getVolumeValue(int series, int item) {
+    @Override
+	public double getVolumeValue(int series, int item) {
         double result = Double.NaN;
         Number volume = getVolume(series, item);
         if (volume != null) {
@@ -358,7 +371,8 @@ public class DefaultHighLowDataset extends AbstractXYDataset
      *
      * @return The number of series.
      */
-    public int getSeriesCount() {
+    @Override
+	public int getSeriesCount() {
         return 1;
     }
 
@@ -369,7 +383,8 @@ public class DefaultHighLowDataset extends AbstractXYDataset
      *
      * @return The number of items in the specified series.
      */
-    public int getItemCount(int series) {
+    @Override
+	public int getItemCount(int series) {
         return this.date.length;
     }
 
@@ -380,7 +395,8 @@ public class DefaultHighLowDataset extends AbstractXYDataset
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

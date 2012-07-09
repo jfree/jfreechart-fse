@@ -255,7 +255,8 @@ public abstract class Series implements Cloneable, Serializable {
      * @throws CloneNotSupportedException  not thrown by this class, but
      *         subclasses may differ.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         Series clone = (Series) super.clone();
         clone.listeners = new EventListenerList();
         clone.propertyChangeSupport = new PropertyChangeSupport(clone);
@@ -270,7 +271,8 @@ public abstract class Series implements Cloneable, Serializable {
      *
      * @return <code>true</code> or <code>false</code>.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -292,7 +294,8 @@ public abstract class Series implements Cloneable, Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result;
         result = this.key.hashCode();
         result = 29 * result + (this.description != null

@@ -206,7 +206,8 @@ public class DateTickUnit extends TickUnit implements Serializable {
      *
      * @return The formatted date.
      */
-    public String valueToString(double milliseconds) {
+    @Override
+	public String valueToString(double milliseconds) {
         return this.formatter.format(new Date((long) milliseconds));
     }
 
@@ -420,7 +421,8 @@ public class DateTickUnit extends TickUnit implements Serializable {
      *
      * @return <code>true</code> or <code>false</code>.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -448,7 +450,8 @@ public class DateTickUnit extends TickUnit implements Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 19;
         result = 37 * result + this.unitType.hashCode();
         result = 37 * result + this.count;
@@ -462,7 +465,8 @@ public class DateTickUnit extends TickUnit implements Serializable {
      *
      * @return A string representation of this instance.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return "DateTickUnit[" + this.unitType.toString() + ", "
                 + this.count + "]";
     }

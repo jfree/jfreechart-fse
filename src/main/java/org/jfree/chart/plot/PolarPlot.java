@@ -326,7 +326,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      *
      * @return A short string describing the type of plot.
      */
-    public String getPlotType() {
+    @Override
+	public String getPlotType() {
        return PolarPlot.localizationResources.getString("Polar_Plot");
     }
 
@@ -1373,7 +1374,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      * @param info  collects chart drawing information (<code>null</code>
      *              permitted).
      */
-    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+    @Override
+	public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
             PlotState parentState, PlotRenderingInfo info) {
 
         // if the plot area is too small, just return...
@@ -1643,7 +1645,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      *
      * @param percent  the amount of the zoom.
      */
-    public void zoom(double percent) {
+    @Override
+	public void zoom(double percent) {
         for (int axisIdx = 0; axisIdx < getAxisCount(); axisIdx++) {
             final ValueAxis axis = getAxis(axisIdx);
             if (axis != null) {
@@ -1698,7 +1701,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      *
      * @return The range.
      */
-    public Range getDataRange(ValueAxis axis) {
+    @Override
+	public Range getDataRange(ValueAxis axis) {
         Range result = null;
         int axisIdx = getAxisIndex(axis);
         List mappedDatasets = new ArrayList();
@@ -1731,7 +1735,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      *
      * @param event  information about the event (not used here).
      */
-    public void datasetChanged(DatasetChangeEvent event) {
+    @Override
+	public void datasetChanged(DatasetChangeEvent event) {
         for (int i = 0; i < this.axes.size(); i++) {
             final ValueAxis axis = (ValueAxis) this.axes.get(i);
             if (axis != null) {
@@ -1753,7 +1758,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      *
      * @param event  information about the property change.
      */
-    public void rendererChanged(RendererChangeEvent event) {
+    @Override
+	public void rendererChanged(RendererChangeEvent event) {
         fireChangeEvent();
     }
 
@@ -1764,7 +1770,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      *
      * @return The legend items.
      */
-    public LegendItemCollection getLegendItems() {
+    @Override
+	public LegendItemCollection getLegendItems() {
         if (this.fixedLegendItems != null) {
             return this.fixedLegendItems;
         }
@@ -1791,7 +1798,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      *
      * @return <code>true</code> or <code>false</code>.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -1876,7 +1884,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      * @throws CloneNotSupportedException  this can occur if some component of
      *         the plot cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
 
         PolarPlot clone = (PolarPlot) super.clone();
         clone.axes = (ObjectList) ObjectUtilities.clone(this.axes);
@@ -1982,7 +1991,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      * @param state  the plot state.
      * @param source  the source point (in Java2D coordinates).
      */
-    public void zoomDomainAxes(double factor, PlotRenderingInfo state,
+    @Override
+	public void zoomDomainAxes(double factor, PlotRenderingInfo state,
                                Point2D source) {
         // do nothing
     }
@@ -1998,7 +2008,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      *
      * @since 1.0.7
      */
-    public void zoomDomainAxes(double factor, PlotRenderingInfo state,
+    @Override
+	public void zoomDomainAxes(double factor, PlotRenderingInfo state,
                                Point2D source, boolean useAnchor) {
         // do nothing
     }
@@ -2012,7 +2023,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      * @param state  the plot state.
      * @param source  the source point (in Java2D coordinates).
      */
-    public void zoomDomainAxes(double lowerPercent, double upperPercent,
+    @Override
+	public void zoomDomainAxes(double lowerPercent, double upperPercent,
                                PlotRenderingInfo state, Point2D source) {
         // do nothing
     }
@@ -2024,7 +2036,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      * @param state  the plot state.
      * @param source  the source point (in Java2D coordinates).
      */
-    public void zoomRangeAxes(double factor, PlotRenderingInfo state,
+    @Override
+	public void zoomRangeAxes(double factor, PlotRenderingInfo state,
                               Point2D source) {
         zoom(factor);
     }
@@ -2041,7 +2054,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      *
      * @since 1.0.7
      */
-    public void zoomRangeAxes(double factor, PlotRenderingInfo info,
+    @Override
+	public void zoomRangeAxes(double factor, PlotRenderingInfo info,
                               Point2D source, boolean useAnchor) {
         // get the source coordinate - this plot has always a VERTICAL
         // orientation
@@ -2070,7 +2084,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      * @param state  the plot state.
      * @param source  the source point (in Java2D coordinates).
      */
-    public void zoomRangeAxes(double lowerPercent, double upperPercent,
+    @Override
+	public void zoomRangeAxes(double lowerPercent, double upperPercent,
                               PlotRenderingInfo state, Point2D source) {
         zoom((upperPercent + lowerPercent) / 2.0);
     }
@@ -2080,7 +2095,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      *
      * @return <code>false</code> always.
      */
-    public boolean isDomainZoomable() {
+    @Override
+	public boolean isDomainZoomable() {
         return false;
     }
 
@@ -2089,7 +2105,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      *
      * @return <code>true</code>.
      */
-    public boolean isRangeZoomable() {
+    @Override
+	public boolean isRangeZoomable() {
         return true;
     }
 
@@ -2098,7 +2115,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      *
      * @return The orientation.
      */
-    public PlotOrientation getOrientation() {
+    @Override
+	public PlotOrientation getOrientation() {
         return PlotOrientation.HORIZONTAL;
     }
 

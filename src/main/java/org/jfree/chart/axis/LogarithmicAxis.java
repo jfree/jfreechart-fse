@@ -275,7 +275,8 @@ public class LogarithmicAxis extends NumberAxis {
      *
      * @param range  the new range.
      */
-    public void setRange(Range range) {
+    @Override
+	public void setRange(Range range) {
         super.setRange(range);      // call parent method
         setupSmallLogFlag();        // setup flag based on bounds values
     }
@@ -503,7 +504,8 @@ public class LogarithmicAxis extends NumberAxis {
     /**
      * Rescales the axis to ensure that all data is visible.
      */
-    public void autoAdjustRange() {
+    @Override
+	public void autoAdjustRange() {
 
         Plot plot = getPlot();
         if (plot == null) {
@@ -622,7 +624,8 @@ public class LogarithmicAxis extends NumberAxis {
      *
      * @return The Java2D coordinate.
      */
-    public double valueToJava2D(double value, Rectangle2D plotArea,
+    @Override
+	public double valueToJava2D(double value, Rectangle2D plotArea,
                                 RectangleEdge edge) {
 
         Range range = getRange();
@@ -664,7 +667,8 @@ public class LogarithmicAxis extends NumberAxis {
      *
      * @return The data value.
      */
-    public double java2DToValue(double java2DValue, Rectangle2D plotArea,
+    @Override
+	public double java2DToValue(double java2DValue, Rectangle2D plotArea,
                                 RectangleEdge edge) {
 
         Range range = getRange();
@@ -698,7 +702,8 @@ public class LogarithmicAxis extends NumberAxis {
      * @param lowerPercent  the new lower bound.
      * @param upperPercent  the new upper bound.
      */
-    public void zoomRange(double lowerPercent, double upperPercent) {
+    @Override
+	public void zoomRange(double lowerPercent, double upperPercent) {
         double startLog = switchedLog10(getRange().getLowerBound());
         double lengthLog = switchedLog10(getRange().getUpperBound()) - startLog;
         Range adjusted;
@@ -729,7 +734,8 @@ public class LogarithmicAxis extends NumberAxis {
      *
      * @return A list of ticks.
      */
-    protected List refreshTicksHorizontal(Graphics2D g2,
+    @Override
+	protected List refreshTicksHorizontal(Graphics2D g2,
                                           Rectangle2D dataArea,
                                           RectangleEdge edge) {
 
@@ -878,7 +884,8 @@ public class LogarithmicAxis extends NumberAxis {
      *
      * @return A list of ticks.
      */
-    protected List refreshTicksVertical(Graphics2D g2,
+    @Override
+	protected List refreshTicksVertical(Graphics2D g2,
                                         Rectangle2D dataArea,
                                         RectangleEdge edge) {
 

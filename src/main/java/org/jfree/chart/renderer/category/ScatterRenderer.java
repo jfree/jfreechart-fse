@@ -367,7 +367,8 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * @return The range (or <code>null</code> if the dataset is
      *         <code>null</code> or empty).
      */
-    public Range findRangeBounds(CategoryDataset dataset) {
+    @Override
+	public Range findRangeBounds(CategoryDataset dataset) {
          return findRangeBounds(dataset, true);
     }
 
@@ -385,7 +386,8 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * @param column  the column index (zero-based).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2, CategoryItemRendererState state,
+    @Override
+	public void drawItem(Graphics2D g2, CategoryItemRendererState state,
             Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
             ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
             int pass) {
@@ -463,7 +465,8 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      *
      * @return The legend item.
      */
-    public LegendItem getLegendItem(int datasetIndex, int series) {
+    @Override
+	public LegendItem getLegendItem(int datasetIndex, int series) {
 
         CategoryPlot cp = getPlot();
         if (cp == null) {
@@ -519,7 +522,8 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * @param obj the object (<code>null</code> permitted).
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -559,7 +563,8 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      *
      * @throws CloneNotSupportedException  should not happen.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         ScatterRenderer clone = (ScatterRenderer) super.clone();
         clone.seriesShapesFilled
                 = (BooleanList) this.seriesShapesFilled.clone();

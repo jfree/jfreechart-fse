@@ -473,7 +473,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The series count.
      */
-    public int getSeriesCount() {
+    @Override
+	public int getSeriesCount() {
         return this.seriesCount;
     }
 
@@ -486,7 +487,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The item count.
      */
-    public int getItemCount(int series) {  // all arrays equal length,
+    @Override
+	public int getItemCount(int series) {  // all arrays equal length,
                                            // so ignore argument:
         return this.historyCount;
     }
@@ -737,7 +739,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      */
     // getXxx() ftns can ignore the "series" argument:
     // Don't synchronize this!! Instead, synchronize the loop that calls it.
-    public Number getX(int series, int item) {
+    @Override
+	public Number getX(int series, int item) {
         RegularTimePeriod tp = this.pointsInTime[translateGet(item)];
         return new Long(getX(tp));
     }
@@ -750,7 +753,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The value.
      */
-    public double getYValue(int series, int item) {
+    @Override
+	public double getYValue(int series, int item) {
         // Don't synchronize this!!
         // Instead, synchronize the loop that calls it.
         ValueSequence values = this.valueHistory[series];
@@ -765,7 +769,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The value.
      */
-    public Number getY(int series, int item) {
+    @Override
+	public Number getY(int series, int item) {
         return new Float(getYValue(series, item));
     }
 
@@ -777,7 +782,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The value.
      */
-    public Number getStartX(int series, int item) {
+    @Override
+	public Number getStartX(int series, int item) {
         RegularTimePeriod tp = this.pointsInTime[translateGet(item)];
         return new Long(tp.getFirstMillisecond(this.workingCalendar));
     }
@@ -790,7 +796,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The value.
      */
-    public Number getEndX(int series, int item) {
+    @Override
+	public Number getEndX(int series, int item) {
         RegularTimePeriod tp = this.pointsInTime[translateGet(item)];
         return new Long(tp.getLastMillisecond(this.workingCalendar));
     }
@@ -803,7 +810,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The value.
      */
-    public Number getStartY(int series, int item) {
+    @Override
+	public Number getStartY(int series, int item) {
         return getY(series, item);
     }
 
@@ -815,7 +823,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The value.
      */
-    public Number getEndY(int series, int item) {
+    @Override
+	public Number getEndY(int series, int item) {
         return getY(series, item);
     }
 
@@ -837,7 +846,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The key.
      */
-    public Comparable getSeriesKey(int series) {
+    @Override
+	public Comparable getSeriesKey(int series) {
         return this.seriesKeys[series];
     }
 
@@ -861,7 +871,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The minimum value.
      */
-    public double getDomainLowerBound(boolean includeInterval) {
+    @Override
+	public double getDomainLowerBound(boolean includeInterval) {
         return this.domainStart.doubleValue();
         // a Long kept updated by advanceTime()
     }
@@ -874,7 +885,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The maximum value.
      */
-    public double getDomainUpperBound(boolean includeInterval) {
+    @Override
+	public double getDomainUpperBound(boolean includeInterval) {
         return this.domainEnd.doubleValue();
         // a Long kept updated by advanceTime()
     }
@@ -887,7 +899,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The range.
      */
-    public Range getDomainBounds(boolean includeInterval) {
+    @Override
+	public Range getDomainBounds(boolean includeInterval) {
         if (this.domainRange == null) {
             findDomainLimits();
         }
@@ -928,7 +941,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The minimum range value.
      */
-    public double getRangeLowerBound(boolean includeInterval) {
+    @Override
+	public double getRangeLowerBound(boolean includeInterval) {
         double result = Double.NaN;
         if (this.minValue != null) {
             result = this.minValue.doubleValue();
@@ -944,7 +958,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The maximum range value.
      */
-    public double getRangeUpperBound(boolean includeInterval) {
+    @Override
+	public double getRangeUpperBound(boolean includeInterval) {
         double result = Double.NaN;
         if (this.maxValue != null) {
             result = this.maxValue.doubleValue();
@@ -960,7 +975,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The range.
      */
-    public Range getRangeBounds(boolean includeInterval) {
+    @Override
+	public Range getRangeBounds(boolean includeInterval) {
         if (this.valueRange == null) {
             double max = getRangeUpperBound(includeInterval);
             this.valueRange = new Range(0.0, max);

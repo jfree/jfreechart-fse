@@ -209,7 +209,8 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      *
      * @return The paint.
      */
-    public Paint getNextPaint() {
+    @Override
+	public Paint getNextPaint() {
         Paint result
             = this.paintSequence[this.paintIndex % this.paintSequence.length];
         this.paintIndex++;
@@ -221,7 +222,8 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      *
      * @return The paint.
      */
-    public Paint getNextOutlinePaint() {
+    @Override
+	public Paint getNextOutlinePaint() {
         Paint result = this.outlinePaintSequence[
                 this.outlinePaintIndex % this.outlinePaintSequence.length];
         this.outlinePaintIndex++;
@@ -235,7 +237,8 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      *
      * @since 1.0.6
      */
-    public Paint getNextFillPaint() {
+    @Override
+	public Paint getNextFillPaint() {
         Paint result = this.fillPaintSequence[this.fillPaintIndex
                 % this.fillPaintSequence.length];
         this.fillPaintIndex++;
@@ -247,7 +250,8 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      *
      * @return The stroke.
      */
-    public Stroke getNextStroke() {
+    @Override
+	public Stroke getNextStroke() {
         Stroke result = this.strokeSequence[
                 this.strokeIndex % this.strokeSequence.length];
         this.strokeIndex++;
@@ -259,7 +263,8 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      *
      * @return The stroke.
      */
-    public Stroke getNextOutlineStroke() {
+    @Override
+	public Stroke getNextOutlineStroke() {
         Stroke result = this.outlineStrokeSequence[
                 this.outlineStrokeIndex % this.outlineStrokeSequence.length];
         this.outlineStrokeIndex++;
@@ -271,7 +276,8 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      *
      * @return The shape.
      */
-    public Shape getNextShape() {
+    @Override
+	public Shape getNextShape() {
         Shape result = this.shapeSequence[
                 this.shapeIndex % this.shapeSequence.length];
         this.shapeIndex++;
@@ -343,7 +349,8 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
 
         if (obj == this) {
             return true;
@@ -540,7 +547,8 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      * @throws CloneNotSupportedException if a component of the supplier does
      *                                    not support cloning.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         DefaultDrawingSupplier clone = (DefaultDrawingSupplier) super.clone();
         return clone;
     }

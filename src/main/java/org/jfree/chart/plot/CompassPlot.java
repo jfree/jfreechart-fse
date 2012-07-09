@@ -571,7 +571,8 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
      * @param parentState  the state from the parent plot, if there is one.
      * @param info  collects info about the drawing.
      */
-    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+    @Override
+	public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
                      PlotState parentState,
                      PlotRenderingInfo info) {
 
@@ -706,7 +707,8 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
      *
      * @return A string describing the plot.
      */
-    public String getPlotType() {
+    @Override
+	public String getPlotType() {
         return localizationResources.getString("Compass_Plot");
     }
 
@@ -716,7 +718,8 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
      *
      * @return The legend items.
      */
-    public LegendItemCollection getLegendItems() {
+    @Override
+	public LegendItemCollection getLegendItems() {
         return null;
     }
 
@@ -725,7 +728,8 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
      *
      * @param percent  the zoom amount.
      */
-    public void zoom(double percent) {
+    @Override
+	public void zoom(double percent) {
         // no zooming possible
     }
 
@@ -752,7 +756,8 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -804,7 +809,8 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
      * @throws CloneNotSupportedException  this class will not throw this
      *         exception, but subclasses (if any) might.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
 
         CompassPlot clone = (CompassPlot) super.clone();
         if (this.circle1 != null) {

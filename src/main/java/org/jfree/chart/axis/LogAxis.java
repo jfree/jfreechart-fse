@@ -298,7 +298,8 @@ public class LogAxis extends ValueAxis {
      *
      * @return A value along the axis scale.
      */
-    public double java2DToValue(double java2DValue, Rectangle2D area,
+    @Override
+	public double java2DToValue(double java2DValue, Rectangle2D area,
             RectangleEdge edge) {
 
         Range range = getRange();
@@ -338,7 +339,8 @@ public class LogAxis extends ValueAxis {
      *
      * @return The Java2D coordinate corresponding to <code>value</code>.
      */
-    public double valueToJava2D(double value, Rectangle2D area,
+    @Override
+	public double valueToJava2D(double value, Rectangle2D area,
             RectangleEdge edge) {
 
         Range range = getRange();
@@ -370,7 +372,8 @@ public class LogAxis extends ValueAxis {
      * Configures the axis.  This method is typically called when an axis
      * is assigned to a new plot.
      */
-    public void configure() {
+    @Override
+	public void configure() {
         if (isAutoRange()) {
             autoAdjustRange();
         }
@@ -380,7 +383,8 @@ public class LogAxis extends ValueAxis {
      * Adjusts the axis range to match the data range that the axis is
      * required to display.
      */
-    protected void autoAdjustRange() {
+    @Override
+	protected void autoAdjustRange() {
         Plot plot = getPlot();
         if (plot == null) {
             return;  // no plot, no data
@@ -441,7 +445,8 @@ public class LogAxis extends ValueAxis {
      *
      * @return The axis state (never <code>null</code>).
      */
-    public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
+    @Override
+	public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
             Rectangle2D dataArea, RectangleEdge edge,
             PlotRenderingInfo plotState) {
 
@@ -473,7 +478,8 @@ public class LogAxis extends ValueAxis {
      * @return A list of ticks.
      *
      */
-    public List refreshTicks(Graphics2D g2, AxisState state,
+    @Override
+	public List refreshTicks(Graphics2D g2, AxisState state,
             Rectangle2D dataArea, RectangleEdge edge) {
 
         List result = new java.util.ArrayList();
@@ -798,7 +804,8 @@ public class LogAxis extends ValueAxis {
      * @param lowerPercent  the new lower bound.
      * @param upperPercent  the new upper bound.
      */
-    public void zoomRange(double lowerPercent, double upperPercent) {
+    @Override
+	public void zoomRange(double lowerPercent, double upperPercent) {
         Range range = getRange();
         double start = range.getLowerBound();
         double end = range.getUpperBound();
@@ -826,7 +833,8 @@ public class LogAxis extends ValueAxis {
      *
      * @since 1.0.13
      */
-    public void pan(double percent) {
+    @Override
+	public void pan(double percent) {
         Range range = getRange();
         double lower = range.getLowerBound();
         double upper = range.getUpperBound();
@@ -865,7 +873,8 @@ public class LogAxis extends ValueAxis {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -887,7 +896,8 @@ public class LogAxis extends ValueAxis {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 193;
         long temp = Double.doubleToLongBits(this.base);
         result = 37 * result + (int) (temp ^ (temp >>> 32));

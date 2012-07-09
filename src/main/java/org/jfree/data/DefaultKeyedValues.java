@@ -106,7 +106,8 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      *
      * @return The item count.
      */
-    public int getItemCount() {
+    @Override
+	public int getItemCount() {
         return this.indexMap.size();
     }
 
@@ -119,7 +120,8 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      *
      * @throws IndexOutOfBoundsException if <code>item</code> is out of bounds.
      */
-    public Number getValue(int item) {
+    @Override
+	public Number getValue(int item) {
         return (Number) this.values.get(item);
     }
 
@@ -132,7 +134,8 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      *
      * @throws IndexOutOfBoundsException if <code>item</code> is out of bounds.
      */
-    public Comparable getKey(int index) {
+    @Override
+	public Comparable getKey(int index) {
         return (Comparable) this.keys.get(index);
     }
 
@@ -146,7 +149,8 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @throws IllegalArgumentException if <code>key</code> is
      *     <code>null</code>.
      */
-    public int getIndex(Comparable key) {
+    @Override
+	public int getIndex(Comparable key) {
         if (key == null) {
             throw new IllegalArgumentException("Null 'key' argument.");
         }
@@ -162,7 +166,8 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      *
      * @return The keys (never <code>null</code>).
      */
-    public List getKeys() {
+    @Override
+	public List getKeys() {
         return (List) this.keys.clone();
     }
 
@@ -177,7 +182,8 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      *
      * @see #getValue(int)
      */
-    public Number getValue(Comparable key) {
+    @Override
+	public Number getValue(Comparable key) {
         int index = getIndex(key);
         if (index < 0) {
             throw new UnknownKeyException("Key not found: " + key);
@@ -405,7 +411,8 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -447,7 +454,8 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return (this.keys != null ? this.keys.hashCode() : 0);
     }
 
@@ -459,7 +467,8 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @throws CloneNotSupportedException  this class will not throw this
      *         exception, but subclasses might.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         DefaultKeyedValues clone = (DefaultKeyedValues) super.clone();
         clone.keys = (ArrayList) this.keys.clone();
         clone.values = (ArrayList) this.values.clone();

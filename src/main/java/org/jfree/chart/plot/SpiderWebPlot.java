@@ -330,7 +330,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      *
      * @return The plot type.
      */
-    public String getPlotType() {
+    @Override
+	public String getPlotType() {
         // return localizationResources.getString("Radar_Plot");
         return ("Spider Web Plot");
     }
@@ -1077,7 +1078,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      *
      * @return The legend items (never <code>null</code>).
      */
-    public LegendItemCollection getLegendItems() {
+    @Override
+	public LegendItemCollection getLegendItems() {
         LegendItemCollection result = new LegendItemCollection();
         if (getDataset() == null) {
             return result;
@@ -1144,7 +1146,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * @param parentState  the state from the parent plot, if there is one.
      * @param info  collects info about the drawing.
      */
-    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+    @Override
+	public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
             PlotState parentState, PlotRenderingInfo info) {
 
         // adjust for insets...
@@ -1499,7 +1502,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -1603,7 +1607,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * @throws CloneNotSupportedException if the plot cannot be cloned for
      *         any reason.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         SpiderWebPlot clone = (SpiderWebPlot) super.clone();
         clone.legendItemShape = ShapeUtilities.clone(this.legendItemShape);
         clone.seriesPaintList = (PaintList) this.seriesPaintList.clone();

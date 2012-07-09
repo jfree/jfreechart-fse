@@ -170,7 +170,8 @@ public class SlidingCategoryDataset extends AbstractDataset
      *
      * @return The column index, or -1 if the key is not recognised.
      */
-    public int getColumnIndex(Comparable key) {
+    @Override
+	public int getColumnIndex(Comparable key) {
         int index = this.underlying.getColumnIndex(key);
         if (index >= this.firstCategoryIndex && index <= lastCategoryIndex()) {
             return index - this.firstCategoryIndex;
@@ -187,7 +188,8 @@ public class SlidingCategoryDataset extends AbstractDataset
      *
      * @throws IndexOutOfBoundsException if <code>row</code> is out of bounds.
      */
-    public Comparable getColumnKey(int column) {
+    @Override
+	public Comparable getColumnKey(int column) {
         return this.underlying.getColumnKey(column + this.firstCategoryIndex);
     }
 
@@ -198,7 +200,8 @@ public class SlidingCategoryDataset extends AbstractDataset
      *
      * @see #getColumnKey(int)
      */
-    public List getColumnKeys() {
+    @Override
+	public List getColumnKeys() {
         List result = new java.util.ArrayList();
         int last = lastCategoryIndex();
         for (int i = this.firstCategoryIndex; i <= last; i++) {
@@ -214,7 +217,8 @@ public class SlidingCategoryDataset extends AbstractDataset
      *
      * @return The row index, or <code>-1</code> if the key is unrecognised.
      */
-    public int getRowIndex(Comparable key) {
+    @Override
+	public int getRowIndex(Comparable key) {
         return this.underlying.getRowIndex(key);
     }
 
@@ -227,7 +231,8 @@ public class SlidingCategoryDataset extends AbstractDataset
      *
      * @throws IndexOutOfBoundsException if <code>row</code> is out of bounds.
      */
-    public Comparable getRowKey(int row) {
+    @Override
+	public Comparable getRowKey(int row) {
         return this.underlying.getRowKey(row);
     }
 
@@ -236,7 +241,8 @@ public class SlidingCategoryDataset extends AbstractDataset
      *
      * @return The keys.
      */
-    public List getRowKeys() {
+    @Override
+	public List getRowKeys() {
         return this.underlying.getRowKeys();
     }
 
@@ -250,7 +256,8 @@ public class SlidingCategoryDataset extends AbstractDataset
      *
      * @throws UnknownKeyException if either key is not defined in the dataset.
      */
-    public Number getValue(Comparable rowKey, Comparable columnKey) {
+    @Override
+	public Number getValue(Comparable rowKey, Comparable columnKey) {
         int r = getRowIndex(rowKey);
         int c = getColumnIndex(columnKey);
         if (c != -1) {
@@ -266,7 +273,8 @@ public class SlidingCategoryDataset extends AbstractDataset
      *
      * @return The column count.
      */
-    public int getColumnCount() {
+    @Override
+	public int getColumnCount() {
         int last = lastCategoryIndex();
         if (last == -1) {
             return 0;
@@ -281,7 +289,8 @@ public class SlidingCategoryDataset extends AbstractDataset
      *
      * @return The row count.
      */
-    public int getRowCount() {
+    @Override
+	public int getRowCount() {
         return this.underlying.getRowCount();
     }
 
@@ -293,7 +302,8 @@ public class SlidingCategoryDataset extends AbstractDataset
      *
      * @return The value (possibly <code>null</code>).
      */
-    public Number getValue(int row, int column) {
+    @Override
+	public Number getValue(int row, int column) {
         return this.underlying.getValue(row, column + this.firstCategoryIndex);
     }
 
@@ -305,7 +315,8 @@ public class SlidingCategoryDataset extends AbstractDataset
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -339,7 +350,8 @@ public class SlidingCategoryDataset extends AbstractDataset
      * @throws CloneNotSupportedException if the dataset cannot be cloned for
      *         any reason.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         SlidingCategoryDataset clone = (SlidingCategoryDataset) super.clone();
         if (this.underlying instanceof PublicCloneable) {
             PublicCloneable pc = (PublicCloneable) this.underlying;
