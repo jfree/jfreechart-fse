@@ -457,7 +457,8 @@ public class RelativeDateFormat extends DateFormat {
      *
      * @return The formatted date.
      */
-    public StringBuffer format(Date date, StringBuffer toAppendTo,
+    @Override
+	public StringBuffer format(Date date, StringBuffer toAppendTo,
                                FieldPosition fieldPosition) {
         long currentMillis = date.getTime();
         long elapsed = currentMillis - this.baseMillis;
@@ -501,7 +502,8 @@ public class RelativeDateFormat extends DateFormat {
      *
      * @return <code>null</code>, as this method has not been implemented.
      */
-    public Date parse(String source, ParsePosition pos) {
+    @Override
+	public Date parse(String source, ParsePosition pos) {
         return null;
     }
 
@@ -512,7 +514,8 @@ public class RelativeDateFormat extends DateFormat {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -567,7 +570,8 @@ public class RelativeDateFormat extends DateFormat {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 193;
         result = 37 * result
                 + (int) (this.baseMillis ^ (this.baseMillis >>> 32));
@@ -585,7 +589,8 @@ public class RelativeDateFormat extends DateFormat {
      *
      * @return A clone.
      */
-    public Object clone() {
+    @Override
+	public Object clone() {
         RelativeDateFormat clone = (RelativeDateFormat) super.clone();
         clone.dayFormatter = (NumberFormat) this.dayFormatter.clone();
         clone.secondFormatter = (NumberFormat) this.secondFormatter.clone();

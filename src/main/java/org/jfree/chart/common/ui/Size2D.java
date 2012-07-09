@@ -127,7 +127,8 @@ public class Size2D implements Cloneable, PublicCloneable, Serializable {
      * 
      * @return A string.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return "Size2D[width=" + this.width + ", height=" + this.height + "]";   
     }
 
@@ -138,7 +139,8 @@ public class Size2D implements Cloneable, PublicCloneable, Serializable {
      * 
      * @return A boolean.
      */
-    public boolean equals(final Object obj) {
+    @Override
+	public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -162,7 +164,8 @@ public class Size2D implements Cloneable, PublicCloneable, Serializable {
      * 
      * @throws CloneNotSupportedException if the object cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
     

@@ -203,7 +203,8 @@ public class Outlier implements Comparable {
      *
      * @return A <code>String</code> representing the outlier.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return "{" + getX() + "," + getY() + "}";
     }
 

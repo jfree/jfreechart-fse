@@ -116,7 +116,8 @@ public class StandardContourToolTipGenerator implements ContourToolTipGenerator,
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    public boolean 
+ {
 
         if (obj == this) {
             return true;

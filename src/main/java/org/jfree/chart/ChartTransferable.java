@@ -172,7 +172,8 @@ public class ChartTransferable implements Transferable {
      * 
      * @return The data flavors supported.
      */
-    public DataFlavor[] getTransferDataFlavors() {
+    @Override
+	public DataFlavor[] getTransferDataFlavors() {
         return new DataFlavor[] {this.imageFlavor};
     }
 
@@ -183,7 +184,8 @@ public class ChartTransferable implements Transferable {
      *
      * @return A boolean.
      */
-    public boolean isDataFlavorSupported(DataFlavor flavor) {
+    @Override
+	public boolean isDataFlavorSupported(DataFlavor flavor) {
         return this.imageFlavor.equals(flavor);
     }
 
@@ -197,7 +199,8 @@ public class ChartTransferable implements Transferable {
      * @throws java.awt.datatransfer.UnsupportedFlavorException
      * @throws java.io.IOException
      */
-    public Object getTransferData(DataFlavor flavor)
+    @Override
+	public Object getTransferData(DataFlavor flavor)
             throws UnsupportedFlavorException, IOException {
         
         if (this.imageFlavor.equals(flavor)) {

@@ -88,7 +88,8 @@ public class StrokeList extends AbstractObjectList {
      * 
      * @throws CloneNotSupportedException if an item in the list cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
     
@@ -99,7 +100,8 @@ public class StrokeList extends AbstractObjectList {
      *
      * @return A boolean.
      */
-    public boolean equals(final Object o) {
+    @Override
+	public boolean equals(final Object o) {
 
         if (o == null) {
             return false;
@@ -122,7 +124,8 @@ public class StrokeList extends AbstractObjectList {
      *
      * @return the hashcode
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return super.hashCode();
     }
 

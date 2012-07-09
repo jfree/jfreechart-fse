@@ -207,7 +207,8 @@ class DefaultTitleEditor extends JPanel implements ActionListener {
      *
      * @param event  the event
      */
-    public void actionPerformed(ActionEvent event) {
+    @Override
+	public void actionPerformed(ActionEvent event) {
 
         String command = event.getActionCommand();
 

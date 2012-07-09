@@ -343,7 +343,8 @@ public class TextBox implements Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(final Object obj) {
+    @Override
+	public boolean equals(final Object obj) {
         if (obj == this) {
             return true;
         }
@@ -385,7 +386,8 @@ public class TextBox implements Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result;
         long temp;
         result = (this.outlinePaint != null ? this.outlinePaint.hashCode() : 0);

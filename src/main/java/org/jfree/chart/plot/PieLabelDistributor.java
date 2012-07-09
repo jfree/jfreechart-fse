@@ -69,7 +69,8 @@ public class PieLabelDistributor extends AbstractPieLabelDistributor {
      * @param minY  the minimum y-coordinate in Java2D-space.
      * @param height  the available height (in Java2D units).
      */
-    public void distributeLabels(double minY, double height) {
+    @Override
+	public void distributeLabels(double minY, double height) {
         sort();  // sorts the label records into ascending order by baseY
 //        if (isOverlap()) {
 //            adjustInwards();
@@ -211,7 +212,8 @@ public class PieLabelDistributor extends AbstractPieLabelDistributor {
      *
      * @return A string.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuffer result = new StringBuffer();
         for (int i = 0; i < this.labels.size(); i++) {
             result.append(getPieLabelRecord(i).toString()).append("\n");

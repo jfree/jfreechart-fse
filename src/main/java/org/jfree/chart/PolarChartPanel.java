@@ -124,7 +124,8 @@ public class PolarChartPanel extends ChartPanel {
      *
      * @param chart  The chart.
      */
-    public void setChart(JFreeChart chart) {
+    @Override
+	public void setChart(JFreeChart chart) {
         checkChart(chart);
         super.setChart(chart);
     }
@@ -198,7 +199,8 @@ public class PolarChartPanel extends ChartPanel {
      *
      * @param event  the event.
      */
-    public void actionPerformed(ActionEvent event) {
+    @Override
+	public void actionPerformed(ActionEvent event) {
        String command = event.getActionCommand();
 
        if (command.equals(POLAR_ZOOM_IN_ACTION_COMMAND)) {

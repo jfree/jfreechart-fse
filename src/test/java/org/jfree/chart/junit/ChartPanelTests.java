@@ -77,7 +77,8 @@ public class ChartPanelTests extends TestCase
      *
      * @param event  the event.
      */
-    public void chartChanged(ChartChangeEvent event) {
+    @Override
+	public void chartChanged(ChartChangeEvent event) {
         this.chartChangeEvents.add(event);
     }
 
@@ -159,7 +160,8 @@ public class ChartPanelTests extends TestCase
      *
      * @param event  the event.
      */
-    public void chartMouseClicked(ChartMouseEvent event) {
+    @Override
+	public void chartMouseClicked(ChartMouseEvent event) {
         // ignore
     }
 
@@ -168,7 +170,8 @@ public class ChartPanelTests extends TestCase
      *
      * @param event  the event.
      */
-    public void chartMouseMoved(ChartMouseEvent event) {
+    @Override
+	public void chartMouseMoved(ChartMouseEvent event) {
         // ignore
     }
 

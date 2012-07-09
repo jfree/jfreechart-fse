@@ -1114,7 +1114,8 @@ public class JFreeChart implements Drawable,
      * @param g2  the graphics device.
      * @param area  the area within which the chart should be drawn.
      */
-    public void draw(Graphics2D g2, Rectangle2D area) {
+    @Override
+	public void draw(Graphics2D g2, Rectangle2D area) {
         draw(g2, area, null, null);
     }
 
@@ -1568,7 +1569,8 @@ public class JFreeChart implements Drawable,
      *
      * @param event  information about the chart title change.
      */
-    public void titleChanged(TitleChangeEvent event) {
+    @Override
+	public void titleChanged(TitleChangeEvent event) {
         event.setChart(this);
         notifyListeners(event);
     }
@@ -1579,7 +1581,8 @@ public class JFreeChart implements Drawable,
      *
      * @param event  information about the plot change.
      */
-    public void plotChanged(PlotChangeEvent event) {
+    @Override
+	public void plotChanged(PlotChangeEvent event) {
         event.setChart(this);
         notifyListeners(event);
     }
@@ -1591,7 +1594,8 @@ public class JFreeChart implements Drawable,
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -1706,7 +1710,8 @@ public class JFreeChart implements Drawable,
      *
      * @throws CloneNotSupportedException if the chart is not cloneable.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         JFreeChart chart = (JFreeChart) super.clone();
 
         chart.renderingHints = (RenderingHints) this.renderingHints.clone();
@@ -1875,7 +1880,8 @@ class JFreeChartInfo extends ProjectInfo {
      *
      * @return The JFreeChart logo.
      */
-    public Image getLogo() {
+    @Override
+	public Image getLogo() {
 
         Image logo = super.getLogo();
         if (logo == null) {

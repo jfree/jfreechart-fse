@@ -127,7 +127,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      *
      * @return The series count.
      */
-    public int getSeriesCount() {
+    @Override
+	public int getSeriesCount() {
         return this.data.size();
     }
 
@@ -159,7 +160,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      * @throws IllegalArgumentException if <code>series</code> is not in the
      *     specified range.
      */
-    public Comparable getSeriesKey(int series) {
+    @Override
+	public Comparable getSeriesKey(int series) {
         // defer argument checking
         return getSeries(series).getKey();
     }
@@ -174,7 +176,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      * @throws IllegalArgumentException if <code>series</code> is not in the
      *     range <code>0</code> to <code>getSeriesCount() - 1</code>.
      */
-    public int getItemCount(int series) {
+    @Override
+	public int getItemCount(int series) {
         // defer argument checking
         return getSeries(series).getItemCount();
     }
@@ -208,7 +211,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      *
      * @return The x-value.
      */
-    public double getXValue(int series, int item) {
+    @Override
+	public double getXValue(int series, int item) {
         OHLCSeries s = (OHLCSeries) this.data.get(series);
         OHLCItem di = (OHLCItem) s.getDataItem(item);
         RegularTimePeriod period = di.getPeriod();
@@ -223,7 +227,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      *
      * @return The x-value.
      */
-    public Number getX(int series, int item) {
+    @Override
+	public Number getX(int series, int item) {
         return new Double(getXValue(series, item));
     }
 
@@ -235,7 +240,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      *
      * @return The y-value.
      */
-    public Number getY(int series, int item) {
+    @Override
+	public Number getY(int series, int item) {
         OHLCSeries s = (OHLCSeries) this.data.get(series);
         OHLCItem di = (OHLCItem) s.getDataItem(item);
         return new Double(di.getYValue());
@@ -249,7 +255,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      *
      * @return The open-value.
      */
-    public double getOpenValue(int series, int item) {
+    @Override
+	public double getOpenValue(int series, int item) {
         OHLCSeries s = (OHLCSeries) this.data.get(series);
         OHLCItem di = (OHLCItem) s.getDataItem(item);
         return di.getOpenValue();
@@ -263,7 +270,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      *
      * @return The open-value.
      */
-    public Number getOpen(int series, int item) {
+    @Override
+	public Number getOpen(int series, int item) {
         return new Double(getOpenValue(series, item));
     }
 
@@ -275,7 +283,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      *
      * @return The close-value.
      */
-    public double getCloseValue(int series, int item) {
+    @Override
+	public double getCloseValue(int series, int item) {
         OHLCSeries s = (OHLCSeries) this.data.get(series);
         OHLCItem di = (OHLCItem) s.getDataItem(item);
         return di.getCloseValue();
@@ -289,7 +298,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      *
      * @return The close-value.
      */
-    public Number getClose(int series, int item) {
+    @Override
+	public Number getClose(int series, int item) {
         return new Double(getCloseValue(series, item));
     }
 
@@ -301,7 +311,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      *
      * @return The high-value.
      */
-    public double getHighValue(int series, int item) {
+    @Override
+	public double getHighValue(int series, int item) {
         OHLCSeries s = (OHLCSeries) this.data.get(series);
         OHLCItem di = (OHLCItem) s.getDataItem(item);
         return di.getHighValue();
@@ -315,7 +326,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      *
      * @return The high-value.
      */
-    public Number getHigh(int series, int item) {
+    @Override
+	public Number getHigh(int series, int item) {
         return new Double(getHighValue(series, item));
     }
 
@@ -327,7 +339,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      *
      * @return The low-value.
      */
-    public double getLowValue(int series, int item) {
+    @Override
+	public double getLowValue(int series, int item) {
         OHLCSeries s = (OHLCSeries) this.data.get(series);
         OHLCItem di = (OHLCItem) s.getDataItem(item);
         return di.getLowValue();
@@ -341,7 +354,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      *
      * @return The low-value.
      */
-    public Number getLow(int series, int item) {
+    @Override
+	public Number getLow(int series, int item) {
         return new Double(getLowValue(series, item));
     }
 
@@ -354,7 +368,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      *
      * @return <code>null</code>.
      */
-    public Number getVolume(int series, int item) {
+    @Override
+	public Number getVolume(int series, int item) {
         return null;
     }
 
@@ -367,7 +382,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      *
      * @return <code>Double.NaN</code>.
      */
-    public double getVolumeValue(int series, int item) {
+    @Override
+	public double getVolumeValue(int series, int item) {
         return Double.NaN;
     }
 
@@ -441,7 +457,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -460,7 +477,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 137;
         result = HashUtilities.hashCode(result, this.xPosition);
         for (int i = 0; i < this.data.size(); i++) {
@@ -476,7 +494,8 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      *
      * @throws CloneNotSupportedException if there is a problem.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         OHLCSeriesCollection clone
                 = (OHLCSeriesCollection) super.clone();
         clone.data = (List) ObjectUtilities.deepClone(this.data);

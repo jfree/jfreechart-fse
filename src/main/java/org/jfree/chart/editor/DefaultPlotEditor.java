@@ -420,7 +420,8 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
      * Handles user actions generated within the panel.
      * @param event     the event
      */
-    public void actionPerformed(ActionEvent event) {
+    @Override
+	public void actionPerformed(ActionEvent event) {
         String command = event.getActionCommand();
         if (command.equals("BackgroundPaint")) {
             attemptBackgroundPaintSelection();

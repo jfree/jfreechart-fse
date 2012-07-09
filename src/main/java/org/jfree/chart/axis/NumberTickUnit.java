@@ -112,7 +112,8 @@ public class NumberTickUnit extends TickUnit implements Serializable {
      *
      * @return The formatted string.
      */
-    public String valueToString(double value) {
+    @Override
+	public String valueToString(double value) {
         return this.formatter.format(value);
     }
 
@@ -123,7 +124,8 @@ public class NumberTickUnit extends TickUnit implements Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -145,7 +147,8 @@ public class NumberTickUnit extends TickUnit implements Serializable {
      *
      * @return A string.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return "[size=" + this.valueToString(this.getSize()) + "]";
     }
 
@@ -154,7 +157,8 @@ public class NumberTickUnit extends TickUnit implements Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = super.hashCode();
         result = 29 * result + (this.formatter != null
                 ? this.formatter.hashCode() : 0);

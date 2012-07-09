@@ -405,7 +405,8 @@ public strictfp class Range implements Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (!(obj instanceof Range)) {
             return false;
         }
@@ -424,7 +425,8 @@ public strictfp class Range implements Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result;
         long temp;
         temp = Double.doubleToLongBits(this.lower);
@@ -440,7 +442,8 @@ public strictfp class Range implements Serializable {
      * @return A String "Range[lower,upper]" where lower=lower range and
      *         upper=upper range.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return ("Range[" + this.lower + "," + this.upper + "]");
     }
 

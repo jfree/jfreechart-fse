@@ -99,7 +99,8 @@ public class PaletteSample extends JComponent implements ListCellRenderer {
      *
      * @return The renderer.
      */
-    public Component getListCellRendererComponent(JList list, Object value,
+    @Override
+	public Component getListCellRendererComponent(JList list, Object value,
                                                   int index,
                                                   boolean isSelected,
                                                   boolean cellHasFocus) {
@@ -124,7 +125,8 @@ public class PaletteSample extends JComponent implements ListCellRenderer {
      *
      * @return The preferred size.
      */
-    public Dimension getPreferredSize() {
+    @Override
+	public Dimension getPreferredSize() {
         return this.preferredSize;
     }
 
@@ -133,7 +135,8 @@ public class PaletteSample extends JComponent implements ListCellRenderer {
      *
      * @param g  the graphics device.
      */
-    public void paintComponent(Graphics g) {
+    @Override
+	public void paintComponent(Graphics g) {
 
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(

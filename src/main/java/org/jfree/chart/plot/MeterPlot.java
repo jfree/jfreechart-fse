@@ -776,7 +776,8 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      *
      * @return A collection of legend items.
      */
-    public LegendItemCollection getLegendItems() {
+    @Override
+	public LegendItemCollection getLegendItems() {
         LegendItemCollection result = new LegendItemCollection();
         Iterator iterator = this.intervals.iterator();
         while (iterator.hasNext()) {
@@ -804,7 +805,8 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      * @param parentState  the state from the parent plot, if there is one.
      * @param info  collects info about the drawing.
      */
-    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+    @Override
+	public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
                      PlotState parentState,
                      PlotRenderingInfo info) {
 
@@ -1184,7 +1186,8 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      *
      * @return A string describing the type of plot.
      */
-    public String getPlotType() {
+    @Override
+	public String getPlotType() {
         return localizationResources.getString("Meter_Plot");
     }
 
@@ -1195,7 +1198,8 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      *
      * @param percent   The zoom percentage.
      */
-    public void zoom(double percent) {
+    @Override
+	public void zoom(double percent) {
         // intentionally blank
     }
 
@@ -1207,7 +1211,8 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -1324,7 +1329,8 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      * @throws CloneNotSupportedException if some component of the plot cannot
      *         be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         MeterPlot clone = (MeterPlot) super.clone();
         clone.tickLabelFormat = (NumberFormat) this.tickLabelFormat.clone();
         // the following relies on the fact that the intervals are immutable

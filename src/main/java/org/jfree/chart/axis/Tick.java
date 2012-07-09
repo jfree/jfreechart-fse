@@ -140,7 +140,8 @@ public abstract class Tick implements Serializable, Cloneable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -170,7 +171,8 @@ public abstract class Tick implements Serializable, Cloneable {
      *
      * @throws CloneNotSupportedException if there is a problem cloning.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         Tick clone = (Tick) super.clone();
         return clone;
     }
@@ -180,7 +182,8 @@ public abstract class Tick implements Serializable, Cloneable {
      *
      * @return A string.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return this.text;
     }
 }

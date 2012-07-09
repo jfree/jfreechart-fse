@@ -200,7 +200,8 @@ public class StackedBarRenderer extends BarRenderer
      *
      * @return The number of passes required by the renderer.
      */
-    public int getPassCount() {
+    @Override
+	public int getPassCount() {
         return 3;
     }
 
@@ -212,7 +213,8 @@ public class StackedBarRenderer extends BarRenderer
      *
      * @return The range (or <code>null</code> if the dataset is empty).
      */
-    public Range findRangeBounds(CategoryDataset dataset) {
+    @Override
+	public Range findRangeBounds(CategoryDataset dataset) {
         if (dataset == null) {
             return null;
         }
@@ -232,7 +234,8 @@ public class StackedBarRenderer extends BarRenderer
      * @param rendererIndex  the renderer index.
      * @param state  the renderer state.
      */
-    protected void calculateBarWidth(CategoryPlot plot,
+    @Override
+	protected void calculateBarWidth(CategoryPlot plot,
                                      Rectangle2D dataArea,
                                      int rendererIndex,
                                      CategoryItemRendererState state) {
@@ -283,7 +286,8 @@ public class StackedBarRenderer extends BarRenderer
      * @param column  the column index (zero-based).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2,
+    @Override
+	public void drawItem(Graphics2D g2,
                          CategoryItemRendererState state,
                          Rectangle2D dataArea,
                          CategoryPlot plot,
@@ -418,7 +422,8 @@ public class StackedBarRenderer extends BarRenderer
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

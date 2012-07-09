@@ -84,7 +84,8 @@ public class StrokeChooserPanel extends JPanel {
         add(this.selector);
         // Changes due to focus problems!! DZ
         this.selector.addActionListener(new ActionListener() {
-            public void actionPerformed(final ActionEvent evt) {
+            @Override
+			public void actionPerformed(final ActionEvent evt) {
                 getSelector().transferFocus();
             }
         });

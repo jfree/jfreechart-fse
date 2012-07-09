@@ -410,7 +410,8 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * Configures the axis to work with the specified plot.  If the axis has
      * auto-scaling, then sets the maximum and minimum values.
      */
-    public void configure() {
+    @Override
+	public void configure() {
         if (isAutoRange()) {
             autoAdjustRange();
         }
@@ -419,7 +420,8 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
     /**
      * Rescales the axis to ensure that all data is visible.
      */
-    protected void autoAdjustRange() {
+    @Override
+	protected void autoAdjustRange() {
 
         Plot plot = getPlot();
         if (plot == null) {
@@ -521,7 +523,8 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      *
      * @see #java2DToValue(double, Rectangle2D, RectangleEdge)
      */
-    public double valueToJava2D(double value, Rectangle2D area,
+    @Override
+	public double valueToJava2D(double value, Rectangle2D area,
                                 RectangleEdge edge) {
 
         Range range = getRange();
@@ -561,7 +564,8 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      *
      * @see #valueToJava2D(double, Rectangle2D, RectangleEdge)
      */
-    public double java2DToValue(double java2DValue, Rectangle2D area,
+    @Override
+	public double java2DToValue(double java2DValue, Rectangle2D area,
                                 RectangleEdge edge) {
 
         Range range = getRange();
@@ -649,7 +653,8 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      *
      * @return The axis state (never <code>null</code>).
      */
-    public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
+    @Override
+	public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
             Rectangle2D dataArea, RectangleEdge edge,
             PlotRenderingInfo plotState) {
 
@@ -1136,7 +1141,8 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * @return A list of ticks.
      *
      */
-    public List refreshTicks(Graphics2D g2,
+    @Override
+	public List refreshTicks(Graphics2D g2,
                              AxisState state,
                              Rectangle2D dataArea,
                              RectangleEdge edge) {
@@ -1357,7 +1363,8 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * @throws CloneNotSupportedException if some component of the axis does
      *         not support cloning.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         NumberAxis clone = (NumberAxis) super.clone();
         if (this.numberFormatOverride != null) {
             clone.numberFormatOverride

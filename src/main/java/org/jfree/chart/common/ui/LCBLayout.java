@@ -97,7 +97,8 @@ public class LCBLayout implements LayoutManager, Serializable {
      *
      * @return the preferred size using this layout manager.
     */
-    public Dimension preferredLayoutSize(final Container parent) {
+    @Override
+	public Dimension preferredLayoutSize(final Container parent) {
 
         synchronized (parent.getTreeLock()) {
             final Insets insets = parent.getInsets();
@@ -138,7 +139,8 @@ public class LCBLayout implements LayoutManager, Serializable {
      *
      * @return the minimum size using this layout manager.
      */
-    public Dimension minimumLayoutSize(final Container parent) {
+    @Override
+	public Dimension minimumLayoutSize(final Container parent) {
 
         synchronized (parent.getTreeLock()) {
             final Insets insets = parent.getInsets();
@@ -177,7 +179,8 @@ public class LCBLayout implements LayoutManager, Serializable {
      *
      * @param parent  the parent.
      */
-    public void layoutContainer(final Container parent) {
+    @Override
+	public void layoutContainer(final Container parent) {
 
         synchronized (parent.getTreeLock()) {
             final Insets insets = parent.getInsets();
@@ -251,7 +254,8 @@ public class LCBLayout implements LayoutManager, Serializable {
      *
      * @param comp  the component.
      */
-    public void removeLayoutComponent(final Component comp) {
+    @Override
+	public void removeLayoutComponent(final Component comp) {
         // not used
     }
 
@@ -261,7 +265,8 @@ public class LCBLayout implements LayoutManager, Serializable {
      * @param name  the component name.
      * @param comp  the component.
      */
-    public void addLayoutComponent(final String name, final Component comp) {
+    @Override
+	public void addLayoutComponent(final String name, final Component comp) {
         // not used
     }
 

@@ -2372,7 +2372,8 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @param info  collects info about the drawing
      *              (<code>null</code> permitted).
      */
-    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+    @Override
+	public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
                      PlotState parentState, PlotRenderingInfo info) {
 
         // adjust for insets...
@@ -3016,7 +3017,8 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      *
      * @return The plot type.
      */
-    public String getPlotType() {
+    @Override
+	public String getPlotType() {
         return localizationResources.getString("Pie_Plot");
     }
 

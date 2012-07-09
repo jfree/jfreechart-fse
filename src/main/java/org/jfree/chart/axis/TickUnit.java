@@ -139,7 +139,8 @@ public abstract class TickUnit implements Comparable, Serializable {
      *      <code>0</code> if both have the same size and <code>-1</code> this
      *      size is less than the others.
      */
-    public int compareTo(Object object) {
+    @Override
+	public int compareTo(Object object) {
 
         if (object instanceof TickUnit) {
             TickUnit other = (TickUnit) object;
@@ -166,7 +167,8 @@ public abstract class TickUnit implements Comparable, Serializable {
      *
      * @return <code>true</code> or <code>false</code>.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -188,7 +190,8 @@ public abstract class TickUnit implements Comparable, Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         long temp = this.size != +0.0d ? Double.doubleToLongBits(this.size)
                 : 0L;
         return (int) (temp ^ (temp >>> 32));

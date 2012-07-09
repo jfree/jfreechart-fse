@@ -151,7 +151,8 @@ public class ProjectInfo extends BasicProjectInfo {
      *
      * @return a string describing the project.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         final StringBuffer result = new StringBuffer();
         result.append(getName());

@@ -644,7 +644,8 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
      *
      * @return A legend item for the series.
      */
-    public LegendItem getLegendItem(int datasetIndex, int series) {
+    @Override
+	public LegendItem getLegendItem(int datasetIndex, int series) {
         XYPlot plot = getPlot();
         if (plot == null) {
             return null;
@@ -772,7 +773,8 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
      *
      * @return The renderer state.
      */
-    public XYItemRendererState initialise(Graphics2D g2,
+    @Override
+	public XYItemRendererState initialise(Graphics2D g2,
                                           Rectangle2D dataArea,
                                           XYPlot plot,
                                           XYDataset data,
@@ -803,7 +805,8 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
      *                        (<code>null</code> permitted).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2,
+    @Override
+	public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
                          PlotRenderingInfo info,
@@ -1009,7 +1012,8 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
 
         if (obj == this) {
             return true;
@@ -1062,7 +1066,8 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
      *
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         StandardXYItemRenderer clone = (StandardXYItemRenderer) super.clone();
         clone.seriesShapesFilled
                 = (BooleanList) this.seriesShapesFilled.clone();

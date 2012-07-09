@@ -167,7 +167,8 @@ public class StackedXYBarRenderer extends XYBarRenderer {
      *
      * @return <code>2</code>.
      */
-    public int getPassCount() {
+    @Override
+	public int getPassCount() {
         return 3;
     }
 
@@ -185,7 +186,8 @@ public class StackedXYBarRenderer extends XYBarRenderer {
      *
      * @return A state object.
      */
-    public XYItemRendererState initialise(Graphics2D g2,
+    @Override
+	public XYItemRendererState initialise(Graphics2D g2,
                                           Rectangle2D dataArea,
                                           XYPlot plot,
                                           XYDataset data,
@@ -236,7 +238,8 @@ public class StackedXYBarRenderer extends XYBarRenderer {
      *                        (<code>null</code> permitted).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2,
+    @Override
+	public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
                          PlotRenderingInfo info,
@@ -420,7 +423,8 @@ public class StackedXYBarRenderer extends XYBarRenderer {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -439,7 +443,8 @@ public class StackedXYBarRenderer extends XYBarRenderer {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = super.hashCode();
         result = result * 37 + (this.renderAsPercentages ? 1 : 0);
         return result;

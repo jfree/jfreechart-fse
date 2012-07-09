@@ -181,7 +181,8 @@ public class SubCategoryAxis extends CategoryAxis
      *
      * @return The space required to draw the axis.
      */
-    public AxisSpace reserveSpace(Graphics2D g2, Plot plot,
+    @Override
+	public AxisSpace reserveSpace(Graphics2D g2, Plot plot,
                                   Rectangle2D plotArea,
                                   RectangleEdge edge, AxisSpace space) {
 
@@ -252,7 +253,8 @@ public class SubCategoryAxis extends CategoryAxis
      *
      * @return The axis state (never <code>null</code>).
      */
-    public AxisState draw(Graphics2D g2,
+    @Override
+	public AxisState draw(Graphics2D g2,
                           double cursor,
                           Rectangle2D plotArea,
                           Rectangle2D dataArea,
@@ -402,7 +404,8 @@ public class SubCategoryAxis extends CategoryAxis
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

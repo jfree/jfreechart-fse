@@ -137,7 +137,8 @@ public class StandardXYURLGenerator implements XYURLGenerator, Serializable {
      *
      * @return The generated URL.
      */
-    public String generateURL(XYDataset dataset, int series, int item) {
+    @Override
+	public String generateURL(XYDataset dataset, int series, int item) {
         // TODO: URLEncode?
         String url = this.prefix;
         boolean firstParameter = url.indexOf("?") == -1;
@@ -154,7 +155,8 @@ public class StandardXYURLGenerator implements XYURLGenerator, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

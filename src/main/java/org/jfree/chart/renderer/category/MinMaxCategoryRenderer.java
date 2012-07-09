@@ -330,7 +330,8 @@ public class MinMaxCategoryRenderer extends AbstractCategoryItemRenderer {
      * @param column  the column index (zero-based).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2, CategoryItemRendererState state,
+    @Override
+	public void drawItem(Graphics2D g2, CategoryItemRendererState state,
             Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
             ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
             int pass) {
@@ -436,7 +437,8 @@ public class MinMaxCategoryRenderer extends AbstractCategoryItemRenderer {
      *
      * @since 1.0.7
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -472,7 +474,8 @@ public class MinMaxCategoryRenderer extends AbstractCategoryItemRenderer {
       final int height = shape.getBounds().height;
       final GeneralPath path = new GeneralPath(shape);
       return new Icon() {
-          public void paintIcon(Component c, Graphics g, int x, int y) {
+          @Override
+		public void paintIcon(Component c, Graphics g, int x, int y) {
               Graphics2D g2 = (Graphics2D) g;
               path.transform(AffineTransform.getTranslateInstance(x, y));
               if (fillPaint != null) {
@@ -486,11 +489,13 @@ public class MinMaxCategoryRenderer extends AbstractCategoryItemRenderer {
               path.transform(AffineTransform.getTranslateInstance(-x, -y));
         }
 
-        public int getIconWidth() {
+        @Override
+		public int getIconWidth() {
             return width;
         }
 
-        public int getIconHeight() {
+        @Override
+		public int getIconHeight() {
             return height;
         }
 
@@ -512,7 +517,8 @@ public class MinMaxCategoryRenderer extends AbstractCategoryItemRenderer {
         final int height = shape.getBounds().height;
         final GeneralPath path = new GeneralPath(shape);
         return new Icon() {
-            public void paintIcon(Component c, Graphics g, int x, int y) {
+            @Override
+			public void paintIcon(Component c, Graphics g, int x, int y) {
                 Graphics2D g2 = (Graphics2D) g;
                 path.transform(AffineTransform.getTranslateInstance(x, y));
                 if (fill) {
@@ -524,11 +530,13 @@ public class MinMaxCategoryRenderer extends AbstractCategoryItemRenderer {
                 path.transform(AffineTransform.getTranslateInstance(-x, -y));
             }
 
-            public int getIconWidth() {
+            @Override
+			public int getIconWidth() {
                 return width;
             }
 
-            public int getIconHeight() {
+            @Override
+			public int getIconHeight() {
                 return height;
             }
         };

@@ -188,7 +188,8 @@ public class ChartRenderingInfo implements Cloneable, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -215,7 +216,8 @@ public class ChartRenderingInfo implements Cloneable, Serializable {
      *
      * @throws CloneNotSupportedException if the object cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         ChartRenderingInfo clone = (ChartRenderingInfo) super.clone();
         if (this.chartArea != null) {
             clone.chartArea = (Rectangle2D) this.chartArea.clone();

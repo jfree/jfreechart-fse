@@ -182,7 +182,8 @@ public class RectangleInsets implements Serializable {
      * 
      * @return A boolean.
      */
-    public boolean equals(final Object obj) {
+    @Override
+	public boolean equals(final Object obj) {
         if (obj == this) {
             return true;   
         }
@@ -213,7 +214,8 @@ public class RectangleInsets implements Serializable {
      * 
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result;
         long temp;
         result = (this.unitType != null ? this.unitType.hashCode() : 0);
@@ -234,7 +236,8 @@ public class RectangleInsets implements Serializable {
      * 
      * @return A string representing this instance.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return "RectangleInsets[t=" + this.top + ",l=" + this.left
                 + ",b=" + this.bottom + ",r=" + this.right + "]";
     }

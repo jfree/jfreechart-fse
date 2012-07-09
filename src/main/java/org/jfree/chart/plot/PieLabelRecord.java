@@ -217,7 +217,8 @@ public class PieLabelRecord implements Comparable, Serializable {
      *
      * @return An integer that specifies the relative order of the two objects.
      */
-    public int compareTo(Object obj) {
+    @Override
+	public int compareTo(Object obj) {
         int result = 0;
         if (obj instanceof PieLabelRecord) {
             PieLabelRecord plr = (PieLabelRecord) obj;
@@ -238,7 +239,8 @@ public class PieLabelRecord implements Comparable, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -278,7 +280,8 @@ public class PieLabelRecord implements Comparable, Serializable {
      *
      * @return A string.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return this.baseY + ", " + this.key.toString();
     }
 }

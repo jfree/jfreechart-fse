@@ -867,7 +867,8 @@ public abstract class SerialDate implements Comparable,
      *
      * @return  a string representation of the date.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return getDayOfMonth() + "-" + SerialDate.monthCodeToString(getMonth())
                                + "-" + getYYYY();
     }

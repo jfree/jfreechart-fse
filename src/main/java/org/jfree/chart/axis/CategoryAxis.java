@@ -1351,7 +1351,8 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         if (getLabel() != null) {
             return getLabel().hashCode();
         }

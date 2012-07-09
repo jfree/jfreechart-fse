@@ -172,7 +172,8 @@ public class MeanAndStandardDeviation implements Serializable {
      *
      * @since 1.0.7
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return "[" + this.mean + ", " + this.standardDeviation + "]";
     }
 

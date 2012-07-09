@@ -80,11 +80,13 @@ public class ComparableObjectSeriesTests extends TestCase {
                 boolean allowDuplicateXValues) {
             super(key, autoSort, allowDuplicateXValues);
         }
-        public void add(Comparable x, Object y) {
+        @Override
+		public void add(Comparable x, Object y) {
             super.add(x, y);
         }
 
-        public ComparableObjectItem remove(Comparable x) {
+        @Override
+		public ComparableObjectItem remove(Comparable x) {
             return super.remove(x);
         }
     }

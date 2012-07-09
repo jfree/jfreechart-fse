@@ -266,7 +266,8 @@ class DefaultChartEditor extends JPanel implements ActionListener, ChartEditor {
      *
      * @param chart  the chart.
      */
-    public void updateChart(JFreeChart chart) {
+    @Override
+	public void updateChart(JFreeChart chart) {
 
         this.titleEditor.setTitleProperties(chart);
         this.plotEditor.updatePlotProperties(chart.getPlot());

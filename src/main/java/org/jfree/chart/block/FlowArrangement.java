@@ -104,7 +104,8 @@ public class FlowArrangement implements Arrangement, Serializable {
      * @param block  the block.
      * @param key  a key that controls the position of the block.
      */
-    public void add(Block block, Object key) {
+    @Override
+	public void add(Block block, Object key) {
         // since the flow layout is relatively straightforward,
         // no information needs to be recorded here
     }
@@ -121,7 +122,8 @@ public class FlowArrangement implements Arrangement, Serializable {
      *
      * @return The size of the container after arrangement of the contents.
      */
-    public Size2D arrange(BlockContainer container, Graphics2D g2,
+    @Override
+	public Size2D arrange(BlockContainer container, Graphics2D g2,
                           RectangleConstraint constraint) {
 
         LengthConstraintType w = constraint.getWidthConstraintType();

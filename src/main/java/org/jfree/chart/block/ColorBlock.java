@@ -104,7 +104,8 @@ public class ColorBlock extends AbstractBlock implements Block {
      *
      * @return The block size (in Java2D units, never <code>null</code>).
      */
-    public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
+    @Override
+	public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
         return new Size2D(calculateTotalWidth(getWidth()),
                 calculateTotalHeight(getHeight()));
     }

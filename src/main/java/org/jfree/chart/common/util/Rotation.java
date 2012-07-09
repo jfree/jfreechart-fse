@@ -87,7 +87,8 @@ public final class Rotation implements Serializable {
      *
      * @return the string (never <code>null</code>).
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return this.name;
     }
 
@@ -109,7 +110,8 @@ public final class Rotation implements Serializable {
      * @param o the other object
      * @return true or false
      */
-    public boolean equals(final Object o) {
+    @Override
+	public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -131,7 +133,8 @@ public final class Rotation implements Serializable {
      *
      * @return the hashcode
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         final long temp = Double.doubleToLongBits(this.factor);
         return (int) (temp ^ (temp >>> 32));
     }

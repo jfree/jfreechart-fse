@@ -134,7 +134,8 @@ public class ClusteredXYBarRenderer extends XYBarRenderer
      *
      * @return <code>2</code>.
      */
-    public int getPassCount() {
+    @Override
+	public int getPassCount() {
         return 2;
     }
 
@@ -145,7 +146,8 @@ public class ClusteredXYBarRenderer extends XYBarRenderer
      *
      * @return The bounds (possibly <code>null</code>).
      */
-    public Range findDomainBounds(XYDataset dataset) {
+    @Override
+	public Range findDomainBounds(XYDataset dataset) {
         if (dataset == null) {
             return null;
         }
@@ -220,7 +222,8 @@ public class ClusteredXYBarRenderer extends XYBarRenderer
      *                        (<code>null</code> permitted).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2,
+    @Override
+	public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
                          PlotRenderingInfo info,
@@ -353,7 +356,8 @@ public class ClusteredXYBarRenderer extends XYBarRenderer
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -374,7 +378,8 @@ public class ClusteredXYBarRenderer extends XYBarRenderer
      *
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

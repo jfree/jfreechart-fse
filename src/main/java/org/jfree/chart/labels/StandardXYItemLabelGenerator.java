@@ -180,7 +180,8 @@ public class StandardXYItemLabelGenerator extends AbstractXYItemLabelGenerator
      *
      * @return The label text (possibly <code>null</code>).
      */
-    public String generateLabel(XYDataset dataset, int series, int item) {
+    @Override
+	public String generateLabel(XYDataset dataset, int series, int item) {
         return generateLabelString(dataset, series, item);
     }
 
@@ -191,7 +192,8 @@ public class StandardXYItemLabelGenerator extends AbstractXYItemLabelGenerator
      *
      * @throws CloneNotSupportedException if cloning is not supported.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -202,7 +204,8 @@ public class StandardXYItemLabelGenerator extends AbstractXYItemLabelGenerator
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

@@ -201,7 +201,8 @@ public class Millisecond extends RegularTimePeriod implements Serializable {
      *
      * @see #getLastMillisecond()
      */
-    public long getFirstMillisecond() {
+    @Override
+	public long getFirstMillisecond() {
         return this.firstMillisecond;
     }
 
@@ -215,7 +216,8 @@ public class Millisecond extends RegularTimePeriod implements Serializable {
      *
      * @see #getFirstMillisecond()
      */
-    public long getLastMillisecond() {
+    @Override
+	public long getLastMillisecond() {
         return this.firstMillisecond;
     }
 
@@ -227,7 +229,8 @@ public class Millisecond extends RegularTimePeriod implements Serializable {
      *
      * @since 1.0.3
      */
-    public void peg(Calendar calendar) {
+    @Override
+	public void peg(Calendar calendar) {
         this.firstMillisecond = getFirstMillisecond(calendar);
     }
 
@@ -236,7 +239,8 @@ public class Millisecond extends RegularTimePeriod implements Serializable {
      *
      * @return The millisecond preceding this one.
      */
-    public RegularTimePeriod previous() {
+    @Override
+	public RegularTimePeriod previous() {
         RegularTimePeriod result = null;
         if (this.millisecond != FIRST_MILLISECOND_IN_SECOND) {
             result = new Millisecond(this.millisecond - 1, getSecond());
@@ -255,7 +259,8 @@ public class Millisecond extends RegularTimePeriod implements Serializable {
      *
      * @return The millisecond following this one.
      */
-    public RegularTimePeriod next() {
+    @Override
+	public RegularTimePeriod next() {
         RegularTimePeriod result = null;
         if (this.millisecond != LAST_MILLISECOND_IN_SECOND) {
             result = new Millisecond(this.millisecond + 1, getSecond());
@@ -274,7 +279,8 @@ public class Millisecond extends RegularTimePeriod implements Serializable {
      *
      * @return The serial index number.
      */
-    public long getSerialIndex() {
+    @Override
+	public long getSerialIndex() {
         long hourIndex = this.day.getSerialIndex() * 24L + this.hour;
         long minuteIndex = hourIndex * 60L + this.minute;
         long secondIndex = minuteIndex * 60L + this.second;
@@ -292,7 +298,8 @@ public class Millisecond extends RegularTimePeriod implements Serializable {
      * @return <code>true</code> if milliseconds and seconds of this and object
      *      are the same.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -327,7 +334,8 @@ public class Millisecond extends RegularTimePeriod implements Serializable {
      *
      * @return A hashcode.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 17;
         result = 37 * result + this.millisecond;
         result = 37 * result + getSecond().hashCode();
@@ -344,7 +352,8 @@ public class Millisecond extends RegularTimePeriod implements Serializable {
      *
      * @return negative == before, zero == same, positive == after.
      */
-    public int compareTo(Object obj) {
+    @Override
+	public int compareTo(Object obj) {
         int result;
         long difference;
 
@@ -396,7 +405,8 @@ public class Millisecond extends RegularTimePeriod implements Serializable {
      * @throws NullPointerException if <code>calendar</code> is
      *     <code>null</code>.
      */
-    public long getFirstMillisecond(Calendar calendar) {
+    @Override
+	public long getFirstMillisecond(Calendar calendar) {
         int year = this.day.getYear();
         int month = this.day.getMonth() - 1;
         int day = this.day.getDayOfMonth();
@@ -416,7 +426,8 @@ public class Millisecond extends RegularTimePeriod implements Serializable {
      * @throws NullPointerException if <code>calendar</code> is
      *     <code>null</code>.
      */
-    public long getLastMillisecond(Calendar calendar) {
+    @Override
+	public long getLastMillisecond(Calendar calendar) {
         return getFirstMillisecond(calendar);
     }
 

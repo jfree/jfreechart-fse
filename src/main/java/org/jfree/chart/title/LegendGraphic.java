@@ -509,7 +509,8 @@ public class LegendGraphic extends AbstractBlock
      *
      * @return The block size (in Java2D units, never <code>null</code>).
      */
-    public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
+    @Override
+	public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
         RectangleConstraint contentConstraint = toContentConstraint(constraint);
         LengthConstraintType w = contentConstraint.getWidthConstraintType();
         LengthConstraintType h = contentConstraint.getHeightConstraintType();
@@ -582,7 +583,8 @@ public class LegendGraphic extends AbstractBlock
      * @param g2  the graphics device.
      * @param area  the area.
      */
-    public void draw(Graphics2D g2, Rectangle2D area) {
+    @Override
+	public void draw(Graphics2D g2, Rectangle2D area) {
 
         area = trimMargin(area);
         drawBorder(g2, area);
@@ -632,7 +634,8 @@ public class LegendGraphic extends AbstractBlock
      *
      * @return Always <code>null</code>.
      */
-    public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
+    @Override
+	public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
         draw(g2, area);
         return null;
     }
@@ -645,7 +648,8 @@ public class LegendGraphic extends AbstractBlock
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (!(obj instanceof LegendGraphic)) {
             return false;
         }
@@ -701,7 +705,8 @@ public class LegendGraphic extends AbstractBlock
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 193;
         result = 37 * result + ObjectUtilities.hashCode(this.fillPaint);
         // FIXME: use other fields too
@@ -715,7 +720,8 @@ public class LegendGraphic extends AbstractBlock
      *
      * @throws CloneNotSupportedException if there is a problem cloning.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         LegendGraphic clone = (LegendGraphic) super.clone();
         clone.shape = ShapeUtilities.clone(this.shape);
         clone.line = ShapeUtilities.clone(this.line);

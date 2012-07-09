@@ -91,7 +91,8 @@ public class ShapeList extends AbstractObjectList {
      * @throws CloneNotSupportedException if an item in the list does not
      *         support cloning.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -102,7 +103,8 @@ public class ShapeList extends AbstractObjectList {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
 
         if (obj == this) {
             return true;
@@ -126,7 +128,8 @@ public class ShapeList extends AbstractObjectList {
      *
      * @return the hashcode
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return super.hashCode();
     }
 

@@ -105,7 +105,8 @@ public class StrokeSample extends JComponent implements ListCellRenderer {
      *
      * @return the preferred size of the component.
      */
-    public Dimension getPreferredSize() {
+    @Override
+	public Dimension getPreferredSize() {
         return this.preferredSize;
     }
 
@@ -114,7 +115,8 @@ public class StrokeSample extends JComponent implements ListCellRenderer {
      *
      * @param g  the graphics device.
      */
-    public void paintComponent(final Graphics g) {
+    @Override
+	public void paintComponent(final Graphics g) {
 
         final Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -163,7 +165,8 @@ public class StrokeSample extends JComponent implements ListCellRenderer {
      *
      * @return the component for rendering.
      */
-    public Component getListCellRendererComponent(JList list, Object value,
+    @Override
+	public Component getListCellRendererComponent(JList list, Object value,
             int index, boolean isSelected, boolean cellHasFocus) {
         if (value instanceof Stroke) {
             setStroke((Stroke) value);

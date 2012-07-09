@@ -93,7 +93,8 @@ public class StackedBarChart3DTests extends TestCase {
     /**
      * Common test setup.
      */
-    protected void setUp() {
+    @Override
+	protected void setUp() {
         this.chart = createChart();
     }
 
@@ -218,7 +219,8 @@ public class StackedBarChart3DTests extends TestCase {
          *
          * @param event  the event.
          */
-        public void chartChanged(ChartChangeEvent event) {
+        @Override
+		public void chartChanged(ChartChangeEvent event) {
             this.flag = true;
         }
 

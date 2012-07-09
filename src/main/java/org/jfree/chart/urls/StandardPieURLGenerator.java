@@ -134,7 +134,8 @@ public class StandardPieURLGenerator implements PieURLGenerator, Serializable {
      *
      * @return A string containing the generated URL.
      */
-    public String generateURL(PieDataset dataset, Comparable key,
+    @Override
+	public String generateURL(PieDataset dataset, Comparable key,
             int pieIndex) {
         String url = this.prefix;
         if (url.indexOf("?") > -1) {
@@ -159,7 +160,8 @@ public class StandardPieURLGenerator implements PieURLGenerator, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

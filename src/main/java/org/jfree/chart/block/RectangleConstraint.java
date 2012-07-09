@@ -308,7 +308,8 @@ public class RectangleConstraint {
      *
      * @return A string.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return "RectangleConstraint["
                 + this.widthConstraintType.toString() + ": width="
                 + this.width + ", height=" + this.height + "]";
