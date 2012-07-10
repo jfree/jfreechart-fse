@@ -215,13 +215,13 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * Annotations to be drawn in the background layer ('underneath' the data
      * items).
      */
-    private List backgroundAnnotations;
+    private List<XYAnnotation> backgroundAnnotations;
 
     /**
      * Annotations to be drawn in the foreground layer ('on top' of the data
      * items).
      */
-    private List foregroundAnnotations;
+    private List<XYAnnotation> foregroundAnnotations;
 
     /** The legend item label generator. */
     private XYSeriesLabelGenerator legendItemLabelGenerator;
@@ -241,8 +241,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         this.itemLabelGeneratorList = new ObjectList();
         this.toolTipGeneratorList = new ObjectList();
         this.urlGenerator = null;
-        this.backgroundAnnotations = new java.util.ArrayList();
-        this.foregroundAnnotations = new java.util.ArrayList();
+        this.backgroundAnnotations = new java.util.ArrayList<XYAnnotation>();
+        this.foregroundAnnotations = new java.util.ArrayList<XYAnnotation>();
         this.legendItemLabelGenerator = new StandardXYSeriesLabelGenerator(
                 "{0}");
     }
@@ -580,8 +580,9 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * 
      * @since 1.0.13
      */
-    public Collection getAnnotations() {
-        List result = new java.util.ArrayList(this.foregroundAnnotations);
+    public Collection<XYAnnotation> getAnnotations() {
+        List<XYAnnotation> result = new java.util.ArrayList<XYAnnotation>(
+                this.foregroundAnnotations);
         result.addAll(this.backgroundAnnotations);
         return result;
     }
@@ -1512,9 +1513,9 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
                     ObjectUtilities.clone(this.legendItemURLGenerator);
         }
 
-        clone.foregroundAnnotations = (List) ObjectUtilities.deepClone(
+        clone.foregroundAnnotations = (List<XYAnnotation>) ObjectUtilities.deepClone(
                 this.foregroundAnnotations);
-        clone.backgroundAnnotations = (List) ObjectUtilities.deepClone(
+        clone.backgroundAnnotations = (List<XYAnnotation>) ObjectUtilities.deepClone(
                 this.backgroundAnnotations);
 
         return clone;
@@ -1701,7 +1702,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
                                 Layer layer,
                                 PlotRenderingInfo info) {
 
-        Iterator iterator = null;
+        Iterator<XYAnnotation> iterator = null;
         if (layer.equals(Layer.FOREGROUND)) {
             iterator = this.foregroundAnnotations.iterator();
         }
@@ -1713,7 +1714,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             throw new RuntimeException("Unknown layer.");
         }
         while (iterator.hasNext()) {
-            XYAnnotation annotation = (XYAnnotation) iterator.next();
+            XYAnnotation annotation = iterator.next();
             int index = this.plot.getIndexOf(this);
             annotation.draw(g2, this.plot, dataArea, domainAxis, rangeAxis,
                     index, info);
