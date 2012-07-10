@@ -178,15 +178,6 @@ public class LineRenderer3DTests extends TestCase {
             return false;
         }
 
-        r1.setLinesVisible(false);
-        if (r1.equals(r2)) {
-            return false;
-        }
-        r2.setLinesVisible(false);
-        if (!r1.equals(r2)) {
-            return false;
-        }
-
         r1.setBaseShapesVisible(!r1.getBaseShapesVisible());
         if (r1.equals(r2)) {
             return false;
@@ -205,27 +196,6 @@ public class LineRenderer3DTests extends TestCase {
             return false;
         }
 
-        r1.setShapesVisible(false);
-        if (r1.equals(r2)) {
-            return false;
-        }
-        r2.setShapesVisible(false);
-        if (!r1.equals(r2)) {
-            return false;
-        }
-
-        boolean flag = true;
-        Boolean existing = r1.getShapesFilled();
-        if (existing != null) {
-            flag = !existing.booleanValue();
-        }
-        r1.setShapesFilled(flag);
-        boolean b5 = !r1.equals(r2);
-        r2.setShapesFilled(flag);
-        boolean b6 = r1.equals(r2);
-
-        r1.setShapesFilled(false);
-        r2.setShapesFilled(false);
         r1.setSeriesShapesFilled(0, false);
         r2.setSeriesShapesFilled(0, true);
         boolean b7 = !r1.equals(r2);
@@ -238,7 +208,7 @@ public class LineRenderer3DTests extends TestCase {
         r2.setBaseShapesFilled(false);
         boolean b10 = (r1.equals(r2));
 
-        return b0 && b5 && b6 && b7 && b8 && b9 && b10;
+        return b0 && b7 && b8 && b9 && b10;
 
     }
 
