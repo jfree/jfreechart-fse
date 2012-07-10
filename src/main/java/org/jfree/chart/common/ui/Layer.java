@@ -75,7 +75,8 @@ public final class Layer implements Serializable {
      *
      * @return The string.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return this.name;
     }
 
@@ -87,7 +88,8 @@ public final class Layer implements Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(final Object o) {
+    @Override
+	public boolean equals(final Object o) {
 
         if (this == o) {
             return true;
@@ -110,7 +112,8 @@ public final class Layer implements Serializable {
      *
      * @return the hashcode
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return this.name.hashCode();
     }
 

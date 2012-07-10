@@ -150,7 +150,8 @@ public class XIntervalSeries extends ComparableObjectSeries {
      *
      * @return The data item.
      */
-    public ComparableObjectItem getDataItem(int index) {
+    @Override
+	public ComparableObjectItem getDataItem(int index) {
         return super.getDataItem(index);
     }
 

@@ -112,7 +112,8 @@ public class JFreeChartTests extends TestCase implements ChartChangeListener {
     /**
      * Common test setup.
      */
-    protected void setUp() {
+    @Override
+	protected void setUp() {
 
         // create a dataset...
         DefaultPieDataset data = new DefaultPieDataset();
@@ -583,7 +584,8 @@ public class JFreeChartTests extends TestCase implements ChartChangeListener {
      *
      * @param event  the event.
      */
-    public void chartChanged(ChartChangeEvent event) {
+    @Override
+	public void chartChanged(ChartChangeEvent event) {
         this.lastChartChangeEvent = event;
     }
 

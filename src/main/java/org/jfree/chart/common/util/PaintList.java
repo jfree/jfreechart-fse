@@ -88,7 +88,8 @@ public class PaintList extends AbstractObjectList {
      *
      * @return A boolean.
      */
-    public boolean equals(final Object obj) {
+    @Override
+	public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
@@ -112,7 +113,8 @@ public class PaintList extends AbstractObjectList {
      *
      * @return the hashcode
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return super.hashCode();
     }
 

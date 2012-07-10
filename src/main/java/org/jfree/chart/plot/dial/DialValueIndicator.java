@@ -569,7 +569,8 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      *
      * @return <code>true</code>.
      */
-    public boolean isClippedToWindow() {
+    @Override
+	public boolean isClippedToWindow() {
         return true;
     }
 
@@ -583,7 +584,8 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * @param frame  the dial frame (ignored here).
      * @param view  the view rectangle (<code>null</code> not permitted).
      */
-    public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
+    @Override
+	public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
             Rectangle2D view) {
 
         // work out the anchor point
@@ -678,7 +680,8 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -737,7 +740,8 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      *
      * @return The hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 193;
         result = 37 * result + HashUtilities.hashCodeForPaint(this.paint);
         result = 37 * result + HashUtilities.hashCodeForPaint(
@@ -756,7 +760,8 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * @throws CloneNotSupportedException if some attribute of this instance
      *     cannot be cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

@@ -97,7 +97,8 @@ public class PaintSample extends JComponent {
      *
      * @return the preferred size.
      */
-    public Dimension getPreferredSize() {
+    @Override
+	public Dimension getPreferredSize() {
         return this.preferredSize;
     }
 
@@ -106,7 +107,8 @@ public class PaintSample extends JComponent {
      *
      * @param g  the graphics device.
      */
-    public void paintComponent(final Graphics g) {
+    @Override
+	public void paintComponent(final Graphics g) {
 
         final Graphics2D g2 = (Graphics2D) g;
         final Dimension size = getSize();

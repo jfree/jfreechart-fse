@@ -86,7 +86,8 @@ public class CustomPieURLGenerator implements PieURLGenerator,
      *
      * @see #getURL(Comparable, int)
      */
-    public String generateURL(PieDataset dataset, Comparable key,
+    @Override
+	public String generateURL(PieDataset dataset, Comparable key,
                               int pieIndex) {
         return getURL(key, pieIndex);
     }
@@ -162,7 +163,8 @@ public class CustomPieURLGenerator implements PieURLGenerator,
      *
      * @return A boolean.
      */
-    public boolean equals(Object o) {
+    @Override
+	public boolean equals(Object o) {
 
         if (o == this) {
             return true;
@@ -200,7 +202,8 @@ public class CustomPieURLGenerator implements PieURLGenerator,
      *
      * @throws CloneNotSupportedException if cloning is not supported.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         CustomPieURLGenerator urlGen = new CustomPieURLGenerator();
         Map map;
         Map newMap;

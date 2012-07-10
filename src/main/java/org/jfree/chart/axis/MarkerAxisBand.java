@@ -231,7 +231,8 @@ public class MarkerAxisBand implements Serializable {
      *
      * @return <code>true</code> or <code>false</code>.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -265,7 +266,8 @@ public class MarkerAxisBand implements Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 37;
         result = 19 * result + this.font.hashCode();
         result = 19 * result + this.markers.hashCode();

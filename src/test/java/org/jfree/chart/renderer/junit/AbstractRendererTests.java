@@ -355,7 +355,8 @@ public class AbstractRendererTests extends TestCase {
     }
 
     private static class TestRenderer extends XYLineAndShapeRenderer {
-        public void setTreatLegendShapeAsLine(boolean flag) {
+        @Override
+		public void setTreatLegendShapeAsLine(boolean flag) {
             super.setTreatLegendShapeAsLine(flag);
         }
     }
@@ -516,7 +517,8 @@ public class AbstractRendererTests extends TestCase {
         public MyRendererChangeListener() {
             this.lastEvent = null;
         }
-        public void rendererChanged(RendererChangeEvent event) {
+        @Override
+		public void rendererChanged(RendererChangeEvent event) {
             this.lastEvent = event;
         }
     }

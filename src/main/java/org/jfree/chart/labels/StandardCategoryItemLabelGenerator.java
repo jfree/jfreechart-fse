@@ -125,7 +125,8 @@ public class StandardCategoryItemLabelGenerator
      *
      * @return The label (possibly <code>null</code>).
      */
-    public String generateLabel(CategoryDataset dataset, int row, int column) {
+    @Override
+	public String generateLabel(CategoryDataset dataset, int row, int column) {
         return generateLabelString(dataset, row, column);
     }
 
@@ -137,7 +138,8 @@ public class StandardCategoryItemLabelGenerator
      * @return <code>true</code> if this generator is equal to
      *     <code>obj</code>, and <code>false</code> otherwise.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

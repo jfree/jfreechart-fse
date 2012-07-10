@@ -83,7 +83,8 @@ public class DynamicDriveToolTipTagFragmentGenerator
      *
      * @return The formatted HTML area tag attribute(s).
      */
-    public String generateToolTipFragment(String toolTipText) {
+    @Override
+	public String generateToolTipFragment(String toolTipText) {
         return " onMouseOver=\"return stm(['"
             + ImageMapUtilities.javascriptEscape(this.title) + "','"
             + ImageMapUtilities.javascriptEscape(toolTipText) + "'],Style["

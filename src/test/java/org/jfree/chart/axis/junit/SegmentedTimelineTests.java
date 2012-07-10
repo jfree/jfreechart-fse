@@ -187,7 +187,8 @@ public class SegmentedTimelineTests extends TestCase {
      *
      * @throws Exception if there is a problem.
      */
-    protected void setUp() throws Exception {
+    @Override
+	protected void setUp() throws Exception {
         // setup our test timelines
         //
         // Legend for comments below:
@@ -287,7 +288,8 @@ public class SegmentedTimelineTests extends TestCase {
      *
      * @throws Exception if there is a problem.
      */
-    protected void tearDown() throws Exception {
+    @Override
+	protected void tearDown() throws Exception {
         // does nothing
     }
 

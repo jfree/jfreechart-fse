@@ -64,7 +64,8 @@ public class OverLIBToolTipTagFragmentGenerator
      *
      * @return The formatted HTML area tag attribute(s).
      */
-    public String generateToolTipFragment(String toolTipText) {
+    @Override
+	public String generateToolTipFragment(String toolTipText) {
         return " onMouseOver=\"return overlib('"
                 + ImageMapUtilities.javascriptEscape(toolTipText)
                 + "');\" onMouseOut=\"return nd();\"";

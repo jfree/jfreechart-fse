@@ -125,7 +125,8 @@ public class LegendItemCollection implements Cloneable, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -147,7 +148,8 @@ public class LegendItemCollection implements Cloneable, Serializable {
      * @throws CloneNotSupportedException if an item in the collection is not
      *         cloneable.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         LegendItemCollection clone = (LegendItemCollection) super.clone();
         clone.items = (List) ObjectUtilities.deepClone(this.items);
         return clone;

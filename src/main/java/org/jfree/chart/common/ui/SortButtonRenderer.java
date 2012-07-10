@@ -193,7 +193,8 @@ public class SortButtonRenderer implements TableCellRenderer {
      * @param column     the column.
      * @return the renderer.
      */
-    public Component getTableCellRendererComponent(final JTable table,
+    @Override
+	public Component getTableCellRendererComponent(final JTable table,
                                                    final Object value,
                                                    final boolean isSelected,
                                                    final boolean hasFocus,

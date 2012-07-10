@@ -162,7 +162,8 @@ public class DateRange extends Range implements Serializable {
      *
      * @return A string representing the date range.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         DateFormat df = DateFormat.getDateTimeInstance();
         return "[" + df.format(getLowerDate()) + " --> "
                 + df.format(getUpperDate()) + "]";

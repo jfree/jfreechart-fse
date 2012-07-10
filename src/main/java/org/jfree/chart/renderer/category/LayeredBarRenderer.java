@@ -133,7 +133,8 @@ public class LayeredBarRenderer extends BarRenderer implements Serializable {
      * @param rendererIndex  the renderer index.
      * @param state  the renderer state.
      */
-    protected void calculateBarWidth(CategoryPlot plot,
+    @Override
+	protected void calculateBarWidth(CategoryPlot plot,
                                      Rectangle2D dataArea,
                                      int rendererIndex,
                                      CategoryItemRendererState state) {
@@ -186,7 +187,8 @@ public class LayeredBarRenderer extends BarRenderer implements Serializable {
      * @param column  the column index (zero-based).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2,
+    @Override
+	public void drawItem(Graphics2D g2,
                          CategoryItemRendererState state,
                          Rectangle2D dataArea,
                          CategoryPlot plot,

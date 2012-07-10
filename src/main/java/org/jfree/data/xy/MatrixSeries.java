@@ -127,7 +127,8 @@ public class MatrixSeries extends Series implements Serializable {
      *
      * @return The item count.
      */
-    public int getItemCount() {
+    @Override
+	public int getItemCount() {
         return getRowCount() * getColumnsCount();
     }
 
@@ -210,7 +211,8 @@ public class MatrixSeries extends Series implements Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

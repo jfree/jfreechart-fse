@@ -275,7 +275,8 @@ public class OHLCSeriesCollectionTests extends TestCase
      *
      * @param event  the event.
      */
-    public void datasetChanged(DatasetChangeEvent event) {
+    @Override
+	public void datasetChanged(DatasetChangeEvent event) {
         this.lastEvent = event;
     }
 

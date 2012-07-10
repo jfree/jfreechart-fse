@@ -129,7 +129,8 @@ public class HistogramBin implements Cloneable, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
@@ -153,7 +154,8 @@ public class HistogramBin implements Cloneable, Serializable {
      *
      * @throws CloneNotSupportedException not thrown by this class.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

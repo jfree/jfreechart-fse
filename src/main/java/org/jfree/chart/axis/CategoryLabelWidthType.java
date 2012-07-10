@@ -81,7 +81,8 @@ public final class CategoryLabelWidthType implements Serializable {
      *
      * @return The string (never </code>null</code>).
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return this.name;
     }
 

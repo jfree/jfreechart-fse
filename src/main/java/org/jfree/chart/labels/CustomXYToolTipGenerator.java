@@ -141,7 +141,8 @@ public class CustomXYToolTipGenerator implements XYToolTipGenerator,
      *
      * @return The tooltip text.
      */
-    public String generateToolTip(XYDataset data, int series, int item) {
+    @Override
+	public String generateToolTip(XYDataset data, int series, int item) {
 
         return getToolTipText(series, item);
 
@@ -154,7 +155,8 @@ public class CustomXYToolTipGenerator implements XYToolTipGenerator,
      *
      * @throws CloneNotSupportedException if cloning is not supported.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
 
         CustomXYToolTipGenerator clone
             = (CustomXYToolTipGenerator) super.clone();
@@ -171,7 +173,8 @@ public class CustomXYToolTipGenerator implements XYToolTipGenerator,
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
 
         if (obj == this) {
             return true;

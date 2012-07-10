@@ -74,7 +74,8 @@ public class G2TextMeasurer implements TextMeasurer {
      * 
      * @return The string width.
      */
-    public float getStringWidth(final String text, 
+    @Override
+	public float getStringWidth(final String text, 
                                 final int start, final int end) {
         final FontMetrics fm = this.g2.getFontMetrics();
         final Rectangle2D bounds = TextUtilities.getTextBounds(

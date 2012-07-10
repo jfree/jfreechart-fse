@@ -640,7 +640,8 @@ public abstract class Marker implements Cloneable, Serializable {
      *
      * @throws CloneNotSupportedException never.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

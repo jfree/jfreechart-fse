@@ -261,7 +261,8 @@ public class TextFragment implements Serializable {
      * 
      * @return A boolean.
      */
-    public boolean equals(final Object obj) {
+    @Override
+	public boolean equals(final Object obj) {
         if (obj == null) {
             return false;   
         }
@@ -289,7 +290,8 @@ public class TextFragment implements Serializable {
      * 
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result;
         result = (this.text != null ? this.text.hashCode() : 0);
         result = 29 * result + (this.font != null ? this.font.hashCode() : 0);

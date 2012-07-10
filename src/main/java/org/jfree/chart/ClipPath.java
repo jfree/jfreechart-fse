@@ -429,7 +429,8 @@ public class ClipPath implements Cloneable {
      *
      * @throws CloneNotSupportedException if cloning is not supported.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         ClipPath clone = (ClipPath) super.clone();
         clone.xValue = (double[]) this.xValue.clone();
         clone.yValue = (double[]) this.yValue.clone();

@@ -393,7 +393,8 @@ public abstract class ColorPalette implements Cloneable, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object o) {
+    @Override
+	public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -444,7 +445,8 @@ public abstract class ColorPalette implements Cloneable, Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result;
         long temp;
         temp = Double.doubleToLongBits(this.minZ);
@@ -466,7 +468,8 @@ public abstract class ColorPalette implements Cloneable, Serializable {
      *
      * @throws CloneNotSupportedException never.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
 
         ColorPalette clone = (ColorPalette) super.clone();
         return clone;

@@ -57,7 +57,8 @@ public class StandardXYZURLGenerator extends StandardXYURLGenerator
      *
      * @return A string containing the generated URL.
      */
-    public String generateURL(XYZDataset dataset, int series, int item) {
+    @Override
+	public String generateURL(XYZDataset dataset, int series, int item) {
         return super.generateURL(dataset, series, item);
     }
 

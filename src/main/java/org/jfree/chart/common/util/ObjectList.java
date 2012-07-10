@@ -79,7 +79,8 @@ public class ObjectList extends AbstractObjectList {
      *   
      * @return The object or <code>null</code>.          
      */          
-    public Object get(final int index) {         
+    @Override
+	public Object get(final int index) {         
         return super.get(index);         
     }    
          
@@ -89,7 +90,8 @@ public class ObjectList extends AbstractObjectList {
      * @param index  the object index.   
      * @param object  the object (<code>null</code> permitted).          
      */          
-    public void set(final int index, final Object object) {      
+    @Override
+	public void set(final int index, final Object object) {      
         super.set(index, object);        
     }    
          
@@ -100,7 +102,8 @@ public class ObjectList extends AbstractObjectList {
      *   
      * @return The index or -1.          
      */          
-    public int indexOf(final Object object) {    
+    @Override
+	public int indexOf(final Object object) {    
         return super.indexOf(object);    
     }    
          

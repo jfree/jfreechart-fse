@@ -407,7 +407,8 @@ public class MarkerTests extends TestCase implements MarkerChangeListener {
      *
      * @param event  the event.
      */
-    public void markerChanged(MarkerChangeEvent event) {
+    @Override
+	public void markerChanged(MarkerChangeEvent event) {
         this.lastEvent = event;
     }
 

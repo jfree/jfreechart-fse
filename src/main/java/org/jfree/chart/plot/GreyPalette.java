@@ -71,7 +71,8 @@ public class GreyPalette extends ColorPalette implements Serializable {
     /**
      * Intializes the palette's indices.
      */
-    public void initialize() {
+    @Override
+	public void initialize() {
 
         setPaletteName("Grey");
 

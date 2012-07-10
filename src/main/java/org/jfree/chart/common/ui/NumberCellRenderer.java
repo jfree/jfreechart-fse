@@ -78,7 +78,8 @@ public class NumberCellRenderer extends DefaultTableCellRenderer {
      *
      * @return the component that can render the contents of the cell.
      */
-    public Component getTableCellRendererComponent(final JTable table, 
+    @Override
+	public Component getTableCellRendererComponent(final JTable table, 
             final Object value, final boolean isSelected, 
             final boolean hasFocus, final int row, final int column) {
 

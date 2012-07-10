@@ -114,7 +114,8 @@ public class DateTick extends ValueTick {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -133,7 +134,8 @@ public class DateTick extends ValueTick {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return this.date.hashCode();
     }
 

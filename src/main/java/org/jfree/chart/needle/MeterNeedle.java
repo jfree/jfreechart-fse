@@ -353,7 +353,8 @@ public abstract class MeterNeedle implements Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -390,7 +391,8 @@ public abstract class MeterNeedle implements Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = HashUtilities.hashCode(193, this.fillPaint);
         result = HashUtilities.hashCode(result, this.highlightPaint);
         result = HashUtilities.hashCode(result, this.outlinePaint);

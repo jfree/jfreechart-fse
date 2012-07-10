@@ -74,7 +74,8 @@ public class IntervalMarkerTests
      *
      * @param event  the last event.
      */
-    public void markerChanged(MarkerChangeEvent event) {
+    @Override
+	public void markerChanged(MarkerChangeEvent event) {
         this.lastEvent = event;
     }
 

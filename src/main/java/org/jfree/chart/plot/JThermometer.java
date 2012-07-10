@@ -257,7 +257,8 @@ public class JThermometer extends JPanel implements Serializable {
      *
      * @param fg  the foreground color.
      */
-    public void setForeground(Color fg) {
+    @Override
+	public void setForeground(Color fg) {
         super.setForeground(fg);
         if (this.plot != null) {
             this.plot.setThermometerPaint(fg);
@@ -269,7 +270,8 @@ public class JThermometer extends JPanel implements Serializable {
      *
      * @param bg  the background color.
      */
-    public void setBackground(Color bg) {
+    @Override
+	public void setBackground(Color bg) {
         super.setBackground(bg);
         if (this.plot != null) {
             this.plot.setBackgroundPaint(bg);

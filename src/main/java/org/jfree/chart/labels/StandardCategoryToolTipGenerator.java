@@ -105,7 +105,8 @@ public class StandardCategoryToolTipGenerator
      *
      * @return The tooltip text (possibly <code>null</code>).
      */
-    public String generateToolTip(CategoryDataset dataset,
+    @Override
+	public String generateToolTip(CategoryDataset dataset,
                                   int row, int column) {
         return generateLabelString(dataset, row, column);
     }
@@ -117,7 +118,8 @@ public class StandardCategoryToolTipGenerator
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

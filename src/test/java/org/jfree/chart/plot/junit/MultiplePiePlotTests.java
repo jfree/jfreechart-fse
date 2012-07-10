@@ -93,7 +93,8 @@ public class MultiplePiePlotTests extends TestCase
      *
      * @param event  the event.
      */
-    public void plotChanged(PlotChangeEvent event) {
+    @Override
+	public void plotChanged(PlotChangeEvent event) {
         this.lastEvent = event;
     }
 

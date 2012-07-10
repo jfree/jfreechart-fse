@@ -137,7 +137,8 @@ public class LineRenderer3D extends LineAndShapeRenderer
      * @see #setXOffset(double)
      * @see #getYOffset()
      */
-    public double getXOffset() {
+    @Override
+	public double getXOffset() {
         return this.xOffset;
     }
 
@@ -149,7 +150,8 @@ public class LineRenderer3D extends LineAndShapeRenderer
      * @see #setYOffset(double)
      * @see #getXOffset()
      */
-    public double getYOffset() {
+    @Override
+	public double getYOffset() {
         return this.yOffset;
     }
 

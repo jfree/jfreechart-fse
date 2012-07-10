@@ -82,7 +82,8 @@ public class SimpleTimePeriodTests extends TestCase {
     /**
      * Common test setup.
      */
-    protected void setUp() {
+    @Override
+	protected void setUp() {
         // no setup
     }
 

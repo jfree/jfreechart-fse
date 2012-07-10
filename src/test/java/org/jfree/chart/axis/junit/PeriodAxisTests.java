@@ -89,7 +89,8 @@ public class PeriodAxisTests extends TestCase implements AxisChangeListener {
      *
      * @param event  the event.
      */
-    public void axisChanged(AxisChangeEvent event) {
+    @Override
+	public void axisChanged(AxisChangeEvent event) {
         this.lastEvent = event;
     }
 

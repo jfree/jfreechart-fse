@@ -84,7 +84,8 @@ public class OHLCSeries extends ComparableObjectSeries {
      *
      * @return The data item.
      */
-    public ComparableObjectItem getDataItem(int index) {
+    @Override
+	public ComparableObjectItem getDataItem(int index) {
         return super.getDataItem(index);
     }
 
@@ -116,7 +117,8 @@ public class OHLCSeries extends ComparableObjectSeries {
      *
      * @since 1.0.14
      */
-    public ComparableObjectItem remove(int index) {
+    @Override
+	public ComparableObjectItem remove(int index) {
         return super.remove(index);
     }
 

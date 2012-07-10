@@ -631,11 +631,13 @@ public class PiePlotTests extends TestCase {
     }
 
     static class NullLegendLabelGenerator implements PieSectionLabelGenerator {
-        public AttributedString generateAttributedSectionLabel(
+        @Override
+		public AttributedString generateAttributedSectionLabel(
                 PieDataset dataset, Comparable key) {
             return null;
         }
-        public String generateSectionLabel(PieDataset dataset, Comparable key) {
+        @Override
+		public String generateSectionLabel(PieDataset dataset, Comparable key) {
             return null;
         }
     }

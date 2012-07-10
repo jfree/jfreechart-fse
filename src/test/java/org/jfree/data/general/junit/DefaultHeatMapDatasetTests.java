@@ -71,7 +71,8 @@ public class DefaultHeatMapDatasetTests extends TestCase
      *
      * @param event  the last event.
      */
-    public void datasetChanged(DatasetChangeEvent event) {
+    @Override
+	public void datasetChanged(DatasetChangeEvent event) {
         this.lastEvent = event;
     }
 

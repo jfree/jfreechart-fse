@@ -102,7 +102,8 @@ public class KeyedValueComparator implements Comparator {
      *
      * @return An int indicating the relative order of the objects.
      */
-    public int compare(Object o1, Object o2) {
+    @Override
+	public int compare(Object o1, Object o2) {
 
         if (o2 == null) {
             return -1;

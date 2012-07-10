@@ -1039,7 +1039,8 @@ public class LegendItem implements Cloneable, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -1120,7 +1121,8 @@ public class LegendItem implements Cloneable, Serializable {
      *
      * @since 1.0.10
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         LegendItem clone = (LegendItem) super.clone();
         if (this.seriesKey instanceof PublicCloneable) {
             PublicCloneable pc = (PublicCloneable) this.seriesKey;

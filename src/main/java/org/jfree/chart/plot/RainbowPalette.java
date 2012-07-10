@@ -175,7 +175,8 @@ public class RainbowPalette extends ColorPalette implements Serializable {
     /**
      * Intializes the palettes indexes
      */
-    public void initialize() {
+    @Override
+	public void initialize() {
 
         setPaletteName("Rainbow");
 

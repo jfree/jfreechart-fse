@@ -217,7 +217,8 @@ public class Task implements Cloneable, PublicCloneable, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object object) {
+    @Override
+	public boolean equals(Object object) {
         if (object == this) {
             return true;
         }
@@ -249,7 +250,8 @@ public class Task implements Cloneable, PublicCloneable, Serializable {
      * @throws CloneNotSupportedException  never thrown by this class, but
      *         subclasses may not support cloning.
      */
-    public Object clone() throws CloneNotSupportedException {
+    @Override
+	public Object clone() throws CloneNotSupportedException {
         Task clone = (Task) super.clone();
         return clone;
     }

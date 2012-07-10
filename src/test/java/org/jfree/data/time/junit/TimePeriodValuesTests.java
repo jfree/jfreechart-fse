@@ -100,7 +100,8 @@ public class TimePeriodValuesTests extends TestCase {
     /**
      * Common test setup.
      */
-    protected void setUp() {
+    @Override
+	protected void setUp() {
 
         this.seriesA = new TimePeriodValues("Series A");
         try {
@@ -439,7 +440,8 @@ public class TimePeriodValuesTests extends TestCase {
          * 
          * @param event  the event.
          */
-        public void seriesChanged(SeriesChangeEvent event) {
+        @Override
+		public void seriesChanged(SeriesChangeEvent event) {
             this.lastEvent = event;
         }
     }

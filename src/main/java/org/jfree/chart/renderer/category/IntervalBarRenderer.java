@@ -115,7 +115,8 @@ public class IntervalBarRenderer extends BarRenderer {
      * @return The range (or <code>null</code> if the dataset is
      *         <code>null</code> or empty).
      */
-    public Range findRangeBounds(CategoryDataset dataset) {
+    @Override
+	public Range findRangeBounds(CategoryDataset dataset) {
         return findRangeBounds(dataset, true);
     }
 
@@ -133,7 +134,8 @@ public class IntervalBarRenderer extends BarRenderer {
      * @param column  the column index (zero-based).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2,
+    @Override
+	public void drawItem(Graphics2D g2,
                          CategoryItemRendererState state,
                          Rectangle2D dataArea,
                          CategoryPlot plot,
@@ -265,7 +267,8 @@ public class IntervalBarRenderer extends BarRenderer {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

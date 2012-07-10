@@ -250,7 +250,8 @@ public class TextLine implements Serializable {
      * 
      * @return A boolean.
      */
-    public boolean equals(final Object obj) {
+    @Override
+	public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
@@ -269,7 +270,8 @@ public class TextLine implements Serializable {
      * 
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return (this.fragments != null ? this.fragments.hashCode() : 0);
     }
 

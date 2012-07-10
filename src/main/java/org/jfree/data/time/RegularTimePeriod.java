@@ -174,7 +174,8 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable,
      *
      * @see #getFirstMillisecond()
      */
-    public Date getStart() {
+    @Override
+	public Date getStart() {
         return new Date(getFirstMillisecond());
     }
 
@@ -186,7 +187,8 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable,
      *
      * @see #getLastMillisecond()
      */
-    public Date getEnd() {
+    @Override
+	public Date getEnd() {
         return new Date(getLastMillisecond());
     }
 

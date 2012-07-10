@@ -105,7 +105,8 @@ public class LibraryTableModel extends AbstractTableModel {
      *
      * @return the number of rows.
      */
-    public int getRowCount() {
+    @Override
+	public int getRowCount() {
         return this.libraries.length;
     }
 
@@ -115,7 +116,8 @@ public class LibraryTableModel extends AbstractTableModel {
      *
      * @return the number of columns in the table model.
      */
-    public int getColumnCount() {
+    @Override
+	public int getColumnCount() {
         return 4;
     }
 
@@ -126,7 +128,8 @@ public class LibraryTableModel extends AbstractTableModel {
      *
      * @return the name of the specified column.
      */
-    public String getColumnName(final int column) {
+    @Override
+	public String getColumnName(final int column) {
 
         String result = null;
 
@@ -158,7 +161,8 @@ public class LibraryTableModel extends AbstractTableModel {
      *
      * @return the value.
      */
-    public Object getValueAt(final int row, final int column) {
+    @Override
+	public Object getValueAt(final int row, final int column) {
 
         Object result = null;
         final Library library = this.libraries[row];

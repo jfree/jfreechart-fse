@@ -75,7 +75,8 @@ public class DialPlotTests extends TestCase implements PlotChangeListener {
      *
      * @param event  the event.
      */
-    public void plotChanged(PlotChangeEvent event) {
+    @Override
+	public void plotChanged(PlotChangeEvent event) {
         this.lastEvent = event;
     }
 

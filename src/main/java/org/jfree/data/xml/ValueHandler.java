@@ -81,7 +81,8 @@ public class ValueHandler extends DefaultHandler implements DatasetTags {
      *
      * @throws SAXException for errors.
      */
-    public void startElement(String namespaceURI,
+    @Override
+	public void startElement(String namespaceURI,
                              String localName,
                              String qName,
                              Attributes atts) throws SAXException {
@@ -105,7 +106,8 @@ public class ValueHandler extends DefaultHandler implements DatasetTags {
      *
      * @throws SAXException for errors.
      */
-    public void endElement(String namespaceURI,
+    @Override
+	public void endElement(String namespaceURI,
                            String localName,
                            String qName) throws SAXException {
 
@@ -136,7 +138,8 @@ public class ValueHandler extends DefaultHandler implements DatasetTags {
      * @param start  the start index.
      * @param length  the length of the valid character data.
      */
-    public void characters(char[] ch, int start, int length) {
+    @Override
+	public void characters(char[] ch, int start, int length) {
         if (this.currentText != null) {
             this.currentText.append(String.copyValueOf(ch, start, length));
         }

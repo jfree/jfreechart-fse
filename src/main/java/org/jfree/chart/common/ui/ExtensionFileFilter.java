@@ -96,7 +96,8 @@ public class ExtensionFileFilter extends FileFilter {
      *
      * @return a description of the filter.
      */
-    public String getDescription() {
+    @Override
+	public String getDescription() {
         return this.description;
     }
 

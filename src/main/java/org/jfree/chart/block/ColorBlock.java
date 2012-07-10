@@ -116,7 +116,8 @@ public class ColorBlock extends AbstractBlock implements Block {
      * @param g2  the graphics device.
      * @param area  the area.
      */
-    public void draw(Graphics2D g2, Rectangle2D area) {
+    @Override
+	public void draw(Graphics2D g2, Rectangle2D area) {
         area = trimMargin(area);
         drawBorder(g2, area);
         area = trimBorder(area);
@@ -134,7 +135,8 @@ public class ColorBlock extends AbstractBlock implements Block {
      *
      * @return Always <code>null</code>.
      */
-    public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
+    @Override
+	public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
         draw(g2, area);
         return null;
     }
@@ -146,7 +148,8 @@ public class ColorBlock extends AbstractBlock implements Block {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

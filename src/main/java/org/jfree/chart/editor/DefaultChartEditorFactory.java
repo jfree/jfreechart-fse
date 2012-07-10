@@ -60,7 +60,8 @@ public class DefaultChartEditorFactory implements ChartEditorFactory {
      *
      * @return A chart editor for the given chart.
      */
-    public ChartEditor createEditor(JFreeChart chart) {
+    @Override
+	public ChartEditor createEditor(JFreeChart chart) {
         return new DefaultChartEditor(chart);
     }
 

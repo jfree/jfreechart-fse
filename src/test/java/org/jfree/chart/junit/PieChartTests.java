@@ -138,7 +138,8 @@ public class PieChartTests extends TestCase {
          *
          * @param event  the event.
          */
-        public void chartChanged(ChartChangeEvent event) {
+        @Override
+		public void chartChanged(ChartChangeEvent event) {
             this.flag = true;
         }
 

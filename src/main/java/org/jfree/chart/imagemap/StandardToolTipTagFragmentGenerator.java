@@ -61,7 +61,8 @@ public class StandardToolTipTagFragmentGenerator
      *
      * @return The formatted HTML area tag attribute(s).
      */
-    public String generateToolTipFragment(String toolTipText) {
+    @Override
+	public String generateToolTipFragment(String toolTipText) {
         return " title=\"" + ImageMapUtilities.htmlEscape(toolTipText)
             + "\" alt=\"\"";
     }

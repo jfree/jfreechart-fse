@@ -103,7 +103,8 @@ public class DateAxisTests extends TestCase {
             super(label);
         }
 
-        public Date previousStandardDate(Date d, DateTickUnit unit) {
+        @Override
+		public Date previousStandardDate(Date d, DateTickUnit unit) {
             return super.previousStandardDate(d, unit);
         }
     }

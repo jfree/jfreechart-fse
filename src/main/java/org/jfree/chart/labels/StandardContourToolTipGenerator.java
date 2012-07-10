@@ -77,7 +77,8 @@ public class StandardContourToolTipGenerator implements ContourToolTipGenerator,
      *
      * @return The tooltip text.
      */
-    public String generateToolTip(ContourDataset data, int item) {
+    @Override
+	public String generateToolTip(ContourDataset data, int item) {
 
         double x = data.getXValue(0, item);
         double y = data.getYValue(0, item);

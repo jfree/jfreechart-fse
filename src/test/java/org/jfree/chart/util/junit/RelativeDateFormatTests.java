@@ -82,7 +82,8 @@ public class RelativeDateFormatTests extends TestCase {
     /**
      * Set a known locale for the tests.
      */
-    protected void setUp() throws Exception {
+    @Override
+	protected void setUp() throws Exception {
         super.setUp();
         this.savedLocale = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -91,7 +92,8 @@ public class RelativeDateFormatTests extends TestCase {
     /**
      * Restore the default locale after the tests complete.
      */
-    protected void tearDown() throws Exception {
+    @Override
+	protected void tearDown() throws Exception {
         super.tearDown();
         Locale.setDefault(this.savedLocale);
     }

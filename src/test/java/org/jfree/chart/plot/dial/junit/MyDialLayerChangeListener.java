@@ -59,7 +59,8 @@ public class MyDialLayerChangeListener implements DialLayerChangeListener {
      *
      * @param event  the event.
      */
-    public void dialLayerChanged(DialLayerChangeEvent event) {
+    @Override
+	public void dialLayerChanged(DialLayerChangeEvent event) {
     }
 
 }

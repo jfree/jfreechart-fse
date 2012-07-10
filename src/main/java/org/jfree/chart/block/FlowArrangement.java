@@ -413,7 +413,8 @@ public class FlowArrangement implements Arrangement, Serializable {
     /**
      * Clears any cached information.
      */
-    public void clear() {
+    @Override
+	public void clear() {
         // no action required.
     }
 
@@ -424,7 +425,8 @@ public class FlowArrangement implements Arrangement, Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

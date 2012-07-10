@@ -127,7 +127,8 @@ public class ComparableObjectSeries extends Series
      *
      * @return The item count.
      */
-    public int getItemCount() {
+    @Override
+	public int getItemCount() {
         return this.data.size();
     }
 
@@ -394,7 +395,8 @@ public class ComparableObjectSeries extends Series
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -425,7 +427,8 @@ public class ComparableObjectSeries extends Series
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = super.hashCode();
         // it is too slow to look at every data item, so let's just look at
         // the first, middle and last items...

@@ -165,7 +165,8 @@ public class Library {
      *
      * @return A boolean.
      */
-    public boolean equals(final Object o)
+    @Override
+	public boolean equals(final Object o)
     {
       if (this == o)
       {
@@ -191,7 +192,8 @@ public class Library {
      *
      * @return A hash code.
      */
-    public int hashCode()
+    @Override
+	public int hashCode()
     {
       return (this.name != null ? this.name.hashCode() : 0);
     }

@@ -109,7 +109,8 @@ class MouseWheelHandler implements MouseWheelListener, Serializable {
      *
      * @param e  the event.
      */
-    public void mouseWheelMoved(MouseWheelEvent e) {
+    @Override
+	public void mouseWheelMoved(MouseWheelEvent e) {
         JFreeChart chart = this.chartPanel.getChart();
         if (chart == null) {
             return;

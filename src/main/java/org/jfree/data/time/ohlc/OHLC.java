@@ -122,7 +122,8 @@ public class OHLC implements Serializable {
      *
      * @return A boolean.
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -150,7 +151,8 @@ public class OHLC implements Serializable {
      *
      * @return A hash code.
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int result = 193;
         result = HashUtilities.hashCode(result, this.open);
         result = HashUtilities.hashCode(result, this.high);
