@@ -47,6 +47,7 @@ import java.util.List;
 
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.axis.ValueTick;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.event.RendererChangeListener;
 import org.jfree.chart.labels.XYToolTipGenerator;
@@ -84,7 +85,7 @@ public interface PolarItemRenderer {
      * @param dataArea  the data area.
      */
     public void drawAngularGridLines(Graphics2D g2, PolarPlot plot,
-            List ticks, Rectangle2D dataArea);
+            List<ValueTick> ticks, Rectangle2D dataArea);
 
     /**
      * Draw the radial gridlines - the rings.

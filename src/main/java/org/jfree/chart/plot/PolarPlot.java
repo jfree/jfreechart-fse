@@ -1165,8 +1165,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      *
      * @since 1.0.10
      */
-    protected List refreshAngleTicks() {
-        List ticks = new ArrayList();
+    protected List<ValueTick> refreshAngleTicks() {
+        List<ValueTick> ticks = new ArrayList<ValueTick>();
         for (double currentTickVal = 0.0; currentTickVal < 360.0;
                 currentTickVal += this.angleTickUnit.getSize()) {
             
@@ -1586,7 +1586,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      * @param radialTicks  the ticks for the radial axis.
      */
     protected void drawGridlines(Graphics2D g2, Rectangle2D dataArea,
-                                 List angularTicks, List radialTicks) {
+                                 List<ValueTick> angularTicks, List radialTicks) {
 
         PolarItemRenderer renderer = getRenderer();
         // no renderer, no gridlines...

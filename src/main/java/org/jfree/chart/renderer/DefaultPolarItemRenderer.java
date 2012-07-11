@@ -82,6 +82,7 @@ import java.util.List;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.NumberTick;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.axis.ValueTick;
 import org.jfree.chart.common.util.BooleanList;
 import org.jfree.chart.common.util.BooleanUtilities;
 import org.jfree.chart.common.util.ObjectList;
@@ -601,8 +602,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      */
     @Override
 	public void drawAngularGridLines(Graphics2D g2, PolarPlot plot,
-                List ticks, Rectangle2D dataArea) {
-
+                List<ValueTick> ticks, Rectangle2D dataArea) {
         g2.setFont(plot.getAngleLabelFont());
         g2.setStroke(plot.getAngleGridlineStroke());
         g2.setPaint(plot.getAngleGridlinePaint());
@@ -611,10 +611,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         double maxRadius = plot.getAxis().getUpperBound();
         Point center = plot.translateValueThetaRadiusToJava2D(axisMin, axisMin,
                 dataArea);
-        Iterator iterator = ticks.iterator();
-        while (iterator.hasNext()) {
-            NumberTick tick = (NumberTick) iterator.next();
-            double tickVal = tick.getNumber().doubleValue();
+        for (ValueTick tick : ticks) {
+            double tickVal = tick.getValue();
             Point p = plot.translateValueThetaRadiusToJava2D(
                     tickVal, maxRadius, dataArea);
             g2.setPaint(plot.getAngleGridlinePaint());
