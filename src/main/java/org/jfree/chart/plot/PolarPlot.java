@@ -231,7 +231,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
     private boolean radiusMinorGridlinesVisible;
     
     /** The annotations for the plot. */
-    private List cornerTextItems = new ArrayList();
+    private List<String> cornerTextItems = new ArrayList<String>();
 
     /** 
      * The actual margin in pixels.
@@ -1446,10 +1446,9 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
         g2.setColor(Color.BLACK);
         double width = 0.0;
         double height = 0.0;
-        for (Iterator it = this.cornerTextItems.iterator(); it.hasNext();) {
-            String msg = (String) it.next();
+        for (String s : this.cornerTextItems) {
             FontMetrics fm = g2.getFontMetrics();
-            Rectangle2D bounds = TextUtilities.getTextBounds(msg, g2, fm);
+            Rectangle2D bounds = TextUtilities.getTextBounds(s, g2, fm);
             width = Math.max(width, bounds.getWidth());
             height += bounds.getHeight();
         }
@@ -1463,12 +1462,11 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
         double y = area.getMaxY() - height;
         g2.drawRect((int) x, (int) y, (int) width, (int) height);
         x += ANNOTATION_MARGIN;
-        for (Iterator it = this.cornerTextItems.iterator(); it.hasNext();) {
-            String msg = (String) it.next();
-            Rectangle2D bounds = TextUtilities.getTextBounds(msg, g2,
+        for (String s : this.cornerTextItems) {
+            Rectangle2D bounds = TextUtilities.getTextBounds(s, g2,
                     g2.getFontMetrics());
             y += bounds.getHeight();
-            g2.drawString(msg, (int) x, (int) y);
+            g2.drawString(s, (int) x, (int) y);
         }
     }
 
@@ -1920,8 +1918,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
             }
         }
 
-        clone.cornerTextItems = new ArrayList(this.cornerTextItems);
-       
+        clone.cornerTextItems = new ArrayList<String>(this.cornerTextItems);
+        // FIXME : after cloning, the old items won't be in the clone
         return clone;
     }
 
