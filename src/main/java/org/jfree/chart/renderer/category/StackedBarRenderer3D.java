@@ -320,33 +320,6 @@ public class StackedBarRenderer3D extends BarRenderer3D
      *
      * @param dataset  the dataset (<code>null</code> not permitted).
      * @param category  the category key (<code>null</code> not permitted).
-     * @param base  the base value.
-     * @param asPercentages  a flag that controls whether the values in the
-     *     list are converted to percentages of the total.
-     *
-     * @return The value list.
-     *
-     * @since 1.0.4
-     *
-     * @deprecated As of 1.0.13, use {@link #createStackedValueList(
-     *     CategoryDataset, Comparable, int[], double, boolean)}.
-     */
-    protected List createStackedValueList(CategoryDataset dataset,
-            Comparable category, double base, boolean asPercentages) {
-        int[] rows = new int[dataset.getRowCount()];
-        for (int i = 0; i < rows.length; i++) {
-            rows[i] = i;
-        }
-        return createStackedValueList(dataset, category, rows, base,
-                asPercentages);
-    }
-
-    /**
-     * Returns a list containing the stacked values for the specified series
-     * in the given dataset, plus the supplied base value.
-     *
-     * @param dataset  the dataset (<code>null</code> not permitted).
-     * @param category  the category key (<code>null</code> not permitted).
      * @param includedRows  the included rows.
      * @param base  the base value.
      * @param asPercentages  a flag that controls whether the values in the

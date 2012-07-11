@@ -514,42 +514,4 @@ public class StackedAreaRenderer extends AreaRenderer
         return super.equals(obj);
     }
 
-    /**
-     * Calculates the stacked value of the all series up to, but not including
-     * <code>series</code> for the specified category, <code>category</code>.
-     * It returns 0.0 if <code>series</code> is the first series, i.e. 0.
-     *
-     * @param dataset  the dataset (<code>null</code> not permitted).
-     * @param series  the series.
-     * @param category  the category.
-     *
-     * @return double returns a cumulative value for all series' values up to
-     *         but excluding <code>series</code> for Object
-     *         <code>category</code>.
-     *
-     * @deprecated As of 1.0.13, as the method is never used internally.
-     */
-    protected double getPreviousHeight(CategoryDataset dataset,
-            int series, int category) {
-
-        double result = 0.0;
-        Number n;
-        double total = 0.0;
-        if (this.renderAsPercentages) {
-            total = DataUtilities.calculateColumnTotal(dataset, category);
-        }
-        for (int i = 0; i < series; i++) {
-            n = dataset.getValue(i, category);
-            if (n != null) {
-                double v = n.doubleValue();
-                if (this.renderAsPercentages) {
-                    v = v / total;
-                }
-                result += v;
-            }
-        }
-        return result;
-
-    }
-
 }
