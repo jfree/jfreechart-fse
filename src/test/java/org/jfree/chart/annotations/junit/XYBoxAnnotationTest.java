@@ -24,18 +24,18 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ---------------------------
- * XYShapeAnnotationTests.java
- * ---------------------------
- * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
+ * -------------------------
+ * XYBoxAnnotationTests.java
+ * -------------------------
+ * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 29-Sep-2004 : Version 1 (DG);
- * 07-Jan-2005 : Added hashCode() test (DG);
+ * 19-Jan-2005 : Version 1 (DG);
+ * 26-Feb-2008 : Added testDrawWithNullInfo() method (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
  *
  */
@@ -45,7 +45,6 @@ package org.jfree.chart.annotations.junit;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.GradientPaint;
-import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -57,13 +56,19 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.annotations.XYShapeAnnotation;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.annotations.XYBoxAnnotation;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.xy.DefaultTableXYDataset;
+import org.jfree.data.xy.XYSeries;
 
 /**
- * Some tests for the {@link XYShapeAnnotation} class.
+ * Some tests for the {@link XYBoxAnnotation} class.
  */
-public class XYShapeAnnotationTests extends TestCase {
+public class XYBoxAnnotationTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -71,7 +76,7 @@ public class XYShapeAnnotationTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYShapeAnnotationTests.class);
+        return new TestSuite(XYBoxAnnotationTest.class);
     }
 
     /**
@@ -79,7 +84,7 @@ public class XYShapeAnnotationTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYShapeAnnotationTests(String name) {
+    public XYBoxAnnotationTest(String name) {
         super(name);
     }
 
@@ -88,33 +93,27 @@ public class XYShapeAnnotationTests extends TestCase {
      */
     public void testEquals() {
 
-        XYShapeAnnotation a1 = new XYShapeAnnotation(
-                new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0),
+        XYBoxAnnotation a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
                 new BasicStroke(1.2f), Color.red, Color.blue);
-        XYShapeAnnotation a2 = new XYShapeAnnotation(
-                new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0),
+        XYBoxAnnotation a2 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
                 new BasicStroke(1.2f), Color.red, Color.blue);
         assertTrue(a1.equals(a2));
         assertTrue(a2.equals(a1));
 
-        // shape
-        a1 = new XYShapeAnnotation(
-                new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0),
-                new BasicStroke(1.2f), Color.red, Color.blue);
+        // x0
+        a1 = new XYBoxAnnotation(2.0, 2.0, 3.0, 4.0, new BasicStroke(1.2f),
+                Color.red, Color.blue);
         assertFalse(a1.equals(a2));
-        a2 = new XYShapeAnnotation(
-                new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0),
-                new BasicStroke(1.2f), Color.red, Color.blue);
+        a2 = new XYBoxAnnotation(2.0, 2.0, 3.0, 4.0, new BasicStroke(1.2f),
+                Color.red, Color.blue);
         assertTrue(a1.equals(a2));
 
         // stroke
-        a1 = new XYShapeAnnotation(
-                new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0),
-                new BasicStroke(2.3f), Color.red, Color.blue);
+        a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0, new BasicStroke(2.3f),
+                Color.red, Color.blue);
         assertFalse(a1.equals(a2));
-        a2 = new XYShapeAnnotation(
-                new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0),
-                new BasicStroke(2.3f), Color.red, Color.blue);
+        a2 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0, new BasicStroke(2.3f),
+                Color.red, Color.blue);
         assertTrue(a1.equals(a2));
 
         GradientPaint gp1a = new GradientPaint(1.0f, 2.0f, Color.blue,
@@ -127,23 +126,19 @@ public class XYShapeAnnotationTests extends TestCase {
                 7.0f, 8.0f, Color.white);
 
         // outlinePaint
-        a1 = new XYShapeAnnotation(
-                new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0),
-                new BasicStroke(2.3f), gp1a, Color.blue);
+        a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0, new BasicStroke(2.3f),
+                gp1a, Color.blue);
         assertFalse(a1.equals(a2));
-        a2 = new XYShapeAnnotation(
-                new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0),
-                new BasicStroke(2.3f), gp1b, Color.blue);
+        a2 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0, new BasicStroke(2.3f),
+                gp1b, Color.blue);
         assertTrue(a1.equals(a2));
 
         // fillPaint
-        a1 = new XYShapeAnnotation(
-                new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0),
-                new BasicStroke(2.3f), gp1a, gp2a);
+        a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0, new BasicStroke(2.3f),
+                gp1a, gp2a);
         assertFalse(a1.equals(a2));
-        a2 = new XYShapeAnnotation(
-                new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0),
-                new BasicStroke(2.3f), gp1b, gp2b);
+        a2 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0, new BasicStroke(2.3f),
+                gp1b, gp2b);
         assertTrue(a1.equals(a2));
     }
 
@@ -151,11 +146,9 @@ public class XYShapeAnnotationTests extends TestCase {
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashCode() {
-        XYShapeAnnotation a1 = new XYShapeAnnotation(
-                new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0),
+        XYBoxAnnotation a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
                 new BasicStroke(1.2f), Color.red, Color.blue);
-        XYShapeAnnotation a2 = new XYShapeAnnotation(
-                new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0),
+        XYBoxAnnotation a2 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
                 new BasicStroke(1.2f), Color.red, Color.blue);
         assertTrue(a1.equals(a2));
         int h1 = a1.hashCode();
@@ -167,12 +160,11 @@ public class XYShapeAnnotationTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        XYShapeAnnotation a1 = new XYShapeAnnotation(
-                new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0),
+        XYBoxAnnotation a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
                 new BasicStroke(1.2f), Color.red, Color.blue);
-        XYShapeAnnotation a2 = null;
+        XYBoxAnnotation a2 = null;
         try {
-            a2 = (XYShapeAnnotation) a1.clone();
+            a2 = (XYBoxAnnotation) a1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -186,8 +178,7 @@ public class XYShapeAnnotationTests extends TestCase {
      * Checks that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        XYShapeAnnotation a1 = new XYShapeAnnotation(
-                new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0),
+        XYBoxAnnotation a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
                 new BasicStroke(1.2f), Color.red, Color.blue);
         assertTrue(a1 instanceof PublicCloneable);
     }
@@ -196,10 +187,10 @@ public class XYShapeAnnotationTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        XYShapeAnnotation a1 = new XYShapeAnnotation(
-                new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0),
+
+        XYBoxAnnotation a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
                 new BasicStroke(1.2f), Color.red, Color.blue);
-        XYShapeAnnotation a2 = null;
+        XYBoxAnnotation a2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -207,15 +198,54 @@ public class XYShapeAnnotationTests extends TestCase {
             out.writeObject(a1);
             out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            a2 = (XYShapeAnnotation) in.readObject();
+            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                    buffer.toByteArray()));
+            a2 = (XYBoxAnnotation) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(a1, a2);
+    }
+
+    /**
+     * Draws the chart with a <code>null</code> info object to make sure that
+     * no exceptions are thrown.
+     */
+    public void testDrawWithNullInfo() {
+        boolean success = false;
+        try {
+            DefaultTableXYDataset dataset = new DefaultTableXYDataset();
+
+            XYSeries s1 = new XYSeries("Series 1", true, false);
+            s1.add(5.0, 5.0);
+            s1.add(10.0, 15.5);
+            s1.add(15.0, 9.5);
+            s1.add(20.0, 7.5);
+            dataset.addSeries(s1);
+
+            XYSeries s2 = new XYSeries("Series 2", true, false);
+            s2.add(5.0, 5.0);
+            s2.add(10.0, 15.5);
+            s2.add(15.0, 9.5);
+            s2.add(20.0, 3.5);
+            dataset.addSeries(s2);
+            XYPlot plot = new XYPlot(dataset,
+                    new NumberAxis("X"), new NumberAxis("Y"),
+                    new XYLineAndShapeRenderer());
+            plot.addAnnotation(new XYBoxAnnotation(10.0, 12.0, 3.0, 4.0,
+                    new BasicStroke(1.2f), Color.red, Color.blue));
+            JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
+                    null);
+            success = true;
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+            success = false;
+        }
+        assertTrue(success);
     }
 
 }

@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * --------------------------------
- * CategoryTextAnnotationTests.java
- * --------------------------------
+ * --------------------------
+ * XYLineAnnotationTests.java
+ * --------------------------
  * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -42,6 +42,10 @@
 
 package org.jfree.chart.annotations.junit;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Stroke;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -53,14 +57,13 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.annotations.CategoryTextAnnotation;
-import org.jfree.chart.axis.CategoryAnchor;
+import org.jfree.chart.annotations.XYLineAnnotation;
 import org.jfree.chart.common.util.PublicCloneable;
 
 /**
- * Tests for the {@link CategoryTextAnnotation} class.
+ * Tests for the {@link XYLineAnnotation} class.
  */
-public class CategoryTextAnnotationTests extends TestCase {
+public class XYLineAnnotationTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -68,7 +71,7 @@ public class CategoryTextAnnotationTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(CategoryTextAnnotationTests.class);
+        return new TestSuite(XYLineAnnotationTest.class);
     }
 
     /**
@@ -76,7 +79,7 @@ public class CategoryTextAnnotationTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public CategoryTextAnnotationTests(String name) {
+    public XYLineAnnotationTest(String name) {
         super(name);
     }
 
@@ -84,41 +87,59 @@ public class CategoryTextAnnotationTests extends TestCase {
      * Confirm that the equals method can distinguish all the required fields.
      */
     public void testEquals() {
-
-        CategoryTextAnnotation a1 = new CategoryTextAnnotation("Test", 
-                "Category", 1.0);
-        CategoryTextAnnotation a2 = new CategoryTextAnnotation("Test", 
-                "Category", 1.0);
+        Stroke stroke = new BasicStroke(2.0f);
+        XYLineAnnotation a1 = new XYLineAnnotation(10.0, 20.0, 100.0, 200.0,
+                stroke, Color.blue);
+        XYLineAnnotation a2 = new XYLineAnnotation(10.0, 20.0, 100.0, 200.0,
+                stroke, Color.blue);
         assertTrue(a1.equals(a2));
+        assertTrue(a2.equals(a1));
 
-        // category
-        a1.setCategory("Category 2");
+        a1 = new XYLineAnnotation(11.0, 20.0, 100.0, 200.0, stroke, Color.blue);
         assertFalse(a1.equals(a2));
-        a2.setCategory("Category 2");
+        a2 = new XYLineAnnotation(11.0, 20.0, 100.0, 200.0, stroke, Color.blue);
         assertTrue(a1.equals(a2));
 
-        // categoryAnchor
-        a1.setCategoryAnchor(CategoryAnchor.START);
+        a1 = new XYLineAnnotation(11.0, 21.0, 100.0, 200.0, stroke, Color.blue);
         assertFalse(a1.equals(a2));
-        a2.setCategoryAnchor(CategoryAnchor.START);
+        a2 = new XYLineAnnotation(11.0, 21.0, 100.0, 200.0, stroke, Color.blue);
         assertTrue(a1.equals(a2));
 
-        // value
-        a1.setValue(0.15);
+        a1 = new XYLineAnnotation(11.0, 21.0, 101.0, 200.0, stroke, Color.blue);
         assertFalse(a1.equals(a2));
-        a2.setValue(0.15);
+        a2 = new XYLineAnnotation(11.0, 21.0, 101.0, 200.0, stroke, Color.blue);
         assertTrue(a1.equals(a2));
 
+        a1 = new XYLineAnnotation(11.0, 21.0, 101.0, 201.0, stroke, Color.blue);
+        assertFalse(a1.equals(a2));
+        a2 = new XYLineAnnotation(11.0, 21.0, 101.0, 201.0, stroke, Color.blue);
+        assertTrue(a1.equals(a2));
+
+        Stroke stroke2 = new BasicStroke(0.99f);
+        a1 = new XYLineAnnotation(11.0, 21.0, 101.0, 200.0, stroke2, Color.blue);
+        assertFalse(a1.equals(a2));
+        a2 = new XYLineAnnotation(11.0, 21.0, 101.0, 200.0, stroke2, Color.blue);
+        assertTrue(a1.equals(a2));
+
+        GradientPaint g1 = new GradientPaint(1.0f, 2.0f, Color.red,
+                3.0f, 4.0f, Color.white);
+        GradientPaint g2 = new GradientPaint(1.0f, 2.0f, Color.red,
+                3.0f, 4.0f, Color.white);
+        a1 = new XYLineAnnotation(11.0, 21.0, 101.0, 200.0, stroke2, g1);
+        assertFalse(a1.equals(a2));
+        a2 = new XYLineAnnotation(11.0, 21.0, 101.0, 200.0, stroke2, g2);
+        assertTrue(a1.equals(a2));
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
-    public void testHashcode() {
-        CategoryTextAnnotation a1 = new CategoryTextAnnotation("Test", 
-                "Category", 1.0);
-        CategoryTextAnnotation a2 = new CategoryTextAnnotation("Test", 
-                "Category", 1.0);
+    public void testHashCode() {
+        Stroke stroke = new BasicStroke(2.0f);
+        XYLineAnnotation a1 = new XYLineAnnotation(10.0, 20.0, 100.0, 200.0,
+                stroke, Color.blue);
+        XYLineAnnotation a2 = new XYLineAnnotation(10.0, 20.0, 100.0, 200.0,
+                stroke, Color.blue);
         assertTrue(a1.equals(a2));
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
@@ -129,14 +150,15 @@ public class CategoryTextAnnotationTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        CategoryTextAnnotation a1 = new CategoryTextAnnotation(
-                "Test", "Category", 1.0);
-        CategoryTextAnnotation a2 = null;
+        Stroke stroke = new BasicStroke(2.0f);
+        XYLineAnnotation a1 = new XYLineAnnotation(10.0, 20.0, 100.0, 200.0,
+                stroke, Color.blue);
+        XYLineAnnotation a2 = null;
         try {
-            a2 = (CategoryTextAnnotation) a1.clone();
+            a2 = (XYLineAnnotation) a1.clone();
         }
         catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            System.err.println("Failed to clone.");
         }
         assertTrue(a1 != a2);
         assertTrue(a1.getClass() == a2.getClass());
@@ -147,8 +169,9 @@ public class CategoryTextAnnotationTests extends TestCase {
      * Checks that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        CategoryTextAnnotation a1 = new CategoryTextAnnotation(
-                "Test", "Category", 1.0);
+        Stroke stroke = new BasicStroke(2.0f);
+        XYLineAnnotation a1 = new XYLineAnnotation(10.0, 20.0, 100.0, 200.0,
+                stroke, Color.blue);
         assertTrue(a1 instanceof PublicCloneable);
     }
 
@@ -156,9 +179,11 @@ public class CategoryTextAnnotationTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        CategoryTextAnnotation a1 = new CategoryTextAnnotation("Test", 
-                "Category", 1.0);
-        CategoryTextAnnotation a2 = null;
+
+        Stroke stroke = new BasicStroke(2.0f);
+        XYLineAnnotation a1 = new XYLineAnnotation(10.0, 20.0, 100.0, 200.0,
+                stroke, Color.blue);
+        XYLineAnnotation a2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -168,13 +193,14 @@ public class CategoryTextAnnotationTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            a2 = (CategoryTextAnnotation) in.readObject();
+            a2 = (XYLineAnnotation) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(a1, a2);
+
     }
 
 }

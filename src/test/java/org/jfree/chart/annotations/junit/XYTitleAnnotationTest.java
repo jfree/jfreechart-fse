@@ -64,7 +64,7 @@ import org.jfree.data.xy.XYSeries;
 /**
  * Tests for the {@link XYTitleAnnotation} class.
  */
-public class XYTitleAnnotationTests extends TestCase {
+public class XYTitleAnnotationTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -72,7 +72,7 @@ public class XYTitleAnnotationTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYTitleAnnotationTests.class);
+        return new TestSuite(XYTitleAnnotationTest.class);
     }
 
     /**
@@ -80,7 +80,7 @@ public class XYTitleAnnotationTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYTitleAnnotationTests(String name) {
+    public XYTitleAnnotationTest(String name) {
         super(name);
     }
 

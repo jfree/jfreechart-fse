@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -----------------------------------
- * CategoryPointerAnnotationTests.java
- * -----------------------------------
+ * -----------------------------
+ * XYPolygonAnnotationTests.java
+ * -----------------------------
  * (C) Copyright 2006-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -34,7 +34,7 @@
  *
  * Changes
  * -------
- * 02-Oct-2006 : Version 1 (DG);
+ * 10-Jul-2006 : Version 1 (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
  *
  */
@@ -43,6 +43,7 @@ package org.jfree.chart.annotations.junit;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Stroke;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -55,13 +56,13 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.annotations.CategoryPointerAnnotation;
+import org.jfree.chart.annotations.XYPolygonAnnotation;
 import org.jfree.chart.common.util.PublicCloneable;
 
 /**
- * Tests for the {@link CategoryPointerAnnotation} class.
+ * Tests for the {@link XYPolygonAnnotation} class.
  */
-public class CategoryPointerAnnotationTests extends TestCase {
+public class XYPolygonAnnotationTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -69,7 +70,7 @@ public class CategoryPointerAnnotationTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(CategoryPointerAnnotationTests.class);
+        return new TestSuite(XYPolygonAnnotationTest.class);
     }
 
     /**
@@ -77,7 +78,7 @@ public class CategoryPointerAnnotationTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public CategoryPointerAnnotationTests(String name) {
+    public XYPolygonAnnotationTest(String name) {
         super(name);
     }
 
@@ -85,87 +86,61 @@ public class CategoryPointerAnnotationTests extends TestCase {
      * Confirm that the equals method can distinguish all the required fields.
      */
     public void testEquals() {
-
-        CategoryPointerAnnotation a1 = new CategoryPointerAnnotation("Label",
-                "Key 1", 20.0, Math.PI);
-        CategoryPointerAnnotation a2 = new CategoryPointerAnnotation("Label",
-                "Key 1", 20.0, Math.PI);
+        Stroke stroke1 = new BasicStroke(2.0f);
+        Stroke stroke2 = new BasicStroke(2.5f);
+        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[] {1.0,
+                2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.red, Color.blue);
+        XYPolygonAnnotation a2 = new XYPolygonAnnotation(new double[] {1.0,
+                2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.red, Color.blue);
         assertTrue(a1.equals(a2));
+        assertTrue(a2.equals(a1));
 
-        a1 = new CategoryPointerAnnotation("Label2", "Key 1", 20.0, Math.PI);
+        a1 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
+                6.0}, stroke1, Color.red, Color.blue);
         assertFalse(a1.equals(a2));
-        a2 = new CategoryPointerAnnotation("Label2", "Key 1", 20.0, Math.PI);
+        a2 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
+                6.0}, stroke1, Color.red, Color.blue);
         assertTrue(a1.equals(a2));
 
-        a1.setCategory("Key 2");
+        a1 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
+                6.0}, stroke2, Color.red, Color.blue);
         assertFalse(a1.equals(a2));
-        a2.setCategory("Key 2");
+        a2 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
+                6.0}, stroke2, Color.red, Color.blue);
         assertTrue(a1.equals(a2));
 
-        a1.setValue(22.0);
+        GradientPaint gp1 = new GradientPaint(1.0f, 2.0f, Color.yellow, 3.0f,
+                4.0f, Color.white);
+        GradientPaint gp2 = new GradientPaint(1.0f, 2.0f, Color.yellow, 3.0f,
+                4.0f, Color.white);
+        a1 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
+                6.0}, stroke2, gp1, Color.blue);
         assertFalse(a1.equals(a2));
-        a2.setValue(22.0);
+        a2 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
+                6.0}, stroke2, gp2, Color.blue);
         assertTrue(a1.equals(a2));
 
-        //private double angle;
-        a1.setAngle(Math.PI / 4.0);
+        GradientPaint gp3 = new GradientPaint(1.0f, 2.0f, Color.green, 3.0f,
+                4.0f, Color.white);
+        GradientPaint gp4 = new GradientPaint(1.0f, 2.0f, Color.green, 3.0f,
+                4.0f, Color.white);
+        a1 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
+                6.0}, stroke2, gp1, gp3);
         assertFalse(a1.equals(a2));
-        a2.setAngle(Math.PI / 4.0);
+        a2 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
+                6.0}, stroke2, gp2, gp4);
         assertTrue(a1.equals(a2));
-
-        //private double tipRadius;
-        a1.setTipRadius(20.0);
-        assertFalse(a1.equals(a2));
-        a2.setTipRadius(20.0);
-        assertTrue(a1.equals(a2));
-
-        //private double baseRadius;
-        a1.setBaseRadius(5.0);
-        assertFalse(a1.equals(a2));
-        a2.setBaseRadius(5.0);
-        assertTrue(a1.equals(a2));
-
-        //private double arrowLength;
-        a1.setArrowLength(33.0);
-        assertFalse(a1.equals(a2));
-        a2.setArrowLength(33.0);
-        assertTrue(a1.equals(a2));
-
-        //private double arrowWidth;
-        a1.setArrowWidth(9.0);
-        assertFalse(a1.equals(a2));
-        a2.setArrowWidth(9.0);
-        assertTrue(a1.equals(a2));
-
-        //private Stroke arrowStroke;
-        Stroke stroke = new BasicStroke(1.5f);
-        a1.setArrowStroke(stroke);
-        assertFalse(a1.equals(a2));
-        a2.setArrowStroke(stroke);
-        assertTrue(a1.equals(a2));
-
-        //private Paint arrowPaint;
-        a1.setArrowPaint(Color.blue);
-        assertFalse(a1.equals(a2));
-        a2.setArrowPaint(Color.blue);
-        assertTrue(a1.equals(a2));
-
-        //private double labelOffset;
-        a1.setLabelOffset(10.0);
-        assertFalse(a1.equals(a2));
-        a2.setLabelOffset(10.0);
-        assertTrue(a1.equals(a2));
-
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashCode() {
-        CategoryPointerAnnotation a1 = new CategoryPointerAnnotation("Label",
-                "A", 20.0, Math.PI);
-        CategoryPointerAnnotation a2 = new CategoryPointerAnnotation("Label",
-                "A", 20.0, Math.PI);
+        Stroke stroke = new BasicStroke(2.0f);
+        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[] {1.0,
+                2.0, 3.0, 4.0, 5.0, 6.0}, stroke, Color.red, Color.blue);
+        XYPolygonAnnotation a2 = new XYPolygonAnnotation(new double[] {1.0,
+                2.0, 3.0, 4.0, 5.0, 6.0}, stroke, Color.red, Color.blue);
         assertTrue(a1.equals(a2));
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
@@ -176,11 +151,12 @@ public class CategoryPointerAnnotationTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        CategoryPointerAnnotation a1 = new CategoryPointerAnnotation("Label",
-                "A", 20.0, Math.PI);
-        CategoryPointerAnnotation a2 = null;
+        Stroke stroke1 = new BasicStroke(2.0f);
+        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[] {1.0,
+                2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.red, Color.blue);
+        XYPolygonAnnotation a2 = null;
         try {
-            a2 = (CategoryPointerAnnotation) a1.clone();
+            a2 = (XYPolygonAnnotation) a1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -194,8 +170,9 @@ public class CategoryPointerAnnotationTests extends TestCase {
      * Checks that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        CategoryPointerAnnotation a1 = new CategoryPointerAnnotation("Label",
-                "A", 20.0, Math.PI);
+        Stroke stroke1 = new BasicStroke(2.0f);
+        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[] {1.0,
+                2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.red, Color.blue);
         assertTrue(a1 instanceof PublicCloneable);
     }
 
@@ -204,9 +181,10 @@ public class CategoryPointerAnnotationTests extends TestCase {
      */
     public void testSerialization() {
 
-        CategoryPointerAnnotation a1 = new CategoryPointerAnnotation("Label",
-                "A", 20.0, Math.PI);
-        CategoryPointerAnnotation a2 = null;
+        Stroke stroke1 = new BasicStroke(2.0f);
+        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[] {1.0,
+                2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.red, Color.blue);
+        XYPolygonAnnotation a2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -214,9 +192,10 @@ public class CategoryPointerAnnotationTests extends TestCase {
             out.writeObject(a1);
             out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            a2 = (CategoryPointerAnnotation) in.readObject();
+            ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray())
+            );
+            a2 = (XYPolygonAnnotation) in.readObject();
             in.close();
         }
         catch (Exception e) {

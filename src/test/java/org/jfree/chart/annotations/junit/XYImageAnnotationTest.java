@@ -57,7 +57,7 @@ import org.jfree.chart.common.util.PublicCloneable;
 /**
  * Tests for the {@link XYImageAnnotation} class.
  */
-public class XYImageAnnotationTests extends TestCase {
+public class XYImageAnnotationTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -65,7 +65,7 @@ public class XYImageAnnotationTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYImageAnnotationTests.class);
+        return new TestSuite(XYImageAnnotationTest.class);
     }
 
     /**
@@ -73,7 +73,7 @@ public class XYImageAnnotationTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYImageAnnotationTests(String name) {
+    public XYImageAnnotationTest(String name) {
         super(name);
     }
 

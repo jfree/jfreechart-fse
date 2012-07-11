@@ -58,9 +58,9 @@ import org.jfree.chart.annotations.CategoryLineAnnotation;
 import org.jfree.chart.common.util.PublicCloneable;
 
 /**
- * Tests for the {@link CategoryLineAnnotationTests} class.
+ * Tests for the {@link CategoryLineAnnotationTest} class.
  */
-public class CategoryLineAnnotationTests extends TestCase {
+public class CategoryLineAnnotationTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -68,7 +68,7 @@ public class CategoryLineAnnotationTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(CategoryLineAnnotationTests.class);
+        return new TestSuite(CategoryLineAnnotationTest.class);
     }
 
     /**
@@ -76,7 +76,7 @@ public class CategoryLineAnnotationTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public CategoryLineAnnotationTests(String name) {
+    public CategoryLineAnnotationTest(String name) {
         super(name);
     }
 

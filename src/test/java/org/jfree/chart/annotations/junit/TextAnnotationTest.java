@@ -58,7 +58,7 @@ import org.jfree.chart.common.ui.TextAnchor;
 /**
  * Tests for the {@link TextAnnotation} class.
  */
-public class TextAnnotationTests extends TestCase {
+public class TextAnnotationTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -66,7 +66,7 @@ public class TextAnnotationTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(TextAnnotationTests.class);
+        return new TestSuite(TextAnnotationTest.class);
     }
 
     /**
@@ -74,7 +74,7 @@ public class TextAnnotationTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public TextAnnotationTests(String name) {
+    public TextAnnotationTest(String name) {
         super(name);
     }
 

@@ -64,7 +64,7 @@ import org.jfree.chart.common.util.PublicCloneable;
 /**
  * Tests for the {@link XYPointerAnnotation} class.
  */
-public class XYPointerAnnotationTests extends TestCase {
+public class XYPointerAnnotationTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -72,7 +72,7 @@ public class XYPointerAnnotationTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYPointerAnnotationTests.class);
+        return new TestSuite(XYPointerAnnotationTest.class);
     }
 
     /**
@@ -80,7 +80,7 @@ public class XYPointerAnnotationTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYPointerAnnotationTests(String name) {
+    public XYPointerAnnotationTest(String name) {
         super(name);
     }
 

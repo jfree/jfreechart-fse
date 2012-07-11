@@ -65,7 +65,7 @@ import org.jfree.chart.common.util.PublicCloneable;
 /**
  * Tests for the {@link XYDrawableAnnotation} class.
  */
-public class XYDrawableAnnotationTests extends TestCase {
+public class XYDrawableAnnotationTest extends TestCase {
 
     static class TestDrawable implements Drawable, Cloneable, Serializable {
         /**
@@ -116,7 +116,7 @@ public class XYDrawableAnnotationTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYDrawableAnnotationTests.class);
+        return new TestSuite(XYDrawableAnnotationTest.class);
     }
 
     /**
@@ -124,7 +124,7 @@ public class XYDrawableAnnotationTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYDrawableAnnotationTests(String name) {
+    public XYDrawableAnnotationTest(String name) {
         super(name);
     }
 

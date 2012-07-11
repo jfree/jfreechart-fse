@@ -133,7 +133,7 @@ public class StatisticsTests extends TestCase {
         // try a null collection
         boolean pass = false;
         try {
-            Statistics.calculateMean((Collection) null);
+            Statistics.calculateMean((Collection<Number>) null);
         }
         catch (IllegalArgumentException e) {
             pass = true;
@@ -142,7 +142,7 @@ public class StatisticsTests extends TestCase {
 
         pass = false;
         try {
-            Statistics.calculateMean((Collection) null, false);
+            Statistics.calculateMean((Collection<Number>) null, false);
         }
         catch (IllegalArgumentException e) {
             pass = true;
@@ -150,7 +150,7 @@ public class StatisticsTests extends TestCase {
         assertTrue(pass);
 
         // try an empty collection
-        List values = new ArrayList();
+        List<Number> values = new ArrayList<Number>();
         assertTrue(Double.isNaN(Statistics.calculateMean(values)));
         assertTrue(Double.isNaN(Statistics.calculateMean(values, true)));
         assertTrue(Double.isNaN(Statistics.calculateMean(values, false)));
@@ -176,7 +176,7 @@ public class StatisticsTests extends TestCase {
         assertEquals(9.0, Statistics.calculateMean(values, false), EPSILON);
 
         // try a collection with several numbers
-        values = new ArrayList();
+        values = new ArrayList<Number>();
         values.add(new Double(9.0));
         values.add(new Double(3.0));
         values.add(new Double(2.0));
@@ -201,7 +201,7 @@ public class StatisticsTests extends TestCase {
         assertTrue(Double.isNaN(Statistics.calculateMedian(null, true)));
 
         // check empty list
-        List list = new ArrayList();
+        List <Number>list = new ArrayList<Number>();
         assertTrue(Double.isNaN(Statistics.calculateMedian(list, false)));
         assertTrue(Double.isNaN(Statistics.calculateMedian(list, true)));
 
@@ -225,18 +225,6 @@ public class StatisticsTests extends TestCase {
         }
         assertTrue(pass);
 
-        // check a list containing a non-Number object
-        list.clear();
-        list.add("Not a number");
-        pass = false;
-        try {
-            Statistics.calculateMedian(list, false);
-        }
-        catch (ClassCastException e) {
-            pass = true;
-        }
-        assertTrue(pass);
-
         pass = false;
         try {
             Statistics.calculateMedian(list, true);
@@ -252,7 +240,7 @@ public class StatisticsTests extends TestCase {
      * A test for the calculateMedian() method.
      */
     public void testCalculateMedian1() {
-        List values = new ArrayList();
+        List<Number> values = new ArrayList<Number>();
         values.add(new Double(1.0));
         double median = Statistics.calculateMedian(values);
         assertEquals(1.0, median, 0.0000001);
@@ -262,7 +250,7 @@ public class StatisticsTests extends TestCase {
      * A test for the calculateMedian() method.
      */
     public void testCalculateMedian2() {
-        List values = new ArrayList();
+        List<Number> values = new ArrayList<Number>();
         values.add(new Double(2.0));
         values.add(new Double(1.0));
         double median = Statistics.calculateMedian(values);
@@ -273,7 +261,7 @@ public class StatisticsTests extends TestCase {
      * A test for the calculateMedian() method.
      */
     public void testCalculateMedian3() {
-        List values = new ArrayList();
+        List<Number> values = new ArrayList<Number>();
         values.add(new Double(1.0));
         values.add(new Double(2.0));
         values.add(new Double(3.0));
@@ -288,7 +276,7 @@ public class StatisticsTests extends TestCase {
      * A test for the calculateMedian() method.
      */
     public void testCalculateMedian4() {
-        List values = new ArrayList();
+        List<Number> values = new ArrayList<Number>();
         values.add(new Double(7.0));
         values.add(new Double(2.0));
         values.add(new Double(3.0));
@@ -304,7 +292,7 @@ public class StatisticsTests extends TestCase {
      * A test using some real data that caused a problem at one point.
      */
     public void testCalculateMedian5() {
-        List values = new ArrayList();
+        List<Number> values = new ArrayList<Number>();
         values.add(new Double(11.228692993861783));
         values.add(new Double(11.30823353859889));
         values.add(new Double(11.75312904769314));
@@ -351,7 +339,7 @@ public class StatisticsTests extends TestCase {
         values.add(new Double(11.326344465881341));
         double median = Statistics.calculateMedian(values, true);
         assertEquals(11.812413268425116, median, 0.000001);
-        Collections.sort(values);
+        Collections.sort((List) values);
         double median2 = Statistics.calculateMedian(values, false);
         assertEquals(11.812413268425116, median2, 0.000001);
     }
@@ -360,7 +348,7 @@ public class StatisticsTests extends TestCase {
      * A test for the calculateMedian() method.
      */
     public void testCalculateMedian6() {
-        List values = new ArrayList();
+        List<Number> values = new ArrayList<Number>();
         values.add(new Double(7.0));
         values.add(new Double(2.0));
         values.add(new Double(3.0));

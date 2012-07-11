@@ -24,18 +24,21 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -----------------------------
- * XYPolygonAnnotationTests.java
- * -----------------------------
- * (C) Copyright 2006-2008, by Object Refinery Limited and Contributors.
+ * --------------------------
+ * XYTextAnnotationTests.java
+ * --------------------------
+ * (C) Copyright 2003-2009, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 10-Jul-2006 : Version 1 (DG);
+ * 19-Aug-2003 : Version 1 (DG);
+ * 07-Jan-2005 : Added hashCode() test (DG);
+ * 26-Jan-2006 : Extended equals() test (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
+ * 12-Feb-2009 : Updated testEquals() (DG);
  *
  */
 
@@ -43,8 +46,8 @@ package org.jfree.chart.annotations.junit;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GradientPaint;
-import java.awt.Stroke;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -56,13 +59,14 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.annotations.XYPolygonAnnotation;
+import org.jfree.chart.annotations.XYTextAnnotation;
+import org.jfree.chart.common.ui.TextAnchor;
 import org.jfree.chart.common.util.PublicCloneable;
 
 /**
- * Tests for the {@link XYPolygonAnnotation} class.
+ * Tests for the {@link XYTextAnnotation} class.
  */
-public class XYPolygonAnnotationTests extends TestCase {
+public class XYTextAnnotationTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -70,7 +74,7 @@ public class XYPolygonAnnotationTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYPolygonAnnotationTests.class);
+        return new TestSuite(XYTextAnnotationTest.class);
     }
 
     /**
@@ -78,7 +82,7 @@ public class XYPolygonAnnotationTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYPolygonAnnotationTests(String name) {
+    public XYTextAnnotationTest(String name) {
         super(name);
     }
 
@@ -86,61 +90,90 @@ public class XYPolygonAnnotationTests extends TestCase {
      * Confirm that the equals method can distinguish all the required fields.
      */
     public void testEquals() {
-        Stroke stroke1 = new BasicStroke(2.0f);
-        Stroke stroke2 = new BasicStroke(2.5f);
-        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[] {1.0,
-                2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.red, Color.blue);
-        XYPolygonAnnotation a2 = new XYPolygonAnnotation(new double[] {1.0,
-                2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.red, Color.blue);
-        assertTrue(a1.equals(a2));
-        assertTrue(a2.equals(a1));
-
-        a1 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
-                6.0}, stroke1, Color.red, Color.blue);
-        assertFalse(a1.equals(a2));
-        a2 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
-                6.0}, stroke1, Color.red, Color.blue);
+        XYTextAnnotation a1 = new XYTextAnnotation("Text", 10.0, 20.0);
+        XYTextAnnotation a2 = new XYTextAnnotation("Text", 10.0, 20.0);
         assertTrue(a1.equals(a2));
 
-        a1 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
-                6.0}, stroke2, Color.red, Color.blue);
+        // text
+        a1 = new XYTextAnnotation("ABC", 10.0, 20.0);
         assertFalse(a1.equals(a2));
-        a2 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
-                6.0}, stroke2, Color.red, Color.blue);
+        a2 = new XYTextAnnotation("ABC", 10.0, 20.0);
         assertTrue(a1.equals(a2));
 
-        GradientPaint gp1 = new GradientPaint(1.0f, 2.0f, Color.yellow, 3.0f,
-                4.0f, Color.white);
-        GradientPaint gp2 = new GradientPaint(1.0f, 2.0f, Color.yellow, 3.0f,
-                4.0f, Color.white);
-        a1 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
-                6.0}, stroke2, gp1, Color.blue);
+        // x
+        a1 = new XYTextAnnotation("ABC", 11.0, 20.0);
         assertFalse(a1.equals(a2));
-        a2 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
-                6.0}, stroke2, gp2, Color.blue);
+        a2 = new XYTextAnnotation("ABC", 11.0, 20.0);
         assertTrue(a1.equals(a2));
 
-        GradientPaint gp3 = new GradientPaint(1.0f, 2.0f, Color.green, 3.0f,
-                4.0f, Color.white);
-        GradientPaint gp4 = new GradientPaint(1.0f, 2.0f, Color.green, 3.0f,
-                4.0f, Color.white);
-        a1 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
-                6.0}, stroke2, gp1, gp3);
+        // y
+        a1 = new XYTextAnnotation("ABC", 11.0, 22.0);
         assertFalse(a1.equals(a2));
-        a2 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
-                6.0}, stroke2, gp2, gp4);
+        a2 = new XYTextAnnotation("ABC", 11.0, 22.0);
         assertTrue(a1.equals(a2));
+
+        // font
+        a1.setFont(new Font("Serif", Font.PLAIN, 23));
+        assertFalse(a1.equals(a2));
+        a2.setFont(new Font("Serif", Font.PLAIN, 23));
+        assertTrue(a1.equals(a2));
+
+        // paint
+        GradientPaint gp1 = new GradientPaint(1.0f, 2.0f, Color.red, 3.0f,
+                4.0f, Color.yellow);
+        GradientPaint gp2 = new GradientPaint(1.0f, 2.0f, Color.red, 3.0f,
+                4.0f, Color.yellow);
+        a1.setPaint(gp1);
+        assertFalse(a1.equals(a2));
+        a2.setPaint(gp2);
+        assertTrue(a1.equals(a2));
+
+        // rotation anchor
+        a1.setRotationAnchor(TextAnchor.BASELINE_RIGHT);
+        assertFalse(a1.equals(a2));
+        a2.setRotationAnchor(TextAnchor.BASELINE_RIGHT);
+        assertTrue(a1.equals(a2));
+
+        // rotation angle
+        a1.setRotationAngle(12.3);
+        assertFalse(a1.equals(a2));
+        a2.setRotationAngle(12.3);
+        assertTrue(a1.equals(a2));
+
+        // text anchor
+        a1.setTextAnchor(TextAnchor.BASELINE_RIGHT);
+        assertFalse(a1.equals(a2));
+        a2.setTextAnchor(TextAnchor.BASELINE_RIGHT);
+        assertTrue(a1.equals(a2));
+
+        a1.setBackgroundPaint(gp1);
+        assertFalse(a1.equals(a2));
+        a2.setBackgroundPaint(gp1);
+        assertTrue(a1.equals(a2));
+
+        a1.setOutlinePaint(gp1);
+        assertFalse(a1.equals(a2));
+        a2.setOutlinePaint(gp1);
+        assertTrue(a1.equals(a2));
+
+        a1.setOutlineStroke(new BasicStroke(1.2f));
+        assertFalse(a1.equals(a2));
+        a2.setOutlineStroke(new BasicStroke(1.2f));
+        assertTrue(a1.equals(a2));
+
+        a1.setOutlineVisible(!a1.isOutlineVisible());
+        assertFalse(a1.equals(a2));
+        a2.setOutlineVisible(a1.isOutlineVisible());
+        assertTrue(a1.equals(a2));
+
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashCode() {
-        Stroke stroke = new BasicStroke(2.0f);
-        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[] {1.0,
-                2.0, 3.0, 4.0, 5.0, 6.0}, stroke, Color.red, Color.blue);
-        XYPolygonAnnotation a2 = new XYPolygonAnnotation(new double[] {1.0,
-                2.0, 3.0, 4.0, 5.0, 6.0}, stroke, Color.red, Color.blue);
+        XYTextAnnotation a1 = new XYTextAnnotation("Text", 10.0, 20.0);
+        XYTextAnnotation a2 = new XYTextAnnotation("Text", 10.0, 20.0);
         assertTrue(a1.equals(a2));
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
@@ -151,12 +184,10 @@ public class XYPolygonAnnotationTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        Stroke stroke1 = new BasicStroke(2.0f);
-        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[] {1.0,
-                2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.red, Color.blue);
-        XYPolygonAnnotation a2 = null;
+        XYTextAnnotation a1 = new XYTextAnnotation("Text", 10.0, 20.0);
+        XYTextAnnotation a2 = null;
         try {
-            a2 = (XYPolygonAnnotation) a1.clone();
+            a2 = (XYTextAnnotation) a1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -170,9 +201,7 @@ public class XYPolygonAnnotationTests extends TestCase {
      * Checks that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        Stroke stroke1 = new BasicStroke(2.0f);
-        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[] {1.0,
-                2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.red, Color.blue);
+        XYTextAnnotation a1 = new XYTextAnnotation("Text", 10.0, 20.0);
         assertTrue(a1 instanceof PublicCloneable);
     }
 
@@ -180,11 +209,10 @@ public class XYPolygonAnnotationTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-
-        Stroke stroke1 = new BasicStroke(2.0f);
-        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[] {1.0,
-                2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.red, Color.blue);
-        XYPolygonAnnotation a2 = null;
+        XYTextAnnotation a1 = new XYTextAnnotation("Text", 10.0, 20.0);
+        a1.setOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+                Color.blue));
+        XYTextAnnotation a2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -192,17 +220,15 @@ public class XYPolygonAnnotationTests extends TestCase {
             out.writeObject(a1);
             out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-            );
-            a2 = (XYPolygonAnnotation) in.readObject();
+            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                    buffer.toByteArray()));
+            a2 = (XYTextAnnotation) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(a1, a2);
-
     }
 
 }
