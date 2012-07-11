@@ -85,6 +85,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.jfree.chart.LegendItem;
@@ -161,7 +162,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
                     "org.jfree.chart.plot.LocalizationBundle");
 
     /** The angles that are marked with gridlines. */
-    private List angleTicks;
+    private List<ValueTick> angleTicks;
 
     /** The range axis (used for the y-values). */
     private ObjectList axes;
@@ -1269,7 +1270,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      *
      * @param indices  the list of indices (<code>null</code> permitted).
      */
-    private void checkAxisIndices(List indices) {
+    private void checkAxisIndices(List<Integer> indices) {
         // axisIndices can be:
         // 1.  null;
         // 2.  non-empty, containing only Integer objects that are unique.
@@ -1280,17 +1281,12 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
         if (count == 0) {
             throw new IllegalArgumentException("Empty list not permitted.");
         }
-        HashSet set = new HashSet();
-        for (int i = 0; i < count; i++) {
-            Object item = indices.get(i);
-            if (!(item instanceof Integer)) {
-                throw new IllegalArgumentException(
-                        "Indices must be Integer instances.");
-            }
-            if (set.contains(item)) {
+        Set<Integer> set = new HashSet<Integer>();
+        for (Integer i : indices) {
+            if (set.contains(i)) {
                 throw new IllegalArgumentException("Indices must be unique.");
             }
-            set.add(item);
+            set.add(i);
         }
     }
 
@@ -1586,7 +1582,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      * @param radialTicks  the ticks for the radial axis.
      */
     protected void drawGridlines(Graphics2D g2, Rectangle2D dataArea,
-                                 List<ValueTick> angularTicks, List radialTicks) {
+            List<ValueTick> angularTicks, List<ValueTick> radialTicks) {
 
         PolarItemRenderer renderer = getRenderer();
         // no renderer, no gridlines...
@@ -1609,7 +1605,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
             Stroke gridStroke = getRadiusGridlineStroke();
             Paint gridPaint = getRadiusGridlinePaint();
             if ((gridStroke != null) && (gridPaint != null)) {
-                List ticks = buildRadialTicks(radialTicks);
+                List<ValueTick> ticks = buildRadialTicks(radialTicks);
                 renderer.drawRadialGridLines(g2, this, getAxis(),
                         ticks, dataArea);
             }
@@ -1625,15 +1621,13 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      * @return Ticks to use for radial gridlines.
      * @since 1.0.15
      */
-    protected List buildRadialTicks(List allTicks)
-    {
-        List ticks = new ArrayList();
-        Iterator it = allTicks.iterator();
-        while (it.hasNext()) {
-            ValueTick tick = (ValueTick) it.next();
+    protected List<ValueTick> buildRadialTicks(List<ValueTick> allTicks) {
+        List<ValueTick> ticks = new ArrayList<ValueTick>();
+        for (ValueTick tick : allTicks) {
             if (isRadiusMinorGridlinesVisible() ||
-                    TickType.MAJOR.equals(tick.getTickType()))
+                    TickType.MAJOR.equals(tick.getTickType())) {
                 ticks.add(tick);
+            }
         }
         return ticks;
     }

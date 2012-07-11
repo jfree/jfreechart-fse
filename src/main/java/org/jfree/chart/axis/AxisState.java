@@ -59,7 +59,7 @@ public class AxisState {
     private double cursor;
 
     /** The axis ticks. */
-    private List ticks;
+    private List<ValueTick> ticks;
 
     /** The maximum width/height. */
     private double max;
@@ -78,7 +78,7 @@ public class AxisState {
      */
     public AxisState(double cursor) {
         this.cursor = cursor;
-        this.ticks = new java.util.ArrayList();
+        this.ticks = new java.util.ArrayList<ValueTick>();
     }
 
     /**
@@ -161,7 +161,7 @@ public class AxisState {
      *
      * @return The list of ticks.
      */
-    public List getTicks() {
+    public List<ValueTick> getTicks() {
         return this.ticks;
     }
 
@@ -170,7 +170,7 @@ public class AxisState {
      *
      * @param ticks  the ticks.
      */
-    public void setTicks(List ticks) {
+    public void setTicks(List<ValueTick> ticks) {
         this.ticks = ticks;
     }
 
