@@ -353,8 +353,23 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     @Override
 	public void setSeriesItemLabelGenerator(int series,
                                             XYItemLabelGenerator generator) {
+        setSeriesItemLabelGenerator(series, generator, true);
+    }
+
+    /**
+     * Sets the item label generator for a series and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param series  the series index (zero based).
+     * @param generator  the generator (<code>null</code> permitted).
+     */
+    @Override
+	public void setSeriesItemLabelGenerator(int series,
+                XYItemLabelGenerator generator, boolean notify) {
         this.itemLabelGeneratorList.set(series, generator);
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     /**
@@ -375,8 +390,22 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     @Override
 	public void setBaseItemLabelGenerator(XYItemLabelGenerator generator) {
+        setBaseItemLabelGenerator(generator, true);
+    }
+
+    /**
+     * Sets the base item label generator and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param generator  the generator (<code>null</code> permitted).
+     */
+    @Override
+	public void setBaseItemLabelGenerator(XYItemLabelGenerator generator, 
+	        boolean notify) {
         this.baseItemLabelGenerator = generator;
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     // TOOL TIP GENERATOR
@@ -423,8 +452,23 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     @Override
 	public void setSeriesToolTipGenerator(int series,
                                           XYToolTipGenerator generator) {
+        setSeriesToolTipGenerator(series, generator, true);
+    }
+
+    /**
+     * Sets the tool tip generator for a series and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param series  the series index (zero based).
+     * @param generator  the generator (<code>null</code> permitted).
+     */
+    @Override
+	public void setSeriesToolTipGenerator(int series,
+                XYToolTipGenerator generator, boolean notify) {
         this.toolTipGeneratorList.set(series, generator);
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     /**
@@ -449,8 +493,24 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     @Override
 	public void setBaseToolTipGenerator(XYToolTipGenerator generator) {
+        setBaseToolTipGenerator(generator, true);
+    }
+
+    /**
+     * Sets the base tool tip generator and sends a {@link RendererChangeEvent}
+     * to all registered listeners.
+     *
+     * @param generator  the generator (<code>null</code> permitted).
+     *
+     * @see #getBaseToolTipGenerator()
+     */
+    @Override
+	public void setBaseToolTipGenerator(XYToolTipGenerator generator, 
+	        boolean notify) {
         this.baseToolTipGenerator = generator;
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     // URL GENERATOR
@@ -473,8 +533,21 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     @Override
 	public void setURLGenerator(XYURLGenerator urlGenerator) {
+        setURLGenerator(urlGenerator, true);
+    }
+
+    /**
+     * Sets the URL generator for HTML image maps and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param urlGenerator  the URL generator (<code>null</code> permitted).
+     */
+    @Override
+	public void setURLGenerator(XYURLGenerator urlGenerator, boolean notify) {
         this.urlGenerator = urlGenerator;
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     /**
@@ -609,11 +682,27 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     @Override
 	public void setLegendItemLabelGenerator(XYSeriesLabelGenerator generator) {
+        setLegendItemLabelGenerator(generator, true);
+    }
+
+    /**
+     * Sets the legend item label generator and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param generator  the generator (<code>null</code> not permitted).
+     *
+     * @see #getLegendItemLabelGenerator()
+     */
+    @Override
+	public void setLegendItemLabelGenerator(XYSeriesLabelGenerator generator,
+	        boolean notify) {
         if (generator == null) {
             throw new IllegalArgumentException("Null 'generator' argument.");
         }
         this.legendItemLabelGenerator = generator;
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     /**

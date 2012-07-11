@@ -391,7 +391,7 @@ public interface XYItemRenderer extends LegendItemSource {
      */
     public void setSeriesPaint(int series, Paint paint);
 
-    // FIXME: add setSeriesPaint(int, Paint, boolean)?
+    public void setSeriesPaint(int series, Paint paint, boolean notify);
 
     /**
      * Returns the base paint.
@@ -412,57 +412,58 @@ public interface XYItemRenderer extends LegendItemSource {
      */
     public void setBasePaint(Paint paint);
 
-    // FIXME: add setBasePaint(int, Paint, boolean)?
+    public void setBasePaint(Paint paint, boolean notify);
 
-//    // FILL PAINT
-//
-//    /**
-//     * Returns the paint used to fill data items as they are drawn.
-//     *
-//     * @param row  the row (or series) index (zero-based).
-//     * @param column  the column (or category) index (zero-based).
-//     *
-//     * @return The paint (never <code>null</code>).
-//     */
-//    public Paint getItemFillPaint(int row, int column);
-//
-//    /**
-//     * Returns the paint used to fill an item drawn by the renderer.
-//     *
-//     * @param series  the series index (zero-based).
-//     *
-//     * @return The paint (possibly <code>null</code>).
-//     */
-//    public Paint getSeriesFillPaint(int series);
-//
-//    /**
-//     * Sets the paint used for a series and sends a
-//     * {@link RendererChangeEvent} to all registered listeners.
-//     *
-//     * @param series  the series index (zero-based).
-//     * @param paint  the paint (<code>null</code> permitted).
-//     */
-//    public void setSeriesFillPaint(int series, Paint paint);
-//
-//    // FIXME: add setSeriesFillPaint(int, Paint, boolean)?
-//
-//    /**
-//     * Returns the base paint.
-//     *
-//     * @return The base paint (never <code>null</code>).
-//     */
-//    public Paint getBaseFillPaint();
-//
-//    /**
-//     * Sets the base paint and sends a {@link RendererChangeEvent} to all
-//     * registered listeners.
-//     *
-//     * @param paint  the paint (<code>null</code> not permitted).
-//     */
-//    public void setBaseFillPaint(Paint paint);
-//
-//    // FIXME: add setBaseFillPaint(int, Paint, boolean)?
+    // FILL PAINT
 
+    /**
+     * Returns the paint used to fill data items as they are drawn.
+     *
+     * @param row  the row (or series) index (zero-based).
+     * @param column  the column (or category) index (zero-based).
+     *
+     * @return The paint (never <code>null</code>).
+     */
+    public Paint getItemFillPaint(int row, int column);
+
+    /**
+     * Returns the paint used to fill an item drawn by the renderer.
+     *
+     * @param series  the series index (zero-based).
+     *
+     * @return The paint (possibly <code>null</code>).
+     */
+    public Paint getSeriesFillPaint(int series);
+
+    /**
+     * Sets the paint used for a series and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param series  the series index (zero-based).
+     * @param paint  the paint (<code>null</code> permitted).
+     */
+    public void setSeriesFillPaint(int series, Paint paint);
+
+    public void setSeriesFillPaint(int series, Paint paint, boolean notify);
+
+    /**
+     * Returns the base paint.
+     *
+     * @return The base paint (never <code>null</code>).
+     */
+    public Paint getBaseFillPaint();
+
+    /**
+     * Sets the base paint and sends a {@link RendererChangeEvent} to all
+     * registered listeners.
+     *
+     * @param paint  the paint (<code>null</code> not permitted).
+     */
+    public void setBaseFillPaint(Paint paint);
+
+    public void setBaseFillPaint(Paint paint, boolean notify);
+
+    
     //// OUTLINE PAINT ////////////////////////////////////////////////////////
 
     /**
@@ -497,7 +498,7 @@ public interface XYItemRenderer extends LegendItemSource {
      */
     public void setSeriesOutlinePaint(int series, Paint paint);
 
-    // FIXME: add setSeriesOutlinePaint(int, Paint, boolean)?
+    public void setSeriesOutlinePaint(int series, Paint paint, boolean notify);
 
     /**
      * Returns the base outline paint.
@@ -518,7 +519,7 @@ public interface XYItemRenderer extends LegendItemSource {
      */
     public void setBaseOutlinePaint(Paint paint);
 
-    // FIXME: add setBaseOutlinePaint(Paint, boolean)?
+    public void setBaseOutlinePaint(Paint paint, boolean notify);
 
     //// STROKE ///////////////////////////////////////////////////////////////
 
@@ -554,7 +555,7 @@ public interface XYItemRenderer extends LegendItemSource {
      */
     public void setSeriesStroke(int series, Stroke stroke);
 
-    // FIXME: add setSeriesStroke(int, Stroke, boolean) ?
+    public void setSeriesStroke(int series, Stroke stroke, boolean notify);
 
     /**
      * Returns the base stroke.
@@ -575,7 +576,8 @@ public interface XYItemRenderer extends LegendItemSource {
      */
     public void setBaseStroke(Stroke stroke);
 
-    // FIXME: add setBaseStroke(Stroke, boolean) ?
+    public void setBaseStroke(Stroke stroke, boolean notify);
+
 
     //// OUTLINE STROKE ///////////////////////////////////////////////////////
 
@@ -613,7 +615,8 @@ public interface XYItemRenderer extends LegendItemSource {
      */
     public void setSeriesOutlineStroke(int series, Stroke stroke);
 
-    // FIXME: add setSeriesOutlineStroke(int, Stroke, boolean) ?
+    public void setSeriesOutlineStroke(int series, Stroke stroke, 
+            boolean notify);
 
     /**
      * Returns the base outline stroke.
@@ -634,7 +637,8 @@ public interface XYItemRenderer extends LegendItemSource {
      */
     public void setBaseOutlineStroke(Stroke stroke);
 
-    // FIXME: add setBaseOutlineStroke(Stroke, boolean) ?
+    public void setBaseOutlineStroke(Stroke stroke, boolean notify);
+
 
     //// SHAPE ////////////////////////////////////////////////////////////////
 
@@ -670,7 +674,7 @@ public interface XYItemRenderer extends LegendItemSource {
      */
     public void setSeriesShape(int series, Shape shape);
 
-    // FIXME: add setSeriesShape(int, Shape, boolean) ?
+    public void setSeriesShape(int series, Shape shape, boolean notify);
 
     /**
      * Returns the base shape.
@@ -691,7 +695,7 @@ public interface XYItemRenderer extends LegendItemSource {
      */
     public void setBaseShape(Shape shape);
 
-    // FIXME: add setBaseShape(Shape, boolean) ?
+    public void setBaseShape(Shape shape, boolean notify);
 
 
     //// LEGEND ITEMS /////////////////////////////////////////////////////////
@@ -726,7 +730,10 @@ public interface XYItemRenderer extends LegendItemSource {
      */
     public void setLegendItemLabelGenerator(XYSeriesLabelGenerator generator);
 
+    public void setLegendItemLabelGenerator(XYSeriesLabelGenerator generator,
+    		boolean notify);
 
+    
     //// TOOL TIP GENERATOR ///////////////////////////////////////////////////
 
     /**
@@ -760,7 +767,10 @@ public interface XYItemRenderer extends LegendItemSource {
      * @see #getSeriesToolTipGenerator(int)
      */
     public void setSeriesToolTipGenerator(int series,
-                                          XYToolTipGenerator generator);
+            XYToolTipGenerator generator);
+
+    public void setSeriesToolTipGenerator(int series,
+            XYToolTipGenerator generator, boolean notify);
 
     /**
      * Returns the base tool tip generator.
@@ -781,8 +791,10 @@ public interface XYItemRenderer extends LegendItemSource {
      */
     public void setBaseToolTipGenerator(XYToolTipGenerator generator);
 
-    //// URL GENERATOR ////////////////////////////////////////////////////////
+    public void setBaseToolTipGenerator(XYToolTipGenerator generator, 
+    		boolean notify);
 
+    //// URL GENERATOR ////////////////////////////////////////////////////////
 
     /**
      * Returns the URL generator for HTML image maps.
@@ -798,6 +810,9 @@ public interface XYItemRenderer extends LegendItemSource {
      */
     public void setURLGenerator(XYURLGenerator urlGenerator);
 
+    public void setURLGenerator(XYURLGenerator urlGenerator, boolean notify);
+ 
+    
     //// ITEM LABELS VISIBLE //////////////////////////////////////////////////
 
     /**
@@ -932,7 +947,8 @@ public interface XYItemRenderer extends LegendItemSource {
     public void setSeriesItemLabelGenerator(int series,
                                             XYItemLabelGenerator generator);
 
-    // FIXME:
+    public void setSeriesItemLabelGenerator(int series,
+            XYItemLabelGenerator generator, boolean notify);
 
     /**
      * Returns the base item label generator.
@@ -953,6 +969,10 @@ public interface XYItemRenderer extends LegendItemSource {
      */
     public void setBaseItemLabelGenerator(XYItemLabelGenerator generator);
 
+    public void setBaseItemLabelGenerator(XYItemLabelGenerator generator, 
+            boolean notify);
+
+    
     //// ITEM LABEL FONT ///////////////////////////////////////////////////////
 
     /**
@@ -985,6 +1005,8 @@ public interface XYItemRenderer extends LegendItemSource {
      */
     public void setSeriesItemLabelFont(int series, Font font);
 
+    public void setSeriesItemLabelFont(int series, Font font, boolean notify);
+
     /**
      * Returns the base item label font (this is used when no other font
      * setting is available).
@@ -1005,6 +1027,9 @@ public interface XYItemRenderer extends LegendItemSource {
      */
     public void setBaseItemLabelFont(Font font);
 
+    public void setBaseItemLabelFont(Font font, boolean notify);
+
+    
     //// ITEM LABEL PAINT  /////////////////////////////////////////////////////
 
     /**
@@ -1039,6 +1064,9 @@ public interface XYItemRenderer extends LegendItemSource {
      */
     public void setSeriesItemLabelPaint(int series, Paint paint);
 
+    public void setSeriesItemLabelPaint(int series, Paint paint, 
+            boolean notify);
+
     /**
      * Returns the base item label paint.
      *
@@ -1054,6 +1082,9 @@ public interface XYItemRenderer extends LegendItemSource {
      */
     public void setBaseItemLabelPaint(Paint paint);
 
+    public void setBaseItemLabelPaint(Paint paint, boolean notify);
+
+    
     // POSITIVE ITEM LABEL POSITION...
 
     /**
@@ -1095,8 +1126,7 @@ public interface XYItemRenderer extends LegendItemSource {
      * @param notify  notify registered listeners?
      */
     public void setSeriesPositiveItemLabelPosition(int series,
-                                                   ItemLabelPosition position,
-                                                   boolean notify);
+            ItemLabelPosition position, boolean notify);
 
     /**
      * Returns the base positive item label position.
@@ -1166,8 +1196,7 @@ public interface XYItemRenderer extends LegendItemSource {
      * @param notify  notify registered listeners?
      */
     public void setSeriesNegativeItemLabelPosition(int series,
-                                                   ItemLabelPosition position,
-                                                   boolean notify);
+            ItemLabelPosition position, boolean notify);
 
     /**
      * Returns the base item label position for negative values.
@@ -1196,22 +1225,21 @@ public interface XYItemRenderer extends LegendItemSource {
 
 
     // CREATE ENTITIES
-    // FIXME:  these methods should be defined
 
-//    public boolean getItemCreateEntity(int series, int item);
-//
-//    public Boolean getSeriesCreateEntities(int series);
-//
-//    public void setSeriesCreateEntities(int series, Boolean create);
-//
-//    public void setSeriesCreateEntities(int series, Boolean create,
-//            boolean notify);
-//
-//    public boolean getBaseCreateEntities();
-//
-//    public void setBaseCreateEntities(boolean create);
-//
-//    public void setBaseCreateEntities(boolean create, boolean notify);
+    public boolean getItemCreateEntity(int series, int item);
+
+    public Boolean getSeriesCreateEntities(int series);
+
+    public void setSeriesCreateEntities(int series, Boolean create);
+
+    public void setSeriesCreateEntities(int series, Boolean create,
+            boolean notify);
+
+    public boolean getBaseCreateEntities();
+
+    public void setBaseCreateEntities(boolean create);
+
+    public void setBaseCreateEntities(boolean create, boolean notify);
 
     //// ANNOTATIONS //////////////////////////////////////////////////////////
 
