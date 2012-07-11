@@ -118,7 +118,7 @@ public abstract class Statistics {
      *
      * @return The mean.
      */
-    public static double calculateMean(Collection values) {
+    public static double calculateMean(Collection<Number> values) {
         return calculateMean(values, true);
     }
 
@@ -135,7 +135,7 @@ public abstract class Statistics {
      *
      * @since 1.0.3
      */
-    public static double calculateMean(Collection values,
+    public static double calculateMean(Collection<Number> values,
             boolean includeNullAndNaN) {
 
         if (values == null) {
@@ -143,29 +143,26 @@ public abstract class Statistics {
         }
         int count = 0;
         double total = 0.0;
-        Iterator iterator = values.iterator();
-        while (iterator.hasNext()) {
-            Object object = iterator.next();
-            if (object == null) {
+        for (Number n : values) {
+            if (n == null) {
+            	if (includeNullAndNaN) {
+                    return Double.NaN;
+            	}
+            	else {
+            		continue;
+            	}
+            }
+            double value = n.doubleValue();
+            if (Double.isNaN(value)) {
                 if (includeNullAndNaN) {
                     return Double.NaN;
                 }
-            }
-            else {
-                if (object instanceof Number) {
-                    Number number = (Number) object;
-                    double value = number.doubleValue();
-                    if (Double.isNaN(value)) {
-                        if (includeNullAndNaN) {
-                            return Double.NaN;
-                        }
-                    }
-                    else {
-                        total = total + number.doubleValue();
-                        count = count + 1;
-                    }
+                else {
+                	continue;
                 }
             }
+            total = total + value;
+            count = count + 1;
         }
         return total / count;
     }
@@ -181,7 +178,7 @@ public abstract class Statistics {
      *
      * @return The median.
      */
-    public static double calculateMedian(List values) {
+    public static double calculateMedian(List<Number> values) {
         return calculateMedian(values, true);
     }
 
@@ -196,37 +193,34 @@ public abstract class Statistics {
      *
      * @return The median.
      */
-    public static double calculateMedian(List values, boolean copyAndSort) {
+    public static double calculateMedian(List<Number> values, 
+            boolean copyAndSort) {
 
+        if (values == null) {
+        	return Double.NaN;
+        }
         double result = Double.NaN;
-        if (values != null) {
-            if (copyAndSort) {
-                int itemCount = values.size();
-                List copy = new ArrayList(itemCount);
-                for (int i = 0; i < itemCount; i++) {
-                    copy.add(i, values.get(i));
-                }
-                Collections.sort(copy);
-                values = copy;
-            }
-            int count = values.size();
-            if (count > 0) {
-                if (count % 2 == 1) {
-                    if (count > 1) {
-                        Number value = (Number) values.get((count - 1) / 2);
-                        result = value.doubleValue();
-                    }
-                    else {
-                        Number value = (Number) values.get(0);
-                        result = value.doubleValue();
-                    }
+        if (copyAndSort) {
+            List<Number> copy = new ArrayList<Number>(values);
+            Collections.sort((List) copy);
+            values = copy;
+        }
+        int count = values.size();
+        if (count > 0) {
+            if (count % 2 == 1) {
+                if (count > 1) {
+                    Number value = values.get((count - 1) / 2);
+                    result = value.doubleValue();
                 }
                 else {
-                    Number value1 = (Number) values.get(count / 2 - 1);
-                    Number value2 = (Number) values.get(count / 2);
-                    result = (value1.doubleValue() + value2.doubleValue())
-                             / 2.0;
+                    Number value = values.get(0);
+                    result = value.doubleValue();
                 }
+            }
+            else {
+                Number value1 = values.get(count / 2 - 1);
+                Number value2 = values.get(count / 2);
+                result = (value1.doubleValue() + value2.doubleValue()) / 2.0;
             }
         }
         return result;
@@ -243,7 +237,7 @@ public abstract class Statistics {
      *
      * @return The median.
      */
-    public static double calculateMedian(List values, int start, int end) {
+    public static double calculateMedian(List<Number> values, int start, int end) {
         return calculateMedian(values, start, end, true);
     }
 
@@ -260,16 +254,16 @@ public abstract class Statistics {
      *
      * @return The median.
      */
-    public static double calculateMedian(List values, int start, int end,
-                                         boolean copyAndSort) {
+    public static double calculateMedian(List<Number> values, 
+            int start, int end, boolean copyAndSort) {
 
         double result = Double.NaN;
         if (copyAndSort) {
-            List working = new ArrayList(end - start + 1);
+            List<Number> working = new ArrayList<Number>(end - start + 1);
             for (int i = start; i <= end; i++) {
                 working.add(values.get(i));
             }
-            Collections.sort(working);
+            Collections.sort((List) working);
             result = calculateMedian(working, false);
         }
         else {
@@ -277,20 +271,18 @@ public abstract class Statistics {
             if (count > 0) {
                 if (count % 2 == 1) {
                     if (count > 1) {
-                        Number value
-                            = (Number) values.get(start + (count - 1) / 2);
+                        Number value = values.get(start + (count - 1) / 2);
                         result = value.doubleValue();
                     }
                     else {
-                        Number value = (Number) values.get(start);
+                        Number value = values.get(start);
                         result = value.doubleValue();
                     }
                 }
                 else {
-                    Number value1 = (Number) values.get(start + count / 2 - 1);
-                    Number value2 = (Number) values.get(start + count / 2);
-                    result
-                        = (value1.doubleValue() + value2.doubleValue()) / 2.0;
+                    Number v1 = values.get(start + count / 2 - 1);
+                    Number v2 = values.get(start + count / 2);
+                    result = (v1.doubleValue() + v2.doubleValue()) / 2.0;
                 }
             }
         }
