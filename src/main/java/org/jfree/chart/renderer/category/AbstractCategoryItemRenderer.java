@@ -320,8 +320,25 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     @Override
 	public void setSeriesItemLabelGenerator(int series,
                                         CategoryItemLabelGenerator generator) {
+        setSeriesItemLabelGenerator(series, generator, true);
+    }
+
+    /**
+     * Sets the item label generator for a series and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param series  the series index (zero based).
+     * @param generator  the generator (<code>null</code> permitted).
+     *
+     * @see #getSeriesItemLabelGenerator(int)
+     */
+    @Override
+	public void setSeriesItemLabelGenerator(int series,
+                CategoryItemLabelGenerator generator, boolean notify) {
         this.itemLabelGeneratorList.set(series, generator);
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     /**
@@ -346,9 +363,25 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
 	public void setBaseItemLabelGenerator(
-            CategoryItemLabelGenerator generator) {
+	        CategoryItemLabelGenerator generator) {
+        setBaseItemLabelGenerator(generator, true);
+    }
+
+    /**
+     * Sets the base item label generator and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param generator  the generator (<code>null</code> permitted).
+     *
+     * @see #getBaseItemLabelGenerator()
+     */
+    @Override
+	public void setBaseItemLabelGenerator(
+	        CategoryItemLabelGenerator generator, boolean notify) {
         this.baseItemLabelGenerator = generator;
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     // TOOL TIP GENERATOR
@@ -402,8 +435,25 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     @Override
 	public void setSeriesToolTipGenerator(int series,
                                           CategoryToolTipGenerator generator) {
+        setSeriesToolTipGenerator(series, generator, true);
+    }
+
+    /**
+     * Sets the tool tip generator for a series and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param series  the series index (zero-based).
+     * @param generator  the generator (<code>null</code> permitted).
+     *
+     * @see #getSeriesToolTipGenerator(int)
+     */
+    @Override
+	public void setSeriesToolTipGenerator(int series,
+                CategoryToolTipGenerator generator, boolean notify) {
         this.toolTipGeneratorList.set(series, generator);
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     /**
@@ -428,8 +478,24 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
 	public void setBaseToolTipGenerator(CategoryToolTipGenerator generator) {
+        setBaseToolTipGenerator(generator, true);
+    }
+
+    /**
+     * Sets the base tool tip generator and sends a {@link RendererChangeEvent}
+     * to all registered listeners.
+     *
+     * @param generator  the generator (<code>null</code> permitted).
+     *
+     * @see #getBaseToolTipGenerator()
+     */
+    @Override
+	public void setBaseToolTipGenerator(CategoryToolTipGenerator generator,
+	        boolean notify) {
         this.baseToolTipGenerator = generator;
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     // URL GENERATOR
@@ -482,8 +548,25 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     @Override
 	public void setSeriesItemURLGenerator(int series,
                                           CategoryURLGenerator generator) {
+        setSeriesItemURLGenerator(series, generator, true);
+    }
+
+    /**
+     * Sets the URL generator for a series and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param series  the series index (zero based).
+     * @param generator  the generator.
+     *
+     * @see #getSeriesItemURLGenerator(int)
+     */
+    @Override
+	public void setSeriesItemURLGenerator(int series,
+                CategoryURLGenerator generator, boolean notify) {
         this.itemURLGeneratorList.set(series, generator);
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     /**
@@ -508,8 +591,24 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
 	public void setBaseItemURLGenerator(CategoryURLGenerator generator) {
+        setBaseItemURLGenerator(generator, true);
+    }
+
+    /**
+     * Sets the base item URL generator and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param generator  the item URL generator (<code>null</code> permitted).
+     *
+     * @see #getBaseItemURLGenerator()
+     */
+    @Override
+	public void setBaseItemURLGenerator(CategoryURLGenerator generator, 
+	        boolean notify) {
         this.baseItemURLGenerator = generator;
-        fireChangeEvent();
+        if (notify) {
+            fireChangeEvent();
+        }
     }
 
     /**
