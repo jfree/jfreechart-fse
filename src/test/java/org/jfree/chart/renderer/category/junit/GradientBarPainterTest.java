@@ -25,7 +25,7 @@
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------------
- * StandardBarPainterTests.java
+ * GradientBarPainterTests.java
  * ----------------------------
  * (C) Copyright 2008, by Object Refinery Limited and Contributors.
  *
@@ -52,12 +52,12 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.renderer.category.StandardBarPainter;
+import org.jfree.chart.renderer.category.GradientBarPainter;
 
 /**
- * Tests for the {@link StandardBarPainter} class.
+ * Tests for the {@link GradientBarPainter} class.
  */
-public class StandardBarPainterTests extends TestCase {
+public class GradientBarPainterTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -65,7 +65,7 @@ public class StandardBarPainterTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StandardBarPainterTests.class);
+        return new TestSuite(GradientBarPainterTest.class);
     }
 
     /**
@@ -73,7 +73,7 @@ public class StandardBarPainterTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StandardBarPainterTests(String name) {
+    public GradientBarPainterTest(String name) {
         super(name);
     }
 
@@ -81,17 +81,32 @@ public class StandardBarPainterTests extends TestCase {
      * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        StandardBarPainter p1 = new StandardBarPainter();
-        StandardBarPainter p2 = new StandardBarPainter();
+        GradientBarPainter p1 = new GradientBarPainter(0.1, 0.2, 0.3);
+        GradientBarPainter p2 = new GradientBarPainter(0.1, 0.2, 0.3);
         assertEquals(p1, p2);
+
+        p1 = new GradientBarPainter(0.11, 0.2, 0.3);
+        assertFalse(p1.equals(p2));
+        p2 = new GradientBarPainter(0.11, 0.2, 0.3);
+        assertTrue(p1.equals(p2));
+
+        p1 = new GradientBarPainter(0.11, 0.22, 0.3);
+        assertFalse(p1.equals(p2));
+        p2 = new GradientBarPainter(0.11, 0.22, 0.3);
+        assertTrue(p1.equals(p2));
+
+        p1 = new GradientBarPainter(0.11, 0.22, 0.33);
+        assertFalse(p1.equals(p2));
+        p2 = new GradientBarPainter(0.11, 0.22, 0.33);
+        assertTrue(p1.equals(p2));
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        StandardBarPainter p1 = new StandardBarPainter();
-        StandardBarPainter p2 = new StandardBarPainter();
+        GradientBarPainter p1 = new GradientBarPainter(0.1, 0.2, 0.3);
+        GradientBarPainter p2 = new GradientBarPainter(0.1, 0.2, 0.3);
         assertTrue(p1.equals(p2));
         int h1 = p1.hashCode();
         int h2 = p2.hashCode();
@@ -103,7 +118,7 @@ public class StandardBarPainterTests extends TestCase {
      * instances of the class are immutable).
      */
     public void testCloning() {
-        StandardBarPainter p1 = new StandardBarPainter();
+        GradientBarPainter p1 = new GradientBarPainter(0.1, 0.2, 0.3);
         assertFalse(p1 instanceof Cloneable);
         assertFalse(p1 instanceof PublicCloneable);
     }
@@ -112,8 +127,8 @@ public class StandardBarPainterTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        StandardBarPainter p1 = new StandardBarPainter();
-        StandardBarPainter p2 = null;
+        GradientBarPainter p1 = new GradientBarPainter(0.1, 0.2, 0.3);
+        GradientBarPainter p2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -121,7 +136,7 @@ public class StandardBarPainterTests extends TestCase {
             out.close();
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            p2 = (StandardBarPainter) in.readObject();
+            p2 = (GradientBarPainter) in.readObject();
             in.close();
         }
         catch (Exception e) {

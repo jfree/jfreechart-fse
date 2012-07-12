@@ -64,7 +64,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 /**
  * Tests for the {@link StackedBarRenderer3D} class.
  */
-public class StackedBarRenderer3DTests extends TestCase {
+public class StackedBarRenderer3DTest extends TestCase {
 
     /**
      * Provide access to protected method.
@@ -85,7 +85,7 @@ public class StackedBarRenderer3DTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StackedBarRenderer3DTests.class);
+        return new TestSuite(StackedBarRenderer3DTest.class);
     }
 
     /**
@@ -93,7 +93,7 @@ public class StackedBarRenderer3DTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StackedBarRenderer3DTests(String name) {
+    public StackedBarRenderer3DTest(String name) {
         super(name);
     }
 

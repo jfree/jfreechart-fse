@@ -82,7 +82,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 /**
  * Tests for the {@link BarRenderer} class.
  */
-public class BarRendererTests extends TestCase {
+public class BarRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -90,7 +90,7 @@ public class BarRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(BarRendererTests.class);
+        return new TestSuite(BarRendererTest.class);
     }
 
     /**
@@ -98,7 +98,7 @@ public class BarRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public BarRendererTests(String name) {
+    public BarRendererTest(String name) {
         super(name);
     }
 

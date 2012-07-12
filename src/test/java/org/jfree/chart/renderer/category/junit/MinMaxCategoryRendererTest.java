@@ -24,23 +24,27 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -----------------------
- * LevelRendererTests.java
- * -----------------------
- * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
+ * --------------------------------
+ * MinMaxCategoryRendererTests.java
+ * --------------------------------
+ * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 29-Mar-2005 : Version 1 (DG);
- * 23-Apr-2008 : Added testPublicCloneable (DG);
+ * 22-Oct-2003 : Version 1 (DG);
+ * 28-Sep-2007 : Added testEquals() method (DG);
+ * 23-Apr-2008 : Added testPublicCloneable() (DG);
  *
  */
 
 package org.jfree.chart.renderer.category.junit;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -53,18 +57,17 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.renderer.category.LevelRenderer;
+import org.jfree.chart.renderer.category.MinMaxCategoryRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
- * Tests for the {@link LevelRenderer} class.
+ * Tests for the {@link MinMaxCategoryRenderer} class.
  */
-public class LevelRendererTests extends TestCase {
+public class MinMaxCategoryRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -72,7 +75,7 @@ public class LevelRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(LevelRendererTests.class);
+        return new TestSuite(MinMaxCategoryRendererTest.class);
     }
 
     /**
@@ -80,37 +83,42 @@ public class LevelRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public LevelRendererTests(String name) {
+    public MinMaxCategoryRendererTest(String name) {
         super(name);
     }
 
     /**
-     * Test that the equals() method distinguishes all fields.
+     * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        LevelRenderer r1 = new LevelRenderer();
-        LevelRenderer r2 = new LevelRenderer();
-        assertTrue(r1.equals(r2));
-        assertTrue(r2.equals(r1));
+        MinMaxCategoryRenderer r1 = new MinMaxCategoryRenderer();
+        MinMaxCategoryRenderer r2 = new MinMaxCategoryRenderer();
+        assertEquals(r1, r2);
 
-        r1.setItemMargin(0.123);
+        r1.setDrawLines(true);
         assertFalse(r1.equals(r2));
-        r2.setItemMargin(0.123);
+        r2.setDrawLines(true);
         assertTrue(r1.equals(r2));
 
-        r1.setMaximumItemWidth(0.234);
+        r1.setGroupPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+                Color.yellow));
         assertFalse(r1.equals(r2));
-        r2.setMaximumItemWidth(0.234);
+        r2.setGroupPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+                Color.yellow));
         assertTrue(r1.equals(r2));
 
+        r1.setGroupStroke(new BasicStroke(1.2f));
+        assertFalse(r1.equals(r2));
+        r2.setGroupStroke(new BasicStroke(1.2f));
+        assertTrue(r1.equals(r2));
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        LevelRenderer r1 = new LevelRenderer();
-        LevelRenderer r2 = new LevelRenderer();
+        MinMaxCategoryRenderer r1 = new MinMaxCategoryRenderer();
+        MinMaxCategoryRenderer r2 = new MinMaxCategoryRenderer();
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -121,12 +129,10 @@ public class LevelRendererTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        LevelRenderer r1 = new LevelRenderer();
-        r1.setItemMargin(0.123);
-        r1.setMaximumItemWidth(0.234);
-        LevelRenderer r2 = null;
+        MinMaxCategoryRenderer r1 = new MinMaxCategoryRenderer();
+        MinMaxCategoryRenderer r2 = null;
         try {
-            r2 = (LevelRenderer) r1.clone();
+            r2 = (MinMaxCategoryRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
             System.err.println("Failed to clone.");
@@ -134,40 +140,14 @@ public class LevelRendererTests extends TestCase {
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
-
-        assertTrue(checkIndependence(r1, r2));
-
     }
 
     /**
      * Check that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        LevelRenderer r1 = new LevelRenderer();
+        MinMaxCategoryRenderer r1 = new MinMaxCategoryRenderer();
         assertTrue(r1 instanceof PublicCloneable);
-    }
-
-    /**
-     * Checks that the two renderers are equal but independent of one another.
-     *
-     * @param r1  renderer 1.
-     * @param r2  renderer 2.
-     *
-     * @return A boolean.
-     */
-    private boolean checkIndependence(LevelRenderer r1, LevelRenderer r2) {
-
-        // should be equal...
-        boolean b0 = r1.equals(r2);
-
-        // and independent...
-        r1.setItemMargin(0.0);
-        boolean b1 = !r1.equals(r2);
-        r2.setItemMargin(0.0);
-        boolean b2 = r1.equals(r2);
-
-        return b0 && b1 && b2;
-
     }
 
     /**
@@ -175,8 +155,8 @@ public class LevelRendererTests extends TestCase {
      */
     public void testSerialization() {
 
-        LevelRenderer r1 = new LevelRenderer();
-        LevelRenderer r2 = null;
+        MinMaxCategoryRenderer r1 = new MinMaxCategoryRenderer();
+        MinMaxCategoryRenderer r2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -185,13 +165,12 @@ public class LevelRendererTests extends TestCase {
             out.close();
 
             ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-            );
-            r2 = (LevelRenderer) in.readObject();
+                    new ByteArrayInputStream(buffer.toByteArray()));
+            r2 = (MinMaxCategoryRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
         assertEquals(r1, r2);
 
@@ -208,7 +187,7 @@ public class LevelRendererTests extends TestCase {
             dataset.addValue(1.0, "S1", "C1");
             CategoryPlot plot = new CategoryPlot(dataset,
                     new CategoryAxis("Category"), new NumberAxis("Value"),
-                    new LevelRenderer());
+                    new MinMaxCategoryRenderer());
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
@@ -219,29 +198,6 @@ public class LevelRendererTests extends TestCase {
             success = false;
         }
         assertTrue(success);
-    }
-
-    /**
-     * A check for the datasetIndex and seriesIndex fields in the LegendItem
-     * returned by the getLegendItem() method.
-     */
-    public void testGetLegendItemSeriesIndex() {
-        DefaultCategoryDataset dataset0 = new DefaultCategoryDataset();
-        dataset0.addValue(21.0, "R1", "C1");
-        dataset0.addValue(22.0, "R2", "C1");
-        DefaultCategoryDataset dataset1 = new DefaultCategoryDataset();
-        dataset1.addValue(23.0, "R3", "C1");
-        dataset1.addValue(24.0, "R4", "C1");
-        dataset1.addValue(25.0, "R5", "C1");
-        LevelRenderer r = new LevelRenderer();
-        CategoryPlot plot = new CategoryPlot(dataset0, new CategoryAxis("x"),
-                new NumberAxis("y"), r);
-        plot.setDataset(1, dataset1);
-        /*JFreeChart chart =*/ new JFreeChart(plot);
-        LegendItem li = r.getLegendItem(1, 2);
-        assertEquals("R5", li.getLabel());
-        assertEquals(1, li.getDatasetIndex());
-        assertEquals(2, li.getSeriesIndex());
     }
 
 }

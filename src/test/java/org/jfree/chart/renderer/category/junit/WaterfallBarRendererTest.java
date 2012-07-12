@@ -24,27 +24,25 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * --------------------------------
- * MinMaxCategoryRendererTests.java
- * --------------------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
+ * ------------------------------
+ * WaterfallBarRendererTests.java
+ * ------------------------------
+ * (C) Copyright 2003-2009, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 22-Oct-2003 : Version 1 (DG);
- * 28-Sep-2007 : Added testEquals() method (DG);
+ * 21-Oct-2003 : Version 1 (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
+ * 04-Feb-2009 : Added testFindRangeBounds() (DG);
  *
  */
 
 package org.jfree.chart.renderer.category.junit;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -56,18 +54,13 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.renderer.category.MinMaxCategoryRenderer;
-import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.chart.renderer.category.WaterfallBarRenderer;
 
 /**
- * Tests for the {@link MinMaxCategoryRenderer} class.
+ * Tests for the {@link WaterfallBarRenderer} class.
  */
-public class MinMaxCategoryRendererTests extends TestCase {
+public class WaterfallBarRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -75,7 +68,7 @@ public class MinMaxCategoryRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(MinMaxCategoryRendererTests.class);
+        return new TestSuite(WaterfallBarRendererTest.class);
     }
 
     /**
@@ -83,42 +76,58 @@ public class MinMaxCategoryRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public MinMaxCategoryRendererTests(String name) {
+    public WaterfallBarRendererTest(String name) {
         super(name);
+    }
+
+    /**
+     * Some tests for the findRangeBounds() method.
+     */
+    public void testFindRangeBounds() {
+        WaterfallBarRenderer r = new WaterfallBarRenderer();
+        assertNull(r.findRangeBounds(null));
     }
 
     /**
      * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        MinMaxCategoryRenderer r1 = new MinMaxCategoryRenderer();
-        MinMaxCategoryRenderer r2 = new MinMaxCategoryRenderer();
+        WaterfallBarRenderer r1 = new WaterfallBarRenderer();
+        WaterfallBarRenderer r2 = new WaterfallBarRenderer();
         assertEquals(r1, r2);
 
-        r1.setDrawLines(true);
+        // firstBarPaint;
+        r1.setFirstBarPaint(Color.cyan);
         assertFalse(r1.equals(r2));
-        r2.setDrawLines(true);
+        r2.setFirstBarPaint(Color.cyan);
         assertTrue(r1.equals(r2));
 
-        r1.setGroupPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.yellow));
+        // lastBarPaint;
+        r1.setLastBarPaint(Color.cyan);
         assertFalse(r1.equals(r2));
-        r2.setGroupPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.yellow));
+        r2.setLastBarPaint(Color.cyan);
         assertTrue(r1.equals(r2));
 
-        r1.setGroupStroke(new BasicStroke(1.2f));
+        // positiveBarPaint;
+        r1.setPositiveBarPaint(Color.cyan);
         assertFalse(r1.equals(r2));
-        r2.setGroupStroke(new BasicStroke(1.2f));
+        r2.setPositiveBarPaint(Color.cyan);
         assertTrue(r1.equals(r2));
+
+        //private Paint negativeBarPaint;
+        r1.setNegativeBarPaint(Color.cyan);
+        assertFalse(r1.equals(r2));
+        r2.setNegativeBarPaint(Color.cyan);
+        assertTrue(r1.equals(r2));
+
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        MinMaxCategoryRenderer r1 = new MinMaxCategoryRenderer();
-        MinMaxCategoryRenderer r2 = new MinMaxCategoryRenderer();
+        WaterfallBarRenderer r1 = new WaterfallBarRenderer();
+        WaterfallBarRenderer r2 = new WaterfallBarRenderer();
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -129,10 +138,10 @@ public class MinMaxCategoryRendererTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        MinMaxCategoryRenderer r1 = new MinMaxCategoryRenderer();
-        MinMaxCategoryRenderer r2 = null;
+        WaterfallBarRenderer r1 = new WaterfallBarRenderer();
+        WaterfallBarRenderer r2 = null;
         try {
-            r2 = (MinMaxCategoryRenderer) r1.clone();
+            r2 = (WaterfallBarRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
             System.err.println("Failed to clone.");
@@ -140,13 +149,20 @@ public class MinMaxCategoryRendererTests extends TestCase {
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
+
+        // quick check for independence
+        r1.setFirstBarPaint(Color.yellow);
+        assertFalse(r1.equals(r2));
+        r2.setFirstBarPaint(Color.yellow);
+        assertTrue(r1.equals(r2));
+
     }
 
     /**
      * Check that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        MinMaxCategoryRenderer r1 = new MinMaxCategoryRenderer();
+        WaterfallBarRenderer r1 = new WaterfallBarRenderer();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -155,8 +171,8 @@ public class MinMaxCategoryRendererTests extends TestCase {
      */
     public void testSerialization() {
 
-        MinMaxCategoryRenderer r1 = new MinMaxCategoryRenderer();
-        MinMaxCategoryRenderer r2 = null;
+        WaterfallBarRenderer r1 = new WaterfallBarRenderer();
+        WaterfallBarRenderer r2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -165,8 +181,9 @@ public class MinMaxCategoryRendererTests extends TestCase {
             out.close();
 
             ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (MinMaxCategoryRenderer) in.readObject();
+                new ByteArrayInputStream(buffer.toByteArray())
+            );
+            r2 = (WaterfallBarRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
@@ -174,30 +191,6 @@ public class MinMaxCategoryRendererTests extends TestCase {
         }
         assertEquals(r1, r2);
 
-    }
-
-    /**
-     * Draws the chart with a <code>null</code> info object to make sure that
-     * no exceptions are thrown (particularly by code in the renderer).
-     */
-    public void testDrawWithNullInfo() {
-        boolean success = false;
-        try {
-            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-            dataset.addValue(1.0, "S1", "C1");
-            CategoryPlot plot = new CategoryPlot(dataset,
-                    new CategoryAxis("Category"), new NumberAxis("Value"),
-                    new MinMaxCategoryRenderer());
-            JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
-            success = true;
-        }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-            success = false;
-        }
-        assertTrue(success);
     }
 
 }

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -25,18 +25,20 @@
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
- * GanttRendererTests.java
+ * BarRenderer3DTests.java
  * -----------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 22-Oct-2003 : Version 1 (DG);
- * 20-Mar-2007 : Extended testEquals() (DG);
- * 23-Apr-2008 : Added testPublicCloneable() (DG);
+ * 25-Mar-2003 : Version 1 (DG);
+ * 22-Oct-2003 : Added hashCode test (DG);
+ * 07-Dec-2006 : Improved testEquals() (DG);
+ * 23-Apr-2008 : Added testPublicCloneable (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -56,12 +58,12 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.renderer.category.GanttRenderer;
+import org.jfree.chart.renderer.category.BarRenderer3D;
 
 /**
- * Tests for the {@link GanttRenderer} class.
+ * Tests for the {@link BarRenderer3D} class.
  */
-public class GanttRendererTests extends TestCase {
+public class BarRenderer3DTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -69,7 +71,7 @@ public class GanttRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(GanttRendererTests.class);
+        return new TestSuite(BarRenderer3DTest.class);
     }
 
     /**
@@ -77,7 +79,7 @@ public class GanttRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public GanttRendererTests(String name) {
+    public BarRenderer3DTest(String name) {
         super(name);
     }
 
@@ -85,28 +87,25 @@ public class GanttRendererTests extends TestCase {
      * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        GanttRenderer r1 = new GanttRenderer();
-        GanttRenderer r2 = new GanttRenderer();
+        BarRenderer3D r1 = new BarRenderer3D(1.0, 2.0);
+        BarRenderer3D r2 = new BarRenderer3D(1.0, 2.0);
         assertEquals(r1, r2);
 
-        r1.setCompletePaint(Color.yellow);
+        r1 = new BarRenderer3D(1.1, 2.0);
         assertFalse(r1.equals(r2));
-        r2.setCompletePaint(Color.yellow);
+        r2 = new BarRenderer3D(1.1, 2.0);
         assertTrue(r1.equals(r2));
 
-        r1.setIncompletePaint(Color.green);
+        r1 = new BarRenderer3D(1.1, 2.2);
         assertFalse(r1.equals(r2));
-        r2.setIncompletePaint(Color.green);
+        r2 = new BarRenderer3D(1.1, 2.2);
         assertTrue(r1.equals(r2));
 
-        r1.setStartPercent(0.11);
+        r1.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.red, 4.0f, 3.0f,
+                Color.blue));
         assertFalse(r1.equals(r2));
-        r2.setStartPercent(0.11);
-        assertTrue(r1.equals(r2));
-
-        r1.setEndPercent(0.88);
-        assertFalse(r1.equals(r2));
-        r2.setEndPercent(0.88);
+        r2.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.red, 4.0f, 3.0f,
+                Color.blue));
         assertTrue(r1.equals(r2));
     }
 
@@ -114,8 +113,8 @@ public class GanttRendererTests extends TestCase {
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        GanttRenderer r1 = new GanttRenderer();
-        GanttRenderer r2 = new GanttRenderer();
+        BarRenderer3D r1 = new BarRenderer3D();
+        BarRenderer3D r2 = new BarRenderer3D();
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -126,10 +125,10 @@ public class GanttRendererTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        GanttRenderer r1 = new GanttRenderer();
-        GanttRenderer r2 = null;
+        BarRenderer3D r1 = new BarRenderer3D();
+        BarRenderer3D r2 = null;
         try {
-            r2 = (GanttRenderer) r1.clone();
+            r2 = (BarRenderer3D) r1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -143,7 +142,7 @@ public class GanttRendererTests extends TestCase {
      * Check that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        GanttRenderer r1 = new GanttRenderer();
+        BarRenderer3D r1 = new BarRenderer3D();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -151,14 +150,10 @@ public class GanttRendererTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-
-        GanttRenderer r1 = new GanttRenderer();
-        r1.setCompletePaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f,
-                4.0f, Color.blue));
-        r1.setIncompletePaint(new GradientPaint(4.0f, 3.0f, Color.red, 2.0f,
-                1.0f, Color.blue));
-        GanttRenderer r2 = null;
-
+        BarRenderer3D r1 = new BarRenderer3D();
+        r1.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.red, 4.0f, 3.0f,
+                Color.blue));
+        BarRenderer3D r2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -167,14 +162,13 @@ public class GanttRendererTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (GanttRenderer) in.readObject();
+            r2 = (BarRenderer3D) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(r1, r2);
-
     }
 
 }

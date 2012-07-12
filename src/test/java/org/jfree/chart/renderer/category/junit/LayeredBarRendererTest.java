@@ -24,19 +24,18 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -----------------------------
- * StackedAreaRendererTests.java
- * -----------------------------
- * (C) Copyright 2003-2009, by Object Refinery Limited and Contributors.
+ * ----------------------------
+ * LayeredBarRendererTests.java
+ * ----------------------------
+ * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 25-Mar-2003 : Version 1 (DG);
+ * 22-Oct-2003 : Version 1 (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
- * 04-Feb-2009 : Added testFindRangeBounds (DG);
  *
  */
 
@@ -53,15 +52,18 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.renderer.category.StackedAreaRenderer;
-import org.jfree.data.Range;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.renderer.category.LayeredBarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
- * Tests for the {@link StackedAreaRendererTests} class.
+ * Tests for the {@link LayeredBarRenderer} class.
  */
-public class StackedAreaRendererTests extends TestCase {
+public class LayeredBarRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -69,7 +71,7 @@ public class StackedAreaRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StackedAreaRendererTests.class);
+        return new TestSuite(LayeredBarRendererTest.class);
     }
 
     /**
@@ -77,57 +79,25 @@ public class StackedAreaRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StackedAreaRendererTests(String name) {
+    public LayeredBarRendererTest(String name) {
         super(name);
-    }
-
-    /**
-     * Some checks for the findRangeBounds() method.
-     */
-    public void testFindRangeBounds() {
-        StackedAreaRenderer r = new StackedAreaRenderer();
-        assertNull(r.findRangeBounds(null));
-
-        // an empty dataset should return a null range
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        assertNull(r.findRangeBounds(dataset));
-
-        dataset.addValue(1.0, "R1", "C1");
-        assertEquals(new Range(0.0, 1.0), r.findRangeBounds(dataset));
-
-        dataset.addValue(-2.0, "R1", "C2");
-        assertEquals(new Range(-2.0, 1.0), r.findRangeBounds(dataset));
-
-        dataset.addValue(null, "R1", "C3");
-        assertEquals(new Range(-2.0, 1.0), r.findRangeBounds(dataset));
-
-        dataset.addValue(2.0, "R2", "C1");
-        assertEquals(new Range(-2.0, 3.0), r.findRangeBounds(dataset));
-
-        dataset.addValue(null, "R2", "C2");
-        assertEquals(new Range(-2.0, 3.0), r.findRangeBounds(dataset));
     }
 
     /**
      * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        StackedAreaRenderer r1 = new StackedAreaRenderer();
-        StackedAreaRenderer r2 = new StackedAreaRenderer();
+        LayeredBarRenderer r1 = new LayeredBarRenderer();
+        LayeredBarRenderer r2 = new LayeredBarRenderer();
         assertEquals(r1, r2);
-
-        r1.setRenderAsPercentages(true);
-        assertFalse(r1.equals(r2));
-        r2.setRenderAsPercentages(true);
-        assertTrue(r1.equals(r2));
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        StackedAreaRenderer r1 = new StackedAreaRenderer();
-        StackedAreaRenderer r2 = new StackedAreaRenderer();
+        LayeredBarRenderer r1 = new LayeredBarRenderer();
+        LayeredBarRenderer r2 = new LayeredBarRenderer();
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -138,25 +108,24 @@ public class StackedAreaRendererTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        StackedAreaRenderer r1 = new StackedAreaRenderer();
-        StackedAreaRenderer r2 = null;
+        LayeredBarRenderer r1 = new LayeredBarRenderer();
+        LayeredBarRenderer r2 = null;
         try {
-            r2 = (StackedAreaRenderer) r1.clone();
+            r2 = (LayeredBarRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            System.err.println("Failed to clone.");
         }
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
-
     }
 
     /**
      * Check that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        StackedAreaRenderer r1 = new StackedAreaRenderer();
+        LayeredBarRenderer r1 = new LayeredBarRenderer();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -165,8 +134,8 @@ public class StackedAreaRendererTests extends TestCase {
      */
     public void testSerialization() {
 
-        StackedAreaRenderer r1 = new StackedAreaRenderer();
-        StackedAreaRenderer r2 = null;
+        LayeredBarRenderer r1 = new LayeredBarRenderer();
+        LayeredBarRenderer r2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -175,15 +144,40 @@ public class StackedAreaRendererTests extends TestCase {
             out.close();
 
             ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (StackedAreaRenderer) in.readObject();
+                new ByteArrayInputStream(buffer.toByteArray())
+            );
+            r2 = (LayeredBarRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
         assertEquals(r1, r2);
 
+    }
+
+    /**
+     * Draws the chart with a <code>null</code> info object to make sure that
+     * no exceptions are thrown (particularly by code in the renderer).
+     */
+    public void testDrawWithNullInfo() {
+        boolean success = false;
+        try {
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+            dataset.addValue(1.0, "S1", "C1");
+            CategoryPlot plot = new CategoryPlot(dataset,
+                    new CategoryAxis("Category"), new NumberAxis("Value"),
+                    new LayeredBarRenderer());
+            JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
+                    null);
+            success = true;
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+            success = false;
+        }
+        assertTrue(success);
     }
 
 }

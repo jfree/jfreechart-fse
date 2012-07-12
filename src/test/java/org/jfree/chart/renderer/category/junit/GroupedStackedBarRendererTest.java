@@ -24,17 +24,17 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ----------------------------
- * LayeredBarRendererTests.java
- * ----------------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
+ * -----------------------------------
+ * GroupedStackedBarRendererTests.java
+ * -----------------------------------
+ * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 22-Oct-2003 : Version 1 (DG);
+ * 08-Jul-2004 : Version 1 (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
  *
  */
@@ -57,13 +57,15 @@ import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.renderer.category.LayeredBarRenderer;
+import org.jfree.chart.renderer.category.GroupedStackedBarRenderer;
+import org.jfree.data.KeyToGroupMap;
+import org.jfree.data.Range;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
- * Tests for the {@link LayeredBarRenderer} class.
+ * Tests for the {@link GroupedStackedBarRenderer} class.
  */
-public class LayeredBarRendererTests extends TestCase {
+public class GroupedStackedBarRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -71,7 +73,7 @@ public class LayeredBarRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(LayeredBarRendererTests.class);
+        return new TestSuite(GroupedStackedBarRendererTest.class);
     }
 
     /**
@@ -79,42 +81,41 @@ public class LayeredBarRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public LayeredBarRendererTests(String name) {
+    public GroupedStackedBarRendererTest(String name) {
         super(name);
     }
 
     /**
-     * Check that the equals() method distinguishes all fields.
+     * Test that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        LayeredBarRenderer r1 = new LayeredBarRenderer();
-        LayeredBarRenderer r2 = new LayeredBarRenderer();
-        assertEquals(r1, r2);
-    }
-
-    /**
-     * Two objects that are equal are required to return the same hashCode.
-     */
-    public void testHashcode() {
-        LayeredBarRenderer r1 = new LayeredBarRenderer();
-        LayeredBarRenderer r2 = new LayeredBarRenderer();
+        GroupedStackedBarRenderer r1 = new GroupedStackedBarRenderer();
+        GroupedStackedBarRenderer r2 = new GroupedStackedBarRenderer();
         assertTrue(r1.equals(r2));
-        int h1 = r1.hashCode();
-        int h2 = r2.hashCode();
-        assertEquals(h1, h2);
+        assertTrue(r2.equals(r1));
+
+        // map
+        KeyToGroupMap m1 = new KeyToGroupMap("G1");
+        m1.mapKeyToGroup("S1", "G2");
+        r1.setSeriesToGroupMap(m1);
+        assertFalse(r1.equals(r2));
+        KeyToGroupMap m2 = new KeyToGroupMap("G1");
+        m2.mapKeyToGroup("S1", "G2");
+        r2.setSeriesToGroupMap(m2);
+        assertTrue(r1.equals(r2));
     }
 
     /**
      * Confirm that cloning works.
      */
     public void testCloning() {
-        LayeredBarRenderer r1 = new LayeredBarRenderer();
-        LayeredBarRenderer r2 = null;
+        GroupedStackedBarRenderer r1 = new GroupedStackedBarRenderer();
+        GroupedStackedBarRenderer r2 = null;
         try {
-            r2 = (LayeredBarRenderer) r1.clone();
+            r2 = (GroupedStackedBarRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
+            e.printStackTrace();
         }
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
@@ -125,7 +126,7 @@ public class LayeredBarRendererTests extends TestCase {
      * Check that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        LayeredBarRenderer r1 = new LayeredBarRenderer();
+        GroupedStackedBarRenderer r1 = new GroupedStackedBarRenderer();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -134,23 +135,21 @@ public class LayeredBarRendererTests extends TestCase {
      */
     public void testSerialization() {
 
-        LayeredBarRenderer r1 = new LayeredBarRenderer();
-        LayeredBarRenderer r2 = null;
-
+        GroupedStackedBarRenderer r1 = new GroupedStackedBarRenderer();
+        GroupedStackedBarRenderer r2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(r1);
             out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-            );
-            r2 = (LayeredBarRenderer) in.readObject();
+            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                    buffer.toByteArray()));
+            r2 = (GroupedStackedBarRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
         assertEquals(r1, r2);
 
@@ -165,9 +164,14 @@ public class LayeredBarRendererTests extends TestCase {
         try {
             DefaultCategoryDataset dataset = new DefaultCategoryDataset();
             dataset.addValue(1.0, "S1", "C1");
+            dataset.addValue(2.0, "S1", "C2");
+            dataset.addValue(3.0, "S2", "C1");
+            dataset.addValue(4.0, "S2", "C2");
+            GroupedStackedBarRenderer renderer
+                    = new GroupedStackedBarRenderer();
             CategoryPlot plot = new CategoryPlot(dataset,
                     new CategoryAxis("Category"), new NumberAxis("Value"),
-                    new LayeredBarRenderer());
+                    renderer);
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
@@ -178,6 +182,39 @@ public class LayeredBarRendererTests extends TestCase {
             success = false;
         }
         assertTrue(success);
+    }
+
+    /**
+     * Some checks for the findRangeBounds() method.
+     */
+    public void testFindRangeBounds() {
+        GroupedStackedBarRenderer r = new GroupedStackedBarRenderer();
+        assertNull(r.findRangeBounds(null));
+
+        // an empty dataset should return a null range
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        assertNull(r.findRangeBounds(dataset));
+
+        dataset.addValue(1.0, "R1", "C1");
+        assertEquals(new Range(0.0, 1.0), r.findRangeBounds(dataset));
+
+        dataset.addValue(-2.0, "R1", "C2");
+        assertEquals(new Range(-2.0, 1.0), r.findRangeBounds(dataset));
+
+        dataset.addValue(null, "R1", "C3");
+        assertEquals(new Range(-2.0, 1.0), r.findRangeBounds(dataset));
+
+        KeyToGroupMap m = new KeyToGroupMap("G1");
+        m.mapKeyToGroup("R1", "G1");
+        m.mapKeyToGroup("R2", "G1");
+        m.mapKeyToGroup("R3", "G2");
+        r.setSeriesToGroupMap(m);
+
+        dataset.addValue(0.5, "R3", "C1");
+        assertEquals(new Range(-2.0, 1.0), r.findRangeBounds(dataset));
+
+        dataset.addValue(5.0, "R3", "C2");
+        assertEquals(new Range(-2.0, 5.0), r.findRangeBounds(dataset));
     }
 
 }

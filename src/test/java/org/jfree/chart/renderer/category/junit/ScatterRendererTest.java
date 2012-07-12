@@ -24,19 +24,18 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ------------------------------
- * LineAndShapeRendererTests.java
- * ------------------------------
- * (C) Copyright 2003-2009, by Object Refinery Limited and Contributors.
+ * -------------------------
+ * ScatterRendererTests.java
+ * -------------------------
+ * (C) Copyright 2007-2009, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 22-Sep-2003 : Version 1 (DG);
- * 17-May-2007 : Added check for getLegendItem() method (DG);
- * 27-Sep-2007 : Extended equals() test (DG);
+ * 08-Oct-2007 : Version 1 (DG);
+ * 11-Oct-2007 : Renamed ScatterRenderer (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
  * 16-May-2009 : Added testFindRangeBounds() (DG);
  *
@@ -50,25 +49,22 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.renderer.category.LineAndShapeRenderer;
+import org.jfree.chart.renderer.category.ScatterRenderer;
 import org.jfree.data.Range;
-import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.statistics.DefaultMultiValueCategoryDataset;
 
 /**
- * Tests for the {@link LineAndShapeRenderer} class.
+ * Tests for the {@link ScatterRenderer} class.
  */
-public class LineAndShapeRendererTests extends TestCase {
+public class ScatterRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -76,7 +72,7 @@ public class LineAndShapeRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(LineAndShapeRendererTests.class);
+        return new TestSuite(ScatterRendererTest.class);
     }
 
     /**
@@ -84,7 +80,7 @@ public class LineAndShapeRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public LineAndShapeRendererTests(String name) {
+    public ScatterRendererTest(String name) {
         super(name);
     }
 
@@ -93,29 +89,9 @@ public class LineAndShapeRendererTests extends TestCase {
      */
     public void testEquals() {
 
-        LineAndShapeRenderer r1 = new LineAndShapeRenderer();
-        LineAndShapeRenderer r2 = new LineAndShapeRenderer();
+        ScatterRenderer r1 = new ScatterRenderer();
+        ScatterRenderer r2 = new ScatterRenderer();
         assertEquals(r1, r2);
-
-        r1.setBaseLinesVisible(!r1.getBaseLinesVisible());
-        assertFalse(r1.equals(r2));
-        r2.setBaseLinesVisible(r1.getBaseLinesVisible());
-        assertTrue(r1.equals(r2));
-
-        r1.setSeriesLinesVisible(1, true);
-        assertFalse(r1.equals(r2));
-        r2.setSeriesLinesVisible(1, true);
-        assertTrue(r1.equals(r2));
-
-        r1.setBaseShapesVisible(!r1.getBaseShapesVisible());
-        assertFalse(r1.equals(r2));
-        r2.setBaseShapesVisible(r1.getBaseShapesVisible());
-        assertTrue(r1.equals(r2));
-
-        r1.setSeriesShapesVisible(1, true);
-        assertFalse(r1.equals(r2));
-        r2.setSeriesShapesVisible(1, true);
-        assertTrue(r1.equals(r2));
 
         r1.setSeriesShapesFilled(1, true);
         assertFalse(r1.equals(r2));
@@ -127,19 +103,24 @@ public class LineAndShapeRendererTests extends TestCase {
         r2.setBaseShapesFilled(false);
         assertTrue(r1.equals(r2));
 
+        r1.setUseFillPaint(true);
+        assertFalse(r1.equals(r2));
+        r2.setUseFillPaint(true);
+        assertTrue(r1.equals(r2));
+
+        r1.setDrawOutlines(true);
+        assertFalse(r1.equals(r2));
+        r2.setDrawOutlines(true);
+        assertTrue(r1.equals(r2));
+
         r1.setUseOutlinePaint(true);
         assertFalse(r1.equals(r2));
         r2.setUseOutlinePaint(true);
         assertTrue(r1.equals(r2));
 
-        r1.setUseSeriesOffset(true);
+        r1.setUseSeriesOffset(false);
         assertFalse(r1.equals(r2));
-        r2.setUseSeriesOffset(true);
-        assertTrue(r1.equals(r2));
-
-        r1.setItemMargin(0.14);
-        assertFalse(r1.equals(r2));
-        r2.setItemMargin(0.14);
+        r2.setUseSeriesOffset(false);
         assertTrue(r1.equals(r2));
 
     }
@@ -148,8 +129,8 @@ public class LineAndShapeRendererTests extends TestCase {
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        LineAndShapeRenderer r1 = new LineAndShapeRenderer();
-        LineAndShapeRenderer r2 = new LineAndShapeRenderer();
+        ScatterRenderer r1 = new ScatterRenderer();
+        ScatterRenderer r2 = new ScatterRenderer();
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -160,10 +141,10 @@ public class LineAndShapeRendererTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        LineAndShapeRenderer r1 = new LineAndShapeRenderer();
-        LineAndShapeRenderer r2 = null;
+        ScatterRenderer r1 = new ScatterRenderer();
+        ScatterRenderer r2 = null;
         try {
-            r2 = (LineAndShapeRenderer) r1.clone();
+            r2 = (ScatterRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -173,14 +154,13 @@ public class LineAndShapeRendererTests extends TestCase {
         assertTrue(r1.equals(r2));
 
         assertTrue(checkIndependence(r1, r2));
-
     }
 
     /**
      * Check that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        LineAndShapeRenderer r1 = new LineAndShapeRenderer();
+        ScatterRenderer r1 = new ScatterRenderer();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -192,8 +172,8 @@ public class LineAndShapeRendererTests extends TestCase {
      *
      * @return A boolean.
      */
-    private boolean checkIndependence(LineAndShapeRenderer r1,
-                                      LineAndShapeRenderer r2) {
+    private boolean checkIndependence(ScatterRenderer r1,
+            ScatterRenderer r2) {
 
         // should be equal...
         if (!r1.equals(r2)) {
@@ -201,48 +181,11 @@ public class LineAndShapeRendererTests extends TestCase {
         }
 
         // and independent...
-        r1.setBaseLinesVisible(!r1.getBaseLinesVisible());
+        r1.setSeriesShapesFilled(1, true);
         if (r1.equals(r2)) {
             return false;
         }
-        r2.setBaseLinesVisible(r1.getBaseLinesVisible());
-        if (!r1.equals(r2)) {
-            return false;
-        }
-
-        r1.setSeriesLinesVisible(1, true);
-        if (r1.equals(r2)) {
-            return false;
-        }
-        r2.setSeriesLinesVisible(1, true);
-        if (!r1.equals(r2)) {
-            return false;
-        }
-
-        r1.setBaseShapesVisible(!r1.getBaseShapesVisible());
-        if (r1.equals(r2)) {
-            return false;
-        }
-        r2.setBaseShapesVisible(r1.getBaseShapesVisible());
-        if (!r1.equals(r2)) {
-            return false;
-        }
-
-        r1.setSeriesShapesVisible(1, true);
-        if (r1.equals(r2)) {
-            return false;
-        }
-        r2.setSeriesShapesVisible(1, true);
-        if (!r1.equals(r2)) {
-            return false;
-        }
-
-        r1.setSeriesShapesFilled(0, false);
-        r2.setSeriesShapesFilled(0, true);
-        if (r1.equals(r2)) {
-            return false;
-        }
-        r2.setSeriesShapesFilled(0, false);
+        r2.setSeriesShapesFilled(1, true);
         if (!r1.equals(r2)) {
             return false;
         }
@@ -264,10 +207,8 @@ public class LineAndShapeRendererTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-
-        LineAndShapeRenderer r1 = new LineAndShapeRenderer();
-        LineAndShapeRenderer r2 = null;
-
+        ScatterRenderer r1 = new ScatterRenderer();
+        ScatterRenderer r2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -276,64 +217,47 @@ public class LineAndShapeRendererTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (LineAndShapeRenderer) in.readObject();
+            r2 = (ScatterRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(r1, r2);
-
-    }
-
-    /**
-     * A check for the datasetIndex and seriesIndex fields in the LegendItem
-     * returned by the getLegendItem() method.
-     */
-    public void testGetLegendItemSeriesIndex() {
-        DefaultCategoryDataset dataset0 = new DefaultCategoryDataset();
-        dataset0.addValue(21.0, "R1", "C1");
-        dataset0.addValue(22.0, "R2", "C1");
-        DefaultCategoryDataset dataset1 = new DefaultCategoryDataset();
-        dataset1.addValue(23.0, "R3", "C1");
-        dataset1.addValue(24.0, "R4", "C1");
-        dataset1.addValue(25.0, "R5", "C1");
-        LineAndShapeRenderer r = new LineAndShapeRenderer();
-        CategoryPlot plot = new CategoryPlot(dataset0, new CategoryAxis("x"),
-                new NumberAxis("y"), r);
-        plot.setDataset(1, dataset1);
-        /*JFreeChart chart =*/ new JFreeChart(plot);
-        LegendItem li = r.getLegendItem(1, 2);
-        assertEquals("R5", li.getLabel());
-        assertEquals(1, li.getDatasetIndex());
-        assertEquals(2, li.getSeriesIndex());
     }
 
     /**
      * Some checks for the findRangeBounds() method.
      */
     public void testFindRangeBounds() {
-        LineAndShapeRenderer r = new LineAndShapeRenderer();
+        ScatterRenderer r = new ScatterRenderer();
         assertNull(r.findRangeBounds(null));
 
         // an empty dataset should return a null range
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        DefaultMultiValueCategoryDataset dataset
+                = new DefaultMultiValueCategoryDataset();
         assertNull(r.findRangeBounds(dataset));
 
-        dataset.addValue(1.0, "R1", "C1");
+        List values = Arrays.asList(new Double[] {new Double(1.0)});
+        dataset.add(values, "R1", "C1");
         assertEquals(new Range(1.0, 1.0), r.findRangeBounds(dataset));
 
-        dataset.addValue(-2.0, "R1", "C2");
-        assertEquals(new Range(-2.0, 1.0), r.findRangeBounds(dataset));
+        values = Arrays.asList(new Double[] {new Double(2.0), new Double(2.2)});
+        dataset.add(values, "R1", "C2");
+        assertEquals(new Range(1.0, 2.2), r.findRangeBounds(dataset));
 
-        dataset.addValue(null, "R1", "C3");
-        assertEquals(new Range(-2.0, 1.0), r.findRangeBounds(dataset));
+        values = Arrays.asList(new Double[] {new Double(-3.0),
+                new Double(-3.2)});
+        dataset.add(values, "R1", "C3");
+        assertEquals(new Range(-3.2, 2.2), r.findRangeBounds(dataset));
 
-        dataset.addValue(-6.0, "R2", "C1");
-        assertEquals(new Range(-6.0, 1.0), r.findRangeBounds(dataset));
+        values = Arrays.asList(new Double[] {new Double(6.0)});
+        dataset.add(values, "R2", "C1");
+        assertEquals(new Range(-3.2, 6.0), r.findRangeBounds(dataset));
 
         r.setSeriesVisible(1, Boolean.FALSE);
-        assertEquals(new Range(-2.0, 1.0), r.findRangeBounds(dataset));
+        assertEquals(new Range(-3.2, 2.2), r.findRangeBounds(dataset));
     }
+
 
 }

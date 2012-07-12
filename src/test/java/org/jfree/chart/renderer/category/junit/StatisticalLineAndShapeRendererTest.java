@@ -24,24 +24,26 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -----------------------------
- * IntervalBarRendererTests.java
- * -----------------------------
- * (C) Copyright 2003-2009, by Object Refinery Limited and Contributors.
+ * -----------------------------------------
+ * StatisticalLineAndShapeRendererTests.java
+ * -----------------------------------------
+ * (C) Copyright 2005-2009, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 25-Mar-2003 : Version 1 (DG);
- * 23-Apr-2008 : Added testPublicCloneable (DG);
+ * 15-Jun-2005 : Version 1 (DG);
+ * 25-Sep-2006 : Added test1562759() (DG);
+ * 23-Apr-2008 : Added testPublicCloneable() (DG);
  * 16-May-2009 : Added testFindRangeBounds() (DG);
  *
  */
 
 package org.jfree.chart.renderer.category.junit;
 
+import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -58,15 +60,14 @@ import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.chart.renderer.category.IntervalBarRenderer;
+import org.jfree.chart.renderer.category.StatisticalLineAndShapeRenderer;
 import org.jfree.data.Range;
-import org.jfree.data.category.DefaultIntervalCategoryDataset;
+import org.jfree.data.statistics.DefaultStatisticalCategoryDataset;
 
 /**
- * Tests for the {@link IntervalBarRenderer} class.
+ * Tests for the {@link StatisticalLineAndShapeRenderer} class.
  */
-public class IntervalBarRendererTests extends TestCase {
+public class StatisticalLineAndShapeRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -74,7 +75,7 @@ public class IntervalBarRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(IntervalBarRendererTests.class);
+        return new TestSuite(StatisticalLineAndShapeRendererTest.class);
     }
 
     /**
@@ -82,29 +83,35 @@ public class IntervalBarRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public IntervalBarRendererTests(String name) {
+    public StatisticalLineAndShapeRendererTest(String name) {
         super(name);
     }
 
     /**
-     * Problem that the equals() method distinguishes all fields.
+     * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        IntervalBarRenderer r1 = new IntervalBarRenderer();
-        IntervalBarRenderer r2 = new IntervalBarRenderer();
-        assertEquals(r1, r2);
+        StatisticalLineAndShapeRenderer r1
+            = new StatisticalLineAndShapeRenderer();
+        StatisticalLineAndShapeRenderer r2
+            = new StatisticalLineAndShapeRenderer();
+        assertTrue(r1.equals(r2));
+        assertTrue(r2.equals(r1));
 
-        // the renderer should not be equal to a BarRenderer
-        BarRenderer br = new BarRenderer();
-        assertFalse(r1.equals(br));
+        r1.setErrorIndicatorPaint(Color.red);
+        assertFalse(r1.equals(r2));
+        r2.setErrorIndicatorPaint(Color.red);
+        assertTrue(r2.equals(r1));
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        IntervalBarRenderer r1 = new IntervalBarRenderer();
-        IntervalBarRenderer r2 = new IntervalBarRenderer();
+        StatisticalLineAndShapeRenderer r1
+            = new StatisticalLineAndShapeRenderer();
+        StatisticalLineAndShapeRenderer r2
+            = new StatisticalLineAndShapeRenderer();
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -115,10 +122,11 @@ public class IntervalBarRendererTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        IntervalBarRenderer r1 = new IntervalBarRenderer();
-        IntervalBarRenderer r2 = null;
+        StatisticalLineAndShapeRenderer r1
+                = new StatisticalLineAndShapeRenderer();
+        StatisticalLineAndShapeRenderer r2 = null;
         try {
-            r2 = (IntervalBarRenderer) r1.clone();
+            r2 = (StatisticalLineAndShapeRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
             System.err.println("Failed to clone.");
@@ -132,7 +140,8 @@ public class IntervalBarRendererTests extends TestCase {
      * Check that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        IntervalBarRenderer r1 = new IntervalBarRenderer();
+        StatisticalLineAndShapeRenderer r1
+                = new StatisticalLineAndShapeRenderer();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -140,22 +149,27 @@ public class IntervalBarRendererTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        IntervalBarRenderer r1 = new IntervalBarRenderer();
-        IntervalBarRenderer r2 = null;
+
+        StatisticalLineAndShapeRenderer r1
+            = new StatisticalLineAndShapeRenderer();
+        StatisticalLineAndShapeRenderer r2 = null;
+
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(r1);
             out.close();
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            r2 = (IntervalBarRenderer) in.readObject();
+
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
+            r2 = (StatisticalLineAndShapeRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
         assertEquals(r1, r2);
+
     }
 
     /**
@@ -165,15 +179,13 @@ public class IntervalBarRendererTests extends TestCase {
     public void testDrawWithNullInfo() {
         boolean success = false;
         try {
-            double[][] starts = new double[][] {{0.1, 0.2, 0.3},
-                    {0.3, 0.4, 0.5}};
-            double[][] ends = new double[][] {{0.5, 0.6, 0.7}, {0.7, 0.8, 0.9}};
-            DefaultIntervalCategoryDataset dataset
-                    = new DefaultIntervalCategoryDataset(starts, ends);
-            IntervalBarRenderer renderer = new IntervalBarRenderer();
+            DefaultStatisticalCategoryDataset dataset
+                = new DefaultStatisticalCategoryDataset();
+            dataset.add(1.0, 2.0, "S1", "C1");
+            dataset.add(3.0, 4.0, "S1", "C2");
             CategoryPlot plot = new CategoryPlot(dataset,
                     new CategoryAxis("Category"), new NumberAxis("Value"),
-                    renderer);
+                    new StatisticalLineAndShapeRenderer());
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
@@ -187,28 +199,47 @@ public class IntervalBarRendererTests extends TestCase {
     }
 
     /**
+     * A simple test for bug report 1562759.
+     */
+    public void test1562759() {
+        StatisticalLineAndShapeRenderer r
+            = new StatisticalLineAndShapeRenderer(true, false);
+        assertTrue(r.getBaseLinesVisible());
+        assertFalse(r.getBaseShapesVisible());
+
+        r = new StatisticalLineAndShapeRenderer(false, true);
+        assertFalse(r.getBaseLinesVisible());
+        assertTrue(r.getBaseShapesVisible());
+    }
+
+    /**
      * Some checks for the findRangeBounds() method.
      */
     public void testFindRangeBounds() {
-        IntervalBarRenderer r = new IntervalBarRenderer();
+        StatisticalLineAndShapeRenderer r
+                = new StatisticalLineAndShapeRenderer();
         assertNull(r.findRangeBounds(null));
 
         // an empty dataset should return a null range
-        DefaultIntervalCategoryDataset dataset
-                = new DefaultIntervalCategoryDataset(new double[0][0],
-                new double[0][0]);
+        DefaultStatisticalCategoryDataset dataset
+                = new DefaultStatisticalCategoryDataset();
         assertNull(r.findRangeBounds(dataset));
 
-        double[][] starts = new double[][] {{0.1, 0.2, 0.3}, {0.3, 0.4, 0.5}};
-        double[][] ends = new double[][] {{0.5, 0.6, 0.7}, {0.7, 0.8, 0.9}};
-        dataset = new DefaultIntervalCategoryDataset(starts, ends);
-        assertEquals(new Range(0.0, 0.9), r.findRangeBounds(dataset));
-        r.setIncludeBaseInRange(false);
-        assertEquals(new Range(0.1, 0.9), r.findRangeBounds(dataset));
-        r.setIncludeBaseInRange(true);
+        dataset.add(1.0, 0.5, "R1", "C1");
+        assertEquals(new Range(0.5, 1.5), r.findRangeBounds(dataset));
 
+        dataset.add(-2.0, 0.2, "R1", "C2");
+        assertEquals(new Range(-2.2, 1.5), r.findRangeBounds(dataset));
+
+        dataset.add(null, null, "R1", "C3");
+        assertEquals(new Range(-2.2, 1.5), r.findRangeBounds(dataset));
+
+        dataset.add(5.0, 1.0, "R2", "C3");
+        assertEquals(new Range(-2.2, 6.0), r.findRangeBounds(dataset));
+
+        // check that the series visible flag is observed
         r.setSeriesVisible(1, Boolean.FALSE);
-        assertEquals(new Range(0.0, 0.7), r.findRangeBounds(dataset));
+        assertEquals(new Range(-2.2, 1.5), r.findRangeBounds(dataset));
     }
 
 }

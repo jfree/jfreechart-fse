@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ------------------------------
- * WaterfallBarRendererTests.java
- * ------------------------------
+ * -----------------------------
+ * StackedAreaRendererTests.java
+ * -----------------------------
  * (C) Copyright 2003-2009, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -34,15 +34,14 @@
  *
  * Changes
  * -------
- * 21-Oct-2003 : Version 1 (DG);
+ * 25-Mar-2003 : Version 1 (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
- * 04-Feb-2009 : Added testFindRangeBounds() (DG);
+ * 04-Feb-2009 : Added testFindRangeBounds (DG);
  *
  */
 
 package org.jfree.chart.renderer.category.junit;
 
-import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -55,12 +54,14 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.renderer.category.WaterfallBarRenderer;
+import org.jfree.chart.renderer.category.StackedAreaRenderer;
+import org.jfree.data.Range;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
- * Tests for the {@link WaterfallBarRenderer} class.
+ * Tests for the {@link StackedAreaRendererTests} class.
  */
-public class WaterfallBarRendererTests extends TestCase {
+public class StackedAreaRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -68,7 +69,7 @@ public class WaterfallBarRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(WaterfallBarRendererTests.class);
+        return new TestSuite(StackedAreaRendererTest.class);
     }
 
     /**
@@ -76,58 +77,57 @@ public class WaterfallBarRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public WaterfallBarRendererTests(String name) {
+    public StackedAreaRendererTest(String name) {
         super(name);
     }
 
     /**
-     * Some tests for the findRangeBounds() method.
+     * Some checks for the findRangeBounds() method.
      */
     public void testFindRangeBounds() {
-        WaterfallBarRenderer r = new WaterfallBarRenderer();
+        StackedAreaRenderer r = new StackedAreaRenderer();
         assertNull(r.findRangeBounds(null));
+
+        // an empty dataset should return a null range
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        assertNull(r.findRangeBounds(dataset));
+
+        dataset.addValue(1.0, "R1", "C1");
+        assertEquals(new Range(0.0, 1.0), r.findRangeBounds(dataset));
+
+        dataset.addValue(-2.0, "R1", "C2");
+        assertEquals(new Range(-2.0, 1.0), r.findRangeBounds(dataset));
+
+        dataset.addValue(null, "R1", "C3");
+        assertEquals(new Range(-2.0, 1.0), r.findRangeBounds(dataset));
+
+        dataset.addValue(2.0, "R2", "C1");
+        assertEquals(new Range(-2.0, 3.0), r.findRangeBounds(dataset));
+
+        dataset.addValue(null, "R2", "C2");
+        assertEquals(new Range(-2.0, 3.0), r.findRangeBounds(dataset));
     }
 
     /**
      * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        WaterfallBarRenderer r1 = new WaterfallBarRenderer();
-        WaterfallBarRenderer r2 = new WaterfallBarRenderer();
+        StackedAreaRenderer r1 = new StackedAreaRenderer();
+        StackedAreaRenderer r2 = new StackedAreaRenderer();
         assertEquals(r1, r2);
 
-        // firstBarPaint;
-        r1.setFirstBarPaint(Color.cyan);
+        r1.setRenderAsPercentages(true);
         assertFalse(r1.equals(r2));
-        r2.setFirstBarPaint(Color.cyan);
+        r2.setRenderAsPercentages(true);
         assertTrue(r1.equals(r2));
-
-        // lastBarPaint;
-        r1.setLastBarPaint(Color.cyan);
-        assertFalse(r1.equals(r2));
-        r2.setLastBarPaint(Color.cyan);
-        assertTrue(r1.equals(r2));
-
-        // positiveBarPaint;
-        r1.setPositiveBarPaint(Color.cyan);
-        assertFalse(r1.equals(r2));
-        r2.setPositiveBarPaint(Color.cyan);
-        assertTrue(r1.equals(r2));
-
-        //private Paint negativeBarPaint;
-        r1.setNegativeBarPaint(Color.cyan);
-        assertFalse(r1.equals(r2));
-        r2.setNegativeBarPaint(Color.cyan);
-        assertTrue(r1.equals(r2));
-
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        WaterfallBarRenderer r1 = new WaterfallBarRenderer();
-        WaterfallBarRenderer r2 = new WaterfallBarRenderer();
+        StackedAreaRenderer r1 = new StackedAreaRenderer();
+        StackedAreaRenderer r2 = new StackedAreaRenderer();
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -138,22 +138,16 @@ public class WaterfallBarRendererTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        WaterfallBarRenderer r1 = new WaterfallBarRenderer();
-        WaterfallBarRenderer r2 = null;
+        StackedAreaRenderer r1 = new StackedAreaRenderer();
+        StackedAreaRenderer r2 = null;
         try {
-            r2 = (WaterfallBarRenderer) r1.clone();
+            r2 = (StackedAreaRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
+            e.printStackTrace();
         }
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
-
-        // quick check for independence
-        r1.setFirstBarPaint(Color.yellow);
-        assertFalse(r1.equals(r2));
-        r2.setFirstBarPaint(Color.yellow);
         assertTrue(r1.equals(r2));
 
     }
@@ -162,7 +156,7 @@ public class WaterfallBarRendererTests extends TestCase {
      * Check that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        WaterfallBarRenderer r1 = new WaterfallBarRenderer();
+        StackedAreaRenderer r1 = new StackedAreaRenderer();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -171,8 +165,8 @@ public class WaterfallBarRendererTests extends TestCase {
      */
     public void testSerialization() {
 
-        WaterfallBarRenderer r1 = new WaterfallBarRenderer();
-        WaterfallBarRenderer r2 = null;
+        StackedAreaRenderer r1 = new StackedAreaRenderer();
+        StackedAreaRenderer r2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -181,13 +175,12 @@ public class WaterfallBarRendererTests extends TestCase {
             out.close();
 
             ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-            );
-            r2 = (WaterfallBarRenderer) in.readObject();
+                    new ByteArrayInputStream(buffer.toByteArray()));
+            r2 = (StackedAreaRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
         assertEquals(r1, r2);
 

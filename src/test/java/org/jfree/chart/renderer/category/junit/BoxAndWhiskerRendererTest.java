@@ -83,7 +83,7 @@ import org.jfree.data.statistics.DefaultBoxAndWhiskerCategoryDataset;
 /**
  * Tests for the {@link BoxAndWhiskerRenderer} class.
  */
-public class BoxAndWhiskerRendererTests extends TestCase {
+public class BoxAndWhiskerRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -91,7 +91,7 @@ public class BoxAndWhiskerRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(BoxAndWhiskerRendererTests.class);
+        return new TestSuite(BoxAndWhiskerRendererTest.class);
     }
 
     /**
@@ -99,7 +99,7 @@ public class BoxAndWhiskerRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public BoxAndWhiskerRendererTests(String name) {
+    public BoxAndWhiskerRendererTest(String name) {
         super(name);
     }
 

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -24,28 +24,24 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -----------------------
- * BarRenderer3DTests.java
- * -----------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
+ * -------------------------------------
+ * DefaultCategoryItemRendererTests.java
+ * -------------------------------------
+ * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 25-Mar-2003 : Version 1 (DG);
+ * 29-Apr-2003 : Version 1 (DG);
  * 22-Oct-2003 : Added hashCode test (DG);
- * 07-Dec-2006 : Improved testEquals() (DG);
- * 23-Apr-2008 : Added testPublicCloneable (DG);
- * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 23-Apr-2008 : Added testPublicCloneable() (DG);
  *
  */
 
 package org.jfree.chart.renderer.category.junit;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -58,12 +54,12 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.renderer.category.BarRenderer3D;
+import org.jfree.chart.renderer.category.DefaultCategoryItemRenderer;
 
 /**
- * Tests for the {@link BarRenderer3D} class.
+ * Tests for the {@link DefaultCategoryItemRenderer} class.
  */
-public class BarRenderer3DTests extends TestCase {
+public class DefaultCategoryItemRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -71,7 +67,7 @@ public class BarRenderer3DTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(BarRenderer3DTests.class);
+        return new TestSuite(DefaultCategoryItemRendererTest.class);
     }
 
     /**
@@ -79,7 +75,7 @@ public class BarRenderer3DTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public BarRenderer3DTests(String name) {
+    public DefaultCategoryItemRendererTest(String name) {
         super(name);
     }
 
@@ -87,34 +83,17 @@ public class BarRenderer3DTests extends TestCase {
      * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        BarRenderer3D r1 = new BarRenderer3D(1.0, 2.0);
-        BarRenderer3D r2 = new BarRenderer3D(1.0, 2.0);
+        DefaultCategoryItemRenderer r1 = new DefaultCategoryItemRenderer();
+        DefaultCategoryItemRenderer r2 = new DefaultCategoryItemRenderer();
         assertEquals(r1, r2);
-
-        r1 = new BarRenderer3D(1.1, 2.0);
-        assertFalse(r1.equals(r2));
-        r2 = new BarRenderer3D(1.1, 2.0);
-        assertTrue(r1.equals(r2));
-
-        r1 = new BarRenderer3D(1.1, 2.2);
-        assertFalse(r1.equals(r2));
-        r2 = new BarRenderer3D(1.1, 2.2);
-        assertTrue(r1.equals(r2));
-
-        r1.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.red, 4.0f, 3.0f,
-                Color.blue));
-        assertFalse(r1.equals(r2));
-        r2.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.red, 4.0f, 3.0f,
-                Color.blue));
-        assertTrue(r1.equals(r2));
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        BarRenderer3D r1 = new BarRenderer3D();
-        BarRenderer3D r2 = new BarRenderer3D();
+        DefaultCategoryItemRenderer r1 = new DefaultCategoryItemRenderer();
+        DefaultCategoryItemRenderer r2 = new DefaultCategoryItemRenderer();
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -125,13 +104,13 @@ public class BarRenderer3DTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        BarRenderer3D r1 = new BarRenderer3D();
-        BarRenderer3D r2 = null;
+        DefaultCategoryItemRenderer r1 = new DefaultCategoryItemRenderer();
+        DefaultCategoryItemRenderer r2 = null;
         try {
-            r2 = (BarRenderer3D) r1.clone();
+            r2 = (DefaultCategoryItemRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            System.err.println("Failed to clone.");
         }
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
@@ -142,7 +121,7 @@ public class BarRenderer3DTests extends TestCase {
      * Check that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        BarRenderer3D r1 = new BarRenderer3D();
+        DefaultCategoryItemRenderer r1 = new DefaultCategoryItemRenderer();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -150,10 +129,10 @@ public class BarRenderer3DTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        BarRenderer3D r1 = new BarRenderer3D();
-        r1.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.red, 4.0f, 3.0f,
-                Color.blue));
-        BarRenderer3D r2 = null;
+
+        DefaultCategoryItemRenderer r1 = new DefaultCategoryItemRenderer();
+        DefaultCategoryItemRenderer r2 = null;
+
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -161,14 +140,16 @@ public class BarRenderer3DTests extends TestCase {
             out.close();
 
             ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (BarRenderer3D) in.readObject();
+                new ByteArrayInputStream(buffer.toByteArray())
+            );
+            r2 = (DefaultCategoryItemRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
         assertEquals(r1, r2);
+
     }
 
 }

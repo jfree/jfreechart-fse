@@ -66,7 +66,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 /**
  * Tests for the {@link AbstractCategoryItemRenderer} class.
  */
-public class AbstractCategoryItemRendererTests extends TestCase {
+public class AbstractCategoryItemRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -74,7 +74,7 @@ public class AbstractCategoryItemRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(AbstractCategoryItemRendererTests.class);
+        return new TestSuite(AbstractCategoryItemRendererTest.class);
     }
 
     /**

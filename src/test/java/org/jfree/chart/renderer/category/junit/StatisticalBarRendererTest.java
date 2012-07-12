@@ -70,7 +70,7 @@ import org.jfree.data.statistics.DefaultStatisticalCategoryDataset;
 /**
  * Tests for the {@link StatisticalBarRenderer} class.
  */
-public class StatisticalBarRendererTests extends TestCase {
+public class StatisticalBarRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -78,7 +78,7 @@ public class StatisticalBarRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StatisticalBarRendererTests.class);
+        return new TestSuite(StatisticalBarRendererTest.class);
     }
 
     /**
@@ -86,7 +86,7 @@ public class StatisticalBarRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StatisticalBarRendererTests(String name) {
+    public StatisticalBarRendererTest(String name) {
         super(name);
     }
 

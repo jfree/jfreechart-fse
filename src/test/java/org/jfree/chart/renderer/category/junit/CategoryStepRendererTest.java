@@ -24,19 +24,20 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -------------------------------------
- * DefaultCategoryItemRendererTests.java
- * -------------------------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
+ * ------------------------------
+ * CategoryStepRendererTests.java
+ * ------------------------------
+ * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 29-Apr-2003 : Version 1 (DG);
- * 22-Oct-2003 : Added hashCode test (DG);
- * 23-Apr-2008 : Added testPublicCloneable() (DG);
+ * 08-Mar-2005 : Version 1 (DG);
+ * 22-Feb-2007 : Minor updates (DG);
+ * 17-May-2007 : Added testGetLegendItemSeriesIndex() (DG);
+ * 23-Apr-2008 : Added testPublicCloneable (DG);
  *
  */
 
@@ -53,13 +54,19 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.renderer.category.DefaultCategoryItemRenderer;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.renderer.category.CategoryStepRenderer;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
- * Tests for the {@link DefaultCategoryItemRenderer} class.
+ * Tests for the {@link CategoryStepRenderer} class.
  */
-public class DefaultCategoryItemRendererTests extends TestCase {
+public class CategoryStepRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -67,7 +74,7 @@ public class DefaultCategoryItemRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(DefaultCategoryItemRendererTests.class);
+        return new TestSuite(CategoryStepRendererTest.class);
     }
 
     /**
@@ -75,7 +82,7 @@ public class DefaultCategoryItemRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public DefaultCategoryItemRendererTests(String name) {
+    public CategoryStepRendererTest(String name) {
         super(name);
     }
 
@@ -83,34 +90,27 @@ public class DefaultCategoryItemRendererTests extends TestCase {
      * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        DefaultCategoryItemRenderer r1 = new DefaultCategoryItemRenderer();
-        DefaultCategoryItemRenderer r2 = new DefaultCategoryItemRenderer();
+        CategoryStepRenderer r1 = new CategoryStepRenderer(false);
+        CategoryStepRenderer r2 = new CategoryStepRenderer(false);
         assertEquals(r1, r2);
-    }
 
-    /**
-     * Two objects that are equal are required to return the same hashCode.
-     */
-    public void testHashcode() {
-        DefaultCategoryItemRenderer r1 = new DefaultCategoryItemRenderer();
-        DefaultCategoryItemRenderer r2 = new DefaultCategoryItemRenderer();
+        r1 = new CategoryStepRenderer(true);
+        assertFalse(r1.equals(r2));
+        r2 = new CategoryStepRenderer(true);
         assertTrue(r1.equals(r2));
-        int h1 = r1.hashCode();
-        int h2 = r2.hashCode();
-        assertEquals(h1, h2);
     }
 
     /**
      * Confirm that cloning works.
      */
     public void testCloning() {
-        DefaultCategoryItemRenderer r1 = new DefaultCategoryItemRenderer();
-        DefaultCategoryItemRenderer r2 = null;
+        CategoryStepRenderer r1 = new CategoryStepRenderer(false);
+        CategoryStepRenderer r2 = null;
         try {
-            r2 = (DefaultCategoryItemRenderer) r1.clone();
+            r2 = (CategoryStepRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
+            e.printStackTrace();
         }
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
@@ -121,7 +121,7 @@ public class DefaultCategoryItemRendererTests extends TestCase {
      * Check that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        DefaultCategoryItemRenderer r1 = new DefaultCategoryItemRenderer();
+        CategoryStepRenderer r1 = new CategoryStepRenderer(false);
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -130,8 +130,8 @@ public class DefaultCategoryItemRendererTests extends TestCase {
      */
     public void testSerialization() {
 
-        DefaultCategoryItemRenderer r1 = new DefaultCategoryItemRenderer();
-        DefaultCategoryItemRenderer r2 = null;
+        CategoryStepRenderer r1 = new CategoryStepRenderer();
+        CategoryStepRenderer r2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -140,16 +140,38 @@ public class DefaultCategoryItemRendererTests extends TestCase {
             out.close();
 
             ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-            );
-            r2 = (DefaultCategoryItemRenderer) in.readObject();
+                    new ByteArrayInputStream(buffer.toByteArray()));
+            r2 = (CategoryStepRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
         assertEquals(r1, r2);
 
+    }
+
+    /**
+     * A check for the datasetIndex and seriesIndex fields in the LegendItem
+     * returned by the getLegendItem() method.
+     */
+    public void testGetLegendItemSeriesIndex() {
+        DefaultCategoryDataset dataset0 = new DefaultCategoryDataset();
+        dataset0.addValue(21.0, "R1", "C1");
+        dataset0.addValue(22.0, "R2", "C1");
+        DefaultCategoryDataset dataset1 = new DefaultCategoryDataset();
+        dataset1.addValue(23.0, "R3", "C1");
+        dataset1.addValue(24.0, "R4", "C1");
+        dataset1.addValue(25.0, "R5", "C1");
+        CategoryStepRenderer r = new CategoryStepRenderer();
+        CategoryPlot plot = new CategoryPlot(dataset0, new CategoryAxis("x"),
+                new NumberAxis("y"), r);
+        plot.setDataset(1, dataset1);
+        /*JFreeChart chart =*/ new JFreeChart(plot);
+        LegendItem li = r.getLegendItem(1, 2);
+        assertEquals("R5", li.getLabel());
+        assertEquals(1, li.getDatasetIndex());
+        assertEquals(2, li.getSeriesIndex());
     }
 
 }

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -24,20 +24,22 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ------------------------------
- * CategoryStepRendererTests.java
- * ------------------------------
- * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
+ * ----------------------
+ * AreaRendererTests.java
+ * ----------------------
+ * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 08-Mar-2005 : Version 1 (DG);
- * 22-Feb-2007 : Minor updates (DG);
+ * 25-Mar-2003 : Version 1 (DG);
+ * 22-Oct-2003 : Added hashCode() test (DG);
+ * 11-Oct-2006 : Strengthened the testEquals() method (DG);
  * 17-May-2007 : Added testGetLegendItemSeriesIndex() (DG);
- * 23-Apr-2008 : Added testPublicCloneable (DG);
+ * 23-Apr-2008 : Added testPublicCloneable() (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
@@ -60,13 +62,14 @@ import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.renderer.category.CategoryStepRenderer;
+import org.jfree.chart.renderer.AreaRendererEndType;
+import org.jfree.chart.renderer.category.AreaRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
- * Tests for the {@link CategoryStepRenderer} class.
+ * Tests for the {@link AreaRenderer} class.
  */
-public class CategoryStepRendererTests extends TestCase {
+public class AreaRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -74,7 +77,7 @@ public class CategoryStepRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(CategoryStepRendererTests.class);
+        return new TestSuite(AreaRendererTest.class);
     }
 
     /**
@@ -82,7 +85,7 @@ public class CategoryStepRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public CategoryStepRendererTests(String name) {
+    public AreaRendererTest(String name) {
         super(name);
     }
 
@@ -90,24 +93,36 @@ public class CategoryStepRendererTests extends TestCase {
      * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        CategoryStepRenderer r1 = new CategoryStepRenderer(false);
-        CategoryStepRenderer r2 = new CategoryStepRenderer(false);
+        AreaRenderer r1 = new AreaRenderer();
+        AreaRenderer r2 = new AreaRenderer();
         assertEquals(r1, r2);
 
-        r1 = new CategoryStepRenderer(true);
+        r1.setEndType(AreaRendererEndType.LEVEL);
         assertFalse(r1.equals(r2));
-        r2 = new CategoryStepRenderer(true);
+        r2.setEndType(AreaRendererEndType.LEVEL);
         assertTrue(r1.equals(r2));
+    }
+
+    /**
+     * Two objects that are equal are required to return the same hashCode.
+     */
+    public void testHashcode() {
+        AreaRenderer r1 = new AreaRenderer();
+        AreaRenderer r2 = new AreaRenderer();
+        assertTrue(r1.equals(r2));
+        int h1 = r1.hashCode();
+        int h2 = r2.hashCode();
+        assertEquals(h1, h2);
     }
 
     /**
      * Confirm that cloning works.
      */
     public void testCloning() {
-        CategoryStepRenderer r1 = new CategoryStepRenderer(false);
-        CategoryStepRenderer r2 = null;
+        AreaRenderer r1 = new AreaRenderer();
+        AreaRenderer r2 = null;
         try {
-            r2 = (CategoryStepRenderer) r1.clone();
+            r2 = (AreaRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -121,7 +136,7 @@ public class CategoryStepRendererTests extends TestCase {
      * Check that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        CategoryStepRenderer r1 = new CategoryStepRenderer(false);
+        AreaRenderer r1 = new AreaRenderer();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -129,10 +144,8 @@ public class CategoryStepRendererTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-
-        CategoryStepRenderer r1 = new CategoryStepRenderer();
-        CategoryStepRenderer r2 = null;
-
+        AreaRenderer r1 = new AreaRenderer();
+        AreaRenderer r2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -141,14 +154,13 @@ public class CategoryStepRendererTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (CategoryStepRenderer) in.readObject();
+            r2 = (AreaRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(r1, r2);
-
     }
 
     /**
@@ -163,7 +175,7 @@ public class CategoryStepRendererTests extends TestCase {
         dataset1.addValue(23.0, "R3", "C1");
         dataset1.addValue(24.0, "R4", "C1");
         dataset1.addValue(25.0, "R5", "C1");
-        CategoryStepRenderer r = new CategoryStepRenderer();
+        AreaRenderer r = new AreaRenderer();
         CategoryPlot plot = new CategoryPlot(dataset0, new CategoryAxis("x"),
                 new NumberAxis("y"), r);
         plot.setDataset(1, dataset1);
