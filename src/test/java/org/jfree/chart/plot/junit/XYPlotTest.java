@@ -109,7 +109,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 /**
  * Tests for the {@link XYPlot} class.
  */
-public class XYPlotTests extends TestCase {
+public class XYPlotTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -117,7 +117,7 @@ public class XYPlotTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYPlotTests.class);
+        return new TestSuite(XYPlotTest.class);
     }
 
     /**
@@ -125,7 +125,7 @@ public class XYPlotTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYPlotTests(String name) {
+    public XYPlotTest(String name) {
         super(name);
     }
 

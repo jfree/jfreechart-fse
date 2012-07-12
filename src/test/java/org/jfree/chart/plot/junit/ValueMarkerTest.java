@@ -74,7 +74,7 @@ import org.jfree.chart.plot.ValueMarker;
 /**
  * Tests for the {@link ValueMarker} class.
  */
-public class ValueMarkerTests
+public class ValueMarkerTest
     extends TestCase
     implements MarkerChangeListener {
 
@@ -87,7 +87,7 @@ public class ValueMarkerTests
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(ValueMarkerTests.class);
+        return new TestSuite(ValueMarkerTest.class);
     }
 
     /**
@@ -95,7 +95,7 @@ public class ValueMarkerTests
      *
      * @param name  the name of the tests.
      */
-    public ValueMarkerTests(String name) {
+    public ValueMarkerTest(String name) {
         super(name);
     }
 

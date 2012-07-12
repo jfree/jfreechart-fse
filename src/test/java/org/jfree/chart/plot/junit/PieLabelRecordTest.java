@@ -58,7 +58,7 @@ import org.jfree.chart.text.TextBox;
 /**
  * Some tests for the {@link CategoryMarker} class.
  */
-public class PieLabelRecordTests extends TestCase {
+public class PieLabelRecordTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -66,7 +66,7 @@ public class PieLabelRecordTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(PieLabelRecordTests.class);
+        return new TestSuite(PieLabelRecordTest.class);
     }
 
     /**
@@ -74,7 +74,7 @@ public class PieLabelRecordTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public PieLabelRecordTests(String name) {
+    public PieLabelRecordTest(String name) {
         super(name);
     }
 

@@ -25,7 +25,7 @@
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------------------
- * CombinedDomainCategoryPlotTests.java
+ * CombinedRangeCategoryPlotTests.java
  * ------------------------------------
  * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
@@ -34,7 +34,7 @@
  *
  * Changes
  * -------
- * 19-Aug-2003 : Version 1 (DG);
+ * 21-Aug-2003 : Version 1 (DG);
  * 03-Jan-2008 : Added testNotification() (DG);
  *
  */
@@ -63,16 +63,16 @@ import org.jfree.chart.event.ChartChangeEvent;
 import org.jfree.chart.event.ChartChangeListener;
 import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.CombinedDomainCategoryPlot;
+import org.jfree.chart.plot.CombinedRangeCategoryPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
- * Tests for the {@link CombinedDomainCategoryPlot} class.
+ * Tests for the {@link CombinedRangeCategoryPlot} class.
  */
-public class CombinedDomainCategoryPlotTests extends TestCase
+public class CombinedRangeCategoryPlotTest extends TestCase
         implements ChartChangeListener {
 
     /** A list of the events received. */
@@ -94,7 +94,7 @@ public class CombinedDomainCategoryPlotTests extends TestCase
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(CombinedDomainCategoryPlotTests.class);
+        return new TestSuite(CombinedRangeCategoryPlotTest.class);
     }
 
     /**
@@ -102,43 +102,27 @@ public class CombinedDomainCategoryPlotTests extends TestCase
      *
      * @param name  the name of the tests.
      */
-    public CombinedDomainCategoryPlotTests(String name) {
+    public CombinedRangeCategoryPlotTest(String name) {
         super(name);
     }
 
     /**
-     * This is a test to replicate the bug report 987080.
-     */
-    public void testRemoveSubplot() {
-        CombinedDomainCategoryPlot plot = new CombinedDomainCategoryPlot();
-        CategoryPlot plot1 = new CategoryPlot();
-        CategoryPlot plot2 = new CategoryPlot();
-        plot.add(plot1);
-        plot.add(plot2);
-        // remove plot2, but plot1 is removed instead
-        plot.remove(plot2);
-        List plots = plot.getSubplots();
-        assertTrue(plots.get(0) == plot1);
-        assertEquals(1, plots.size());
-    }
-
-    /**
-     * Some checks for the equals() method.
+     * Test the equals() method.
      */
     public void testEquals() {
-        CombinedDomainCategoryPlot plot1 = createPlot();
-        CombinedDomainCategoryPlot plot2 = createPlot();
+        CombinedRangeCategoryPlot plot1 = createPlot();
+        CombinedRangeCategoryPlot plot2 = createPlot();
         assertTrue(plot1.equals(plot2));
     }
 
     /**
-     * Some checks for cloning.
+     * Confirm that cloning works.
      */
     public void testCloning() {
-        CombinedDomainCategoryPlot plot1 = createPlot();
-        CombinedDomainCategoryPlot plot2 = null;
+        CombinedRangeCategoryPlot plot1 = createPlot();
+        CombinedRangeCategoryPlot plot2 = null;
         try {
-            plot2 = (CombinedDomainCategoryPlot) plot1.clone();
+            plot2 = (CombinedRangeCategoryPlot) plot1.clone();
         }
         catch (CloneNotSupportedException e) {
             System.err.println("Failed to clone.");
@@ -152,8 +136,8 @@ public class CombinedDomainCategoryPlotTests extends TestCase
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        CombinedDomainCategoryPlot plot1 = createPlot();
-        CombinedDomainCategoryPlot plot2 = null;
+        CombinedRangeCategoryPlot plot1 = createPlot();
+        CombinedRangeCategoryPlot plot2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -161,13 +145,30 @@ public class CombinedDomainCategoryPlotTests extends TestCase
             out.close();
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            plot2 = (CombinedDomainCategoryPlot) in.readObject();
+            plot2 = (CombinedRangeCategoryPlot) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(plot1, plot2);
+
+    }
+
+    /**
+     * This is a test to replicate the bug report 1121172.
+     */
+    public void testRemoveSubplot() {
+        CombinedRangeCategoryPlot plot = new CombinedRangeCategoryPlot();
+        CategoryPlot plot1 = new CategoryPlot();
+        CategoryPlot plot2 = new CategoryPlot();
+        CategoryPlot plot3 = new CategoryPlot();
+        plot.add(plot1);
+        plot.add(plot2);
+        plot.add(plot3);
+        plot.remove(plot2);
+        List plots = plot.getSubplots();
+        assertEquals(2, plots.size());
     }
 
     /**
@@ -175,7 +176,7 @@ public class CombinedDomainCategoryPlotTests extends TestCase
      * subplot.
      */
     public void testNotification() {
-        CombinedDomainCategoryPlot plot = createPlot();
+        CombinedRangeCategoryPlot plot = createPlot();
         JFreeChart chart = new JFreeChart(plot);
         chart.addChangeListener(this);
         CategoryPlot subplot1 = (CategoryPlot) plot.getSubplots().get(0);
@@ -285,41 +286,33 @@ public class CombinedDomainCategoryPlotTests extends TestCase
     /**
      * Creates a sample plot.
      *
-     * @return A sample plot.
+     * @return A plot.
      */
-    private CombinedDomainCategoryPlot createPlot() {
-
+    private CombinedRangeCategoryPlot createPlot() {
         CategoryDataset dataset1 = createDataset1();
-        NumberAxis rangeAxis1 = new NumberAxis("Value");
-        rangeAxis1.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        CategoryAxis catAxis1 = new CategoryAxis("Category");
         LineAndShapeRenderer renderer1 = new LineAndShapeRenderer();
         renderer1.setBaseToolTipGenerator(
-            new StandardCategoryToolTipGenerator()
-        );
-        CategoryPlot subplot1 = new CategoryPlot(
-            dataset1, null, rangeAxis1, renderer1
-        );
+                new StandardCategoryToolTipGenerator());
+        CategoryPlot subplot1 = new CategoryPlot(dataset1, catAxis1, null,
+                renderer1);
         subplot1.setDomainGridlinesVisible(true);
 
         CategoryDataset dataset2 = createDataset2();
-        NumberAxis rangeAxis2 = new NumberAxis("Value");
-        rangeAxis2.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        CategoryAxis catAxis2 = new CategoryAxis("Category");
         BarRenderer renderer2 = new BarRenderer();
         renderer2.setBaseToolTipGenerator(
-            new StandardCategoryToolTipGenerator()
-        );
-        CategoryPlot subplot2 = new CategoryPlot(
-            dataset2, null, rangeAxis2, renderer2
-        );
+                new StandardCategoryToolTipGenerator());
+        CategoryPlot subplot2 = new CategoryPlot(dataset2, catAxis2, null,
+                renderer2);
         subplot2.setDomainGridlinesVisible(true);
 
-        CategoryAxis domainAxis = new CategoryAxis("Category");
-        CombinedDomainCategoryPlot plot
-            = new CombinedDomainCategoryPlot(domainAxis);
+        NumberAxis rangeAxis = new NumberAxis("Value");
+        CombinedRangeCategoryPlot plot = new CombinedRangeCategoryPlot(
+                rangeAxis);
         plot.add(subplot1, 2);
         plot.add(subplot2, 1);
         return plot;
-
     }
 
 }

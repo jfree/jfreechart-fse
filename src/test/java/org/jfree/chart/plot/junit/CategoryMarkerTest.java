@@ -61,7 +61,7 @@ import org.jfree.chart.plot.CategoryMarker;
 /**
  * Some tests for the {@link CategoryMarker} class.
  */
-public class CategoryMarkerTests extends TestCase
+public class CategoryMarkerTest extends TestCase
         implements MarkerChangeListener {
 
     MarkerChangeEvent lastEvent;
@@ -82,7 +82,7 @@ public class CategoryMarkerTests extends TestCase
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(CategoryMarkerTests.class);
+        return new TestSuite(CategoryMarkerTest.class);
     }
 
     /**
@@ -90,7 +90,7 @@ public class CategoryMarkerTests extends TestCase
      *
      * @param name  the name of the tests.
      */
-    public CategoryMarkerTests(String name) {
+    public CategoryMarkerTest(String name) {
         super(name);
     }
 

@@ -63,7 +63,7 @@ import org.jfree.chart.plot.IntervalMarker;
 /**
  * Tests for the {@link IntervalMarker} class.
  */
-public class IntervalMarkerTests
+public class IntervalMarkerTest
     extends TestCase
     implements MarkerChangeListener {
 
@@ -85,7 +85,7 @@ public class IntervalMarkerTests
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(IntervalMarkerTests.class);
+        return new TestSuite(IntervalMarkerTest.class);
     }
 
     /**
@@ -93,7 +93,7 @@ public class IntervalMarkerTests
      *
      * @param name  the name of the tests.
      */
-    public IntervalMarkerTests(String name) {
+    public IntervalMarkerTest(String name) {
         super(name);
     }
 

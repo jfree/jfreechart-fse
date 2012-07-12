@@ -65,7 +65,7 @@ import org.jfree.chart.plot.FastScatterPlot;
 /**
  * Tests for the {@link FastScatterPlot} class.
  */
-public class FastScatterPlotTests extends TestCase {
+public class FastScatterPlotTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -73,7 +73,7 @@ public class FastScatterPlotTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(FastScatterPlotTests.class);
+        return new TestSuite(FastScatterPlotTest.class);
     }
 
     /**
@@ -81,7 +81,7 @@ public class FastScatterPlotTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public FastScatterPlotTests(String name) {
+    public FastScatterPlotTest(String name) {
         super(name);
     }
 

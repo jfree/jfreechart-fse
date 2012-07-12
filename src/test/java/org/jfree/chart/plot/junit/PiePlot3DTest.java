@@ -24,24 +24,28 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ---------------------------
- * PlotRenderingInfoTests.java
- * ---------------------------
- * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
+ * -------------------
+ * Pie3DPlotTests.java
+ * -------------------
+ * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 20-May-2004 : Version 1 (DG);
+ * 18-Mar-2003 : Version 1 (DG);
+ * 22-Mar-2007 : Added testEquals() (DG);
+ * 05-Oct-2007 : Modified testEquals() for new field (DG);
+ * 19-Mar-2008 : Added test for null dataset (DG);
  *
  */
 
 package org.jfree.chart.plot.junit;
 
-import java.awt.Rectangle;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -53,13 +57,14 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.ChartRenderingInfo;
-import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot3D;
 
 /**
- * Tests for the {@link PlotRenderingInfo} class.
+ * Tests for the {@link PiePlot3D} class.
  */
-public class PlotRenderingInfoTests extends TestCase {
+public class PiePlot3DTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -67,7 +72,7 @@ public class PlotRenderingInfoTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(PlotRenderingInfoTests.class);
+        return new TestSuite(PiePlot3DTest.class);
     }
 
     /**
@@ -75,66 +80,27 @@ public class PlotRenderingInfoTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public PlotRenderingInfoTests(String name) {
+    public PiePlot3DTest(String name) {
         super(name);
     }
 
     /**
-     * Test the equals() method.
+     * Some checks for the equals() method.
      */
     public void testEquals() {
-        PlotRenderingInfo p1 = new PlotRenderingInfo(new ChartRenderingInfo());
-        PlotRenderingInfo p2 = new PlotRenderingInfo(new ChartRenderingInfo());
+        PiePlot3D p1 = new PiePlot3D();
+        PiePlot3D p2 = new PiePlot3D();
         assertTrue(p1.equals(p2));
         assertTrue(p2.equals(p1));
 
-        p1.setPlotArea(new Rectangle(2, 3, 4, 5));
+        p1.setDepthFactor(1.23);
         assertFalse(p1.equals(p2));
-        p2.setPlotArea(new Rectangle(2, 3, 4, 5));
+        p2.setDepthFactor(1.23);
         assertTrue(p1.equals(p2));
 
-        p1.setDataArea(new Rectangle(2, 4, 6, 8));
+        p1.setDarkerSides(true);
         assertFalse(p1.equals(p2));
-        p2.setDataArea(new Rectangle(2, 4, 6, 8));
-        assertTrue(p1.equals(p2));
-
-        p1.addSubplotInfo(new PlotRenderingInfo(null));
-        assertFalse(p1.equals(p2));
-        p2.addSubplotInfo(new PlotRenderingInfo(null));
-        assertTrue(p1.equals(p2));
-
-        p1.getSubplotInfo(0).setDataArea(new Rectangle(1, 2, 3, 4));
-        assertFalse(p1.equals(p2));
-        p2.getSubplotInfo(0).setDataArea(new Rectangle(1, 2, 3, 4));
-        assertTrue(p1.equals(p2));
-    }
-
-    /**
-     * Confirm that cloning works.
-     */
-    public void testCloning() {
-        PlotRenderingInfo p1 = new PlotRenderingInfo(new ChartRenderingInfo());
-        p1.setPlotArea(new Rectangle2D.Double());
-        PlotRenderingInfo p2 = null;
-        try {
-            p2 = (PlotRenderingInfo) p1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        assertTrue(p1 != p2);
-        assertTrue(p1.getClass() == p2.getClass());
-        assertTrue(p1.equals(p2));
-
-        // check independence
-        p1.getPlotArea().setRect(1.0, 2.0, 3.0, 4.0);
-        assertFalse(p1.equals(p2));
-        p2.getPlotArea().setRect(1.0, 2.0, 3.0, 4.0);
-        assertTrue(p1.equals(p2));
-
-        p1.getDataArea().setRect(4.0, 3.0, 2.0, 1.0);
-        assertFalse(p1.equals(p2));
-        p2.getDataArea().setRect(4.0, 3.0, 2.0, 1.0);
+        p2.setDarkerSides(true);
         assertTrue(p1.equals(p2));
     }
 
@@ -143,8 +109,8 @@ public class PlotRenderingInfoTests extends TestCase {
      */
     public void testSerialization() {
 
-        PlotRenderingInfo p1 = new PlotRenderingInfo(new ChartRenderingInfo());
-        PlotRenderingInfo p2 = null;
+        PiePlot3D p1 = new PiePlot3D(null);
+        PiePlot3D p2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -153,16 +119,36 @@ public class PlotRenderingInfoTests extends TestCase {
             out.close();
 
             ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-            );
-            p2 = (PlotRenderingInfo) in.readObject();
+                    new ByteArrayInputStream(buffer.toByteArray()));
+            p2 = (PiePlot3D) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
         assertEquals(p1, p2);
 
+    }
+
+    /**
+     * Draws a pie chart where the label generator returns null.
+     */
+    public void testDrawWithNullDataset() {
+        JFreeChart chart = ChartFactory.createPieChart3D("Test", null, true,
+                false, false);
+        boolean success = false;
+        try {
+            BufferedImage image = new BufferedImage(200 , 100,
+                    BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2 = image.createGraphics();
+            chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
+            g2.dispose();
+            success = true;
+        }
+        catch (Exception e) {
+            success = false;
+        }
+        assertTrue(success);
     }
 
 }

@@ -62,7 +62,7 @@ import org.jfree.chart.plot.DefaultDrawingSupplier;
 /**
  * Tests for the {@link DefaultDrawingSupplier} class.
  */
-public class DefaultDrawingSupplierTests extends TestCase {
+public class DefaultDrawingSupplierTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -70,7 +70,7 @@ public class DefaultDrawingSupplierTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(DefaultDrawingSupplierTests.class);
+        return new TestSuite(DefaultDrawingSupplierTest.class);
     }
 
     /**
@@ -78,7 +78,7 @@ public class DefaultDrawingSupplierTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public DefaultDrawingSupplierTests(String name) {
+    public DefaultDrawingSupplierTest(String name) {
         super(name);
     }
 

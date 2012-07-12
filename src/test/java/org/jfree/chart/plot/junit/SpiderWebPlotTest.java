@@ -78,7 +78,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 /**
  * Tests for the {@link SpiderWebPlot} class.
  */
-public class SpiderWebPlotTests extends TestCase {
+public class SpiderWebPlotTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -86,7 +86,7 @@ public class SpiderWebPlotTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(SpiderWebPlotTests.class);
+        return new TestSuite(SpiderWebPlotTest.class);
     }
 
     /**
@@ -94,7 +94,7 @@ public class SpiderWebPlotTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public SpiderWebPlotTests(String name) {
+    public SpiderWebPlotTest(String name) {
         super(name);
     }
 

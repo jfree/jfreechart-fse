@@ -61,7 +61,7 @@ import org.jfree.data.general.DefaultValueDataset;
 /**
  * Tests for the {@link CompassPlot} class.
  */
-public class CompassPlotTests extends TestCase {
+public class CompassPlotTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -69,7 +69,7 @@ public class CompassPlotTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(CompassPlotTests.class);
+        return new TestSuite(CompassPlotTest.class);
     }
 
     /**
@@ -77,7 +77,7 @@ public class CompassPlotTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public CompassPlotTests(String name) {
+    public CompassPlotTest(String name) {
         super(name);
     }
 

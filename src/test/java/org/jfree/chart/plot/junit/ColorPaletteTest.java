@@ -50,7 +50,7 @@ import org.jfree.chart.plot.GreyPalette;
 /**
  * Tests for the <code>ColorPalette</code> class.
  */
-public class ColorPaletteTests extends TestCase {
+public class ColorPaletteTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -58,7 +58,7 @@ public class ColorPaletteTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(ColorPaletteTests.class);
+        return new TestSuite(ColorPaletteTest.class);
     }
 
     /**
@@ -66,7 +66,7 @@ public class ColorPaletteTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public ColorPaletteTests(String name) {
+    public ColorPaletteTest(String name) {
         super(name);
     }
 

@@ -85,7 +85,7 @@ import org.jfree.data.general.PieDataset;
 /**
  * Some tests for the {@link PiePlot} class.
  */
-public class PiePlotTests extends TestCase {
+public class PiePlotTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -93,7 +93,7 @@ public class PiePlotTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(PiePlotTests.class);
+        return new TestSuite(PiePlotTest.class);
     }
 
     /**
@@ -101,7 +101,7 @@ public class PiePlotTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public PiePlotTests(String name) {
+    public PiePlotTest(String name) {
         super(name);
     }
 

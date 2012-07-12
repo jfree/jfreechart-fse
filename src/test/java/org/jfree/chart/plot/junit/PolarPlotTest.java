@@ -79,7 +79,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 /**
  * Some tests for the {@link PolarPlot} class.
  */
-public class PolarPlotTests extends TestCase {
+public class PolarPlotTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -87,7 +87,7 @@ public class PolarPlotTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(PolarPlotTests.class);
+        return new TestSuite(PolarPlotTest.class);
     }
 
     /**
@@ -95,7 +95,7 @@ public class PolarPlotTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public PolarPlotTests(String name) {
+    public PolarPlotTest(String name) {
         super(name);
     }
 

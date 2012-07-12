@@ -66,7 +66,7 @@ import org.jfree.chart.plot.Plot;
 /**
  * Some tests for the {@link Plot} class.
  */
-public class PlotTests extends TestCase {
+public class PlotTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -74,7 +74,7 @@ public class PlotTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(PlotTests.class);
+        return new TestSuite(PlotTest.class);
     }
 
     /**
@@ -82,7 +82,7 @@ public class PlotTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public PlotTests(String name) {
+    public PlotTest(String name) {
         super(name);
     }
 

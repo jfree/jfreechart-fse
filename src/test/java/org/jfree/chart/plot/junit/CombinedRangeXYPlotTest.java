@@ -75,7 +75,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 /**
  * Tests for the {@link CombinedRangeXYPlot} class.
  */
-public class CombinedRangeXYPlotTests extends TestCase
+public class CombinedRangeXYPlotTest extends TestCase
         implements ChartChangeListener {
 
     /** A list of the events received. */
@@ -97,7 +97,7 @@ public class CombinedRangeXYPlotTests extends TestCase
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(CombinedRangeXYPlotTests.class);
+        return new TestSuite(CombinedRangeXYPlotTest.class);
     }
 
     /**
@@ -105,7 +105,7 @@ public class CombinedRangeXYPlotTests extends TestCase
      *
      * @param name  the name of the tests.
      */
-    public CombinedRangeXYPlotTests(String name) {
+    public CombinedRangeXYPlotTest(String name) {
         super(name);
     }
 

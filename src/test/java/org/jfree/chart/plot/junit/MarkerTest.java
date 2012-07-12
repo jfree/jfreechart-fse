@@ -66,7 +66,7 @@ import org.jfree.chart.plot.XYPlot;
 /**
  * Tests for the {@link Marker} class.
  */
-public class MarkerTests extends TestCase implements MarkerChangeListener {
+public class MarkerTest extends TestCase implements MarkerChangeListener {
 
     MarkerChangeEvent lastEvent;
 
@@ -76,7 +76,7 @@ public class MarkerTests extends TestCase implements MarkerChangeListener {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(MarkerTests.class);
+        return new TestSuite(MarkerTest.class);
     }
 
     /**
@@ -84,7 +84,7 @@ public class MarkerTests extends TestCase implements MarkerChangeListener {
      *
      * @param name  the name of the tests.
      */
-    public MarkerTests(String name) {
+    public MarkerTest(String name) {
         super(name);
     }
 

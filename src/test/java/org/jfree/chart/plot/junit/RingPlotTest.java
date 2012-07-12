@@ -61,7 +61,7 @@ import org.jfree.chart.plot.RingPlot;
 /**
  * Tests for the {@link RingPlot} class.
  */
-public class RingPlotTests extends TestCase {
+public class RingPlotTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -69,7 +69,7 @@ public class RingPlotTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(RingPlotTests.class);
+        return new TestSuite(RingPlotTest.class);
     }
 
     /**
@@ -77,7 +77,7 @@ public class RingPlotTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public RingPlotTests(String name) {
+    public RingPlotTest(String name) {
         super(name);
     }
 

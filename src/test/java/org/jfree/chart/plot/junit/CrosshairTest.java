@@ -65,7 +65,7 @@ import org.jfree.chart.plot.Crosshair;
 /**
  * Tests for the {@link Crosshair} class.
  */
-public class CrosshairTests extends TestCase {
+public class CrosshairTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -73,7 +73,7 @@ public class CrosshairTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(CrosshairTests.class);
+        return new TestSuite(CrosshairTest.class);
     }
 
     /**
@@ -81,7 +81,7 @@ public class CrosshairTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public CrosshairTests(String name) {
+    public CrosshairTest(String name) {
         super(name);
     }
 

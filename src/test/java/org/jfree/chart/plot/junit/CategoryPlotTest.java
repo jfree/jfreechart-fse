@@ -108,7 +108,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 /**
  * Tests for the {@link CategoryPlot} class.
  */
-public class CategoryPlotTests extends TestCase {
+public class CategoryPlotTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -116,7 +116,7 @@ public class CategoryPlotTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(CategoryPlotTests.class);
+        return new TestSuite(CategoryPlotTest.class);
     }
 
     /**
@@ -124,7 +124,7 @@ public class CategoryPlotTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public CategoryPlotTests(String name) {
+    public CategoryPlotTest(String name) {
         super(name);
     }
 

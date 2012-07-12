@@ -24,28 +24,24 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -------------------
- * Pie3DPlotTests.java
- * -------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
+ * -----------------------
+ * MeterIntervalTests.java
+ * -----------------------
+ * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 18-Mar-2003 : Version 1 (DG);
- * 22-Mar-2007 : Added testEquals() (DG);
- * 05-Oct-2007 : Modified testEquals() for new field (DG);
- * 19-Mar-2008 : Added test for null dataset (DG);
+ * 22-Mar-2005 : Version 1 (DG);
  *
  */
 
 package org.jfree.chart.plot.junit;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -57,14 +53,13 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PiePlot3D;
+import org.jfree.chart.plot.MeterInterval;
+import org.jfree.data.Range;
 
 /**
- * Tests for the {@link PiePlot3D} class.
+ * Tests for the {@link MeterInterval} class.
  */
-public class PiePlot3DTests extends TestCase {
+public class MeterIntervalTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -72,7 +67,7 @@ public class PiePlot3DTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(PiePlot3DTests.class);
+        return new TestSuite(MeterIntervalTest.class);
     }
 
     /**
@@ -80,75 +75,72 @@ public class PiePlot3DTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public PiePlot3DTests(String name) {
+    public MeterIntervalTest(String name) {
         super(name);
     }
 
     /**
-     * Some checks for the equals() method.
+     * Confirm that the equals method can distinguish all the required fields.
      */
     public void testEquals() {
-        PiePlot3D p1 = new PiePlot3D();
-        PiePlot3D p2 = new PiePlot3D();
-        assertTrue(p1.equals(p2));
-        assertTrue(p2.equals(p1));
 
-        p1.setDepthFactor(1.23);
-        assertFalse(p1.equals(p2));
-        p2.setDepthFactor(1.23);
-        assertTrue(p1.equals(p2));
+        MeterInterval m1 = new MeterInterval(
+            "Label 1", new Range(1.2, 3.4), Color.red, new BasicStroke(1.0f),
+            Color.blue
+        );
+        MeterInterval m2 = new MeterInterval(
+            "Label 1", new Range(1.2, 3.4), Color.red, new BasicStroke(1.0f),
+            Color.blue
+        );
+        assertTrue(m1.equals(m2));
+        assertTrue(m2.equals(m1));
 
-        p1.setDarkerSides(true);
-        assertFalse(p1.equals(p2));
-        p2.setDarkerSides(true);
-        assertTrue(p1.equals(p2));
+        m1 = new MeterInterval(
+            "Label 2", new Range(1.2, 3.4), Color.red, new BasicStroke(1.0f),
+            Color.blue
+        );
+        assertFalse(m1.equals(m2));
+        m2 = new MeterInterval(
+            "Label 2", new Range(1.2, 3.4), Color.red, new BasicStroke(1.0f),
+            Color.blue
+        );
+        assertTrue(m1.equals(m2));
+
     }
 
     /**
+     * This class is immutable so cloning isn't required.
+     */
+    public void testCloning() {
+        MeterInterval m1 = new MeterInterval("X", new Range(1.0, 2.0));
+        assertFalse(m1 instanceof Cloneable);
+    }
+
+   /**
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
 
-        PiePlot3D p1 = new PiePlot3D(null);
-        PiePlot3D p2 = null;
-
+        MeterInterval m1 = new MeterInterval("X", new Range(1.0, 2.0));
+        MeterInterval m2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(p1);
+            out.writeObject(m1);
             out.close();
 
             ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            p2 = (PiePlot3D) in.readObject();
+                new ByteArrayInputStream(buffer.toByteArray())
+            );
+            m2 = (MeterInterval) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
-        assertEquals(p1, p2);
+        boolean b = m1.equals(m2);
+        assertTrue(b);
 
-    }
-
-    /**
-     * Draws a pie chart where the label generator returns null.
-     */
-    public void testDrawWithNullDataset() {
-        JFreeChart chart = ChartFactory.createPieChart3D("Test", null, true,
-                false, false);
-        boolean success = false;
-        try {
-            BufferedImage image = new BufferedImage(200 , 100,
-                    BufferedImage.TYPE_INT_RGB);
-            Graphics2D g2 = image.createGraphics();
-            chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
-            g2.dispose();
-            success = true;
-        }
-        catch (Exception e) {
-            success = false;
-        }
-        assertTrue(success);
     }
 
 }

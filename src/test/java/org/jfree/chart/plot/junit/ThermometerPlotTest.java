@@ -66,7 +66,7 @@ import org.jfree.chart.plot.ThermometerPlot;
 /**
  * Tests for the {@link ThermometerPlot} class.
  */
-public class ThermometerPlotTests extends TestCase {
+public class ThermometerPlotTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -74,7 +74,7 @@ public class ThermometerPlotTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(ThermometerPlotTests.class);
+        return new TestSuite(ThermometerPlotTest.class);
     }
 
     /**
@@ -82,7 +82,7 @@ public class ThermometerPlotTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public ThermometerPlotTests(String name) {
+    public ThermometerPlotTest(String name) {
         super(name);
     }
 

@@ -67,7 +67,7 @@ import org.jfree.data.general.DefaultValueDataset;
 /**
  * Tests for the {@link MeterPlot} class.
  */
-public class MeterPlotTests extends TestCase {
+public class MeterPlotTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -75,7 +75,7 @@ public class MeterPlotTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(MeterPlotTests.class);
+        return new TestSuite(MeterPlotTest.class);
     }
 
     /**
@@ -83,7 +83,7 @@ public class MeterPlotTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public MeterPlotTests(String name) {
+    public MeterPlotTest(String name) {
         super(name);
     }
 

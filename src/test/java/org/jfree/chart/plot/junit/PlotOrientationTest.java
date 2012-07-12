@@ -24,24 +24,22 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -----------------------
- * MeterIntervalTests.java
- * -----------------------
- * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
+ * -------------------------
+ * PlotOrientationTests.java
+ * -------------------------
+ * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 22-Mar-2005 : Version 1 (DG);
+ * 19-Apr-2004 : Version 1 (DG);
  *
  */
 
 package org.jfree.chart.plot.junit;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -53,13 +51,13 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.plot.MeterInterval;
-import org.jfree.data.Range;
+import org.jfree.chart.plot.PlotOrientation;
 
 /**
- * Tests for the {@link MeterInterval} class.
+ * Tests for the {@link PlotOrientation} class.
+ *
  */
-public class MeterIntervalTests extends TestCase {
+public class PlotOrientationTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -67,7 +65,7 @@ public class MeterIntervalTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(MeterIntervalTests.class);
+        return new TestSuite(PlotOrientationTest.class);
     }
 
     /**
@@ -75,72 +73,50 @@ public class MeterIntervalTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public MeterIntervalTests(String name) {
+    public PlotOrientationTest(String name) {
         super(name);
     }
 
     /**
-     * Confirm that the equals method can distinguish all the required fields.
+     * Some checks for the equals() method.
      */
     public void testEquals() {
-
-        MeterInterval m1 = new MeterInterval(
-            "Label 1", new Range(1.2, 3.4), Color.red, new BasicStroke(1.0f),
-            Color.blue
+        assertEquals(PlotOrientation.HORIZONTAL, PlotOrientation.HORIZONTAL);
+        assertEquals(PlotOrientation.VERTICAL, PlotOrientation.VERTICAL);
+        assertFalse(
+            PlotOrientation.HORIZONTAL.equals(PlotOrientation.VERTICAL)
         );
-        MeterInterval m2 = new MeterInterval(
-            "Label 1", new Range(1.2, 3.4), Color.red, new BasicStroke(1.0f),
-            Color.blue
+        assertFalse(
+            PlotOrientation.VERTICAL.equals(PlotOrientation.HORIZONTAL)
         );
-        assertTrue(m1.equals(m2));
-        assertTrue(m2.equals(m1));
-
-        m1 = new MeterInterval(
-            "Label 2", new Range(1.2, 3.4), Color.red, new BasicStroke(1.0f),
-            Color.blue
-        );
-        assertFalse(m1.equals(m2));
-        m2 = new MeterInterval(
-            "Label 2", new Range(1.2, 3.4), Color.red, new BasicStroke(1.0f),
-            Color.blue
-        );
-        assertTrue(m1.equals(m2));
-
     }
 
     /**
-     * This class is immutable so cloning isn't required.
-     */
-    public void testCloning() {
-        MeterInterval m1 = new MeterInterval("X", new Range(1.0, 2.0));
-        assertFalse(m1 instanceof Cloneable);
-    }
-
-   /**
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
 
-        MeterInterval m1 = new MeterInterval("X", new Range(1.0, 2.0));
-        MeterInterval m2 = null;
+        PlotOrientation orientation1 = PlotOrientation.HORIZONTAL;
+        PlotOrientation orientation2 = null;
+
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(m1);
+            out.writeObject(orientation1);
             out.close();
 
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            m2 = (MeterInterval) in.readObject();
+            orientation2 = (PlotOrientation) in.readObject();
             in.close();
         }
         catch (Exception e) {
             System.out.println(e.toString());
         }
-        boolean b = m1.equals(m2);
-        assertTrue(b);
-
+        assertEquals(orientation1, orientation2);
+        boolean same = orientation1 == orientation2;
+        assertEquals(true, same);
     }
 
 }

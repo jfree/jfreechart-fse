@@ -72,7 +72,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 /**
  * Some tests for the {@link MultiplePiePlot} class.
  */
-public class MultiplePiePlotTests extends TestCase
+public class MultiplePiePlotTest extends TestCase
         implements PlotChangeListener {
 
     /** The last event received. */
@@ -84,7 +84,7 @@ public class MultiplePiePlotTests extends TestCase
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(MultiplePiePlotTests.class);
+        return new TestSuite(MultiplePiePlotTest.class);
     }
 
     /**
@@ -103,7 +103,7 @@ public class MultiplePiePlotTests extends TestCase
      *
      * @param name  the name of the tests.
      */
-    public MultiplePiePlotTests(String name) {
+    public MultiplePiePlotTest(String name) {
         super(name);
     }
 
