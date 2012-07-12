@@ -68,7 +68,7 @@ public class DataXYPackageTests extends TestCase {
      */
     public static Test suite() {
         TestSuite suite = new TestSuite("org.jfree.data.xy");
-        suite.addTestSuite(CategoryTableXYDatasetTests.class);
+        suite.addTestSuite(CategoryTableXYDatasetTest.class);
         suite.addTestSuite(DefaultHighLowDatasetTests.class);
         suite.addTestSuite(DefaultIntervalXYDatasetTests.class);
         suite.addTestSuite(DefaultOHLCDatasetTests.class);

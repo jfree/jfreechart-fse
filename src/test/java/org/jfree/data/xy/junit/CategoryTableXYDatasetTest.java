@@ -58,7 +58,7 @@ import org.jfree.data.xy.CategoryTableXYDataset;
 /**
  * Tests for the {@link CategoryTableXYDataset} class.
  */
-public class CategoryTableXYDatasetTests extends TestCase {
+public class CategoryTableXYDatasetTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -66,7 +66,7 @@ public class CategoryTableXYDatasetTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(CategoryTableXYDatasetTests.class);
+        return new TestSuite(CategoryTableXYDatasetTest.class);
     }
 
     /**
@@ -74,7 +74,7 @@ public class CategoryTableXYDatasetTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public CategoryTableXYDatasetTests(String name) {
+    public CategoryTableXYDatasetTest(String name) {
         super(name);
     }
 
