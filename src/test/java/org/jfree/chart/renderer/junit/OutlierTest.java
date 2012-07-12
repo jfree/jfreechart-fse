@@ -53,7 +53,7 @@ import org.jfree.chart.renderer.Outlier;
 /**
  * Tests for the {@link Outlier} class.
  */
-public class OutlierTests extends TestCase {
+public class OutlierTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -61,7 +61,7 @@ public class OutlierTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(OutlierTests.class);
+        return new TestSuite(OutlierTest.class);
     }
 
     /**
@@ -69,7 +69,7 @@ public class OutlierTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public OutlierTests(String name) {
+    public OutlierTest(String name) {
         super(name);
     }
 

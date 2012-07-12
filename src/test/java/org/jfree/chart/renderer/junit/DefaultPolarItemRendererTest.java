@@ -57,7 +57,7 @@ import org.jfree.chart.renderer.DefaultPolarItemRenderer;
 /**
  * Tests for the {@link DefaultPolarItemRenderer} class.
  */
-public class DefaultPolarItemRendererTests extends TestCase {
+public class DefaultPolarItemRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -65,7 +65,7 @@ public class DefaultPolarItemRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(DefaultPolarItemRendererTests.class);
+        return new TestSuite(DefaultPolarItemRendererTest.class);
     }
 
     /**
@@ -73,7 +73,7 @@ public class DefaultPolarItemRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public DefaultPolarItemRendererTests(String name) {
+    public DefaultPolarItemRendererTest(String name) {
         super(name);
     }
 

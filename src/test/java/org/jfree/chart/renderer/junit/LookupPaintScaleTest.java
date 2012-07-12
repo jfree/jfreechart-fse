@@ -61,7 +61,7 @@ import org.jfree.chart.renderer.LookupPaintScale;
 /**
  * Tests for the {@link LookupPaintScale} class.
  */
-public class LookupPaintScaleTests extends TestCase {
+public class LookupPaintScaleTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -69,7 +69,7 @@ public class LookupPaintScaleTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(LookupPaintScaleTests.class);
+        return new TestSuite(LookupPaintScaleTest.class);
     }
 
     /**
@@ -77,7 +77,7 @@ public class LookupPaintScaleTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public LookupPaintScaleTests(String name) {
+    public LookupPaintScaleTest(String name) {
         super(name);
     }
 

@@ -85,7 +85,7 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 /**
  * Tests for the {@link AbstractRenderer} class.
  */
-public class AbstractRendererTests extends TestCase {
+public class AbstractRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -93,7 +93,7 @@ public class AbstractRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(AbstractRendererTests.class);
+        return new TestSuite(AbstractRendererTest.class);
     }
 
     /**
@@ -101,7 +101,7 @@ public class AbstractRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public AbstractRendererTests(String name) {
+    public AbstractRendererTest(String name) {
         super(name);
     }
 

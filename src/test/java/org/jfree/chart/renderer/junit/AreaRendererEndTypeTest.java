@@ -56,7 +56,7 @@ import org.jfree.chart.renderer.AreaRendererEndType;
 /**
  * Tests for the {@link AreaRendererEndType} class.
  */
-public class AreaRendererEndTypeTests extends TestCase {
+public class AreaRendererEndTypeTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -64,7 +64,7 @@ public class AreaRendererEndTypeTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(AreaRendererEndTypeTests.class);
+        return new TestSuite(AreaRendererEndTypeTest.class);
     }
 
     /**
@@ -72,7 +72,7 @@ public class AreaRendererEndTypeTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public AreaRendererEndTypeTests(String name) {
+    public AreaRendererEndTypeTest(String name) {
         super(name);
     }
 

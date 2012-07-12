@@ -60,7 +60,7 @@ import org.jfree.chart.renderer.GrayPaintScale;
 /**
  * Tests for the {@link GrayPaintScale} class.
  */
-public class GrayPaintScaleTests extends TestCase {
+public class GrayPaintScaleTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -68,7 +68,7 @@ public class GrayPaintScaleTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(GrayPaintScaleTests.class);
+        return new TestSuite(GrayPaintScaleTest.class);
     }
 
     /**
@@ -76,7 +76,7 @@ public class GrayPaintScaleTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public GrayPaintScaleTests(String name) {
+    public GrayPaintScaleTest(String name) {
         super(name);
     }
 

@@ -51,7 +51,7 @@ import org.jfree.data.xy.DefaultXYDataset;
 /**
  * Some checks for the {@link RendererUtilities} class.
  */
-public class RendererUtilitiesTests extends TestCase {
+public class RendererUtilitiesTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -59,7 +59,7 @@ public class RendererUtilitiesTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(RendererUtilitiesTests.class);
+        return new TestSuite(RendererUtilitiesTest.class);
     }
 
     /**
@@ -67,7 +67,7 @@ public class RendererUtilitiesTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public RendererUtilitiesTests(String name) {
+    public RendererUtilitiesTest(String name) {
         super(name);
     }
 
