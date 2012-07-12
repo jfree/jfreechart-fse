@@ -24,26 +24,24 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -------------------------
- * AreaXYRenderer2Tests.java
- * -------------------------
- * (C) Copyright 2005-2008, by Object Refinery Limited.
+ * ------------------------
+ * XYStepRendererTests.java
+ * ------------------------
+ * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 24-May-2005 : Version 1 (DG);
- * 30-Nov-2006 : Extended testEquals() and testCloning() (DG);
- * 17-May-2007 : Added testGetLegendItemSeriesIndex() (DG);
- * 22-Apr-2008 : Added testPublicCloneable (DG);
+ * 25-Mar-2003 : Version 1 (DG);
+ * 14-Feb-2008 : Added checks for new code (DG);
+ * 22-Apr-2008 : Added testPublicCloneable() (DG);
  *
  */
 
 package org.jfree.chart.renderer.xy.junit;
 
-import java.awt.Rectangle;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -56,19 +54,17 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYAreaRenderer2;
+import org.jfree.chart.renderer.xy.XYStepRenderer;
 import org.jfree.data.xy.DefaultTableXYDataset;
 import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
 
 /**
- * Tests for the {@link XYAreaRenderer2} class.
+ * Tests for the {@link XYStepRenderer} class.
  */
-public class XYAreaRenderer2Tests extends TestCase {
+public class XYStepRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -76,7 +72,7 @@ public class XYAreaRenderer2Tests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYAreaRenderer2Tests.class);
+        return new TestSuite(XYStepRendererTest.class);
     }
 
     /**
@@ -84,7 +80,7 @@ public class XYAreaRenderer2Tests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYAreaRenderer2Tests(String name) {
+    public XYStepRendererTest(String name) {
         super(name);
     }
 
@@ -92,18 +88,19 @@ public class XYAreaRenderer2Tests extends TestCase {
      * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        XYAreaRenderer2 r1 = new XYAreaRenderer2();
-        XYAreaRenderer2 r2 = new XYAreaRenderer2();
+        XYStepRenderer r1 = new XYStepRenderer();
+        XYStepRenderer r2 = new XYStepRenderer();
         assertEquals(r1, r2);
 
-        r1.setOutline(!r1.isOutline());
+        r1.setStepPoint(0.44);
         assertFalse(r1.equals(r2));
-        r2.setOutline(r1.isOutline());
+        r2.setStepPoint(0.44);
         assertTrue(r1.equals(r2));
 
-        r1.setLegendArea(new Rectangle(1, 2, 3, 4));
+        // try something from the base class
+        r1.setBaseCreateEntities(false);
         assertFalse(r1.equals(r2));
-        r2.setLegendArea(new Rectangle(1, 2, 3, 4));
+        r2.setBaseCreateEntities(false);
         assertTrue(r1.equals(r2));
     }
 
@@ -111,8 +108,10 @@ public class XYAreaRenderer2Tests extends TestCase {
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        XYAreaRenderer2 r1 = new XYAreaRenderer2();
-        XYAreaRenderer2 r2 = new XYAreaRenderer2();
+        XYStepRenderer r1 = new XYStepRenderer();
+        r1.setStepPoint(0.123);
+        XYStepRenderer r2 = new XYStepRenderer();
+        r2.setStepPoint(0.123);
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -123,30 +122,24 @@ public class XYAreaRenderer2Tests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        XYAreaRenderer2 r1 = new XYAreaRenderer2();
-        Rectangle rect = new Rectangle(1, 2, 3, 4);
-        r1.setLegendArea(rect);
-        XYAreaRenderer2 r2 = null;
+        XYStepRenderer r1 = new XYStepRenderer();
+        XYStepRenderer r2 = null;
         try {
-            r2 = (XYAreaRenderer2) r1.clone();
+            r2 = (XYStepRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            System.err.println("Failed to clone.");
         }
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
-
-        // check independence
-        rect.setBounds(99, 99, 99, 99);
-        assertFalse(r1.equals(r2));
     }
 
     /**
      * Verify that this class implements {@link PublicCloneable}.
      */
     public void testPublicCloneable() {
-        XYAreaRenderer2 r1 = new XYAreaRenderer2();
+        XYStepRenderer r1 = new XYStepRenderer();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -154,10 +147,9 @@ public class XYAreaRenderer2Tests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-
-        XYAreaRenderer2 r1 = new XYAreaRenderer2();
-        XYAreaRenderer2 r2 = null;
-
+        XYStepRenderer r1 = new XYStepRenderer();
+        r1.setStepPoint(0.123);
+        XYStepRenderer r2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -166,14 +158,13 @@ public class XYAreaRenderer2Tests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (XYAreaRenderer2) in.readObject();
+            r2 = (XYStepRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            fail(e.toString());
+            e.printStackTrace();
         }
         assertEquals(r1, r2);
-
     }
 
     /**
@@ -200,7 +191,7 @@ public class XYAreaRenderer2Tests extends TestCase {
             dataset.addSeries(s2);
             XYPlot plot = new XYPlot(dataset,
                     new NumberAxis("X"), new NumberAxis("Y"),
-                    new XYAreaRenderer2());
+                    new XYStepRenderer());
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
@@ -214,38 +205,40 @@ public class XYAreaRenderer2Tests extends TestCase {
     }
 
     /**
-     * A check for the datasetIndex and seriesIndex fields in the LegendItem
-     * returned by the getLegendItem() method.
+     * Draws the chart with a <code>null</code> value in the dataset to make
+     * sure that no exceptions are thrown.
      */
-    public void testGetLegendItemSeriesIndex() {
-        XYSeriesCollection d1 = new XYSeriesCollection();
-        XYSeries s1 = new XYSeries("S1");
-        s1.add(1.0, 1.1);
-        XYSeries s2 = new XYSeries("S2");
-        s2.add(1.0, 1.1);
-        d1.addSeries(s1);
-        d1.addSeries(s2);
+    public void testDrawWithNullValue() {
+        boolean success = false;
+        try {
+            DefaultTableXYDataset dataset = new DefaultTableXYDataset();
 
-        XYSeriesCollection d2 = new XYSeriesCollection();
-        XYSeries s3 = new XYSeries("S3");
-        s3.add(1.0, 1.1);
-        XYSeries s4 = new XYSeries("S4");
-        s4.add(1.0, 1.1);
-        XYSeries s5 = new XYSeries("S5");
-        s5.add(1.0, 1.1);
-        d2.addSeries(s3);
-        d2.addSeries(s4);
-        d2.addSeries(s5);
+            XYSeries s1 = new XYSeries("Series 1", true, false);
+            s1.add(5.0, 5.0);
+            s1.add(10.0, null);
+            s1.add(15.0, 9.5);
+            s1.add(20.0, 7.5);
+            dataset.addSeries(s1);
 
-        XYAreaRenderer2 r = new XYAreaRenderer2();
-        XYPlot plot = new XYPlot(d1, new NumberAxis("x"),
-                new NumberAxis("y"), r);
-        plot.setDataset(1, d2);
-        /*JFreeChart chart =*/ new JFreeChart(plot);
-        LegendItem li = r.getLegendItem(1, 2);
-        assertEquals("S5", li.getLabel());
-        assertEquals(1, li.getDatasetIndex());
-        assertEquals(2, li.getSeriesIndex());
+            XYSeries s2 = new XYSeries("Series 2", true, false);
+            s2.add(5.0, 5.0);
+            s2.add(10.0, 15.5);
+            s2.add(15.0, null);
+            s2.add(20.0, null);
+            dataset.addSeries(s2);
+            XYPlot plot = new XYPlot(dataset,
+                    new NumberAxis("X"), new NumberAxis("Y"),
+                    new XYStepRenderer());
+            JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
+                    null);
+            success = true;
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+            success = false;
+        }
+        assertTrue(success);
     }
 
 }

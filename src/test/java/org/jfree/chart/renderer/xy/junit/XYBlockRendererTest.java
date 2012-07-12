@@ -67,7 +67,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 /**
  * Tests for the {@link XYBlockRenderer} class.
  */
-public class XYBlockRendererTests extends TestCase {
+public class XYBlockRendererTest extends TestCase {
 
     private static final double EPSILON = 0.0000000001;
 
@@ -77,7 +77,7 @@ public class XYBlockRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYBlockRendererTests.class);
+        return new TestSuite(XYBlockRendererTest.class);
     }
 
     /**
@@ -85,7 +85,7 @@ public class XYBlockRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYBlockRendererTests(String name) {
+    public XYBlockRendererTest(String name) {
         super(name);
     }
 

@@ -71,7 +71,7 @@ import org.jfree.data.xy.TableXYDataset;
 /**
  * Tests for the {@link StackedXYAreaRenderer2} class.
  */
-public class StackedXYAreaRenderer2Tests extends TestCase {
+public class StackedXYAreaRenderer2Test extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -79,7 +79,7 @@ public class StackedXYAreaRenderer2Tests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StackedXYAreaRenderer2Tests.class);
+        return new TestSuite(StackedXYAreaRenderer2Test.class);
     }
 
     /**
@@ -87,7 +87,7 @@ public class StackedXYAreaRenderer2Tests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StackedXYAreaRenderer2Tests(String name) {
+    public StackedXYAreaRenderer2Test(String name) {
         super(name);
     }
 

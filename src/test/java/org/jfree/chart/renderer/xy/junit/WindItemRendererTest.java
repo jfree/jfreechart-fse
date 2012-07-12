@@ -25,23 +25,22 @@
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------
- * XYSplineRendererTests.java
+ * WindItemRendererTests.java
  * --------------------------
- * (C) Copyright 2007, 2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 25-Jul-2007 : Version 1 (DG);
- * 22-Apr-2008 : Added testPublicCloneable() (DG);
+ * 25-Mar-2003 : Version 1 (DG);
+ * 22-Apr-2008 : Added testPublicCloneable (DG);
  *
  */
 
 package org.jfree.chart.renderer.xy.junit;
 
-import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -54,12 +53,12 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.renderer.xy.XYSplineRenderer;
+import org.jfree.chart.renderer.xy.WindItemRenderer;
 
 /**
- * Tests for the {@link XYSplineRenderer} class.
+ * Tests for the {@link WindItemRenderer} class.
  */
-public class XYSplineRendererTests extends TestCase {
+public class WindItemRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -67,7 +66,7 @@ public class XYSplineRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYSplineRendererTests.class);
+        return new TestSuite(WindItemRendererTest.class);
     }
 
     /**
@@ -75,32 +74,25 @@ public class XYSplineRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYSplineRendererTests(String name) {
+    public WindItemRendererTest(String name) {
         super(name);
     }
 
     /**
-     * Test that the equals() method distinguishes all fields.
+     * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-
-        XYSplineRenderer r1 = new XYSplineRenderer();
-        XYSplineRenderer r2 = new XYSplineRenderer();
+        WindItemRenderer r1 = new WindItemRenderer();
+        WindItemRenderer r2 = new WindItemRenderer();
         assertEquals(r1, r2);
-        assertEquals(r2, r1);
-
-        r1.setPrecision(9);
-        assertFalse(r1.equals(r2));
-        r2.setPrecision(9);
-        assertTrue(r1.equals(r2));
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        XYSplineRenderer r1 = new XYSplineRenderer();
-        XYSplineRenderer r2 = new XYSplineRenderer();
+        WindItemRenderer r1 = new WindItemRenderer();
+        WindItemRenderer r2 = new WindItemRenderer();
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -111,15 +103,13 @@ public class XYSplineRendererTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        Rectangle2D legendShape = new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0);
-        XYSplineRenderer r1 = new XYSplineRenderer();
-        r1.setLegendLine(legendShape);
-        XYSplineRenderer r2 = null;
+        WindItemRenderer r1 = new WindItemRenderer();
+        WindItemRenderer r2 = null;
         try {
-            r2 = (XYSplineRenderer) r1.clone();
+            r2 = (WindItemRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            System.err.println("Failed to clone.");
         }
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
@@ -130,7 +120,7 @@ public class XYSplineRendererTests extends TestCase {
      * Verify that this class implements {@link PublicCloneable}.
      */
     public void testPublicCloneable() {
-        XYSplineRenderer r1 = new XYSplineRenderer();
+        WindItemRenderer r1 = new WindItemRenderer();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -139,8 +129,9 @@ public class XYSplineRendererTests extends TestCase {
      */
     public void testSerialization() {
 
-        XYSplineRenderer r1 = new XYSplineRenderer();
-        XYSplineRenderer r2 = null;
+        WindItemRenderer r1 = new WindItemRenderer();
+        WindItemRenderer r2 = null;
+
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -149,11 +140,11 @@ public class XYSplineRendererTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (XYSplineRenderer) in.readObject();
+            r2 = (WindItemRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
         assertEquals(r1, r2);
 

@@ -76,7 +76,7 @@ import org.jfree.data.xy.XYSeries;
 /**
  * Tests for the {@link StackedXYAreaRenderer} class.
  */
-public class StackedXYAreaRendererTests extends TestCase {
+public class StackedXYAreaRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -84,7 +84,7 @@ public class StackedXYAreaRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StackedXYAreaRendererTests.class);
+        return new TestSuite(StackedXYAreaRendererTest.class);
     }
 
     /**
@@ -92,7 +92,7 @@ public class StackedXYAreaRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StackedXYAreaRendererTests(String name) {
+    public StackedXYAreaRendererTest(String name) {
         super(name);
     }
 

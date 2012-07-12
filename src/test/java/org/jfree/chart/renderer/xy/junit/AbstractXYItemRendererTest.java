@@ -57,7 +57,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 /**
  * Tests for the {@link AbstractXYItemRenderer} class.
  */
-public class AbstractXYItemRendererTests extends TestCase {
+public class AbstractXYItemRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -65,7 +65,7 @@ public class AbstractXYItemRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(AbstractXYItemRendererTests.class);
+        return new TestSuite(AbstractXYItemRendererTest.class);
     }
 
     /**
@@ -73,7 +73,7 @@ public class AbstractXYItemRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public AbstractXYItemRendererTests(String name) {
+    public AbstractXYItemRendererTest(String name) {
         super(name);
     }
 

@@ -24,27 +24,28 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * --------------------------------
- * XYLineAndShapeRendererTests.java
- * --------------------------------
- * (C) Copyright 2004-2012, by Object Refinery Limited and Contributors.
+ * ------------------------
+ * XYAreaRendererTests.java
+ * ------------------------
+ * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 27-Jan-2004 : Version 1 (DG);
- * 07-Jan-2005 : Added check for findRangeBounds() method (DG);
- * 21-Feb-2007 : Check independence in testCloning() (DG);
+ * 25-Mar-2003 : Version 1 (DG);
+ * 22-Oct-2003 : Added hashCode test (DG);
+ * 14-Feb-2007 : Updated testCloning() (DG);
  * 17-May-2007 : Added testGetLegendItemSeriesIndex() (DG);
- * 22-Apr-2008 : Added testPublicCloneable() (DG);
+ * 22-Apr-2008 : Added testPublicCloneable (DG);
+ * 10-Jun-2009 : Check new fields (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
 package org.jfree.chart.renderer.xy.junit;
 
-import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -57,24 +58,22 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.common.ui.GradientPaintTransformType;
+import org.jfree.chart.common.ui.StandardGradientPaintTransformer;
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.chart.urls.TimeSeriesURLGenerator;
-import org.jfree.data.Range;
-import org.jfree.data.xy.TableXYDataset;
+import org.jfree.chart.renderer.xy.XYAreaRenderer;
+import org.jfree.data.xy.DefaultTableXYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 /**
- * Tests for the {@link XYLineAndShapeRenderer} class.
+ * Tests for the {@link XYAreaRenderer} class.
  */
-public class XYLineAndShapeRendererTests extends TestCase {
+public class XYAreaRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -82,7 +81,7 @@ public class XYLineAndShapeRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYLineAndShapeRendererTests.class);
+        return new TestSuite(XYAreaRendererTest.class);
     }
 
     /**
@@ -90,63 +89,51 @@ public class XYLineAndShapeRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYLineAndShapeRendererTests(String name) {
+    public XYAreaRendererTest(String name) {
         super(name);
     }
 
     /**
-     * Test that the equals() method distinguishes all fields.
+     * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-
-        XYLineAndShapeRenderer r1 = new XYLineAndShapeRenderer();
-        XYLineAndShapeRenderer r2 = new XYLineAndShapeRenderer();
+        XYAreaRenderer r1 = new XYAreaRenderer();
+        XYAreaRenderer r2 = new XYAreaRenderer();
         assertEquals(r1, r2);
-        assertEquals(r2, r1);
 
-        r1.setSeriesLinesVisible(3, true);
+        r1 = new XYAreaRenderer(XYAreaRenderer.AREA_AND_SHAPES);
         assertFalse(r1.equals(r2));
-        r2.setSeriesLinesVisible(3, true);
+        r2 = new XYAreaRenderer(XYAreaRenderer.AREA_AND_SHAPES);
         assertTrue(r1.equals(r2));
 
-        r1.setBaseLinesVisible(false);
+        r1 = new XYAreaRenderer(XYAreaRenderer.AREA);
         assertFalse(r1.equals(r2));
-        r2.setBaseLinesVisible(false);
+        r2 = new XYAreaRenderer(XYAreaRenderer.AREA);
         assertTrue(r1.equals(r2));
 
-        r1.setLegendLine(new Line2D.Double(1.0, 2.0, 3.0, 4.0));
+        r1 = new XYAreaRenderer(XYAreaRenderer.LINES);
         assertFalse(r1.equals(r2));
-        r2.setLegendLine(new Line2D.Double(1.0, 2.0, 3.0, 4.0));
+        r2 = new XYAreaRenderer(XYAreaRenderer.LINES);
         assertTrue(r1.equals(r2));
 
-        r1.setSeriesShapesVisible(3, true);
+        r1 = new XYAreaRenderer(XYAreaRenderer.SHAPES);
         assertFalse(r1.equals(r2));
-        r2.setSeriesShapesVisible(3, true);
+        r2 = new XYAreaRenderer(XYAreaRenderer.SHAPES);
         assertTrue(r1.equals(r2));
 
-        r1.setBaseShapesVisible(false);
+        r1 = new XYAreaRenderer(XYAreaRenderer.SHAPES_AND_LINES);
         assertFalse(r1.equals(r2));
-        r2.setBaseShapesVisible(false);
+        r2 = new XYAreaRenderer(XYAreaRenderer.SHAPES_AND_LINES);
         assertTrue(r1.equals(r2));
 
-        r1.setSeriesShapesFilled(3, true);
+        r1.setOutline(true);
         assertFalse(r1.equals(r2));
-        r2.setSeriesShapesFilled(3, true);
+        r2.setOutline(true);
         assertTrue(r1.equals(r2));
 
-        r1.setBaseShapesFilled(false);
+        r1.setLegendArea(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
         assertFalse(r1.equals(r2));
-        r2.setBaseShapesFilled(false);
-        assertTrue(r1.equals(r2));
-
-        r1.setDrawOutlines(!r1.getDrawOutlines());
-        assertFalse(r1.equals(r2));
-        r2.setDrawOutlines(r1.getDrawOutlines());
-        assertTrue(r1.equals(r2));
-
-        r1.setUseOutlinePaint(true);
-        assertFalse(r1.equals(r2));
-        r2.setUseOutlinePaint(true);
+        r2.setLegendArea(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
         assertTrue(r1.equals(r2));
 
         r1.setUseFillPaint(true);
@@ -154,50 +141,39 @@ public class XYLineAndShapeRendererTests extends TestCase {
         r2.setUseFillPaint(true);
         assertTrue(r1.equals(r2));
 
-        r1.setDrawSeriesLineAsPath(true);
+        r1.setGradientTransformer(new StandardGradientPaintTransformer(
+                GradientPaintTransformType.CENTER_VERTICAL));
         assertFalse(r1.equals(r2));
-        r2.setDrawSeriesLineAsPath(true);
+        r2.setGradientTransformer(new StandardGradientPaintTransformer(
+                GradientPaintTransformType.CENTER_VERTICAL));
         assertTrue(r1.equals(r2));
     }
-
-    /**
-     * Test that the equals() method works for a TimeSeriesURLGenerator.
-     */
-    public void testEquals2() {
-        XYLineAndShapeRenderer r1 = new XYLineAndShapeRenderer();
-        XYLineAndShapeRenderer r2 = new XYLineAndShapeRenderer();
-        assertEquals(r1, r2);
-        assertEquals(r2, r1);
-
-        r1.setURLGenerator(new TimeSeriesURLGenerator());
-        assertFalse(r1.equals(r2));
-        r2.setURLGenerator(new TimeSeriesURLGenerator());
-        assertTrue(r1.equals(r2));
-    }
-
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        XYLineAndShapeRenderer r1 = new XYLineAndShapeRenderer();
-        XYLineAndShapeRenderer r2 = new XYLineAndShapeRenderer();
+        XYAreaRenderer r1 = new XYAreaRenderer();
+        XYAreaRenderer r2 = new XYAreaRenderer();
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);
+
+        r2.setUseFillPaint(true);
+        assertFalse(r1.hashCode() == r2.hashCode());
     }
 
     /**
      * Confirm that cloning works.
      */
     public void testCloning() {
-        Rectangle2D legendShape = new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0);
-        XYLineAndShapeRenderer r1 = new XYLineAndShapeRenderer();
-        r1.setLegendLine(legendShape);
-        XYLineAndShapeRenderer r2 = null;
+        XYAreaRenderer r1 = new XYAreaRenderer();
+        Rectangle2D rect1 = new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0);
+        r1.setLegendArea(rect1);
+        XYAreaRenderer r2 = null;
         try {
-            r2 = (XYLineAndShapeRenderer) r1.clone();
+            r2 = (XYAreaRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -206,24 +182,10 @@ public class XYLineAndShapeRendererTests extends TestCase {
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
 
-        r1.setSeriesLinesVisible(0, false);
+        // check independence
+        rect1.setRect(4.0, 3.0, 2.0, 1.0);
         assertFalse(r1.equals(r2));
-        r2.setSeriesLinesVisible(0, false);
-        assertTrue(r1.equals(r2));
-
-        legendShape.setRect(4.0, 3.0, 2.0, 1.0);
-        assertFalse(r1.equals(r2));
-        r2.setLegendLine(new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0));
-        assertTrue(r1.equals(r2));
-
-        r1.setSeriesShapesVisible(1, true);
-        assertFalse(r1.equals(r2));
-        r2.setSeriesShapesVisible(1, true);
-        assertTrue(r1.equals(r2));
-
-        r1.setSeriesShapesFilled(1, true);
-        assertFalse(r1.equals(r2));
-        r2.setSeriesShapesFilled(1, true);
+        r2.setLegendArea(new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0));
         assertTrue(r1.equals(r2));
     }
 
@@ -231,7 +193,7 @@ public class XYLineAndShapeRendererTests extends TestCase {
      * Verify that this class implements {@link PublicCloneable}.
      */
     public void testPublicCloneable() {
-        XYLineAndShapeRenderer r1 = new XYLineAndShapeRenderer();
+        XYAreaRenderer r1 = new XYAreaRenderer();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -240,8 +202,9 @@ public class XYLineAndShapeRendererTests extends TestCase {
      */
     public void testSerialization() {
 
-        XYLineAndShapeRenderer r1 = new XYLineAndShapeRenderer();
-        XYLineAndShapeRenderer r2 = null;
+        XYAreaRenderer r1 = new XYAreaRenderer();
+        XYAreaRenderer r2 = null;
+
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -250,52 +213,51 @@ public class XYLineAndShapeRendererTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (XYLineAndShapeRenderer) in.readObject();
+            r2 = (XYAreaRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
         assertEquals(r1, r2);
 
     }
 
     /**
-     * Check that the renderer is calculating the domain bounds correctly.
+     * Draws the chart with a <code>null</code> info object to make sure that
+     * no exceptions are thrown (particularly by code in the renderer).
      */
-    public void testFindDomainBounds() {
-        XYSeriesCollection dataset
-                = RendererXYPackageTests.createTestXYSeriesCollection();
-        JFreeChart chart = ChartFactory.createXYLineChart(
-                "Test Chart", "X", "Y", dataset, PlotOrientation.VERTICAL,
-                false, false, false);
-        XYPlot plot = (XYPlot) chart.getPlot();
-        NumberAxis domainAxis = (NumberAxis) plot.getDomainAxis();
-        domainAxis.setAutoRangeIncludesZero(false);
-        Range bounds = domainAxis.getRange();
-        assertFalse(bounds.contains(0.9));
-        assertTrue(bounds.contains(1.0));
-        assertTrue(bounds.contains(2.0));
-        assertFalse(bounds.contains(2.10));
-    }
+    public void testDrawWithNullInfo() {
+        boolean success = false;
+        try {
+            DefaultTableXYDataset dataset = new DefaultTableXYDataset();
 
-    /**
-     * Check that the renderer is calculating the range bounds correctly.
-     */
-    public void testFindRangeBounds() {
-        TableXYDataset dataset
-                = RendererXYPackageTests.createTestTableXYDataset();
-        JFreeChart chart = ChartFactory.createXYLineChart(
-                "Test Chart", "X", "Y", dataset, PlotOrientation.VERTICAL,
-                false, false, false);
-        XYPlot plot = (XYPlot) chart.getPlot();
-        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setAutoRangeIncludesZero(false);
-        Range bounds = rangeAxis.getRange();
-        assertFalse(bounds.contains(1.0));
-        assertTrue(bounds.contains(2.0));
-        assertTrue(bounds.contains(5.0));
-        assertFalse(bounds.contains(6.0));
+            XYSeries s1 = new XYSeries("Series 1", true, false);
+            s1.add(5.0, 5.0);
+            s1.add(10.0, 15.5);
+            s1.add(15.0, 9.5);
+            s1.add(20.0, 7.5);
+            dataset.addSeries(s1);
+
+            XYSeries s2 = new XYSeries("Series 2", true, false);
+            s2.add(5.0, 5.0);
+            s2.add(10.0, 15.5);
+            s2.add(15.0, 9.5);
+            s2.add(20.0, 3.5);
+            dataset.addSeries(s2);
+            XYPlot plot = new XYPlot(dataset,
+                    new NumberAxis("X"), new NumberAxis("Y"),
+                    new XYAreaRenderer());
+            JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
+                    null);
+            success = true;
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+            success = false;
+        }
+        assertTrue(success);
     }
 
     /**
@@ -322,7 +284,7 @@ public class XYLineAndShapeRendererTests extends TestCase {
         d2.addSeries(s4);
         d2.addSeries(s5);
 
-        XYLineAndShapeRenderer r = new XYLineAndShapeRenderer();
+        XYAreaRenderer r = new XYAreaRenderer();
         XYPlot plot = new XYPlot(d1, new NumberAxis("x"),
                 new NumberAxis("y"), r);
         plot.setDataset(1, d2);

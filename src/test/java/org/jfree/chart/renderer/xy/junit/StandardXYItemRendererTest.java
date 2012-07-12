@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ---------------------------
- * YIntervalRendererTests.java
- * ---------------------------
+ * --------------------------------
+ * StandardXYItemRendererTests.java
+ * --------------------------------
  * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -35,16 +35,22 @@
  * Changes
  * -------
  * 25-Mar-2003 : Version 1 (DG);
- * 20-Feb-2007 : Extended the testEquals() checks (DG);
+ * 22-Oct-2003 : Added hashCode test (DG);
+ * 08-Oct-2004 : Strengthened test for equals() method (DG);
+ * 14-Mar-2007 : Added new checks in testEquals() and testCloning() (DG);
  * 17-May-2007 : Added testGetLegendItemSeriesIndex() (DG);
- * 22-Apr-2008 : Added testPublicCloneable() (DG);
- * 26-May-2008 : Extended testEquals() (DG);
+ * 08-Jun-2007 : Added testNoDisplayedItem() (DG);
+ * 22-Apr-2008 : Added testPublicCloneable (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
 package org.jfree.chart.renderer.xy.junit;
 
+import java.awt.Graphics2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -56,26 +62,26 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartRenderingInfo;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.annotations.XYTextAnnotation;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.common.ui.Layer;
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.labels.IntervalXYItemLabelGenerator;
-import org.jfree.chart.labels.StandardXYItemLabelGenerator;
-import org.jfree.chart.labels.StandardXYSeriesLabelGenerator;
-import org.jfree.chart.labels.StandardXYToolTipGenerator;
+import org.jfree.chart.common.util.UnitType;
+import org.jfree.chart.entity.EntityCollection;
+import org.jfree.chart.entity.XYItemEntity;
+import org.jfree.chart.junit.TestUtilities;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.YIntervalRenderer;
-import org.jfree.chart.urls.StandardXYURLGenerator;
-import org.jfree.data.xy.YIntervalSeries;
-import org.jfree.data.xy.YIntervalSeriesCollection;
+import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 /**
- * Tests for the {@link YIntervalRenderer} class.
+ * Tests for the {@link StandardXYItemRenderer} class.
  */
-public class YIntervalRendererTests extends TestCase {
+public class StandardXYItemRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -83,7 +89,7 @@ public class YIntervalRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(YIntervalRendererTests.class);
+        return new TestSuite(StandardXYItemRendererTest.class);
     }
 
     /**
@@ -91,89 +97,75 @@ public class YIntervalRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public YIntervalRendererTests(String name) {
+    public StandardXYItemRendererTest(String name) {
         super(name);
     }
 
     /**
-     * Check that the equals() method distinguishes all fields.
+     * Test that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        YIntervalRenderer r1 = new YIntervalRenderer();
-        YIntervalRenderer r2 = new YIntervalRenderer();
+        StandardXYItemRenderer r1 = new StandardXYItemRenderer();
+        StandardXYItemRenderer r2 = new StandardXYItemRenderer();
         assertEquals(r1, r2);
 
-        // the following fields are inherited from the AbstractXYItemRenderer
-        r1.setSeriesItemLabelGenerator(0, new StandardXYItemLabelGenerator());
+        r1.setBaseShapesVisible(true);
         assertFalse(r1.equals(r2));
-        r2.setSeriesItemLabelGenerator(0, new StandardXYItemLabelGenerator());
+        r2.setBaseShapesVisible(true);
         assertTrue(r1.equals(r2));
 
-        r1.setBaseItemLabelGenerator(new StandardXYItemLabelGenerator());
+        r1.setPlotLines(false);
         assertFalse(r1.equals(r2));
-        r2.setBaseItemLabelGenerator(new StandardXYItemLabelGenerator());
+        r2.setPlotLines(false);
         assertTrue(r1.equals(r2));
 
-        r1.setSeriesToolTipGenerator(0, new StandardXYToolTipGenerator());
+        r1.setPlotImages(true);
         assertFalse(r1.equals(r2));
-        r2.setSeriesToolTipGenerator(0, new StandardXYToolTipGenerator());
+        r2.setPlotImages(true);
         assertTrue(r1.equals(r2));
 
-        r1.setBaseToolTipGenerator(new StandardXYToolTipGenerator());
+        r1.setPlotDiscontinuous(true);
         assertFalse(r1.equals(r2));
-        r2.setBaseToolTipGenerator(new StandardXYToolTipGenerator());
+        r2.setPlotDiscontinuous(true);
         assertTrue(r1.equals(r2));
 
-        r1.setURLGenerator(new StandardXYURLGenerator());
+        r1.setGapThresholdType(UnitType.ABSOLUTE);
         assertFalse(r1.equals(r2));
-        r2.setURLGenerator(new StandardXYURLGenerator());
+        r2.setGapThresholdType(UnitType.ABSOLUTE);
         assertTrue(r1.equals(r2));
 
-        r1.addAnnotation(new XYTextAnnotation("X", 1.0, 2.0), Layer.FOREGROUND);
+        r1.setGapThreshold(1.23);
         assertFalse(r1.equals(r2));
-        r2.addAnnotation(new XYTextAnnotation("X", 1.0, 2.0), Layer.FOREGROUND);
+        r2.setGapThreshold(1.23);
         assertTrue(r1.equals(r2));
 
-        r1.addAnnotation(new XYTextAnnotation("X", 1.0, 2.0), Layer.BACKGROUND);
+        r1.setLegendLine(new Line2D.Double(1.0, 2.0, 3.0, 4.0));
         assertFalse(r1.equals(r2));
-        r2.addAnnotation(new XYTextAnnotation("X", 1.0, 2.0), Layer.BACKGROUND);
+        r2.setLegendLine(new Line2D.Double(1.0, 2.0, 3.0, 4.0));
         assertTrue(r1.equals(r2));
 
-        r1.setDefaultEntityRadius(99);
+        r1.setSeriesShapesFilled(1, Boolean.TRUE);
         assertFalse(r1.equals(r2));
-        r2.setDefaultEntityRadius(99);
+        r2.setSeriesShapesFilled(1, Boolean.TRUE);
         assertTrue(r1.equals(r2));
 
-        r1.setLegendItemLabelGenerator(new StandardXYSeriesLabelGenerator(
-                "{0} {1}"));
+        r1.setBaseShapesFilled(false);
         assertFalse(r1.equals(r2));
-        r2.setLegendItemLabelGenerator(new StandardXYSeriesLabelGenerator(
-                "{0} {1}"));
+        r2.setBaseShapesFilled(false);
         assertTrue(r1.equals(r2));
 
-        r1.setLegendItemToolTipGenerator(new StandardXYSeriesLabelGenerator());
+        r1.setDrawSeriesLineAsPath(true);
         assertFalse(r1.equals(r2));
-        r2.setLegendItemToolTipGenerator(new StandardXYSeriesLabelGenerator());
+        r2.setDrawSeriesLineAsPath(true);
         assertTrue(r1.equals(r2));
-
-        r1.setLegendItemURLGenerator(new StandardXYSeriesLabelGenerator());
-        assertFalse(r1.equals(r2));
-        r2.setLegendItemURLGenerator(new StandardXYSeriesLabelGenerator());
-        assertTrue(r1.equals(r2));
-
-        r1.setAdditionalItemLabelGenerator(new IntervalXYItemLabelGenerator());
-        assertFalse(r1.equals(r2));
-        r2.setAdditionalItemLabelGenerator(new IntervalXYItemLabelGenerator());
-        assertTrue(r1.equals(r2));
-
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        YIntervalRenderer r1 = new YIntervalRenderer();
-        YIntervalRenderer r2 = new YIntervalRenderer();
+        StandardXYItemRenderer r1 = new StandardXYItemRenderer();
+        StandardXYItemRenderer r2 = new StandardXYItemRenderer();
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -184,10 +176,12 @@ public class YIntervalRendererTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        YIntervalRenderer r1 = new YIntervalRenderer();
-        YIntervalRenderer r2 = null;
+        StandardXYItemRenderer r1 = new StandardXYItemRenderer();
+        Rectangle2D rect1 = new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0);
+        r1.setLegendLine(rect1);
+        StandardXYItemRenderer r2 = null;
         try {
-            r2 = (YIntervalRenderer) r1.clone();
+            r2 = (StandardXYItemRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -197,37 +191,22 @@ public class YIntervalRendererTests extends TestCase {
         assertTrue(r1.equals(r2));
 
         // check independence
-        r1.setSeriesItemLabelGenerator(0, new StandardXYItemLabelGenerator());
+        rect1.setRect(4.0, 3.0, 2.0, 1.0);
         assertFalse(r1.equals(r2));
-        r2.setSeriesItemLabelGenerator(0, new StandardXYItemLabelGenerator());
+        r2.setLegendLine(new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0));
         assertTrue(r1.equals(r2));
 
-        r1.setSeriesToolTipGenerator(0, new StandardXYToolTipGenerator());
+        r1.setSeriesShapesFilled(1, Boolean.TRUE);
         assertFalse(r1.equals(r2));
-        r2.setSeriesToolTipGenerator(0, new StandardXYToolTipGenerator());
+        r2.setSeriesShapesFilled(1, Boolean.TRUE);
         assertTrue(r1.equals(r2));
-
-        r1.addAnnotation(new XYTextAnnotation("ABC", 1.0, 2.0),
-                Layer.FOREGROUND);
-        assertFalse(r1.equals(r2));
-        r2.addAnnotation(new XYTextAnnotation("ABC", 1.0, 2.0),
-                Layer.FOREGROUND);
-        assertTrue(r1.equals(r2));
-
-        r1.addAnnotation(new XYTextAnnotation("ABC", 1.0, 2.0),
-                Layer.BACKGROUND);
-        assertFalse(r1.equals(r2));
-        r2.addAnnotation(new XYTextAnnotation("ABC", 1.0, 2.0),
-                Layer.BACKGROUND);
-        assertTrue(r1.equals(r2));
-
     }
 
     /**
      * Verify that this class implements {@link PublicCloneable}.
      */
     public void testPublicCloneable() {
-        YIntervalRenderer r1 = new YIntervalRenderer();
+        StandardXYItemRenderer r1 = new StandardXYItemRenderer();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -235,10 +214,8 @@ public class YIntervalRendererTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-
-        YIntervalRenderer r1 = new YIntervalRenderer();
-        YIntervalRenderer r2 = null;
-
+        StandardXYItemRenderer r1 = new StandardXYItemRenderer();
+        StandardXYItemRenderer r2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -247,14 +224,13 @@ public class YIntervalRendererTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (YIntervalRenderer) in.readObject();
+            r2 = (StandardXYItemRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(r1, r2);
-
     }
 
     /**
@@ -262,26 +238,26 @@ public class YIntervalRendererTests extends TestCase {
      * returned by the getLegendItem() method.
      */
     public void testGetLegendItemSeriesIndex() {
-        YIntervalSeriesCollection d1 = new YIntervalSeriesCollection();
-        YIntervalSeries s1 = new YIntervalSeries("S1");
-        s1.add(1.0, 1.1, 1.2, 1.3);
-        YIntervalSeries s2 = new YIntervalSeries("S2");
-        s2.add(1.0, 1.1, 1.2, 1.3);
+        XYSeriesCollection d1 = new XYSeriesCollection();
+        XYSeries s1 = new XYSeries("S1");
+        s1.add(1.0, 1.1);
+        XYSeries s2 = new XYSeries("S2");
+        s2.add(1.0, 1.1);
         d1.addSeries(s1);
         d1.addSeries(s2);
 
-        YIntervalSeriesCollection d2 = new YIntervalSeriesCollection();
-        YIntervalSeries s3 = new YIntervalSeries("S3");
-        s3.add(1.0, 1.1, 1.2, 1.3);
-        YIntervalSeries s4 = new YIntervalSeries("S4");
-        s4.add(1.0, 1.1, 1.2, 1.3);
-        YIntervalSeries s5 = new YIntervalSeries("S5");
-        s5.add(1.0, 1.1, 1.2, 1.3);
+        XYSeriesCollection d2 = new XYSeriesCollection();
+        XYSeries s3 = new XYSeries("S3");
+        s3.add(1.0, 1.1);
+        XYSeries s4 = new XYSeries("S4");
+        s4.add(1.0, 1.1);
+        XYSeries s5 = new XYSeries("S5");
+        s5.add(1.0, 1.1);
         d2.addSeries(s3);
         d2.addSeries(s4);
         d2.addSeries(s5);
 
-        YIntervalRenderer r = new YIntervalRenderer();
+        StandardXYItemRenderer r = new StandardXYItemRenderer();
         XYPlot plot = new XYPlot(d1, new NumberAxis("x"),
                 new NumberAxis("y"), r);
         plot.setDataset(1, d2);
@@ -290,6 +266,34 @@ public class YIntervalRendererTests extends TestCase {
         assertEquals("S5", li.getLabel());
         assertEquals(1, li.getDatasetIndex());
         assertEquals(2, li.getSeriesIndex());
+    }
+
+    /**
+     * A check to ensure that an item that falls outside the plot's data area
+     * does NOT generate an item entity.
+     */
+    public void testNoDisplayedItem() {
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        XYSeries s1 = new XYSeries("S1");
+        s1.add(10.0, 10.0);
+        dataset.addSeries(s1);
+        JFreeChart chart = ChartFactory.createXYLineChart("Title", "X", "Y",
+                dataset, PlotOrientation.VERTICAL, false, true, false);
+        XYPlot plot = (XYPlot) chart.getPlot();
+        plot.setRenderer(new StandardXYItemRenderer());
+        NumberAxis xAxis = (NumberAxis) plot.getDomainAxis();
+        xAxis.setRange(0.0, 5.0);
+        NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
+        yAxis.setRange(0.0, 5.0);
+        BufferedImage image = new BufferedImage(200 , 100,
+                BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = image.createGraphics();
+        ChartRenderingInfo info = new ChartRenderingInfo();
+        chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, info);
+        g2.dispose();
+        EntityCollection ec = info.getEntityCollection();
+        assertFalse(TestUtilities.containsInstanceOf(ec.getEntities(),
+                XYItemEntity.class));
     }
 
 }

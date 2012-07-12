@@ -24,24 +24,25 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ------------------------
- * VectorRendererTests.java
- * ------------------------
- * (C) Copyright 2007, 2008, by Object Refinery Limited and Contributors.
+ * --------------------------
+ * XYBubbleRendererTests.java
+ * --------------------------
+ * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 30-Jan-2007 : Version 1 (DG);
+ * 25-Mar-2003 : Version 1 (DG);
+ * 24-Jan-2007 : Added more checks to testEquals() (DG);
+ * 17-May-2007 : Added testGetLegendItemSeriesIndex() (DG);
  * 22-Apr-2008 : Added testPublicCloneable (DG);
  *
  */
 
 package org.jfree.chart.renderer.xy.junit;
 
-import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -53,13 +54,18 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.renderer.xy.VectorRenderer;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYBubbleRenderer;
+import org.jfree.data.xy.DefaultXYZDataset;
 
 /**
- * Tests for the {@link VectorRenderer} class.
+ * Tests for the {@link XYBubbleRenderer} class.
  */
-public class VectorRendererTests extends TestCase {
+public class XYBubbleRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -67,7 +73,7 @@ public class VectorRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(VectorRendererTests.class);
+        return new TestSuite(XYBubbleRendererTest.class);
     }
 
     /**
@@ -75,24 +81,21 @@ public class VectorRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public VectorRendererTests(String name) {
+    public XYBubbleRendererTest(String name) {
         super(name);
     }
 
     /**
-     * Test that the equals() method distinguishes all fields.
+     * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        // default instances
-        VectorRenderer r1 = new VectorRenderer();
-        VectorRenderer r2 = new VectorRenderer();
-        assertTrue(r1.equals(r2));
-        assertTrue(r2.equals(r1));
+        XYBubbleRenderer r1 = new XYBubbleRenderer();
+        XYBubbleRenderer r2 = new XYBubbleRenderer();
+        assertEquals(r1, r2);
 
-        // check that super class fields are being looked at...
-        r1.setSeriesFillPaint(0, Color.green);
+        r1 = new XYBubbleRenderer(XYBubbleRenderer.SCALE_ON_RANGE_AXIS);
         assertFalse(r1.equals(r2));
-        r2.setSeriesFillPaint(0, Color.green);
+        r2 = new XYBubbleRenderer(XYBubbleRenderer.SCALE_ON_RANGE_AXIS);
         assertTrue(r1.equals(r2));
     }
 
@@ -100,8 +103,8 @@ public class VectorRendererTests extends TestCase {
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        VectorRenderer r1 = new VectorRenderer();
-        VectorRenderer r2 = new VectorRenderer();
+        XYBubbleRenderer r1 = new XYBubbleRenderer();
+        XYBubbleRenderer r2 = new XYBubbleRenderer();
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -112,10 +115,10 @@ public class VectorRendererTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        VectorRenderer r1 = new VectorRenderer();
-        VectorRenderer r2 = null;
+        XYBubbleRenderer r1 = new XYBubbleRenderer();
+        XYBubbleRenderer r2 = null;
         try {
-            r2 = (VectorRenderer) r1.clone();
+            r2 = (XYBubbleRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -129,7 +132,7 @@ public class VectorRendererTests extends TestCase {
      * Verify that this class implements {@link PublicCloneable}.
      */
     public void testPublicCloneable() {
-        VectorRenderer r1 = new VectorRenderer();
+        XYBubbleRenderer r1 = new XYBubbleRenderer();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -137,8 +140,9 @@ public class VectorRendererTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        VectorRenderer r1 = new VectorRenderer();
-        VectorRenderer r2 = null;
+        XYBubbleRenderer r1 = new XYBubbleRenderer();
+        XYBubbleRenderer r2 = null;
+
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -147,13 +151,58 @@ public class VectorRendererTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (VectorRenderer) in.readObject();
+            r2 = (XYBubbleRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(r1, r2);
+    }
+
+    /**
+     * A check for the datasetIndex and seriesIndex fields in the LegendItem
+     * returned by the getLegendItem() method.
+     */
+    public void testGetLegendItemSeriesIndex() {
+        DefaultXYZDataset d1 = new DefaultXYZDataset();
+        double[] x = {2.1, 2.3, 2.3, 2.2, 2.2, 1.8, 1.8, 1.9, 2.3, 3.8};
+        double[] y = {14.1, 11.1, 10.0, 8.8, 8.7, 8.4, 5.4, 4.1, 4.1, 25};
+        double[] z = {2.4, 2.7, 2.7, 2.2, 2.2, 2.2, 2.1, 2.2, 1.6, 4};
+        double[][] s1 = new double[][] {x, y, z};
+        d1.addSeries("S1", s1);
+        x = new double[] {2.1};
+        y = new double[] {14.1};
+        z = new double[] {2.4};
+        double[][] s2 = new double[][] {x, y, z};
+        d1.addSeries("S2", s2);
+
+        DefaultXYZDataset d2 = new DefaultXYZDataset();
+        x = new double[] {2.1};
+        y = new double[] {14.1};
+        z = new double[] {2.4};
+        double[][] s3 = new double[][] {x, y, z};
+        d2.addSeries("S3", s3);
+        x = new double[] {2.1};
+        y = new double[] {14.1};
+        z = new double[] {2.4};
+        double[][] s4 = new double[][] {x, y, z};
+        d2.addSeries("S4", s4);
+        x = new double[] {2.1};
+        y = new double[] {14.1};
+        z = new double[] {2.4};
+        double[][] s5 = new double[][] {x, y, z};
+        d2.addSeries("S5", s5);
+
+        XYBubbleRenderer r = new XYBubbleRenderer();
+        XYPlot plot = new XYPlot(d1, new NumberAxis("x"),
+                new NumberAxis("y"), r);
+        plot.setDataset(1, d2);
+        /*JFreeChart chart =*/ new JFreeChart(plot);
+        LegendItem li = r.getLegendItem(1, 2);
+        assertEquals("S5", li.getLabel());
+        assertEquals(1, li.getDatasetIndex());
+        assertEquals(2, li.getSeriesIndex());
     }
 
 }

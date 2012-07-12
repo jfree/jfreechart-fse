@@ -64,7 +64,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 /**
  * Tests for the {@link XYShapeRenderer} class.
  */
-public class XYShapeRendererTests extends TestCase {
+public class XYShapeRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -72,7 +72,7 @@ public class XYShapeRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYShapeRendererTests.class);
+        return new TestSuite(XYShapeRendererTest.class);
     }
 
     /**
@@ -80,7 +80,7 @@ public class XYShapeRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYShapeRendererTests(String name) {
+    public XYShapeRendererTest(String name) {
         super(name);
     }
 

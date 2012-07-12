@@ -24,20 +24,18 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ------------------------------
- * XYDifferenceRendererTests.java
- * ------------------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
+ * -------------------------
+ * AreaXYRenderer2Tests.java
+ * -------------------------
+ * (C) Copyright 2005-2008, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 22-Oct-2003 : Version 1 (DG);
- * 04-May-2005 : Improved equals() test (DG);
- * 24-Jan-2007 : Added 'roundXCoordinates' to testEquals(), and improved
- *               testClone() (DG);
+ * 24-May-2005 : Version 1 (DG);
+ * 30-Nov-2006 : Extended testEquals() and testCloning() (DG);
  * 17-May-2007 : Added testGetLegendItemSeriesIndex() (DG);
  * 22-Apr-2008 : Added testPublicCloneable (DG);
  *
@@ -45,10 +43,7 @@
 
 package org.jfree.chart.renderer.xy.junit;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Shape;
-import java.awt.geom.Line2D;
+import java.awt.Rectangle;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -65,14 +60,15 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYDifferenceRenderer;
+import org.jfree.chart.renderer.xy.XYAreaRenderer2;
+import org.jfree.data.xy.DefaultTableXYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 /**
- * Tests for the {@link XYDifferenceRenderer} class.
+ * Tests for the {@link XYAreaRenderer2} class.
  */
-public class XYDifferenceRendererTests extends TestCase {
+public class XYAreaRenderer2Test extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -80,7 +76,7 @@ public class XYDifferenceRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYDifferenceRendererTests.class);
+        return new TestSuite(XYAreaRenderer2Test.class);
     }
 
     /**
@@ -88,7 +84,7 @@ public class XYDifferenceRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYDifferenceRendererTests(String name) {
+    public XYAreaRenderer2Test(String name) {
         super(name);
     }
 
@@ -96,57 +92,27 @@ public class XYDifferenceRendererTests extends TestCase {
      * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        XYDifferenceRenderer r1 = new XYDifferenceRenderer(
-                Color.red, Color.blue, false);
-        XYDifferenceRenderer r2 = new XYDifferenceRenderer(
-                Color.red, Color.blue, false);
+        XYAreaRenderer2 r1 = new XYAreaRenderer2();
+        XYAreaRenderer2 r2 = new XYAreaRenderer2();
         assertEquals(r1, r2);
 
-        // positive paint
-        r1.setPositivePaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.blue));
+        r1.setOutline(!r1.isOutline());
         assertFalse(r1.equals(r2));
-        r2.setPositivePaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.blue));
+        r2.setOutline(r1.isOutline());
         assertTrue(r1.equals(r2));
 
-        // negative paint
-        r1.setNegativePaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
-                3.0f, 4.0f, Color.blue));
+        r1.setLegendArea(new Rectangle(1, 2, 3, 4));
         assertFalse(r1.equals(r2));
-        r2.setNegativePaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
-                3.0f, 4.0f, Color.blue));
+        r2.setLegendArea(new Rectangle(1, 2, 3, 4));
         assertTrue(r1.equals(r2));
-
-        // shapesVisible
-        r1 = new XYDifferenceRenderer(Color.green, Color.yellow, true);
-        assertFalse(r1.equals(r2));
-        r2 = new XYDifferenceRenderer(Color.green, Color.yellow, true);
-        assertTrue(r1.equals(r2));
-
-        // legendLine
-        r1.setLegendLine(new Line2D.Double(1.0, 2.0, 3.0, 4.0));
-        assertFalse(r1.equals(r2));
-        r2.setLegendLine(new Line2D.Double(1.0, 2.0, 3.0, 4.0));
-        assertTrue(r1.equals(r2));
-
-        // roundXCoordinates
-        r1.setRoundXCoordinates(true);
-        assertFalse(r1.equals(r2));
-        r2.setRoundXCoordinates(true);
-        assertTrue(r1.equals(r2));
-
-        assertFalse(r1.equals(null));
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        XYDifferenceRenderer r1
-            = new XYDifferenceRenderer(Color.red, Color.blue, false);
-        XYDifferenceRenderer r2
-            = new XYDifferenceRenderer(Color.red, Color.blue, false);
+        XYAreaRenderer2 r1 = new XYAreaRenderer2();
+        XYAreaRenderer2 r2 = new XYAreaRenderer2();
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -157,11 +123,12 @@ public class XYDifferenceRendererTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        XYDifferenceRenderer r1 = new XYDifferenceRenderer(Color.red,
-                Color.blue, false);
-        XYDifferenceRenderer r2 = null;
+        XYAreaRenderer2 r1 = new XYAreaRenderer2();
+        Rectangle rect = new Rectangle(1, 2, 3, 4);
+        r1.setLegendArea(rect);
+        XYAreaRenderer2 r2 = null;
         try {
-            r2 = (XYDifferenceRenderer) r1.clone();
+            r2 = (XYAreaRenderer2) r1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -171,19 +138,15 @@ public class XYDifferenceRendererTests extends TestCase {
         assertTrue(r1.equals(r2));
 
         // check independence
-        Shape s = r1.getLegendLine();
-        if (s instanceof Line2D) {
-            Line2D l = (Line2D) s;
-            l.setLine(1.0, 2.0, 3.0, 4.0);
-            assertFalse(r1.equals(r2));
-        }
+        rect.setBounds(99, 99, 99, 99);
+        assertFalse(r1.equals(r2));
     }
 
     /**
      * Verify that this class implements {@link PublicCloneable}.
      */
     public void testPublicCloneable() {
-        XYDifferenceRenderer r1 = new XYDifferenceRenderer();
+        XYAreaRenderer2 r1 = new XYAreaRenderer2();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -192,9 +155,8 @@ public class XYDifferenceRendererTests extends TestCase {
      */
     public void testSerialization() {
 
-        XYDifferenceRenderer r1 = new XYDifferenceRenderer(Color.red,
-                Color.blue, false);
-        XYDifferenceRenderer r2 = null;
+        XYAreaRenderer2 r1 = new XYAreaRenderer2();
+        XYAreaRenderer2 r2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -204,14 +166,51 @@ public class XYDifferenceRendererTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (XYDifferenceRenderer) in.readObject();
+            r2 = (XYAreaRenderer2) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            fail(e.toString());
         }
         assertEquals(r1, r2);
 
+    }
+
+    /**
+     * Draws the chart with a <code>null</code> info object to make sure that
+     * no exceptions are thrown (particularly by code in the renderer).
+     */
+    public void testDrawWithNullInfo() {
+        boolean success = false;
+        try {
+            DefaultTableXYDataset dataset = new DefaultTableXYDataset();
+
+            XYSeries s1 = new XYSeries("Series 1", true, false);
+            s1.add(5.0, 5.0);
+            s1.add(10.0, 15.5);
+            s1.add(15.0, 9.5);
+            s1.add(20.0, 7.5);
+            dataset.addSeries(s1);
+
+            XYSeries s2 = new XYSeries("Series 2", true, false);
+            s2.add(5.0, 5.0);
+            s2.add(10.0, 15.5);
+            s2.add(15.0, 9.5);
+            s2.add(20.0, 3.5);
+            dataset.addSeries(s2);
+            XYPlot plot = new XYPlot(dataset,
+                    new NumberAxis("X"), new NumberAxis("Y"),
+                    new XYAreaRenderer2());
+            JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
+                    null);
+            success = true;
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+            success = false;
+        }
+        assertTrue(success);
     }
 
     /**
@@ -238,7 +237,7 @@ public class XYDifferenceRendererTests extends TestCase {
         d2.addSeries(s4);
         d2.addSeries(s5);
 
-        XYDifferenceRenderer r = new XYDifferenceRenderer();
+        XYAreaRenderer2 r = new XYAreaRenderer2();
         XYPlot plot = new XYPlot(d1, new NumberAxis("x"),
                 new NumberAxis("y"), r);
         plot.setDataset(1, d2);

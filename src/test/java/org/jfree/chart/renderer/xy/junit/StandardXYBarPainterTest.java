@@ -57,7 +57,7 @@ import org.jfree.chart.renderer.xy.StandardXYBarPainter;
 /**
  * Tests for the {@link StandardXYBarPainter} class.
  */
-public class StandardXYBarPainterTests extends TestCase {
+public class StandardXYBarPainterTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -65,7 +65,7 @@ public class StandardXYBarPainterTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StandardXYBarPainterTests.class);
+        return new TestSuite(StandardXYBarPainterTest.class);
     }
 
     /**
@@ -73,7 +73,7 @@ public class StandardXYBarPainterTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StandardXYBarPainterTests(String name) {
+    public StandardXYBarPainterTest(String name) {
         super(name);
     }
 

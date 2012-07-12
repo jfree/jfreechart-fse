@@ -25,44 +25,50 @@
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
- * XYErrorRendererTests.java
+ * HighLowRendererTests.java
  * -------------------------
- * (C) Copyright 2006-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 25-Oct-2006 : Version 1 (DG);
+ * 25-Mar-2003 : Version 1 (DG);
+ * 22-Oct-2003 : Added hashCode test (DG);
+ * 01-Nov-2005 : Added tests for new fields (DG);
+ * 17-Aug-2006 : Added testFindRangeBounds() method (DG);
  * 22-Apr-2008 : Added testPublicCloneable (DG);
- * 28-Jan-2009 : Updated tests for new errorStroke field (DG);
+ * 29-Apr-2008 : Extended testEquals() for new field (DG);
  *
  */
 
 package org.jfree.chart.renderer.xy.junit;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.util.Date;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.renderer.xy.XYErrorRenderer;
+import org.jfree.chart.renderer.xy.HighLowRenderer;
+import org.jfree.data.Range;
+import org.jfree.data.xy.DefaultOHLCDataset;
+import org.jfree.data.xy.OHLCDataItem;
+import org.jfree.data.xy.OHLCDataset;
 
 /**
- * Tests for the {@link XYErrorRenderer} class.
+ * Tests for the {@link HighLowRenderer} class.
  */
-public class XYErrorRendererTests extends TestCase {
+public class HighLowRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -70,7 +76,7 @@ public class XYErrorRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYErrorRendererTests.class);
+        return new TestSuite(HighLowRendererTest.class);
     }
 
     /**
@@ -78,7 +84,7 @@ public class XYErrorRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYErrorRendererTests(String name) {
+    public HighLowRendererTest(String name) {
         super(name);
     }
 
@@ -86,50 +92,47 @@ public class XYErrorRendererTests extends TestCase {
      * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        XYErrorRenderer r1 = new XYErrorRenderer();
-        XYErrorRenderer r2 = new XYErrorRenderer();
+        HighLowRenderer r1 = new HighLowRenderer();
+        HighLowRenderer r2 = new HighLowRenderer();
         assertEquals(r1, r2);
 
-        // drawXError
-        r1.setDrawXError(false);
+        // drawOpenTicks
+        r1.setDrawOpenTicks(false);
         assertFalse(r1.equals(r2));
-        r2.setDrawXError(false);
+        r2.setDrawOpenTicks(false);
         assertTrue(r1.equals(r2));
 
-        // drawYError
-        r1.setDrawYError(false);
+        // drawCloseTicks
+        r1.setDrawCloseTicks(false);
         assertFalse(r1.equals(r2));
-        r2.setDrawYError(false);
+        r2.setDrawCloseTicks(false);
         assertTrue(r1.equals(r2));
 
-        // capLength
-        r1.setCapLength(9.0);
+        // openTickPaint
+        r1.setOpenTickPaint(Color.red);
         assertFalse(r1.equals(r2));
-        r2.setCapLength(9.0);
+        r2.setOpenTickPaint(Color.red);
         assertTrue(r1.equals(r2));
 
-        // errorPaint
-        r1.setErrorPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.green));
+        // closeTickPaint
+        r1.setCloseTickPaint(Color.blue);
         assertFalse(r1.equals(r2));
-        r2.setErrorPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.green));
+        r2.setCloseTickPaint(Color.blue);
         assertTrue(r1.equals(r2));
 
-        // errorStroke
-        r1.setErrorStroke(new BasicStroke(1.5f));
+        // tickLength
+        r1.setTickLength(99.9);
         assertFalse(r1.equals(r2));
-        r2.setErrorStroke(new BasicStroke(1.5f));
+        r2.setTickLength(99.9);
         assertTrue(r1.equals(r2));
-
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        XYErrorRenderer r1 = new XYErrorRenderer();
-        XYErrorRenderer r2 = new XYErrorRenderer();
+        HighLowRenderer r1 = new HighLowRenderer();
+        HighLowRenderer r2 = new HighLowRenderer();
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -140,30 +143,11 @@ public class XYErrorRendererTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        XYErrorRenderer r1 = new XYErrorRenderer();
-        r1.setErrorPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.white));
-        XYErrorRenderer r2 = null;
+        HighLowRenderer r1 = new HighLowRenderer();
+        r1.setCloseTickPaint(Color.green);
+        HighLowRenderer r2 = null;
         try {
-            r2 = (XYErrorRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
-    }
-
-    /**
-     * A test for cloning.
-     */
-    public void testCloning2() {
-        XYErrorRenderer r1 = new XYErrorRenderer();
-        r1.setErrorStroke(new BasicStroke(1.5f));
-        XYErrorRenderer r2 = null;
-        try {
-            r2 = (XYErrorRenderer) r1.clone();
+            r2 = (HighLowRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -177,7 +161,7 @@ public class XYErrorRendererTests extends TestCase {
      * Verify that this class implements {@link PublicCloneable}.
      */
     public void testPublicCloneable() {
-        XYErrorRenderer r1 = new XYErrorRenderer();
+        HighLowRenderer r1 = new HighLowRenderer();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -185,10 +169,10 @@ public class XYErrorRendererTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        XYErrorRenderer r1 = new XYErrorRenderer();
-        r1.setErrorPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.white));
-        XYErrorRenderer r2 = null;
+
+        HighLowRenderer r1 = new HighLowRenderer();
+        r1.setCloseTickPaint(Color.green);
+        HighLowRenderer r2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -198,54 +182,44 @@ public class XYErrorRendererTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (XYErrorRenderer) in.readObject();
+            r2 = (HighLowRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(r1, r2);
+
     }
-
-    /**
-     * Serialize an instance, restore it, and check for equality.
-     */
-    public void testSerialization2() {
-        XYErrorRenderer r1 = new XYErrorRenderer();
-        r1.setErrorStroke(new BasicStroke(1.5f));
-        XYErrorRenderer r2 = null;
-
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(r1);
-            out.close();
-
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (XYErrorRenderer) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        assertEquals(r1, r2);
-    }
-
-    /**
-     * Some checks for the findDomainBounds() method.
-     */
-    public void testFindDomainBounds() {
-        XYErrorRenderer r = new XYErrorRenderer();
-        assertNull(r.findDomainBounds(null));
-    }
-
 
     /**
      * Some checks for the findRangeBounds() method.
      */
     public void testFindRangeBounds() {
-        XYErrorRenderer r = new XYErrorRenderer();
-        assertNull(r.findRangeBounds(null));
+        HighLowRenderer renderer = new HighLowRenderer();
+
+        OHLCDataItem item1 = new OHLCDataItem(new Date(1L), 2.0, 4.0, 1.0, 3.0,
+                100);
+        OHLCDataset dataset = new DefaultOHLCDataset("S1",
+                new OHLCDataItem[] {item1});
+        Range range = renderer.findRangeBounds(dataset);
+        assertEquals(new Range(1.0, 4.0), range);
+
+        OHLCDataItem item2 = new OHLCDataItem(new Date(1L), -1.0, 3.0, -1.0,
+                3.0, 100);
+        dataset = new DefaultOHLCDataset("S1", new OHLCDataItem[] {item1,
+                item2});
+        range = renderer.findRangeBounds(dataset);
+        assertEquals(new Range(-1.0, 4.0), range);
+
+        // try an empty dataset - should return a null range
+        dataset = new DefaultOHLCDataset("S1", new OHLCDataItem[] {});
+        range = renderer.findRangeBounds(dataset);
+        assertNull(range);
+
+        // try a null dataset - should return a null range
+        range = renderer.findRangeBounds(null);
+        assertNull(range);
     }
+
 }

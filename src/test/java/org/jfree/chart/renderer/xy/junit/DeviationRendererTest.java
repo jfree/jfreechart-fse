@@ -24,17 +24,17 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * --------------------------
- * WindItemRendererTests.java
- * --------------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
+ * ---------------------------
+ * DeviationRendererTests.java
+ * ---------------------------
+ * (C) Copyright 2007, 2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 25-Mar-2003 : Version 1 (DG);
+ * 26-Feb-2007 : Version 1 (DG);
  * 22-Apr-2008 : Added testPublicCloneable (DG);
  *
  */
@@ -53,12 +53,12 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.renderer.xy.WindItemRenderer;
+import org.jfree.chart.renderer.xy.DeviationRenderer;
 
 /**
- * Tests for the {@link WindItemRenderer} class.
+ * Tests for the {@link DeviationRenderer} class.
  */
-public class WindItemRendererTests extends TestCase {
+public class DeviationRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -66,7 +66,7 @@ public class WindItemRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(WindItemRendererTests.class);
+        return new TestSuite(DeviationRendererTest.class);
     }
 
     /**
@@ -74,25 +74,34 @@ public class WindItemRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public WindItemRendererTests(String name) {
+    public DeviationRendererTest(String name) {
         super(name);
     }
 
     /**
-     * Check that the equals() method distinguishes all fields.
+     * Test that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        WindItemRenderer r1 = new WindItemRenderer();
-        WindItemRenderer r2 = new WindItemRenderer();
-        assertEquals(r1, r2);
+
+        // default instances
+        DeviationRenderer r1 = new DeviationRenderer();
+        DeviationRenderer r2 = new DeviationRenderer();
+        assertTrue(r1.equals(r2));
+        assertTrue(r2.equals(r1));
+
+        r1.setAlpha(0.1f);
+        assertFalse(r1.equals(r2));
+        r2.setAlpha(0.1f);
+        assertTrue(r1.equals(r2));
+
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        WindItemRenderer r1 = new WindItemRenderer();
-        WindItemRenderer r2 = new WindItemRenderer();
+        DeviationRenderer r1 = new DeviationRenderer();
+        DeviationRenderer r2 = new DeviationRenderer();
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -103,24 +112,27 @@ public class WindItemRendererTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        WindItemRenderer r1 = new WindItemRenderer();
-        WindItemRenderer r2 = null;
+        DeviationRenderer r1 = new DeviationRenderer();
+        DeviationRenderer r2 = null;
         try {
-            r2 = (WindItemRenderer) r1.clone();
+            r2 = (DeviationRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
+            e.printStackTrace();
         }
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
+
+        // check independence
+
     }
 
     /**
      * Verify that this class implements {@link PublicCloneable}.
      */
     public void testPublicCloneable() {
-        WindItemRenderer r1 = new WindItemRenderer();
+        DeviationRenderer r1 = new DeviationRenderer();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -129,8 +141,8 @@ public class WindItemRendererTests extends TestCase {
      */
     public void testSerialization() {
 
-        WindItemRenderer r1 = new WindItemRenderer();
-        WindItemRenderer r2 = null;
+        DeviationRenderer r1 = new DeviationRenderer();
+        DeviationRenderer r2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -140,11 +152,11 @@ public class WindItemRendererTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (WindItemRenderer) in.readObject();
+            r2 = (DeviationRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
         assertEquals(r1, r2);
 

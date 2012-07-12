@@ -24,26 +24,24 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ----------------------------
- * XYStepAreaRendererTests.java
- * ----------------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
+ * --------------------------
+ * XYSplineRendererTests.java
+ * --------------------------
+ * (C) Copyright 2007, 2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
- * Contributor(s):   Matthias Rose;
+ * Contributor(s):   -;
  *
  * Changes
  * -------
- * 25-Mar-2003 : Version 1 (DG);
- * 26-Sep-2003 : copied XYStepRendererTests.java and used for
- *               testing XYStepAreaRenderer (MR);
- * 14-Feb-2007 : Extended testEquals() (DG);
- * 22-Apr-2008 : Added testPublicCloneable (DG);
+ * 25-Jul-2007 : Version 1 (DG);
+ * 22-Apr-2008 : Added testPublicCloneable() (DG);
  *
  */
 
 package org.jfree.chart.renderer.xy.junit;
 
+import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -55,18 +53,13 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYStepAreaRenderer;
-import org.jfree.data.xy.DefaultTableXYDataset;
-import org.jfree.data.xy.XYSeries;
+import org.jfree.chart.renderer.xy.XYSplineRenderer;
 
 /**
- * Tests for the {@link XYStepAreaRenderer} class.
+ * Tests for the {@link XYSplineRenderer} class.
  */
-public class XYStepAreaRendererTests extends TestCase {
+public class XYSplineRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -74,7 +67,7 @@ public class XYStepAreaRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYStepAreaRendererTests.class);
+        return new TestSuite(XYSplineRendererTest.class);
     }
 
     /**
@@ -82,41 +75,23 @@ public class XYStepAreaRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYStepAreaRendererTests(String name) {
+    public XYSplineRendererTest(String name) {
         super(name);
     }
 
     /**
-     * Check that the equals() method distinguishes all fields.
+     * Test that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        XYStepAreaRenderer r1 = new XYStepAreaRenderer();
-        XYStepAreaRenderer r2 = new XYStepAreaRenderer();
+
+        XYSplineRenderer r1 = new XYSplineRenderer();
+        XYSplineRenderer r2 = new XYSplineRenderer();
         assertEquals(r1, r2);
+        assertEquals(r2, r1);
 
-        r1.setOutline(true);
+        r1.setPrecision(9);
         assertFalse(r1.equals(r2));
-        r2.setOutline(true);
-        assertTrue(r1.equals(r2));
-
-        r1.setShapesVisible(true);
-        assertFalse(r1.equals(r2));
-        r2.setShapesVisible(true);
-        assertTrue(r1.equals(r2));
-
-        r1.setShapesFilled(true);
-        assertFalse(r1.equals(r2));
-        r2.setShapesFilled(true);
-        assertTrue(r1.equals(r2));
-
-        r1.setPlotArea(false);
-        assertFalse(r1.equals(r2));
-        r2.setPlotArea(false);
-        assertTrue(r1.equals(r2));
-
-        r1.setRangeBase(-1.0);
-        assertFalse(r1.equals(r2));
-        r2.setRangeBase(-1.0);
+        r2.setPrecision(9);
         assertTrue(r1.equals(r2));
     }
 
@@ -124,8 +99,8 @@ public class XYStepAreaRendererTests extends TestCase {
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        XYStepAreaRenderer r1 = new XYStepAreaRenderer();
-        XYStepAreaRenderer r2 = new XYStepAreaRenderer();
+        XYSplineRenderer r1 = new XYSplineRenderer();
+        XYSplineRenderer r2 = new XYSplineRenderer();
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -136,10 +111,12 @@ public class XYStepAreaRendererTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        XYStepAreaRenderer r1 = new XYStepAreaRenderer();
-        XYStepAreaRenderer r2 = null;
+        Rectangle2D legendShape = new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0);
+        XYSplineRenderer r1 = new XYSplineRenderer();
+        r1.setLegendLine(legendShape);
+        XYSplineRenderer r2 = null;
         try {
-            r2 = (XYStepAreaRenderer) r1.clone();
+            r2 = (XYSplineRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -153,7 +130,7 @@ public class XYStepAreaRendererTests extends TestCase {
      * Verify that this class implements {@link PublicCloneable}.
      */
     public void testPublicCloneable() {
-        XYStepAreaRenderer r1 = new XYStepAreaRenderer();
+        XYSplineRenderer r1 = new XYSplineRenderer();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -162,9 +139,8 @@ public class XYStepAreaRendererTests extends TestCase {
      */
     public void testSerialization() {
 
-        XYStepAreaRenderer r1 = new XYStepAreaRenderer();
-        XYStepAreaRenderer r2 = null;
-
+        XYSplineRenderer r1 = new XYSplineRenderer();
+        XYSplineRenderer r2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -173,50 +149,14 @@ public class XYStepAreaRendererTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (XYStepAreaRenderer) in.readObject();
+            r2 = (XYSplineRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(r1, r2);
-    }
 
-    /**
-     * Draws the chart with a <code>null</code> info object to make sure that
-     * no exceptions are thrown (particularly by code in the renderer).
-     */
-    public void testDrawWithNullInfo() {
-        boolean success = false;
-        try {
-            DefaultTableXYDataset dataset = new DefaultTableXYDataset();
-
-            XYSeries s1 = new XYSeries("Series 1", true, false);
-            s1.add(5.0, 5.0);
-            s1.add(10.0, 15.5);
-            s1.add(15.0, 9.5);
-            s1.add(20.0, 7.5);
-            dataset.addSeries(s1);
-
-            XYSeries s2 = new XYSeries("Series 2", true, false);
-            s2.add(5.0, 5.0);
-            s2.add(10.0, 15.5);
-            s2.add(15.0, 9.5);
-            s2.add(20.0, 3.5);
-            dataset.addSeries(s2);
-            XYPlot plot = new XYPlot(dataset,
-                    new NumberAxis("X"), new NumberAxis("Y"),
-                    new XYStepAreaRenderer());
-            JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
-            success = true;
-        }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-            success = false;
-        }
-        assertTrue(success);
     }
 
 }

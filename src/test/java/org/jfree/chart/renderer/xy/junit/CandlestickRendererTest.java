@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -------------------------
- * HighLowRendererTests.java
- * -------------------------
+ * -----------------------------
+ * CandlestickRendererTests.java
+ * -----------------------------
  * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -36,16 +36,18 @@
  * -------
  * 25-Mar-2003 : Version 1 (DG);
  * 22-Oct-2003 : Added hashCode test (DG);
- * 01-Nov-2005 : Added tests for new fields (DG);
- * 17-Aug-2006 : Added testFindRangeBounds() method (DG);
- * 22-Apr-2008 : Added testPublicCloneable (DG);
- * 29-Apr-2008 : Extended testEquals() for new field (DG);
+ * 17-Aug-2006 : Strengthened testEquals() and added testFindRangeBounds()
+ *               method (DG);
+ * 05-Mar-2007 : Added new field to testEquals() (DG);
+ * 08-Oct-2007 : Added tests for new volumePaint field (DG);
+ * 22-Apr-2008 : Added testPublicCloneable() (DG);
  *
  */
 
 package org.jfree.chart.renderer.xy.junit;
 
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -59,16 +61,16 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.renderer.xy.HighLowRenderer;
+import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.data.Range;
 import org.jfree.data.xy.DefaultOHLCDataset;
 import org.jfree.data.xy.OHLCDataItem;
 import org.jfree.data.xy.OHLCDataset;
 
 /**
- * Tests for the {@link HighLowRenderer} class.
+ * Tests for the {@link CandlestickRenderer} class.
  */
-public class HighLowRendererTests extends TestCase {
+public class CandlestickRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -76,7 +78,7 @@ public class HighLowRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(HighLowRendererTests.class);
+        return new TestSuite(CandlestickRendererTest.class);
     }
 
     /**
@@ -84,46 +86,95 @@ public class HighLowRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public HighLowRendererTests(String name) {
+    public CandlestickRendererTest(String name) {
         super(name);
+    }
+
+    private static final double EPSILON = 0.0000000001;
+
+    /**
+     * Some checks for the constructor.
+     */
+    public void testConstructor() {
+        CandlestickRenderer r1 = new CandlestickRenderer();
+
+        // check defaults
+        assertEquals(Color.green, r1.getUpPaint());
+        assertEquals(Color.red, r1.getDownPaint());
+        assertFalse(r1.getUseOutlinePaint());
+        assertTrue(r1.getDrawVolume());
+        assertEquals(Color.gray, r1.getVolumePaint());
+        assertEquals(-1.0, r1.getCandleWidth(), EPSILON);
     }
 
     /**
      * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        HighLowRenderer r1 = new HighLowRenderer();
-        HighLowRenderer r2 = new HighLowRenderer();
+        CandlestickRenderer r1 = new CandlestickRenderer();
+        CandlestickRenderer r2 = new CandlestickRenderer();
         assertEquals(r1, r2);
 
-        // drawOpenTicks
-        r1.setDrawOpenTicks(false);
+        // upPaint
+        r1.setUpPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+                Color.white));
         assertFalse(r1.equals(r2));
-        r2.setDrawOpenTicks(false);
+        r2.setUpPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+                Color.white));
         assertTrue(r1.equals(r2));
 
-        // drawCloseTicks
-        r1.setDrawCloseTicks(false);
+        // downPaint
+        r1.setDownPaint(new GradientPaint(5.0f, 6.0f, Color.green, 7.0f, 8.0f,
+                Color.yellow));
         assertFalse(r1.equals(r2));
-        r2.setDrawCloseTicks(false);
+        r2.setDownPaint(new GradientPaint(5.0f, 6.0f, Color.green, 7.0f, 8.0f,
+                Color.yellow));
         assertTrue(r1.equals(r2));
 
-        // openTickPaint
-        r1.setOpenTickPaint(Color.red);
+        // drawVolume
+        r1.setDrawVolume(false);
         assertFalse(r1.equals(r2));
-        r2.setOpenTickPaint(Color.red);
+        r2.setDrawVolume(false);
         assertTrue(r1.equals(r2));
 
-        // closeTickPaint
-        r1.setCloseTickPaint(Color.blue);
+        // candleWidth
+        r1.setCandleWidth(3.3);
         assertFalse(r1.equals(r2));
-        r2.setCloseTickPaint(Color.blue);
+        r2.setCandleWidth(3.3);
         assertTrue(r1.equals(r2));
 
-        // tickLength
-        r1.setTickLength(99.9);
+        // maxCandleWidthInMilliseconds
+        r1.setMaxCandleWidthInMilliseconds(123);
         assertFalse(r1.equals(r2));
-        r2.setTickLength(99.9);
+        r2.setMaxCandleWidthInMilliseconds(123);
+        assertTrue(r1.equals(r2));
+
+        // autoWidthMethod
+        r1.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_SMALLEST);
+        assertFalse(r1.equals(r2));
+        r2.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_SMALLEST);
+        assertTrue(r1.equals(r2));
+
+        // autoWidthFactor
+        r1.setAutoWidthFactor(0.22);
+        assertFalse(r1.equals(r2));
+        r2.setAutoWidthFactor(0.22);
+        assertTrue(r1.equals(r2));
+
+        // autoWidthGap
+        r1.setAutoWidthGap(1.1);
+        assertFalse(r1.equals(r2));
+        r2.setAutoWidthGap(1.1);
+        assertTrue(r1.equals(r2));
+
+        r1.setUseOutlinePaint(true);
+        assertFalse(r1.equals(r2));
+        r2.setUseOutlinePaint(true);
+        assertTrue(r1.equals(r2));
+
+        r1.setVolumePaint(Color.blue);
+        assertFalse(r1.equals(r2));
+        r2.setVolumePaint(Color.blue);
         assertTrue(r1.equals(r2));
     }
 
@@ -131,8 +182,8 @@ public class HighLowRendererTests extends TestCase {
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        HighLowRenderer r1 = new HighLowRenderer();
-        HighLowRenderer r2 = new HighLowRenderer();
+        CandlestickRenderer r1 = new CandlestickRenderer();
+        CandlestickRenderer r2 = new CandlestickRenderer();
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -143,11 +194,10 @@ public class HighLowRendererTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        HighLowRenderer r1 = new HighLowRenderer();
-        r1.setCloseTickPaint(Color.green);
-        HighLowRenderer r2 = null;
+        CandlestickRenderer r1 = new CandlestickRenderer();
+        CandlestickRenderer r2 = null;
         try {
-            r2 = (HighLowRenderer) r1.clone();
+            r2 = (CandlestickRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -161,7 +211,7 @@ public class HighLowRendererTests extends TestCase {
      * Verify that this class implements {@link PublicCloneable}.
      */
     public void testPublicCloneable() {
-        HighLowRenderer r1 = new HighLowRenderer();
+        CandlestickRenderer r1 = new CandlestickRenderer();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -170,9 +220,8 @@ public class HighLowRendererTests extends TestCase {
      */
     public void testSerialization() {
 
-        HighLowRenderer r1 = new HighLowRenderer();
-        r1.setCloseTickPaint(Color.green);
-        HighLowRenderer r2 = null;
+        CandlestickRenderer r1 = new CandlestickRenderer();
+        CandlestickRenderer r2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -182,7 +231,7 @@ public class HighLowRendererTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (HighLowRenderer) in.readObject();
+            r2 = (CandlestickRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
@@ -196,7 +245,7 @@ public class HighLowRendererTests extends TestCase {
      * Some checks for the findRangeBounds() method.
      */
     public void testFindRangeBounds() {
-        HighLowRenderer renderer = new HighLowRenderer();
+        CandlestickRenderer renderer = new CandlestickRenderer();
 
         OHLCDataItem item1 = new OHLCDataItem(new Date(1L), 2.0, 4.0, 1.0, 3.0,
                 100);

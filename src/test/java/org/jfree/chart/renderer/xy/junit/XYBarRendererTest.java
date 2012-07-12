@@ -81,7 +81,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 /**
  * Tests for the {@link XYBarRenderer} class.
  */
-public class XYBarRendererTests extends TestCase {
+public class XYBarRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -89,7 +89,7 @@ public class XYBarRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYBarRendererTests.class);
+        return new TestSuite(XYBarRendererTest.class);
     }
 
     /**
@@ -97,7 +97,7 @@ public class XYBarRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYBarRendererTests(String name) {
+    public XYBarRendererTest(String name) {
         super(name);
     }
 

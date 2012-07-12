@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -----------------------
- * XYDotRendererTests.java
- * -----------------------
+ * ------------------------------
+ * XYDifferenceRendererTests.java
+ * ------------------------------
  * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -34,16 +34,21 @@
  *
  * Changes
  * -------
- * 25-Mar-2003 : Version 1 (DG);
+ * 22-Oct-2003 : Version 1 (DG);
+ * 04-May-2005 : Improved equals() test (DG);
+ * 24-Jan-2007 : Added 'roundXCoordinates' to testEquals(), and improved
+ *               testClone() (DG);
  * 17-May-2007 : Added testGetLegendItemSeriesIndex() (DG);
- * 09-Nov-2007 : Updated testEquals() (DG);
  * 22-Apr-2008 : Added testPublicCloneable (DG);
  *
  */
 
 package org.jfree.chart.renderer.xy.junit;
 
-import java.awt.geom.Rectangle2D;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Shape;
+import java.awt.geom.Line2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -60,14 +65,14 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYDotRenderer;
+import org.jfree.chart.renderer.xy.XYDifferenceRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 /**
- * Tests for the {@link XYDotRenderer} class.
+ * Tests for the {@link XYDifferenceRenderer} class.
  */
-public class XYDotRendererTests extends TestCase {
+public class XYDifferenceRendererTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -75,7 +80,7 @@ public class XYDotRendererTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYDotRendererTests.class);
+        return new TestSuite(XYDifferenceRendererTest.class);
     }
 
     /**
@@ -83,7 +88,7 @@ public class XYDotRendererTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYDotRendererTests(String name) {
+    public XYDifferenceRendererTest(String name) {
         super(name);
     }
 
@@ -91,42 +96,60 @@ public class XYDotRendererTests extends TestCase {
      * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        XYDotRenderer r1 = new XYDotRenderer();
-        XYDotRenderer r2 = new XYDotRenderer();
+        XYDifferenceRenderer r1 = new XYDifferenceRenderer(
+                Color.red, Color.blue, false);
+        XYDifferenceRenderer r2 = new XYDifferenceRenderer(
+                Color.red, Color.blue, false);
         assertEquals(r1, r2);
 
-        r1.setDotWidth(11);
+        // positive paint
+        r1.setPositivePaint(new GradientPaint(1.0f, 2.0f, Color.red,
+                3.0f, 4.0f, Color.blue));
         assertFalse(r1.equals(r2));
-        r2.setDotWidth(11);
+        r2.setPositivePaint(new GradientPaint(1.0f, 2.0f, Color.red,
+                3.0f, 4.0f, Color.blue));
         assertTrue(r1.equals(r2));
 
-        r1.setDotHeight(12);
+        // negative paint
+        r1.setNegativePaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
+                3.0f, 4.0f, Color.blue));
         assertFalse(r1.equals(r2));
-        r2.setDotHeight(12);
+        r2.setNegativePaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
+                3.0f, 4.0f, Color.blue));
         assertTrue(r1.equals(r2));
 
-        r1.setLegendShape(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
+        // shapesVisible
+        r1 = new XYDifferenceRenderer(Color.green, Color.yellow, true);
         assertFalse(r1.equals(r2));
-        r2.setLegendShape(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
+        r2 = new XYDifferenceRenderer(Color.green, Color.yellow, true);
         assertTrue(r1.equals(r2));
+
+        // legendLine
+        r1.setLegendLine(new Line2D.Double(1.0, 2.0, 3.0, 4.0));
+        assertFalse(r1.equals(r2));
+        r2.setLegendLine(new Line2D.Double(1.0, 2.0, 3.0, 4.0));
+        assertTrue(r1.equals(r2));
+
+        // roundXCoordinates
+        r1.setRoundXCoordinates(true);
+        assertFalse(r1.equals(r2));
+        r2.setRoundXCoordinates(true);
+        assertTrue(r1.equals(r2));
+
+        assertFalse(r1.equals(null));
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        XYDotRenderer r1 = new XYDotRenderer();
-        XYDotRenderer r2 = new XYDotRenderer();
+        XYDifferenceRenderer r1
+            = new XYDifferenceRenderer(Color.red, Color.blue, false);
+        XYDifferenceRenderer r2
+            = new XYDifferenceRenderer(Color.red, Color.blue, false);
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
-        assertEquals(h1, h2);
-
-        r1.setDotHeight(12);
-        r2.setDotHeight(12);
-        assertTrue(r1.equals(r2));
-        h1 = r1.hashCode();
-        h2 = r2.hashCode();
         assertEquals(h1, h2);
     }
 
@@ -134,10 +157,11 @@ public class XYDotRendererTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        XYDotRenderer r1 = new XYDotRenderer();
-        XYDotRenderer r2 = null;
+        XYDifferenceRenderer r1 = new XYDifferenceRenderer(Color.red,
+                Color.blue, false);
+        XYDifferenceRenderer r2 = null;
         try {
-            r2 = (XYDotRenderer) r1.clone();
+            r2 = (XYDifferenceRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -145,13 +169,21 @@ public class XYDotRendererTests extends TestCase {
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
+
+        // check independence
+        Shape s = r1.getLegendLine();
+        if (s instanceof Line2D) {
+            Line2D l = (Line2D) s;
+            l.setLine(1.0, 2.0, 3.0, 4.0);
+            assertFalse(r1.equals(r2));
+        }
     }
 
     /**
      * Verify that this class implements {@link PublicCloneable}.
      */
     public void testPublicCloneable() {
-        XYDotRenderer r1 = new XYDotRenderer();
+        XYDifferenceRenderer r1 = new XYDifferenceRenderer();
         assertTrue(r1 instanceof PublicCloneable);
     }
 
@@ -160,8 +192,9 @@ public class XYDotRendererTests extends TestCase {
      */
     public void testSerialization() {
 
-        XYDotRenderer r1 = new XYDotRenderer();
-        XYDotRenderer r2 = null;
+        XYDifferenceRenderer r1 = new XYDifferenceRenderer(Color.red,
+                Color.blue, false);
+        XYDifferenceRenderer r2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -171,7 +204,7 @@ public class XYDotRendererTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (XYDotRenderer) in.readObject();
+            r2 = (XYDifferenceRenderer) in.readObject();
             in.close();
         }
         catch (Exception e) {
@@ -205,7 +238,7 @@ public class XYDotRendererTests extends TestCase {
         d2.addSeries(s4);
         d2.addSeries(s5);
 
-        XYDotRenderer r = new XYDotRenderer();
+        XYDifferenceRenderer r = new XYDifferenceRenderer();
         XYPlot plot = new XYPlot(d1, new NumberAxis("x"),
                 new NumberAxis("y"), r);
         plot.setDataset(1, d2);

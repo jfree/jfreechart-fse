@@ -57,7 +57,7 @@ import org.jfree.chart.renderer.xy.GradientXYBarPainter;
 /**
  * Tests for the {@link GradientXYBarPainter} class.
  */
-public class GradientXYBarPainterTests extends TestCase {
+public class GradientXYBarPainterTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -65,7 +65,7 @@ public class GradientXYBarPainterTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(GradientXYBarPainterTests.class);
+        return new TestSuite(GradientXYBarPainterTest.class);
     }
 
     /**
@@ -73,7 +73,7 @@ public class GradientXYBarPainterTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public GradientXYBarPainterTests(String name) {
+    public GradientXYBarPainterTest(String name) {
         super(name);
     }
 
