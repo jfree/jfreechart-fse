@@ -68,7 +68,7 @@ import org.jfree.data.time.Year;
 /**
  * A collection of test cases for the {@link TimePeriodValues} class.
  */
-public class TimePeriodValuesTests extends TestCase {
+public class TimePeriodValuesTest extends TestCase {
 
     /** Series A. */
     private TimePeriodValues seriesA;
@@ -85,7 +85,7 @@ public class TimePeriodValuesTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(TimePeriodValuesTests.class);
+        return new TestSuite(TimePeriodValuesTest.class);
     }
 
     /**
@@ -93,7 +93,7 @@ public class TimePeriodValuesTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public TimePeriodValuesTests(String name) {
+    public TimePeriodValuesTest(String name) {
         super(name);
     }
 

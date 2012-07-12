@@ -81,7 +81,7 @@ import org.jfree.data.time.Year;
 /**
  * A collection of test cases for the {@link TimeSeries} class.
  */
-public class TimeSeriesTests extends TestCase implements SeriesChangeListener {
+public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
 
     /** A time series. */
     private TimeSeries seriesA;
@@ -101,7 +101,7 @@ public class TimeSeriesTests extends TestCase implements SeriesChangeListener {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(TimeSeriesTests.class);
+        return new TestSuite(TimeSeriesTest.class);
     }
 
     /**
@@ -109,7 +109,7 @@ public class TimeSeriesTests extends TestCase implements SeriesChangeListener {
      *
      * @param name  the name of the tests.
      */
-    public TimeSeriesTests(String name) {
+    public TimeSeriesTest(String name) {
         super(name);
     }
 

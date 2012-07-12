@@ -68,7 +68,7 @@ import org.jfree.data.time.Year;
 /**
  * Tests for the {link Quarter} class.
  */
-public class QuarterTests extends TestCase {
+public class QuarterTest extends TestCase {
 
     /** A quarter. */
     private Quarter q1Y1900;
@@ -88,7 +88,7 @@ public class QuarterTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(QuarterTests.class);
+        return new TestSuite(QuarterTest.class);
     }
 
     /**
@@ -96,7 +96,7 @@ public class QuarterTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public QuarterTests(String name) {
+    public QuarterTest(String name) {
         super(name);
     }
 

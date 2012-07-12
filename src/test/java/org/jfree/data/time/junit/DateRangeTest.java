@@ -24,17 +24,18 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -------------------------
- * TimePeriodValueTests.java
- * -------------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited.
+ * -------------------
+ * DateRangeTests.java
+ * -------------------
+ * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 30-Jul-2003 : Version 1 (DG);
+ * 23-Mar-2004 : Version 1 (DG);
+ * 11-Jan-2005 : Added test to ensure Cloneable is not implemented (DG);
  *
  */
 
@@ -46,18 +47,18 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.util.Date;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.data.time.Day;
-import org.jfree.data.time.TimePeriodValue;
+import org.jfree.data.time.DateRange;
 
 /**
- * Tests for the {@link TimePeriodValue} class.
+ * Some tests for the {@link DateRange} class.
  */
-public class TimePeriodValueTests extends TestCase {
+public class DateRangeTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -65,7 +66,7 @@ public class TimePeriodValueTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(TimePeriodValueTests.class);
+        return new TestSuite(DateRangeTest.class);
     }
 
     /**
@@ -73,61 +74,74 @@ public class TimePeriodValueTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public TimePeriodValueTests(String name) {
+    public DateRangeTest(String name) {
         super(name);
     }
 
     /**
-     * Common test setup.
-     */
-    @Override
-	protected void setUp() {
-        // no setup
-    }
-
-    /**
-     * Test that an instance is equal to itself.
-     */
-    public void testEqualsSelf() {
-        TimePeriodValue tpv = new TimePeriodValue(new Day(), 55.75);
-        assertTrue(tpv.equals(tpv));
-    }
-
-    /**
-     * Tests the equals() method.
+     * Confirm that the equals method can distinguish all the required fields.
      */
     public void testEquals() {
-        TimePeriodValue tpv1 = new TimePeriodValue(new Day(30, 7, 2003), 55.75);
-        TimePeriodValue tpv2 = new TimePeriodValue(new Day(30, 7, 2003), 55.75);
-        assertTrue(tpv1.equals(tpv2));
-        assertTrue(tpv2.equals(tpv1));
+        DateRange r1 = new DateRange(new Date(1000L), new Date(2000L));
+        DateRange r2 = new DateRange(new Date(1000L), new Date(2000L));
+        assertTrue(r1.equals(r2));
+        assertTrue(r2.equals(r1));
+
+        r1 = new DateRange(new Date(1111L), new Date(2000L));
+        assertFalse(r1.equals(r2));
+        r2 = new DateRange(new Date(1111L), new Date(2000L));
+        assertTrue(r1.equals(r2));
+
+        r1 = new DateRange(new Date(1111L), new Date(2222L));
+        assertFalse(r1.equals(r2));
+        r2 = new DateRange(new Date(1111L), new Date(2222L));
+        assertTrue(r1.equals(r2));
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-
-        TimePeriodValue tpv1 = new TimePeriodValue(new Day(30, 7, 2003), 55.75);
-        TimePeriodValue tpv2 = null;
+        DateRange r1 = new DateRange(new Date(1000L), new Date(2000L));
+        DateRange r2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(tpv1);
+            out.writeObject(r1);
             out.close();
 
             ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-            );
-            tpv2 = (TimePeriodValue) in.readObject();
+                    new ByteArrayInputStream(buffer.toByteArray()));
+            r2 = (DateRange) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
-        assertEquals(tpv1, tpv2);
+        assertEquals(r1, r2);
+    }
 
+    /**
+     * The {@link DateRange} class is immutable, so it doesn't need to
+     * be cloneable.
+     */
+    public void testClone() {
+        DateRange r1 = new DateRange(new Date(1000L), new Date(2000L));
+        assertFalse(r1 instanceof Cloneable);
+    }
+
+    /**
+     * Confirm that a DateRange is immutable.
+     */
+    public void testImmutable() {
+        Date d1 = new Date(10L);
+        Date d2 = new Date(20L);
+        DateRange r = new DateRange(d1, d2);
+        d1.setTime(11L);
+        assertEquals(new Date(10L), r.getLowerDate());
+        r.getUpperDate().setTime(22L);
+        assertEquals(new Date(20L), r.getUpperDate());
     }
 
 }

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -24,22 +24,25 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ---------------------
- * MillisecondTests.java
- * ---------------------
- * (C) Copyright 2002-2009, by Object Refinery Limited.
+ * ---------------
+ * MonthTests.java
+ * ---------------
+ * (C) Copyright 2001-2008, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 29-Jan-2002 : Version 1 (DG);
+ * 16-Nov-2001 : Version 1 (DG);
+ * 14-Feb-2002 : Order of parameters in Month(int, int) constructor
+ *               changed (DG);
+ * 26-Jun-2002 : Removed unnecessary import (DG);
  * 17-Oct-2002 : Fixed errors reported by Checkstyle (DG);
- * 21-Oct-2003 : Added hashCode tests (DG);
- * 29-Apr-2004 : Added test for getMiddleMillisecond() method (DG);
- * 11-Jan-2005 : Added test for non-clonability (DG);
- * 05-Oct-2006 : Added some tests (DG);
+ * 13-Mar-2003 : Added serialization test (DG);
+ * 21-Oct-2003 : Added hashCode test (DG);
+ * 11-Jan-2005 : Added non-clonability test (DG);
+ * 05-Oct-2006 : Added some new tests (DG);
  * 11-Jul-2007 : Fixed bad time zone assumption (DG);
  *
  */
@@ -63,16 +66,26 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.date.MonthConstants;
-import org.jfree.data.time.Day;
-import org.jfree.data.time.Hour;
-import org.jfree.data.time.Millisecond;
-import org.jfree.data.time.Minute;
-import org.jfree.data.time.Second;
+import org.jfree.data.time.Month;
+import org.jfree.data.time.TimePeriodFormatException;
+import org.jfree.data.time.Year;
 
 /**
- * Tests for the {@link Millisecond} class.
+ * Tests for the {@link Month} class.
  */
-public class MillisecondTests extends TestCase {
+public class MonthTest extends TestCase {
+
+    /** A month. */
+    private Month jan1900;
+
+    /** A month. */
+    private Month feb1900;
+
+    /** A month. */
+    private Month nov9999;
+
+    /** A month. */
+    private Month dec9999;
 
     /**
      * Returns the tests as a test suite.
@@ -80,7 +93,7 @@ public class MillisecondTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(MillisecondTests.class);
+        return new TestSuite(MonthTest.class);
     }
 
     /**
@@ -88,7 +101,7 @@ public class MillisecondTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public MillisecondTests(String name) {
+    public MonthTest(String name) {
         super(name);
     }
 
@@ -96,133 +109,190 @@ public class MillisecondTests extends TestCase {
      * Common test setup.
      */
     @Override
-    protected void setUp() {
-        // no setup
+	protected void setUp() {
+        this.jan1900 = new Month(MonthConstants.JANUARY, 1900);
+        this.feb1900 = new Month(MonthConstants.FEBRUARY, 1900);
+        this.nov9999 = new Month(MonthConstants.NOVEMBER, 9999);
+        this.dec9999 = new Month(MonthConstants.DECEMBER, 9999);
     }
 
     /**
-     * Check that a {@link Millisecond} instance is equal to itself.
+     * Check that a Month instance is equal to itself.
      *
      * SourceForge Bug ID: 558850.
      */
     public void testEqualsSelf() {
-        Millisecond millisecond = new Millisecond();
-        assertTrue(millisecond.equals(millisecond));
+        Month month = new Month();
+        assertTrue(month.equals(month));
     }
 
     /**
      * Tests the equals method.
      */
     public void testEquals() {
-        Day day1 = new Day(29, MonthConstants.MARCH, 2002);
-        Hour hour1 = new Hour(15, day1);
-        Minute minute1 = new Minute(15, hour1);
-        Second second1 = new Second(34, minute1);
-        Millisecond milli1 = new Millisecond(999, second1);
-        Day day2 = new Day(29, MonthConstants.MARCH, 2002);
-        Hour hour2 = new Hour(15, day2);
-        Minute minute2 = new Minute(15, hour2);
-        Second second2 = new Second(34, minute2);
-        Millisecond milli2 = new Millisecond(999, second2);
-        assertTrue(milli1.equals(milli2));
+        Month m1 = new Month(MonthConstants.MAY, 2002);
+        Month m2 = new Month(MonthConstants.MAY, 2002);
+        assertTrue(m1.equals(m2));
     }
 
     /**
-     * In GMT, the 4.55:59.123pm on 21 Mar 2002 is
-     * java.util.Date(1016729759123L).  Use this to check the Millisecond
-     * constructor.
+     * In GMT, the end of Feb 2000 is java.util.Date(951,868,799,999L).  Use
+     * this to check the Month constructor.
      */
     public void testDateConstructor1() {
+
         TimeZone zone = TimeZone.getTimeZone("GMT");
-        Locale locale = Locale.getDefault();  // locale should not matter here
-        Calendar c = new GregorianCalendar(zone);
-        Millisecond m1 = new Millisecond(new Date(1016729759122L), zone,
-                locale);
-        Millisecond m2 = new Millisecond(new Date(1016729759123L), zone,
-                locale);
+        Calendar c = new GregorianCalendar(zone);        
+        Locale locale = Locale.UK;
+        Month m1 = new Month(new Date(951868799999L), zone, locale);
+        Month m2 = new Month(new Date(951868800000L), zone, locale);
 
-        assertEquals(122, m1.getMillisecond());
-        assertEquals(1016729759122L, m1.getLastMillisecond(c));
+        assertEquals(MonthConstants.FEBRUARY, m1.getMonth());
+        assertEquals(951868799999L, m1.getLastMillisecond(c));
 
-        assertEquals(123, m2.getMillisecond());
-        assertEquals(1016729759123L, m2.getFirstMillisecond(c));
+        assertEquals(MonthConstants.MARCH, m2.getMonth());
+        assertEquals(951868800000L, m2.getFirstMillisecond(c));
+
     }
 
     /**
-     * In Tallinn, the 4.55:59.123pm on 21 Mar 2002 is
-     * java.util.Date(1016722559123L).  Use this to check the Millisecond
-     * constructor.
+     * In Auckland, the end of Feb 2000 is java.util.Date(951,821,999,999L).
+     * Use this to check the Month constructor.
      */
     public void testDateConstructor2() {
-        TimeZone zone = TimeZone.getTimeZone("Europe/Tallinn");
-        Locale locale = Locale.getDefault();  // locale should not matter here
+
+        TimeZone zone = TimeZone.getTimeZone("Pacific/Auckland");
         Calendar c = new GregorianCalendar(zone);
-        Millisecond m1 = new Millisecond(new Date(1016722559122L), zone,
-                locale);
-        Millisecond m2 = new Millisecond(new Date(1016722559123L), zone,
-                locale);
+        Month m1 = new Month(new Date(951821999999L), zone, Locale.UK);
+        Month m2 = new Month(new Date(951822000000L), zone, Locale.UK);
 
-        assertEquals(122, m1.getMillisecond());
-        assertEquals(1016722559122L, m1.getLastMillisecond(c));
+        assertEquals(MonthConstants.FEBRUARY, m1.getMonth());
+        assertEquals(951821999999L, m1.getLastMillisecond(c));
 
-        assertEquals(123, m2.getMillisecond());
-        assertEquals(1016722559123L, m2.getFirstMillisecond(c));
+        assertEquals(MonthConstants.MARCH, m2.getMonth());
+        assertEquals(951822000000L, m2.getFirstMillisecond(c));
+
+    }
+
+    /**
+     * Set up a month equal to Jan 1900.  Request the previous month, it should
+     * be null.
+     */
+    public void testJan1900Previous() {
+        Month previous = (Month) this.jan1900.previous();
+        assertNull(previous);
+    }
+
+    /**
+     * Set up a month equal to Jan 1900.  Request the next month, it should be
+     * Feb 1900.
+     */
+    public void testJan1900Next() {
+        Month next = (Month) this.jan1900.next();
+        assertEquals(this.feb1900, next);
+    }
+
+    /**
+     * Set up a month equal to Dec 9999.  Request the previous month, it should
+     * be Nov 9999.
+     */
+    public void testDec9999Previous() {
+        Month previous = (Month) this.dec9999.previous();
+        assertEquals(this.nov9999, previous);
+    }
+
+    /**
+     * Set up a month equal to Dec 9999.  Request the next month, it should be
+     * null.
+     */
+    public void testDec9999Next() {
+        Month next = (Month) this.dec9999.next();
+        assertNull(next);
+    }
+
+    /**
+     * Tests the string parsing code...
+     */
+    public void testParseMonth() {
+
+        Month month;
+
+        // test 1...
+        try {
+            month = Month.parseMonth("1990-01");
+        }
+        catch (TimePeriodFormatException e) {
+            month = new Month(1, 1900);
+        }
+        assertEquals(1, month.getMonth());
+        assertEquals(1990, month.getYear().getYear());
+
+        // test 2...
+        try {
+            month = Month.parseMonth("02-1991");
+        }
+        catch (TimePeriodFormatException e) {
+            month = new Month(1, 1900);
+        }
+        assertEquals(2, month.getMonth());
+        assertEquals(1991, month.getYear().getYear());
+
+        // test 3...
+        try {
+            month = Month.parseMonth("March 1993");
+        }
+        catch (TimePeriodFormatException e) {
+            month = new Month(1, 1900);
+        }
+        assertEquals(3, month.getMonth());
+        assertEquals(1993, month.getYear().getYear());
+
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        Millisecond m1 = new Millisecond();
-        Millisecond m2 = null;
+
+        Month m1 = new Month(12, 1999);
+        Month m2 = null;
+
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(m1);
             out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            m2 = (Millisecond) in.readObject();
+            ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray())
+            );
+            m2 = (Month) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
         assertEquals(m1, m2);
+
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        Millisecond m1 = new Millisecond(599, 23, 45, 7, 9, 10, 2007);
-        Millisecond m2 = new Millisecond(599, 23, 45, 7, 9, 10, 2007);
+        Month m1 = new Month(2, 2003);
+        Month m2 = new Month(2, 2003);
         assertTrue(m1.equals(m2));
-        int hash1 = m1.hashCode();
-        int hash2 = m2.hashCode();
-        assertEquals(hash1, hash2);
+        int h1 = m1.hashCode();
+        int h2 = m2.hashCode();
+        assertEquals(h1, h2);
     }
 
     /**
-     * A test for bug report 943985 - the calculation for the middle
-     * millisecond is incorrect for odd milliseconds.
-     */
-    public void test943985() {
-        Millisecond ms = new Millisecond(new java.util.Date(4));
-        assertEquals(ms.getFirstMillisecond(), ms.getMiddleMillisecond());
-        assertEquals(ms.getMiddleMillisecond(), ms.getLastMillisecond());
-        ms = new Millisecond(new java.util.Date(5));
-        assertEquals(ms.getFirstMillisecond(), ms.getMiddleMillisecond());
-        assertEquals(ms.getMiddleMillisecond(), ms.getLastMillisecond());
-    }
-
-    /**
-     * The {@link Millisecond} class is immutable, so should not be
-     * {@link Cloneable}.
+     * The {@link Month} class is immutable, so should not be {@link Cloneable}.
      */
     public void testNotCloneable() {
-        Millisecond m = new Millisecond(599, 23, 45, 7, 9, 10, 2007);
+        Month m = new Month(2, 2003);
         assertFalse(m instanceof Cloneable);
     }
 
@@ -234,8 +304,8 @@ public class MillisecondTests extends TestCase {
         Locale.setDefault(Locale.UK);
         TimeZone savedZone = TimeZone.getDefault();
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/London"));
-        Millisecond m = new Millisecond(500, 15, 43, 15, 1, 4, 2006);
-        assertEquals(1143902595500L, m.getFirstMillisecond());
+        Month m = new Month(3, 1970);
+        assertEquals(5094000000L, m.getFirstMillisecond());
         Locale.setDefault(saved);
         TimeZone.setDefault(savedZone);
     }
@@ -244,10 +314,10 @@ public class MillisecondTests extends TestCase {
      * Some checks for the getFirstMillisecond(TimeZone) method.
      */
     public void testGetFirstMillisecondWithTimeZone() {
-        Millisecond m = new Millisecond(500, 50, 59, 15, 1, 4, 1950);
+        Month m = new Month(2, 1950);
         TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
         Calendar c = new GregorianCalendar(zone);
-        assertEquals(-623289609500L, m.getFirstMillisecond(c));
+        assertEquals(-628444800000L, m.getFirstMillisecond(c));
 
         // try null calendar
         boolean pass = false;
@@ -264,10 +334,10 @@ public class MillisecondTests extends TestCase {
      * Some checks for the getFirstMillisecond(TimeZone) method.
      */
     public void testGetFirstMillisecondWithCalendar() {
-        Millisecond m = new Millisecond(500, 55, 40, 2, 15, 4, 2000);
+        Month m = new Month(1, 2001);
         GregorianCalendar calendar = new GregorianCalendar(Locale.GERMANY);
         calendar.setTimeZone(TimeZone.getTimeZone("Europe/Frankfurt"));
-        assertEquals(955766455500L, m.getFirstMillisecond(calendar));
+        assertEquals(978307200000L, m.getFirstMillisecond(calendar));
 
         // try null calendar
         boolean pass = false;
@@ -288,8 +358,8 @@ public class MillisecondTests extends TestCase {
         Locale.setDefault(Locale.UK);
         TimeZone savedZone = TimeZone.getDefault();
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/London"));
-        Millisecond m = new Millisecond(750, 1, 1, 1, 1, 1, 1970);
-        assertEquals(61750L, m.getLastMillisecond());
+        Month m = new Month(3, 1970);
+        assertEquals(7772399999L, m.getLastMillisecond());
         Locale.setDefault(saved);
         TimeZone.setDefault(savedZone);
     }
@@ -298,10 +368,10 @@ public class MillisecondTests extends TestCase {
      * Some checks for the getLastMillisecond(TimeZone) method.
      */
     public void testGetLastMillisecondWithTimeZone() {
-        Millisecond m = new Millisecond(750, 55, 1, 2, 7, 7, 1950);
+        Month m = new Month(2, 1950);
         TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
         Calendar c = new GregorianCalendar(zone);
-        assertEquals(-614962684250L, m.getLastMillisecond(c));
+        assertEquals(-626025600001L, m.getLastMillisecond(c));
 
         // try null calendar
         boolean pass = false;
@@ -318,10 +388,10 @@ public class MillisecondTests extends TestCase {
      * Some checks for the getLastMillisecond(TimeZone) method.
      */
     public void testGetLastMillisecondWithCalendar() {
-        Millisecond m = new Millisecond(250, 50, 45, 21, 21, 4, 2001);
+        Month m = new Month(3, 2001);
         GregorianCalendar calendar = new GregorianCalendar(Locale.GERMANY);
         calendar.setTimeZone(TimeZone.getTimeZone("Europe/Frankfurt"));
-        assertEquals(987889550250L, m.getLastMillisecond(calendar));
+        assertEquals(986083199999L, m.getLastMillisecond(calendar));
 
         // try null calendar
         boolean pass = false;
@@ -338,27 +408,21 @@ public class MillisecondTests extends TestCase {
      * Some checks for the getSerialIndex() method.
      */
     public void testGetSerialIndex() {
-        Millisecond m = new Millisecond(500, 1, 1, 1, 1, 1, 2000);
-        assertEquals(3155850061500L, m.getSerialIndex());
-        m = new Millisecond(500, 1, 1, 1, 1, 1, 1900);
-        // TODO: this must be wrong...
-        assertEquals(176461500L, m.getSerialIndex());
+        Month m = new Month(1, 2000);
+        assertEquals(24001L, m.getSerialIndex());
+        m = new Month(1, 1900);
+        assertEquals(22801L, m.getSerialIndex());
     }
 
     /**
      * Some checks for the testNext() method.
      */
     public void testNext() {
-        Millisecond m = new Millisecond(555, 55, 30, 1, 12, 12, 2000);
-        m = (Millisecond) m.next();
-        assertEquals(2000, m.getSecond().getMinute().getHour().getYear());
-        assertEquals(12, m.getSecond().getMinute().getHour().getMonth());
-        assertEquals(12, m.getSecond().getMinute().getHour().getDayOfMonth());
-        assertEquals(1, m.getSecond().getMinute().getHour().getHour());
-        assertEquals(30, m.getSecond().getMinute().getMinute());
-        assertEquals(55, m.getSecond().getSecond());
-        assertEquals(556, m.getMillisecond());
-        m = new Millisecond(999, 59, 59, 23, 31, 12, 9999);
+        Month m = new Month(12, 2000);
+        m = (Month) m.next();
+        assertEquals(new Year(2001), m.getYear());
+        assertEquals(1, m.getMonth());
+        m = new Month(12, 9999);
         assertNull(m.next());
     }
 
@@ -369,9 +433,9 @@ public class MillisecondTests extends TestCase {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.ITALY);
         Calendar cal = Calendar.getInstance(Locale.ITALY);
-        cal.set(2006, Calendar.JANUARY, 16, 3, 47, 55);
-        cal.set(Calendar.MILLISECOND, 555);
-        Millisecond m = new Millisecond(555, 55, 47, 3, 16, 1, 2006);
+        cal.set(2006, Calendar.MARCH, 1, 0, 0, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        Month m = new Month(3, 2006);
         assertEquals(cal.getTime(), m.getStart());
         Locale.setDefault(saved);
     }
@@ -383,9 +447,9 @@ public class MillisecondTests extends TestCase {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.ITALY);
         Calendar cal = Calendar.getInstance(Locale.ITALY);
-        cal.set(2006, Calendar.JANUARY, 16, 3, 47, 55);
-        cal.set(Calendar.MILLISECOND, 555);
-        Millisecond m = new Millisecond(555, 55, 47, 3, 16, 1, 2006);
+        cal.set(2006, Calendar.JANUARY, 31, 23, 59, 59);
+        cal.set(Calendar.MILLISECOND, 999);
+        Month m = new Month(1, 2006);
         assertEquals(cal.getTime(), m.getEnd());
         Locale.setDefault(saved);
     }

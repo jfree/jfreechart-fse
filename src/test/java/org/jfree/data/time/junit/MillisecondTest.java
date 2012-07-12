@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ----------------
- * SecondTests.java
- * ----------------
+ * ---------------------
+ * MillisecondTests.java
+ * ---------------------
  * (C) Copyright 2002-2009, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -36,9 +36,10 @@
  * -------
  * 29-Jan-2002 : Version 1 (DG);
  * 17-Oct-2002 : Fixed errors reported by Checkstyle (DG);
- * 13-Oct-2003 : Added serialization test (DG);
+ * 21-Oct-2003 : Added hashCode tests (DG);
+ * 29-Apr-2004 : Added test for getMiddleMillisecond() method (DG);
  * 11-Jan-2005 : Added test for non-clonability (DG);
- * 06-Oct-2006 : Added some new tests (DG);
+ * 05-Oct-2006 : Added some tests (DG);
  * 11-Jul-2007 : Fixed bad time zone assumption (DG);
  *
  */
@@ -64,13 +65,14 @@ import junit.framework.TestSuite;
 import org.jfree.chart.date.MonthConstants;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.Hour;
+import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.Minute;
 import org.jfree.data.time.Second;
 
 /**
- * Tests for the {@link Second} class.
+ * Tests for the {@link Millisecond} class.
  */
-public class SecondTests extends TestCase {
+public class MillisecondTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -78,7 +80,7 @@ public class SecondTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(SecondTests.class);
+        return new TestSuite(MillisecondTest.class);
     }
 
     /**
@@ -86,7 +88,7 @@ public class SecondTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public SecondTests(String name) {
+    public MillisecondTest(String name) {
         super(name);
     }
 
@@ -94,18 +96,18 @@ public class SecondTests extends TestCase {
      * Common test setup.
      */
     @Override
-	protected void setUp() {
+    protected void setUp() {
         // no setup
     }
 
     /**
-     * Test that a Second instance is equal to itself.
+     * Check that a {@link Millisecond} instance is equal to itself.
      *
      * SourceForge Bug ID: 558850.
      */
     public void testEqualsSelf() {
-        Second second = new Second();
-        assertTrue(second.equals(second));
+        Millisecond millisecond = new Millisecond();
+        assertTrue(millisecond.equals(millisecond));
     }
 
     /**
@@ -116,92 +118,112 @@ public class SecondTests extends TestCase {
         Hour hour1 = new Hour(15, day1);
         Minute minute1 = new Minute(15, hour1);
         Second second1 = new Second(34, minute1);
+        Millisecond milli1 = new Millisecond(999, second1);
         Day day2 = new Day(29, MonthConstants.MARCH, 2002);
         Hour hour2 = new Hour(15, day2);
         Minute minute2 = new Minute(15, hour2);
         Second second2 = new Second(34, minute2);
-        assertTrue(second1.equals(second2));
+        Millisecond milli2 = new Millisecond(999, second2);
+        assertTrue(milli1.equals(milli2));
     }
 
     /**
-     * In GMT, the 4.55:59pm on 21 Mar 2002 is java.util.Date(1016729759000L).
-     * Use this to check the Second constructor.
+     * In GMT, the 4.55:59.123pm on 21 Mar 2002 is
+     * java.util.Date(1016729759123L).  Use this to check the Millisecond
+     * constructor.
      */
     public void testDateConstructor1() {
         TimeZone zone = TimeZone.getTimeZone("GMT");
+        Locale locale = Locale.getDefault();  // locale should not matter here
         Calendar c = new GregorianCalendar(zone);
-        
-        Locale locale = Locale.getDefault();  // locale shouldn't matter here
-        Second s1 = new Second(new Date(1016729758999L), zone, locale);
-        Second s2 = new Second(new Date(1016729759000L), zone, locale);
+        Millisecond m1 = new Millisecond(new Date(1016729759122L), zone,
+                locale);
+        Millisecond m2 = new Millisecond(new Date(1016729759123L), zone,
+                locale);
 
-        assertEquals(58, s1.getSecond());
-        assertEquals(1016729758999L, s1.getLastMillisecond(c));
+        assertEquals(122, m1.getMillisecond());
+        assertEquals(1016729759122L, m1.getLastMillisecond(c));
 
-        assertEquals(59, s2.getSecond());
-        assertEquals(1016729759000L, s2.getFirstMillisecond(c));
+        assertEquals(123, m2.getMillisecond());
+        assertEquals(1016729759123L, m2.getFirstMillisecond(c));
     }
 
     /**
-     * In Chicago, the 4.55:59pm on 21 Mar 2002 is
-     * java.util.Date(1016751359000L). Use this to check the Second constructor.
+     * In Tallinn, the 4.55:59.123pm on 21 Mar 2002 is
+     * java.util.Date(1016722559123L).  Use this to check the Millisecond
+     * constructor.
      */
     public void testDateConstructor2() {
-        TimeZone zone = TimeZone.getTimeZone("America/Chicago");
+        TimeZone zone = TimeZone.getTimeZone("Europe/Tallinn");
+        Locale locale = Locale.getDefault();  // locale should not matter here
         Calendar c = new GregorianCalendar(zone);
-        Locale locale = Locale.getDefault();  // locale shouldn't matter here
-        Second s1 = new Second(new Date(1016751358999L), zone, locale);
-        Second s2 = new Second(new Date(1016751359000L), zone, locale);
+        Millisecond m1 = new Millisecond(new Date(1016722559122L), zone,
+                locale);
+        Millisecond m2 = new Millisecond(new Date(1016722559123L), zone,
+                locale);
 
-        assertEquals(58, s1.getSecond());
-        assertEquals(1016751358999L, s1.getLastMillisecond(c));
+        assertEquals(122, m1.getMillisecond());
+        assertEquals(1016722559122L, m1.getLastMillisecond(c));
 
-        assertEquals(59, s2.getSecond());
-        assertEquals(1016751359000L, s2.getFirstMillisecond(c));
+        assertEquals(123, m2.getMillisecond());
+        assertEquals(1016722559123L, m2.getFirstMillisecond(c));
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        Second s1 = new Second();
-        Second s2 = null;
+        Millisecond m1 = new Millisecond();
+        Millisecond m2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(s1);
+            out.writeObject(m1);
             out.close();
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            s2 = (Second) in.readObject();
+            m2 = (Millisecond) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        assertEquals(s1, s2);
+        assertEquals(m1, m2);
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        Second s1 = new Second(13, 45, 5, 1, 2, 2003);
-        Second s2 = new Second(13, 45, 5, 1, 2, 2003);
-        assertTrue(s1.equals(s2));
-        int h1 = s1.hashCode();
-        int h2 = s2.hashCode();
-        assertEquals(h1, h2);
+        Millisecond m1 = new Millisecond(599, 23, 45, 7, 9, 10, 2007);
+        Millisecond m2 = new Millisecond(599, 23, 45, 7, 9, 10, 2007);
+        assertTrue(m1.equals(m2));
+        int hash1 = m1.hashCode();
+        int hash2 = m2.hashCode();
+        assertEquals(hash1, hash2);
     }
 
     /**
-     * The {@link Second} class is immutable, so should not be
+     * A test for bug report 943985 - the calculation for the middle
+     * millisecond is incorrect for odd milliseconds.
+     */
+    public void test943985() {
+        Millisecond ms = new Millisecond(new java.util.Date(4));
+        assertEquals(ms.getFirstMillisecond(), ms.getMiddleMillisecond());
+        assertEquals(ms.getMiddleMillisecond(), ms.getLastMillisecond());
+        ms = new Millisecond(new java.util.Date(5));
+        assertEquals(ms.getFirstMillisecond(), ms.getMiddleMillisecond());
+        assertEquals(ms.getMiddleMillisecond(), ms.getLastMillisecond());
+    }
+
+    /**
+     * The {@link Millisecond} class is immutable, so should not be
      * {@link Cloneable}.
      */
     public void testNotCloneable() {
-        Second s = new Second(13, 45, 5, 1, 2, 2003);
-        assertFalse(s instanceof Cloneable);
+        Millisecond m = new Millisecond(599, 23, 45, 7, 9, 10, 2007);
+        assertFalse(m instanceof Cloneable);
     }
 
     /**
@@ -212,8 +234,8 @@ public class SecondTests extends TestCase {
         Locale.setDefault(Locale.UK);
         TimeZone savedZone = TimeZone.getDefault();
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/London"));
-        Second s = new Second(15, 43, 15, 1, 4, 2006);
-        assertEquals(1143902595000L, s.getFirstMillisecond());
+        Millisecond m = new Millisecond(500, 15, 43, 15, 1, 4, 2006);
+        assertEquals(1143902595500L, m.getFirstMillisecond());
         Locale.setDefault(saved);
         TimeZone.setDefault(savedZone);
     }
@@ -222,15 +244,15 @@ public class SecondTests extends TestCase {
      * Some checks for the getFirstMillisecond(TimeZone) method.
      */
     public void testGetFirstMillisecondWithTimeZone() {
-        Second s = new Second(50, 59, 15, 1, 4, 1950);
+        Millisecond m = new Millisecond(500, 50, 59, 15, 1, 4, 1950);
         TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
         Calendar c = new GregorianCalendar(zone);
-        assertEquals(-623289610000L, s.getFirstMillisecond(c));
+        assertEquals(-623289609500L, m.getFirstMillisecond(c));
 
         // try null calendar
         boolean pass = false;
         try {
-            s.getFirstMillisecond((Calendar) null);
+            m.getFirstMillisecond((Calendar) null);
         }
         catch (NullPointerException e) {
             pass = true;
@@ -242,15 +264,15 @@ public class SecondTests extends TestCase {
      * Some checks for the getFirstMillisecond(TimeZone) method.
      */
     public void testGetFirstMillisecondWithCalendar() {
-        Second s = new Second(55, 40, 2, 15, 4, 2000);
+        Millisecond m = new Millisecond(500, 55, 40, 2, 15, 4, 2000);
         GregorianCalendar calendar = new GregorianCalendar(Locale.GERMANY);
         calendar.setTimeZone(TimeZone.getTimeZone("Europe/Frankfurt"));
-        assertEquals(955766455000L, s.getFirstMillisecond(calendar));
+        assertEquals(955766455500L, m.getFirstMillisecond(calendar));
 
         // try null calendar
         boolean pass = false;
         try {
-            s.getFirstMillisecond((Calendar) null);
+            m.getFirstMillisecond((Calendar) null);
         }
         catch (NullPointerException e) {
             pass = true;
@@ -266,8 +288,8 @@ public class SecondTests extends TestCase {
         Locale.setDefault(Locale.UK);
         TimeZone savedZone = TimeZone.getDefault();
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/London"));
-        Second s = new Second(1, 1, 1, 1, 1, 1970);
-        assertEquals(61999L, s.getLastMillisecond());
+        Millisecond m = new Millisecond(750, 1, 1, 1, 1, 1, 1970);
+        assertEquals(61750L, m.getLastMillisecond());
         Locale.setDefault(saved);
         TimeZone.setDefault(savedZone);
     }
@@ -276,15 +298,15 @@ public class SecondTests extends TestCase {
      * Some checks for the getLastMillisecond(TimeZone) method.
      */
     public void testGetLastMillisecondWithTimeZone() {
-        Second s = new Second(55, 1, 2, 7, 7, 1950);
+        Millisecond m = new Millisecond(750, 55, 1, 2, 7, 7, 1950);
         TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
         Calendar c = new GregorianCalendar(zone);
-        assertEquals(-614962684001L, s.getLastMillisecond(c));
+        assertEquals(-614962684250L, m.getLastMillisecond(c));
 
         // try null calendar
         boolean pass = false;
         try {
-            s.getLastMillisecond((Calendar) null);
+            m.getLastMillisecond((Calendar) null);
         }
         catch (NullPointerException e) {
             pass = true;
@@ -296,15 +318,15 @@ public class SecondTests extends TestCase {
      * Some checks for the getLastMillisecond(TimeZone) method.
      */
     public void testGetLastMillisecondWithCalendar() {
-        Second s = new Second(50, 45, 21, 21, 4, 2001);
+        Millisecond m = new Millisecond(250, 50, 45, 21, 21, 4, 2001);
         GregorianCalendar calendar = new GregorianCalendar(Locale.GERMANY);
         calendar.setTimeZone(TimeZone.getTimeZone("Europe/Frankfurt"));
-        assertEquals(987889550999L, s.getLastMillisecond(calendar));
+        assertEquals(987889550250L, m.getLastMillisecond(calendar));
 
         // try null calendar
         boolean pass = false;
         try {
-            s.getLastMillisecond((Calendar) null);
+            m.getLastMillisecond((Calendar) null);
         }
         catch (NullPointerException e) {
             pass = true;
@@ -316,26 +338,28 @@ public class SecondTests extends TestCase {
      * Some checks for the getSerialIndex() method.
      */
     public void testGetSerialIndex() {
-        Second s = new Second(1, 1, 1, 1, 1, 2000);
-        assertEquals(3155850061L, s.getSerialIndex());
-        s = new Second(1, 1, 1, 1, 1, 1900);
-        assertEquals(176461L, s.getSerialIndex());
+        Millisecond m = new Millisecond(500, 1, 1, 1, 1, 1, 2000);
+        assertEquals(3155850061500L, m.getSerialIndex());
+        m = new Millisecond(500, 1, 1, 1, 1, 1, 1900);
+        // TODO: this must be wrong...
+        assertEquals(176461500L, m.getSerialIndex());
     }
 
     /**
      * Some checks for the testNext() method.
      */
     public void testNext() {
-        Second s = new Second(55, 30, 1, 12, 12, 2000);
-        s = (Second) s.next();
-        assertEquals(2000, s.getMinute().getHour().getYear());
-        assertEquals(12, s.getMinute().getHour().getMonth());
-        assertEquals(12, s.getMinute().getHour().getDayOfMonth());
-        assertEquals(1, s.getMinute().getHour().getHour());
-        assertEquals(30, s.getMinute().getMinute());
-        assertEquals(56, s.getSecond());
-        s = new Second(59, 59, 23, 31, 12, 9999);
-        assertNull(s.next());
+        Millisecond m = new Millisecond(555, 55, 30, 1, 12, 12, 2000);
+        m = (Millisecond) m.next();
+        assertEquals(2000, m.getSecond().getMinute().getHour().getYear());
+        assertEquals(12, m.getSecond().getMinute().getHour().getMonth());
+        assertEquals(12, m.getSecond().getMinute().getHour().getDayOfMonth());
+        assertEquals(1, m.getSecond().getMinute().getHour().getHour());
+        assertEquals(30, m.getSecond().getMinute().getMinute());
+        assertEquals(55, m.getSecond().getSecond());
+        assertEquals(556, m.getMillisecond());
+        m = new Millisecond(999, 59, 59, 23, 31, 12, 9999);
+        assertNull(m.next());
     }
 
     /**
@@ -346,9 +370,9 @@ public class SecondTests extends TestCase {
         Locale.setDefault(Locale.ITALY);
         Calendar cal = Calendar.getInstance(Locale.ITALY);
         cal.set(2006, Calendar.JANUARY, 16, 3, 47, 55);
-        cal.set(Calendar.MILLISECOND, 0);
-        Second s = new Second(55, 47, 3, 16, 1, 2006);
-        assertEquals(cal.getTime(), s.getStart());
+        cal.set(Calendar.MILLISECOND, 555);
+        Millisecond m = new Millisecond(555, 55, 47, 3, 16, 1, 2006);
+        assertEquals(cal.getTime(), m.getStart());
         Locale.setDefault(saved);
     }
 
@@ -360,9 +384,9 @@ public class SecondTests extends TestCase {
         Locale.setDefault(Locale.ITALY);
         Calendar cal = Calendar.getInstance(Locale.ITALY);
         cal.set(2006, Calendar.JANUARY, 16, 3, 47, 55);
-        cal.set(Calendar.MILLISECOND, 999);
-        Second s = new Second(55, 47, 3, 16, 1, 2006);
-        assertEquals(cal.getTime(), s.getEnd());
+        cal.set(Calendar.MILLISECOND, 555);
+        Millisecond m = new Millisecond(555, 55, 47, 3, 16, 1, 2006);
+        assertEquals(cal.getTime(), m.getEnd());
         Locale.setDefault(saved);
     }
 

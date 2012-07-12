@@ -73,7 +73,7 @@ import org.jfree.data.time.Day;
 /**
  * Tests for the {@link Day} class.
  */
-public class DayTests extends TestCase {
+public class DayTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -81,7 +81,7 @@ public class DayTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(DayTests.class);
+        return new TestSuite(DayTest.class);
     }
 
     /**
@@ -89,7 +89,7 @@ public class DayTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public DayTests(String name) {
+    public DayTest(String name) {
         super(name);
     }
 

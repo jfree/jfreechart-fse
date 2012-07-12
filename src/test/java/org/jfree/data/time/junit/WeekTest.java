@@ -72,7 +72,7 @@ import org.jfree.data.time.Year;
 /**
  * Tests for the {@link Week} class.
  */
-public class WeekTests extends TestCase {
+public class WeekTest extends TestCase {
 
     /** A week. */
     private Week w1Y1900;
@@ -92,7 +92,7 @@ public class WeekTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(WeekTests.class);
+        return new TestSuite(WeekTest.class);
     }
 
     /**
@@ -100,7 +100,7 @@ public class WeekTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public WeekTests(String name) {
+    public WeekTest(String name) {
         super(name);
     }
 

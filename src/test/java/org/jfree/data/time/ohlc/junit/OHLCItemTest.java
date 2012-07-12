@@ -58,7 +58,7 @@ import org.jfree.data.time.ohlc.OHLCItem;
 /**
  * Tests for the {@link OHLCItem} class.
  */
-public class OHLCItemTests extends TestCase {
+public class OHLCItemTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -66,7 +66,7 @@ public class OHLCItemTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(OHLCItemTests.class);
+        return new TestSuite(OHLCItemTest.class);
     }
 
     /**
@@ -74,7 +74,7 @@ public class OHLCItemTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public OHLCItemTests(String name) {
+    public OHLCItemTest(String name) {
         super(name);
     }
 

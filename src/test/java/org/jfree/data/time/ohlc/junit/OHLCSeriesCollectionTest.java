@@ -63,7 +63,7 @@ import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 /**
  * Tests for the {@link OHLCSeriesCollectionTests} class.
  */
-public class OHLCSeriesCollectionTests extends TestCase
+public class OHLCSeriesCollectionTest extends TestCase
         implements DatasetChangeListener {
 
     /**
@@ -72,7 +72,7 @@ public class OHLCSeriesCollectionTests extends TestCase
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(OHLCSeriesCollectionTests.class);
+        return new TestSuite(OHLCSeriesCollectionTest.class);
     }
 
     /**
@@ -80,7 +80,7 @@ public class OHLCSeriesCollectionTests extends TestCase
      *
      * @param name  the name of the tests.
      */
-    public OHLCSeriesCollectionTests(String name) {
+    public OHLCSeriesCollectionTest(String name) {
         super(name);
     }
 

@@ -59,7 +59,7 @@ import org.jfree.data.time.SimpleTimePeriod;
 /**
  * Tests for the {@link SimpleTimePeriod} class.
  */
-public class SimpleTimePeriodTests extends TestCase {
+public class SimpleTimePeriodTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -67,7 +67,7 @@ public class SimpleTimePeriodTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(SimpleTimePeriodTests.class);
+        return new TestSuite(SimpleTimePeriodTest.class);
     }
 
     /**
@@ -75,7 +75,7 @@ public class SimpleTimePeriodTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public SimpleTimePeriodTests(String name) {
+    public SimpleTimePeriodTest(String name) {
         super(name);
     }
 

@@ -70,7 +70,7 @@ import org.jfree.data.time.Year;
 /**
  * A collection of test cases for the {@link TimeSeriesCollection} class.
  */
-public class TimeSeriesCollectionTests extends TestCase {
+public class TimeSeriesCollectionTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -78,7 +78,7 @@ public class TimeSeriesCollectionTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(TimeSeriesCollectionTests.class);
+        return new TestSuite(TimeSeriesCollectionTest.class);
     }
 
     /**
@@ -86,7 +86,7 @@ public class TimeSeriesCollectionTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public TimeSeriesCollectionTests(String name) {
+    public TimeSeriesCollectionTest(String name) {
         super(name);
     }
 

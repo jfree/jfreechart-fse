@@ -25,22 +25,21 @@
  * Other names may be trademarks of their respective owners.]
  *
  * --------------
- * YearTests.java
+ * HourTests.java
  * --------------
- * (C) Copyright 2001-2008, by Object Refinery Limited.
+ * (C) Copyright 2002-2009, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 16-Nov-2001 : Version 1 (DG);
- * 19-Mar-2002 : Added tests for constructor that uses java.util.Date to ensure
- *               it is consistent with the getStart() and getEnd() methods (DG);
+ * 29-Jan-2002 : Version 1 (DG);
  * 17-Oct-2002 : Fixed errors reported by Checkstyle (DG);
  * 13-Mar-2003 : Added serialization test (DG);
+ * 21-Oct-2003 : Added hashCode test (DG);
  * 11-Jan-2005 : Added test for non-clonability (DG);
- * 05-Oct-2006 : Added some new tests (DG);
+ * 05-Oct-2006 : Added new tests (DG);
  * 11-Jul-2007 : Fixed bad time zone assumption (DG);
  *
  */
@@ -63,13 +62,14 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.data.time.TimePeriodFormatException;
-import org.jfree.data.time.Year;
+import org.jfree.chart.date.MonthConstants;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.Hour;
 
 /**
- * Tests for the {@link Year} class.
+ * Tests for the {@link Hour} class.
  */
-public class YearTests extends TestCase {
+public class HourTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -77,7 +77,7 @@ public class YearTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(YearTests.class);
+        return new TestSuite(HourTest.class);
     }
 
     /**
@@ -85,7 +85,7 @@ public class YearTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public YearTests(String name) {
+    public HourTest(String name) {
         super(name);
     }
 
@@ -98,191 +98,156 @@ public class YearTests extends TestCase {
     }
 
     /**
-     * Check that a Year instance is equal to itself.
+     * Check that an Hour instance is equal to itself.
      *
      * SourceForge Bug ID: 558850.
      */
     public void testEqualsSelf() {
-        Year year = new Year();
-        assertTrue(year.equals(year));
+        Hour hour = new Hour();
+        assertTrue(hour.equals(hour));
     }
 
     /**
      * Tests the equals method.
      */
     public void testEquals() {
-        Year year1 = new Year(2002);
-        Year year2 = new Year(2002);
-        assertTrue(year1.equals(year2));
-
-        year1 = new Year(1999);
-        assertFalse(year1.equals(year2));
-        year2 = new Year(1999);
-        assertTrue(year1.equals(year2));
+        Hour hour1 = new Hour(15, new Day(29, MonthConstants.MARCH, 2002));
+        Hour hour2 = new Hour(15, new Day(29, MonthConstants.MARCH, 2002));
+        assertTrue(hour1.equals(hour2));
     }
 
     /**
-     * In GMT, the end of 2001 is java.util.Date(1009843199999L).  Use this to
-     * check the year constructor.
+     * In GMT, the 4pm on 21 Mar 2002 is java.util.Date(1,014,307,200,000L).
+     * Use this to check the hour constructor.
      */
     public void testDateConstructor1() {
-
         TimeZone zone = TimeZone.getTimeZone("GMT");
         Calendar c = new GregorianCalendar(zone);
-        Date d1 = new Date(1009843199999L);
-        Date d2 = new Date(1009843200000L);
-        Year y1 = new Year(d1, zone, Locale.getDefault());
-        Year y2 = new Year(d2, zone, Locale.getDefault());
+        Locale locale = Locale.getDefault();  // locale should not matter here
+        Hour h1 = new Hour(new Date(1014307199999L), zone, locale);
+        Hour h2 = new Hour(new Date(1014307200000L), zone, locale);
 
-        assertEquals(2001, y1.getYear());
-        assertEquals(1009843199999L, y1.getLastMillisecond(c));
+        assertEquals(15, h1.getHour());
+        assertEquals(1014307199999L, h1.getLastMillisecond(c));
 
-        assertEquals(2002, y2.getYear());
-        assertEquals(1009843200000L, y2.getFirstMillisecond(c));
-
+        assertEquals(16, h2.getHour());
+        assertEquals(1014307200000L, h2.getFirstMillisecond(c));
     }
 
     /**
-     * In Los Angeles, the end of 2001 is java.util.Date(1009871999999L).  Use
-     * this to check the year constructor.
+     * In Sydney, the 4pm on 21 Mar 2002 is java.util.Date(1,014,267,600,000L).
+     * Use this to check the hour constructor.
      */
     public void testDateConstructor2() {
-
-        TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
+        TimeZone zone = TimeZone.getTimeZone("Australia/Sydney");
+        Locale locale = Locale.getDefault();  // locale should not matter here
         Calendar c = new GregorianCalendar(zone);
-        Year y1 = new Year(new Date(1009871999999L), zone, Locale.getDefault());
-        Year y2 = new Year(new Date(1009872000000L), zone, Locale.getDefault());
+        Hour h1 = new Hour(new Date(1014267599999L), zone, locale);
+        Hour h2 = new Hour (new Date(1014267600000L), zone, locale);
 
-        assertEquals(2001, y1.getYear());
-        assertEquals(1009871999999L, y1.getLastMillisecond(c));
+        assertEquals(15, h1.getHour());
+        assertEquals(1014267599999L, h1.getLastMillisecond(c));
 
-        assertEquals(2002, y2.getYear());
-        assertEquals(1009872000000L, y2.getFirstMillisecond(c));
-
+        assertEquals(16, h2.getHour());
+        assertEquals(1014267600000L, h2.getFirstMillisecond(c));
     }
 
     /**
-     * Set up a year equal to 1900.  Request the previous year, it should be
-     * null.
+     * Set up an hour equal to hour zero, 1 January 1900.  Request the
+     * previous hour, it should be null.
      */
-    public void testMinuss9999Previous() {
-        Year current = new Year(-9999);
-        Year previous = (Year) current.previous();
+    public void testFirstHourPrevious() {
+        Hour first = new Hour(0, new Day(1, MonthConstants.JANUARY, 1900));
+        Hour previous = (Hour) first.previous();
         assertNull(previous);
     }
 
     /**
-     * Set up a year equal to 1900.  Request the next year, it should be 1901.
+     * Set up an hour equal to hour zero, 1 January 1900.  Request the next
+     * hour, it should be null.
      */
-    public void test1900Next() {
-        Year current = new Year(1900);
-        Year next = (Year) current.next();
-        assertEquals(1901, next.getYear());
+    public void testFirstHourNext() {
+        Hour first = new Hour(0, new Day(1, MonthConstants.JANUARY, 1900));
+        Hour next = (Hour) first.next();
+        assertEquals(1, next.getHour());
+        assertEquals(1900, next.getYear());
     }
 
     /**
-     * Set up a year equal to 9999.  Request the previous year, it should be
-     * 9998.
+     * Set up an hour equal to hour zero, 1 January 1900.  Request the previous
+     * hour, it should be null.
      */
-    public void test9999Previous() {
-        Year current = new Year(9999);
-        Year previous = (Year) current.previous();
-        assertEquals(9998, previous.getYear());
+    public void testLastHourPrevious() {
+        Hour last = new Hour(23, new Day(31, MonthConstants.DECEMBER, 9999));
+        Hour previous = (Hour) last.previous();
+        assertEquals(22, previous.getHour());
+        assertEquals(9999, previous.getYear());
     }
 
     /**
-     * Set up a year equal to 9999.  Request the next year, it should be null.
+     * Set up an hour equal to hour zero, 1 January 1900.  Request the next
+     * hour, it should be null.
      */
-    public void test9999Next() {
-        Year current = new Year(9999);
-        Year next = (Year) current.next();
+    public void testLastHourNext() {
+        Hour last = new Hour(23, new Day(31, MonthConstants.DECEMBER, 9999));
+        Hour next = (Hour) last.next();
         assertNull(next);
     }
 
     /**
-     * Tests the year string parser.
+     * Problem for date parsing.
      */
-    public void testParseYear() {
-
-        Year year = null;
-
+    public void testParseHour() {
         // test 1...
-        try {
-            year = Year.parseYear("2000");
-        }
-        catch (TimePeriodFormatException e) {
-            year = new Year(1900);
-        }
-        assertEquals(2000, year.getYear());
-
-        // test 2...
-        try {
-            year = Year.parseYear(" 2001 ");
-        }
-        catch (TimePeriodFormatException e) {
-            year = new Year(1900);
-        }
-        assertEquals(2001, year.getYear());
-
-        // test 3...
-        try {
-            year = Year.parseYear("99");
-        }
-        catch (TimePeriodFormatException e) {
-            year = new Year(1900);
-        }
-        assertEquals(99, year.getYear());
-
+        Hour h = Hour.parseHour("2002-01-29 13");
+        assertEquals(13, h.getHour());
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-
-        Year y1 = new Year(1999);
-        Year y2 = null;
+        Hour h1 = new Hour();
+        Hour h2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(y1);
+            out.writeObject(h1);
             out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-            );
-            y2 = (Year) in.readObject();
+            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                    buffer.toByteArray()));
+            h2 = (Hour) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
-        assertEquals(y1, y2);
-
-    }
-
-    /**
-     * The {@link Year} class is immutable, so should not be {@link Cloneable}.
-     */
-    public void testNotCloneable() {
-        Year y = new Year(1999);
-        assertFalse(y instanceof Cloneable);
+        assertEquals(h1, h2);
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        Year y1 = new Year(1988);
-        Year y2 = new Year(1988);
-        assertTrue(y1.equals(y2));
-        int h1 = y1.hashCode();
-        int h2 = y2.hashCode();
-        assertEquals(h1, h2);
+        Hour h1 = new Hour(7, 9, 10, 1999);
+        Hour h2 = new Hour(7, 9, 10, 1999);
+        assertTrue(h1.equals(h2));
+        int hash1 = h1.hashCode();
+        int hash2 = h2.hashCode();
+        assertEquals(hash1, hash2);
     }
 
     /**
+     * The {@link Hour} class is immutable, so should not be {@link Cloneable}.
+     */
+    public void testNotCloneable() {
+        Hour h = new Hour(7, 9, 10, 1999);
+        assertFalse(h instanceof Cloneable);
+    }
+
+/**
      * Some checks for the getFirstMillisecond() method.
      */
     public void testGetFirstMillisecond() {
@@ -290,9 +255,8 @@ public class YearTests extends TestCase {
         Locale.setDefault(Locale.UK);
         TimeZone savedZone = TimeZone.getDefault();
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/London"));
-        Year y = new Year(1970);
-        // TODO: Check this result...
-        assertEquals(-3600000L, y.getFirstMillisecond());
+        Hour h = new Hour(15, 1, 4, 2006);
+        assertEquals(1143900000000L, h.getFirstMillisecond());
         Locale.setDefault(saved);
         TimeZone.setDefault(savedZone);
     }
@@ -301,15 +265,15 @@ public class YearTests extends TestCase {
      * Some checks for the getFirstMillisecond(TimeZone) method.
      */
     public void testGetFirstMillisecondWithTimeZone() {
-        Year y = new Year(1950);
+        Hour h = new Hour(15, 1, 4, 1950);
         TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
         Calendar c = new GregorianCalendar(zone);
-        assertEquals(-631123200000L, y.getFirstMillisecond(c));
+        assertEquals(-623293200000L, h.getFirstMillisecond(c));
 
         // try null calendar
         boolean pass = false;
         try {
-            y.getFirstMillisecond((Calendar) null);
+            h.getFirstMillisecond((Calendar) null);
         }
         catch (NullPointerException e) {
             pass = true;
@@ -321,15 +285,15 @@ public class YearTests extends TestCase {
      * Some checks for the getFirstMillisecond(TimeZone) method.
      */
     public void testGetFirstMillisecondWithCalendar() {
-        Year y = new Year(2001);
+        Hour h = new Hour(2, 15, 4, 2000);
         GregorianCalendar calendar = new GregorianCalendar(Locale.GERMANY);
         calendar.setTimeZone(TimeZone.getTimeZone("Europe/Frankfurt"));
-        assertEquals(978307200000L, y.getFirstMillisecond(calendar));
+        assertEquals(955764000000L, h.getFirstMillisecond(calendar));
 
         // try null calendar
         boolean pass = false;
         try {
-            y.getFirstMillisecond((Calendar) null);
+            h.getFirstMillisecond((Calendar) null);
         }
         catch (NullPointerException e) {
             pass = true;
@@ -345,9 +309,8 @@ public class YearTests extends TestCase {
         Locale.setDefault(Locale.UK);
         TimeZone savedZone = TimeZone.getDefault();
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/London"));
-        Year y = new Year(1970);
-        // TODO: Check this result...
-        assertEquals(31532399999L, y.getLastMillisecond());
+        Hour h = new Hour(1, 1, 1, 1970);
+        assertEquals(3599999L, h.getLastMillisecond());
         Locale.setDefault(saved);
         TimeZone.setDefault(savedZone);
     }
@@ -356,16 +319,15 @@ public class YearTests extends TestCase {
      * Some checks for the getLastMillisecond(TimeZone) method.
      */
     public void testGetLastMillisecondWithTimeZone() {
-        Year y = new Year(1950);
+        Hour h = new Hour(2, 7, 7, 1950);
         TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
         Calendar c = new GregorianCalendar(zone);
-
-        assertEquals(-599587200001L, y.getLastMillisecond(c));
+        assertEquals(-614959200001L, h.getLastMillisecond(c));
 
         // try null calendar
         boolean pass = false;
         try {
-            y.getLastMillisecond((Calendar) null);
+            h.getLastMillisecond((Calendar) null);
         }
         catch (NullPointerException e) {
             pass = true;
@@ -377,15 +339,15 @@ public class YearTests extends TestCase {
      * Some checks for the getLastMillisecond(TimeZone) method.
      */
     public void testGetLastMillisecondWithCalendar() {
-        Year y = new Year(2001);
+        Hour h = new Hour(21, 21, 4, 2001);
         GregorianCalendar calendar = new GregorianCalendar(Locale.GERMANY);
         calendar.setTimeZone(TimeZone.getTimeZone("Europe/Frankfurt"));
-        assertEquals(1009843199999L, y.getLastMillisecond(calendar));
+        assertEquals(987890399999L, h.getLastMillisecond(calendar));
 
         // try null calendar
         boolean pass = false;
         try {
-            y.getLastMillisecond((Calendar) null);
+            h.getLastMillisecond((Calendar) null);
         }
         catch (NullPointerException e) {
             pass = true;
@@ -397,19 +359,24 @@ public class YearTests extends TestCase {
      * Some checks for the getSerialIndex() method.
      */
     public void testGetSerialIndex() {
-        Year y = new Year(2000);
-        assertEquals(2000L, y.getSerialIndex());
+        Hour h = new Hour(1, 1, 1, 2000);
+        assertEquals(876625L, h.getSerialIndex());
+        h = new Hour(1, 1, 1, 1900);
+        assertEquals(49L, h.getSerialIndex());
     }
 
     /**
      * Some checks for the testNext() method.
      */
     public void testNext() {
-        Year y = new Year(2000);
-        y = (Year) y.next();
-        assertEquals(2001, y.getYear());
-        y = new Year(9999);
-        assertNull(y.next());
+        Hour h = new Hour(1, 12, 12, 2000);
+        h = (Hour) h.next();
+        assertEquals(2000, h.getYear());
+        assertEquals(12, h.getMonth());
+        assertEquals(12, h.getDayOfMonth());
+        assertEquals(2, h.getHour());
+        h = new Hour(23, 31, 12, 9999);
+        assertNull(h.next());
     }
 
     /**
@@ -419,10 +386,10 @@ public class YearTests extends TestCase {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.ITALY);
         Calendar cal = Calendar.getInstance(Locale.ITALY);
-        cal.set(2006, Calendar.JANUARY, 1, 0, 0, 0);
+        cal.set(2006, Calendar.JANUARY, 16, 3, 0, 0);
         cal.set(Calendar.MILLISECOND, 0);
-        Year y = new Year(2006);
-        assertEquals(cal.getTime(), y.getStart());
+        Hour h = new Hour(3, 16, 1, 2006);
+        assertEquals(cal.getTime(), h.getStart());
         Locale.setDefault(saved);
     }
 
@@ -433,10 +400,10 @@ public class YearTests extends TestCase {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.ITALY);
         Calendar cal = Calendar.getInstance(Locale.ITALY);
-        cal.set(2006, Calendar.DECEMBER, 31, 23, 59, 59);
+        cal.set(2006, Calendar.JANUARY, 8, 1, 59, 59);
         cal.set(Calendar.MILLISECOND, 999);
-        Year y = new Year(2006);
-        assertEquals(cal.getTime(), y.getEnd());
+        Hour h = new Hour(1, 8, 1, 2006);
+        assertEquals(cal.getTime(), h.getEnd());
         Locale.setDefault(saved);
     }
 

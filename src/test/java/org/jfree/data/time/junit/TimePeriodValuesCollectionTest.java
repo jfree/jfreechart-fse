@@ -66,7 +66,7 @@ import org.jfree.data.time.TimePeriodValuesCollection;
 /**
  * Some tests for the {@link TimePeriodValuesCollection} class.
  */
-public class TimePeriodValuesCollectionTests extends TestCase {
+public class TimePeriodValuesCollectionTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -74,7 +74,7 @@ public class TimePeriodValuesCollectionTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(TimePeriodValuesCollectionTests.class);
+        return new TestSuite(TimePeriodValuesCollectionTest.class);
     }
 
     /**
@@ -82,7 +82,7 @@ public class TimePeriodValuesCollectionTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public TimePeriodValuesCollectionTests(String name) {
+    public TimePeriodValuesCollectionTest(String name) {
         super(name);
     }
 

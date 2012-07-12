@@ -53,7 +53,7 @@ import org.jfree.data.time.TimeSeries;
 /**
  * Tests for the {@link MovingAverage} class.
  */
-public class MovingAverageTests extends TestCase {
+public class MovingAverageTest extends TestCase {
 
     private static final double EPSILON = 0.0000000001;
 
@@ -63,7 +63,7 @@ public class MovingAverageTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(MovingAverageTests.class);
+        return new TestSuite(MovingAverageTest.class);
     }
 
     /**
@@ -71,7 +71,7 @@ public class MovingAverageTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public MovingAverageTests(String name) {
+    public MovingAverageTest(String name) {
         super(name);
     }
 

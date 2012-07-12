@@ -59,7 +59,7 @@ import org.jfree.data.time.Year;
 /**
  * A collection of test cases for the {@link TimeTableXYDataset} class.
  */
-public class TimeTableXYDatasetTests extends TestCase {
+public class TimeTableXYDatasetTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -67,7 +67,7 @@ public class TimeTableXYDatasetTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(TimeTableXYDatasetTests.class);
+        return new TestSuite(TimeTableXYDatasetTest.class);
     }
 
     /**
@@ -75,7 +75,7 @@ public class TimeTableXYDatasetTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public TimeTableXYDatasetTests(String name) {
+    public TimeTableXYDatasetTest(String name) {
         super(name);
     }
 

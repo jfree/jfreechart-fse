@@ -24,20 +24,17 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * --------------------------
- * FixedMillisecondTests.java
- * --------------------------
- * (C) Copyright 2002-2008, by Object Refinery Limited.
+ * -------------------------
+ * TimePeriodValueTests.java
+ * -------------------------
+ * (C) Copyright 2003-2008, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 29-Jan-2002 : Version 1 (DG);
- * 17-Oct-2002 : Fixed errors reported by Checkstyle (DG);
- * 21-Oct-2003 : Added hashCode test (DG);
- * 28-May-2008 : Added test for immutability (DG);
+ * 30-Jul-2003 : Version 1 (DG);
  *
  */
 
@@ -49,18 +46,18 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.util.Date;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.data.time.FixedMillisecond;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.TimePeriodValue;
 
 /**
- * Tests for the {@link FixedMillisecond} class.
+ * Tests for the {@link TimePeriodValue} class.
  */
-public class FixedMillisecondTests extends TestCase {
+public class TimePeriodValueTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -68,7 +65,7 @@ public class FixedMillisecondTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(FixedMillisecondTests.class);
+        return new TestSuite(TimePeriodValueTest.class);
     }
 
     /**
@@ -76,8 +73,34 @@ public class FixedMillisecondTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public FixedMillisecondTests(String name) {
+    public TimePeriodValueTest(String name) {
         super(name);
+    }
+
+    /**
+     * Common test setup.
+     */
+    @Override
+	protected void setUp() {
+        // no setup
+    }
+
+    /**
+     * Test that an instance is equal to itself.
+     */
+    public void testEqualsSelf() {
+        TimePeriodValue tpv = new TimePeriodValue(new Day(), 55.75);
+        assertTrue(tpv.equals(tpv));
+    }
+
+    /**
+     * Tests the equals() method.
+     */
+    public void testEquals() {
+        TimePeriodValue tpv1 = new TimePeriodValue(new Day(30, 7, 2003), 55.75);
+        TimePeriodValue tpv2 = new TimePeriodValue(new Day(30, 7, 2003), 55.75);
+        assertTrue(tpv1.equals(tpv2));
+        assertTrue(tpv2.equals(tpv1));
     }
 
     /**
@@ -85,55 +108,26 @@ public class FixedMillisecondTests extends TestCase {
      */
     public void testSerialization() {
 
-        FixedMillisecond m1 = new FixedMillisecond();
-        FixedMillisecond m2 = null;
+        TimePeriodValue tpv1 = new TimePeriodValue(new Day(30, 7, 2003), 55.75);
+        TimePeriodValue tpv2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(m1);
+            out.writeObject(tpv1);
             out.close();
 
             ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            m2 = (FixedMillisecond) in.readObject();
+                new ByteArrayInputStream(buffer.toByteArray())
+            );
+            tpv2 = (TimePeriodValue) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
-        assertEquals(m1, m2);
+        assertEquals(tpv1, tpv2);
 
     }
 
-    /**
-     * Two objects that are equal are required to return the same hashCode.
-     */
-    public void testHashcode() {
-        FixedMillisecond m1 = new FixedMillisecond(500000L);
-        FixedMillisecond m2 = new FixedMillisecond(500000L);
-        assertTrue(m1.equals(m2));
-        int h1 = m1.hashCode();
-        int h2 = m2.hashCode();
-        assertEquals(h1, h2);
-    }
-
-    /**
-     * The {@link FixedMillisecond} class is immutable, so should not be
-     * {@link Cloneable}.
-     */
-    public void testNotCloneable() {
-        FixedMillisecond m = new FixedMillisecond(500000L);
-        assertFalse(m instanceof Cloneable);
-    }
-
-    /**
-     * A check for immutability.
-     */
-    public void testImmutability() {
-        Date d = new Date(20L);
-        FixedMillisecond fm = new FixedMillisecond(d);
-        d.setTime(22L);
-        assertEquals(20L, fm.getFirstMillisecond());
-    }
 }

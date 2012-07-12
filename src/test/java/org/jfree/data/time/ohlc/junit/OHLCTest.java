@@ -24,21 +24,22 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * --------------------------
- * TimePeriodAnchorTests.java
- * --------------------------
- * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
+ * --------------
+ * OHLCTests.java
+ * --------------
+ * (C) Copyright 2006-2009, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 01-Mar-2004 : Version 1 (DG);
+ * 04-Dec-2006 : Version 1 (DG);
+ * 23-May-2009 : Added testHashCode() (DG);
  *
  */
 
-package org.jfree.data.time.junit;
+package org.jfree.data.time.ohlc.junit;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -51,12 +52,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.data.time.TimePeriodAnchor;
+import org.jfree.data.time.ohlc.OHLC;
 
 /**
- * Tests for the {@link TimePeriodAnchor} class.
+ * Tests for the {@link OHLC} class.
  */
-public class TimePeriodAnchorTests extends TestCase {
+public class OHLCTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -64,7 +65,7 @@ public class TimePeriodAnchorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(TimePeriodAnchorTests.class);
+        return new TestSuite(OHLCTest.class);
     }
 
     /**
@@ -72,44 +73,81 @@ public class TimePeriodAnchorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public TimePeriodAnchorTests(String name) {
+    public OHLCTest(String name) {
         super(name);
     }
 
     /**
-     * Test the equals() method.
+     * Confirm that the equals method can distinguish all the required fields.
      */
     public void testEquals() {
-        assertTrue(TimePeriodAnchor.START.equals(TimePeriodAnchor.START));
-        assertTrue(TimePeriodAnchor.MIDDLE.equals(TimePeriodAnchor.MIDDLE));
-        assertTrue(TimePeriodAnchor.END.equals(TimePeriodAnchor.END));
+        OHLC i1 = new OHLC(2.0, 4.0, 1.0, 3.0);
+        OHLC i2 = new OHLC(2.0, 4.0, 1.0, 3.0);
+        assertEquals(i1, i2);
+
+        i1 = new OHLC(2.2, 4.0, 1.0, 3.0);
+        assertFalse(i1.equals(i2));
+        i2 = new OHLC(2.2, 4.0, 1.0, 3.0);
+        assertTrue(i1.equals(i2));
+
+        i1 = new OHLC(2.2, 4.4, 1.0, 3.0);
+        assertFalse(i1.equals(i2));
+        i2 = new OHLC(2.2, 4.4, 1.0, 3.0);
+        assertTrue(i1.equals(i2));
+
+        i1 = new OHLC(2.2, 4.4, 1.1, 3.0);
+        assertFalse(i1.equals(i2));
+        i2 = new OHLC(2.2, 4.4, 1.1, 3.0);
+        assertTrue(i1.equals(i2));
+
+        i1 = new OHLC(2.2, 4.4, 1.1, 3.3);
+        assertFalse(i1.equals(i2));
+        i2 = new OHLC(2.2, 4.4, 1.1, 3.3);
+        assertTrue(i1.equals(i2));
     }
 
     /**
-     * Serialize an instance, restore it, and check for identity.
+     * This class is immutable.
+     */
+    public void testCloning() {
+        OHLC i1 = new OHLC(2.0, 4.0, 1.0, 3.0);
+        assertFalse(i1 instanceof Cloneable);
+    }
+
+    /**
+     * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-
-        TimePeriodAnchor a1 = TimePeriodAnchor.START;
-        TimePeriodAnchor a2 = null;
+        OHLC i1 = new OHLC(2.0, 4.0, 1.0, 3.0);
+        OHLC i2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(a1);
+            out.writeObject(i1);
             out.close();
 
             ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-            );
-            a2 = (TimePeriodAnchor) in.readObject();
+                    new ByteArrayInputStream(buffer.toByteArray()));
+            i2 = (OHLC) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
-        assertTrue(a1 == a2);
+        assertEquals(i1, i2);
+    }
 
+    /**
+     * Two objects that are equal are required to return the same hashCode.
+     */
+    public void testHashcode() {
+        OHLC i1 = new OHLC(2.0, 4.0, 1.0, 3.0);
+        OHLC i2 = new OHLC(2.0, 4.0, 1.0, 3.0);
+        assertTrue(i1.equals(i2));
+        int h1 = i1.hashCode();
+        int h2 = i2.hashCode();
+        assertEquals(h1, h2);
     }
 
 }
