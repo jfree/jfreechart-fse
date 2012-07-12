@@ -124,11 +124,6 @@ public class TimePeriodValuesCollectionTest extends TestCase {
         TimePeriodValuesCollection c2 = new TimePeriodValuesCollection();
         assertTrue(c1.equals(c2));
         
-        c1.setDomainIsPointsInTime(!c1.getDomainIsPointsInTime());
-        assertFalse(c1.equals(c2));
-        c2.setDomainIsPointsInTime(c1.getDomainIsPointsInTime());
-        assertTrue(c1.equals(c2));
-        
         c1.setXPosition(TimePeriodAnchor.END);
         assertFalse(c1.equals(c2));
         c2.setXPosition(TimePeriodAnchor.END);
@@ -202,7 +197,6 @@ public class TimePeriodValuesCollectionTest extends TestCase {
     public void testGetDomainBoundsWithoutInterval() {
         // check empty dataset
         TimePeriodValuesCollection dataset = new TimePeriodValuesCollection();
-        dataset.setDomainIsPointsInTime(false);
         Range r = dataset.getDomainBounds(false);
         assertNull(r);
         
