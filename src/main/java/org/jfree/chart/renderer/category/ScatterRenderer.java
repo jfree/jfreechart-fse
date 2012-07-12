@@ -62,7 +62,6 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.common.util.BooleanList;
-import org.jfree.chart.common.util.BooleanUtilities;
 import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.common.util.ShapeUtilities;
@@ -309,8 +308,7 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * @param filled the flag.
      */
     public void setSeriesShapesFilled(int series, boolean filled) {
-        this.seriesShapesFilled.setBoolean(series,
-                BooleanUtilities.valueOf(filled));
+        this.seriesShapesFilled.setBoolean(series, Boolean.valueOf(filled));
         fireChangeEvent();
     }
 

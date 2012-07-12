@@ -107,7 +107,6 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.common.util.BooleanList;
-import org.jfree.chart.common.util.BooleanUtilities;
 import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.common.util.ShapeUtilities;
@@ -280,7 +279,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
      * @see #getSeriesLinesVisible(int)
      */
     public void setSeriesLinesVisible(int series, boolean visible) {
-        setSeriesLinesVisible(series, BooleanUtilities.valueOf(visible));
+        setSeriesLinesVisible(series, Boolean.valueOf(visible));
     }
 
     /**
@@ -352,7 +351,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
      * @see #getSeriesShapesVisible(int)
      */
     public void setSeriesShapesVisible(int series, boolean visible) {
-        setSeriesShapesVisible(series, BooleanUtilities.valueOf(visible));
+        setSeriesShapesVisible(series, Boolean.valueOf(visible));
     }
 
     /**
@@ -510,7 +509,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
      */
     public void setSeriesShapesFilled(int series, boolean filled) {
         // delegate
-        setSeriesShapesFilled(series, BooleanUtilities.valueOf(filled));
+        setSeriesShapesFilled(series, Boolean.valueOf(filled));
     }
 
     /**

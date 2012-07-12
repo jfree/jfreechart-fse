@@ -72,7 +72,6 @@ import org.jfree.chart.common.ui.PaintSample;
 import org.jfree.chart.common.ui.RectangleInsets;
 import org.jfree.chart.common.ui.StrokeChooserPanel;
 import org.jfree.chart.common.ui.StrokeSample;
-import org.jfree.chart.common.util.BooleanUtilities;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
@@ -187,19 +186,16 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
             CategoryItemRenderer renderer = ((CategoryPlot) plot).getRenderer();
             if (renderer instanceof LineAndShapeRenderer) {
                 LineAndShapeRenderer r = (LineAndShapeRenderer) renderer;
-                this.drawLines = BooleanUtilities.valueOf(
-                        r.getBaseLinesVisible());
-                this.drawShapes = BooleanUtilities.valueOf(
-                        r.getBaseShapesVisible());
+                this.drawLines = Boolean.valueOf(r.getBaseLinesVisible());
+                this.drawShapes = Boolean.valueOf(r.getBaseShapesVisible());
             }
         }
         else if (plot instanceof XYPlot) {
             XYItemRenderer renderer = ((XYPlot) plot).getRenderer();
             if (renderer instanceof StandardXYItemRenderer) {
                 StandardXYItemRenderer r = (StandardXYItemRenderer) renderer;
-                this.drawLines = BooleanUtilities.valueOf(r.getPlotLines());
-                this.drawShapes = BooleanUtilities.valueOf(
-                        r.getBaseShapesVisible());
+                this.drawLines = Boolean.valueOf(r.getPlotLines());
+                this.drawShapes = Boolean.valueOf(r.getBaseShapesVisible());
             }
         }
 
@@ -525,8 +521,7 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
      * <tt>StandardXYItemRenderer</tt>s.
      */
     private void attemptDrawLinesSelection() {
-        this.drawLines = BooleanUtilities.valueOf(
-                this.drawLinesCheckBox.isSelected());
+        this.drawLines = Boolean.valueOf(this.drawLinesCheckBox.isSelected());
     }
 
     /**
@@ -534,8 +529,7 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
      * by <tt>LineAndShapeRenderer</tt>s and <tt>StandardXYItemRenderer</tt>s.
      */
     private void attemptDrawShapesSelection() {
-        this.drawShapes = BooleanUtilities.valueOf(
-                this.drawShapesCheckBox.isSelected());
+        this.drawShapes = Boolean.valueOf(this.drawShapesCheckBox.isSelected());
     }
 
     /**

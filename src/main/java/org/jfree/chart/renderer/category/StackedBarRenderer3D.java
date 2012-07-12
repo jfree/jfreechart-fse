@@ -105,7 +105,6 @@ import java.util.List;
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.common.util.BooleanUtilities;
 import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -514,8 +513,7 @@ public class StackedBarRenderer3D extends BarRenderer3D
             }
 
             itemLabelList.add(new Object[] {new Integer(series),
-                    faces[5].getBounds2D(),
-                    BooleanUtilities.valueOf(v0 < getBase())});
+                    faces[5].getBounds2D(), Boolean.valueOf(v0 < getBase())});
 
             // add an item entity, if this information is being collected
             EntityCollection entities = state.getEntityCollection();
@@ -711,8 +709,7 @@ public class StackedBarRenderer3D extends BarRenderer3D
             }
 
             itemLabelList.add(new Object[] {new Integer(series),
-                    faces[5].getBounds2D(),
-                    BooleanUtilities.valueOf(v0 < getBase())});
+                    faces[5].getBounds2D(), Boolean.valueOf(v0 < getBase())});
 
             // add an item entity, if this information is being collected
             EntityCollection entities = state.getEntityCollection();

@@ -84,7 +84,6 @@ import org.jfree.chart.axis.NumberTick;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.axis.ValueTick;
 import org.jfree.chart.common.util.BooleanList;
-import org.jfree.chart.common.util.BooleanUtilities;
 import org.jfree.chart.common.util.ObjectList;
 import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.chart.common.util.PublicCloneable;
@@ -388,7 +387,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @param filled  the flag.
      */
     public void setSeriesFilled(int series, boolean filled) {
-        this.seriesFilled.setBoolean(series, BooleanUtilities.valueOf(filled));
+        this.seriesFilled.setBoolean(series, Boolean.valueOf(filled));
     }
 
     /**

@@ -115,7 +115,6 @@ import javax.swing.event.EventListenerList;
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.common.ui.TextAnchor;
 import org.jfree.chart.common.util.BooleanList;
-import org.jfree.chart.common.util.BooleanUtilities;
 import org.jfree.chart.common.util.ObjectList;
 import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.chart.common.util.PaintList;
@@ -1717,7 +1716,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @param visible  the flag.
      */
     public void setSeriesItemLabelsVisible(int series, boolean visible) {
-        setSeriesItemLabelsVisible(series, BooleanUtilities.valueOf(visible));
+        setSeriesItemLabelsVisible(series, Boolean.valueOf(visible));
     }
 
     /**
@@ -1772,7 +1771,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @see #getBaseItemLabelsVisible()
      */
     public void setBaseItemLabelsVisible(boolean visible) {
-        setBaseItemLabelsVisible(BooleanUtilities.valueOf(visible));
+        setBaseItemLabelsVisible(Boolean.valueOf(visible));
     }
 
     /**

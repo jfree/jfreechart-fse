@@ -88,7 +88,6 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.common.ui.RectangleEdge;
 import org.jfree.chart.common.util.BooleanList;
-import org.jfree.chart.common.util.BooleanUtilities;
 import org.jfree.chart.common.util.ObjectUtilities;
 import org.jfree.chart.common.util.PublicCloneable;
 import org.jfree.chart.common.util.ShapeUtilities;
@@ -300,7 +299,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * @see #getSeriesLinesVisible(int)
      */
     public void setSeriesLinesVisible(int series, boolean visible) {
-        setSeriesLinesVisible(series, BooleanUtilities.valueOf(visible));
+        setSeriesLinesVisible(series, Boolean.valueOf(visible));
     }
 
     /**
@@ -401,7 +400,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * @see #getSeriesShapesVisible(int)
      */
     public void setSeriesShapesVisible(int series, boolean visible) {
-        setSeriesShapesVisible(series, BooleanUtilities.valueOf(visible));
+        setSeriesShapesVisible(series, Boolean.valueOf(visible));
     }
 
     /**
@@ -489,7 +488,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * @see #getSeriesShapesFilled(int)
      */
     public void setSeriesShapesFilled(int series, boolean flag) {
-        setSeriesShapesFilled(series, BooleanUtilities.valueOf(flag));
+        setSeriesShapesFilled(series, Boolean.valueOf(flag));
     }
 
     /**
