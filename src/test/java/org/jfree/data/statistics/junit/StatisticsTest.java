@@ -225,15 +225,6 @@ public class StatisticsTest extends TestCase {
         }
         assertTrue(pass);
 
-        pass = false;
-        try {
-            Statistics.calculateMedian(list, true);
-        }
-        catch (ClassCastException e) {
-            pass = true;
-        }
-        assertTrue(pass);
-
     }
 
     /**
