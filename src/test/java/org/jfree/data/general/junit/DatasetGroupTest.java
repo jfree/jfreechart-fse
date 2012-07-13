@@ -25,67 +25,82 @@
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
- * GanttPackageTests.java
+ * DatasetGroupTests.java
  * ----------------------
- * (C) Copyright 2004-2008, by Object Refinery Limited.
+ * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 30-Jul-2004 : Version 1 (DG);
- * 12-Jan-2005 : Merged TaskSeriesCollectionTests2.java into
- *               TaskSeriesCollectionTests.java (DG);
- * 18-Jan-2005 : Added main() method (DG);
- * 09-May-2008 : Added SlidingGanttCategoryDatasetTests (DG);
+ * 14-Jan-2005 : Version 1 (DG);
  *
  */
 
-package org.jfree.data.gantt.junit;
+package org.jfree.data.general.junit;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.data.general.DatasetGroup;
+
 /**
- * Some tests for the <code>org.jfree.data.gantt</code> package that can be
- * run using JUnit.  You can find more information about JUnit at
- * <a href="http://www.junit.org">http://www.junit.org</a>.
+ * Tests for the {@link DatasetGroup} class.
  */
-public class DataGanttPackageTests extends TestCase {
+public class DatasetGroupTest extends TestCase {
 
     /**
-     * Returns a test suite to the JUnit test runner.
+     * Returns the tests as a test suite.
      *
      * @return The test suite.
      */
     public static Test suite() {
-        TestSuite suite = new TestSuite("org.jfree.data.gantt");
-        suite.addTestSuite(SlidingGanttCategoryDatasetTest.class);
-        suite.addTestSuite(TaskTest.class);
-        suite.addTestSuite(TaskSeriesTest.class);
-        suite.addTestSuite(TaskSeriesCollectionTest.class);
-        suite.addTestSuite(XYTaskDatasetTest.class);
-        return suite;
+        return new TestSuite(DatasetGroupTest.class);
     }
 
     /**
-     * Constructs the test suite.
+     * Constructs a new set of tests.
      *
-     * @param name  the test suite name.
+     * @param name  the name of the tests.
      */
-    public DataGanttPackageTests(String name) {
+    public DatasetGroupTest(String name) {
         super(name);
     }
 
     /**
-     * Runs the test suite using JUnit's text-based runner.
-     *
-     * @param args  ignored.
+     * Serialize an instance, restore it, and check for equality.
      */
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(suite());
+    public void testSerialization() {
+
+        DatasetGroup g1 = new DatasetGroup();
+        DatasetGroup g2 = null;
+
+        try {
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(g1);
+            out.close();
+
+            ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray())
+            );
+            g2 = (DatasetGroup) in.readObject();
+            in.close();
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        assertEquals(g1, g2);
+
     }
 
 }
