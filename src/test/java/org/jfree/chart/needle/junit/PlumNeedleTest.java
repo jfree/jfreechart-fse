@@ -25,7 +25,7 @@
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
- * ShipNeedleTests.java
+ * PlumNeedleTests.java
  * --------------------
  * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
  *
@@ -51,12 +51,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.needle.ShipNeedle;
+import org.jfree.chart.needle.PlumNeedle;
 
 /**
- * Tests for the {@link ShipNeedle} class.
+ * Tests for the {@link PlumNeedle} class.
  */
-public class ShipNeedleTests extends TestCase {
+public class PlumNeedleTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -64,7 +64,7 @@ public class ShipNeedleTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(ShipNeedleTests.class);
+        return new TestSuite(PlumNeedleTest.class);
     }
 
     /**
@@ -72,7 +72,7 @@ public class ShipNeedleTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public ShipNeedleTests(String name) {
+    public PlumNeedleTest(String name) {
         super(name);
     }
 
@@ -80,8 +80,8 @@ public class ShipNeedleTests extends TestCase {
      * Check that the equals() method can distinguish all fields.
      */
     public void testEquals() {
-       ShipNeedle n1 = new ShipNeedle();
-       ShipNeedle n2 = new ShipNeedle();
+       PlumNeedle n1 = new PlumNeedle();
+       PlumNeedle n2 = new PlumNeedle();
        assertTrue(n1.equals(n2));
        assertTrue(n2.equals(n1));
     }
@@ -90,10 +90,10 @@ public class ShipNeedleTests extends TestCase {
      * Check that cloning works.
      */
     public void testCloning() {
-        ShipNeedle n1 = new ShipNeedle();
-        ShipNeedle n2 = null;
+        PlumNeedle n1 = new PlumNeedle();
+        PlumNeedle n2 = null;
         try {
-            n2 = (ShipNeedle) n1.clone();
+            n2 = (PlumNeedle) n1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -108,8 +108,8 @@ public class ShipNeedleTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        ShipNeedle n1 = new ShipNeedle();
-        ShipNeedle n2 = null;
+        PlumNeedle n1 = new PlumNeedle();
+        PlumNeedle n2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -118,7 +118,7 @@ public class ShipNeedleTests extends TestCase {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            n2 = (ShipNeedle) in.readObject();
+            n2 = (PlumNeedle) in.readObject();
             in.close();
         }
         catch (Exception e) {

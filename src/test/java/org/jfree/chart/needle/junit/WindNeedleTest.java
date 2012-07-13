@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -----------------------
- * PointerNeedleTests.java
- * -----------------------
+ * --------------------
+ * WindNeedleTests.java
+ * --------------------
  * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -51,19 +51,20 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.needle.PointerNeedle;
+import org.jfree.chart.needle.WindNeedle;
 
 /**
- * Tests for the {@link PointerNeedle} class.
+ * Tests for the {@link WindNeedle} class.
  */
-public class PointerNeedleTests extends TestCase {
+public class WindNeedleTest extends TestCase {
+
     /**
      * Returns the tests as a test suite.
      *
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(PointerNeedleTests.class);
+        return new TestSuite(WindNeedleTest.class);
     }
 
     /**
@@ -71,7 +72,7 @@ public class PointerNeedleTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public PointerNeedleTests(String name) {
+    public WindNeedleTest(String name) {
         super(name);
     }
 
@@ -79,8 +80,8 @@ public class PointerNeedleTests extends TestCase {
      * Check that the equals() method can distinguish all fields.
      */
     public void testEquals() {
-       PointerNeedle n1 = new PointerNeedle();
-       PointerNeedle n2 = new PointerNeedle();
+       WindNeedle n1 = new WindNeedle();
+       WindNeedle n2 = new WindNeedle();
        assertTrue(n1.equals(n2));
        assertTrue(n2.equals(n1));
     }
@@ -89,10 +90,10 @@ public class PointerNeedleTests extends TestCase {
      * Check that cloning works.
      */
     public void testCloning() {
-        PointerNeedle n1 = new PointerNeedle();
-        PointerNeedle n2 = null;
+        WindNeedle n1 = new WindNeedle();
+        WindNeedle n2 = null;
         try {
-            n2 = (PointerNeedle) n1.clone();
+            n2 = (WindNeedle) n1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -107,8 +108,8 @@ public class PointerNeedleTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        PointerNeedle n1 = new PointerNeedle();
-        PointerNeedle n2 = null;
+        WindNeedle n1 = new WindNeedle();
+        WindNeedle n2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -117,7 +118,7 @@ public class PointerNeedleTests extends TestCase {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            n2 = (PointerNeedle) in.readObject();
+            n2 = (WindNeedle) in.readObject();
             in.close();
         }
         catch (Exception e) {

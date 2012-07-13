@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ---------------------
- * MeterNeedleTests.java
- * ---------------------
+ * --------------------
+ * LongNeedleTests.java
+ * --------------------
  * (C) Copyright 2005, 2007, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -40,29 +40,30 @@
 
 package org.jfree.chart.needle.junit;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Stroke;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.needle.LineNeedle;
-import org.jfree.chart.needle.MeterNeedle;
+import org.jfree.chart.needle.LongNeedle;
 
 /**
- * Tests for the {@link MeterNeedle} class.
+ * Tests for the {@link LongNeedle} class.
  */
-public class MeterNeedleTests extends TestCase {
+public class LongNeedleTest extends TestCase {
     /**
      * Returns the tests as a test suite.
      *
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(MeterNeedleTests.class);
+        return new TestSuite(LongNeedleTest.class);
     }
 
     /**
@@ -70,7 +71,7 @@ public class MeterNeedleTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public MeterNeedleTests(String name) {
+    public LongNeedleTest(String name) {
         super(name);
     }
 
@@ -78,44 +79,50 @@ public class MeterNeedleTests extends TestCase {
      * Check that the equals() method can distinguish all fields.
      */
     public void testEquals() {
-        MeterNeedle n1 = new LineNeedle();
-        MeterNeedle n2 = new LineNeedle();
-        assertTrue(n1.equals(n2));
+       LongNeedle n1 = new LongNeedle();
+       LongNeedle n2 = new LongNeedle();
+       assertTrue(n1.equals(n2));
+       assertTrue(n2.equals(n1));
+    }
 
-        n1.setFillPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f, Color.blue));
-        assertFalse(n1.equals(n2));
-        n2.setFillPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f, Color.blue));
+    /**
+     * Check that cloning works.
+     */
+    public void testCloning() {
+        LongNeedle n1 = new LongNeedle();
+        LongNeedle n2 = null;
+        try {
+            n2 = (LongNeedle) n1.clone();
+        }
+        catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            System.err.println("Failed to clone.");
+        }
+        assertTrue(n1 != n2);
+        assertTrue(n1.getClass() == n2.getClass());
         assertTrue(n1.equals(n2));
+    }
 
-        n1.setOutlinePaint(new GradientPaint(5.0f, 6.0f, Color.red, 7.0f, 8.0f, Color.blue));
-        assertFalse(n1.equals(n2));
-        n2.setOutlinePaint(new GradientPaint(5.0f, 6.0f, Color.red, 7.0f, 8.0f, Color.blue));
-        assertTrue(n1.equals(n2));
-
-        n1.setHighlightPaint(new GradientPaint(9.0f, 0.0f, Color.red, 1.0f, 2.0f, Color.blue));
-        assertFalse(n1.equals(n2));
-        n2.setHighlightPaint(new GradientPaint(9.0f, 0.0f, Color.red, 1.0f, 2.0f, Color.blue));
-        assertTrue(n1.equals(n2));
-
-        Stroke s = new BasicStroke(1.23f);
-        n1.setOutlineStroke(s);
-        assertFalse(n1.equals(n2));
-        n2.setOutlineStroke(s);
-        assertTrue(n1.equals(n2));
-
-        n1.setRotateX(1.23);
-        assertFalse(n1.equals(n2));
-        n2.setRotateX(1.23);
-        assertTrue(n1.equals(n2));
-
-        n1.setRotateY(4.56);
-        assertFalse(n1.equals(n2));
-        n2.setRotateY(4.56);
-        assertTrue(n1.equals(n2));
-
-        n1.setSize(11);
-        assertFalse(n1.equals(n2));
-        n2.setSize(11);
+    /**
+     * Serialize an instance, restore it, and check for equality.
+     */
+    public void testSerialization() {
+        LongNeedle n1 = new LongNeedle();
+        LongNeedle n2 = null;
+        try {
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(n1);
+            out.close();
+            ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray())
+            );
+            n2 = (LongNeedle) in.readObject();
+            in.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         assertTrue(n1.equals(n2));
     }
 

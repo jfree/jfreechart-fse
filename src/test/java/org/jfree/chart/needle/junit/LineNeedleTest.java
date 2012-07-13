@@ -25,7 +25,7 @@
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
- * LongNeedleTests.java
+ * LineNeedleTests.java
  * --------------------
  * (C) Copyright 2005, 2007, by Object Refinery Limited and Contributors.
  *
@@ -51,19 +51,19 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.needle.LongNeedle;
+import org.jfree.chart.needle.LineNeedle;
 
 /**
- * Tests for the {@link LongNeedle} class.
+ * Tests for the {@link LineNeedle} class.
  */
-public class LongNeedleTests extends TestCase {
+public class LineNeedleTest extends TestCase {
     /**
      * Returns the tests as a test suite.
      *
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(LongNeedleTests.class);
+        return new TestSuite(LineNeedleTest.class);
     }
 
     /**
@@ -71,7 +71,7 @@ public class LongNeedleTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public LongNeedleTests(String name) {
+    public LineNeedleTest(String name) {
         super(name);
     }
 
@@ -79,8 +79,8 @@ public class LongNeedleTests extends TestCase {
      * Check that the equals() method can distinguish all fields.
      */
     public void testEquals() {
-       LongNeedle n1 = new LongNeedle();
-       LongNeedle n2 = new LongNeedle();
+       LineNeedle n1 = new LineNeedle();
+       LineNeedle n2 = new LineNeedle();
        assertTrue(n1.equals(n2));
        assertTrue(n2.equals(n1));
     }
@@ -89,10 +89,10 @@ public class LongNeedleTests extends TestCase {
      * Check that cloning works.
      */
     public void testCloning() {
-        LongNeedle n1 = new LongNeedle();
-        LongNeedle n2 = null;
+        LineNeedle n1 = new LineNeedle();
+        LineNeedle n2 = null;
         try {
-            n2 = (LongNeedle) n1.clone();
+            n2 = (LineNeedle) n1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -107,8 +107,8 @@ public class LongNeedleTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        LongNeedle n1 = new LongNeedle();
-        LongNeedle n2 = null;
+        LineNeedle n1 = new LineNeedle();
+        LineNeedle n2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -117,7 +117,7 @@ public class LongNeedleTests extends TestCase {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            n2 = (LongNeedle) in.readObject();
+            n2 = (LineNeedle) in.readObject();
             in.close();
         }
         catch (Exception e) {

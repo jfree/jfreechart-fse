@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ---------------------
- * ArrowNeedleTests.java
- * ---------------------
+ * -------------------------
+ * MiddlePinNeedleTests.java
+ * -------------------------
  * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -51,19 +51,20 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.needle.ArrowNeedle;
+import org.jfree.chart.needle.MiddlePinNeedle;
 
 /**
- * Tests for the {@link ArrowNeedle} class.
+ * Tests for the {@link MiddlePinNeedle} class.
  */
-public class ArrowNeedleTests extends TestCase {
+public class MiddlePinNeedleTest extends TestCase {
+
     /**
      * Returns the tests as a test suite.
      *
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(ArrowNeedleTests.class);
+        return new TestSuite(MiddlePinNeedleTest.class);
     }
 
     /**
@@ -71,7 +72,7 @@ public class ArrowNeedleTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public ArrowNeedleTests(String name) {
+    public MiddlePinNeedleTest(String name) {
         super(name);
     }
 
@@ -79,25 +80,20 @@ public class ArrowNeedleTests extends TestCase {
      * Check that the equals() method can distinguish all fields.
      */
     public void testEquals() {
-       ArrowNeedle n1 = new ArrowNeedle(false);
-       ArrowNeedle n2 = new ArrowNeedle(false);
+       MiddlePinNeedle n1 = new MiddlePinNeedle();
+       MiddlePinNeedle n2 = new MiddlePinNeedle();
        assertTrue(n1.equals(n2));
        assertTrue(n2.equals(n1));
-
-       n1 = new ArrowNeedle(true);
-       assertFalse(n1.equals(n2));
-       n2 = new ArrowNeedle(true);
-       assertTrue(n1.equals(n2));
     }
 
     /**
      * Check that cloning works.
      */
     public void testCloning() {
-        ArrowNeedle n1 = new ArrowNeedle(false);
-        ArrowNeedle n2 = null;
+        MiddlePinNeedle n1 = new MiddlePinNeedle();
+        MiddlePinNeedle n2 = null;
         try {
-            n2 = (ArrowNeedle) n1.clone();
+            n2 = (MiddlePinNeedle) n1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -112,8 +108,8 @@ public class ArrowNeedleTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        ArrowNeedle n1 = new ArrowNeedle(false);
-        ArrowNeedle n2 = null;
+        MiddlePinNeedle n1 = new MiddlePinNeedle();
+        MiddlePinNeedle n2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -122,7 +118,7 @@ public class ArrowNeedleTests extends TestCase {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            n2 = (ArrowNeedle) in.readObject();
+            n2 = (MiddlePinNeedle) in.readObject();
             in.close();
         }
         catch (Exception e) {

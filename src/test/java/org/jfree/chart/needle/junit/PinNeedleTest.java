@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -------------------------
- * MiddlePinNeedleTests.java
- * -------------------------
+ * -------------------
+ * PinNeedleTests.java
+ * -------------------
  * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -51,20 +51,19 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.needle.MiddlePinNeedle;
+import org.jfree.chart.needle.PinNeedle;
 
 /**
- * Tests for the {@link MiddlePinNeedle} class.
+ * Tests for the {@link PinNeedle} class.
  */
-public class MiddlePinNeedleTests extends TestCase {
-
+public class PinNeedleTest extends TestCase {
     /**
      * Returns the tests as a test suite.
      *
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(MiddlePinNeedleTests.class);
+        return new TestSuite(PinNeedleTest.class);
     }
 
     /**
@@ -72,7 +71,7 @@ public class MiddlePinNeedleTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public MiddlePinNeedleTests(String name) {
+    public PinNeedleTest(String name) {
         super(name);
     }
 
@@ -80,8 +79,8 @@ public class MiddlePinNeedleTests extends TestCase {
      * Check that the equals() method can distinguish all fields.
      */
     public void testEquals() {
-       MiddlePinNeedle n1 = new MiddlePinNeedle();
-       MiddlePinNeedle n2 = new MiddlePinNeedle();
+       PinNeedle n1 = new PinNeedle();
+       PinNeedle n2 = new PinNeedle();
        assertTrue(n1.equals(n2));
        assertTrue(n2.equals(n1));
     }
@@ -90,10 +89,10 @@ public class MiddlePinNeedleTests extends TestCase {
      * Check that cloning works.
      */
     public void testCloning() {
-        MiddlePinNeedle n1 = new MiddlePinNeedle();
-        MiddlePinNeedle n2 = null;
+        PinNeedle n1 = new PinNeedle();
+        PinNeedle n2 = null;
         try {
-            n2 = (MiddlePinNeedle) n1.clone();
+            n2 = (PinNeedle) n1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -108,8 +107,8 @@ public class MiddlePinNeedleTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        MiddlePinNeedle n1 = new MiddlePinNeedle();
-        MiddlePinNeedle n2 = null;
+        PinNeedle n1 = new PinNeedle();
+        PinNeedle n2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -118,7 +117,7 @@ public class MiddlePinNeedleTests extends TestCase {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            n2 = (MiddlePinNeedle) in.readObject();
+            n2 = (PinNeedle) in.readObject();
             in.close();
         }
         catch (Exception e) {
