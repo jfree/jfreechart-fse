@@ -24,17 +24,17 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ---------------------------------------------
- * StandardToolTipTagFragmentGeneratorTests.java
- * ---------------------------------------------
- * (C) Copyright 2007, 2008, by Object Refinery Limited and Contributors.
+ * -------------------------------------------------
+ * DynamicDriveToolTipTagFragmentGeneratorTests.java
+ * -------------------------------------------------
+ * (C) Copyright 2009, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 05-Dec-2007 : Version 1 (DG);
+ * 25-Mar-2009 : Version 1 (DG);
  *
  */
 
@@ -44,12 +44,13 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.imagemap.StandardToolTipTagFragmentGenerator;
+import org.jfree.chart.imagemap.DynamicDriveToolTipTagFragmentGenerator;
+import org.jfree.chart.imagemap.OverLIBToolTipTagFragmentGenerator;
 
 /**
- * Tests for the {@link StandardToolTipTagFragmentGeneratorTests} class.
+ * Tests for the {@link DynamicDriveToolTipTagFragmentGenerator} class.
  */
-public class StandardToolTipTagFragmentGeneratorTests extends TestCase {
+public class DynamicDriveToolTipTagFragmentGeneratorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -57,7 +58,7 @@ public class StandardToolTipTagFragmentGeneratorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StandardToolTipTagFragmentGeneratorTests.class);
+        return new TestSuite(DynamicDriveToolTipTagFragmentGeneratorTest.class);
     }
 
     /**
@@ -65,7 +66,7 @@ public class StandardToolTipTagFragmentGeneratorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StandardToolTipTagFragmentGeneratorTests(String name) {
+    public DynamicDriveToolTipTagFragmentGeneratorTest(String name) {
         super(name);
     }
 
@@ -73,12 +74,14 @@ public class StandardToolTipTagFragmentGeneratorTests extends TestCase {
      * Some checks for the generateURLFragment() method.
      */
     public void testGenerateURLFragment() {
-        StandardToolTipTagFragmentGenerator g
-                = new StandardToolTipTagFragmentGenerator();
-        assertEquals(" title=\"abc\" alt=\"\"",
+        OverLIBToolTipTagFragmentGenerator g
+                = new OverLIBToolTipTagFragmentGenerator();
+        assertEquals(" onMouseOver=\"return overlib('abc');\""
+                + " onMouseOut=\"return nd();\"",
                 g.generateToolTipFragment("abc"));
-        assertEquals(" title=\"Series &quot;A&quot;, 100.0\" alt=\"\"",
-                g.generateToolTipFragment("Series \"A\", 100.0"));
+        assertEquals(" onMouseOver=\"return overlib("
+                + "'It\\'s \\\"A\\\", 100.0');\" onMouseOut=\"return nd();\"",
+                g.generateToolTipFragment("It\'s \"A\", 100.0"));
     }
 
 }

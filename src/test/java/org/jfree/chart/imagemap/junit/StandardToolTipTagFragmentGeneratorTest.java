@@ -24,17 +24,17 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * --------------------------------------------
- * OverLIBToolTipTagFragmentGeneratorTests.java
- * --------------------------------------------
- * (C) Copyright 2009, by Object Refinery Limited and Contributors.
+ * ---------------------------------------------
+ * StandardToolTipTagFragmentGeneratorTests.java
+ * ---------------------------------------------
+ * (C) Copyright 2007, 2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 25-Mar-2009 : Version 1 (DG);
+ * 05-Dec-2007 : Version 1 (DG);
  *
  */
 
@@ -44,12 +44,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.imagemap.OverLIBToolTipTagFragmentGenerator;
+import org.jfree.chart.imagemap.StandardToolTipTagFragmentGenerator;
 
 /**
- * Tests for the {@link OverLIBToolTipTagFragmentGenerator} class.
+ * Tests for the {@link StandardToolTipTagFragmentGeneratorTests} class.
  */
-public class OverLIBToolTipTagFragmentGeneratorTests extends TestCase {
+public class StandardToolTipTagFragmentGeneratorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -57,7 +57,7 @@ public class OverLIBToolTipTagFragmentGeneratorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(OverLIBToolTipTagFragmentGeneratorTests.class);
+        return new TestSuite(StandardToolTipTagFragmentGeneratorTest.class);
     }
 
     /**
@@ -65,7 +65,7 @@ public class OverLIBToolTipTagFragmentGeneratorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public OverLIBToolTipTagFragmentGeneratorTests(String name) {
+    public StandardToolTipTagFragmentGeneratorTest(String name) {
         super(name);
     }
 
@@ -73,14 +73,12 @@ public class OverLIBToolTipTagFragmentGeneratorTests extends TestCase {
      * Some checks for the generateURLFragment() method.
      */
     public void testGenerateURLFragment() {
-        OverLIBToolTipTagFragmentGenerator g
-                = new OverLIBToolTipTagFragmentGenerator();
-        assertEquals(" onMouseOver=\"return overlib('abc');\""
-                + " onMouseOut=\"return nd();\"",
+        StandardToolTipTagFragmentGenerator g
+                = new StandardToolTipTagFragmentGenerator();
+        assertEquals(" title=\"abc\" alt=\"\"",
                 g.generateToolTipFragment("abc"));
-        assertEquals(" onMouseOver=\"return overlib("
-                + "'It\\'s \\\"A\\\", 100.0');\" onMouseOut=\"return nd();\"",
-                g.generateToolTipFragment("It\'s \"A\", 100.0"));
+        assertEquals(" title=\"Series &quot;A&quot;, 100.0\" alt=\"\"",
+                g.generateToolTipFragment("Series \"A\", 100.0"));
     }
 
 }

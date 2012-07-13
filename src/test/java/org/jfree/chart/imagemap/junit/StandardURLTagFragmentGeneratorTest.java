@@ -49,7 +49,7 @@ import org.jfree.chart.imagemap.StandardURLTagFragmentGenerator;
 /**
  * Tests for the {@link StandardURLTagFragmentGeneratorTests} class.
  */
-public class StandardURLTagFragmentGeneratorTests extends TestCase {
+public class StandardURLTagFragmentGeneratorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -57,7 +57,7 @@ public class StandardURLTagFragmentGeneratorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StandardURLTagFragmentGeneratorTests.class);
+        return new TestSuite(StandardURLTagFragmentGeneratorTest.class);
     }
 
     /**
@@ -65,7 +65,7 @@ public class StandardURLTagFragmentGeneratorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StandardURLTagFragmentGeneratorTests(String name) {
+    public StandardURLTagFragmentGeneratorTest(String name) {
         super(name);
     }
 

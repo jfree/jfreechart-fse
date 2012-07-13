@@ -61,11 +61,11 @@ public class ImageMapPackageTests extends TestCase {
      */
     public static Test suite() {
         TestSuite suite = new TestSuite("org.jfree.chart.imagemap");
-        suite.addTestSuite(DynamicDriveToolTipTagFragmentGeneratorTests.class);
-        suite.addTestSuite(ImageMapUtilitiesTests.class);
-        suite.addTestSuite(OverLIBToolTipTagFragmentGeneratorTests.class);
-        suite.addTestSuite(StandardToolTipTagFragmentGeneratorTests.class);
-        suite.addTestSuite(StandardURLTagFragmentGeneratorTests.class);
+        suite.addTestSuite(DynamicDriveToolTipTagFragmentGeneratorTest.class);
+        suite.addTestSuite(ImageMapUtilitiesTest.class);
+        suite.addTestSuite(OverLIBToolTipTagFragmentGeneratorTest.class);
+        suite.addTestSuite(StandardToolTipTagFragmentGeneratorTest.class);
+        suite.addTestSuite(StandardURLTagFragmentGeneratorTest.class);
         return suite;
     }
 

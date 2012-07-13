@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ---------------------------
- * ImageMapUtilitiesTests.java
- * ---------------------------
+ * --------------------------------------------
+ * OverLIBToolTipTagFragmentGeneratorTests.java
+ * --------------------------------------------
  * (C) Copyright 2009, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -44,12 +44,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.imagemap.ImageMapUtilities;
+import org.jfree.chart.imagemap.OverLIBToolTipTagFragmentGenerator;
 
 /**
- * Tests for the {@link ImageMapUtilities} class.
+ * Tests for the {@link OverLIBToolTipTagFragmentGenerator} class.
  */
-public class ImageMapUtilitiesTests extends TestCase {
+public class OverLIBToolTipTagFragmentGeneratorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -57,7 +57,7 @@ public class ImageMapUtilitiesTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(ImageMapUtilitiesTests.class);
+        return new TestSuite(OverLIBToolTipTagFragmentGeneratorTest.class);
     }
 
     /**
@@ -65,34 +65,22 @@ public class ImageMapUtilitiesTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public ImageMapUtilitiesTests(String name) {
+    public OverLIBToolTipTagFragmentGeneratorTest(String name) {
         super(name);
     }
 
     /**
-     * Some checks for the htmlEscape() method.
+     * Some checks for the generateURLFragment() method.
      */
-    public void testHTMLEscape() {
-        assertEquals("", ImageMapUtilities.htmlEscape(""));
-        assertEquals("abc", ImageMapUtilities.htmlEscape("abc"));
-        assertEquals("&amp;", ImageMapUtilities.htmlEscape("&"));
-        assertEquals("&quot;", ImageMapUtilities.htmlEscape("\""));
-        assertEquals("&lt;", ImageMapUtilities.htmlEscape("<"));
-        assertEquals("&gt;", ImageMapUtilities.htmlEscape(">"));
-        assertEquals("&#39;", ImageMapUtilities.htmlEscape("\'"));
-        assertEquals("&#092;abc", ImageMapUtilities.htmlEscape("\\abc"));
-        assertEquals("abc\n", ImageMapUtilities.htmlEscape("abc\n"));
-    }
-
-    /**
-     * Some checks for the javascriptEscape() method.
-     */
-    public void testJavascriptEscape() {
-        assertEquals("", ImageMapUtilities.javascriptEscape(""));
-        assertEquals("abc", ImageMapUtilities.javascriptEscape("abc"));
-        assertEquals("\\\'", ImageMapUtilities.javascriptEscape("\'"));
-        assertEquals("\\\"", ImageMapUtilities.javascriptEscape("\""));   
-        assertEquals("\\\\", ImageMapUtilities.javascriptEscape("\\"));
+    public void testGenerateURLFragment() {
+        OverLIBToolTipTagFragmentGenerator g
+                = new OverLIBToolTipTagFragmentGenerator();
+        assertEquals(" onMouseOver=\"return overlib('abc');\""
+                + " onMouseOut=\"return nd();\"",
+                g.generateToolTipFragment("abc"));
+        assertEquals(" onMouseOver=\"return overlib("
+                + "'It\\'s \\\"A\\\", 100.0');\" onMouseOut=\"return nd();\"",
+                g.generateToolTipFragment("It\'s \"A\", 100.0"));
     }
 
 }
