@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ---------------------------
- * StandardDialFrameTests.java
- * ---------------------------
+ * ----------------------
+ * ArcDialFrameTests.java
+ * ----------------------
  * (C) Copyright 2006-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -35,7 +35,7 @@
  * Changes
  * -------
  * 03-Nov-2006 : Version 1 (DG);
- * 29-Oct-2007 : Renamed StandardDialFrameTests (DG);
+ * 24-Oct-2007 : Renamed (DG);
  *
  */
 
@@ -55,12 +55,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.plot.dial.StandardDialFrame;
+import org.jfree.chart.plot.dial.ArcDialFrame;
 
 /**
- * Tests for the {@link StandardDialFrame} class.
+ * Tests for the {@link ArcDialFrame} class.
  */
-public class StandardDialFrameTests extends TestCase {
+public class ArcDialFrameTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -68,7 +68,7 @@ public class StandardDialFrameTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StandardDialFrameTests.class);
+        return new TestSuite(ArcDialFrameTest.class);
     }
 
     /**
@@ -76,7 +76,7 @@ public class StandardDialFrameTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StandardDialFrameTests(String name) {
+    public ArcDialFrameTest(String name) {
         super(name);
     }
 
@@ -84,36 +84,54 @@ public class StandardDialFrameTests extends TestCase {
      * Confirm that the equals method can distinguish all the required fields.
      */
     public void testEquals() {
-        StandardDialFrame f1 = new StandardDialFrame();
-        StandardDialFrame f2 = new StandardDialFrame();
+        ArcDialFrame f1 = new ArcDialFrame();
+        ArcDialFrame f2 = new ArcDialFrame();
         assertTrue(f1.equals(f2));
 
-        // radius
-        f1.setRadius(0.2);
+        // background paint
+        f1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+                3.0f, 4.0f, Color.yellow));
         assertFalse(f1.equals(f2));
-        f2.setRadius(0.2);
+        f2.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+                3.0f, 4.0f, Color.yellow));
         assertTrue(f1.equals(f2));
 
-        // backgroundPaint
-        f1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.white, 3.0f,
-                4.0f, Color.yellow));
+        // foreground paint
+        f1.setForegroundPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+                3.0f, 4.0f, Color.yellow));
         assertFalse(f1.equals(f2));
-        f2.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.white, 3.0f,
-                4.0f, Color.yellow));
-        assertTrue(f1.equals(f2));
-
-        // foregroundPaint
-        f1.setForegroundPaint(new GradientPaint(1.0f, 2.0f, Color.blue, 3.0f,
-                4.0f, Color.green));
-        assertFalse(f1.equals(f2));
-        f2.setForegroundPaint(new GradientPaint(1.0f, 2.0f, Color.blue, 3.0f,
-                4.0f, Color.green));
+        f2.setForegroundPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+                3.0f, 4.0f, Color.yellow));
         assertTrue(f1.equals(f2));
 
         // stroke
-        f1.setStroke(new BasicStroke(2.4f));
+        f1.setStroke(new BasicStroke(1.1f));
         assertFalse(f1.equals(f2));
-        f2.setStroke(new BasicStroke(2.4f));
+        f2.setStroke(new BasicStroke(1.1f));
+        assertTrue(f1.equals(f2));
+
+        // inner radius
+        f1.setInnerRadius(0.11);
+        assertFalse(f1.equals(f2));
+        f2.setInnerRadius(0.11);
+        assertTrue(f1.equals(f2));
+
+        // outer radius
+        f1.setOuterRadius(0.88);
+        assertFalse(f1.equals(f2));
+        f2.setOuterRadius(0.88);
+        assertTrue(f1.equals(f2));
+
+        // startAngle
+        f1.setStartAngle(99);
+        assertFalse(f1.equals(f2));
+        f2.setStartAngle(99);
+        assertTrue(f1.equals(f2));
+
+        // extent
+        f1.setExtent(33);
+        assertFalse(f1.equals(f2));
+        f2.setExtent(33);
         assertTrue(f1.equals(f2));
 
         // check an inherited attribute
@@ -127,8 +145,8 @@ public class StandardDialFrameTests extends TestCase {
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashCode() {
-        StandardDialFrame f1 = new StandardDialFrame();
-        StandardDialFrame f2 = new StandardDialFrame();
+        ArcDialFrame f1 = new ArcDialFrame();
+        ArcDialFrame f2 = new ArcDialFrame();
         assertTrue(f1.equals(f2));
         int h1 = f1.hashCode();
         int h2 = f2.hashCode();
@@ -139,10 +157,10 @@ public class StandardDialFrameTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        StandardDialFrame f1 = new StandardDialFrame();
-        StandardDialFrame f2 = null;
+        ArcDialFrame f1 = new ArcDialFrame();
+        ArcDialFrame f2 = null;
         try {
-            f2 = (StandardDialFrame) f1.clone();
+            f2 = (ArcDialFrame) f1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -162,8 +180,8 @@ public class StandardDialFrameTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        StandardDialFrame f1 = new StandardDialFrame();
-        StandardDialFrame f2 = null;
+        ArcDialFrame f1 = new ArcDialFrame();
+        ArcDialFrame f2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -173,7 +191,7 @@ public class StandardDialFrameTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            f2 = (StandardDialFrame) in.readObject();
+            f2 = (ArcDialFrame) in.readObject();
             in.close();
         }
         catch (Exception e) {

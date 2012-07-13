@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -------------------------
- * SimpleDialRangeTests.java
- * -------------------------
+ * ---------------------------
+ * StandardDialFrameTests.java
+ * ---------------------------
  * (C) Copyright 2006-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -35,11 +35,13 @@
  * Changes
  * -------
  * 03-Nov-2006 : Version 1 (DG);
+ * 29-Oct-2007 : Renamed StandardDialFrameTests (DG);
  *
  */
 
 package org.jfree.chart.plot.dial.junit;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
@@ -53,12 +55,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.plot.dial.StandardDialRange;
+import org.jfree.chart.plot.dial.StandardDialFrame;
 
 /**
- * Tests for the {@link StandardDialRange} class.
+ * Tests for the {@link StandardDialFrame} class.
  */
-public class StandardDialRangeTests extends TestCase {
+public class StandardDialFrameTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -66,7 +68,7 @@ public class StandardDialRangeTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StandardDialRangeTests.class);
+        return new TestSuite(StandardDialFrameTest.class);
     }
 
     /**
@@ -74,7 +76,7 @@ public class StandardDialRangeTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StandardDialRangeTests(String name) {
+    public StandardDialFrameTest(String name) {
         super(name);
     }
 
@@ -82,46 +84,54 @@ public class StandardDialRangeTests extends TestCase {
      * Confirm that the equals method can distinguish all the required fields.
      */
     public void testEquals() {
-        StandardDialRange r1 = new StandardDialRange();
-        StandardDialRange r2 = new StandardDialRange();
-        assertTrue(r1.equals(r2));
+        StandardDialFrame f1 = new StandardDialFrame();
+        StandardDialFrame f2 = new StandardDialFrame();
+        assertTrue(f1.equals(f2));
 
-        // lowerBound
-        r1.setLowerBound(1.1);
-        assertFalse(r1.equals(r2));
-        r2.setLowerBound(1.1);
-        assertTrue(r1.equals(r2));
+        // radius
+        f1.setRadius(0.2);
+        assertFalse(f1.equals(f2));
+        f2.setRadius(0.2);
+        assertTrue(f1.equals(f2));
 
-        // upperBound
-        r1.setUpperBound(11.1);
-        assertFalse(r1.equals(r2));
-        r2.setUpperBound(11.1);
-        assertTrue(r1.equals(r2));
+        // backgroundPaint
+        f1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.white, 3.0f,
+                4.0f, Color.yellow));
+        assertFalse(f1.equals(f2));
+        f2.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.white, 3.0f,
+                4.0f, Color.yellow));
+        assertTrue(f1.equals(f2));
 
-        // paint
-        r1.setPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.blue));
-        assertFalse(r1.equals(r2));
-        r2.setPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.blue));
-        assertTrue(r1.equals(r2));
+        // foregroundPaint
+        f1.setForegroundPaint(new GradientPaint(1.0f, 2.0f, Color.blue, 3.0f,
+                4.0f, Color.green));
+        assertFalse(f1.equals(f2));
+        f2.setForegroundPaint(new GradientPaint(1.0f, 2.0f, Color.blue, 3.0f,
+                4.0f, Color.green));
+        assertTrue(f1.equals(f2));
+
+        // stroke
+        f1.setStroke(new BasicStroke(2.4f));
+        assertFalse(f1.equals(f2));
+        f2.setStroke(new BasicStroke(2.4f));
+        assertTrue(f1.equals(f2));
 
         // check an inherited attribute
-        r1.setVisible(false);
-        assertFalse(r1.equals(r2));
-        r2.setVisible(false);
-        assertTrue(r1.equals(r2));
+        f1.setVisible(false);
+        assertFalse(f1.equals(f2));
+        f2.setVisible(false);
+        assertTrue(f1.equals(f2));
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashCode() {
-        StandardDialRange r1 = new StandardDialRange();
-        StandardDialRange r2 = new StandardDialRange();
-        assertTrue(r1.equals(r2));
-        int h1 = r1.hashCode();
-        int h2 = r2.hashCode();
+        StandardDialFrame f1 = new StandardDialFrame();
+        StandardDialFrame f2 = new StandardDialFrame();
+        assertTrue(f1.equals(f2));
+        int h1 = f1.hashCode();
+        int h2 = f2.hashCode();
         assertEquals(h1, h2);
     }
 
@@ -129,47 +139,47 @@ public class StandardDialRangeTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        StandardDialRange r1 = new StandardDialRange();
-        StandardDialRange r2 = null;
+        StandardDialFrame f1 = new StandardDialFrame();
+        StandardDialFrame f2 = null;
         try {
-            r2 = (StandardDialRange) r1.clone();
+            f2 = (StandardDialFrame) f1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertTrue(f1 != f2);
+        assertTrue(f1.getClass() == f2.getClass());
+        assertTrue(f1.equals(f2));
 
         // check that the listener lists are independent
         MyDialLayerChangeListener l1 = new MyDialLayerChangeListener();
-        r1.addChangeListener(l1);
-        assertTrue(r1.hasListener(l1));
-        assertFalse(r2.hasListener(l1));
+        f1.addChangeListener(l1);
+        assertTrue(f1.hasListener(l1));
+        assertFalse(f2.hasListener(l1));
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        StandardDialRange r1 = new StandardDialRange();
-        StandardDialRange r2 = null;
+        StandardDialFrame f1 = new StandardDialFrame();
+        StandardDialFrame f2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(r1);
+            out.writeObject(f1);
             out.close();
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (StandardDialRange) in.readObject();
+            f2 = (StandardDialFrame) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        assertEquals(r1, r2);
+        assertEquals(f1, f2);
     }
 
 }

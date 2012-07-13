@@ -67,7 +67,7 @@ import org.jfree.chart.title.LegendTitle;
 /**
  * Some tests for the {@link LegendTitle} class.
  */
-public class LegendTitleTests extends TestCase {
+public class LegendTitleTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -75,7 +75,7 @@ public class LegendTitleTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(LegendTitleTests.class);
+        return new TestSuite(LegendTitleTest.class);
     }
 
     /**
@@ -83,7 +83,7 @@ public class LegendTitleTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public LegendTitleTests(String name) {
+    public LegendTitleTest(String name) {
         super(name);
     }
 

@@ -62,7 +62,7 @@ import org.jfree.chart.plot.dial.StandardDialScale;
 /**
  * Tests for the {@link StandardDialScale} class.
  */
-public class StandardDialScaleTests extends TestCase {
+public class StandardDialScaleTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -70,7 +70,7 @@ public class StandardDialScaleTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StandardDialScaleTests.class);
+        return new TestSuite(StandardDialScaleTest.class);
     }
 
     /**
@@ -78,7 +78,7 @@ public class StandardDialScaleTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StandardDialScaleTests(String name) {
+    public StandardDialScaleTest(String name) {
         super(name);
     }
 

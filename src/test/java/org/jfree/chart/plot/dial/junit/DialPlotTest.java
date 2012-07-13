@@ -65,7 +65,7 @@ import org.jfree.chart.plot.dial.StandardDialScale;
 /**
  * Tests for the {@link DialPlot} class.
  */
-public class DialPlotTests extends TestCase implements PlotChangeListener {
+public class DialPlotTest extends TestCase implements PlotChangeListener {
 
     /** The last plot change event received. */
     private PlotChangeEvent lastEvent;
@@ -87,7 +87,7 @@ public class DialPlotTests extends TestCase implements PlotChangeListener {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(DialPlotTests.class);
+        return new TestSuite(DialPlotTest.class);
     }
 
     /**
@@ -95,7 +95,7 @@ public class DialPlotTests extends TestCase implements PlotChangeListener {
      *
      * @param name  the name of the tests.
      */
-    public DialPlotTests(String name) {
+    public DialPlotTest(String name) {
         super(name);
     }
 

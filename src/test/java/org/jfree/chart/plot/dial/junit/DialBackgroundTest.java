@@ -61,7 +61,7 @@ import org.jfree.chart.plot.dial.DialBackground;
 /**
  * Tests for the {@link DialBackground} class.
  */
-public class DialBackgroundTests extends TestCase {
+public class DialBackgroundTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -69,7 +69,7 @@ public class DialBackgroundTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(DialBackgroundTests.class);
+        return new TestSuite(DialBackgroundTest.class);
     }
 
     /**
@@ -77,7 +77,7 @@ public class DialBackgroundTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public DialBackgroundTests(String name) {
+    public DialBackgroundTest(String name) {
         super(name);
     }
 

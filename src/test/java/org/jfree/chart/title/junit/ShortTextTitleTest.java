@@ -56,7 +56,7 @@ import org.jfree.chart.title.ShortTextTitle;
 /**
  * Tests for the {@link ShortTextTitle} class.
  */
-public class ShortTextTitleTests extends TestCase {
+public class ShortTextTitleTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -64,7 +64,7 @@ public class ShortTextTitleTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(ShortTextTitleTests.class);
+        return new TestSuite(ShortTextTitleTest.class);
     }
 
     /**
@@ -72,7 +72,7 @@ public class ShortTextTitleTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public ShortTextTitleTests(String name) {
+    public ShortTextTitleTest(String name) {
         super(name);
     }
 

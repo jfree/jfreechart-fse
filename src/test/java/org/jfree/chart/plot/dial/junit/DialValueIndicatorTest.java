@@ -65,7 +65,7 @@ import org.jfree.chart.plot.dial.DialValueIndicator;
 /**
  * Tests for the {@link DialValueIndicator} class.
  */
-public class DialValueIndicatorTests extends TestCase {
+public class DialValueIndicatorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -73,7 +73,7 @@ public class DialValueIndicatorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(DialValueIndicatorTests.class);
+        return new TestSuite(DialValueIndicatorTest.class);
     }
 
     /**
@@ -81,7 +81,7 @@ public class DialValueIndicatorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public DialValueIndicatorTests(String name) {
+    public DialValueIndicatorTest(String name) {
         super(name);
     }
 

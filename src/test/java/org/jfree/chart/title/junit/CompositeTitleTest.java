@@ -24,28 +24,25 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -------------------
- * TextTitleTests.java
- * -------------------
- * (C) Copyright 2004-2012, by Object Refinery Limited and Contributors.
+ * ------------------------
+ * CompositeTitleTests.java
+ * ------------------------
+ * (C) Copyright 2005-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 17-Feb-2004 : Version 1 (DG);
- * 06-Jun-2005 : Use GradientPaint in equals() test (DG);
- * 07-Oct-2005 : Updated testEquals() (DG);
- * 28-Apr-2008 : Extended testEquals() (DG);
- * 17-Jun-2012 : Remove JCommon dependencies (DG);
+ * 04-Feb-2005 : Version 1 (DG);
+ * 09-Jul-2008 : Added new field into testEquals() (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
 package org.jfree.chart.title.junit;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -58,13 +55,16 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.common.ui.HorizontalAlignment;
+import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.block.BlockContainer;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.title.CompositeTitle;
 import org.jfree.chart.title.TextTitle;
 
 /**
- * Tests for the {@link TextTitle} class.
+ * Tests for the {@link CompositeTitle} class.
  */
-public class TextTitleTests extends TestCase {
+public class CompositeTitleTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -72,7 +72,7 @@ public class TextTitleTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(TextTitleTests.class);
+        return new TestSuite(CompositeTitleTest.class);
     }
 
     /**
@@ -80,72 +80,56 @@ public class TextTitleTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public TextTitleTests(String name) {
+    public CompositeTitleTest(String name) {
         super(name);
+    }
+
+    /**
+     * Some checks for the constructor.
+     */
+    public void testConstructor() {
+        CompositeTitle t = new CompositeTitle();
+        assertNull(t.getBackgroundPaint());
     }
 
     /**
      * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        TextTitle t1 = new TextTitle();
-        TextTitle t2 = new TextTitle();
+        CompositeTitle t1 = new CompositeTitle(new BlockContainer());
+        CompositeTitle t2 = new CompositeTitle(new BlockContainer());
         assertEquals(t1, t2);
+        assertEquals(t2, t1);
 
-        t1.setText("Test 1");
+        // margin
+        t1.setMargin(new RectangleInsets(1.0, 2.0, 3.0, 4.0));
         assertFalse(t1.equals(t2));
-        t2.setText("Test 1");
+        t2.setMargin(new RectangleInsets(1.0, 2.0, 3.0, 4.0));
         assertTrue(t1.equals(t2));
 
-        Font f = new Font("SansSerif", Font.PLAIN, 15);
-        t1.setFont(f);
+        // border
+        t1.setFrame(new BlockBorder(Color.red));
         assertFalse(t1.equals(t2));
-        t2.setFont(f);
+        t2.setFrame(new BlockBorder(Color.red));
         assertTrue(t1.equals(t2));
 
-        t1.setTextAlignment(HorizontalAlignment.RIGHT);
+        // padding
+        t1.setPadding(new RectangleInsets(1.0, 2.0, 3.0, 4.0));
         assertFalse(t1.equals(t2));
-        t2.setTextAlignment(HorizontalAlignment.RIGHT);
+        t2.setPadding(new RectangleInsets(1.0, 2.0, 3.0, 4.0));
         assertTrue(t1.equals(t2));
 
-        // paint
-        t1.setPaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.blue));
+        // contained titles
+        t1.getContainer().add(new TextTitle("T1"));
         assertFalse(t1.equals(t2));
-        t2.setPaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.blue));
+        t2.getContainer().add(new TextTitle("T1"));
         assertTrue(t1.equals(t2));
 
-        // backgroundPaint
-        t1.setBackgroundPaint(new GradientPaint(4.0f, 3.0f, Color.red,
-                2.0f, 1.0f, Color.blue));
+        t1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+                3.0f, 4.0f, Color.yellow));
         assertFalse(t1.equals(t2));
-        t2.setBackgroundPaint(new GradientPaint(4.0f, 3.0f, Color.red,
-                2.0f, 1.0f, Color.blue));
-        assertTrue(t1.equals(t2));
-
-        // maximumLinesToDisplay
-        t1.setMaximumLinesToDisplay(3);
-        assertFalse(t1.equals(t2));
-        t2.setMaximumLinesToDisplay(3);
-        assertTrue(t1.equals(t2));
-
-        // toolTipText
-        t1.setToolTipText("TTT");
-        assertFalse(t1.equals(t2));
-        t2.setToolTipText("TTT");
-        assertTrue(t1.equals(t2));
-
-        // urlText
-        t1.setURLText(("URL"));
-        assertFalse(t1.equals(t2));
-        t2.setURLText(("URL"));
-        assertTrue(t1.equals(t2));
-
-        // expandToFitSpace
-        t1.setExpandToFitSpace(!t1.getExpandToFitSpace());
-        assertFalse(t1.equals(t2));
-        t2.setExpandToFitSpace(!t2.getExpandToFitSpace());
+        t2.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+                3.0f, 4.0f, Color.yellow));
         assertTrue(t1.equals(t2));
 
     }
@@ -154,8 +138,10 @@ public class TextTitleTests extends TestCase {
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        TextTitle t1 = new TextTitle();
-        TextTitle t2 = new TextTitle();
+        CompositeTitle t1 = new CompositeTitle(new BlockContainer());
+        t1.getContainer().add(new TextTitle("T1"));
+        CompositeTitle t2 = new CompositeTitle(new BlockContainer());
+        t2.getContainer().add(new TextTitle("T1"));
         assertTrue(t1.equals(t2));
         int h1 = t1.hashCode();
         int h2 = t2.hashCode();
@@ -166,13 +152,16 @@ public class TextTitleTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        TextTitle t1 = new TextTitle();
-        TextTitle t2 = null;
+        CompositeTitle t1 = new CompositeTitle(new BlockContainer());
+        t1.getContainer().add(new TextTitle("T1"));
+        t1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+                3.0f, 4.0f, Color.yellow));
+        CompositeTitle t2 = null;
         try {
-            t2 = (TextTitle) t1.clone();
+            t2 = (CompositeTitle) t1.clone();
         }
         catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            fail(e.toString());
         }
         assertTrue(t1 != t2);
         assertTrue(t1.getClass() == t2.getClass());
@@ -183,10 +172,11 @@ public class TextTitleTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-
-        TextTitle t1 = new TextTitle("Test");
-        TextTitle t2 = null;
-
+        CompositeTitle t1 = new CompositeTitle(new BlockContainer());
+        t1.getContainer().add(new TextTitle("T1"));
+        t1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+                3.0f, 4.0f, Color.blue));
+        CompositeTitle t2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -195,14 +185,13 @@ public class TextTitleTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            t2 = (TextTitle) in.readObject();
+            t2 = (CompositeTitle) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(t1, t2);
-
     }
 
 }

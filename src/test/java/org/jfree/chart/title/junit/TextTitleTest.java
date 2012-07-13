@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -25,9 +25,9 @@
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
- * DateTitleTests.java
+ * TextTitleTests.java
  * -------------------
- * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -35,6 +35,10 @@
  * Changes
  * -------
  * 17-Feb-2004 : Version 1 (DG);
+ * 06-Jun-2005 : Use GradientPaint in equals() test (DG);
+ * 07-Oct-2005 : Updated testEquals() (DG);
+ * 28-Apr-2008 : Extended testEquals() (DG);
+ * 17-Jun-2012 : Remove JCommon dependencies (DG);
  *
  */
 
@@ -42,6 +46,7 @@ package org.jfree.chart.title.junit;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -53,12 +58,13 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.title.DateTitle;
+import org.jfree.chart.common.ui.HorizontalAlignment;
+import org.jfree.chart.title.TextTitle;
 
 /**
- * Tests for the {@link DateTitle} class.
+ * Tests for the {@link TextTitle} class.
  */
-public class DateTitleTests extends TestCase {
+public class TextTitleTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -66,7 +72,7 @@ public class DateTitleTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(DateTitleTests.class);
+        return new TestSuite(TextTitleTest.class);
     }
 
     /**
@@ -74,7 +80,7 @@ public class DateTitleTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public DateTitleTests(String name) {
+    public TextTitleTest(String name) {
         super(name);
     }
 
@@ -82,8 +88,8 @@ public class DateTitleTests extends TestCase {
      * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        DateTitle t1 = new DateTitle();
-        DateTitle t2 = new DateTitle();
+        TextTitle t1 = new TextTitle();
+        TextTitle t2 = new TextTitle();
         assertEquals(t1, t2);
 
         t1.setText("Test 1");
@@ -97,14 +103,49 @@ public class DateTitleTests extends TestCase {
         t2.setFont(f);
         assertTrue(t1.equals(t2));
 
-        t1.setPaint(Color.blue);
+        t1.setTextAlignment(HorizontalAlignment.RIGHT);
         assertFalse(t1.equals(t2));
-        t2.setPaint(Color.blue);
+        t2.setTextAlignment(HorizontalAlignment.RIGHT);
         assertTrue(t1.equals(t2));
 
-        t1.setBackgroundPaint(Color.blue);
+        // paint
+        t1.setPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+                3.0f, 4.0f, Color.blue));
         assertFalse(t1.equals(t2));
-        t2.setBackgroundPaint(Color.blue);
+        t2.setPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+                3.0f, 4.0f, Color.blue));
+        assertTrue(t1.equals(t2));
+
+        // backgroundPaint
+        t1.setBackgroundPaint(new GradientPaint(4.0f, 3.0f, Color.red,
+                2.0f, 1.0f, Color.blue));
+        assertFalse(t1.equals(t2));
+        t2.setBackgroundPaint(new GradientPaint(4.0f, 3.0f, Color.red,
+                2.0f, 1.0f, Color.blue));
+        assertTrue(t1.equals(t2));
+
+        // maximumLinesToDisplay
+        t1.setMaximumLinesToDisplay(3);
+        assertFalse(t1.equals(t2));
+        t2.setMaximumLinesToDisplay(3);
+        assertTrue(t1.equals(t2));
+
+        // toolTipText
+        t1.setToolTipText("TTT");
+        assertFalse(t1.equals(t2));
+        t2.setToolTipText("TTT");
+        assertTrue(t1.equals(t2));
+
+        // urlText
+        t1.setURLText(("URL"));
+        assertFalse(t1.equals(t2));
+        t2.setURLText(("URL"));
+        assertTrue(t1.equals(t2));
+
+        // expandToFitSpace
+        t1.setExpandToFitSpace(!t1.getExpandToFitSpace());
+        assertFalse(t1.equals(t2));
+        t2.setExpandToFitSpace(!t2.getExpandToFitSpace());
         assertTrue(t1.equals(t2));
 
     }
@@ -113,8 +154,8 @@ public class DateTitleTests extends TestCase {
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashcode() {
-        DateTitle t1 = new DateTitle();
-        DateTitle t2 = new DateTitle();
+        TextTitle t1 = new TextTitle();
+        TextTitle t2 = new TextTitle();
         assertTrue(t1.equals(t2));
         int h1 = t1.hashCode();
         int h2 = t2.hashCode();
@@ -125,13 +166,13 @@ public class DateTitleTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        DateTitle t1 = new DateTitle();
-        DateTitle t2 = null;
+        TextTitle t1 = new TextTitle();
+        TextTitle t2 = null;
         try {
-            t2 = (DateTitle) t1.clone();
+            t2 = (TextTitle) t1.clone();
         }
         catch (CloneNotSupportedException e) {
-            System.err.println("DateTitleTests.testCloning: failed to clone.");
+            e.printStackTrace();
         }
         assertTrue(t1 != t2);
         assertTrue(t1.getClass() == t2.getClass());
@@ -143,8 +184,8 @@ public class DateTitleTests extends TestCase {
      */
     public void testSerialization() {
 
-        DateTitle t1 = new DateTitle();
-        DateTitle t2 = null;
+        TextTitle t1 = new TextTitle("Test");
+        TextTitle t2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -154,7 +195,7 @@ public class DateTitleTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            t2 = (DateTitle) in.readObject();
+            t2 = (TextTitle) in.readObject();
             in.close();
         }
         catch (Exception e) {

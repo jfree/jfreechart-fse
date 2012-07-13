@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ----------------------------
- * DialTextAnnotationTests.java
- * ----------------------------
+ * -------------------------
+ * SimpleDialRangeTests.java
+ * -------------------------
  * (C) Copyright 2006-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -41,7 +41,6 @@
 package org.jfree.chart.plot.dial.junit;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -54,12 +53,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.plot.dial.DialTextAnnotation;
+import org.jfree.chart.plot.dial.StandardDialRange;
 
 /**
- * Tests for the {@link DialTextAnnotation} class.
+ * Tests for the {@link StandardDialRange} class.
  */
-public class DialTextAnnotationTests extends TestCase {
+public class StandardDialRangeTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -67,7 +66,7 @@ public class DialTextAnnotationTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(DialTextAnnotationTests.class);
+        return new TestSuite(StandardDialRangeTest.class);
     }
 
     /**
@@ -75,7 +74,7 @@ public class DialTextAnnotationTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public DialTextAnnotationTests(String name) {
+    public StandardDialRangeTest(String name) {
         super(name);
     }
 
@@ -83,57 +82,46 @@ public class DialTextAnnotationTests extends TestCase {
      * Confirm that the equals method can distinguish all the required fields.
      */
     public void testEquals() {
-        DialTextAnnotation a1 = new DialTextAnnotation("A1");
-        DialTextAnnotation a2 = new DialTextAnnotation("A1");
-        assertTrue(a1.equals(a2));
+        StandardDialRange r1 = new StandardDialRange();
+        StandardDialRange r2 = new StandardDialRange();
+        assertTrue(r1.equals(r2));
 
-        // angle
-        a1.setAngle(1.1);
-        assertFalse(a1.equals(a2));
-        a2.setAngle(1.1);
-        assertTrue(a1.equals(a2));
+        // lowerBound
+        r1.setLowerBound(1.1);
+        assertFalse(r1.equals(r2));
+        r2.setLowerBound(1.1);
+        assertTrue(r1.equals(r2));
 
-        // radius
-        a1.setRadius(9.9);
-        assertFalse(a1.equals(a2));
-        a2.setRadius(9.9);
-        assertTrue(a1.equals(a2));
-
-        // font
-        Font f = new Font("SansSerif", Font.PLAIN, 14);
-        a1.setFont(f);
-        assertFalse(a1.equals(a2));
-        a2.setFont(f);
-        assertTrue(a1.equals(a2));
+        // upperBound
+        r1.setUpperBound(11.1);
+        assertFalse(r1.equals(r2));
+        r2.setUpperBound(11.1);
+        assertTrue(r1.equals(r2));
 
         // paint
-        a1.setPaint(Color.red);
-        assertFalse(a1.equals(a2));
-        a2.setPaint(Color.red);
-        assertTrue(a1.equals(a2));
-
-        // label
-        a1.setLabel("ABC");
-        assertFalse(a1.equals(a2));
-        a2.setLabel("ABC");
-        assertTrue(a1.equals(a2));
+        r1.setPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+                Color.blue));
+        assertFalse(r1.equals(r2));
+        r2.setPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+                Color.blue));
+        assertTrue(r1.equals(r2));
 
         // check an inherited attribute
-        a1.setVisible(false);
-        assertFalse(a1.equals(a2));
-        a2.setVisible(false);
-        assertTrue(a1.equals(a2));
+        r1.setVisible(false);
+        assertFalse(r1.equals(r2));
+        r2.setVisible(false);
+        assertTrue(r1.equals(r2));
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashCode() {
-        DialTextAnnotation a1 = new DialTextAnnotation("A1");
-        DialTextAnnotation a2 = new DialTextAnnotation("A1");
-        assertTrue(a1.equals(a2));
-        int h1 = a1.hashCode();
-        int h2 = a2.hashCode();
+        StandardDialRange r1 = new StandardDialRange();
+        StandardDialRange r2 = new StandardDialRange();
+        assertTrue(r1.equals(r2));
+        int h1 = r1.hashCode();
+        int h2 = r2.hashCode();
         assertEquals(h1, h2);
     }
 
@@ -141,75 +129,47 @@ public class DialTextAnnotationTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        // test a default instance
-        DialTextAnnotation a1 = new DialTextAnnotation("A1");
-        DialTextAnnotation a2 = null;
+        StandardDialRange r1 = new StandardDialRange();
+        StandardDialRange r2 = null;
         try {
-            a2 = (DialTextAnnotation) a1.clone();
+            r2 = (StandardDialRange) r1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
-        assertTrue(a1 != a2);
-        assertTrue(a1.getClass() == a2.getClass());
-        assertTrue(a1.equals(a2));
+        assertTrue(r1 != r2);
+        assertTrue(r1.getClass() == r2.getClass());
+        assertTrue(r1.equals(r2));
 
         // check that the listener lists are independent
         MyDialLayerChangeListener l1 = new MyDialLayerChangeListener();
-        a1.addChangeListener(l1);
-        assertTrue(a1.hasListener(l1));
-        assertFalse(a2.hasListener(l1));
-
+        r1.addChangeListener(l1);
+        assertTrue(r1.hasListener(l1));
+        assertFalse(r2.hasListener(l1));
     }
-
 
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        // test a default instance
-        DialTextAnnotation a1 = new DialTextAnnotation("A1");
-        DialTextAnnotation a2 = null;
+        StandardDialRange r1 = new StandardDialRange();
+        StandardDialRange r2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(a1);
+            out.writeObject(r1);
             out.close();
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            a2 = (DialTextAnnotation) in.readObject();
+            r2 = (StandardDialRange) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        assertEquals(a1, a2);
-
-        // test a custom instance
-        a1 = new DialTextAnnotation("A1");
-        a1.setPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.blue));
-        a2 = null;
-
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(a1);
-            out.close();
-
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            a2 = (DialTextAnnotation) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        assertEquals(a1, a2);
-
-
+        assertEquals(r1, r2);
     }
 
 }

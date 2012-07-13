@@ -66,7 +66,7 @@ import org.jfree.chart.title.LegendGraphic;
 /**
  * Tests for the {@link LegendGraphic} class.
  */
-public class LegendGraphicTests extends TestCase {
+public class LegendGraphicTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -74,7 +74,7 @@ public class LegendGraphicTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(LegendGraphicTests.class);
+        return new TestSuite(LegendGraphicTest.class);
     }
 
     /**
@@ -82,7 +82,7 @@ public class LegendGraphicTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public LegendGraphicTests(String name) {
+    public LegendGraphicTest(String name) {
         super(name);
     }
 

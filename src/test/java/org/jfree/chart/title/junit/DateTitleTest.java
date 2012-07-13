@@ -24,25 +24,24 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * --------------------------
- * CrosshairOverlayTests.java
- * --------------------------
- * (C) Copyright 2009, by Object Refinery Limited and Contributors.
+ * -------------------
+ * DateTitleTests.java
+ * -------------------
+ * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 10-Apr-2009 : Version 1 (DG);
+ * 17-Feb-2004 : Version 1 (DG);
  *
  */
 
-package org.jfree.chart.panel.junit;
+package org.jfree.chart.title.junit;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.GradientPaint;
+import java.awt.Font;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -54,13 +53,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.panel.CrosshairOverlay;
-import org.jfree.chart.plot.Crosshair;
+import org.jfree.chart.title.DateTitle;
 
 /**
- * Tests for the {@link CrosshairOverlay} class.
+ * Tests for the {@link DateTitle} class.
  */
-public class CrosshairOverlayTests extends TestCase {
+public class DateTitleTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -68,7 +66,7 @@ public class CrosshairOverlayTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(CrosshairOverlayTests.class);
+        return new TestSuite(DateTitleTest.class);
     }
 
     /**
@@ -76,67 +74,94 @@ public class CrosshairOverlayTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public CrosshairOverlayTests(String name) {
+    public DateTitleTest(String name) {
         super(name);
     }
 
     /**
-     * Confirm that the equals method can distinguish all the required fields.
+     * Check that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-        CrosshairOverlay o1 = new CrosshairOverlay();
-        CrosshairOverlay o2 = new CrosshairOverlay();
-        assertEquals(o1, o2);
+        DateTitle t1 = new DateTitle();
+        DateTitle t2 = new DateTitle();
+        assertEquals(t1, t2);
+
+        t1.setText("Test 1");
+        assertFalse(t1.equals(t2));
+        t2.setText("Test 1");
+        assertTrue(t1.equals(t2));
+
+        Font f = new Font("SansSerif", Font.PLAIN, 15);
+        t1.setFont(f);
+        assertFalse(t1.equals(t2));
+        t2.setFont(f);
+        assertTrue(t1.equals(t2));
+
+        t1.setPaint(Color.blue);
+        assertFalse(t1.equals(t2));
+        t2.setPaint(Color.blue);
+        assertTrue(t1.equals(t2));
+
+        t1.setBackgroundPaint(Color.blue);
+        assertFalse(t1.equals(t2));
+        t2.setBackgroundPaint(Color.blue);
+        assertTrue(t1.equals(t2));
+
+    }
+
+    /**
+     * Two objects that are equal are required to return the same hashCode.
+     */
+    public void testHashcode() {
+        DateTitle t1 = new DateTitle();
+        DateTitle t2 = new DateTitle();
+        assertTrue(t1.equals(t2));
+        int h1 = t1.hashCode();
+        int h2 = t2.hashCode();
+        assertEquals(h1, h2);
+    }
+
+    /**
+     * Confirm that cloning works.
+     */
+    public void testCloning() {
+        DateTitle t1 = new DateTitle();
+        DateTitle t2 = null;
+        try {
+            t2 = (DateTitle) t1.clone();
+        }
+        catch (CloneNotSupportedException e) {
+            System.err.println("DateTitleTests.testCloning: failed to clone.");
+        }
+        assertTrue(t1 != t2);
+        assertTrue(t1.getClass() == t2.getClass());
+        assertTrue(t1.equals(t2));
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        CrosshairOverlay o1 = new CrosshairOverlay();
-        o1.addDomainCrosshair(new Crosshair(99.9));
-        o1.addRangeCrosshair(new Crosshair(1.23, new GradientPaint(1.0f, 2.0f,
-                Color.red, 3.0f, 4.0f, Color.blue), new BasicStroke(1.1f)));
-        CrosshairOverlay o2 = null;
+
+        DateTitle t1 = new DateTitle();
+        DateTitle t2 = null;
+
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(o1);
+            out.writeObject(t1);
             out.close();
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            o2 = (CrosshairOverlay) in.readObject();
+            t2 = (DateTitle) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        assertTrue(o1.equals(o2));
-    }
+        assertEquals(t1, t2);
 
-    /**
-     * Basic checks for cloning.
-     */
-    public void testCloning() {
-        CrosshairOverlay o1 = new CrosshairOverlay();
-        o1.addDomainCrosshair(new Crosshair(99.9));
-        o1.addRangeCrosshair(new Crosshair(1.23, new GradientPaint(1.0f, 2.0f,
-                Color.red, 3.0f, 4.0f, Color.blue), new BasicStroke(1.1f)));
-        CrosshairOverlay o2 = null;
-        try {
-            o2 = (CrosshairOverlay) o1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        assertTrue(o1 != o2);
-        assertTrue(o1.getClass() == o2.getClass());
-        assertTrue(o1.equals(o2));
-
-        o1.addDomainCrosshair(new Crosshair(3.21));
-        o1.addRangeCrosshair(new Crosshair(4.32));
-        assertFalse(o1.equals(o2));
     }
 
 }

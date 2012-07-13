@@ -64,7 +64,7 @@ import org.jfree.chart.title.PaintScaleLegend;
 /**
  * Tests for the {@link PaintScaleLegend} class.
  */
-public class PaintScaleLegendTests extends TestCase {
+public class PaintScaleLegendTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -72,7 +72,7 @@ public class PaintScaleLegendTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(PaintScaleLegendTests.class);
+        return new TestSuite(PaintScaleLegendTest.class);
     }
 
     /**
@@ -80,7 +80,7 @@ public class PaintScaleLegendTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public PaintScaleLegendTests(String name) {
+    public PaintScaleLegendTest(String name) {
         super(name);
     }
 

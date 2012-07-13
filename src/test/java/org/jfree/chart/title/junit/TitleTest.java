@@ -55,7 +55,7 @@ import org.jfree.chart.title.Title;
 /**
  * Tests for the abstract {@link Title} class.
  */
-public class TitleTests extends TestCase {
+public class TitleTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -63,7 +63,7 @@ public class TitleTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(TitleTests.class);
+        return new TestSuite(TitleTest.class);
     }
 
     /**
@@ -71,7 +71,7 @@ public class TitleTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public TitleTests(String name) {
+    public TitleTest(String name) {
         super(name);
     }
 

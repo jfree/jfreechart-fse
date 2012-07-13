@@ -55,7 +55,7 @@ import org.jfree.chart.title.ImageTitle;
 /**
  * Tests for the {@link ImageTitle} class.
  */
-public class ImageTitleTests extends TestCase {
+public class ImageTitleTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -63,7 +63,7 @@ public class ImageTitleTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(ImageTitleTests.class);
+        return new TestSuite(ImageTitleTest.class);
     }
 
     /**
@@ -71,7 +71,7 @@ public class ImageTitleTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public ImageTitleTests(String name) {
+    public ImageTitleTest(String name) {
         super(name);
     }
 
