@@ -380,7 +380,7 @@ public class AbstractRendererTest extends TestCase {
      */
     public void testCloning() {
         LineAndShapeRenderer r1 = new LineAndShapeRenderer();
-        Rectangle2D shape = new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0);
+
         Rectangle2D baseShape = new Rectangle2D.Double(11.0, 12.0, 13.0, 14.0);
         r1.setBaseShape(baseShape);
         r1.setBaseLegendShape(new Rectangle(4, 3, 2, 1));
@@ -392,7 +392,7 @@ public class AbstractRendererTest extends TestCase {
             r2 = (LineAndShapeRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            fail(e.getMessage());
         }
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
@@ -431,10 +431,6 @@ public class AbstractRendererTest extends TestCase {
         r1.setSeriesOutlineStroke(0, new BasicStroke(2.2f));
         assertFalse(r1.equals(r2));
         r2.setSeriesOutlineStroke(0, new BasicStroke(2.2f));
-        assertTrue(r1.equals(r2));
-
-        shape.setRect(4.0, 3.0, 2.0, 1.0);
-        assertFalse(r1.equals(r2));
         assertTrue(r1.equals(r2));
 
         baseShape.setRect(4.0, 3.0, 2.0, 1.0);
@@ -536,7 +532,7 @@ public class AbstractRendererTest extends TestCase {
             r2 = (LineAndShapeRenderer) r1.clone();
         }
         catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            fail(e.getMessage());
         }
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
