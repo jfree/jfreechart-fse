@@ -60,7 +60,7 @@ import org.jfree.chart.common.ui.VerticalAlignment;
 /**
  * Tests for the {@link ColumnArrangement} class.
  */
-public class ColumnArrangementTests extends TestCase {
+public class ColumnArrangementTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -68,7 +68,7 @@ public class ColumnArrangementTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(ColumnArrangementTests.class);
+        return new TestSuite(ColumnArrangementTest.class);
     }
 
     /**
@@ -76,7 +76,7 @@ public class ColumnArrangementTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public ColumnArrangementTests(String name) {
+    public ColumnArrangementTest(String name) {
         super(name);
     }
 

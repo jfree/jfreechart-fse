@@ -25,24 +25,21 @@
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
- * ColorBlockTests.java
+ * EmptyBlockTests.java
  * --------------------
- * (C) Copyright 2007, 2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 16-Mar-2007 : Version 1 (DG);
+ * 04-Feb-2005 : Version 1 (DG);
  *
  */
 
 package org.jfree.chart.block.junit;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -54,12 +51,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.block.ColorBlock;
+import org.jfree.chart.block.EmptyBlock;
 
 /**
- * Tests for the {@link ColorBlock} class.
+ * Tests for the {@link EmptyBlock} class.
  */
-public class ColorBlockTests extends TestCase {
+public class EmptyBlockTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -67,7 +64,7 @@ public class ColorBlockTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(ColorBlockTests.class);
+        return new TestSuite(EmptyBlockTest.class);
     }
 
     /**
@@ -75,7 +72,7 @@ public class ColorBlockTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public ColorBlockTests(String name) {
+    public EmptyBlockTest(String name) {
         super(name);
     }
 
@@ -83,24 +80,19 @@ public class ColorBlockTests extends TestCase {
      * Confirm that the equals() method can distinguish all the required fields.
      */
     public void testEquals() {
-        ColorBlock b1 = new ColorBlock(Color.red, 1.0, 2.0);
-        ColorBlock b2 = new ColorBlock(Color.red, 1.0, 2.0);
+        EmptyBlock b1 = new EmptyBlock(1.0, 2.0);
+        EmptyBlock b2 = new EmptyBlock(1.0, 2.0);
         assertTrue(b1.equals(b2));
         assertTrue(b2.equals(b2));
 
-        b1 = new ColorBlock(Color.blue, 1.0, 2.0);
+        b1 = new EmptyBlock(1.1, 2.0);
         assertFalse(b1.equals(b2));
-        b2 = new ColorBlock(Color.blue, 1.0, 2.0);
+        b2 = new EmptyBlock(1.1, 2.0);
         assertTrue(b1.equals(b2));
 
-        b1 = new ColorBlock(Color.blue, 1.1, 2.0);
+        b1 = new EmptyBlock(1.1, 2.2);
         assertFalse(b1.equals(b2));
-        b2 = new ColorBlock(Color.blue, 1.1, 2.0);
-        assertTrue(b1.equals(b2));
-
-        b1 = new ColorBlock(Color.blue, 1.1, 2.2);
-        assertFalse(b1.equals(b2));
-        b2 = new ColorBlock(Color.blue, 1.1, 2.2);
+        b2 = new EmptyBlock(1.1, 2.2);
         assertTrue(b1.equals(b2));
     }
 
@@ -108,15 +100,11 @@ public class ColorBlockTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        GradientPaint gp = new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.blue);
-        Rectangle2D bounds1 = new Rectangle2D.Double(10.0, 20.0, 30.0, 40.0);
-        ColorBlock b1 = new ColorBlock(gp, 1.0, 2.0);
-        b1.setBounds(bounds1);
-        ColorBlock b2 = null;
+        EmptyBlock b1 = new EmptyBlock(1.0, 2.0);
+        EmptyBlock b2 = null;
 
         try {
-            b2 = (ColorBlock) b1.clone();
+            b2 = (EmptyBlock) b1.clone();
         }
         catch (CloneNotSupportedException e) {
             fail(e.toString());
@@ -124,22 +112,14 @@ public class ColorBlockTests extends TestCase {
         assertTrue(b1 != b2);
         assertTrue(b1.getClass() == b2.getClass());
         assertTrue(b1.equals(b2));
-
-        // check independence
-        bounds1.setRect(1.0, 2.0, 3.0, 4.0);
-        assertFalse(b1.equals(b2));
-        b2.setBounds(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
-        assertTrue(b1.equals(b2));
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        GradientPaint gp = new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.blue);
-        ColorBlock b1 = new ColorBlock(gp, 1.0, 2.0);
-        ColorBlock b2 = null;
+        EmptyBlock b1 = new EmptyBlock(1.0, 2.0);
+        EmptyBlock b2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -148,7 +128,7 @@ public class ColorBlockTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            b2 = (ColorBlock) in.readObject();
+            b2 = (EmptyBlock) in.readObject();
             in.close();
         }
         catch (Exception e) {

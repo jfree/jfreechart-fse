@@ -65,7 +65,7 @@ import org.jfree.data.Range;
 /**
  * Tests for the {@link GridArrangement} class.
  */
-public class GridArrangementTests extends TestCase {
+public class GridArrangementTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -73,7 +73,7 @@ public class GridArrangementTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(GridArrangementTests.class);
+        return new TestSuite(GridArrangementTest.class);
     }
 
     /**
@@ -81,7 +81,7 @@ public class GridArrangementTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public GridArrangementTests(String name) {
+    public GridArrangementTest(String name) {
         super(name);
     }
 

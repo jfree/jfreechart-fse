@@ -53,7 +53,7 @@ import org.jfree.data.Range;
 /**
  * Tests for the {@link RectangleConstraint} class.
  */
-public class RectangleConstraintTests extends TestCase {
+public class RectangleConstraintTest extends TestCase {
 
     private static final double EPSILON = 0.0000000001;
 
@@ -63,7 +63,7 @@ public class RectangleConstraintTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(RectangleConstraintTests.class);
+        return new TestSuite(RectangleConstraintTest.class);
     }
 
     /**
@@ -71,7 +71,7 @@ public class RectangleConstraintTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public RectangleConstraintTests(String name) {
+    public RectangleConstraintTest(String name) {
         super(name);
     }
 

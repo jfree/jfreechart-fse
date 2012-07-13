@@ -63,7 +63,7 @@ import org.jfree.chart.text.TextBlockAnchor;
 /**
  * Some tests for the {@link LabelBlock} class.
  */
-public class LabelBlockTests extends TestCase {
+public class LabelBlockTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -71,7 +71,7 @@ public class LabelBlockTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(LabelBlockTests.class);
+        return new TestSuite(LabelBlockTest.class);
     }
 
     /**
@@ -79,7 +79,7 @@ public class LabelBlockTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public LabelBlockTests(String name) {
+    public LabelBlockTest(String name) {
         super(name);
     }
 

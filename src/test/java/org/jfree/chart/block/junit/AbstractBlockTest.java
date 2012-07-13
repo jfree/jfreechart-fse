@@ -24,26 +24,25 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ---------------------
- * BlockBorderTests.java
- * ---------------------
- * (C) Copyright 2005-2012, by Object Refinery Limited and Contributors.
+ * -----------------------
+ * AbstractBlockTests.java
+ * -----------------------
+ * (C) Copyright 2007-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 04-Feb-2005 : Version 1 (DG);
- * 23-Feb-2005 : Extended equals() test (DG);
+ * 16-Mar-2007 : Version 1 (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
- *
+ * 
  */
 
 package org.jfree.chart.block.junit;
 
 import java.awt.Color;
-import java.awt.GradientPaint;
+import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -55,14 +54,15 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.block.AbstractBlock;
 import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.block.EmptyBlock;
 import org.jfree.chart.common.ui.RectangleInsets;
-import org.jfree.chart.common.util.UnitType;
 
 /**
- * Tests for the {@link BlockBorder} class.
+ * Tests for the {@link AbstractBlock} class.
  */
-public class BlockBorderTests extends TestCase {
+public class AbstractBlockTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -70,7 +70,7 @@ public class BlockBorderTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(BlockBorderTests.class);
+        return new TestSuite(AbstractBlockTest.class);
     }
 
     /**
@@ -78,7 +78,7 @@ public class BlockBorderTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public BlockBorderTests(String name) {
+    public AbstractBlockTest(String name) {
         super(name);
     }
 
@@ -86,61 +86,103 @@ public class BlockBorderTests extends TestCase {
      * Confirm that the equals() method can distinguish all the required fields.
      */
     public void testEquals() {
-        BlockBorder b1 = new BlockBorder(new RectangleInsets(1.0, 2.0, 3.0,
-                4.0), Color.red);
-        BlockBorder b2 = new BlockBorder(new RectangleInsets(1.0, 2.0, 3.0,
-                4.0), Color.red);
+        EmptyBlock b1 = new EmptyBlock(1.0, 2.0);
+        EmptyBlock b2 = new EmptyBlock(1.0, 2.0);
         assertTrue(b1.equals(b2));
         assertTrue(b2.equals(b2));
 
-        // insets
-        b1 = new BlockBorder(new RectangleInsets(UnitType.RELATIVE, 1.0, 2.0,
-                3.0, 4.0), Color.red);
+        b1.setID("Test");
         assertFalse(b1.equals(b2));
-        b2 = new BlockBorder(new RectangleInsets(UnitType.RELATIVE, 1.0, 2.0,
-                3.0, 4.0), Color.red);
+        b2.setID("Test");
         assertTrue(b1.equals(b2));
 
-        // paint
-        b1 = new BlockBorder(new RectangleInsets(1.0, 2.0, 3.0, 4.0),
-                Color.blue);
+        b1.setMargin(new RectangleInsets(1.0, 2.0, 3.0, 4.0));
         assertFalse(b1.equals(b2));
-        b2 = new BlockBorder(new RectangleInsets(1.0, 2.0, 3.0, 4.0),
-                Color.blue);
+        b2.setMargin(new RectangleInsets(1.0, 2.0, 3.0, 4.0));
+        assertTrue(b1.equals(b2));
+
+        b1.setFrame(new BlockBorder(Color.red));
+        assertFalse(b1.equals(b2));
+        b2.setFrame(new BlockBorder(Color.red));
+        assertTrue(b1.equals(b2));
+
+        b1.setPadding(new RectangleInsets(2.0, 4.0, 6.0, 8.0));
+        assertFalse(b1.equals(b2));
+        b2.setPadding(new RectangleInsets(2.0, 4.0, 6.0, 8.0));
+        assertTrue(b1.equals(b2));
+
+        b1.setWidth(1.23);
+        assertFalse(b1.equals(b2));
+        b2.setWidth(1.23);
+        assertTrue(b1.equals(b2));
+
+        b1.setHeight(4.56);
+        assertFalse(b1.equals(b2));
+        b2.setHeight(4.56);
+        assertTrue(b1.equals(b2));
+
+        b1.setBounds(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
+        assertFalse(b1.equals(b2));
+        b2.setBounds(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
+        assertTrue(b1.equals(b2));
+
+        b1 = new EmptyBlock(1.1, 2.0);
+        assertFalse(b1.equals(b2));
+        b2 = new EmptyBlock(1.1, 2.0);
+        assertTrue(b1.equals(b2));
+
+        b1 = new EmptyBlock(1.1, 2.2);
+        assertFalse(b1.equals(b2));
+        b2 = new EmptyBlock(1.1, 2.2);
         assertTrue(b1.equals(b2));
     }
 
     /**
-     * Immutable - cloning not necessary.
+     * Confirm that cloning works.
      */
     public void testCloning() {
-        BlockBorder b1 = new BlockBorder();
-        assertFalse(b1 instanceof Cloneable);
+        EmptyBlock b1 = new EmptyBlock(1.0, 2.0);
+        Rectangle2D bounds1 = new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0);
+        b1.setBounds(bounds1);
+        EmptyBlock b2 = null;
+
+        try {
+            b2 = (EmptyBlock) b1.clone();
+        }
+        catch (CloneNotSupportedException e) {
+            fail(e.toString());
+        }
+        assertTrue(b1 != b2);
+        assertTrue(b1.getClass() == b2.getClass());
+        assertTrue(b1.equals(b2));
+
+        bounds1.setFrame(2.0, 4.0, 6.0, 8.0);
+        assertFalse(b1.equals(b2));
+        b2.setBounds(new Rectangle2D.Double(2.0, 4.0, 6.0, 8.0));
+        assertTrue(b1.equals(b2));
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        BlockBorder b1 = new BlockBorder(new RectangleInsets(1.0, 2.0, 3.0,
-                4.0), new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.yellow));
-        BlockBorder b2 = null;
+        EmptyBlock b1 = new EmptyBlock(1.0, 2.0);
+        EmptyBlock b2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(b1);
             out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            b2 = (BlockBorder) in.readObject();
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
+            b2 = (EmptyBlock) in.readObject();
             in.close();
         }
         catch (Exception e) {
             fail(e.toString());
         }
-        assertTrue(b1.equals(b2));
+        assertEquals(b1, b2);
     }
 
 }

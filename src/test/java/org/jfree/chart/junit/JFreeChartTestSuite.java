@@ -59,7 +59,7 @@ import junit.framework.TestSuite;
 
 import org.jfree.chart.annotations.junit.AnnotationsPackageTests;
 import org.jfree.chart.axis.junit.AxisPackageTests;
-import org.jfree.chart.block.junit.BlockPackageTests;
+import org.jfree.chart.block.junit.BlockPackageTest;
 import org.jfree.chart.entity.junit.EntityPackageTests;
 import org.jfree.chart.labels.junit.LabelsPackageTests;
 import org.jfree.chart.needle.junit.NeedlePackageTests;
@@ -96,7 +96,7 @@ public class JFreeChartTestSuite extends TestCase {
         suite.addTest(ChartPackageTests.suite());
         suite.addTest(AnnotationsPackageTests.suite());
         suite.addTest(AxisPackageTests.suite());
-        suite.addTest(BlockPackageTests.suite());
+        suite.addTest(BlockPackageTest.suite());
         suite.addTest(EntityPackageTests.suite());
         suite.addTest(LabelsPackageTests.suite());
         suite.addTest(NeedlePackageTests.suite());

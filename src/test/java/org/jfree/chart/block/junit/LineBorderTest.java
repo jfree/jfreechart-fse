@@ -61,7 +61,7 @@ import org.jfree.chart.common.ui.RectangleInsets;
 /**
  * Tests for the {@link LineBorder} class.
  */
-public class LineBorderTests extends TestCase {
+public class LineBorderTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -69,7 +69,7 @@ public class LineBorderTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(LineBorderTests.class);
+        return new TestSuite(LineBorderTest.class);
     }
 
     /**
@@ -77,7 +77,7 @@ public class LineBorderTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public LineBorderTests(String name) {
+    public LineBorderTest(String name) {
         super(name);
     }
 

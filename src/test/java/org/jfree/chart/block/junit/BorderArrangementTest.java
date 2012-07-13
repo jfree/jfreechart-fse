@@ -67,7 +67,7 @@ import org.jfree.data.Range;
 /**
  * Tests for the {@link BorderArrangement} class.
  */
-public class BorderArrangementTests extends TestCase {
+public class BorderArrangementTest extends TestCase {
 
     private static final double EPSILON = 0.0000000001;
 
@@ -77,7 +77,7 @@ public class BorderArrangementTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(BorderArrangementTests.class);
+        return new TestSuite(BorderArrangementTest.class);
     }
 
     /**
@@ -85,7 +85,7 @@ public class BorderArrangementTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public BorderArrangementTests(String name) {
+    public BorderArrangementTest(String name) {
         super(name);
     }
 

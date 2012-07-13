@@ -24,22 +24,25 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ------------------------
- * BlockContainerTests.java
- * ------------------------
- * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
+ * --------------------
+ * ColorBlockTests.java
+ * --------------------
+ * (C) Copyright 2007, 2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 04-Feb-2005 : Version 1 (DG);
+ * 16-Mar-2007 : Version 1 (DG);
  *
  */
 
 package org.jfree.chart.block.junit;
 
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -51,15 +54,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.block.BlockContainer;
-import org.jfree.chart.block.ColumnArrangement;
-import org.jfree.chart.block.EmptyBlock;
-import org.jfree.chart.block.FlowArrangement;
+import org.jfree.chart.block.ColorBlock;
 
 /**
- * Tests for the {@link BlockContainer} class.
+ * Tests for the {@link ColorBlock} class.
  */
-public class BlockContainerTests extends TestCase {
+public class ColorBlockTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -67,7 +67,7 @@ public class BlockContainerTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(BlockContainerTests.class);
+        return new TestSuite(ColorBlockTest.class);
     }
 
     /**
@@ -75,7 +75,7 @@ public class BlockContainerTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public BlockContainerTests(String name) {
+    public ColorBlockTest(String name) {
         super(name);
     }
 
@@ -83,65 +83,78 @@ public class BlockContainerTests extends TestCase {
      * Confirm that the equals() method can distinguish all the required fields.
      */
     public void testEquals() {
-        BlockContainer c1 = new BlockContainer(new FlowArrangement());
-        BlockContainer c2 = new BlockContainer(new FlowArrangement());
-        assertTrue(c1.equals(c2));
-        assertTrue(c2.equals(c2));
+        ColorBlock b1 = new ColorBlock(Color.red, 1.0, 2.0);
+        ColorBlock b2 = new ColorBlock(Color.red, 1.0, 2.0);
+        assertTrue(b1.equals(b2));
+        assertTrue(b2.equals(b2));
 
-        c1.setArrangement(new ColumnArrangement());
-        assertFalse(c1.equals(c2));
-        c2.setArrangement(new ColumnArrangement());
-        assertTrue(c1.equals(c2));
+        b1 = new ColorBlock(Color.blue, 1.0, 2.0);
+        assertFalse(b1.equals(b2));
+        b2 = new ColorBlock(Color.blue, 1.0, 2.0);
+        assertTrue(b1.equals(b2));
 
-        c1.add(new EmptyBlock(1.2, 3.4));
-        assertFalse(c1.equals(c2));
-        c2.add(new EmptyBlock(1.2, 3.4));
-        assertTrue(c1.equals(c2));
+        b1 = new ColorBlock(Color.blue, 1.1, 2.0);
+        assertFalse(b1.equals(b2));
+        b2 = new ColorBlock(Color.blue, 1.1, 2.0);
+        assertTrue(b1.equals(b2));
+
+        b1 = new ColorBlock(Color.blue, 1.1, 2.2);
+        assertFalse(b1.equals(b2));
+        b2 = new ColorBlock(Color.blue, 1.1, 2.2);
+        assertTrue(b1.equals(b2));
     }
 
     /**
      * Confirm that cloning works.
      */
     public void testCloning() {
-        BlockContainer c1 = new BlockContainer(new FlowArrangement());
-        c1.add(new EmptyBlock(1.2, 3.4));
-
-        BlockContainer c2 = null;
+        GradientPaint gp = new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+                Color.blue);
+        Rectangle2D bounds1 = new Rectangle2D.Double(10.0, 20.0, 30.0, 40.0);
+        ColorBlock b1 = new ColorBlock(gp, 1.0, 2.0);
+        b1.setBounds(bounds1);
+        ColorBlock b2 = null;
 
         try {
-            c2 = (BlockContainer) c1.clone();
+            b2 = (ColorBlock) b1.clone();
         }
         catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
+            fail(e.toString());
         }
-        assertTrue(c1 != c2);
-        assertTrue(c1.getClass() == c2.getClass());
-        assertTrue(c1.equals(c2));
+        assertTrue(b1 != b2);
+        assertTrue(b1.getClass() == b2.getClass());
+        assertTrue(b1.equals(b2));
+
+        // check independence
+        bounds1.setRect(1.0, 2.0, 3.0, 4.0);
+        assertFalse(b1.equals(b2));
+        b2.setBounds(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
+        assertTrue(b1.equals(b2));
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        BlockContainer c1 = new BlockContainer();
-        c1.add(new EmptyBlock(1.2, 3.4));
-        BlockContainer c2 = null;
+        GradientPaint gp = new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+                Color.blue);
+        ColorBlock b1 = new ColorBlock(gp, 1.0, 2.0);
+        ColorBlock b2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(c1);
+            out.writeObject(b1);
             out.close();
 
             ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-            );
-            c2 = (BlockContainer) in.readObject();
+                    new ByteArrayInputStream(buffer.toByteArray()));
+            b2 = (ColorBlock) in.readObject();
             in.close();
         }
         catch (Exception e) {
             fail(e.toString());
         }
-        assertEquals(c1, c2);
+        assertEquals(b1, b2);
     }
 
 }

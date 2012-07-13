@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * --------------------
- * EmptyBlockTests.java
- * --------------------
+ * ------------------------
+ * BlockContainerTests.java
+ * ------------------------
  * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -51,12 +51,15 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jfree.chart.block.BlockContainer;
+import org.jfree.chart.block.ColumnArrangement;
 import org.jfree.chart.block.EmptyBlock;
+import org.jfree.chart.block.FlowArrangement;
 
 /**
- * Tests for the {@link EmptyBlock} class.
+ * Tests for the {@link BlockContainer} class.
  */
-public class EmptyBlockTests extends TestCase {
+public class BlockContainerTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -64,7 +67,7 @@ public class EmptyBlockTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(EmptyBlockTests.class);
+        return new TestSuite(BlockContainerTest.class);
     }
 
     /**
@@ -72,7 +75,7 @@ public class EmptyBlockTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public EmptyBlockTests(String name) {
+    public BlockContainerTest(String name) {
         super(name);
     }
 
@@ -80,61 +83,65 @@ public class EmptyBlockTests extends TestCase {
      * Confirm that the equals() method can distinguish all the required fields.
      */
     public void testEquals() {
-        EmptyBlock b1 = new EmptyBlock(1.0, 2.0);
-        EmptyBlock b2 = new EmptyBlock(1.0, 2.0);
-        assertTrue(b1.equals(b2));
-        assertTrue(b2.equals(b2));
+        BlockContainer c1 = new BlockContainer(new FlowArrangement());
+        BlockContainer c2 = new BlockContainer(new FlowArrangement());
+        assertTrue(c1.equals(c2));
+        assertTrue(c2.equals(c2));
 
-        b1 = new EmptyBlock(1.1, 2.0);
-        assertFalse(b1.equals(b2));
-        b2 = new EmptyBlock(1.1, 2.0);
-        assertTrue(b1.equals(b2));
+        c1.setArrangement(new ColumnArrangement());
+        assertFalse(c1.equals(c2));
+        c2.setArrangement(new ColumnArrangement());
+        assertTrue(c1.equals(c2));
 
-        b1 = new EmptyBlock(1.1, 2.2);
-        assertFalse(b1.equals(b2));
-        b2 = new EmptyBlock(1.1, 2.2);
-        assertTrue(b1.equals(b2));
+        c1.add(new EmptyBlock(1.2, 3.4));
+        assertFalse(c1.equals(c2));
+        c2.add(new EmptyBlock(1.2, 3.4));
+        assertTrue(c1.equals(c2));
     }
 
     /**
      * Confirm that cloning works.
      */
     public void testCloning() {
-        EmptyBlock b1 = new EmptyBlock(1.0, 2.0);
-        EmptyBlock b2 = null;
+        BlockContainer c1 = new BlockContainer(new FlowArrangement());
+        c1.add(new EmptyBlock(1.2, 3.4));
+
+        BlockContainer c2 = null;
 
         try {
-            b2 = (EmptyBlock) b1.clone();
+            c2 = (BlockContainer) c1.clone();
         }
         catch (CloneNotSupportedException e) {
-            fail(e.toString());
+            System.err.println("Failed to clone.");
         }
-        assertTrue(b1 != b2);
-        assertTrue(b1.getClass() == b2.getClass());
-        assertTrue(b1.equals(b2));
+        assertTrue(c1 != c2);
+        assertTrue(c1.getClass() == c2.getClass());
+        assertTrue(c1.equals(c2));
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        EmptyBlock b1 = new EmptyBlock(1.0, 2.0);
-        EmptyBlock b2 = null;
+        BlockContainer c1 = new BlockContainer();
+        c1.add(new EmptyBlock(1.2, 3.4));
+        BlockContainer c2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(b1);
+            out.writeObject(c1);
             out.close();
 
             ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            b2 = (EmptyBlock) in.readObject();
+                new ByteArrayInputStream(buffer.toByteArray())
+            );
+            c2 = (BlockContainer) in.readObject();
             in.close();
         }
         catch (Exception e) {
             fail(e.toString());
         }
-        assertEquals(b1, b2);
+        assertEquals(c1, c2);
     }
 
 }

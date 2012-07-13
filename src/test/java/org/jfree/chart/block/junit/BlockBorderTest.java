@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -------------------------
- * FlowArrangementTests.java
- * -------------------------
+ * ---------------------
+ * BlockBorderTests.java
+ * ---------------------
  * (C) Copyright 2005-2012, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -35,12 +35,15 @@
  * Changes
  * -------
  * 04-Feb-2005 : Version 1 (DG);
- * 17-Jun-2012 : Remove JCommon dependencies (DG);
+ * 23-Feb-2005 : Extended equals() test (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
 package org.jfree.chart.block.junit;
 
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -52,14 +55,14 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.block.FlowArrangement;
-import org.jfree.chart.common.ui.HorizontalAlignment;
-import org.jfree.chart.common.ui.VerticalAlignment;
+import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.common.util.UnitType;
 
 /**
- * Tests for the {@link FlowArrangement} class.
+ * Tests for the {@link BlockBorder} class.
  */
-public class FlowArrangementTests extends TestCase {
+public class BlockBorderTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -67,7 +70,7 @@ public class FlowArrangementTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(FlowArrangementTests.class);
+        return new TestSuite(BlockBorderTest.class);
     }
 
     /**
@@ -75,7 +78,7 @@ public class FlowArrangementTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public FlowArrangementTests(String name) {
+    public BlockBorderTest(String name) {
         super(name);
     }
 
@@ -83,73 +86,61 @@ public class FlowArrangementTests extends TestCase {
      * Confirm that the equals() method can distinguish all the required fields.
      */
     public void testEquals() {
-        FlowArrangement f1 = new FlowArrangement(HorizontalAlignment.LEFT,
-                VerticalAlignment.TOP, 1.0, 2.0);
-        FlowArrangement f2 = new FlowArrangement(HorizontalAlignment.LEFT,
-                VerticalAlignment.TOP, 1.0, 2.0);
-        assertTrue(f1.equals(f2));
-        assertTrue(f2.equals(f1));
+        BlockBorder b1 = new BlockBorder(new RectangleInsets(1.0, 2.0, 3.0,
+                4.0), Color.red);
+        BlockBorder b2 = new BlockBorder(new RectangleInsets(1.0, 2.0, 3.0,
+                4.0), Color.red);
+        assertTrue(b1.equals(b2));
+        assertTrue(b2.equals(b2));
 
-        f1 = new FlowArrangement(HorizontalAlignment.RIGHT,
-                VerticalAlignment.TOP, 1.0, 2.0);
-        assertFalse(f1.equals(f2));
-        f2 = new FlowArrangement(HorizontalAlignment.RIGHT,
-                VerticalAlignment.TOP, 1.0, 2.0);
-        assertTrue(f1.equals(f2));
+        // insets
+        b1 = new BlockBorder(new RectangleInsets(UnitType.RELATIVE, 1.0, 2.0,
+                3.0, 4.0), Color.red);
+        assertFalse(b1.equals(b2));
+        b2 = new BlockBorder(new RectangleInsets(UnitType.RELATIVE, 1.0, 2.0,
+                3.0, 4.0), Color.red);
+        assertTrue(b1.equals(b2));
 
-        f1 = new FlowArrangement(HorizontalAlignment.RIGHT,
-                VerticalAlignment.BOTTOM, 1.0, 2.0);
-        assertFalse(f1.equals(f2));
-        f2 = new FlowArrangement(HorizontalAlignment.RIGHT,
-                VerticalAlignment.BOTTOM, 1.0, 2.0);
-        assertTrue(f1.equals(f2));
-
-        f1 = new FlowArrangement(HorizontalAlignment.RIGHT,
-                VerticalAlignment.BOTTOM, 1.1, 2.0);
-        assertFalse(f1.equals(f2));
-        f2 = new FlowArrangement(HorizontalAlignment.RIGHT,
-                VerticalAlignment.BOTTOM, 1.1, 2.0);
-        assertTrue(f1.equals(f2));
-
-        f1 = new FlowArrangement(HorizontalAlignment.RIGHT,
-                VerticalAlignment.BOTTOM, 1.1, 2.2);
-        assertFalse(f1.equals(f2));
-        f2 = new FlowArrangement(HorizontalAlignment.RIGHT,
-                VerticalAlignment.BOTTOM, 1.1, 2.2);
-        assertTrue(f1.equals(f2));
-
+        // paint
+        b1 = new BlockBorder(new RectangleInsets(1.0, 2.0, 3.0, 4.0),
+                Color.blue);
+        assertFalse(b1.equals(b2));
+        b2 = new BlockBorder(new RectangleInsets(1.0, 2.0, 3.0, 4.0),
+                Color.blue);
+        assertTrue(b1.equals(b2));
     }
 
     /**
-     * Immutable - cloning is not necessary.
+     * Immutable - cloning not necessary.
      */
     public void testCloning() {
-        FlowArrangement f1 = new FlowArrangement();
-        assertFalse(f1 instanceof Cloneable);
+        BlockBorder b1 = new BlockBorder();
+        assertFalse(b1 instanceof Cloneable);
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        FlowArrangement f1 = new FlowArrangement(HorizontalAlignment.LEFT,
-                VerticalAlignment.TOP, 1.0, 2.0);
-        FlowArrangement f2 = null;
+        BlockBorder b1 = new BlockBorder(new RectangleInsets(1.0, 2.0, 3.0,
+                4.0), new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+                Color.yellow));
+        BlockBorder b2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(f1);
+            out.writeObject(b1);
             out.close();
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            f2 = (FlowArrangement) in.readObject();
+            b2 = (BlockBorder) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            fail(e.toString());
         }
-        assertEquals(f1, f2);
+        assertTrue(b1.equals(b2));
     }
 
 }

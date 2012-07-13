@@ -54,7 +54,7 @@ import junit.framework.TestSuite;
  * <P>
  * These tests can be run using JUnit (http://www.junit.org).
  */
-public class BlockPackageTests extends TestCase {
+public class BlockPackageTest extends TestCase {
 
     /**
      * Returns a test suite to the JUnit test runner.
@@ -63,18 +63,18 @@ public class BlockPackageTests extends TestCase {
      */
     public static Test suite() {
         TestSuite suite = new TestSuite("org.jfree.chart.block");
-        suite.addTestSuite(AbstractBlockTests.class);
-        suite.addTestSuite(BlockBorderTests.class);
-        suite.addTestSuite(BlockContainerTests.class);
-        suite.addTestSuite(BorderArrangementTests.class);
-        suite.addTestSuite(ColorBlockTests.class);
-        suite.addTestSuite(ColumnArrangementTests.class);
-        suite.addTestSuite(EmptyBlockTests.class);
-        suite.addTestSuite(FlowArrangementTests.class);
-        suite.addTestSuite(GridArrangementTests.class);
-        suite.addTestSuite(LabelBlockTests.class);
-        suite.addTestSuite(LineBorderTests.class);
-        suite.addTestSuite(RectangleConstraintTests.class);
+        suite.addTestSuite(AbstractBlockTest.class);
+        suite.addTestSuite(BlockBorderTest.class);
+        suite.addTestSuite(BlockContainerTest.class);
+        suite.addTestSuite(BorderArrangementTest.class);
+        suite.addTestSuite(ColorBlockTest.class);
+        suite.addTestSuite(ColumnArrangementTest.class);
+        suite.addTestSuite(EmptyBlockTest.class);
+        suite.addTestSuite(FlowArrangementTest.class);
+        suite.addTestSuite(GridArrangementTest.class);
+        suite.addTestSuite(LabelBlockTest.class);
+        suite.addTestSuite(LineBorderTest.class);
+        suite.addTestSuite(RectangleConstraintTest.class);
         return suite;
     }
 
@@ -83,7 +83,7 @@ public class BlockPackageTests extends TestCase {
      *
      * @param name  the suite name.
      */
-    public BlockPackageTests(String name) {
+    public BlockPackageTest(String name) {
         super(name);
     }
 
