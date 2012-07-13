@@ -705,7 +705,24 @@ public class XYSeries extends Series implements Cloneable, Serializable {
      * @since 1.0.1
      */
     public void updateByIndex(int index, Number y) {
-        update(index, y);
+        XYDataItem item = getRawDataItem(index);
+        // figure out if we need to iterate through all the y-values
+        boolean iterate = false;
+        double oldY = item.getYValue();
+        if (!Double.isNaN(oldY)) {
+            iterate = oldY <= this.minY || oldY >= this.maxY;
+        }
+        item.setY(y);
+
+        if (iterate) {
+            findBoundsByIteration();
+        }
+        else if (y != null) {
+            double yy = y.doubleValue();
+            this.minY = minIgnoreNaN(this.minY, yy);
+            this.maxY = maxIgnoreNaN(this.maxY, yy);
+        }
+        fireSeriesChanged();
     }
 
     /**
