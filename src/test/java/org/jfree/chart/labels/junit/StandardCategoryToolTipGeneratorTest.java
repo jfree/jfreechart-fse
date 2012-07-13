@@ -24,18 +24,20 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ----------------------------------------
- * StandardXYSeriesLabelGeneratorTests.java
- * ----------------------------------------
- * (C) Copyright 2006-2008, by Object Refinery Limited and Contributors.
+ * ------------------------------------------
+ * StandardCategoryToolTipGeneratorTests.java
+ * ------------------------------------------
+ * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 24-Nov-2006 : Version 1 (DG);
- * 23-Apr-2008 : Added testPublicCloneable() (DG)
+ * 11-May-2004 : Version 1 (DG);
+ * ------------- JFREECHART 1.0.x ---------------------------------------------
+ * 03-May-2006 : Added testEquals1481087() (DG);
+ * 23-Apr-2008 : Added testPublicCloneable() (DG);
  *
  */
 
@@ -47,20 +49,22 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.labels.StandardXYSeriesLabelGenerator;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
+import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
 
 /**
- * Tests for the {@link StandardXYSeriesLabelGenerator} class.
+ * Tests for the {@link StandardCategoryToolTipGenerator} class.
  */
-public class StandardXYSeriesLabelGeneratorTests extends TestCase {
+public class StandardCategoryToolTipGeneratorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -68,7 +72,7 @@ public class StandardXYSeriesLabelGeneratorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StandardXYSeriesLabelGeneratorTests.class);
+        return new TestSuite(StandardCategoryToolTipGeneratorTest.class);
     }
 
     /**
@@ -76,48 +80,53 @@ public class StandardXYSeriesLabelGeneratorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StandardXYSeriesLabelGeneratorTests(String name) {
+    public StandardCategoryToolTipGeneratorTest(String name) {
         super(name);
     }
 
     /**
-     * Some checks for the generalLabel() method.
-     */
-    public void testGenerateLabel() {
-        StandardXYSeriesLabelGenerator g
-                = new StandardXYSeriesLabelGenerator("Series {0}");
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(new XYSeries("1"));
-        dataset.addSeries(new XYSeries("2"));
-        assertEquals("Series 1", g.generateLabel(dataset, 0));
-        assertEquals("Series 2", g.generateLabel(dataset, 1));
-    }
-
-    /**
-     * Some checks for the equals() method.
+     * Tests the equals() method.
      */
     public void testEquals() {
-        StandardXYSeriesLabelGenerator g1
-                = new StandardXYSeriesLabelGenerator("Series {0}");
-        StandardXYSeriesLabelGenerator g2
-                = new StandardXYSeriesLabelGenerator("Series {0}");
+
+        StandardCategoryToolTipGenerator g1
+                = new StandardCategoryToolTipGenerator();
+        StandardCategoryToolTipGenerator g2
+                = new StandardCategoryToolTipGenerator();
         assertTrue(g1.equals(g2));
         assertTrue(g2.equals(g1));
 
-        g1 = new StandardXYSeriesLabelGenerator("{1}");
+        g1 = new StandardCategoryToolTipGenerator("{0}",
+                new DecimalFormat("0.000"));
         assertFalse(g1.equals(g2));
-        g2 = new StandardXYSeriesLabelGenerator("{1}");
+        g2 = new StandardCategoryToolTipGenerator("{0}",
+                new DecimalFormat("0.000"));
         assertTrue(g1.equals(g2));
+
+        g1 = new StandardCategoryToolTipGenerator("{1}",
+                new DecimalFormat("0.000"));
+        assertFalse(g1.equals(g2));
+        g2 = new StandardCategoryToolTipGenerator("{1}",
+                new DecimalFormat("0.000"));
+        assertTrue(g1.equals(g2));
+
+        g1 = new StandardCategoryToolTipGenerator("{2}",
+                new SimpleDateFormat("d-MMM"));
+        assertFalse(g1.equals(g2));
+        g2 = new StandardCategoryToolTipGenerator("{2}",
+                new SimpleDateFormat("d-MMM"));
+        assertTrue(g1.equals(g2));
+
     }
 
     /**
      * Simple check that hashCode is implemented.
      */
     public void testHashCode() {
-        StandardXYSeriesLabelGenerator g1
-                = new StandardXYSeriesLabelGenerator();
-        StandardXYSeriesLabelGenerator g2
-                = new StandardXYSeriesLabelGenerator();
+        StandardCategoryToolTipGenerator g1
+                = new StandardCategoryToolTipGenerator();
+        StandardCategoryToolTipGenerator g2
+                = new StandardCategoryToolTipGenerator();
         assertTrue(g1.equals(g2));
         assertTrue(g1.hashCode() == g2.hashCode());
     }
@@ -126,11 +135,11 @@ public class StandardXYSeriesLabelGeneratorTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        StandardXYSeriesLabelGenerator g1
-                = new StandardXYSeriesLabelGenerator("Series {0}");
-        StandardXYSeriesLabelGenerator g2 = null;
+        StandardCategoryToolTipGenerator g1
+                = new StandardCategoryToolTipGenerator();
+        StandardCategoryToolTipGenerator g2 = null;
         try {
-            g2 = (StandardXYSeriesLabelGenerator) g1.clone();
+            g2 = (StandardCategoryToolTipGenerator) g1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -144,8 +153,8 @@ public class StandardXYSeriesLabelGeneratorTests extends TestCase {
      * Check to ensure that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        StandardXYSeriesLabelGenerator g1
-                = new StandardXYSeriesLabelGenerator("Series {0}");
+        StandardCategoryToolTipGenerator g1
+                = new StandardCategoryToolTipGenerator();
         assertTrue(g1 instanceof PublicCloneable);
     }
 
@@ -153,9 +162,11 @@ public class StandardXYSeriesLabelGeneratorTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        StandardXYSeriesLabelGenerator g1
-                = new StandardXYSeriesLabelGenerator("Series {0}");
-        StandardXYSeriesLabelGenerator g2 = null;
+
+        StandardCategoryToolTipGenerator g1
+                = new StandardCategoryToolTipGenerator("{2}",
+                DateFormat.getInstance());
+        StandardCategoryToolTipGenerator g2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -165,12 +176,27 @@ public class StandardXYSeriesLabelGeneratorTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            g2 = (StandardXYSeriesLabelGenerator) in.readObject();
+            g2 = (StandardCategoryToolTipGenerator) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(g1, g2);
+
     }
+
+    /**
+     * A test for bug 1481087.
+     */
+    public void testEquals1481087() {
+        StandardCategoryToolTipGenerator g1
+                = new StandardCategoryToolTipGenerator("{0}",
+                new DecimalFormat("0.00"));
+        StandardCategoryItemLabelGenerator g2
+                = new StandardCategoryItemLabelGenerator("{0}",
+                new DecimalFormat("0.00"));
+        assertFalse(g1.equals(g2));
+    }
+
 }

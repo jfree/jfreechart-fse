@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -----------------------------------
- * HighLowItemLabelGeneratorTests.java
- * -----------------------------------
+ * ------------------------------------
+ * CustomXYItemLabelGeneratorTests.java
+ * ------------------------------------
  * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -34,7 +34,8 @@
  *
  * Changes
  * -------
- * 18-Mar-2003 : Version 1 (DG);
+ * 23-Mar-2003 : Version 1 (DG);
+ * 13-Aug-2003 : Added cloning tests (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
  *
  */
@@ -47,21 +48,19 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.labels.HighLowItemLabelGenerator;
+import org.jfree.chart.labels.CustomXYToolTipGenerator;
 
 /**
- * Tests for the {@link HighLowItemLabelGenerator} class.
+ * Tests for the {@link CustomXYToolTipGenerator} class.
  */
-public class HighLowItemLabelGeneratorTests extends TestCase {
+public class CustomXYItemLabelGeneratorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -69,7 +68,7 @@ public class HighLowItemLabelGeneratorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(HighLowItemLabelGeneratorTests.class);
+        return new TestSuite(CustomXYItemLabelGeneratorTest.class);
     }
 
     /**
@@ -77,52 +76,18 @@ public class HighLowItemLabelGeneratorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public HighLowItemLabelGeneratorTests(String name) {
+    public CustomXYItemLabelGeneratorTest(String name) {
         super(name);
-    }
-
-    /**
-     * Tests that the equals method can distinguish all fields.
-     */
-    public void testEquals() {
-        HighLowItemLabelGenerator g1 = new HighLowItemLabelGenerator();
-        HighLowItemLabelGenerator g2 = new HighLowItemLabelGenerator();
-        assertTrue(g1.equals(g2));
-        assertTrue(g2.equals(g1));
-
-        g1 = new HighLowItemLabelGenerator(new SimpleDateFormat("d-MMM-yyyy"),
-                NumberFormat.getInstance());
-        assertFalse(g1.equals(g2));
-        g2 = new HighLowItemLabelGenerator(new SimpleDateFormat("d-MMM-yyyy"),
-                NumberFormat.getInstance());
-        assertTrue(g1.equals(g2));
-
-        g1 = new HighLowItemLabelGenerator(new SimpleDateFormat("d-MMM-yyyy"),
-                new DecimalFormat("0.000"));
-        assertFalse(g1.equals(g2));
-        g2 = new HighLowItemLabelGenerator(new SimpleDateFormat("d-MMM-yyyy"),
-                new DecimalFormat("0.000"));
-        assertTrue(g1.equals(g2));
-    }
-
-    /**
-     * Simple check that hashCode is implemented.
-     */
-    public void testHashCode() {
-        HighLowItemLabelGenerator g1 = new HighLowItemLabelGenerator();
-        HighLowItemLabelGenerator g2 = new HighLowItemLabelGenerator();
-        assertTrue(g1.equals(g2));
-        assertTrue(g1.hashCode() == g2.hashCode());
     }
 
     /**
      * Confirm that cloning works.
      */
     public void testCloning() {
-        HighLowItemLabelGenerator g1 = new HighLowItemLabelGenerator();
-        HighLowItemLabelGenerator g2 = null;
+        CustomXYToolTipGenerator g1 = new CustomXYToolTipGenerator();
+        CustomXYToolTipGenerator g2 = null;
         try {
-            g2 = (HighLowItemLabelGenerator) g1.clone();
+            g2 = (CustomXYToolTipGenerator) g1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -136,7 +101,7 @@ public class HighLowItemLabelGeneratorTests extends TestCase {
      * Check to ensure that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        HighLowItemLabelGenerator g1 = new HighLowItemLabelGenerator();
+        CustomXYToolTipGenerator g1 = new CustomXYToolTipGenerator();
         assertTrue(g1 instanceof PublicCloneable);
     }
 
@@ -145,8 +110,20 @@ public class HighLowItemLabelGeneratorTests extends TestCase {
      */
     public void testSerialization() {
 
-        HighLowItemLabelGenerator g1 = new HighLowItemLabelGenerator();
-        HighLowItemLabelGenerator g2 = null;
+        List t1 = new java.util.ArrayList();
+        t1.add("Tooltip A1");
+        t1.add("Tooltip A2");
+        t1.add("Tooltip A3");
+
+        List t2 = new java.util.ArrayList();
+        t2.add("Tooltip B1");
+        t2.add("Tooltip B2");
+        t2.add("Tooltip B3");
+
+        CustomXYToolTipGenerator g1 = new CustomXYToolTipGenerator();
+        g1.addToolTipSeries(t1);
+        g1.addToolTipSeries(t2);
+        CustomXYToolTipGenerator g2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -156,7 +133,7 @@ public class HighLowItemLabelGeneratorTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            g2 = (HighLowItemLabelGenerator) in.readObject();
+            g2 = (CustomXYToolTipGenerator) in.readObject();
             in.close();
         }
         catch (Exception e) {

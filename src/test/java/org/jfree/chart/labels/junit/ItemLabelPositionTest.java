@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -----------------------------------------
- * StandardContourToolTipGeneratorTests.java
- * -----------------------------------------
+ * ---------------------------
+ * ItemLabelPositionTests.java
+ * ---------------------------
  * (C) Copyright 2003-2007, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -34,7 +34,8 @@
  *
  * Changes
  * -------
- * 21-Mar-2003 : Version 1 (DG);
+ * 30-Oct-2003 : Version 1 (DG);
+ * 19-Feb-2004 : Moved to org.jfree.chart.labels.junit (DG);
  *
  */
 
@@ -51,12 +52,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.labels.StandardContourToolTipGenerator;
+import org.jfree.chart.labels.ItemLabelPosition;
 
 /**
- * Tests for the <code>StandardContourToolTipGenerator</code> class.
+ * Tests for the {@link ItemLabelPosition} class.
  */
-public class StandardContourToolTipGeneratorTests extends TestCase {
+public class ItemLabelPositionTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -64,7 +65,7 @@ public class StandardContourToolTipGeneratorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StandardContourToolTipGeneratorTests.class);
+        return new TestSuite(ItemLabelPositionTest.class);
     }
 
     /**
@@ -72,8 +73,17 @@ public class StandardContourToolTipGeneratorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StandardContourToolTipGeneratorTests(String name) {
+    public ItemLabelPositionTest(String name) {
         super(name);
+    }
+
+    /**
+     * Check that the equals() method distinguishes all fields.
+     */
+    public void testEquals() {
+        ItemLabelPosition p1 = new ItemLabelPosition();
+        ItemLabelPosition p2 = new ItemLabelPosition();
+        assertEquals(p1, p2);
     }
 
     /**
@@ -81,26 +91,24 @@ public class StandardContourToolTipGeneratorTests extends TestCase {
      */
     public void testSerialization() {
 
-        StandardContourToolTipGenerator g1
-            = new StandardContourToolTipGenerator();
-        StandardContourToolTipGenerator g2 = null;
+        ItemLabelPosition p1 = new ItemLabelPosition();
+        ItemLabelPosition p2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(g1);
+            out.writeObject(p1);
             out.close();
 
             ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-            );
-            g2 = (StandardContourToolTipGenerator) in.readObject();
+                    new ByteArrayInputStream(buffer.toByteArray()));
+            p2 = (ItemLabelPosition) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
-        assertEquals(g1, g2);
+        assertEquals(p1, p2);
 
     }
 

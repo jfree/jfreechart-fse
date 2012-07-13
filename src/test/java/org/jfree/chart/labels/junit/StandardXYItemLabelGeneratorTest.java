@@ -24,17 +24,20 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ------------------------------------
- * BubbleXYItemLabelGeneratorTests.java
- * ------------------------------------
- * (C) Copyright 2006-2008, by Object Refinery Limited and Contributors.
+ * --------------------------------------
+ * StandardXYItemLabelGeneratorTests.java
+ * --------------------------------------
+ * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 20-Jan-2006 : Version 1 (DG);
+ * 23-Mar-2003 : Version 1 (DG);
+ * 26-Feb-2004 : Updates for new code (DG);
+ * 20-Jan-2006 : Renamed StandardXYItemLabelGeneratorTests.java (DG);
+ * 25-Jan-2007 : Added independence checks to testCloning() (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
  *
  */
@@ -57,14 +60,12 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.labels.BubbleXYItemLabelGenerator;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.chart.labels.StandardXYItemLabelGenerator;
 
 /**
- * Tests for the {@link BubbleXYItemLabelGenerator} class.
+ * Tests for the {@link StandardXYItemLabelGenerator} class.
  */
-public class BubbleXYItemLabelGeneratorTests extends TestCase {
+public class StandardXYItemLabelGeneratorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -72,7 +73,7 @@ public class BubbleXYItemLabelGeneratorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(BubbleXYItemLabelGeneratorTests.class);
+        return new TestSuite(StandardXYItemLabelGeneratorTest.class);
     }
 
     /**
@@ -80,7 +81,7 @@ public class BubbleXYItemLabelGeneratorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public BubbleXYItemLabelGeneratorTests(String name) {
+    public StandardXYItemLabelGeneratorTest(String name) {
         super(name);
     }
 
@@ -96,73 +97,60 @@ public class BubbleXYItemLabelGeneratorTests extends TestCase {
         NumberFormat xnf2 = new DecimalFormat("0.000");
         NumberFormat ynf1 = new DecimalFormat("0.00");
         NumberFormat ynf2 = new DecimalFormat("0.000");
-        NumberFormat znf1 = new DecimalFormat("0.00");
-        NumberFormat znf2 = new DecimalFormat("0.000");
 
-        BubbleXYItemLabelGenerator g1 = null;
-        BubbleXYItemLabelGenerator g2 = null;
+        StandardXYItemLabelGenerator g1 = null;
+        StandardXYItemLabelGenerator g2 = null;
 
-        g1 = new BubbleXYItemLabelGenerator(f1, xnf1, ynf1, znf1);
-        g2 = new BubbleXYItemLabelGenerator(f1, xnf1, ynf1, znf1);
+        g1 = new StandardXYItemLabelGenerator(f1, xnf1, ynf1);
+        g2 = new StandardXYItemLabelGenerator(f1, xnf1, ynf1);
         assertTrue(g1.equals(g2));
         assertTrue(g2.equals(g1));
 
-        g1 = new BubbleXYItemLabelGenerator(f2, xnf1, ynf1, znf1);
+        g1 = new StandardXYItemLabelGenerator(f2, xnf1, ynf1);
         assertFalse(g1.equals(g2));
-        g2 = new BubbleXYItemLabelGenerator(f2, xnf1, ynf1, znf1);
+        g2 = new StandardXYItemLabelGenerator(f2, xnf1, ynf1);
         assertTrue(g1.equals(g2));
 
-        g1 = new BubbleXYItemLabelGenerator(f2, xnf2, ynf1, znf1);
+        g1 = new StandardXYItemLabelGenerator(f2, xnf2, ynf1);
         assertFalse(g1.equals(g2));
-        g2 = new BubbleXYItemLabelGenerator(f2, xnf2, ynf1, znf1);
+        g2 = new StandardXYItemLabelGenerator(f2, xnf2, ynf1);
         assertTrue(g1.equals(g2));
 
-        g1 = new BubbleXYItemLabelGenerator(f2, xnf2, ynf2, znf1);
+        g1 = new StandardXYItemLabelGenerator(f2, xnf2, ynf2);
         assertFalse(g1.equals(g2));
-        g2 = new BubbleXYItemLabelGenerator(f2, xnf2, ynf2, znf1);
-        assertTrue(g1.equals(g2));
-
-        g1 = new BubbleXYItemLabelGenerator(f2, xnf2, ynf2, znf2);
-        assertFalse(g1.equals(g2));
-        g2 = new BubbleXYItemLabelGenerator(f2, xnf2, ynf2, znf2);
+        g2 = new StandardXYItemLabelGenerator(f2, xnf2, ynf2);
         assertTrue(g1.equals(g2));
 
         DateFormat xdf1 = new SimpleDateFormat("d-MMM");
         DateFormat xdf2 = new SimpleDateFormat("d-MMM-yyyy");
         DateFormat ydf1 = new SimpleDateFormat("d-MMM");
         DateFormat ydf2 = new SimpleDateFormat("d-MMM-yyyy");
-        DateFormat zdf1 = new SimpleDateFormat("d-MMM");
-        DateFormat zdf2 = new SimpleDateFormat("d-MMM-yyyy");
 
-        g1 = new BubbleXYItemLabelGenerator(f1, xdf1, ydf1, zdf1);
-        g2 = new BubbleXYItemLabelGenerator(f1, xdf1, ydf1, zdf1);
+        g1 = new StandardXYItemLabelGenerator(f1, xdf1, ydf1);
+        g2 = new StandardXYItemLabelGenerator(f1, xdf1, ydf1);
         assertTrue(g1.equals(g2));
         assertTrue(g2.equals(g1));
 
-        g1 = new BubbleXYItemLabelGenerator(f1, xdf2, ydf1, zdf1);
+        g1 = new StandardXYItemLabelGenerator(f1, xdf2, ydf1);
         assertFalse(g1.equals(g2));
-        g2 = new BubbleXYItemLabelGenerator(f1, xdf2, ydf1, zdf1);
+        g2 = new StandardXYItemLabelGenerator(f1, xdf2, ydf1);
         assertTrue(g1.equals(g2));
 
-        g1 = new BubbleXYItemLabelGenerator(f1, xdf2, ydf2, zdf1);
+        g1 = new StandardXYItemLabelGenerator(f1, xdf2, ydf2);
         assertFalse(g1.equals(g2));
-        g2 = new BubbleXYItemLabelGenerator(f1, xdf2, ydf2, zdf1);
+        g2 = new StandardXYItemLabelGenerator(f1, xdf2, ydf2);
         assertTrue(g1.equals(g2));
 
-        g1 = new BubbleXYItemLabelGenerator(f1, xdf2, ydf2, zdf2);
-        assertFalse(g1.equals(g2));
-        g2 = new BubbleXYItemLabelGenerator(f1, xdf2, ydf2, zdf2);
-        assertTrue(g1.equals(g2));
     }
 
     /**
      * Simple check that hashCode is implemented.
      */
     public void testHashCode() {
-        BubbleXYItemLabelGenerator g1
-                = new BubbleXYItemLabelGenerator();
-        BubbleXYItemLabelGenerator g2
-                = new BubbleXYItemLabelGenerator();
+        StandardXYItemLabelGenerator g1
+                = new StandardXYItemLabelGenerator();
+        StandardXYItemLabelGenerator g2
+                = new StandardXYItemLabelGenerator();
         assertTrue(g1.equals(g2));
         assertTrue(g1.hashCode() == g2.hashCode());
     }
@@ -171,10 +159,10 @@ public class BubbleXYItemLabelGeneratorTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        BubbleXYItemLabelGenerator g1 = new BubbleXYItemLabelGenerator();
-        BubbleXYItemLabelGenerator g2 = null;
+        StandardXYItemLabelGenerator g1 = new StandardXYItemLabelGenerator();
+        StandardXYItemLabelGenerator g2 = null;
         try {
-            g2 = (BubbleXYItemLabelGenerator) g1.clone();
+            g2 = (StandardXYItemLabelGenerator) g1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -182,13 +170,49 @@ public class BubbleXYItemLabelGeneratorTests extends TestCase {
         assertTrue(g1 != g2);
         assertTrue(g1.getClass() == g2.getClass());
         assertTrue(g1.equals(g2));
+
+        // check independence
+        g1.getXFormat().setMinimumIntegerDigits(2);
+        assertFalse(g1.equals(g2));
+        g2.getXFormat().setMinimumIntegerDigits(2);
+        assertTrue(g1.equals(g2));
+
+        g1.getYFormat().setMinimumIntegerDigits(2);
+        assertFalse(g1.equals(g2));
+        g2.getYFormat().setMinimumIntegerDigits(2);
+        assertTrue(g1.equals(g2));
+
+        // another test...
+        g1 = new StandardXYItemLabelGenerator("{0} {1} {2}",
+                DateFormat.getInstance(), DateFormat.getInstance());
+        try {
+            g2 = (StandardXYItemLabelGenerator) g1.clone();
+        }
+        catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        assertTrue(g1 != g2);
+        assertTrue(g1.getClass() == g2.getClass());
+        assertTrue(g1.equals(g2));
+
+        // check independence
+        g1.getXDateFormat().setNumberFormat(new DecimalFormat("0.000"));
+        assertFalse(g1.equals(g2));
+        g2.getXDateFormat().setNumberFormat(new DecimalFormat("0.000"));
+        assertTrue(g1.equals(g2));
+
+        g1.getYDateFormat().setNumberFormat(new DecimalFormat("0.000"));
+        assertFalse(g1.equals(g2));
+        g2.getYDateFormat().setNumberFormat(new DecimalFormat("0.000"));
+        assertTrue(g1.equals(g2));
+
     }
 
     /**
      * Check to ensure that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        BubbleXYItemLabelGenerator g1 = new BubbleXYItemLabelGenerator();
+        StandardXYItemLabelGenerator g1 = new StandardXYItemLabelGenerator();
         assertTrue(g1 instanceof PublicCloneable);
     }
 
@@ -197,8 +221,8 @@ public class BubbleXYItemLabelGeneratorTests extends TestCase {
      */
     public void testSerialization() {
 
-        BubbleXYItemLabelGenerator g1 = new BubbleXYItemLabelGenerator();
-        BubbleXYItemLabelGenerator g2 = null;
+        StandardXYItemLabelGenerator g1 = new StandardXYItemLabelGenerator();
+        StandardXYItemLabelGenerator g2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -208,7 +232,7 @@ public class BubbleXYItemLabelGeneratorTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            g2 = (BubbleXYItemLabelGenerator) in.readObject();
+            g2 = (StandardXYItemLabelGenerator) in.readObject();
             in.close();
         }
         catch (Exception e) {
@@ -216,21 +240,6 @@ public class BubbleXYItemLabelGeneratorTests extends TestCase {
         }
         assertEquals(g1, g2);
 
-    }
-
-    /**
-     * Some checks for the testGenerateLabel() method.
-     */
-    public void testGenerateLabel() {
-        // check handling when the dataset is a regular XYDataset, not an
-        // XYZDataset...
-        XYSeries s1 = new XYSeries("S1");
-        s1.add(1.0, 2.0);
-        s1.add(2.2, 3.3);
-        XYSeriesCollection dataset = new XYSeriesCollection(s1);
-        BubbleXYItemLabelGenerator g = new BubbleXYItemLabelGenerator();
-        assertEquals("{3}", g.generateLabel(dataset, 0, 0));
-        assertEquals("{3}", g.generateLabel(dataset, 0, 1));
     }
 
 }

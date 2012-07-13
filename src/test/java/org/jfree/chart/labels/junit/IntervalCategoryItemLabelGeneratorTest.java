@@ -62,7 +62,7 @@ import org.jfree.chart.labels.IntervalCategoryItemLabelGenerator;
 /**
  * Tests for the {@link IntervalCategoryItemLabelGenerator} class.
  */
-public class IntervalCategoryItemLabelGeneratorTests extends TestCase {
+public class IntervalCategoryItemLabelGeneratorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -70,7 +70,7 @@ public class IntervalCategoryItemLabelGeneratorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(IntervalCategoryItemLabelGeneratorTests.class);
+        return new TestSuite(IntervalCategoryItemLabelGeneratorTest.class);
     }
 
     /**
@@ -78,7 +78,7 @@ public class IntervalCategoryItemLabelGeneratorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public IntervalCategoryItemLabelGeneratorTests(String name) {
+    public IntervalCategoryItemLabelGeneratorTest(String name) {
         super(name);
     }
 

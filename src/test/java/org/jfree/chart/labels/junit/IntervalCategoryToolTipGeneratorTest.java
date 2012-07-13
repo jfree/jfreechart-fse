@@ -63,7 +63,7 @@ import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
 /**
  * Tests for the {@link IntervalCategoryToolTipGenerator} class.
  */
-public class IntervalCategoryToolTipGeneratorTests extends TestCase {
+public class IntervalCategoryToolTipGeneratorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -71,7 +71,7 @@ public class IntervalCategoryToolTipGeneratorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(IntervalCategoryToolTipGeneratorTests.class);
+        return new TestSuite(IntervalCategoryToolTipGeneratorTest.class);
     }
 
     /**
@@ -79,7 +79,7 @@ public class IntervalCategoryToolTipGeneratorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public IntervalCategoryToolTipGeneratorTests(String name) {
+    public IntervalCategoryToolTipGeneratorTest(String name) {
         super(name);
     }
 

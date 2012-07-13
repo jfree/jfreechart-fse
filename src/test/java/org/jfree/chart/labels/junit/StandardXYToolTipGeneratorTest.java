@@ -24,17 +24,17 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ----------------------------------------
- * MultipleXYSeriesLabelGeneratorTests.java
- * ----------------------------------------
- * (C) Copyright 2007, 2008, by Object Refinery Limited and Contributors.
+ * ------------------------------------
+ * StandardXYToolTipGeneratorTests.java
+ * ------------------------------------
+ * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 20-Jan-2007 : Version 1 (DG);
+ * 11-May-2004 : Version 1 (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
  *
  */
@@ -47,18 +47,22 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.labels.MultipleXYSeriesLabelGenerator;
+import org.jfree.chart.labels.StandardXYToolTipGenerator;
 
 /**
- * Tests for the {@link MultipleXYSeriesLabelGenerator} class.
+ * Tests for the {@link StandardXYToolTipGenerator} class.
  */
-public class MultipleXYSeriesLabelGeneratorTests extends TestCase {
+public class StandardXYToolTipGeneratorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -66,7 +70,7 @@ public class MultipleXYSeriesLabelGeneratorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(MultipleXYSeriesLabelGeneratorTests.class);
+        return new TestSuite(StandardXYToolTipGeneratorTest.class);
     }
 
     /**
@@ -74,40 +78,76 @@ public class MultipleXYSeriesLabelGeneratorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public MultipleXYSeriesLabelGeneratorTests(String name) {
+    public StandardXYToolTipGeneratorTest(String name) {
         super(name);
     }
 
     /**
-     * A series of tests for the equals() method.
+     * Tests the equals() method.
      */
     public void testEquals() {
-        MultipleXYSeriesLabelGenerator g1
-                = new MultipleXYSeriesLabelGenerator();
-        MultipleXYSeriesLabelGenerator g2
-                = new MultipleXYSeriesLabelGenerator();
+
+        // some setup...
+        String f1 = "{1}";
+        String f2 = "{2}";
+        NumberFormat xnf1 = new DecimalFormat("0.00");
+        NumberFormat xnf2 = new DecimalFormat("0.000");
+        NumberFormat ynf1 = new DecimalFormat("0.00");
+        NumberFormat ynf2 = new DecimalFormat("0.000");
+
+        StandardXYToolTipGenerator g1 = null;
+        StandardXYToolTipGenerator g2 = null;
+
+        g1 = new StandardXYToolTipGenerator(f1, xnf1, ynf1);
+        g2 = new StandardXYToolTipGenerator(f1, xnf1, ynf1);
         assertTrue(g1.equals(g2));
         assertTrue(g2.equals(g1));
 
-        g1 = new MultipleXYSeriesLabelGenerator("Series {0}");
+        g1 = new StandardXYToolTipGenerator(f2, xnf1, ynf1);
         assertFalse(g1.equals(g2));
-        g2 = new MultipleXYSeriesLabelGenerator("Series {0}");
+        g2 = new StandardXYToolTipGenerator(f2, xnf1, ynf1);
         assertTrue(g1.equals(g2));
 
-        g1.addSeriesLabel(1, "Additional 1");
+        g1 = new StandardXYToolTipGenerator(f2, xnf2, ynf1);
         assertFalse(g1.equals(g2));
-        g2.addSeriesLabel(1, "Additional 1");
+        g2 = new StandardXYToolTipGenerator(f2, xnf2, ynf1);
         assertTrue(g1.equals(g2));
+
+        g1 = new StandardXYToolTipGenerator(f2, xnf2, ynf2);
+        assertFalse(g1.equals(g2));
+        g2 = new StandardXYToolTipGenerator(f2, xnf2, ynf2);
+        assertTrue(g1.equals(g2));
+
+        DateFormat xdf1 = new SimpleDateFormat("d-MMM");
+        DateFormat xdf2 = new SimpleDateFormat("d-MMM-yyyy");
+        DateFormat ydf1 = new SimpleDateFormat("d-MMM");
+        DateFormat ydf2 = new SimpleDateFormat("d-MMM-yyyy");
+
+        g1 = new StandardXYToolTipGenerator(f1, xdf1, ydf1);
+        g2 = new StandardXYToolTipGenerator(f1, xdf1, ydf1);
+        assertTrue(g1.equals(g2));
+        assertTrue(g2.equals(g1));
+
+        g1 = new StandardXYToolTipGenerator(f1, xdf2, ydf1);
+        assertFalse(g1.equals(g2));
+        g2 = new StandardXYToolTipGenerator(f1, xdf2, ydf1);
+        assertTrue(g1.equals(g2));
+
+        g1 = new StandardXYToolTipGenerator(f1, xdf2, ydf2);
+        assertFalse(g1.equals(g2));
+        g2 = new StandardXYToolTipGenerator(f1, xdf2, ydf2);
+        assertTrue(g1.equals(g2));
+
     }
 
     /**
      * Simple check that hashCode is implemented.
      */
     public void testHashCode() {
-        MultipleXYSeriesLabelGenerator g1
-                = new MultipleXYSeriesLabelGenerator();
-        MultipleXYSeriesLabelGenerator g2
-                = new MultipleXYSeriesLabelGenerator();
+        StandardXYToolTipGenerator g1
+                = new StandardXYToolTipGenerator();
+        StandardXYToolTipGenerator g2
+                = new StandardXYToolTipGenerator();
         assertTrue(g1.equals(g2));
         assertTrue(g1.hashCode() == g2.hashCode());
     }
@@ -116,11 +156,10 @@ public class MultipleXYSeriesLabelGeneratorTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        MultipleXYSeriesLabelGenerator g1
-                = new MultipleXYSeriesLabelGenerator();
-        MultipleXYSeriesLabelGenerator g2 = null;
+        StandardXYToolTipGenerator g1 = new StandardXYToolTipGenerator();
+        StandardXYToolTipGenerator g2 = null;
         try {
-            g2 = (MultipleXYSeriesLabelGenerator) g1.clone();
+            g2 = (StandardXYToolTipGenerator) g1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -128,20 +167,13 @@ public class MultipleXYSeriesLabelGeneratorTests extends TestCase {
         assertTrue(g1 != g2);
         assertTrue(g1.getClass() == g2.getClass());
         assertTrue(g1.equals(g2));
-
-        // check independence
-        g1.addSeriesLabel(3, "Add3");
-        assertFalse(g1.equals(g2));
-        g2.addSeriesLabel(3, "Add3");
-        assertTrue(g1.equals(g2));
     }
 
     /**
      * Check to ensure that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        MultipleXYSeriesLabelGenerator g1
-                = new MultipleXYSeriesLabelGenerator();
+        StandardXYToolTipGenerator g1 = new StandardXYToolTipGenerator();
         assertTrue(g1 instanceof PublicCloneable);
     }
 
@@ -150,12 +182,8 @@ public class MultipleXYSeriesLabelGeneratorTests extends TestCase {
      */
     public void testSerialization() {
 
-        MultipleXYSeriesLabelGenerator g1
-                = new MultipleXYSeriesLabelGenerator();
-        g1.addSeriesLabel(0, "Add0");
-        g1.addSeriesLabel(0, "Add0b");
-        g1.addSeriesLabel(1, "Add1");
-        MultipleXYSeriesLabelGenerator g2 = null;
+        StandardXYToolTipGenerator g1 = new StandardXYToolTipGenerator();
+        StandardXYToolTipGenerator g2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -165,7 +193,7 @@ public class MultipleXYSeriesLabelGeneratorTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            g2 = (MultipleXYSeriesLabelGenerator) in.readObject();
+            g2 = (StandardXYToolTipGenerator) in.readObject();
             in.close();
         }
         catch (Exception e) {

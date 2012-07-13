@@ -56,7 +56,7 @@ import org.jfree.chart.labels.ItemLabelAnchor;
 /**
  * Tests for the {@link ItemLabelAnchor} class.
  */
-public class ItemLabelAnchorTests extends TestCase {
+public class ItemLabelAnchorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -64,7 +64,7 @@ public class ItemLabelAnchorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(ItemLabelAnchorTests.class);
+        return new TestSuite(ItemLabelAnchorTest.class);
     }
 
     /**
@@ -72,7 +72,7 @@ public class ItemLabelAnchorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public ItemLabelAnchorTests(String name) {
+    public ItemLabelAnchorTest(String name) {
         super(name);
     }
 

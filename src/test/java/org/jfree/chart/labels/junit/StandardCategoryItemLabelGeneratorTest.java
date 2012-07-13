@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -----------------------------------------
- * BoxAndWhiskerXYToolTipGeneratorTests.java
- * -----------------------------------------
+ * --------------------------------------------
+ * StandardCategoryItemLabelGeneratorTests.java
+ * --------------------------------------------
  * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -34,9 +34,9 @@
  *
  * Changes
  * -------
- * 13-Aug-2003 : Version 1 (DG);
- * 27-Feb-2004 : Renamed BoxAndWhiskerItemLabelGenerator
- *               --> XYBoxAndWhiskerItemLabelGenerator (DG);
+ * 21-Mar-2003 : Version 1 (DG);
+ * 13-Aug-2003 : Added cloning tests (DG);
+ * 11-May-2004 : Renamed class (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
  *
  */
@@ -49,6 +49,7 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
@@ -57,12 +58,14 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.labels.BoxAndWhiskerXYToolTipGenerator;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
+import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
- * Tests for the {@link BoxAndWhiskerXYToolTipGenerator} class.
+ * Tests for the {@link StandardCategoryItemLabelGenerator} class.
  */
-public class BoxAndWhiskerXYToolTipGeneratorTests extends TestCase {
+public class StandardCategoryItemLabelGeneratorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -70,7 +73,7 @@ public class BoxAndWhiskerXYToolTipGeneratorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(BoxAndWhiskerXYToolTipGeneratorTests.class);
+        return new TestSuite(StandardCategoryItemLabelGeneratorTest.class);
     }
 
     /**
@@ -78,62 +81,74 @@ public class BoxAndWhiskerXYToolTipGeneratorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public BoxAndWhiskerXYToolTipGeneratorTests(String name) {
+    public StandardCategoryItemLabelGeneratorTest(String name) {
         super(name);
     }
 
     /**
-     * A series of tests for the equals() method.
+     * Some checks for the generalLabel() method.
+     */
+    public void testGenerateLabel() {
+        StandardCategoryItemLabelGenerator g
+                = new StandardCategoryItemLabelGenerator("{2}",
+                new DecimalFormat("0.000"));
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        dataset.addValue(1.0, "R0", "C0");
+        dataset.addValue(2.0, "R0", "C1");
+        dataset.addValue(3.0, "R1", "C0");
+        dataset.addValue(null, "R1", "C1");
+        String s = g.generateLabel(dataset, 0, 0);
+        assertTrue(s.startsWith("1"));
+        assertTrue(s.endsWith("000"));
+
+        // try a null value
+        s = g.generateLabel(dataset, 1, 1);
+        assertEquals("-", s);
+    }
+
+    /**
+     * Some checks for the equals() method.
      */
     public void testEquals() {
 
-        // standard test
-        BoxAndWhiskerXYToolTipGenerator g1
-                = new BoxAndWhiskerXYToolTipGenerator();
-        BoxAndWhiskerXYToolTipGenerator g2
-                = new BoxAndWhiskerXYToolTipGenerator();
+        StandardCategoryItemLabelGenerator g1
+                = new StandardCategoryItemLabelGenerator();
+        StandardCategoryItemLabelGenerator g2
+                = new StandardCategoryItemLabelGenerator();
         assertTrue(g1.equals(g2));
         assertTrue(g2.equals(g1));
 
-        // tooltip format
-        g1 = new BoxAndWhiskerXYToolTipGenerator("{0} --> {1} {2}",
-                new SimpleDateFormat("yyyy"), new DecimalFormat("0.0"));
-        g2 = new BoxAndWhiskerXYToolTipGenerator("{1} {2}",
-                new SimpleDateFormat("yyyy"), new DecimalFormat("0.0"));
+        g1 = new StandardCategoryItemLabelGenerator("{0}",
+                new DecimalFormat("0.000"));
         assertFalse(g1.equals(g2));
-        g2 = new BoxAndWhiskerXYToolTipGenerator("{0} --> {1} {2}",
-                new SimpleDateFormat("yyyy"), new DecimalFormat("0.0"));
+        g2 = new StandardCategoryItemLabelGenerator("{0}",
+                new DecimalFormat("0.000"));
         assertTrue(g1.equals(g2));
 
-        // date format
-        g1 = new BoxAndWhiskerXYToolTipGenerator("{0} --> {1} {2}",
-                new SimpleDateFormat("yyyy"), new DecimalFormat("0.0"));
-        g2 = new BoxAndWhiskerXYToolTipGenerator("{0} --> {1} {2}",
-                new SimpleDateFormat("MMM-yyyy"), new DecimalFormat("0.0"));
+        g1 = new StandardCategoryItemLabelGenerator("{1}",
+                new DecimalFormat("0.000"));
         assertFalse(g1.equals(g2));
-        g2 = new BoxAndWhiskerXYToolTipGenerator("{0} --> {1} {2}",
-                new SimpleDateFormat("yyyy"), new DecimalFormat("0.0"));
+        g2 = new StandardCategoryItemLabelGenerator("{1}",
+                new DecimalFormat("0.000"));
         assertTrue(g1.equals(g2));
 
-        // Y format
-        g1 = new BoxAndWhiskerXYToolTipGenerator("{0} --> {1} {2}",
-                new SimpleDateFormat("yyyy"), new DecimalFormat("0.0"));
-        g2 = new BoxAndWhiskerXYToolTipGenerator("{0} --> {1} {2}",
-                new SimpleDateFormat("yyyy"), new DecimalFormat("0.00"));
+        g1 = new StandardCategoryItemLabelGenerator("{2}",
+                new SimpleDateFormat("d-MMM"));
         assertFalse(g1.equals(g2));
-        g2 = new BoxAndWhiskerXYToolTipGenerator("{0} --> {1} {2}",
-                new SimpleDateFormat("yyyy"), new DecimalFormat("0.0"));
+        g2 = new StandardCategoryItemLabelGenerator("{2}",
+                new SimpleDateFormat("d-MMM"));
         assertTrue(g1.equals(g2));
+
     }
 
     /**
      * Simple check that hashCode is implemented.
      */
     public void testHashCode() {
-        BoxAndWhiskerXYToolTipGenerator g1
-                = new BoxAndWhiskerXYToolTipGenerator();
-        BoxAndWhiskerXYToolTipGenerator g2
-                = new BoxAndWhiskerXYToolTipGenerator();
+        StandardCategoryItemLabelGenerator g1
+                = new StandardCategoryItemLabelGenerator();
+        StandardCategoryItemLabelGenerator g2
+                = new StandardCategoryItemLabelGenerator();
         assertTrue(g1.equals(g2));
         assertTrue(g1.hashCode() == g2.hashCode());
     }
@@ -142,11 +157,11 @@ public class BoxAndWhiskerXYToolTipGeneratorTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        BoxAndWhiskerXYToolTipGenerator g1
-                = new BoxAndWhiskerXYToolTipGenerator();
-        BoxAndWhiskerXYToolTipGenerator g2 = null;
+        StandardCategoryItemLabelGenerator g1
+                = new StandardCategoryItemLabelGenerator();
+        StandardCategoryItemLabelGenerator g2 = null;
         try {
-            g2 = (BoxAndWhiskerXYToolTipGenerator) g1.clone();
+            g2 = (StandardCategoryItemLabelGenerator) g1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -160,8 +175,8 @@ public class BoxAndWhiskerXYToolTipGeneratorTests extends TestCase {
      * Check to ensure that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        BoxAndWhiskerXYToolTipGenerator g1
-                = new BoxAndWhiskerXYToolTipGenerator();
+        StandardCategoryItemLabelGenerator g1
+                = new StandardCategoryItemLabelGenerator();
         assertTrue(g1 instanceof PublicCloneable);
     }
 
@@ -170,9 +185,10 @@ public class BoxAndWhiskerXYToolTipGeneratorTests extends TestCase {
      */
     public void testSerialization() {
 
-        BoxAndWhiskerXYToolTipGenerator g1
-                = new BoxAndWhiskerXYToolTipGenerator();
-        BoxAndWhiskerXYToolTipGenerator g2 = null;
+        StandardCategoryItemLabelGenerator g1
+                = new StandardCategoryItemLabelGenerator("{2}",
+                DateFormat.getInstance());
+        StandardCategoryItemLabelGenerator g2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -182,7 +198,7 @@ public class BoxAndWhiskerXYToolTipGeneratorTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            g2 = (BoxAndWhiskerXYToolTipGenerator) in.readObject();
+            g2 = (StandardCategoryItemLabelGenerator) in.readObject();
             in.close();
         }
         catch (Exception e) {
@@ -190,6 +206,19 @@ public class BoxAndWhiskerXYToolTipGeneratorTests extends TestCase {
         }
         assertEquals(g1, g2);
 
+    }
+
+    /**
+     * A test for bug 1481087.
+     */
+    public void testEquals1481087() {
+        StandardCategoryItemLabelGenerator g1
+                = new StandardCategoryItemLabelGenerator("{0}",
+                new DecimalFormat("0.00"));
+        StandardCategoryToolTipGenerator g2
+                = new StandardCategoryToolTipGenerator("{0}",
+                new DecimalFormat("0.00"));
+        assertFalse(g1.equals(g2));
     }
 
 }

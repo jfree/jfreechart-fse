@@ -24,18 +24,18 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * --------------------------------------
- * SymbolicXYItemLabelGeneratorTests.java
- * --------------------------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
+ * ----------------------------------------
+ * StandardXYSeriesLabelGeneratorTests.java
+ * ----------------------------------------
+ * (C) Copyright 2006-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 13-Aug-2003 : Version 1 (DG);
- * 23-Apr-2008 : Added testPublicCloneable() (DG);
+ * 24-Nov-2006 : Version 1 (DG);
+ * 23-Apr-2008 : Added testPublicCloneable() (DG)
  *
  */
 
@@ -53,12 +53,14 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.labels.SymbolicXYItemLabelGenerator;
+import org.jfree.chart.labels.StandardXYSeriesLabelGenerator;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 /**
- * Tests for the {@link SymbolicXYItemLabelGenerator} class.
+ * Tests for the {@link StandardXYSeriesLabelGenerator} class.
  */
-public class SymbolicXYItemLabelGeneratorTests extends TestCase {
+public class StandardXYSeriesLabelGeneratorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -66,7 +68,7 @@ public class SymbolicXYItemLabelGeneratorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(SymbolicXYItemLabelGeneratorTests.class);
+        return new TestSuite(StandardXYSeriesLabelGeneratorTest.class);
     }
 
     /**
@@ -74,28 +76,48 @@ public class SymbolicXYItemLabelGeneratorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public SymbolicXYItemLabelGeneratorTests(String name) {
+    public StandardXYSeriesLabelGeneratorTest(String name) {
         super(name);
     }
 
     /**
-     * Tests the equals method.
+     * Some checks for the generalLabel() method.
+     */
+    public void testGenerateLabel() {
+        StandardXYSeriesLabelGenerator g
+                = new StandardXYSeriesLabelGenerator("Series {0}");
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        dataset.addSeries(new XYSeries("1"));
+        dataset.addSeries(new XYSeries("2"));
+        assertEquals("Series 1", g.generateLabel(dataset, 0));
+        assertEquals("Series 2", g.generateLabel(dataset, 1));
+    }
+
+    /**
+     * Some checks for the equals() method.
      */
     public void testEquals() {
-        SymbolicXYItemLabelGenerator g1 = new SymbolicXYItemLabelGenerator();
-        SymbolicXYItemLabelGenerator g2 = new SymbolicXYItemLabelGenerator();
+        StandardXYSeriesLabelGenerator g1
+                = new StandardXYSeriesLabelGenerator("Series {0}");
+        StandardXYSeriesLabelGenerator g2
+                = new StandardXYSeriesLabelGenerator("Series {0}");
         assertTrue(g1.equals(g2));
         assertTrue(g2.equals(g1));
+
+        g1 = new StandardXYSeriesLabelGenerator("{1}");
+        assertFalse(g1.equals(g2));
+        g2 = new StandardXYSeriesLabelGenerator("{1}");
+        assertTrue(g1.equals(g2));
     }
 
     /**
      * Simple check that hashCode is implemented.
      */
     public void testHashCode() {
-        SymbolicXYItemLabelGenerator g1
-                = new SymbolicXYItemLabelGenerator();
-        SymbolicXYItemLabelGenerator g2
-                = new SymbolicXYItemLabelGenerator();
+        StandardXYSeriesLabelGenerator g1
+                = new StandardXYSeriesLabelGenerator();
+        StandardXYSeriesLabelGenerator g2
+                = new StandardXYSeriesLabelGenerator();
         assertTrue(g1.equals(g2));
         assertTrue(g1.hashCode() == g2.hashCode());
     }
@@ -104,10 +126,11 @@ public class SymbolicXYItemLabelGeneratorTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        SymbolicXYItemLabelGenerator g1 = new SymbolicXYItemLabelGenerator();
-        SymbolicXYItemLabelGenerator g2 = null;
+        StandardXYSeriesLabelGenerator g1
+                = new StandardXYSeriesLabelGenerator("Series {0}");
+        StandardXYSeriesLabelGenerator g2 = null;
         try {
-            g2 = (SymbolicXYItemLabelGenerator) g1.clone();
+            g2 = (StandardXYSeriesLabelGenerator) g1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -121,7 +144,8 @@ public class SymbolicXYItemLabelGeneratorTests extends TestCase {
      * Check to ensure that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        SymbolicXYItemLabelGenerator g1 = new SymbolicXYItemLabelGenerator();
+        StandardXYSeriesLabelGenerator g1
+                = new StandardXYSeriesLabelGenerator("Series {0}");
         assertTrue(g1 instanceof PublicCloneable);
     }
 
@@ -129,8 +153,9 @@ public class SymbolicXYItemLabelGeneratorTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        SymbolicXYItemLabelGenerator g1 = new SymbolicXYItemLabelGenerator();
-        SymbolicXYItemLabelGenerator g2 = null;
+        StandardXYSeriesLabelGenerator g1
+                = new StandardXYSeriesLabelGenerator("Series {0}");
+        StandardXYSeriesLabelGenerator g2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -140,7 +165,7 @@ public class SymbolicXYItemLabelGeneratorTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            g2 = (SymbolicXYItemLabelGenerator) in.readObject();
+            g2 = (StandardXYSeriesLabelGenerator) in.readObject();
             in.close();
         }
         catch (Exception e) {
@@ -148,5 +173,4 @@ public class SymbolicXYItemLabelGeneratorTests extends TestCase {
         }
         assertEquals(g1, g2);
     }
-
 }

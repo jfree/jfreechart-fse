@@ -59,7 +59,7 @@ import org.jfree.chart.labels.BoxAndWhiskerToolTipGenerator;
 /**
  * Tests for the {@link BoxAndWhiskerToolTipGenerator} class.
  */
-public class BoxAndWhiskerToolTipGeneratorTests extends TestCase {
+public class BoxAndWhiskerToolTipGeneratorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -67,7 +67,7 @@ public class BoxAndWhiskerToolTipGeneratorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(BoxAndWhiskerToolTipGeneratorTests.class);
+        return new TestSuite(BoxAndWhiskerToolTipGeneratorTest.class);
     }
 
     /**
@@ -75,7 +75,7 @@ public class BoxAndWhiskerToolTipGeneratorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public BoxAndWhiskerToolTipGeneratorTests(String name) {
+    public BoxAndWhiskerToolTipGeneratorTest(String name) {
         super(name);
     }
 

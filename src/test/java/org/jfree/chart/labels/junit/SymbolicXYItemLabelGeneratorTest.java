@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ------------------------------------
- * CustomXYItemLabelGeneratorTests.java
- * ------------------------------------
+ * --------------------------------------
+ * SymbolicXYItemLabelGeneratorTests.java
+ * --------------------------------------
  * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -34,8 +34,7 @@
  *
  * Changes
  * -------
- * 23-Mar-2003 : Version 1 (DG);
- * 13-Aug-2003 : Added cloning tests (DG);
+ * 13-Aug-2003 : Version 1 (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
  *
  */
@@ -48,19 +47,18 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.labels.CustomXYToolTipGenerator;
+import org.jfree.chart.labels.SymbolicXYItemLabelGenerator;
 
 /**
- * Tests for the {@link CustomXYToolTipGenerator} class.
+ * Tests for the {@link SymbolicXYItemLabelGenerator} class.
  */
-public class CustomXYItemLabelGeneratorTests extends TestCase {
+public class SymbolicXYItemLabelGeneratorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -68,7 +66,7 @@ public class CustomXYItemLabelGeneratorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(CustomXYItemLabelGeneratorTests.class);
+        return new TestSuite(SymbolicXYItemLabelGeneratorTest.class);
     }
 
     /**
@@ -76,18 +74,40 @@ public class CustomXYItemLabelGeneratorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public CustomXYItemLabelGeneratorTests(String name) {
+    public SymbolicXYItemLabelGeneratorTest(String name) {
         super(name);
+    }
+
+    /**
+     * Tests the equals method.
+     */
+    public void testEquals() {
+        SymbolicXYItemLabelGenerator g1 = new SymbolicXYItemLabelGenerator();
+        SymbolicXYItemLabelGenerator g2 = new SymbolicXYItemLabelGenerator();
+        assertTrue(g1.equals(g2));
+        assertTrue(g2.equals(g1));
+    }
+
+    /**
+     * Simple check that hashCode is implemented.
+     */
+    public void testHashCode() {
+        SymbolicXYItemLabelGenerator g1
+                = new SymbolicXYItemLabelGenerator();
+        SymbolicXYItemLabelGenerator g2
+                = new SymbolicXYItemLabelGenerator();
+        assertTrue(g1.equals(g2));
+        assertTrue(g1.hashCode() == g2.hashCode());
     }
 
     /**
      * Confirm that cloning works.
      */
     public void testCloning() {
-        CustomXYToolTipGenerator g1 = new CustomXYToolTipGenerator();
-        CustomXYToolTipGenerator g2 = null;
+        SymbolicXYItemLabelGenerator g1 = new SymbolicXYItemLabelGenerator();
+        SymbolicXYItemLabelGenerator g2 = null;
         try {
-            g2 = (CustomXYToolTipGenerator) g1.clone();
+            g2 = (SymbolicXYItemLabelGenerator) g1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -101,7 +121,7 @@ public class CustomXYItemLabelGeneratorTests extends TestCase {
      * Check to ensure that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        CustomXYToolTipGenerator g1 = new CustomXYToolTipGenerator();
+        SymbolicXYItemLabelGenerator g1 = new SymbolicXYItemLabelGenerator();
         assertTrue(g1 instanceof PublicCloneable);
     }
 
@@ -109,21 +129,8 @@ public class CustomXYItemLabelGeneratorTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-
-        List t1 = new java.util.ArrayList();
-        t1.add("Tooltip A1");
-        t1.add("Tooltip A2");
-        t1.add("Tooltip A3");
-
-        List t2 = new java.util.ArrayList();
-        t2.add("Tooltip B1");
-        t2.add("Tooltip B2");
-        t2.add("Tooltip B3");
-
-        CustomXYToolTipGenerator g1 = new CustomXYToolTipGenerator();
-        g1.addToolTipSeries(t1);
-        g1.addToolTipSeries(t2);
-        CustomXYToolTipGenerator g2 = null;
+        SymbolicXYItemLabelGenerator g1 = new SymbolicXYItemLabelGenerator();
+        SymbolicXYItemLabelGenerator g2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -133,14 +140,13 @@ public class CustomXYItemLabelGeneratorTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            g2 = (CustomXYToolTipGenerator) in.readObject();
+            g2 = (SymbolicXYItemLabelGenerator) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(g1, g2);
-
     }
 
 }

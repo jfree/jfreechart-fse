@@ -25,7 +25,7 @@
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------------------
- * StandardPieToolTipGeneratorTests.java
+ * StandardXYZToolTipGeneratorTests.java
  * -------------------------------------
  * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
@@ -34,13 +34,7 @@
  *
  * Changes
  * -------
- * 18-Mar-2003 : Version 1 (DG);
- * 13-Aug-2003 : Added clone tests (DG);
- * 04-Mar-2004 : Added test for equals() method (DG);
- * ------------- JFREECHART 1.0.x ---------------------------------------------
- * 03-May-2006 : Extended test for clone() method (DG);
- * 03-May-2006 : Renamed StandardPieItemLabelGeneratorTests
- *               --> StandardPieToolTipGeneratorTests (DG);
+ * 23-Mar-2003 : Version 1 (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
  *
  */
@@ -53,20 +47,22 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.labels.StandardPieToolTipGenerator;
+import org.jfree.chart.labels.StandardXYZToolTipGenerator;
 
 /**
- * Tests for the {@link StandardPieToolTipGenerator} class.
+ * Tests for the {@link StandardXYZToolTipGenerator} class.
  */
-public class StandardPieToolTipGeneratorTests extends TestCase {
+public class StandardXYZToolTipGeneratorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -74,7 +70,7 @@ public class StandardPieToolTipGeneratorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StandardPieToolTipGeneratorTests.class);
+        return new TestSuite(StandardXYZToolTipGeneratorTest.class);
     }
 
     /**
@@ -82,72 +78,107 @@ public class StandardPieToolTipGeneratorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StandardPieToolTipGeneratorTests(String name) {
+    public StandardXYZToolTipGeneratorTest(String name) {
         super(name);
     }
 
     /**
-     * Test that the equals() method distinguishes all fields.
+     * Tests that the equals() method can distinguish all fields.
      */
     public void testEquals() {
-        StandardPieToolTipGenerator g1 = new StandardPieToolTipGenerator();
-        StandardPieToolTipGenerator g2 = new StandardPieToolTipGenerator();
-        assertTrue(g1.equals(g2));
-        assertTrue(g2.equals(g1));
 
-        g1 = new StandardPieToolTipGenerator("{0}",
-                new DecimalFormat("#,##0.00"),
-                NumberFormat.getPercentInstance());
-        assertFalse(g1.equals(g2));
-        g2 = new StandardPieToolTipGenerator("{0}",
-                new DecimalFormat("#,##0.00"),
-                NumberFormat.getPercentInstance());
-        assertTrue(g1.equals(g2));
+        // some setup...
+        String f1 = "{1}";
+        String f2 = "{2}";
+        NumberFormat xnf1 = new DecimalFormat("0.00");
+        NumberFormat xnf2 = new DecimalFormat("0.000");
+        NumberFormat ynf1 = new DecimalFormat("0.00");
+        NumberFormat ynf2 = new DecimalFormat("0.000");
+        NumberFormat znf1 = new DecimalFormat("0.00");
+        NumberFormat znf2 = new DecimalFormat("0.000");
 
-        g1 = new StandardPieToolTipGenerator("{0} {1}",
-                new DecimalFormat("#,##0.00"),
-                NumberFormat.getPercentInstance());
-        assertFalse(g1.equals(g2));
-        g2 = new StandardPieToolTipGenerator("{0} {1}",
-                new DecimalFormat("#,##0.00"),
-                NumberFormat.getPercentInstance());
-        assertTrue(g1.equals(g2));
+        DateFormat xdf1 = new SimpleDateFormat("d-MMM");
+        DateFormat xdf2 = new SimpleDateFormat("d-MMM-yyyy");
+        DateFormat ydf1 = new SimpleDateFormat("d-MMM");
+        DateFormat ydf2 = new SimpleDateFormat("d-MMM-yyyy");
+        DateFormat zdf1 = new SimpleDateFormat("d-MMM");
+        DateFormat zdf2 = new SimpleDateFormat("d-MMM-yyyy");
 
-        g1 = new StandardPieToolTipGenerator("{0} {1}",
-                new DecimalFormat("#,##0"), NumberFormat.getPercentInstance());
-        assertFalse(g1.equals(g2));
-        g2 = new StandardPieToolTipGenerator("{0} {1}",
-                new DecimalFormat("#,##0"), NumberFormat.getPercentInstance());
+        StandardXYZToolTipGenerator g1 = null;
+        StandardXYZToolTipGenerator g2 = null;
+
+        g1 = new StandardXYZToolTipGenerator(f1, xnf1, ynf1, znf1);
+        g2 = new StandardXYZToolTipGenerator(f1, xnf1, ynf1, znf1);
         assertTrue(g1.equals(g2));
 
-        g1 = new StandardPieToolTipGenerator("{0} {1}",
-                new DecimalFormat("#,##0"), new DecimalFormat("0.000%"));
+        // format string...
+        g1 = new StandardXYZToolTipGenerator(f2, xnf1, ynf1, znf1);
         assertFalse(g1.equals(g2));
-        g2 = new StandardPieToolTipGenerator("{0} {1}",
-                new DecimalFormat("#,##0"), new DecimalFormat("0.000%"));
+        g2 = new StandardXYZToolTipGenerator(f2, xnf1, ynf1, znf1);
         assertTrue(g1.equals(g2));
+
+        // x number format
+        g1 = new StandardXYZToolTipGenerator(f2, xnf2, ynf1, znf1);
+        assertFalse(g1.equals(g2));
+        g2 = new StandardXYZToolTipGenerator(f2, xnf2, ynf1, znf1);
+        assertTrue(g1.equals(g2));
+
+        // y number format
+        g1 = new StandardXYZToolTipGenerator(f2, xnf2, ynf2, znf1);
+        assertFalse(g1.equals(g2));
+        g2 = new StandardXYZToolTipGenerator(f2, xnf2, ynf2, znf1);
+        assertTrue(g1.equals(g2));
+
+        // z number format
+        g1 = new StandardXYZToolTipGenerator(f2, xnf2, ynf2, znf2);
+        assertFalse(g1.equals(g2));
+        g2 = new StandardXYZToolTipGenerator(f2, xnf2, ynf2, znf2);
+        assertTrue(g1.equals(g2));
+
+        g1 = new StandardXYZToolTipGenerator(f2, xdf1, ydf1, zdf1);
+        g2 = new StandardXYZToolTipGenerator(f2, xdf1, ydf1, zdf1);
+        assertTrue(g1.equals(g2));
+
+        // x date format
+        g1 = new StandardXYZToolTipGenerator(f2, xdf2, ydf1, zdf1);
+        assertFalse(g1.equals(g2));
+        g2 = new StandardXYZToolTipGenerator(f2, xdf2, ydf1, zdf1);
+        assertTrue(g1.equals(g2));
+
+        // y date format
+        g1 = new StandardXYZToolTipGenerator(f2, xdf2, ydf2, zdf1);
+        assertFalse(g1.equals(g2));
+        g2 = new StandardXYZToolTipGenerator(f2, xdf2, ydf2, zdf1);
+        assertTrue(g1.equals(g2));
+
+        // z date format
+        g1 = new StandardXYZToolTipGenerator(f2, xdf2, ydf2, zdf2);
+        assertFalse(g1.equals(g2));
+        g2 = new StandardXYZToolTipGenerator(f2, xdf2, ydf2, zdf2);
+        assertTrue(g1.equals(g2));
+
     }
 
     /**
      * Simple check that hashCode is implemented.
      */
     public void testHashCode() {
-        StandardPieToolTipGenerator g1
-                = new StandardPieToolTipGenerator();
-        StandardPieToolTipGenerator g2
-                = new StandardPieToolTipGenerator();
+        StandardXYZToolTipGenerator g1
+                = new StandardXYZToolTipGenerator();
+        StandardXYZToolTipGenerator g2
+                = new StandardXYZToolTipGenerator();
         assertTrue(g1.equals(g2));
         assertTrue(g1.hashCode() == g2.hashCode());
     }
 
     /**
-     * Some checks for cloning.
+     * Confirm that cloning works.
      */
     public void testCloning() {
-        StandardPieToolTipGenerator g1 = new StandardPieToolTipGenerator();
-        StandardPieToolTipGenerator g2 = null;
+        StandardXYZToolTipGenerator g1 = new StandardXYZToolTipGenerator();
+        StandardXYZToolTipGenerator g2 = null;
         try {
-            g2 = (StandardPieToolTipGenerator) g1.clone();
+            g2 = (StandardXYZToolTipGenerator) g1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -155,15 +186,13 @@ public class StandardPieToolTipGeneratorTests extends TestCase {
         assertTrue(g1 != g2);
         assertTrue(g1.getClass() == g2.getClass());
         assertTrue(g1.equals(g2));
-        assertTrue(g1.getNumberFormat() != g2.getNumberFormat());
-        assertTrue(g1.getPercentFormat() != g2.getPercentFormat());
     }
 
     /**
      * Check to ensure that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        StandardPieToolTipGenerator g1 = new StandardPieToolTipGenerator();
+        StandardXYZToolTipGenerator g1 = new StandardXYZToolTipGenerator();
         assertTrue(g1 instanceof PublicCloneable);
     }
 
@@ -172,8 +201,8 @@ public class StandardPieToolTipGeneratorTests extends TestCase {
      */
     public void testSerialization() {
 
-        StandardPieToolTipGenerator g1 = new StandardPieToolTipGenerator();
-        StandardPieToolTipGenerator g2 = null;
+        StandardXYZToolTipGenerator g1 = new StandardXYZToolTipGenerator();
+        StandardXYZToolTipGenerator g2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -183,7 +212,7 @@ public class StandardPieToolTipGeneratorTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            g2 = (StandardPieToolTipGenerator) in.readObject();
+            g2 = (StandardXYZToolTipGenerator) in.readObject();
             in.close();
         }
         catch (Exception e) {

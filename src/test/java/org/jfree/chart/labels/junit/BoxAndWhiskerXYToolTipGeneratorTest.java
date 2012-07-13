@@ -24,17 +24,19 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ------------------------------------
- * StandardXYToolTipGeneratorTests.java
- * ------------------------------------
- * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
+ * -----------------------------------------
+ * BoxAndWhiskerXYToolTipGeneratorTests.java
+ * -----------------------------------------
+ * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 11-May-2004 : Version 1 (DG);
+ * 13-Aug-2003 : Version 1 (DG);
+ * 27-Feb-2004 : Renamed BoxAndWhiskerItemLabelGenerator
+ *               --> XYBoxAndWhiskerItemLabelGenerator (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
  *
  */
@@ -47,9 +49,7 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
 import junit.framework.Test;
@@ -57,12 +57,12 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.labels.StandardXYToolTipGenerator;
+import org.jfree.chart.labels.BoxAndWhiskerXYToolTipGenerator;
 
 /**
- * Tests for the {@link StandardXYToolTipGenerator} class.
+ * Tests for the {@link BoxAndWhiskerXYToolTipGenerator} class.
  */
-public class StandardXYToolTipGeneratorTests extends TestCase {
+public class BoxAndWhiskerXYToolTipGeneratorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -70,7 +70,7 @@ public class StandardXYToolTipGeneratorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StandardXYToolTipGeneratorTests.class);
+        return new TestSuite(BoxAndWhiskerXYToolTipGeneratorTest.class);
     }
 
     /**
@@ -78,76 +78,62 @@ public class StandardXYToolTipGeneratorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StandardXYToolTipGeneratorTests(String name) {
+    public BoxAndWhiskerXYToolTipGeneratorTest(String name) {
         super(name);
     }
 
     /**
-     * Tests the equals() method.
+     * A series of tests for the equals() method.
      */
     public void testEquals() {
 
-        // some setup...
-        String f1 = "{1}";
-        String f2 = "{2}";
-        NumberFormat xnf1 = new DecimalFormat("0.00");
-        NumberFormat xnf2 = new DecimalFormat("0.000");
-        NumberFormat ynf1 = new DecimalFormat("0.00");
-        NumberFormat ynf2 = new DecimalFormat("0.000");
-
-        StandardXYToolTipGenerator g1 = null;
-        StandardXYToolTipGenerator g2 = null;
-
-        g1 = new StandardXYToolTipGenerator(f1, xnf1, ynf1);
-        g2 = new StandardXYToolTipGenerator(f1, xnf1, ynf1);
+        // standard test
+        BoxAndWhiskerXYToolTipGenerator g1
+                = new BoxAndWhiskerXYToolTipGenerator();
+        BoxAndWhiskerXYToolTipGenerator g2
+                = new BoxAndWhiskerXYToolTipGenerator();
         assertTrue(g1.equals(g2));
         assertTrue(g2.equals(g1));
 
-        g1 = new StandardXYToolTipGenerator(f2, xnf1, ynf1);
+        // tooltip format
+        g1 = new BoxAndWhiskerXYToolTipGenerator("{0} --> {1} {2}",
+                new SimpleDateFormat("yyyy"), new DecimalFormat("0.0"));
+        g2 = new BoxAndWhiskerXYToolTipGenerator("{1} {2}",
+                new SimpleDateFormat("yyyy"), new DecimalFormat("0.0"));
         assertFalse(g1.equals(g2));
-        g2 = new StandardXYToolTipGenerator(f2, xnf1, ynf1);
+        g2 = new BoxAndWhiskerXYToolTipGenerator("{0} --> {1} {2}",
+                new SimpleDateFormat("yyyy"), new DecimalFormat("0.0"));
         assertTrue(g1.equals(g2));
 
-        g1 = new StandardXYToolTipGenerator(f2, xnf2, ynf1);
+        // date format
+        g1 = new BoxAndWhiskerXYToolTipGenerator("{0} --> {1} {2}",
+                new SimpleDateFormat("yyyy"), new DecimalFormat("0.0"));
+        g2 = new BoxAndWhiskerXYToolTipGenerator("{0} --> {1} {2}",
+                new SimpleDateFormat("MMM-yyyy"), new DecimalFormat("0.0"));
         assertFalse(g1.equals(g2));
-        g2 = new StandardXYToolTipGenerator(f2, xnf2, ynf1);
+        g2 = new BoxAndWhiskerXYToolTipGenerator("{0} --> {1} {2}",
+                new SimpleDateFormat("yyyy"), new DecimalFormat("0.0"));
         assertTrue(g1.equals(g2));
 
-        g1 = new StandardXYToolTipGenerator(f2, xnf2, ynf2);
+        // Y format
+        g1 = new BoxAndWhiskerXYToolTipGenerator("{0} --> {1} {2}",
+                new SimpleDateFormat("yyyy"), new DecimalFormat("0.0"));
+        g2 = new BoxAndWhiskerXYToolTipGenerator("{0} --> {1} {2}",
+                new SimpleDateFormat("yyyy"), new DecimalFormat("0.00"));
         assertFalse(g1.equals(g2));
-        g2 = new StandardXYToolTipGenerator(f2, xnf2, ynf2);
+        g2 = new BoxAndWhiskerXYToolTipGenerator("{0} --> {1} {2}",
+                new SimpleDateFormat("yyyy"), new DecimalFormat("0.0"));
         assertTrue(g1.equals(g2));
-
-        DateFormat xdf1 = new SimpleDateFormat("d-MMM");
-        DateFormat xdf2 = new SimpleDateFormat("d-MMM-yyyy");
-        DateFormat ydf1 = new SimpleDateFormat("d-MMM");
-        DateFormat ydf2 = new SimpleDateFormat("d-MMM-yyyy");
-
-        g1 = new StandardXYToolTipGenerator(f1, xdf1, ydf1);
-        g2 = new StandardXYToolTipGenerator(f1, xdf1, ydf1);
-        assertTrue(g1.equals(g2));
-        assertTrue(g2.equals(g1));
-
-        g1 = new StandardXYToolTipGenerator(f1, xdf2, ydf1);
-        assertFalse(g1.equals(g2));
-        g2 = new StandardXYToolTipGenerator(f1, xdf2, ydf1);
-        assertTrue(g1.equals(g2));
-
-        g1 = new StandardXYToolTipGenerator(f1, xdf2, ydf2);
-        assertFalse(g1.equals(g2));
-        g2 = new StandardXYToolTipGenerator(f1, xdf2, ydf2);
-        assertTrue(g1.equals(g2));
-
     }
 
     /**
      * Simple check that hashCode is implemented.
      */
     public void testHashCode() {
-        StandardXYToolTipGenerator g1
-                = new StandardXYToolTipGenerator();
-        StandardXYToolTipGenerator g2
-                = new StandardXYToolTipGenerator();
+        BoxAndWhiskerXYToolTipGenerator g1
+                = new BoxAndWhiskerXYToolTipGenerator();
+        BoxAndWhiskerXYToolTipGenerator g2
+                = new BoxAndWhiskerXYToolTipGenerator();
         assertTrue(g1.equals(g2));
         assertTrue(g1.hashCode() == g2.hashCode());
     }
@@ -156,10 +142,11 @@ public class StandardXYToolTipGeneratorTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        StandardXYToolTipGenerator g1 = new StandardXYToolTipGenerator();
-        StandardXYToolTipGenerator g2 = null;
+        BoxAndWhiskerXYToolTipGenerator g1
+                = new BoxAndWhiskerXYToolTipGenerator();
+        BoxAndWhiskerXYToolTipGenerator g2 = null;
         try {
-            g2 = (StandardXYToolTipGenerator) g1.clone();
+            g2 = (BoxAndWhiskerXYToolTipGenerator) g1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -173,7 +160,8 @@ public class StandardXYToolTipGeneratorTests extends TestCase {
      * Check to ensure that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        StandardXYToolTipGenerator g1 = new StandardXYToolTipGenerator();
+        BoxAndWhiskerXYToolTipGenerator g1
+                = new BoxAndWhiskerXYToolTipGenerator();
         assertTrue(g1 instanceof PublicCloneable);
     }
 
@@ -182,8 +170,9 @@ public class StandardXYToolTipGeneratorTests extends TestCase {
      */
     public void testSerialization() {
 
-        StandardXYToolTipGenerator g1 = new StandardXYToolTipGenerator();
-        StandardXYToolTipGenerator g2 = null;
+        BoxAndWhiskerXYToolTipGenerator g1
+                = new BoxAndWhiskerXYToolTipGenerator();
+        BoxAndWhiskerXYToolTipGenerator g2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -193,7 +182,7 @@ public class StandardXYToolTipGeneratorTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            g2 = (StandardXYToolTipGenerator) in.readObject();
+            g2 = (BoxAndWhiskerXYToolTipGenerator) in.readObject();
             in.close();
         }
         catch (Exception e) {

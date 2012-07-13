@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * --------------------------------------------
- * StandardCategoryItemLabelGeneratorTests.java
- * --------------------------------------------
+ * -----------------------------------
+ * HighLowItemLabelGeneratorTests.java
+ * -----------------------------------
  * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -34,9 +34,7 @@
  *
  * Changes
  * -------
- * 21-Mar-2003 : Version 1 (DG);
- * 13-Aug-2003 : Added cloning tests (DG);
- * 11-May-2004 : Renamed class (DG);
+ * 18-Mar-2003 : Version 1 (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
  *
  */
@@ -49,8 +47,8 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
 import junit.framework.Test;
@@ -58,14 +56,12 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
-import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
-import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.chart.labels.HighLowItemLabelGenerator;
 
 /**
- * Tests for the {@link StandardCategoryItemLabelGenerator} class.
+ * Tests for the {@link HighLowItemLabelGenerator} class.
  */
-public class StandardCategoryItemLabelGeneratorTests extends TestCase {
+public class HighLowItemLabelGeneratorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -73,7 +69,7 @@ public class StandardCategoryItemLabelGeneratorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StandardCategoryItemLabelGeneratorTests.class);
+        return new TestSuite(HighLowItemLabelGeneratorTest.class);
     }
 
     /**
@@ -81,74 +77,40 @@ public class StandardCategoryItemLabelGeneratorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StandardCategoryItemLabelGeneratorTests(String name) {
+    public HighLowItemLabelGeneratorTest(String name) {
         super(name);
     }
 
     /**
-     * Some checks for the generalLabel() method.
-     */
-    public void testGenerateLabel() {
-        StandardCategoryItemLabelGenerator g
-                = new StandardCategoryItemLabelGenerator("{2}",
-                new DecimalFormat("0.000"));
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.addValue(1.0, "R0", "C0");
-        dataset.addValue(2.0, "R0", "C1");
-        dataset.addValue(3.0, "R1", "C0");
-        dataset.addValue(null, "R1", "C1");
-        String s = g.generateLabel(dataset, 0, 0);
-        assertTrue(s.startsWith("1"));
-        assertTrue(s.endsWith("000"));
-
-        // try a null value
-        s = g.generateLabel(dataset, 1, 1);
-        assertEquals("-", s);
-    }
-
-    /**
-     * Some checks for the equals() method.
+     * Tests that the equals method can distinguish all fields.
      */
     public void testEquals() {
-
-        StandardCategoryItemLabelGenerator g1
-                = new StandardCategoryItemLabelGenerator();
-        StandardCategoryItemLabelGenerator g2
-                = new StandardCategoryItemLabelGenerator();
+        HighLowItemLabelGenerator g1 = new HighLowItemLabelGenerator();
+        HighLowItemLabelGenerator g2 = new HighLowItemLabelGenerator();
         assertTrue(g1.equals(g2));
         assertTrue(g2.equals(g1));
 
-        g1 = new StandardCategoryItemLabelGenerator("{0}",
-                new DecimalFormat("0.000"));
+        g1 = new HighLowItemLabelGenerator(new SimpleDateFormat("d-MMM-yyyy"),
+                NumberFormat.getInstance());
         assertFalse(g1.equals(g2));
-        g2 = new StandardCategoryItemLabelGenerator("{0}",
-                new DecimalFormat("0.000"));
+        g2 = new HighLowItemLabelGenerator(new SimpleDateFormat("d-MMM-yyyy"),
+                NumberFormat.getInstance());
         assertTrue(g1.equals(g2));
 
-        g1 = new StandardCategoryItemLabelGenerator("{1}",
+        g1 = new HighLowItemLabelGenerator(new SimpleDateFormat("d-MMM-yyyy"),
                 new DecimalFormat("0.000"));
         assertFalse(g1.equals(g2));
-        g2 = new StandardCategoryItemLabelGenerator("{1}",
+        g2 = new HighLowItemLabelGenerator(new SimpleDateFormat("d-MMM-yyyy"),
                 new DecimalFormat("0.000"));
         assertTrue(g1.equals(g2));
-
-        g1 = new StandardCategoryItemLabelGenerator("{2}",
-                new SimpleDateFormat("d-MMM"));
-        assertFalse(g1.equals(g2));
-        g2 = new StandardCategoryItemLabelGenerator("{2}",
-                new SimpleDateFormat("d-MMM"));
-        assertTrue(g1.equals(g2));
-
     }
 
     /**
      * Simple check that hashCode is implemented.
      */
     public void testHashCode() {
-        StandardCategoryItemLabelGenerator g1
-                = new StandardCategoryItemLabelGenerator();
-        StandardCategoryItemLabelGenerator g2
-                = new StandardCategoryItemLabelGenerator();
+        HighLowItemLabelGenerator g1 = new HighLowItemLabelGenerator();
+        HighLowItemLabelGenerator g2 = new HighLowItemLabelGenerator();
         assertTrue(g1.equals(g2));
         assertTrue(g1.hashCode() == g2.hashCode());
     }
@@ -157,11 +119,10 @@ public class StandardCategoryItemLabelGeneratorTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        StandardCategoryItemLabelGenerator g1
-                = new StandardCategoryItemLabelGenerator();
-        StandardCategoryItemLabelGenerator g2 = null;
+        HighLowItemLabelGenerator g1 = new HighLowItemLabelGenerator();
+        HighLowItemLabelGenerator g2 = null;
         try {
-            g2 = (StandardCategoryItemLabelGenerator) g1.clone();
+            g2 = (HighLowItemLabelGenerator) g1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -175,8 +136,7 @@ public class StandardCategoryItemLabelGeneratorTests extends TestCase {
      * Check to ensure that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        StandardCategoryItemLabelGenerator g1
-                = new StandardCategoryItemLabelGenerator();
+        HighLowItemLabelGenerator g1 = new HighLowItemLabelGenerator();
         assertTrue(g1 instanceof PublicCloneable);
     }
 
@@ -185,10 +145,8 @@ public class StandardCategoryItemLabelGeneratorTests extends TestCase {
      */
     public void testSerialization() {
 
-        StandardCategoryItemLabelGenerator g1
-                = new StandardCategoryItemLabelGenerator("{2}",
-                DateFormat.getInstance());
-        StandardCategoryItemLabelGenerator g2 = null;
+        HighLowItemLabelGenerator g1 = new HighLowItemLabelGenerator();
+        HighLowItemLabelGenerator g2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -198,7 +156,7 @@ public class StandardCategoryItemLabelGeneratorTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            g2 = (StandardCategoryItemLabelGenerator) in.readObject();
+            g2 = (HighLowItemLabelGenerator) in.readObject();
             in.close();
         }
         catch (Exception e) {
@@ -206,19 +164,6 @@ public class StandardCategoryItemLabelGeneratorTests extends TestCase {
         }
         assertEquals(g1, g2);
 
-    }
-
-    /**
-     * A test for bug 1481087.
-     */
-    public void testEquals1481087() {
-        StandardCategoryItemLabelGenerator g1
-                = new StandardCategoryItemLabelGenerator("{0}",
-                new DecimalFormat("0.00"));
-        StandardCategoryToolTipGenerator g2
-                = new StandardCategoryToolTipGenerator("{0}",
-                new DecimalFormat("0.00"));
-        assertFalse(g1.equals(g2));
     }
 
 }

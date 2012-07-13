@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -------------------------------------
- * StandardXYZToolTipGeneratorTests.java
- * -------------------------------------
+ * ------------------------------------------
+ * StandardPieSectionLabelGeneratorTests.java
+ * ------------------------------------------
  * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -34,7 +34,10 @@
  *
  * Changes
  * -------
- * 23-Mar-2003 : Version 1 (DG);
+ * 18-Mar-2003 : Version 1 (DG);
+ * 13-Aug-2003 : Added clone tests (DG);
+ * 04-Mar-2004 : Added test for equals() method (DG);
+ * 23-Nov-2006 : Extended equals() test (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
  *
  */
@@ -47,22 +50,21 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.text.DateFormat;
+import java.text.AttributedString;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.labels.StandardXYZToolTipGenerator;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 
 /**
- * Tests for the {@link StandardXYZToolTipGenerator} class.
+ * Tests for the {@link StandardPieSectionLabelGenerator} class.
  */
-public class StandardXYZToolTipGeneratorTests extends TestCase {
+public class StandardPieSectionLabelGeneratorTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -70,7 +72,7 @@ public class StandardXYZToolTipGeneratorTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StandardXYZToolTipGeneratorTests.class);
+        return new TestSuite(StandardPieSectionLabelGeneratorTest.class);
     }
 
     /**
@@ -78,95 +80,68 @@ public class StandardXYZToolTipGeneratorTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StandardXYZToolTipGeneratorTests(String name) {
+    public StandardPieSectionLabelGeneratorTest(String name) {
         super(name);
     }
 
     /**
-     * Tests that the equals() method can distinguish all fields.
+     * Test that the equals() method distinguishes all fields.
      */
     public void testEquals() {
-
-        // some setup...
-        String f1 = "{1}";
-        String f2 = "{2}";
-        NumberFormat xnf1 = new DecimalFormat("0.00");
-        NumberFormat xnf2 = new DecimalFormat("0.000");
-        NumberFormat ynf1 = new DecimalFormat("0.00");
-        NumberFormat ynf2 = new DecimalFormat("0.000");
-        NumberFormat znf1 = new DecimalFormat("0.00");
-        NumberFormat znf2 = new DecimalFormat("0.000");
-
-        DateFormat xdf1 = new SimpleDateFormat("d-MMM");
-        DateFormat xdf2 = new SimpleDateFormat("d-MMM-yyyy");
-        DateFormat ydf1 = new SimpleDateFormat("d-MMM");
-        DateFormat ydf2 = new SimpleDateFormat("d-MMM-yyyy");
-        DateFormat zdf1 = new SimpleDateFormat("d-MMM");
-        DateFormat zdf2 = new SimpleDateFormat("d-MMM-yyyy");
-
-        StandardXYZToolTipGenerator g1 = null;
-        StandardXYZToolTipGenerator g2 = null;
-
-        g1 = new StandardXYZToolTipGenerator(f1, xnf1, ynf1, znf1);
-        g2 = new StandardXYZToolTipGenerator(f1, xnf1, ynf1, znf1);
+        StandardPieSectionLabelGenerator g1
+                = new StandardPieSectionLabelGenerator();
+        StandardPieSectionLabelGenerator g2
+                = new StandardPieSectionLabelGenerator();
         assertTrue(g1.equals(g2));
+        assertTrue(g2.equals(g1));
 
-        // format string...
-        g1 = new StandardXYZToolTipGenerator(f2, xnf1, ynf1, znf1);
+        g1 = new StandardPieSectionLabelGenerator("{0}",
+                new DecimalFormat("#,##0.00"),
+                NumberFormat.getPercentInstance());
         assertFalse(g1.equals(g2));
-        g2 = new StandardXYZToolTipGenerator(f2, xnf1, ynf1, znf1);
+        g2 = new StandardPieSectionLabelGenerator("{0}",
+                new DecimalFormat("#,##0.00"),
+                NumberFormat.getPercentInstance());
         assertTrue(g1.equals(g2));
 
-        // x number format
-        g1 = new StandardXYZToolTipGenerator(f2, xnf2, ynf1, znf1);
+        g1 = new StandardPieSectionLabelGenerator("{0} {1}",
+                new DecimalFormat("#,##0.00"),
+                NumberFormat.getPercentInstance());
         assertFalse(g1.equals(g2));
-        g2 = new StandardXYZToolTipGenerator(f2, xnf2, ynf1, znf1);
+        g2 = new StandardPieSectionLabelGenerator("{0} {1}",
+                new DecimalFormat("#,##0.00"),
+                NumberFormat.getPercentInstance());
         assertTrue(g1.equals(g2));
 
-        // y number format
-        g1 = new StandardXYZToolTipGenerator(f2, xnf2, ynf2, znf1);
+        g1 = new StandardPieSectionLabelGenerator("{0} {1}",
+                new DecimalFormat("#,##0"), NumberFormat.getPercentInstance());
         assertFalse(g1.equals(g2));
-        g2 = new StandardXYZToolTipGenerator(f2, xnf2, ynf2, znf1);
+        g2 = new StandardPieSectionLabelGenerator("{0} {1}",
+                new DecimalFormat("#,##0"), NumberFormat.getPercentInstance());
         assertTrue(g1.equals(g2));
 
-        // z number format
-        g1 = new StandardXYZToolTipGenerator(f2, xnf2, ynf2, znf2);
+        g1 = new StandardPieSectionLabelGenerator("{0} {1}",
+                new DecimalFormat("#,##0"), new DecimalFormat("0.000%"));
         assertFalse(g1.equals(g2));
-        g2 = new StandardXYZToolTipGenerator(f2, xnf2, ynf2, znf2);
+        g2 = new StandardPieSectionLabelGenerator("{0} {1}",
+                new DecimalFormat("#,##0"), new DecimalFormat("0.000%"));
         assertTrue(g1.equals(g2));
 
-        g1 = new StandardXYZToolTipGenerator(f2, xdf1, ydf1, zdf1);
-        g2 = new StandardXYZToolTipGenerator(f2, xdf1, ydf1, zdf1);
-        assertTrue(g1.equals(g2));
-
-        // x date format
-        g1 = new StandardXYZToolTipGenerator(f2, xdf2, ydf1, zdf1);
+        AttributedString as = new AttributedString("XYZ");
+        g1.setAttributedLabel(0, as);
         assertFalse(g1.equals(g2));
-        g2 = new StandardXYZToolTipGenerator(f2, xdf2, ydf1, zdf1);
+        g2.setAttributedLabel(0, as);
         assertTrue(g1.equals(g2));
-
-        // y date format
-        g1 = new StandardXYZToolTipGenerator(f2, xdf2, ydf2, zdf1);
-        assertFalse(g1.equals(g2));
-        g2 = new StandardXYZToolTipGenerator(f2, xdf2, ydf2, zdf1);
-        assertTrue(g1.equals(g2));
-
-        // z date format
-        g1 = new StandardXYZToolTipGenerator(f2, xdf2, ydf2, zdf2);
-        assertFalse(g1.equals(g2));
-        g2 = new StandardXYZToolTipGenerator(f2, xdf2, ydf2, zdf2);
-        assertTrue(g1.equals(g2));
-
     }
 
     /**
      * Simple check that hashCode is implemented.
      */
     public void testHashCode() {
-        StandardXYZToolTipGenerator g1
-                = new StandardXYZToolTipGenerator();
-        StandardXYZToolTipGenerator g2
-                = new StandardXYZToolTipGenerator();
+        StandardPieSectionLabelGenerator g1
+                = new StandardPieSectionLabelGenerator();
+        StandardPieSectionLabelGenerator g2
+                = new StandardPieSectionLabelGenerator();
         assertTrue(g1.equals(g2));
         assertTrue(g1.hashCode() == g2.hashCode());
     }
@@ -175,10 +150,11 @@ public class StandardXYZToolTipGeneratorTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        StandardXYZToolTipGenerator g1 = new StandardXYZToolTipGenerator();
-        StandardXYZToolTipGenerator g2 = null;
+        StandardPieSectionLabelGenerator g1
+                = new StandardPieSectionLabelGenerator();
+        StandardPieSectionLabelGenerator g2 = null;
         try {
-            g2 = (StandardXYZToolTipGenerator) g1.clone();
+            g2 = (StandardPieSectionLabelGenerator) g1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -192,7 +168,8 @@ public class StandardXYZToolTipGeneratorTests extends TestCase {
      * Check to ensure that this class implements PublicCloneable.
      */
     public void testPublicCloneable() {
-        StandardXYZToolTipGenerator g1 = new StandardXYZToolTipGenerator();
+        StandardPieSectionLabelGenerator g1
+                = new StandardPieSectionLabelGenerator();
         assertTrue(g1 instanceof PublicCloneable);
     }
 
@@ -201,8 +178,9 @@ public class StandardXYZToolTipGeneratorTests extends TestCase {
      */
     public void testSerialization() {
 
-        StandardXYZToolTipGenerator g1 = new StandardXYZToolTipGenerator();
-        StandardXYZToolTipGenerator g2 = null;
+        StandardPieSectionLabelGenerator g1
+                = new StandardPieSectionLabelGenerator();
+        StandardPieSectionLabelGenerator g2 = null;
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -210,9 +188,9 @@ public class StandardXYZToolTipGeneratorTests extends TestCase {
             out.writeObject(g1);
             out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            g2 = (StandardXYZToolTipGenerator) in.readObject();
+            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                    buffer.toByteArray()));
+            g2 = (StandardPieSectionLabelGenerator) in.readObject();
             in.close();
         }
         catch (Exception e) {
@@ -220,6 +198,15 @@ public class StandardXYZToolTipGeneratorTests extends TestCase {
         }
         assertEquals(g1, g2);
 
+    }
+
+    /**
+     * Runs the test suite using JUnit's text-based runner.
+     *
+     * @param args  ignored.
+     */
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(suite());
     }
 
 }
