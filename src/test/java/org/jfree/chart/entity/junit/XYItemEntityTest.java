@@ -24,10 +24,10 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -----------------------
- * ContourEntityTests.java
- * -----------------------
- * (C) Copyright 2004, 2007, by Object Refinery Limited and Contributors.
+ * ----------------------
+ * XYItemEntityTests.java
+ * ----------------------
+ * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -52,12 +52,13 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.entity.ContourEntity;
+import org.jfree.chart.entity.XYItemEntity;
+import org.jfree.data.time.TimeSeriesCollection;
 
 /**
- * Tests for the <code>ContourEntity</code> class.
+ * Tests for the {@link XYItemEntity} class.
  */
-public class ContourEntityTests extends TestCase {
+public class XYItemEntityTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -65,7 +66,7 @@ public class ContourEntityTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(ContourEntityTests.class);
+        return new TestSuite(XYItemEntityTest.class);
     }
 
     /**
@@ -73,7 +74,7 @@ public class ContourEntityTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public ContourEntityTests(String name) {
+    public XYItemEntityTest(String name) {
         super(name);
     }
 
@@ -81,12 +82,10 @@ public class ContourEntityTests extends TestCase {
      * Confirm that the equals method can distinguish all the required fields.
      */
     public void testEquals() {
-        ContourEntity e1 = new ContourEntity(
-            new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), "ToolTip", "URL"
-        );
-        ContourEntity e2 = new ContourEntity(
-            new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), "ToolTip", "URL"
-        );
+        XYItemEntity e1 = new XYItemEntity(new Rectangle2D.Double(1.0, 2.0,
+                3.0, 4.0), new TimeSeriesCollection(), 1, 9, "ToolTip", "URL");
+        XYItemEntity e2 = new XYItemEntity(new Rectangle2D.Double(1.0, 2.0,
+                3.0, 4.0), new TimeSeriesCollection(), 1, 9, "ToolTip", "URL");
         assertTrue(e1.equals(e2));
 
         e1.setArea(new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0));
@@ -104,26 +103,31 @@ public class ContourEntityTests extends TestCase {
         e2.setURLText("New URL");
         assertTrue(e1.equals(e2));
 
-        e1.setIndex(99);
+        e1.setSeriesIndex(88);
         assertFalse(e1.equals(e2));
-        e2.setIndex(99);
+        e2.setSeriesIndex(88);
         assertTrue(e1.equals(e2));
+
+        e1.setItem(88);
+        assertFalse(e1.equals(e2));
+        e2.setItem(88);
+        assertTrue(e1.equals(e2));
+
     }
 
     /**
      * Confirm that cloning works.
      */
     public void testCloning() {
-        ContourEntity e1 = new ContourEntity(
-            new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), "ToolTip", "URL"
-        );
-        ContourEntity e2 = null;
+        XYItemEntity e1 = new XYItemEntity(new Rectangle2D.Double(1.0, 2.0,
+                3.0, 4.0), new TimeSeriesCollection(), 1, 9, "ToolTip", "URL");
+        XYItemEntity e2 = null;
 
         try {
-            e2 = (ContourEntity) e1.clone();
+            e2 = (XYItemEntity) e1.clone();
         }
         catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
+            e.printStackTrace();
         }
         assertTrue(e1 != e2);
         assertTrue(e1.getClass() == e2.getClass());
@@ -134,24 +138,22 @@ public class ContourEntityTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        ContourEntity e1 = new ContourEntity(
-            new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), "ToolTip", "URL"
-        );
-        ContourEntity e2 = null;
+        XYItemEntity e1 = new XYItemEntity(new Rectangle2D.Double(1.0, 2.0,
+                3.0, 4.0), new TimeSeriesCollection(), 1, 9, "ToolTip", "URL");
+        XYItemEntity e2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(e1);
             out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-            );
-            e2 = (ContourEntity) in.readObject();
+            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                    buffer.toByteArray()));
+            e2 = (XYItemEntity) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
         assertEquals(e1, e2);
     }

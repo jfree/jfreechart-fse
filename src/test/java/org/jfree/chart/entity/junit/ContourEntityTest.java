@@ -24,10 +24,10 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * --------------------------
- * PieSectionEntityTests.java
- * --------------------------
- * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
+ * -----------------------
+ * ContourEntityTests.java
+ * -----------------------
+ * (C) Copyright 2004, 2007, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -52,13 +52,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.entity.PieSectionEntity;
-import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.chart.entity.ContourEntity;
 
 /**
- * Tests for the {@link PieSectionEntity} class.
+ * Tests for the <code>ContourEntity</code> class.
  */
-public class PieSectionEntityTests extends TestCase {
+public class ContourEntityTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -66,7 +65,7 @@ public class PieSectionEntityTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(PieSectionEntityTests.class);
+        return new TestSuite(ContourEntityTest.class);
     }
 
     /**
@@ -74,7 +73,7 @@ public class PieSectionEntityTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public PieSectionEntityTests(String name) {
+    public ContourEntityTest(String name) {
         super(name);
     }
 
@@ -82,12 +81,12 @@ public class PieSectionEntityTests extends TestCase {
      * Confirm that the equals method can distinguish all the required fields.
      */
     public void testEquals() {
-        PieSectionEntity e1 = new PieSectionEntity(new Rectangle2D.Double(
-                1.0, 2.0, 3.0, 4.0), new DefaultPieDataset(), 1, 2, "Key",
-                "ToolTip", "URL");
-        PieSectionEntity e2 = new PieSectionEntity(new Rectangle2D.Double(1.0,
-                2.0, 3.0, 4.0), new DefaultPieDataset(), 1, 2, "Key",
-                "ToolTip", "URL");
+        ContourEntity e1 = new ContourEntity(
+            new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), "ToolTip", "URL"
+        );
+        ContourEntity e2 = new ContourEntity(
+            new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), "ToolTip", "URL"
+        );
         assertTrue(e1.equals(e2));
 
         e1.setArea(new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0));
@@ -105,24 +104,9 @@ public class PieSectionEntityTests extends TestCase {
         e2.setURLText("New URL");
         assertTrue(e1.equals(e2));
 
-        e1.setDataset(null);
+        e1.setIndex(99);
         assertFalse(e1.equals(e2));
-        e2.setDataset(null);
-        assertTrue(e1.equals(e2));
-
-        e1.setPieIndex(99);
-        assertFalse(e1.equals(e2));
-        e2.setPieIndex(99);
-        assertTrue(e1.equals(e2));
-
-        e1.setSectionIndex(66);
-        assertFalse(e1.equals(e2));
-        e2.setSectionIndex(66);
-        assertTrue(e1.equals(e2));
-
-        e1.setSectionKey("ABC");
-        assertFalse(e1.equals(e2));
-        e2.setSectionKey("ABC");
+        e2.setIndex(99);
         assertTrue(e1.equals(e2));
     }
 
@@ -130,15 +114,16 @@ public class PieSectionEntityTests extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        PieSectionEntity e1 = new PieSectionEntity(new Rectangle2D.Double(1.0,
-                2.0, 3.0, 4.0), new DefaultPieDataset(), 1, 2, "Key",
-                "ToolTip", "URL");
-        PieSectionEntity e2 = null;
+        ContourEntity e1 = new ContourEntity(
+            new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), "ToolTip", "URL"
+        );
+        ContourEntity e2 = null;
+
         try {
-            e2 = (PieSectionEntity) e1.clone();
+            e2 = (ContourEntity) e1.clone();
         }
         catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            System.err.println("Failed to clone.");
         }
         assertTrue(e1 != e2);
         assertTrue(e1.getClass() == e2.getClass());
@@ -149,23 +134,24 @@ public class PieSectionEntityTests extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        PieSectionEntity e1 = new PieSectionEntity(new Rectangle2D.Double(1.0,
-                2.0, 3.0, 4.0), new DefaultPieDataset(), 1, 2, "Key",
-                "ToolTip", "URL");
-        PieSectionEntity e2 = null;
+        ContourEntity e1 = new ContourEntity(
+            new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), "ToolTip", "URL"
+        );
+        ContourEntity e2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(e1);
             out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            e2 = (PieSectionEntity) in.readObject();
+            ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray())
+            );
+            e2 = (ContourEntity) in.readObject();
             in.close();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
         assertEquals(e1, e2);
     }

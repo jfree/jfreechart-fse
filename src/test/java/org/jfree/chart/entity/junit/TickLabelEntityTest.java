@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ----------------------------------
- * StandardEntityCollectionTests.java
- * ----------------------------------
+ * -------------------------
+ * TickLabelEntityTests.java
+ * -------------------------
  * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -34,7 +34,7 @@
  *
  * Changes
  * -------
- * 19-May-2004 : Version 1 (DG);
+ * 20-May-2004 : Version 1 (DG);
  *
  */
 
@@ -52,14 +52,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.entity.PieSectionEntity;
-import org.jfree.chart.entity.StandardEntityCollection;
-import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.chart.entity.TickLabelEntity;
 
 /**
- * Tests for the {@link StandardEntityCollection} class.
+ * Tests for the {@link TickLabelEntity} class.
  */
-public class StandardEntityCollectionTests extends TestCase {
+public class TickLabelEntityTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -67,7 +65,7 @@ public class StandardEntityCollectionTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StandardEntityCollectionTests.class);
+        return new TestSuite(TickLabelEntityTest.class);
     }
 
     /**
@@ -75,7 +73,7 @@ public class StandardEntityCollectionTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StandardEntityCollectionTests(String name) {
+    public TickLabelEntityTest(String name) {
         super(name);
     }
 
@@ -83,74 +81,68 @@ public class StandardEntityCollectionTests extends TestCase {
      * Confirm that the equals method can distinguish all the required fields.
      */
     public void testEquals() {
-        StandardEntityCollection c1 = new StandardEntityCollection();
-        StandardEntityCollection c2 = new StandardEntityCollection();
-        assertTrue(c1.equals(c2));
+        TickLabelEntity e1 = new TickLabelEntity(new Rectangle2D.Double(1.0,
+                2.0, 3.0, 4.0), "ToolTip", "URL");
+        TickLabelEntity e2 = new TickLabelEntity(new Rectangle2D.Double(1.0,
+                2.0, 3.0, 4.0), "ToolTip", "URL");
+        assertTrue(e1.equals(e2));
 
-        PieSectionEntity e1 = new PieSectionEntity(new Rectangle2D.Double(1.0,
-                2.0, 3.0, 4.0), new DefaultPieDataset(), 0, 1, "Key",
-                "ToolTip", "URL");
-        c1.add(e1);
-        assertFalse(c1.equals(c2));
-        PieSectionEntity e2 = new PieSectionEntity(new Rectangle2D.Double(1.0,
-                2.0, 3.0, 4.0), new DefaultPieDataset(), 0, 1, "Key",
-                "ToolTip", "URL");
-        c2.add(e2);
-        assertTrue(c1.equals(c2));
+        e1.setArea(new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0));
+        assertFalse(e1.equals(e2));
+        e2.setArea(new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0));
+        assertTrue(e1.equals(e2));
+
+        e1.setToolTipText("New ToolTip");
+        assertFalse(e1.equals(e2));
+        e2.setToolTipText("New ToolTip");
+        assertTrue(e1.equals(e2));
+
+        e1.setURLText("New URL");
+        assertFalse(e1.equals(e2));
+        e2.setURLText("New URL");
+        assertTrue(e1.equals(e2));
     }
 
     /**
      * Confirm that cloning works.
      */
     public void testCloning() {
-        PieSectionEntity e1 = new PieSectionEntity(new Rectangle2D.Double(1.0,
-                2.0, 3.0, 4.0), new DefaultPieDataset(), 0, 1, "Key",
-                "ToolTip", "URL");
-        StandardEntityCollection c1 = new StandardEntityCollection();
-        c1.add(e1);
-        StandardEntityCollection c2 = null;
+        TickLabelEntity e1 = new TickLabelEntity(new Rectangle2D.Double(1.0,
+                2.0, 3.0, 4.0), "ToolTip", "URL");
+        TickLabelEntity e2 = null;
         try {
-            c2 = (StandardEntityCollection) c1.clone();
+            e2 = (TickLabelEntity) e1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
-        assertTrue(c1 != c2);
-        assertTrue(c1.getClass() == c2.getClass());
-        assertTrue(c1.equals(c2));
-
-        // check independence
-        c1.clear();
-        assertFalse(c1.equals(c2));
-        c2.clear();
-        assertTrue(c1.equals(c2));
+        assertTrue(e1 != e2);
+        assertTrue(e1.getClass() == e2.getClass());
+        assertTrue(e1.equals(e2));
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        PieSectionEntity e1 = new PieSectionEntity(new Rectangle2D.Double(1.0,
-                2.0, 3.0, 4.0), new DefaultPieDataset(), 0, 1, "Key",
-                "ToolTip", "URL");
-        StandardEntityCollection c1 = new StandardEntityCollection();
-        c1.add(e1);
-        StandardEntityCollection c2 = null;
+        TickLabelEntity e1 = new TickLabelEntity(new Rectangle2D.Double(1.0,
+                2.0, 3.0, 4.0), "ToolTip", "URL");
+        TickLabelEntity e2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(c1);
+            out.writeObject(e1);
             out.close();
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            c2 = (StandardEntityCollection) in.readObject();
+            e2 = (TickLabelEntity) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        assertEquals(c1, c2);
+        assertEquals(e1, e2);
     }
 
 }

@@ -58,7 +58,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 /**
  * Tests for the {@link CategoryItemEntity} class.
  */
-public class CategoryItemEntityTests extends TestCase {
+public class CategoryItemEntityTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -66,7 +66,7 @@ public class CategoryItemEntityTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(CategoryItemEntityTests.class);
+        return new TestSuite(CategoryItemEntityTest.class);
     }
 
     /**
@@ -74,7 +74,7 @@ public class CategoryItemEntityTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public CategoryItemEntityTests(String name) {
+    public CategoryItemEntityTest(String name) {
         super(name);
     }
 
