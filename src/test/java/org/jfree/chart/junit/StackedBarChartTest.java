@@ -24,17 +24,21 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ---------------------
- * XYAreaChartTests.java
- * ---------------------
- * (C) Copyright 2005-2008, by Object Refinery Limited.
+ * -------------------------
+ * StackedBarChartTests.java
+ * -------------------------
+ * (C) Copyright 2002-2008, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes:
  * --------
- * 12-Apr-2005 : Version 1 (DG);
+ * 11-Jun-2002 : Version 1 (DG);
+ * 25-Jun-2002 : Removed unnecessary import (DG);
+ * 17-Oct-2002 : Fixed errors reported by Checkstyle (DG);
+ * 29-Jan-2004 : Renamed StackedHorizontalBarChartTests
+ *               --> StackedBarChartTests (DG);
  *
  */
 
@@ -53,20 +57,21 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.event.ChartChangeEvent;
 import org.jfree.chart.event.ChartChangeListener;
-import org.jfree.chart.labels.StandardXYToolTipGenerator;
-import org.jfree.chart.labels.XYToolTipGenerator;
+import org.jfree.chart.labels.CategoryToolTipGenerator;
+import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.renderer.category.CategoryItemRenderer;
+import org.jfree.chart.urls.CategoryURLGenerator;
+import org.jfree.chart.urls.StandardCategoryURLGenerator;
 import org.jfree.data.Range;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.general.DatasetUtilities;
 
 /**
- * Some tests for an XY area chart.
+ * Tests for a stacked bar chart.
  */
-public class XYAreaChartTests extends TestCase {
+public class StackedBarChartTest extends TestCase {
 
     /** A chart. */
     private JFreeChart chart;
@@ -77,7 +82,7 @@ public class XYAreaChartTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYAreaChartTests.class);
+        return new TestSuite(StackedBarChartTest.class);
     }
 
     /**
@@ -85,7 +90,7 @@ public class XYAreaChartTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYAreaChartTests(String name) {
+    public StackedBarChartTest(String name) {
         super(name);
     }
 
@@ -104,6 +109,7 @@ public class XYAreaChartTests extends TestCase {
     public void testDrawWithNullInfo() {
 
         boolean success = false;
+
         try {
             BufferedImage image = new BufferedImage(200 , 100,
                     BufferedImage.TYPE_INT_RGB);
@@ -115,8 +121,8 @@ public class XYAreaChartTests extends TestCase {
         }
         catch (Exception e) {
           success = false;
-          e.printStackTrace();
         }
+
         assertTrue(success);
 
     }
@@ -127,21 +133,23 @@ public class XYAreaChartTests extends TestCase {
     public void testReplaceDataset() {
 
         // create a dataset...
-        XYSeries series1 = new XYSeries("Series 1");
-        series1.add(10.0, 10.0);
-        series1.add(20.0, 20.0);
-        series1.add(30.0, 30.0);
-        XYDataset dataset = new XYSeriesCollection(series1);
+        Number[][] data = new Integer[][]
+            {{new Integer(-30), new Integer(-20)},
+             {new Integer(-10), new Integer(10)},
+             {new Integer(20), new Integer(30)}};
+
+        CategoryDataset newData = DatasetUtilities.createCategoryDataset("S",
+                "C", data);
 
         LocalListener l = new LocalListener();
         this.chart.addChangeListener(l);
-        XYPlot plot = (XYPlot) this.chart.getPlot();
-        plot.setDataset(dataset);
+        CategoryPlot plot = (CategoryPlot) this.chart.getPlot();
+        plot.setDataset(newData);
         assertEquals(true, l.flag);
         ValueAxis axis = plot.getRangeAxis();
         Range range = axis.getRange();
-        assertTrue("Expecting the lower bound of the range to be around 10: "
-                   + range.getLowerBound(), range.getLowerBound() <= 10);
+        assertTrue("Expecting the lower bound of the range to be around -30: "
+                    + range.getLowerBound(), range.getLowerBound() <= -30);
         assertTrue("Expecting the upper bound of the range to be around 30: "
                    + range.getUpperBound(), range.getUpperBound() >= 30);
 
@@ -152,45 +160,60 @@ public class XYAreaChartTests extends TestCase {
      * default generator.
      */
     public void testSetSeriesToolTipGenerator() {
-        XYPlot plot = (XYPlot) this.chart.getPlot();
-        XYItemRenderer renderer = plot.getRenderer();
-        StandardXYToolTipGenerator tt = new StandardXYToolTipGenerator();
+        CategoryPlot plot = (CategoryPlot) this.chart.getPlot();
+        CategoryItemRenderer renderer = plot.getRenderer();
+        StandardCategoryToolTipGenerator tt
+                = new StandardCategoryToolTipGenerator();
         renderer.setSeriesToolTipGenerator(0, tt);
-        XYToolTipGenerator tt2 = renderer.getToolTipGenerator(0, 0);
+        CategoryToolTipGenerator tt2 = renderer.getToolTipGenerator(0, 0);
         assertTrue(tt2 == tt);
     }
 
     /**
-     * Create a horizontal bar chart with sample data in the range -3 to +3.
+     * Check that setting a URL generator for a series does override the
+     * default generator.
+     */
+    public void testSetSeriesURLGenerator() {
+        CategoryPlot plot = (CategoryPlot) this.chart.getPlot();
+        CategoryItemRenderer renderer = plot.getRenderer();
+        StandardCategoryURLGenerator url1
+                = new StandardCategoryURLGenerator();
+        renderer.setSeriesItemURLGenerator(0, url1);
+        CategoryURLGenerator url2 = renderer.getItemURLGenerator(0, 0);
+        assertTrue(url2 == url1);
+    }
+
+    /**
+     * Create a stacked bar chart with sample data in the range -3 to +3.
      *
      * @return The chart.
      */
     private static JFreeChart createChart() {
 
         // create a dataset...
-        XYSeries series1 = new XYSeries("Series 1");
-        series1.add(1.0, 1.0);
-        series1.add(2.0, 2.0);
-        series1.add(3.0, 3.0);
-        XYDataset dataset = new XYSeriesCollection(series1);
+        Number[][] data = new Integer[][]
+            {{new Integer(-3), new Integer(-2)},
+             {new Integer(-1), new Integer(1)},
+             {new Integer(2), new Integer(3)}};
+
+        CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
+                "C", data);
 
         // create the chart...
-        return ChartFactory.createXYAreaChart(
-            "Area Chart",  // chart title
-            "Domain",
-            "Range",
-            dataset,         // data
-            PlotOrientation.VERTICAL,
-            true,            // include legend
-            true,            // tooltips
-            true             // urls
+        return ChartFactory.createStackedBarChart(
+            "Stacked Bar Chart",  // chart title
+            "Domain", "Range",
+            dataset,      // data
+            PlotOrientation.HORIZONTAL,
+            true,         // include legend
+            true,
+            true
         );
 
     }
 
     /**
      * A chart change listener.
-     *
      */
     static class LocalListener implements ChartChangeListener {
 

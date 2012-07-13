@@ -24,10 +24,10 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -------------------
- * StrokeMapTests.java
- * -------------------
- * (C) Copyright 2006-2008, by Object Refinery Limited.
+ * ------------------
+ * PaintMapTests.java
+ * ------------------
+ * (C) Copyright 2006, 2007, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -35,12 +35,14 @@
  * Changes:
  * --------
  * 27-Sep-2006 : Version 1 (DG);
+ * 17-Jan-2007 : Added testKeysOfDifferentClasses() (DG);
  *
  */
 
 package org.jfree.chart.junit;
 
-import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -52,12 +54,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.StrokeMap;
+import org.jfree.chart.PaintMap;
 
 /**
- * Some tests for the {@link StrokeMap} class.
+ * Some tests for the {@link PaintMap} class.
  */
-public class StrokeMapTests extends TestCase {
+public class PaintMapTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -65,7 +67,7 @@ public class StrokeMapTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StrokeMapTests.class);
+        return new TestSuite(PaintMapTest.class);
     }
 
     /**
@@ -73,25 +75,25 @@ public class StrokeMapTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StrokeMapTests(String name) {
+    public PaintMapTest(String name) {
         super(name);
     }
 
     /**
-     * Some checks for the getStroke() method.
+     * Some checks for the getPaint() method.
      */
-    public void testGetStroke() {
-        StrokeMap m1 = new StrokeMap();
-        assertEquals(null, m1.getStroke("A"));
-        m1.put("A", new BasicStroke(1.1f));
-        assertEquals(new BasicStroke(1.1f), m1.getStroke("A"));
+    public void testGetPaint() {
+        PaintMap m1 = new PaintMap();
+        assertEquals(null, m1.getPaint("A"));
+        m1.put("A", Color.red);
+        assertEquals(Color.red, m1.getPaint("A"));
         m1.put("A", null);
-        assertEquals(null, m1.getStroke("A"));
+        assertEquals(null, m1.getPaint("A"));
 
         // a null key should throw an IllegalArgumentException
         boolean pass = false;
         try {
-            m1.getStroke(null);
+            m1.getPaint(null);
         }
         catch (IllegalArgumentException e) {
             pass = true;
@@ -103,14 +105,14 @@ public class StrokeMapTests extends TestCase {
      * Some checks for the put() method.
      */
     public void testPut() {
-        StrokeMap m1 = new StrokeMap();
-        m1.put("A", new BasicStroke(1.1f));
-        assertEquals(new BasicStroke(1.1f), m1.getStroke("A"));
+        PaintMap m1 = new PaintMap();
+        m1.put("A", Color.red);
+        assertEquals(Color.red, m1.getPaint("A"));
 
         // a null key should throw an IllegalArgumentException
         boolean pass = false;
         try {
-            m1.put(null, new BasicStroke(1.1f));
+            m1.put(null, Color.blue);
         }
         catch (IllegalArgumentException e) {
             pass = true;
@@ -122,21 +124,23 @@ public class StrokeMapTests extends TestCase {
      * Some checks for the equals() method.
      */
     public void testEquals() {
-        StrokeMap m1 = new StrokeMap();
-        StrokeMap m2 = new StrokeMap();
+        PaintMap m1 = new PaintMap();
+        PaintMap m2 = new PaintMap();
         assertTrue(m1.equals(m1));
         assertTrue(m1.equals(m2));
         assertFalse(m1.equals(null));
         assertFalse(m1.equals("ABC"));
 
-        m1.put("K1", new BasicStroke(1.1f));
+        m1.put("K1", Color.red);
         assertFalse(m1.equals(m2));
-        m2.put("K1", new BasicStroke(1.1f));
+        m2.put("K1", Color.red);
         assertTrue(m1.equals(m2));
 
-        m1.put("K2", new BasicStroke(2.2f));
+        m1.put("K2", new GradientPaint(1.0f, 2.0f, Color.green, 3.0f, 4.0f,
+                Color.yellow));
         assertFalse(m1.equals(m2));
-        m2.put("K2", new BasicStroke(2.2f));
+        m2.put("K2", new GradientPaint(1.0f, 2.0f, Color.green, 3.0f, 4.0f,
+                Color.yellow));
         assertTrue(m1.equals(m2));
 
         m1.put("K2", null);
@@ -149,20 +153,21 @@ public class StrokeMapTests extends TestCase {
      * Some checks for cloning.
      */
     public void testCloning() {
-        StrokeMap m1 = new StrokeMap();
-        StrokeMap m2 = null;
+        PaintMap m1 = new PaintMap();
+        PaintMap m2 = null;
         try {
-            m2 = (StrokeMap) m1.clone();
+            m2 = (PaintMap) m1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
         assertTrue(m1.equals(m2));
 
-        m1.put("K1", new BasicStroke(1.1f));
-        m1.put("K2", new BasicStroke(2.2f));
+        m1.put("K1", Color.red);
+        m1.put("K2", new GradientPaint(1.0f, 2.0f, Color.green, 3.0f, 4.0f,
+                Color.yellow));
         try {
-            m2 = (StrokeMap) m1.clone();
+            m2 = (PaintMap) m1.clone();
         }
         catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -174,8 +179,8 @@ public class StrokeMapTests extends TestCase {
      * A check for serialization.
      */
     public void testSerialization1() {
-        StrokeMap m1 = new StrokeMap();
-        StrokeMap m2 = null;
+        PaintMap m1 = new PaintMap();
+        PaintMap m2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -184,7 +189,7 @@ public class StrokeMapTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            m2 = (StrokeMap) in.readObject();
+            m2 = (PaintMap) in.readObject();
             in.close();
         }
         catch (Exception e) {
@@ -197,10 +202,11 @@ public class StrokeMapTests extends TestCase {
      * A check for serialization.
      */
     public void testSerialization2() {
-        StrokeMap m1 = new StrokeMap();
-        m1.put("K1", new BasicStroke(1.1f));
-        m1.put("K2", new BasicStroke(2.2f));
-        StrokeMap m2 = null;
+        PaintMap m1 = new PaintMap();
+        m1.put("K1", Color.red);
+        m1.put("K2", new GradientPaint(1.0f, 2.0f, Color.green, 3.0f, 4.0f,
+                Color.yellow));
+        PaintMap m2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
@@ -209,13 +215,25 @@ public class StrokeMapTests extends TestCase {
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            m2 = (StrokeMap) in.readObject();
+            m2 = (PaintMap) in.readObject();
             in.close();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(m1, m2);
+    }
+
+    /**
+     * This test covers a bug reported in the forum:
+     *
+     * http://www.jfree.org/phpBB2/viewtopic.php?t=19980
+     */
+    public void testKeysOfDifferentClasses() {
+        PaintMap m = new PaintMap();
+        m.put("ABC", Color.red);
+        m.put(new Integer(99), Color.blue);
+        assertEquals(Color.blue, m.getPaint(new Integer(99)));
     }
 
 }

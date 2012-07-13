@@ -59,7 +59,7 @@ import org.jfree.data.general.PieDataset;
 /**
  * Tests for a pie chart with a 3D effect.
  */
-public class PieChart3DTests extends TestCase {
+public class PieChart3DTest extends TestCase {
 
     /** A chart. */
     private JFreeChart pieChart;
@@ -70,7 +70,7 @@ public class PieChart3DTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(PieChart3DTests.class);
+        return new TestSuite(PieChart3DTest.class);
     }
 
     /**
@@ -78,7 +78,7 @@ public class PieChart3DTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public PieChart3DTests(String name) {
+    public PieChart3DTest(String name) {
         super(name);
     }
 

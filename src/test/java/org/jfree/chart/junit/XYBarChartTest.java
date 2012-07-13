@@ -68,7 +68,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 /**
  * Some tests for an XY bar chart.
  */
-public class XYBarChartTests extends TestCase {
+public class XYBarChartTest extends TestCase {
 
     /** A chart. */
     private JFreeChart chart;
@@ -79,7 +79,7 @@ public class XYBarChartTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(XYBarChartTests.class);
+        return new TestSuite(XYBarChartTest.class);
     }
 
     /**
@@ -87,7 +87,7 @@ public class XYBarChartTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public XYBarChartTests(String name) {
+    public XYBarChartTest(String name) {
         super(name);
     }
 

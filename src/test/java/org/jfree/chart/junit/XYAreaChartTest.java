@@ -25,17 +25,16 @@
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
- * ScatterPlotTests.java
+ * XYAreaChartTests.java
  * ---------------------
- * (C) Copyright 2002-2008, by Object Refinery Limited.
+ * (C) Copyright 2005-2008, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes:
  * --------
- * 11-Jun-2002 : Version 1 (DG);
- * 17-Oct-2002 : Fixed errors reported by Checkstyle (DG);
+ * 12-Apr-2005 : Version 1 (DG);
  *
  */
 
@@ -65,9 +64,9 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 /**
- * Tests for a scatter plot.
+ * Some tests for an XY area chart.
  */
-public class ScatterPlotTests extends TestCase {
+public class XYAreaChartTest extends TestCase {
 
     /** A chart. */
     private JFreeChart chart;
@@ -78,7 +77,7 @@ public class ScatterPlotTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(ScatterPlotTests.class);
+        return new TestSuite(XYAreaChartTest.class);
     }
 
     /**
@@ -86,7 +85,7 @@ public class ScatterPlotTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public ScatterPlotTests(String name) {
+    public XYAreaChartTest(String name) {
         super(name);
     }
 
@@ -105,7 +104,6 @@ public class ScatterPlotTests extends TestCase {
     public void testDrawWithNullInfo() {
 
         boolean success = false;
-
         try {
             BufferedImage image = new BufferedImage(200 , 100,
                     BufferedImage.TYPE_INT_RGB);
@@ -119,7 +117,6 @@ public class ScatterPlotTests extends TestCase {
           success = false;
           e.printStackTrace();
         }
-
         assertTrue(success);
 
     }
@@ -178,15 +175,15 @@ public class ScatterPlotTests extends TestCase {
         XYDataset dataset = new XYSeriesCollection(series1);
 
         // create the chart...
-        return ChartFactory.createScatterPlot(
-            "Scatter Plot",  // chart title
+        return ChartFactory.createXYAreaChart(
+            "Area Chart",  // chart title
             "Domain",
             "Range",
             dataset,         // data
             PlotOrientation.VERTICAL,
             true,            // include legend
             true,            // tooltips
-            false            // urls
+            true             // urls
         );
 
     }

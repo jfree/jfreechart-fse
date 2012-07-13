@@ -24,32 +24,40 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -----------------------
- * HashUtilitiesTests.java
- * -----------------------
- * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
+ * --------------------
+ * MeterChartTests.java
+ * --------------------
+ * (C) Copyright 2005-2008, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
- * Changes
- * -------
- * 06-Mar-2007 : Version 1 (DG);
+ * Changes:
+ * --------
+ * 29-Mar-2005 : Version 1 (DG);
  *
  */
 
 package org.jfree.chart.junit;
 
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.HashUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.MeterInterval;
+import org.jfree.chart.plot.MeterPlot;
+import org.jfree.data.Range;
+import org.jfree.data.general.DefaultValueDataset;
 
 /**
- * Tests for the {@link HashUtilities} class.
+ * Miscellaneous checks for meter charts.
  */
-public class HashUtilitiesTests extends TestCase {
+public class MeterChartTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -57,7 +65,7 @@ public class HashUtilitiesTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(HashUtilitiesTests.class);
+        return new TestSuite(MeterChartTest.class);
     }
 
     /**
@@ -65,22 +73,31 @@ public class HashUtilitiesTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public HashUtilitiesTests(String name) {
+    public MeterChartTest(String name) {
         super(name);
     }
 
     /**
-     * Some sanity checks for the hashCodeForDoubleArray() method.
+     * Draws the chart with a single range.  At one point, this caused a null
+     * pointer exception (fixed now).
      */
-    public void testHashCodeForDoubleArray() {
-        double[] a1 = new double[] {1.0};
-        double[] a2 = new double[] {1.0};
-        int h1 = HashUtilities.hashCodeForDoubleArray(a1);
-        int h2 = HashUtilities.hashCodeForDoubleArray(a2);
-        assertTrue(h1 == h2);
-
-        double[] a3 = new double[] {0.5, 1.0};
-        int h3 = HashUtilities.hashCodeForDoubleArray(a3);
-        assertFalse(h1 == h3);
+    public void testDrawWithNullInfo() {
+        boolean success = false;
+        MeterPlot plot = new MeterPlot(new DefaultValueDataset(60.0));
+        plot.addInterval(new MeterInterval("Normal", new Range(0.0, 80.0)));
+        JFreeChart chart = new JFreeChart(plot);
+        try {
+            BufferedImage image = new BufferedImage(200, 100,
+                    BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2 = image.createGraphics();
+            chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
+            g2.dispose();
+            success = true;
+        }
+        catch (Exception e) {
+            success = false;
+        }
+        assertTrue(success);
     }
+
 }

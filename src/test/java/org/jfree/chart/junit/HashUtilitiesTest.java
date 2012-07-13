@@ -24,40 +24,32 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * --------------------
- * MeterChartTests.java
- * --------------------
- * (C) Copyright 2005-2008, by Object Refinery Limited.
+ * -----------------------
+ * HashUtilitiesTests.java
+ * -----------------------
+ * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
- * Changes:
- * --------
- * 29-Mar-2005 : Version 1 (DG);
+ * Changes
+ * -------
+ * 06-Mar-2007 : Version 1 (DG);
  *
  */
 
 package org.jfree.chart.junit;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.MeterInterval;
-import org.jfree.chart.plot.MeterPlot;
-import org.jfree.data.Range;
-import org.jfree.data.general.DefaultValueDataset;
+import org.jfree.chart.HashUtilities;
 
 /**
- * Miscellaneous checks for meter charts.
+ * Tests for the {@link HashUtilities} class.
  */
-public class MeterChartTests extends TestCase {
+public class HashUtilitiesTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -65,7 +57,7 @@ public class MeterChartTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(MeterChartTests.class);
+        return new TestSuite(HashUtilitiesTest.class);
     }
 
     /**
@@ -73,31 +65,22 @@ public class MeterChartTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public MeterChartTests(String name) {
+    public HashUtilitiesTest(String name) {
         super(name);
     }
 
     /**
-     * Draws the chart with a single range.  At one point, this caused a null
-     * pointer exception (fixed now).
+     * Some sanity checks for the hashCodeForDoubleArray() method.
      */
-    public void testDrawWithNullInfo() {
-        boolean success = false;
-        MeterPlot plot = new MeterPlot(new DefaultValueDataset(60.0));
-        plot.addInterval(new MeterInterval("Normal", new Range(0.0, 80.0)));
-        JFreeChart chart = new JFreeChart(plot);
-        try {
-            BufferedImage image = new BufferedImage(200, 100,
-                    BufferedImage.TYPE_INT_RGB);
-            Graphics2D g2 = image.createGraphics();
-            chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
-            g2.dispose();
-            success = true;
-        }
-        catch (Exception e) {
-            success = false;
-        }
-        assertTrue(success);
-    }
+    public void testHashCodeForDoubleArray() {
+        double[] a1 = new double[] {1.0};
+        double[] a2 = new double[] {1.0};
+        int h1 = HashUtilities.hashCodeForDoubleArray(a1);
+        int h2 = HashUtilities.hashCodeForDoubleArray(a2);
+        assertTrue(h1 == h2);
 
+        double[] a3 = new double[] {0.5, 1.0};
+        int h3 = HashUtilities.hashCodeForDoubleArray(a3);
+        assertFalse(h1 == h3);
+    }
 }

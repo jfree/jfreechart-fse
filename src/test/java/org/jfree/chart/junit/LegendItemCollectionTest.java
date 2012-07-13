@@ -62,7 +62,7 @@ import org.jfree.chart.LegendItemCollection;
 /**
  * Tests for the {@link LegendItemCollection} class.
  */
-public class LegendItemCollectionTests extends TestCase {
+public class LegendItemCollectionTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -70,7 +70,7 @@ public class LegendItemCollectionTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(LegendItemCollectionTests.class);
+        return new TestSuite(LegendItemCollectionTest.class);
     }
 
     /**
@@ -78,7 +78,7 @@ public class LegendItemCollectionTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public LegendItemCollectionTests(String name) {
+    public LegendItemCollectionTest(String name) {
         super(name);
     }
 

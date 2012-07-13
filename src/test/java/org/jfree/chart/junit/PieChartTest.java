@@ -56,7 +56,7 @@ import org.jfree.data.general.DefaultPieDataset;
  * Tests for a pie chart.
  *
  */
-public class PieChartTests extends TestCase {
+public class PieChartTest extends TestCase {
 
     /** A chart. */
     private JFreeChart pieChart;
@@ -67,7 +67,7 @@ public class PieChartTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(PieChartTests.class);
+        return new TestSuite(PieChartTest.class);
     }
 
     /**
@@ -75,7 +75,7 @@ public class PieChartTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public PieChartTests(String name) {
+    public PieChartTest(String name) {
         super(name);
     }
 

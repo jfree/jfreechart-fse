@@ -63,7 +63,7 @@ import org.jfree.data.general.DatasetUtilities;
 /**
  * Some tests for a waterfall chart.
  */
-public class WaterfallChartTests extends TestCase {
+public class WaterfallChartTest extends TestCase {
 
     /** A chart. */
     private JFreeChart chart;
@@ -74,7 +74,7 @@ public class WaterfallChartTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(WaterfallChartTests.class);
+        return new TestSuite(WaterfallChartTest.class);
     }
 
     /**
@@ -82,7 +82,7 @@ public class WaterfallChartTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public WaterfallChartTests(String name) {
+    public WaterfallChartTest(String name) {
         super(name);
     }
 

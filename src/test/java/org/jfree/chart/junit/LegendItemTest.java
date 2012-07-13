@@ -72,7 +72,7 @@ import org.jfree.chart.common.ui.StandardGradientPaintTransformer;
 /**
  * Tests for the {@link LegendItem} class.
  */
-public class LegendItemTests extends TestCase {
+public class LegendItemTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -80,7 +80,7 @@ public class LegendItemTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(LegendItemTests.class);
+        return new TestSuite(LegendItemTest.class);
     }
 
     /**
@@ -88,7 +88,7 @@ public class LegendItemTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public LegendItemTests(String name) {
+    public LegendItemTest(String name) {
         super(name);
     }
 

@@ -70,7 +70,7 @@ import org.jfree.chart.renderer.xy.StandardXYBarPainter;
 /**
  * Tests for the {@link StandardChartTheme} class.
  */
-public class StandardChartThemeTests extends TestCase {
+public class StandardChartThemeTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -78,7 +78,7 @@ public class StandardChartThemeTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StandardChartThemeTests.class);
+        return new TestSuite(StandardChartThemeTest.class);
     }
 
     /**
@@ -86,7 +86,7 @@ public class StandardChartThemeTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StandardChartThemeTests(String name) {
+    public StandardChartThemeTest(String name) {
         super(name);
     }
 

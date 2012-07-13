@@ -86,7 +86,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 /**
  * Tests for the {@link JFreeChart} class.
  */
-public class JFreeChartTests extends TestCase implements ChartChangeListener {
+public class JFreeChartTest extends TestCase implements ChartChangeListener {
 
     /** A pie chart. */
     private JFreeChart pieChart;
@@ -97,7 +97,7 @@ public class JFreeChartTests extends TestCase implements ChartChangeListener {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(JFreeChartTests.class);
+        return new TestSuite(JFreeChartTest.class);
     }
 
     /**
@@ -105,7 +105,7 @@ public class JFreeChartTests extends TestCase implements ChartChangeListener {
      *
      * @param name  the name of the tests.
      */
-    public JFreeChartTests(String name) {
+    public JFreeChartTest(String name) {
         super(name);
     }
 

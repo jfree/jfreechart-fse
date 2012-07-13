@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ---------------------------
- * StackedBarChart3DTests.java
- * ---------------------------
+ * ---------------------
+ * LineChart3DTests.java
+ * ---------------------
  * (C) Copyright 2005-2008, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -65,9 +65,9 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.general.DatasetUtilities;
 
 /**
- * Some tests for a stacked bar chart with 3D effect.
+ * Some tests for a line chart with a 3D effect.
  */
-public class StackedBarChart3DTests extends TestCase {
+public class LineChart3DTest extends TestCase {
 
     /** A chart. */
     private JFreeChart chart;
@@ -78,7 +78,7 @@ public class StackedBarChart3DTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StackedBarChart3DTests.class);
+        return new TestSuite(LineChart3DTest.class);
     }
 
     /**
@@ -86,7 +86,7 @@ public class StackedBarChart3DTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StackedBarChart3DTests(String name) {
+    public LineChart3DTest(String name) {
         super(name);
     }
 
@@ -95,7 +95,7 @@ public class StackedBarChart3DTests extends TestCase {
      */
     @Override
 	protected void setUp() {
-        this.chart = createChart();
+        this.chart = createLineChart3D();
     }
 
     /**
@@ -115,14 +115,14 @@ public class StackedBarChart3DTests extends TestCase {
             success = true;
         }
         catch (Exception e) {
-          success = false;
+            success = false;
         }
         assertTrue(success);
 
     }
 
     /**
-     * Replaces the dataset and checks that it has changed as expected.
+     * Replaces the chart's dataset and then checks that the new dataset is OK.
      */
     public void testReplaceDataset() {
 
@@ -143,7 +143,7 @@ public class StackedBarChart3DTests extends TestCase {
         ValueAxis axis = plot.getRangeAxis();
         Range range = axis.getRange();
         assertTrue("Expecting the lower bound of the range to be around -30: "
-                    + range.getLowerBound(), range.getLowerBound() <= -30);
+                   + range.getLowerBound(), range.getLowerBound() <= -30);
         assertTrue("Expecting the upper bound of the range to be around 30: "
                    + range.getUpperBound(), range.getUpperBound() >= 30);
 
@@ -178,11 +178,11 @@ public class StackedBarChart3DTests extends TestCase {
     }
 
     /**
-     * Create a stacked bar chart with sample data in the range -3 to +3.
+     * Create a line chart with sample data in the range -3 to +3.
      *
      * @return The chart.
      */
-    private static JFreeChart createChart() {
+    private static JFreeChart createLineChart3D() {
 
         // create a dataset...
         Number[][] data = new Integer[][]
@@ -194,12 +194,12 @@ public class StackedBarChart3DTests extends TestCase {
                 "C", data);
 
         // create the chart...
-        return ChartFactory.createStackedBarChart3D(
-            "Stacked Bar Chart 3D",  // chart title
+        return ChartFactory.createLineChart3D(
+            "Line Chart",
             "Domain", "Range",
-            dataset,      // data
+            dataset,
             PlotOrientation.HORIZONTAL,
-            true,         // include legend
+            true,     // include legend
             true,
             true
         );
@@ -208,6 +208,7 @@ public class StackedBarChart3DTests extends TestCase {
 
     /**
      * A chart change listener.
+     *
      */
     static class LocalListener implements ChartChangeListener {
 

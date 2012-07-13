@@ -69,7 +69,7 @@ import org.jfree.data.time.SimpleTimePeriod;
 /**
  * Some tests for a Gantt chart.
  */
-public class GanttChartTests extends TestCase {
+public class GanttChartTest extends TestCase {
 
     /** A chart. */
     private JFreeChart chart;
@@ -80,7 +80,7 @@ public class GanttChartTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(GanttChartTests.class);
+        return new TestSuite(GanttChartTest.class);
     }
 
     /**
@@ -88,7 +88,7 @@ public class GanttChartTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public GanttChartTests(String name) {
+    public GanttChartTest(String name) {
         super(name);
     }
 

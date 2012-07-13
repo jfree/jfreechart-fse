@@ -70,7 +70,7 @@ import org.jfree.data.general.DatasetUtilities;
 /**
  * Tests for a bar chart.
  */
-public class BarChartTests extends TestCase {
+public class BarChartTest extends TestCase {
 
     /** A chart. */
     private JFreeChart chart;
@@ -81,7 +81,7 @@ public class BarChartTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(BarChartTests.class);
+        return new TestSuite(BarChartTest.class);
     }
 
     /**
@@ -89,7 +89,7 @@ public class BarChartTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public BarChartTests(String name) {
+    public BarChartTest(String name) {
         super(name);
     }
 

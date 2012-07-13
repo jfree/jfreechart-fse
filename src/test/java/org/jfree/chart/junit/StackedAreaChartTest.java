@@ -24,21 +24,17 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -------------------------
- * StackedBarChartTests.java
- * -------------------------
- * (C) Copyright 2002-2008, by Object Refinery Limited.
+ * --------------------------
+ * StackedAreaChartTests.java
+ * --------------------------
+ * (C) Copyright 2005-2008, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes:
  * --------
- * 11-Jun-2002 : Version 1 (DG);
- * 25-Jun-2002 : Removed unnecessary import (DG);
- * 17-Oct-2002 : Fixed errors reported by Checkstyle (DG);
- * 29-Jan-2004 : Renamed StackedHorizontalBarChartTests
- *               --> StackedBarChartTests (DG);
+ * 12-Apr-2005 : Version 1 (DG);
  *
  */
 
@@ -69,9 +65,9 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.general.DatasetUtilities;
 
 /**
- * Tests for a stacked bar chart.
+ * Some tests for a stacked area chart.
  */
-public class StackedBarChartTests extends TestCase {
+public class StackedAreaChartTest extends TestCase {
 
     /** A chart. */
     private JFreeChart chart;
@@ -82,7 +78,7 @@ public class StackedBarChartTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(StackedBarChartTests.class);
+        return new TestSuite(StackedAreaChartTest.class);
     }
 
     /**
@@ -90,7 +86,7 @@ public class StackedBarChartTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public StackedBarChartTests(String name) {
+    public StackedAreaChartTest(String name) {
         super(name);
     }
 
@@ -109,7 +105,6 @@ public class StackedBarChartTests extends TestCase {
     public void testDrawWithNullInfo() {
 
         boolean success = false;
-
         try {
             BufferedImage image = new BufferedImage(200 , 100,
                     BufferedImage.TYPE_INT_RGB);
@@ -122,7 +117,6 @@ public class StackedBarChartTests extends TestCase {
         catch (Exception e) {
           success = false;
         }
-
         assertTrue(success);
 
     }
@@ -163,7 +157,7 @@ public class StackedBarChartTests extends TestCase {
         CategoryPlot plot = (CategoryPlot) this.chart.getPlot();
         CategoryItemRenderer renderer = plot.getRenderer();
         StandardCategoryToolTipGenerator tt
-                = new StandardCategoryToolTipGenerator();
+            = new StandardCategoryToolTipGenerator();
         renderer.setSeriesToolTipGenerator(0, tt);
         CategoryToolTipGenerator tt2 = renderer.getToolTipGenerator(0, 0);
         assertTrue(tt2 == tt);
@@ -200,8 +194,8 @@ public class StackedBarChartTests extends TestCase {
                 "C", data);
 
         // create the chart...
-        return ChartFactory.createStackedBarChart(
-            "Stacked Bar Chart",  // chart title
+        return ChartFactory.createStackedAreaChart(
+            "Stacked Area Chart",  // chart title
             "Domain", "Range",
             dataset,      // data
             PlotOrientation.HORIZONTAL,

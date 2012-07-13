@@ -66,7 +66,7 @@ import org.jfree.data.xy.DefaultXYDataset;
 /**
  * Tests for the {@link ChartPanel} class.
  */
-public class ChartPanelTests extends TestCase
+public class ChartPanelTest extends TestCase
         implements ChartChangeListener, ChartMouseListener {
 
     private List chartChangeEvents = new java.util.ArrayList();
@@ -88,7 +88,7 @@ public class ChartPanelTests extends TestCase
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(ChartPanelTests.class);
+        return new TestSuite(ChartPanelTest.class);
     }
 
     /**
@@ -96,7 +96,7 @@ public class ChartPanelTests extends TestCase
      *
      * @param name  the name of the tests.
      */
-    public ChartPanelTests(String name) {
+    public ChartPanelTest(String name) {
         super(name);
     }
 

@@ -61,7 +61,7 @@ import org.jfree.chart.entity.StandardEntityCollection;
 /**
  * Tests for the {@link ChartRenderingInfo} class.
  */
-public class ChartRenderingInfoTests extends TestCase {
+public class ChartRenderingInfoTest extends TestCase {
 
     /**
      * Returns the tests as a test suite.
@@ -69,7 +69,7 @@ public class ChartRenderingInfoTests extends TestCase {
      * @return The test suite.
      */
     public static Test suite() {
-        return new TestSuite(ChartRenderingInfoTests.class);
+        return new TestSuite(ChartRenderingInfoTest.class);
     }
 
     /**
@@ -77,7 +77,7 @@ public class ChartRenderingInfoTests extends TestCase {
      *
      * @param name  the name of the tests.
      */
-    public ChartRenderingInfoTests(String name) {
+    public ChartRenderingInfoTest(String name) {
         super(name);
     }
 
