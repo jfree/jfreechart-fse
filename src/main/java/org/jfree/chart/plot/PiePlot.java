@@ -376,7 +376,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
     private double shadowYOffset = 4.0f;
 
     /** The percentage amount to explode each pie section. */
-    private Map explodePercentages;
+    private Map<Comparable, Number> explodePercentages;
 
     /** The section label generator. */
     private PieSectionLabelGenerator labelGenerator;
@@ -584,7 +584,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         this.baseSectionOutlineStroke = DEFAULT_OUTLINE_STROKE;
         this.autoPopulateSectionOutlineStroke = false;
 
-        this.explodePercentages = new TreeMap();
+        this.explodePercentages = new TreeMap<Comparable, Number>();
 
         this.labelGenerator = new StandardPieSectionLabelGenerator();
         this.labelFont = DEFAULT_LABEL_FONT;
@@ -1555,7 +1555,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
     public double getExplodePercent(Comparable key) {
         double result = 0.0;
         if (this.explodePercentages != null) {
-            Number percent = (Number) this.explodePercentages.get(key);
+            Number percent = this.explodePercentages.get(key);
             if (percent != null) {
                 result = percent.doubleValue();
             }
@@ -1579,7 +1579,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             throw new IllegalArgumentException("Null 'key' argument.");
         }
         if (this.explodePercentages == null) {
-            this.explodePercentages = new TreeMap();
+            this.explodePercentages = new TreeMap<Comparable, Number>();
         }
         this.explodePercentages.put(key, new Double(percent));
         fireChangeEvent();
@@ -1595,10 +1595,8 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             return 0.0;
         }
         double result = 0.0;
-        Iterator iterator = this.dataset.getKeys().iterator();
-        while (iterator.hasNext()) {
-            Comparable key = (Comparable) iterator.next();
-            Number explode = (Number) this.explodePercentages.get(key);
+        for (Comparable key : this.dataset.getKeys()) {
+            Number explode = this.explodePercentages.get(key);
             if (explode != null) {
                 result = Math.max(result, explode.doubleValue());
             }
