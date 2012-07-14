@@ -98,6 +98,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import org.jfree.chart.common.util.ObjectUtilities;
@@ -912,25 +913,10 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
             return;  // nothing to do
         }
         // find the serial index of the period specified by 'latest'
-        long index = Long.MAX_VALUE;
-        try {
-            Method m = RegularTimePeriod.class.getDeclaredMethod(
-                    "createInstance", new Class[] {Class.class, Date.class,
-                    TimeZone.class});
-            RegularTimePeriod newest = (RegularTimePeriod) m.invoke(
-                    this.timePeriodClass, new Object[] {this.timePeriodClass,
-                            new Date(latest), TimeZone.getDefault()});
-            index = newest.getSerialIndex();
-        }
-        catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+        RegularTimePeriod newest = RegularTimePeriod.createInstance(
+                this.timePeriodClass, new Date(latest), TimeZone.getDefault(),
+                Locale.getDefault());
+        long index = newest.getSerialIndex();
 
         // check if there are any values earlier than specified by the history
         // count...

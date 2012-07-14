@@ -421,15 +421,6 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     }
 
     /**
-     * Two classes with different period classes are NOT the same.
-     */
-    public void testEquals3() {
-        TimeSeries s1 = new TimeSeries("Series");
-        TimeSeries s2 = new TimeSeries("Series");
-        assertFalse(s1.equals(s2));
-    }
-
-    /**
      * Some tests to ensure that the createCopy(RegularTimePeriod,
      * RegularTimePeriod) method is functioning correctly.
      */
