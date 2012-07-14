@@ -1116,25 +1116,6 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * from the {@link ValueAxis} class).
      *
      * @param zone  the time zone (<code>null</code> not permitted).
-     *
-     * @return A collection of standard date tick units.
-     *
-     * @deprecated Since 1.0.11, use {@link #createStandardDateTickUnits(
-     *         TimeZone, Locale)} to explicitly set the locale as well as the
-     *         time zone.
-     */
-    public static TickUnitSource createStandardDateTickUnits(TimeZone zone) {
-        return createStandardDateTickUnits(zone, Locale.getDefault());
-    }
-
-    /**
-     * Returns a collection of standard date tick units.  This collection will
-     * be used by default, but you are free to create your own collection if
-     * you want to (see the
-     * {@link ValueAxis#setStandardTickUnits(TickUnitSource)} method inherited
-     * from the {@link ValueAxis} class).
-     *
-     * @param zone  the time zone (<code>null</code> not permitted).
      * @param locale  the locale (<code>null</code> not permitted).
      *
      * @return A collection of standard date tick units.
