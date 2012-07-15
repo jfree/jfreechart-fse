@@ -188,48 +188,6 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
     /** A constant for the 'critical' range. */
     public static final int CRITICAL = 2;
 
-    /**
-     * The bulb radius.
-     *
-     * @deprecated As of 1.0.7, use {@link #getBulbRadius()}.
-     */
-    protected static final int BULB_RADIUS = 40;
-
-    /**
-     * The bulb diameter.
-     *
-     * @deprecated As of 1.0.7, use {@link #getBulbDiameter()}.
-     */
-    protected static final int BULB_DIAMETER = BULB_RADIUS * 2;
-
-    /**
-     * The column radius.
-     *
-     * @deprecated As of 1.0.7, use {@link #getColumnRadius()}.
-     */
-    protected static final int COLUMN_RADIUS = 20;
-
-    /**
-     * The column diameter.
-     *
-     * @deprecated As of 1.0.7, use {@link #getColumnDiameter()}.
-     */
-    protected static final int COLUMN_DIAMETER = COLUMN_RADIUS * 2;
-
-    /**
-     * The gap radius.
-     *
-     * @deprecated As of 1.0.7, use {@link #getGap()}.
-     */
-    protected static final int GAP_RADIUS = 5;
-
-    /**
-     * The gap diameter.
-     *
-     * @deprecated As of 1.0.7, use {@link #getGap()} times two.
-     */
-    protected static final int GAP_DIAMETER = GAP_RADIUS * 2;
-
     /** The axis gap. */
     protected static final int AXIS_GAP = 10;
 
@@ -668,28 +626,6 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
     }
 
     /**
-     * Sets the unit type.
-     *
-     * @param u  the unit type (<code>null</code> ignored).
-     *
-     * @deprecated Use setUnits(int) instead.  Deprecated as of version 1.0.6,
-     *     because this method is a little obscure and redundant anyway.
-     */
-    public void setUnits(String u) {
-        if (u == null) {
-            return;
-        }
-
-        u = u.toUpperCase().trim();
-        for (int i = 0; i < UNITS.length; ++i) {
-            if (u.equals(UNITS[i].toUpperCase().trim())) {
-                setUnits(i);
-                i = UNITS.length;
-            }
-        }
-    }
-
-    /**
      * Returns a code indicating the location at which the value label is
      * displayed.
      *
@@ -851,35 +787,6 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
             throw new IllegalArgumentException("Null 'paint' argument.");
         }
         this.mercuryPaint = paint;
-        fireChangeEvent();
-    }
-
-    /**
-     * Returns the flag that controls whether not value lines are displayed.
-     *
-     * @return The flag.
-     *
-     * @see #setShowValueLines(boolean)
-     *
-     * @deprecated This flag doesn't do anything useful/visible.  Deprecated
-     *     as of version 1.0.6.
-     */
-    public boolean getShowValueLines() {
-        return this.showValueLines;
-    }
-
-    /**
-     * Sets the display as to whether to show value lines in the output.
-     *
-     * @param b Whether to show value lines in the thermometer
-     *
-     * @see #getShowValueLines()
-     *
-     * @deprecated This flag doesn't do anything useful/visible.  Deprecated
-     *     as of version 1.0.6.
-     */
-    public void setShowValueLines(boolean b) {
-        this.showValueLines = b;
         fireChangeEvent();
     }
 
@@ -1403,34 +1310,6 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
     }
 
     /**
-     * Returns the minimum value in either the domain or the range, whichever
-     * is displayed against the vertical axis for the particular type of plot
-     * implementing this interface.
-     *
-     * @return The minimum value in either the domain or the range.
-     *
-     * @deprecated This method is not used.  Officially deprecated in version
-     *         1.0.6.
-     */
-    public Number getMinimumVerticalDataValue() {
-        return new Double(this.lowerBound);
-    }
-
-    /**
-     * Returns the maximum value in either the domain or the range, whichever
-     * is displayed against the vertical axis for the particular type of plot
-     * implementing this interface.
-     *
-     * @return The maximum value in either the domain or the range
-     *
-     * @deprecated This method is not used.  Officially deprecated in version
-     *         1.0.6.
-     */
-    public Number getMaximumVerticalDataValue() {
-        return new Double(this.upperBound);
-    }
-
-    /**
      * Returns the data range.
      *
      * @param axis  the axis.
@@ -1438,7 +1317,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
      * @return The range of data displayed.
      */
     @Override
-	public Range getDataRange(ValueAxis axis) {
+    public Range getDataRange(ValueAxis axis) {
        return new Range(this.lowerBound, this.upperBound);
     }
 
