@@ -109,13 +109,13 @@ public class PeriodAxisLabelInfoTest extends TestCase {
         RectangleInsets sp2 = new RectangleInsets(2, 2, 2, 2);
         Font lf1 = new Font("SansSerif", Font.PLAIN, 10);
         Font lf2 = new Font("SansSerif", Font.BOLD, 9);
-        Paint lp1 = Color.black;
-        Paint lp2 = Color.blue;
+        Paint lp1 = Color.BLACK;
+        Paint lp2 = Color.BLUE;
         boolean b1 = true;
         boolean b2 = false;
         Stroke s1 = new BasicStroke(0.5f);
         Stroke s2 = new BasicStroke(0.25f);
-        Paint dp1 = Color.red;
+        Paint dp1 = Color.RED;
         Paint dp2 = Color.green;
 
         info1 = new PeriodAxisLabelInfo(c2, df1, sp1, lf1, lp1, b1, s1, dp1);

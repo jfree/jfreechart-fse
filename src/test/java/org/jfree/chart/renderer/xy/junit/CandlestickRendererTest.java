@@ -100,7 +100,7 @@ public class CandlestickRendererTest extends TestCase {
 
         // check defaults
         assertEquals(Color.green, r1.getUpPaint());
-        assertEquals(Color.red, r1.getDownPaint());
+        assertEquals(Color.RED, r1.getDownPaint());
         assertFalse(r1.getUseOutlinePaint());
         assertTrue(r1.getDrawVolume());
         assertEquals(Color.gray, r1.getVolumePaint());
@@ -116,11 +116,11 @@ public class CandlestickRendererTest extends TestCase {
         assertEquals(r1, r2);
 
         // upPaint
-        r1.setUpPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.white));
+        r1.setUpPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
+                Color.WHITE));
         assertFalse(r1.equals(r2));
-        r2.setUpPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.white));
+        r2.setUpPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
+                Color.WHITE));
         assertTrue(r1.equals(r2));
 
         // downPaint
@@ -172,9 +172,9 @@ public class CandlestickRendererTest extends TestCase {
         r2.setUseOutlinePaint(true);
         assertTrue(r1.equals(r2));
 
-        r1.setVolumePaint(Color.blue);
+        r1.setVolumePaint(Color.BLUE);
         assertFalse(r1.equals(r2));
-        r2.setVolumePaint(Color.blue);
+        r2.setVolumePaint(Color.BLUE);
         assertTrue(r1.equals(r2));
     }
 

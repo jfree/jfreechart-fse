@@ -98,9 +98,9 @@ public class ExtendedCategoryAxisTest extends TestCase {
         a2.setSubLabelFont(new Font("Dialog", Font.BOLD, 8));
         assertTrue(a1.equals(a2));
 
-        a1.setSubLabelPaint(Color.red);
+        a1.setSubLabelPaint(Color.RED);
         assertFalse(a1.equals(a2));
-        a2.setSubLabelPaint(Color.red);
+        a2.setSubLabelPaint(Color.RED);
         assertTrue(a1.equals(a2));
     }
 
@@ -147,8 +147,8 @@ public class ExtendedCategoryAxisTest extends TestCase {
     public void testCloning2() {
         ExtendedCategoryAxis a1 = new ExtendedCategoryAxis("Test");
         a1.setTickLabelFont("C1", new Font("Dialog", Font.PLAIN, 15));
-        a1.setTickLabelPaint("C1", new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.white));
+        a1.setTickLabelPaint("C1", new GradientPaint(1.0f, 2.0f, Color.RED,
+                3.0f, 4.0f, Color.WHITE));
         ExtendedCategoryAxis a2 = null;
         try {
             a2 = (ExtendedCategoryAxis) a1.clone();
@@ -184,8 +184,8 @@ public class ExtendedCategoryAxisTest extends TestCase {
      */
     public void testSerialization() {
         ExtendedCategoryAxis a1 = new ExtendedCategoryAxis("Test");
-        a1.setSubLabelPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f,
-                4.0f, Color.blue));
+        a1.setSubLabelPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
+                4.0f, Color.BLUE));
         ExtendedCategoryAxis a2 = null;
 
         try {

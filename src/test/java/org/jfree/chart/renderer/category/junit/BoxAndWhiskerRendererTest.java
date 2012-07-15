@@ -112,10 +112,10 @@ public class BoxAndWhiskerRendererTest extends TestCase {
         assertEquals(r1, r2);
 
         r1.setArtifactPaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
-                3.0f, 4.0f, Color.blue));
+                3.0f, 4.0f, Color.BLUE));
         assertFalse(r1.equals(r2));
         r2.setArtifactPaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
-                3.0f, 4.0f, Color.blue));
+                3.0f, 4.0f, Color.BLUE));
         assertEquals(r1, r2);
 
         r1.setFillBox(!r1.getFillBox());

@@ -91,9 +91,9 @@ public class LegendGraphicTest extends TestCase {
      */
     public void testEquals() {
         LegendGraphic g1 = new LegendGraphic(new Rectangle2D.Double(1.0, 2.0,
-                3.0, 4.0), Color.black);
+                3.0, 4.0), Color.BLACK);
         LegendGraphic g2 = new LegendGraphic(new Rectangle2D.Double(1.0, 2.0,
-                3.0, 4.0), Color.black);
+                3.0, 4.0), Color.BLACK);
         assertEquals(g1, g2);
         assertEquals(g2, g1);
 
@@ -190,9 +190,9 @@ public class LegendGraphicTest extends TestCase {
      */
     public void testHashcode() {
         LegendGraphic g1 = new LegendGraphic(new Rectangle2D.Double(1.0, 2.0,
-                3.0, 4.0), Color.black);
+                3.0, 4.0), Color.BLACK);
         LegendGraphic g2 = new LegendGraphic(new Rectangle2D.Double(1.0, 2.0,
-                3.0, 4.0), Color.black);
+                3.0, 4.0), Color.BLACK);
         assertTrue(g1.equals(g2));
         int h1 = g1.hashCode();
         int h2 = g2.hashCode();
@@ -204,7 +204,7 @@ public class LegendGraphicTest extends TestCase {
      */
     public void testCloning() {
         Rectangle r = new Rectangle(1, 2, 3, 4);
-        LegendGraphic g1 = new LegendGraphic(r, Color.black);
+        LegendGraphic g1 = new LegendGraphic(r, Color.BLACK);
         LegendGraphic g2 = null;
         try {
             g2 = (LegendGraphic) g1.clone();
@@ -226,7 +226,7 @@ public class LegendGraphicTest extends TestCase {
      */
     public void testCloning2() {
         Rectangle r = new Rectangle(1, 2, 3, 4);
-        LegendGraphic g1 = new LegendGraphic(r, Color.black);
+        LegendGraphic g1 = new LegendGraphic(r, Color.BLACK);
         Line2D l = new Line2D.Double(1.0, 2.0, 3.0, 4.0);
         g1.setLine(l);
         LegendGraphic g2 = null;
@@ -252,7 +252,7 @@ public class LegendGraphicTest extends TestCase {
     public void testSerialization() {
 
         Stroke s = new BasicStroke(1.23f);
-        LegendGraphic g1 = new LegendGraphic(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), Color.black);
+        LegendGraphic g1 = new LegendGraphic(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), Color.BLACK);
         g1.setOutlineStroke(s);
         LegendGraphic g2 = null;
 

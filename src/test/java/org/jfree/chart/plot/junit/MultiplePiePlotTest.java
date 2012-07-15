@@ -145,10 +145,10 @@ public class MultiplePiePlotTest extends TestCase
         p2.setAggregatedItemsKey("Aggregated Items");
         assertTrue(p1.equals(p2));
 
-        p1.setAggregatedItemsPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+        p1.setAggregatedItemsPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.yellow));
         assertFalse(p1.equals(p2));
-        p2.setAggregatedItemsPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+        p2.setAggregatedItemsPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.yellow));
         assertTrue(p1.equals(p2));
 
@@ -192,7 +192,7 @@ public class MultiplePiePlotTest extends TestCase
     public void testSerialization() {
         MultiplePiePlot p1 = new MultiplePiePlot(null);
         p1.setAggregatedItemsPaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
-                3.0f, 4.0f, Color.red));
+                3.0f, 4.0f, Color.RED));
         MultiplePiePlot p2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();

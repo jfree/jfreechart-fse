@@ -161,7 +161,7 @@ public class StackedXYAreaRendererTest extends TestCase {
      */
     public void testSerialization() {
         StackedXYAreaRenderer r1 = new StackedXYAreaRenderer();
-        r1.setShapePaint(Color.red);
+        r1.setShapePaint(Color.RED);
         r1.setShapeStroke(new BasicStroke(1.23f));
         StackedXYAreaRenderer r2 = null;
         try {

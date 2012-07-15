@@ -100,10 +100,10 @@ public class TextAnnotationTest extends TestCase {
         assertTrue(a1.equals(a2));
 
         // paint
-        a1.setPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+        a1.setPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.pink));
         assertFalse(a1.equals(a2));
-        a2.setPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+        a2.setPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.pink));
         assertTrue(a1.equals(a2));
 

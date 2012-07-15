@@ -109,10 +109,10 @@ public class XYErrorRendererTest extends TestCase {
         assertTrue(r1.equals(r2));
 
         // errorPaint
-        r1.setErrorPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+        r1.setErrorPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.green));
         assertFalse(r1.equals(r2));
-        r2.setErrorPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+        r2.setErrorPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.green));
         assertTrue(r1.equals(r2));
 
@@ -141,8 +141,8 @@ public class XYErrorRendererTest extends TestCase {
      */
     public void testCloning() {
         XYErrorRenderer r1 = new XYErrorRenderer();
-        r1.setErrorPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.white));
+        r1.setErrorPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
+                Color.WHITE));
         XYErrorRenderer r2 = null;
         try {
             r2 = (XYErrorRenderer) r1.clone();
@@ -186,8 +186,8 @@ public class XYErrorRendererTest extends TestCase {
      */
     public void testSerialization() {
         XYErrorRenderer r1 = new XYErrorRenderer();
-        r1.setErrorPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.white));
+        r1.setErrorPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
+                Color.WHITE));
         XYErrorRenderer r2 = null;
 
         try {

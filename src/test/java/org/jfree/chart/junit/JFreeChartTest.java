@@ -156,9 +156,9 @@ public class JFreeChartTest extends TestCase implements ChartChangeListener {
         assertTrue(chart1.equals(chart2));
 
         // borderPaint
-        chart1.setBorderPaint(Color.red);
+        chart1.setBorderPaint(Color.RED);
         assertFalse(chart1.equals(chart2));
-        chart2.setBorderPaint(Color.red);
+        chart2.setBorderPaint(Color.RED);
         assertTrue(chart1.equals(chart2));
 
         // padding
@@ -190,11 +190,11 @@ public class JFreeChartTest extends TestCase implements ChartChangeListener {
         assertTrue(chart1.equals(chart2));
 
         // backgroundPaint
-        chart1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.blue));
+        chart1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
+                3.0f, 4.0f, Color.BLUE));
         assertFalse(chart1.equals(chart2));
-        chart2.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.blue));
+        chart2.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
+                3.0f, 4.0f, Color.BLUE));
         assertTrue(chart1.equals(chart2));
 
         // backgroundImage

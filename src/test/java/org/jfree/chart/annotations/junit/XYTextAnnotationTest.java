@@ -119,9 +119,9 @@ public class XYTextAnnotationTest extends TestCase {
         assertTrue(a1.equals(a2));
 
         // paint
-        GradientPaint gp1 = new GradientPaint(1.0f, 2.0f, Color.red, 3.0f,
+        GradientPaint gp1 = new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
                 4.0f, Color.yellow);
-        GradientPaint gp2 = new GradientPaint(1.0f, 2.0f, Color.red, 3.0f,
+        GradientPaint gp2 = new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
                 4.0f, Color.yellow);
         a1.setPaint(gp1);
         assertFalse(a1.equals(a2));
@@ -210,8 +210,8 @@ public class XYTextAnnotationTest extends TestCase {
      */
     public void testSerialization() {
         XYTextAnnotation a1 = new XYTextAnnotation("Text", 10.0, 20.0);
-        a1.setOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.blue));
+        a1.setOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
+                Color.BLUE));
         XYTextAnnotation a2 = null;
 
         try {

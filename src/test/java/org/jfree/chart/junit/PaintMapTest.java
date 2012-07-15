@@ -85,8 +85,8 @@ public class PaintMapTest extends TestCase {
     public void testGetPaint() {
         PaintMap m1 = new PaintMap();
         assertEquals(null, m1.getPaint("A"));
-        m1.put("A", Color.red);
-        assertEquals(Color.red, m1.getPaint("A"));
+        m1.put("A", Color.RED);
+        assertEquals(Color.RED, m1.getPaint("A"));
         m1.put("A", null);
         assertEquals(null, m1.getPaint("A"));
 
@@ -106,13 +106,13 @@ public class PaintMapTest extends TestCase {
      */
     public void testPut() {
         PaintMap m1 = new PaintMap();
-        m1.put("A", Color.red);
-        assertEquals(Color.red, m1.getPaint("A"));
+        m1.put("A", Color.RED);
+        assertEquals(Color.RED, m1.getPaint("A"));
 
         // a null key should throw an IllegalArgumentException
         boolean pass = false;
         try {
-            m1.put(null, Color.blue);
+            m1.put(null, Color.BLUE);
         }
         catch (IllegalArgumentException e) {
             pass = true;
@@ -131,9 +131,9 @@ public class PaintMapTest extends TestCase {
         assertFalse(m1.equals(null));
         assertFalse(m1.equals("ABC"));
 
-        m1.put("K1", Color.red);
+        m1.put("K1", Color.RED);
         assertFalse(m1.equals(m2));
-        m2.put("K1", Color.red);
+        m2.put("K1", Color.RED);
         assertTrue(m1.equals(m2));
 
         m1.put("K2", new GradientPaint(1.0f, 2.0f, Color.green, 3.0f, 4.0f,
@@ -163,7 +163,7 @@ public class PaintMapTest extends TestCase {
         }
         assertTrue(m1.equals(m2));
 
-        m1.put("K1", Color.red);
+        m1.put("K1", Color.RED);
         m1.put("K2", new GradientPaint(1.0f, 2.0f, Color.green, 3.0f, 4.0f,
                 Color.yellow));
         try {
@@ -203,7 +203,7 @@ public class PaintMapTest extends TestCase {
      */
     public void testSerialization2() {
         PaintMap m1 = new PaintMap();
-        m1.put("K1", Color.red);
+        m1.put("K1", Color.RED);
         m1.put("K2", new GradientPaint(1.0f, 2.0f, Color.green, 3.0f, 4.0f,
                 Color.yellow));
         PaintMap m2 = null;
@@ -231,9 +231,9 @@ public class PaintMapTest extends TestCase {
      */
     public void testKeysOfDifferentClasses() {
         PaintMap m = new PaintMap();
-        m.put("ABC", Color.red);
-        m.put(new Integer(99), Color.blue);
-        assertEquals(Color.blue, m.getPaint(new Integer(99)));
+        m.put("ABC", Color.RED);
+        m.put(new Integer(99), Color.BLUE);
+        assertEquals(Color.BLUE, m.getPaint(new Integer(99)));
     }
 
 }

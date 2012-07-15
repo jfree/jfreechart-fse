@@ -109,11 +109,11 @@ public class ThermometerPlotTest extends TestCase {
         assertTrue(p2.equals(p1));
 
         // thermometerPaint
-        p1.setThermometerPaint(new GradientPaint(1.0f, 2.0f, Color.blue,
-                3.0f, 4.0f, Color.red));
+        p1.setThermometerPaint(new GradientPaint(1.0f, 2.0f, Color.BLUE,
+                3.0f, 4.0f, Color.RED));
         assertFalse(p1.equals(p2));
-        p2.setThermometerPaint(new GradientPaint(1.0f, 2.0f, Color.blue,
-                3.0f, 4.0f, Color.red));
+        p2.setThermometerPaint(new GradientPaint(1.0f, 2.0f, Color.BLUE,
+                3.0f, 4.0f, Color.RED));
         assertTrue(p2.equals(p1));
 
         // units
@@ -141,11 +141,11 @@ public class ThermometerPlotTest extends TestCase {
         assertTrue(p2.equals(p1));
 
         // valuePaint
-        p1.setValuePaint(new GradientPaint(4.0f, 5.0f, Color.red,
-                6.0f, 7.0f, Color.white));
+        p1.setValuePaint(new GradientPaint(4.0f, 5.0f, Color.RED,
+                6.0f, 7.0f, Color.WHITE));
         assertFalse(p1.equals(p2));
-        p2.setValuePaint(new GradientPaint(4.0f, 5.0f, Color.red,
-                6.0f, 7.0f, Color.white));
+        p2.setValuePaint(new GradientPaint(4.0f, 5.0f, Color.RED,
+                6.0f, 7.0f, Color.WHITE));
         assertTrue(p2.equals(p1));
 
         // valueFormat
@@ -155,11 +155,11 @@ public class ThermometerPlotTest extends TestCase {
         assertTrue(p2.equals(p1));
 
         // mercuryPaint
-        p1.setMercuryPaint(new GradientPaint(9.0f, 8.0f, Color.red,
-                7.0f, 6.0f, Color.blue));
+        p1.setMercuryPaint(new GradientPaint(9.0f, 8.0f, Color.RED,
+                7.0f, 6.0f, Color.BLUE));
         assertFalse(p1.equals(p2));
-        p2.setMercuryPaint(new GradientPaint(9.0f, 8.0f, Color.red,
-                7.0f, 6.0f, Color.blue));
+        p2.setMercuryPaint(new GradientPaint(9.0f, 8.0f, Color.RED,
+                7.0f, 6.0f, Color.BLUE));
         assertTrue(p2.equals(p1));
 
         p1.setSubrange(1, 1.0, 2.0);
@@ -167,10 +167,10 @@ public class ThermometerPlotTest extends TestCase {
         p2.setSubrange(1, 1.0, 2.0);
         assertTrue(p2.equals(p1));
 
-        p1.setSubrangePaint(1, new GradientPaint(1.0f, 2.0f, Color.red,
+        p1.setSubrangePaint(1, new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.yellow));
         assertFalse(p1.equals(p2));
-        p2.setSubrangePaint(1, new GradientPaint(1.0f, 2.0f, Color.red,
+        p2.setSubrangePaint(1, new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.yellow));
         assertTrue(p2.equals(p1));
 
@@ -238,8 +238,8 @@ public class ThermometerPlotTest extends TestCase {
      */
     public void testSerialization2() {
         ThermometerPlot p1 = new ThermometerPlot();
-        p1.setSubrangePaint(1, new GradientPaint(1.0f, 2.0f, Color.red, 3.0f,
-                4.0f, Color.blue));
+        p1.setSubrangePaint(1, new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
+                4.0f, Color.BLUE));
         ThermometerPlot p2 = null;
 
         try {

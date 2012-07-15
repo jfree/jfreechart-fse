@@ -97,25 +97,25 @@ public class XYDifferenceRendererTest extends TestCase {
      */
     public void testEquals() {
         XYDifferenceRenderer r1 = new XYDifferenceRenderer(
-                Color.red, Color.blue, false);
+                Color.RED, Color.BLUE, false);
         XYDifferenceRenderer r2 = new XYDifferenceRenderer(
-                Color.red, Color.blue, false);
+                Color.RED, Color.BLUE, false);
         assertEquals(r1, r2);
 
         // positive paint
-        r1.setPositivePaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.blue));
+        r1.setPositivePaint(new GradientPaint(1.0f, 2.0f, Color.RED,
+                3.0f, 4.0f, Color.BLUE));
         assertFalse(r1.equals(r2));
-        r2.setPositivePaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.blue));
+        r2.setPositivePaint(new GradientPaint(1.0f, 2.0f, Color.RED,
+                3.0f, 4.0f, Color.BLUE));
         assertTrue(r1.equals(r2));
 
         // negative paint
         r1.setNegativePaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
-                3.0f, 4.0f, Color.blue));
+                3.0f, 4.0f, Color.BLUE));
         assertFalse(r1.equals(r2));
         r2.setNegativePaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
-                3.0f, 4.0f, Color.blue));
+                3.0f, 4.0f, Color.BLUE));
         assertTrue(r1.equals(r2));
 
         // shapesVisible
@@ -144,9 +144,9 @@ public class XYDifferenceRendererTest extends TestCase {
      */
     public void testHashcode() {
         XYDifferenceRenderer r1
-            = new XYDifferenceRenderer(Color.red, Color.blue, false);
+            = new XYDifferenceRenderer(Color.RED, Color.BLUE, false);
         XYDifferenceRenderer r2
-            = new XYDifferenceRenderer(Color.red, Color.blue, false);
+            = new XYDifferenceRenderer(Color.RED, Color.BLUE, false);
         assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -157,8 +157,8 @@ public class XYDifferenceRendererTest extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        XYDifferenceRenderer r1 = new XYDifferenceRenderer(Color.red,
-                Color.blue, false);
+        XYDifferenceRenderer r1 = new XYDifferenceRenderer(Color.RED,
+                Color.BLUE, false);
         XYDifferenceRenderer r2 = null;
         try {
             r2 = (XYDifferenceRenderer) r1.clone();
@@ -192,8 +192,8 @@ public class XYDifferenceRendererTest extends TestCase {
      */
     public void testSerialization() {
 
-        XYDifferenceRenderer r1 = new XYDifferenceRenderer(Color.red,
-                Color.blue, false);
+        XYDifferenceRenderer r1 = new XYDifferenceRenderer(Color.RED,
+                Color.BLUE, false);
         XYDifferenceRenderer r2 = null;
 
         try {

@@ -146,14 +146,14 @@ public class SymbolAxisTest extends TestCase {
         a2.setGridBandsVisible(false);
         assertTrue(a1.equals(a2));
 
-        a1.setGridBandPaint(Color.black);
+        a1.setGridBandPaint(Color.BLACK);
         assertFalse(a1.equals(a2));
-        a2.setGridBandPaint(Color.black);
+        a2.setGridBandPaint(Color.BLACK);
         assertTrue(a1.equals(a2));
 
-        a1.setGridBandAlternatePaint(Color.red);
+        a1.setGridBandAlternatePaint(Color.RED);
         assertFalse(a1.equals(a2));
-        a2.setGridBandAlternatePaint(Color.red);
+        a2.setGridBandAlternatePaint(Color.RED);
         assertTrue(a1.equals(a2));
     }
 

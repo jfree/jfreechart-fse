@@ -101,11 +101,11 @@ public class BarRenderer3DTest extends TestCase {
         r2 = new BarRenderer3D(1.1, 2.2);
         assertTrue(r1.equals(r2));
 
-        r1.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.red, 4.0f, 3.0f,
-                Color.blue));
+        r1.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 4.0f, 3.0f,
+                Color.BLUE));
         assertFalse(r1.equals(r2));
-        r2.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.red, 4.0f, 3.0f,
-                Color.blue));
+        r2.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 4.0f, 3.0f,
+                Color.BLUE));
         assertTrue(r1.equals(r2));
     }
 
@@ -151,8 +151,8 @@ public class BarRenderer3DTest extends TestCase {
      */
     public void testSerialization() {
         BarRenderer3D r1 = new BarRenderer3D();
-        r1.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.red, 4.0f, 3.0f,
-                Color.blue));
+        r1.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 4.0f, 3.0f,
+                Color.BLUE));
         BarRenderer3D r2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();

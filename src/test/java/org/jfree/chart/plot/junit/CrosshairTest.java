@@ -89,8 +89,8 @@ public class CrosshairTest extends TestCase {
      * Some checks for the equals() method.
      */
     public void testEquals() {
-        Crosshair c1 = new Crosshair(1.0, Color.blue, new BasicStroke(1.0f));
-        Crosshair c2 = new Crosshair(1.0, Color.blue, new BasicStroke(1.0f));
+        Crosshair c1 = new Crosshair(1.0, Color.BLUE, new BasicStroke(1.0f));
+        Crosshair c2 = new Crosshair(1.0, Color.BLUE, new BasicStroke(1.0f));
         assertTrue(c1.equals(c1));
         assertTrue(c2.equals(c1));
 
@@ -104,9 +104,9 @@ public class CrosshairTest extends TestCase {
         c2.setValue(2.0);
         assertTrue(c1.equals(c2));
 
-        c1.setPaint(Color.red);
+        c1.setPaint(Color.RED);
         assertFalse(c1.equals(c2));
-        c2.setPaint(Color.red);
+        c2.setPaint(Color.RED);
         assertTrue(c1.equals(c2));
 
         c1.setStroke(new BasicStroke(1.1f));
@@ -146,9 +146,9 @@ public class CrosshairTest extends TestCase {
         c2.setLabelFont(new Font("Dialog", Font.PLAIN, 8));
         assertTrue(c1.equals(c2));
 
-        c1.setLabelPaint(Color.red);
+        c1.setLabelPaint(Color.RED);
         assertFalse(c1.equals(c2));
-        c2.setLabelPaint(Color.red);
+        c2.setLabelPaint(Color.RED);
         assertTrue(c1.equals(c2));
 
         c1.setLabelBackgroundPaint(Color.yellow);
@@ -188,7 +188,7 @@ public class CrosshairTest extends TestCase {
      */
     public void testCloning() {
         Crosshair c1 = new Crosshair(1.0, new GradientPaint(1.0f, 2.0f,
-                Color.red, 3.0f, 4.0f, Color.BLUE), new BasicStroke(1.0f));
+                Color.RED, 3.0f, 4.0f, Color.BLUE), new BasicStroke(1.0f));
         Crosshair c2 = null;
         try {
             c2 = (Crosshair) c1.clone();
@@ -214,7 +214,7 @@ public class CrosshairTest extends TestCase {
      */
     public void testSerialization() {
         Crosshair c1 = new Crosshair(1.0, new GradientPaint(1.0f, 2.0f,
-                Color.red, 3.0f, 4.0f, Color.BLUE), new BasicStroke(1.0f));
+                Color.RED, 3.0f, 4.0f, Color.BLUE), new BasicStroke(1.0f));
         Crosshair c2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();

@@ -95,18 +95,18 @@ public class StandardDialFrameTest extends TestCase {
         assertTrue(f1.equals(f2));
 
         // backgroundPaint
-        f1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.white, 3.0f,
+        f1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.WHITE, 3.0f,
                 4.0f, Color.yellow));
         assertFalse(f1.equals(f2));
-        f2.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.white, 3.0f,
+        f2.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.WHITE, 3.0f,
                 4.0f, Color.yellow));
         assertTrue(f1.equals(f2));
 
         // foregroundPaint
-        f1.setForegroundPaint(new GradientPaint(1.0f, 2.0f, Color.blue, 3.0f,
+        f1.setForegroundPaint(new GradientPaint(1.0f, 2.0f, Color.BLUE, 3.0f,
                 4.0f, Color.green));
         assertFalse(f1.equals(f2));
-        f2.setForegroundPaint(new GradientPaint(1.0f, 2.0f, Color.blue, 3.0f,
+        f2.setForegroundPaint(new GradientPaint(1.0f, 2.0f, Color.BLUE, 3.0f,
                 4.0f, Color.green));
         assertTrue(f1.equals(f2));
 

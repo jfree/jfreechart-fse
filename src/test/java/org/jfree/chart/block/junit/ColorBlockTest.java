@@ -83,24 +83,24 @@ public class ColorBlockTest extends TestCase {
      * Confirm that the equals() method can distinguish all the required fields.
      */
     public void testEquals() {
-        ColorBlock b1 = new ColorBlock(Color.red, 1.0, 2.0);
-        ColorBlock b2 = new ColorBlock(Color.red, 1.0, 2.0);
+        ColorBlock b1 = new ColorBlock(Color.RED, 1.0, 2.0);
+        ColorBlock b2 = new ColorBlock(Color.RED, 1.0, 2.0);
         assertTrue(b1.equals(b2));
         assertTrue(b2.equals(b2));
 
-        b1 = new ColorBlock(Color.blue, 1.0, 2.0);
+        b1 = new ColorBlock(Color.BLUE, 1.0, 2.0);
         assertFalse(b1.equals(b2));
-        b2 = new ColorBlock(Color.blue, 1.0, 2.0);
+        b2 = new ColorBlock(Color.BLUE, 1.0, 2.0);
         assertTrue(b1.equals(b2));
 
-        b1 = new ColorBlock(Color.blue, 1.1, 2.0);
+        b1 = new ColorBlock(Color.BLUE, 1.1, 2.0);
         assertFalse(b1.equals(b2));
-        b2 = new ColorBlock(Color.blue, 1.1, 2.0);
+        b2 = new ColorBlock(Color.BLUE, 1.1, 2.0);
         assertTrue(b1.equals(b2));
 
-        b1 = new ColorBlock(Color.blue, 1.1, 2.2);
+        b1 = new ColorBlock(Color.BLUE, 1.1, 2.2);
         assertFalse(b1.equals(b2));
-        b2 = new ColorBlock(Color.blue, 1.1, 2.2);
+        b2 = new ColorBlock(Color.BLUE, 1.1, 2.2);
         assertTrue(b1.equals(b2));
     }
 
@@ -108,8 +108,8 @@ public class ColorBlockTest extends TestCase {
      * Confirm that cloning works.
      */
     public void testCloning() {
-        GradientPaint gp = new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.blue);
+        GradientPaint gp = new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
+                Color.BLUE);
         Rectangle2D bounds1 = new Rectangle2D.Double(10.0, 20.0, 30.0, 40.0);
         ColorBlock b1 = new ColorBlock(gp, 1.0, 2.0);
         b1.setBounds(bounds1);
@@ -136,8 +136,8 @@ public class ColorBlockTest extends TestCase {
      * Serialize an instance, restore it, and check for equality.
      */
     public void testSerialization() {
-        GradientPaint gp = new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.blue);
+        GradientPaint gp = new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
+                Color.BLUE);
         ColorBlock b1 = new ColorBlock(gp, 1.0, 2.0);
         ColorBlock b2 = null;
         try {

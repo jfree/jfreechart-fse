@@ -100,10 +100,10 @@ public class XYBoxAndWhiskerRendererTest extends TestCase {
         assertEquals(r1, r2);
 
         r1.setArtifactPaint(new GradientPaint(1.0f, 2.0f, Color.green,
-                3.0f, 4.0f, Color.red));
+                3.0f, 4.0f, Color.RED));
         assertFalse(r1.equals(r2));
         r2.setArtifactPaint(new GradientPaint(1.0f, 2.0f, Color.green,
-                3.0f, 4.0f, Color.red));
+                3.0f, 4.0f, Color.RED));
         assertEquals(r1, r2);
 
         r1.setBoxWidth(0.55);

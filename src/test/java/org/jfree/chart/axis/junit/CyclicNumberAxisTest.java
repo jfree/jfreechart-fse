@@ -122,11 +122,11 @@ public class CyclicNumberAxisTest extends TestCase {
         assertTrue(a1.equals(a2));
 
         // advance line Paint
-        a1.setAdvanceLinePaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.black));
+        a1.setAdvanceLinePaint(new GradientPaint(1.0f, 2.0f, Color.RED,
+                3.0f, 4.0f, Color.BLACK));
         assertFalse(a1.equals(a2));
-        a2.setAdvanceLinePaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.black));
+        a2.setAdvanceLinePaint(new GradientPaint(1.0f, 2.0f, Color.RED,
+                3.0f, 4.0f, Color.BLACK));
         assertTrue(a1.equals(a2));
 
         // advance line Stroke
