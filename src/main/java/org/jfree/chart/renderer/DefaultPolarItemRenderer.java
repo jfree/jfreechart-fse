@@ -608,12 +608,12 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
 
         double axisMin = plot.getAxis().getLowerBound();
         double maxRadius = plot.getAxis().getUpperBound();
-        Point center = plot.translateValueThetaRadiusToJava2D(axisMin, axisMin,
+        Point center = plot.translateToJava2D(axisMin, axisMin, plot.getAxis(),
                 dataArea);
         for (ValueTick tick : ticks) {
             double tickVal = tick.getValue();
-            Point p = plot.translateValueThetaRadiusToJava2D(
-                    tickVal, maxRadius, dataArea);
+            Point p = plot.translateToJava2D(tickVal, maxRadius, plot.getAxis(),
+                    dataArea);
             g2.setPaint(plot.getAngleGridlinePaint());
             g2.drawLine(center.x, center.y, p.x, p.y);
             if (plot.isAngleLabelsVisible()) {
@@ -636,7 +636,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @param dataArea  the data area.
      */
     @Override
-	public void drawRadialGridLines(Graphics2D g2,
+    public void drawRadialGridLines(Graphics2D g2,
                                     PolarPlot plot,
                                     ValueAxis radialAxis,
                                     List ticks,
@@ -647,15 +647,15 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         g2.setStroke(plot.getRadiusGridlineStroke());
 
         double axisMin = radialAxis.getLowerBound();
-        Point center = plot.translateValueThetaRadiusToJava2D(axisMin, axisMin,
+        Point center = plot.translateToJava2D(axisMin, axisMin, radialAxis,
                 dataArea);
 
         Iterator iterator = ticks.iterator();
         while (iterator.hasNext()) {
             NumberTick tick = (NumberTick) iterator.next();
             double angleDegrees = plot.isCounterClockwise() ? plot.getAngleOffset() : -plot.getAngleOffset();
-            Point p = plot.translateValueThetaRadiusToJava2D(angleDegrees,
-                    tick.getNumber().doubleValue(), dataArea);
+            Point p = plot.translateToJava2D(angleDegrees,
+                    tick.getNumber().doubleValue(), radialAxis, dataArea);
             int r = p.x - center.x;
             int upperLeftX = center.x - r;
             int upperLeftY = center.y - r;
