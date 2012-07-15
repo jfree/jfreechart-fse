@@ -184,7 +184,6 @@ public class StackedAreaChartTest extends TestCase {
      */
     private static JFreeChart createChart() {
 
-        // create a dataset...
         Number[][] data = new Integer[][]
             {{new Integer(-3), new Integer(-2)},
              {new Integer(-1), new Integer(1)},
@@ -193,14 +192,8 @@ public class StackedAreaChartTest extends TestCase {
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
 
-        // create the chart...
-        return ChartFactory.createStackedAreaChart(
-            "Stacked Area Chart",  // chart title
-            "Domain", "Range",
-            dataset,      // data
-            true,         // include legend
-            true,
-            true);  // FIXME this was prev horizontal
+        return ChartFactory.createStackedAreaChart("Stacked Area Chart", 
+                "Domain", "Range", dataset);
 
     }
 
@@ -218,7 +211,7 @@ public class StackedAreaChartTest extends TestCase {
          * @param event  the event.
          */
         @Override
-		public void chartChanged(ChartChangeEvent event) {
+        public void chartChanged(ChartChangeEvent event) {
             this.flag = true;
         }
 

@@ -179,25 +179,19 @@ public class BarChart3DTest extends TestCase {
     }
 
     /**
-     * Create a horizontal bar chart with sample data in the range -3 to +3.
+     * Create a bar chart with sample data in the range -3 to +3.
      *
      * @return The chart.
      */
     private static JFreeChart createBarChart3D() {
-
-        // create a dataset...
         Number[][] data = new Integer[][]
             {{new Integer(-3), new Integer(-2)},
              {new Integer(-1), new Integer(1)},
              {new Integer(2), new Integer(3)}};
-
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
-
-        // create the chart...
         return ChartFactory.createBarChart3D("Bar Chart 3D", "Domain", "Range",
-                dataset, true, true, true);  // FIXME was horizontal
-
+                dataset); 
     }
 
     /**
@@ -215,7 +209,7 @@ public class BarChart3DTest extends TestCase {
          * @param event  the event.
          */
         @Override
-		public void chartChanged(ChartChangeEvent event) {
+        public void chartChanged(ChartChangeEvent event) {
             this.flag = true;
         }
 

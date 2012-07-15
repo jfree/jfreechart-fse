@@ -207,14 +207,8 @@ public class LogAxisTest extends TestCase {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         dataset.setValue(100.0, "Row 1", "Column 1");
         dataset.setValue(200.0, "Row 1", "Column 2");
-        JFreeChart chart = ChartFactory.createBarChart(
-            "Test",
-            "Categories",
-            "Value",
-            dataset,
-            false,
-            false,
-            false);
+        JFreeChart chart = ChartFactory.createBarChart("Test", "Categories",
+                "Value", dataset);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         LogAxis axis = new LogAxis("Log(Y)");
         plot.setRangeAxis(axis);
@@ -232,7 +226,7 @@ public class LogAxisTest extends TestCase {
         dataset.setValue(100.0, "Row 1", "Column 1");
         dataset.setValue(200.0, "Row 1", "Column 2");
         JFreeChart chart = ChartFactory.createLineChart("Test", "Categories",
-                "Value", dataset, false, false, false);
+                "Value", dataset);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         LogAxis axis = new LogAxis("Log(Y)");
         plot.setRangeAxis(axis);
@@ -259,14 +253,8 @@ public class LogAxisTest extends TestCase {
         series.add(3.0, 3.0);
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series);
-        JFreeChart chart = ChartFactory.createScatterPlot(
-            "Test",
-            "X",
-            "Y",
-            dataset,
-            false,
-            false,
-            false);
+        JFreeChart chart = ChartFactory.createScatterPlot("Test", "X", "Y",
+                dataset);
         XYPlot plot = (XYPlot) chart.getPlot();
         LogAxis axis = new LogAxis("Log(Y)");
         plot.setRangeAxis(axis);
@@ -285,14 +273,8 @@ public class LogAxisTest extends TestCase {
         series.add(3.0, 3.0);
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series);
-        JFreeChart chart = ChartFactory.createScatterPlot(
-            "Test",
-            "X",
-            "Y",
-            dataset,
-            false,
-            false,
-            false);
+        JFreeChart chart = ChartFactory.createScatterPlot("Test", "X", "Y",
+                dataset);
         XYPlot plot = (XYPlot) chart.getPlot();
         LogAxis axis = new LogAxis("Log(Y)");
         plot.setRangeAxis(axis);

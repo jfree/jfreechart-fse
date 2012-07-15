@@ -178,7 +178,7 @@ public class StackedXYBarRendererTest extends TestCase {
         TableXYDataset dataset
                 = RendererXYPackageTests.createTestTableXYDataset();
         JFreeChart chart = ChartFactory.createStackedXYAreaChart(
-                "Test Chart", "X", "Y", dataset, false, false, false);
+                "Test Chart", "X", "Y", dataset);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setRenderer(new StackedXYBarRenderer());
         NumberAxis domainAxis = (NumberAxis) plot.getDomainAxis();
@@ -197,7 +197,7 @@ public class StackedXYBarRendererTest extends TestCase {
         TableXYDataset dataset
                 = RendererXYPackageTests.createTestTableXYDataset();
         JFreeChart chart = ChartFactory.createStackedXYAreaChart(
-                "Test Chart", "X", "Y", dataset, false, false, false);
+                "Test Chart", "X", "Y", dataset);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setRenderer(new StackedXYBarRenderer());
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();

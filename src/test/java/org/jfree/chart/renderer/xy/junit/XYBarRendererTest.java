@@ -293,7 +293,7 @@ public class XYBarRendererTest extends TestCase {
         XYSeriesCollection dataset
                 = RendererXYPackageTests.createTestXYSeriesCollection();
         JFreeChart chart = ChartFactory.createXYBarChart("Test Chart", "X",
-                false, "Y", dataset, false, false, false);
+                false, "Y", dataset);
         XYPlot plot = (XYPlot) chart.getPlot();
         NumberAxis domainAxis = (NumberAxis) plot.getDomainAxis();
         domainAxis.setAutoRangeIncludesZero(false);

@@ -109,19 +109,11 @@ public class PieChartTest extends TestCase {
      * @return The pie chart.
      */
     private static JFreeChart createPieChart() {
-        // create a dataset...
         DefaultPieDataset data = new DefaultPieDataset();
         data.setValue("Java", new Double(43.2));
         data.setValue("Visual Basic", new Double(0.0));
         data.setValue("C/C++", new Double(17.5));
-
-        // create the chart...
-        return ChartFactory.createPieChart("Pie Chart",  // chart title
-                                           data,         // data
-                                           true,         // include legend
-                                           true,
-                                           false
-                                           );
+        return ChartFactory.createPieChart("Pie Chart", data);
     }
 
     /**
@@ -139,7 +131,7 @@ public class PieChartTest extends TestCase {
          * @param event  the event.
          */
         @Override
-		public void chartChanged(ChartChangeEvent event) {
+        public void chartChanged(ChartChangeEvent event) {
             this.flag = true;
         }
 

@@ -152,11 +152,9 @@ public class MultiplePiePlotTest extends TestCase
                 3.0f, 4.0f, Color.yellow));
         assertTrue(p1.equals(p2));
 
-        p1.setPieChart(ChartFactory.createPieChart("Title", null, true, true,
-                true));
+        p1.setPieChart(ChartFactory.createPieChart("Title", null));
         assertFalse(p1.equals(p2));
-        p2.setPieChart(ChartFactory.createPieChart("Title", null, true, true,
-                true));
+        p2.setPieChart(ChartFactory.createPieChart("Title", null));
         assertTrue(p1.equals(p2));
 
         p1.setLegendItemShape(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));

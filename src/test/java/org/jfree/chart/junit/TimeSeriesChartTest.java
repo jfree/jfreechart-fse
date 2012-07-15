@@ -160,30 +160,18 @@ public class TimeSeriesChartTest extends TestCase {
     }
 
     /**
-     * Create a horizontal bar chart with sample data in the range -3 to +3.
+     * Create a test chart.
      *
      * @return The chart.
      */
     private static JFreeChart createChart() {
-
-        // create a dataset...
         XYSeries series1 = new XYSeries("Series 1");
         series1.add(1.0, 1.0);
         series1.add(2.0, 2.0);
         series1.add(3.0, 3.0);
         XYDataset dataset = new XYSeriesCollection(series1);
-
-        // create the chart...
-        return ChartFactory.createTimeSeriesChart(
-            "XY Line Chart",  // chart title
-            "Domain",
-            "Range",
-            dataset,         // data
-            true,            // include legend
-            true,            // tooltips
-            true             // urls
-        );
-
+        return ChartFactory.createTimeSeriesChart("XY Line Chart", "Domain",
+                "Range", dataset);
     }
 
     /**
@@ -201,7 +189,7 @@ public class TimeSeriesChartTest extends TestCase {
          * @param event  the event.
          */
         @Override
-		public void chartChanged(ChartChangeEvent event) {
+        public void chartChanged(ChartChangeEvent event) {
             this.flag = true;
         }
 

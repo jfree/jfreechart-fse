@@ -197,7 +197,7 @@ public class XYBoxAndWhiskerRendererTest extends TestCase {
                 new Double(2.0), new Double(3.0), new Double(4.0),
                 new Double(5.0), new Double(6.0), null, null, null));
         JFreeChart chart = ChartFactory.createBoxAndWhiskerChart("Title", "X",
-                "Y", d1, true);
+                "Y", d1);
         try {
             BufferedImage image = new BufferedImage(400, 200,
                     BufferedImage.TYPE_INT_RGB);

@@ -775,14 +775,8 @@ public class XYPlotTest extends TestCase {
     public void testSerialization3() {
 
         XYSeriesCollection dataset = new XYSeriesCollection();
-        JFreeChart chart = ChartFactory.createXYLineChart(
-            "Test Chart",
-            "Domain Axis",
-            "Range Axis",
-            dataset,
-            true,
-            true,
-            false);
+        JFreeChart chart = ChartFactory.createXYLineChart("Test Chart",
+                "Domain Axis", "Range Axis", dataset);
         JFreeChart chart2 = null;
 
         // serialize and deserialize the chart....
@@ -792,9 +786,8 @@ public class XYPlotTest extends TestCase {
             out.writeObject(chart);
             out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-            );
+            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                    buffer.toByteArray()));
             chart2 = (JFreeChart) in.readObject();
             in.close();
         }
@@ -821,14 +814,8 @@ public class XYPlotTest extends TestCase {
     public void testSerialization4() {
 
         XYSeriesCollection dataset = new XYSeriesCollection();
-        JFreeChart chart = ChartFactory.createXYLineChart(
-            "Test Chart",
-            "Domain Axis",
-            "Range Axis",
-            dataset,
-            true,
-            true,
-            false);
+        JFreeChart chart = ChartFactory.createXYLineChart("Test Chart",
+                "Domain Axis", "Range Axis", dataset);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.addDomainMarker(new ValueMarker(1.0), Layer.FOREGROUND);
         plot.addDomainMarker(new IntervalMarker(2.0, 3.0), Layer.BACKGROUND);
@@ -1082,7 +1069,7 @@ public class XYPlotTest extends TestCase {
     public void test1654215() {
         DefaultXYDataset dataset = new DefaultXYDataset();
         JFreeChart chart = ChartFactory.createXYLineChart("Title", "X", "Y",
-                dataset, true, false, false);
+                dataset);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setRenderer(1, new XYLineAndShapeRenderer());
         boolean success = false;
@@ -1108,7 +1095,7 @@ public class XYPlotTest extends TestCase {
     public void testDrawRangeGridlines() {
         DefaultXYDataset dataset = new DefaultXYDataset();
         JFreeChart chart = ChartFactory.createXYLineChart("Title", "X", "Y",
-                dataset, true, false, false);
+                dataset);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setRenderer(null);
         boolean success = false;
@@ -1136,7 +1123,7 @@ public class XYPlotTest extends TestCase {
         dataset.addSeries("Series 1", new double[][] {{1.0, 2.0}, {3.0, 4.0}});
         dataset.addSeries("Series 2", new double[][] {{}, {}});
         JFreeChart chart = ChartFactory.createXYLineChart("Title", "X", "Y",
-                dataset, true, false, false);
+                dataset);
         boolean success = false;
         try {
             BufferedImage image = new BufferedImage(200 , 100,

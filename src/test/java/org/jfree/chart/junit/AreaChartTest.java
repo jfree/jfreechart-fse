@@ -185,7 +185,7 @@ public class AreaChartTest extends TestCase {
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
         return ChartFactory.createAreaChart("Area Chart", "Domain", "Range",
-                dataset, true, true, true);  // FIXME was horizontal
+                dataset);
 
     }
 
@@ -203,7 +203,7 @@ public class AreaChartTest extends TestCase {
          * @param event  the event.
          */
         @Override
-		public void chartChanged(ChartChangeEvent event) {
+        public void chartChanged(ChartChangeEvent event) {
             this.flag = true;
         }
 

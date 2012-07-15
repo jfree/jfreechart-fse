@@ -189,24 +189,14 @@ public class StackedBarChartTest extends TestCase {
      * @return The chart.
      */
     private static JFreeChart createChart() {
-
-        // create a dataset...
         Number[][] data = new Integer[][]
             {{new Integer(-3), new Integer(-2)},
              {new Integer(-1), new Integer(1)},
              {new Integer(2), new Integer(3)}};
-
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
-
-        // create the chart...
-        return ChartFactory.createStackedBarChart(
-            "Stacked Bar Chart",  // chart title
-            "Domain", "Range",
-            dataset,      // data
-            true,         // include legend
-            true,
-            true);
+        return ChartFactory.createStackedBarChart("Stacked Bar Chart",
+                "Domain", "Range", dataset);
 
     }
 
@@ -224,7 +214,7 @@ public class StackedBarChartTest extends TestCase {
          * @param event  the event.
          */
         @Override
-		public void chartChanged(ChartChangeEvent event) {
+        public void chartChanged(ChartChangeEvent event) {
             this.flag = true;
         }
 

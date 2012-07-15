@@ -103,13 +103,8 @@ public class PieChartDemo1 extends ApplicationFrame {
      */
     private static JFreeChart createChart(PieDataset dataset) {
 
-        JFreeChart chart = ChartFactory.createPieChart(
-            "Pie Chart Demo 1",  // chart title
-            dataset,             // data
-            true,                // include legend
-            true,
-            false
-        );
+        JFreeChart chart = ChartFactory.createPieChart("Pie Chart Demo 1",
+                dataset);
 
         PiePlot plot = (PiePlot) chart.getPlot();
         plot.setSectionOutlinesVisible(false);

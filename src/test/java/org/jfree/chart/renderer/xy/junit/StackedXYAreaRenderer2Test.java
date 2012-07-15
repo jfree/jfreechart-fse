@@ -98,8 +98,7 @@ public class StackedXYAreaRenderer2Test extends TestCase {
     public void testDrawWithEmptyDataset() {
         boolean success = false;
         JFreeChart chart = ChartFactory.createStackedXYAreaChart("title", "x",
-                "y", new DefaultTableXYDataset(),
-                true, false, false);
+                "y", new DefaultTableXYDataset());
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setRenderer(new StackedXYAreaRenderer2());
         try {
@@ -198,8 +197,7 @@ public class StackedXYAreaRenderer2Test extends TestCase {
         TableXYDataset dataset
                 = RendererXYPackageTests.createTestTableXYDataset();
         JFreeChart chart = ChartFactory.createStackedXYAreaChart(
-                "Test Chart", "X", "Y", dataset,
-                false, false, false);
+                "Test Chart", "X", "Y", dataset);
         XYPlot plot = (XYPlot) chart.getPlot();
         StackedXYAreaRenderer2 renderer = new StackedXYAreaRenderer2();
         plot.setRenderer(renderer);

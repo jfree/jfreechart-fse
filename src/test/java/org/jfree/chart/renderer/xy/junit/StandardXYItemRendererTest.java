@@ -278,7 +278,7 @@ public class StandardXYItemRendererTest extends TestCase {
         s1.add(10.0, 10.0);
         dataset.addSeries(s1);
         JFreeChart chart = ChartFactory.createXYLineChart("Title", "X", "Y",
-                dataset, false, true, false);
+                dataset);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setRenderer(new StandardXYItemRenderer());
         NumberAxis xAxis = (NumberAxis) plot.getDomainAxis();

@@ -232,7 +232,7 @@ public class ValueAxisTest extends TestCase {
         XYSeriesCollection dataset = new XYSeriesCollection(series);
         dataset.setIntervalWidth(0.0);
         JFreeChart chart = ChartFactory.createScatterPlot(
-                "Title", "X", "Y", dataset, false, false, false);
+                "Title", "X", "Y", dataset);
         ValueAxis domainAxis = ((XYPlot) chart.getPlot()).getDomainAxis();
         Range r = domainAxis.getRange();
         assertEquals(110.0, r.getLength(), EPSILON);

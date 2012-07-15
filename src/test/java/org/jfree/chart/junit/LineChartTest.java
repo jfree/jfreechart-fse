@@ -184,7 +184,6 @@ public class LineChartTest extends TestCase {
      */
     private static JFreeChart createLineChart() {
 
-        // create a dataset...
         Number[][] data = new Integer[][]
             {{new Integer(-3), new Integer(-2)},
              {new Integer(-1), new Integer(1)},
@@ -193,14 +192,8 @@ public class LineChartTest extends TestCase {
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
 
-        // create the chart...
-        return ChartFactory.createLineChart(  // FIXME: this was prev horizontal
-            "Line Chart",
-            "Domain", "Range",
-            dataset,
-            true,     // include legend
-            true,
-            true);
+        return ChartFactory.createLineChart("Line Chart", "Domain", "Range",
+                dataset);
 
     }
 
@@ -219,7 +212,7 @@ public class LineChartTest extends TestCase {
          * @param event  the event.
          */
         @Override
-		public void chartChanged(ChartChangeEvent event) {
+        public void chartChanged(ChartChangeEvent event) {
             this.flag = true;
         }
 

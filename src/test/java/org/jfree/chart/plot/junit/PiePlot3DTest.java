@@ -134,8 +134,7 @@ public class PiePlot3DTest extends TestCase {
      * Draws a pie chart where the label generator returns null.
      */
     public void testDrawWithNullDataset() {
-        JFreeChart chart = ChartFactory.createPieChart3D("Test", null, true,
-                false, false);
+        JFreeChart chart = ChartFactory.createPieChart3D("Test", null);
         boolean success = false;
         try {
             BufferedImage image = new BufferedImage(200 , 100,

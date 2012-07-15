@@ -142,14 +142,7 @@ public class PieChart3DTest extends TestCase {
      * @return The pie chart.
      */
     private static JFreeChart createPieChart3D(PieDataset dataset) {
-
-        return ChartFactory.createPieChart3D(
-            "Pie Chart",  // chart title
-            dataset,      // data
-            true,         // include legend
-            true,
-            false
-        );
+        return ChartFactory.createPieChart3D("Pie Chart", dataset);
     }
 
     /**

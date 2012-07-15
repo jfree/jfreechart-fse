@@ -188,25 +188,14 @@ public class BarChartTest extends TestCase {
      * @return The chart.
      */
     private static JFreeChart createBarChart() {
-
-        // create a dataset...
         Number[][] data = new Integer[][]
             {{new Integer(-3), new Integer(-2)},
              {new Integer(-1), new Integer(1)},
              {new Integer(2), new Integer(3)}};
-
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
-
-        // create the chart...
-        return ChartFactory.createBarChart(
-            "Bar Chart",
-            "Domain", "Range",
-            dataset,
-            true,     // include legend
-            true,
-            true);
-
+        return ChartFactory.createBarChart("Bar Chart", "Domain", "Range",
+                dataset);
     }
 
     /**
@@ -223,7 +212,7 @@ public class BarChartTest extends TestCase {
          * @param event  the event.
          */
         @Override
-		public void chartChanged(ChartChangeEvent event) {
+        public void chartChanged(ChartChangeEvent event) {
             this.flag = true;
         }
 

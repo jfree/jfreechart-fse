@@ -113,23 +113,12 @@ public class JFreeChartTest extends TestCase implements ChartChangeListener {
      * Common test setup.
      */
     @Override
-	protected void setUp() {
-
-        // create a dataset...
+    protected void setUp() {
         DefaultPieDataset data = new DefaultPieDataset();
         data.setValue("Java", new Double(43.2));
         data.setValue("Visual Basic", new Double(0.0));
         data.setValue("C/C++", new Double(17.5));
-
-        // create the chart...
-        this.pieChart = ChartFactory.createPieChart(
-            "Pie Chart",  // chart title
-            data,         // data
-            true,         // include legend
-            true,
-            false
-        );
-
+        this.pieChart = ChartFactory.createPieChart("Pie Chart", data);
     }
 
     /**
@@ -253,8 +242,7 @@ public class JFreeChartTest extends TestCase implements ChartChangeListener {
      */
     public void testGetSubtitle() {
         DefaultPieDataset dataset = new DefaultPieDataset();
-        JFreeChart chart = ChartFactory.createPieChart("title", dataset, true,
-                false, false);
+        JFreeChart chart = ChartFactory.createPieChart("title", dataset);
         Title t = chart.getSubtitle(0);
         assertTrue(t instanceof LegendTitle);
 
@@ -296,8 +284,7 @@ public class JFreeChartTest extends TestCase implements ChartChangeListener {
         data.setValue("Type 2", 23.9);
         data.setValue("Type 3", 45.8);
 
-        JFreeChart c1 = ChartFactory.createPieChart("Test", data, true, true,
-                true);
+        JFreeChart c1 = ChartFactory.createPieChart("Test", data);
         JFreeChart c2 = null;
 
         try {
@@ -329,8 +316,7 @@ public class JFreeChartTest extends TestCase implements ChartChangeListener {
         data.setValue("Type 2", 23.9);
         data.setValue("Type 3", 45.8);
 
-        JFreeChart c1 = ChartFactory.createPieChart3D("Test", data, true, true,
-                true);
+        JFreeChart c1 = ChartFactory.createPieChart3D("Test", data);
         JFreeChart c2 = null;
 
         try {
@@ -402,15 +388,8 @@ public class JFreeChartTest extends TestCase implements ChartChangeListener {
         dataset.addValue(3.0, series3, category8);
 
         // create the chart...
-        JFreeChart c1 = ChartFactory.createBarChart(
-            "Vertical Bar Chart",      // chart title
-            "Category",                // domain axis label
-            "Value",                   // range axis label
-            dataset,                   // data
-            true,                      // include legend
-            true,
-            false);
-
+        JFreeChart c1 = ChartFactory.createBarChart("Vertical Bar Chart",
+                "Category", "Value", dataset);
         JFreeChart c2 = null;
 
         try {
@@ -445,7 +424,7 @@ public class JFreeChartTest extends TestCase implements ChartChangeListener {
         dataset.addSeries(series);
 
         JFreeChart c1 = ChartFactory.createTimeSeriesChart("Test", "Date",
-                "Value", dataset, true, true, true);
+                "Value", dataset);
         JFreeChart c2 = null;
 
         try {
@@ -471,8 +450,7 @@ public class JFreeChartTest extends TestCase implements ChartChangeListener {
      */
     public void testAddSubtitle() {
         DefaultPieDataset dataset = new DefaultPieDataset();
-        JFreeChart chart = ChartFactory.createPieChart("title", dataset, true,
-                false, false);
+        JFreeChart chart = ChartFactory.createPieChart("title", dataset);
 
         TextTitle t0 = new TextTitle("T0");
         chart.addSubtitle(0, t0);
@@ -515,8 +493,7 @@ public class JFreeChartTest extends TestCase implements ChartChangeListener {
      */
     public void testGetSubtitles() {
         DefaultPieDataset dataset = new DefaultPieDataset();
-        JFreeChart chart = ChartFactory.createPieChart("title", dataset, true,
-                false, false);
+        JFreeChart chart = ChartFactory.createPieChart("title", dataset);
         List subtitles = chart.getSubtitles();
 
         assertEquals(1, chart.getSubtitleCount());
@@ -531,8 +508,7 @@ public class JFreeChartTest extends TestCase implements ChartChangeListener {
      */
     public void testLegendEvents() {
         DefaultPieDataset dataset = new DefaultPieDataset();
-        JFreeChart chart = ChartFactory.createPieChart("title", dataset, true,
-                false, false);
+        JFreeChart chart = ChartFactory.createPieChart("title", dataset);
         chart.addChangeListener(this);
         this.lastChartChangeEvent = null;
         LegendTitle legend = chart.getLegend();
@@ -545,8 +521,7 @@ public class JFreeChartTest extends TestCase implements ChartChangeListener {
      */
     public void testTitleChangeEvent() {
         DefaultPieDataset dataset = new DefaultPieDataset();
-        JFreeChart chart = ChartFactory.createPieChart("title", dataset, true,
-                false, false);
+        JFreeChart chart = ChartFactory.createPieChart("title", dataset);
         chart.addChangeListener(this);
         this.lastChartChangeEvent = null;
         TextTitle t = chart.getTitle();

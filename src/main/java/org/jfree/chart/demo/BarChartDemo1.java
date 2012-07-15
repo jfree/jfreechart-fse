@@ -142,16 +142,12 @@ public class BarChartDemo1 extends ApplicationFrame {
      */
     private static JFreeChart createChart(CategoryDataset dataset) {
 
-        // create the chart...
+        // create the chart with default settings...
         JFreeChart chart = ChartFactory.createBarChart(
-            "Bar Chart Demo 1",       // chart title
-            "Category",               // domain axis label
-            "Value",                  // range axis label
-            dataset,                  // data
-            true,                     // include legend
-            true,                     // tooltips?
-            false                     // URLs?
-        );
+                "Bar Chart Demo 1",  // chart title
+                "Category",          // domain axis label
+                "Value",             // range axis label
+                dataset);
 
         // NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
 

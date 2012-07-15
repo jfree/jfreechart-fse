@@ -183,25 +183,14 @@ public class LineChart3DTest extends TestCase {
      * @return The chart.
      */
     private static JFreeChart createLineChart3D() {
-
-        // create a dataset...
         Number[][] data = new Integer[][]
             {{new Integer(-3), new Integer(-2)},
              {new Integer(-1), new Integer(1)},
              {new Integer(2), new Integer(3)}};
-
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
-
-        // create the chart...
-        return ChartFactory.createLineChart3D(
-            "Line Chart",
-            "Domain", "Range",
-            dataset,
-            true,     // include legend
-            true,
-            true);  // FIXME : was horizontal
-
+        return ChartFactory.createLineChart3D("Line Chart", "Domain", "Range",
+            dataset);
     }
 
     /**
