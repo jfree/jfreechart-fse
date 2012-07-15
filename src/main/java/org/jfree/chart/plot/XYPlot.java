@@ -3409,9 +3409,9 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         }
 
         // draw domain crosshair if required...
-        int xAxisIndex = crosshairState.getDomainAxisIndex();
-        ValueAxis xAxis = getDomainAxis(xAxisIndex);
-        RectangleEdge xAxisEdge = getDomainAxisEdge(xAxisIndex);
+        int datasetIndex = crosshairState.getDatasetIndex();
+        ValueAxis xAxis = this.getDomainAxisForDataset(datasetIndex);
+        RectangleEdge xAxisEdge = getDomainAxisEdge(getDomainAxisIndex(xAxis));
         if (!this.domainCrosshairLockedOnData && anchor != null) {
             double xx;
             if (orient == PlotOrientation.VERTICAL) {
@@ -3431,9 +3431,8 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         }
 
         // draw range crosshair if required...
-        int yAxisIndex = crosshairState.getRangeAxisIndex();
-        ValueAxis yAxis = getRangeAxis(yAxisIndex);
-        RectangleEdge yAxisEdge = getRangeAxisEdge(yAxisIndex);
+        ValueAxis yAxis = getRangeAxisForDataset(datasetIndex);
+        RectangleEdge yAxisEdge = getRangeAxisEdge(getRangeAxisIndex(yAxis));
         if (!this.rangeCrosshairLockedOnData && anchor != null) {
             double yy;
             if (orient == PlotOrientation.VERTICAL) {

@@ -413,32 +413,4 @@ public class CrosshairState {
         this.datasetIndex = index;
     }
 
-    /**
-     * Returns the domain axis index for the crosshair x-value.
-     *
-     * @return The domain axis index.
-     *
-     * @since 1.0.4
-     *
-     * @deprecated As of version 1.0.11, the domain axis should be determined
-     *     using the dataset index.
-     */
-    public int getDomainAxisIndex() {
-        return this.domainAxisIndex;
-    }
-
-    /**
-     * Returns the range axis index for the crosshair y-value.
-     *
-     * @return The range axis index.
-     *
-     * @since 1.0.4
-     *
-     * @deprecated As of version 1.0.11, the domain axis should be determined
-     *     using the dataset index.
-     */
-    public int getRangeAxisIndex() {
-        return this.rangeAxisIndex;
-    }
-
 }
