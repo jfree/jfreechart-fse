@@ -70,12 +70,8 @@ import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.Window;
-import java.lang.reflect.Method;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -90,54 +86,6 @@ import javax.swing.table.TableModel;
 public class RefineryUtilities {
 
     private RefineryUtilities() {
-    }
-
-    /**
-     * Computes the center point of the current screen device. If this method is called on JDK 1.4, Xinerama-aware
-     * results are returned. (See Sun-Bug-ID 4463949 for details).
-     *
-     * @return the center point of the current screen.
-     * @deprecated this method is not useful in multi-screen environments.
-     */
-    public static Point getCenterPoint ()
-    {
-      final GraphicsEnvironment localGraphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-      try
-      {
-        final Method method = GraphicsEnvironment.class.getMethod("getCenterPoint", (Class[]) null);
-        return (Point) method.invoke(localGraphicsEnvironment, (Object[]) null);
-      }
-      catch(Exception e)
-      {
-        // ignore ... will fail if this is not a JDK 1.4 ..
-      }
-
-      final Dimension s = Toolkit.getDefaultToolkit().getScreenSize();
-      return new Point (s.width / 2, s.height / 2);
-    }
-
-  /**
-   * Computes the maximum bounds of the current screen device. If this method is called on JDK 1.4, Xinerama-aware
-   * results are returned. (See Sun-Bug-ID 4463949 for details).
-   *
-   * @return the maximum bounds of the current screen.
-   * @deprecated this method is not useful in multi-screen environments.
-   */
-    public static Rectangle getMaximumWindowBounds ()
-    {
-      final GraphicsEnvironment localGraphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-      try
-      {
-        final Method method = GraphicsEnvironment.class.getMethod("getMaximumWindowBounds", (Class[]) null);
-        return (Rectangle) method.invoke(localGraphicsEnvironment, (Object[]) null);
-      }
-      catch(Exception e)
-      {
-        // ignore ... will fail if this is not a JDK 1.4 ..
-      }
-
-      final Dimension s = Toolkit.getDefaultToolkit().getScreenSize();
-      return new Rectangle (0, 0, s.width, s.height);
     }
 
     /**

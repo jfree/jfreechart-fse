@@ -74,7 +74,6 @@ public class LabelsPackageTests extends TestCase {
         suite.addTestSuite(StandardCategoryItemLabelGeneratorTest.class);
         suite.addTestSuite(StandardCategorySeriesLabelGeneratorTest.class);
         suite.addTestSuite(StandardCategoryToolTipGeneratorTest.class);
-        suite.addTestSuite(StandardContourToolTipGeneratorTest.class);
         suite.addTestSuite(StandardPieSectionLabelGeneratorTest.class);
         suite.addTestSuite(StandardPieToolTipGeneratorTest.class);
         suite.addTestSuite(StandardXYItemLabelGeneratorTest.class);
