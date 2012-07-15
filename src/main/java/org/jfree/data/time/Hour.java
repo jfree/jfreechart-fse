@@ -150,20 +150,6 @@ public class Hour extends RegularTimePeriod implements Serializable {
      *
      * @param time  the date-time (<code>null</code> not permitted).
      * @param zone  the time zone (<code>null</code> not permitted).
-     *
-     * @deprecated As of 1.0.13, use the constructor that specifies the locale
-     *     also.
-     */
-    public Hour(Date time, TimeZone zone) {
-        this(time, zone, Locale.getDefault());
-    }
-
-    /**
-     * Constructs a new instance, based on the supplied date/time evaluated
-     * in the specified time zone.
-     *
-     * @param time  the date-time (<code>null</code> not permitted).
-     * @param zone  the time zone (<code>null</code> not permitted).
      * @param locale  the locale (<code>null</code> not permitted).
      *
      * @since 1.0.13
