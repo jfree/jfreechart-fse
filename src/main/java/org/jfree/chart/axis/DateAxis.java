@@ -1262,16 +1262,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
 
             Range r = vap.getDataRange(this);
             if (r == null) {
-                if (this.timeline instanceof SegmentedTimeline) {
-                    //Timeline hasn't method getStartTime()
-                    r = new DateRange((
-                            (SegmentedTimeline) this.timeline).getStartTime(),
-                            ((SegmentedTimeline) this.timeline).getStartTime()
-                            + 1);
-                }
-                else {
-                    r = new DateRange();
-                }
+                r = new DateRange();
             }
 
             long upper = this.timeline.toTimelineValue(
@@ -1337,9 +1328,6 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             Rectangle2D dataArea, RectangleEdge edge) {
 
         long shift = 0;
-        if (this.timeline instanceof SegmentedTimeline) {
-            shift = ((SegmentedTimeline) this.timeline).getStartTime();
-        }
         double zero = valueToJava2D(shift + 0.0, dataArea, edge);
         double tickLabelWidth = estimateMaximumTickLabelWidth(g2,
                 getTickUnit());

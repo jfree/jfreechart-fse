@@ -92,8 +92,6 @@ public class AxisPackageTests extends TestCase {
         suite.addTestSuite(PeriodAxisTest.class);
         suite.addTestSuite(PeriodAxisLabelInfoTest.class);
         suite.addTestSuite(QuarterDateFormatTest.class);
-        suite.addTestSuite(SegmentedTimelineTest.class);
-        suite.addTestSuite(SegmentedTimelineTests.class);
         suite.addTestSuite(StandardTickUnitSourceTest.class);
         suite.addTestSuite(SubCategoryAxisTest.class);
         suite.addTestSuite(SymbolAxisTest.class);

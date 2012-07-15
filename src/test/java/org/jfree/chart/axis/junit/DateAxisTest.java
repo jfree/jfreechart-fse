@@ -60,7 +60,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -78,7 +77,6 @@ import org.jfree.chart.axis.DateTick;
 import org.jfree.chart.axis.DateTickMarkPosition;
 import org.jfree.chart.axis.DateTickUnit;
 import org.jfree.chart.axis.DateTickUnitType;
-import org.jfree.chart.axis.SegmentedTimeline;
 import org.jfree.chart.common.ui.RectangleEdge;
 import org.jfree.data.time.DateRange;
 import org.jfree.data.time.Day;
@@ -155,12 +153,6 @@ public class DateAxisTest extends TestCase {
         a1.setTickMarkPosition(DateTickMarkPosition.END);
         assertFalse(a1.equals(a2));
         a2.setTickMarkPosition(DateTickMarkPosition.END);
-        assertTrue(a1.equals(a2));
-
-        // timeline
-        a1.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());
-        assertFalse(a1.equals(a2));
-        a2.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());
         assertTrue(a1.equals(a2));
 
     }
@@ -1203,32 +1195,4 @@ public class DateAxisTest extends TestCase {
         assertEquals("31-May-2008", t3.getText());
     }
 
-    public void testBug3484403() {
-
-        final long[] dates =
-            { 1304892000000L, 1304632800000L, 1304546400000L, 1304460000000L,
-              1304373600000L, 1304287200000L, 1320015600000L, 1309384800000L,
-              1319752800000L, 1319666400000L, 1319580000000L, 1319493600000L };
-        Arrays.sort(dates);
-
-        DateAxis axis = new DateAxis("Date");
-        // set start and end date
-        Date start = new Date(dates[0]);
-        Date end = new Date(dates[dates.length-1]);
-        axis.setMinimumDate(start);
-        axis.setMaximumDate(end);
-
-        SegmentedTimeline timeline =
-            SegmentedTimeline.newMondayThroughFridayTimeline();
-        timeline.setStartTime(start.getTime());
-        axis.setTimeline(timeline);
-
-        BufferedImage image = new BufferedImage(200, 100,
-                BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = image.createGraphics();
-        Rectangle2D area = new Rectangle2D.Double(0.0, 0.0, 500, 200);
-
-        // if the bug is still present, this leads to an endless loop
-        axis.refreshTicks(g2, new AxisState(), area, RectangleEdge.BOTTOM);
-    }
 }
