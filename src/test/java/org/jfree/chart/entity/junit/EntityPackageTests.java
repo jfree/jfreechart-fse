@@ -62,7 +62,6 @@ public class EntityPackageTests extends TestCase {
         TestSuite suite = new TestSuite("org.jfree.chart.entity");
         suite.addTestSuite(CategoryItemEntityTest.class);
         suite.addTestSuite(CategoryLabelEntityTest.class);
-        suite.addTestSuite(ContourEntityTest.class);
         suite.addTestSuite(LegendItemEntityTest.class);
         suite.addTestSuite(PieSectionEntityTest.class);
         suite.addTestSuite(StandardEntityCollectionTest.class);
