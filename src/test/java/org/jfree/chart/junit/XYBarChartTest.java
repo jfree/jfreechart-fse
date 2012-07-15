@@ -184,11 +184,9 @@ public class XYBarChartTest extends TestCase {
             "Domain", false,
             "Range",
             dataset,         // data
-            PlotOrientation.VERTICAL,
             true,            // include legend
             true,            // tooltips
-            true             // urls
-        );
+            true);
 
     }
 

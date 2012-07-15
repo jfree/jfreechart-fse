@@ -176,8 +176,7 @@ public class SubCategoryAxisTest extends TestCase {
      */
     public void test2275695() {
         JFreeChart chart = ChartFactory.createStackedBarChart("Test",
-                "Category", "Value", null, PlotOrientation.VERTICAL,
-                true, false, false);
+                "Category", "Value", null, true, false, false);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         plot.setDomainAxis(new SubCategoryAxis("SubCategoryAxis"));
         boolean success = false;

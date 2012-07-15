@@ -780,11 +780,9 @@ public class XYPlotTest extends TestCase {
             "Domain Axis",
             "Range Axis",
             dataset,
-            PlotOrientation.VERTICAL,
             true,
             true,
-            false
-        );
+            false);
         JFreeChart chart2 = null;
 
         // serialize and deserialize the chart....
@@ -828,11 +826,9 @@ public class XYPlotTest extends TestCase {
             "Domain Axis",
             "Range Axis",
             dataset,
-            PlotOrientation.VERTICAL,
             true,
             true,
-            false
-        );
+            false);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.addDomainMarker(new ValueMarker(1.0), Layer.FOREGROUND);
         plot.addDomainMarker(new IntervalMarker(2.0, 3.0), Layer.BACKGROUND);
@@ -1086,7 +1082,7 @@ public class XYPlotTest extends TestCase {
     public void test1654215() {
         DefaultXYDataset dataset = new DefaultXYDataset();
         JFreeChart chart = ChartFactory.createXYLineChart("Title", "X", "Y",
-                dataset, PlotOrientation.VERTICAL, true, false, false);
+                dataset, true, false, false);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setRenderer(1, new XYLineAndShapeRenderer());
         boolean success = false;
@@ -1112,7 +1108,7 @@ public class XYPlotTest extends TestCase {
     public void testDrawRangeGridlines() {
         DefaultXYDataset dataset = new DefaultXYDataset();
         JFreeChart chart = ChartFactory.createXYLineChart("Title", "X", "Y",
-                dataset, PlotOrientation.VERTICAL, true, false, false);
+                dataset, true, false, false);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setRenderer(null);
         boolean success = false;
@@ -1140,7 +1136,7 @@ public class XYPlotTest extends TestCase {
         dataset.addSeries("Series 1", new double[][] {{1.0, 2.0}, {3.0, 4.0}});
         dataset.addSeries("Series 2", new double[][] {{}, {}});
         JFreeChart chart = ChartFactory.createXYLineChart("Title", "X", "Y",
-                dataset, PlotOrientation.VERTICAL, true, false, false);
+                dataset, true, false, false);
         boolean success = false;
         try {
             BufferedImage image = new BufferedImage(200 , 100,
@@ -1151,8 +1147,7 @@ public class XYPlotTest extends TestCase {
             success = true;
         }
         catch (Exception e) {
-            e.printStackTrace();
-            success = false;
+            fail(e.getLocalizedMessage());
         }
         assertTrue(success);
     }

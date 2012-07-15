@@ -188,7 +188,7 @@ public class StackedXYAreaRendererTest extends TestCase {
         TableXYDataset dataset
                 = RendererXYPackageTests.createTestTableXYDataset();
         JFreeChart chart = ChartFactory.createStackedXYAreaChart(
-                "Test Chart", "X", "Y", dataset, PlotOrientation.VERTICAL,
+                "Test Chart", "X", "Y", dataset,
                 false, false, false);
         XYPlot plot = (XYPlot) chart.getPlot();
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();

@@ -180,11 +180,9 @@ public class XYLineChartTest extends TestCase {
             "Domain",
             "Range",
             dataset,         // data
-            PlotOrientation.VERTICAL,
             true,            // include legend
             true,            // tooltips
-            true             // urls
-        );
+            true);
 
     }
 

@@ -183,11 +183,9 @@ public class ScatterPlotTest extends TestCase {
             "Domain",
             "Range",
             dataset,         // data
-            PlotOrientation.VERTICAL,
             true,            // include legend
             true,            // tooltips
-            false            // urls
-        );
+            false);
 
     }
 

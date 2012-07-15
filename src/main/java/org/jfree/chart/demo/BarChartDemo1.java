@@ -148,7 +148,6 @@ public class BarChartDemo1 extends ApplicationFrame {
             "Category",               // domain axis label
             "Value",                  // range axis label
             dataset,                  // data
-            PlotOrientation.VERTICAL, // orientation
             true,                     // include legend
             true,                     // tooltips?
             false                     // URLs?

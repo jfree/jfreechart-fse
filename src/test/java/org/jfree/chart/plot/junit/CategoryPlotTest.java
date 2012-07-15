@@ -716,7 +716,7 @@ public class CategoryPlotTest extends TestCase {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         JFreeChart chart = ChartFactory.createBarChart(
                 "Test Chart", "Category Axis", "Value Axis", dataset,
-                PlotOrientation.VERTICAL, true, true, false);
+                true, true, false);
         JFreeChart chart2 = null;
 
         // serialize and deserialize the chart....
@@ -755,7 +755,7 @@ public class CategoryPlotTest extends TestCase {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         JFreeChart chart = ChartFactory.createBarChart(
                 "Test Chart", "Category Axis", "Value Axis",
-                dataset, PlotOrientation.VERTICAL, true, true, false);
+                dataset, true, true, false);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         plot.addRangeMarker(new ValueMarker(1.1), Layer.FOREGROUND);
         plot.addRangeMarker(new IntervalMarker(2.2, 3.3), Layer.BACKGROUND);
@@ -915,7 +915,7 @@ public class CategoryPlotTest extends TestCase {
     public void test1654215() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         JFreeChart chart = ChartFactory.createLineChart("Title", "X", "Y",
-                dataset, PlotOrientation.VERTICAL, true, false, false);
+                dataset, true, false, false);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         plot.setRenderer(1, new LineAndShapeRenderer());
         boolean success = false;

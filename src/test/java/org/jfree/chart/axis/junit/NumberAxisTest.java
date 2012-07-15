@@ -233,11 +233,9 @@ public class NumberAxisTest extends TestCase {
             "Categories",
             "Value",
             dataset,
-            PlotOrientation.VERTICAL,
             false,
             false,
-            false
-        );
+            false);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         NumberAxis axis = (NumberAxis) plot.getRangeAxis();
         assertEquals(axis.getLowerBound(), 0.0, EPSILON);
@@ -254,8 +252,7 @@ public class NumberAxisTest extends TestCase {
         dataset.setValue(100.0, "Row 1", "Column 1");
         dataset.setValue(200.0, "Row 1", "Column 2");
         JFreeChart chart = ChartFactory.createLineChart("Test", "Categories",
-                "Value", dataset, PlotOrientation.VERTICAL, false, false,
-                false);
+                "Value", dataset, false, false, false);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         NumberAxis axis = (NumberAxis) plot.getRangeAxis();
         axis.setAutoRangeIncludesZero(false);
@@ -274,8 +271,7 @@ public class NumberAxisTest extends TestCase {
         dataset.setValue(100.0, "Row 1", "Column 1");
         dataset.setValue(200.0, "Row 1", "Column 2");
         JFreeChart chart = ChartFactory.createLineChart("Test", "Categories",
-                "Value", dataset, PlotOrientation.VERTICAL, false, false,
-                false);
+                "Value", dataset, false, false, false);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         NumberAxis axis = (NumberAxis) plot.getRangeAxis();
         axis.setAutoRangeIncludesZero(false);
@@ -300,8 +296,7 @@ public class NumberAxisTest extends TestCase {
         dataset.setValue(100.0, "Row 1", "Column 1");
         dataset.setValue(200.0, "Row 1", "Column 2");
         JFreeChart chart = ChartFactory.createBarChart("Test", "Categories",
-                "Value", dataset, PlotOrientation.VERTICAL, false, false,
-                false);
+                "Value", dataset, false, false, false);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         NumberAxis axis = (NumberAxis) plot.getRangeAxis();
         axis.setAutoRangeIncludesZero(false);
@@ -355,11 +350,9 @@ public class NumberAxisTest extends TestCase {
             "X",
             "Y",
             dataset,
-            PlotOrientation.VERTICAL,
             false,
             false,
-            false
-        );
+            false);
         XYPlot plot = (XYPlot) chart.getPlot();
         NumberAxis axis = (NumberAxis) plot.getDomainAxis();
         axis.setAutoRangeIncludesZero(false);
@@ -383,11 +376,9 @@ public class NumberAxisTest extends TestCase {
             "X",
             "Y",
             dataset,
-            PlotOrientation.VERTICAL,
             false,
             false,
-            false
-        );
+            false);
         XYPlot plot = (XYPlot) chart.getPlot();
         NumberAxis axis = (NumberAxis) plot.getRangeAxis();
         axis.setAutoRangeIncludesZero(false);

@@ -198,11 +198,9 @@ public class LineChart3DTest extends TestCase {
             "Line Chart",
             "Domain", "Range",
             dataset,
-            PlotOrientation.HORIZONTAL,
             true,     // include legend
             true,
-            true
-        );
+            true);  // FIXME : was horizontal
 
     }
 

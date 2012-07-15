@@ -203,17 +203,14 @@ public class BarChartTest extends TestCase {
             "Bar Chart",
             "Domain", "Range",
             dataset,
-            PlotOrientation.HORIZONTAL,
             true,     // include legend
             true,
-            true
-        );
+            true);
 
     }
 
     /**
      * A chart change listener.
-     *
      */
     static class LocalListener implements ChartChangeListener {
 

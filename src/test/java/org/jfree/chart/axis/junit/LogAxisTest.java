@@ -212,11 +212,9 @@ public class LogAxisTest extends TestCase {
             "Categories",
             "Value",
             dataset,
-            PlotOrientation.VERTICAL,
             false,
             false,
-            false
-        );
+            false);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         LogAxis axis = new LogAxis("Log(Y)");
         plot.setRangeAxis(axis);
@@ -234,8 +232,7 @@ public class LogAxisTest extends TestCase {
         dataset.setValue(100.0, "Row 1", "Column 1");
         dataset.setValue(200.0, "Row 1", "Column 2");
         JFreeChart chart = ChartFactory.createLineChart("Test", "Categories",
-                "Value", dataset, PlotOrientation.VERTICAL, false, false,
-                false);
+                "Value", dataset, false, false, false);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         LogAxis axis = new LogAxis("Log(Y)");
         plot.setRangeAxis(axis);
@@ -267,11 +264,9 @@ public class LogAxisTest extends TestCase {
             "X",
             "Y",
             dataset,
-            PlotOrientation.VERTICAL,
             false,
             false,
-            false
-        );
+            false);
         XYPlot plot = (XYPlot) chart.getPlot();
         LogAxis axis = new LogAxis("Log(Y)");
         plot.setRangeAxis(axis);
@@ -295,11 +290,9 @@ public class LogAxisTest extends TestCase {
             "X",
             "Y",
             dataset,
-            PlotOrientation.VERTICAL,
             false,
             false,
-            false
-        );
+            false);
         XYPlot plot = (XYPlot) chart.getPlot();
         LogAxis axis = new LogAxis("Log(Y)");
         plot.setRangeAxis(axis);

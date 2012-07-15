@@ -166,7 +166,7 @@ public class StackedXYBarRendererTest extends TestCase {
             in.close();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            fail(e.getLocalizedMessage());
         }
         assertEquals(r1, r2);
     }
@@ -178,8 +178,7 @@ public class StackedXYBarRendererTest extends TestCase {
         TableXYDataset dataset
                 = RendererXYPackageTests.createTestTableXYDataset();
         JFreeChart chart = ChartFactory.createStackedXYAreaChart(
-                "Test Chart", "X", "Y", dataset,
-                PlotOrientation.VERTICAL, false, false, false);
+                "Test Chart", "X", "Y", dataset, false, false, false);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setRenderer(new StackedXYBarRenderer());
         NumberAxis domainAxis = (NumberAxis) plot.getDomainAxis();
@@ -198,8 +197,7 @@ public class StackedXYBarRendererTest extends TestCase {
         TableXYDataset dataset
                 = RendererXYPackageTests.createTestTableXYDataset();
         JFreeChart chart = ChartFactory.createStackedXYAreaChart(
-                "Test Chart", "X", "Y", dataset,
-                PlotOrientation.VERTICAL, false, false, false);
+                "Test Chart", "X", "Y", dataset, false, false, false);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setRenderer(new StackedXYBarRenderer());
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();

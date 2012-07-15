@@ -198,11 +198,9 @@ public class StackedBarChart3DTest extends TestCase {
             "Stacked Bar Chart 3D",  // chart title
             "Domain", "Range",
             dataset,      // data
-            PlotOrientation.HORIZONTAL,
             true,         // include legend
             true,
-            true
-        );
+            true);  // FIXME was horizontal
 
     }
 

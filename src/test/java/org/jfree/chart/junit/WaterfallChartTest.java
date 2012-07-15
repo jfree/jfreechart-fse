@@ -168,11 +168,9 @@ public class WaterfallChartTest extends TestCase {
             "Waterfall Chart",
             "Domain", "Range",
             dataset,
-            PlotOrientation.HORIZONTAL,
             true,     // include legend
             true,
-            true
-        );
+            true);
 
     }
 

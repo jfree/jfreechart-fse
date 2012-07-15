@@ -204,11 +204,9 @@ public class StackedBarChartTest extends TestCase {
             "Stacked Bar Chart",  // chart title
             "Domain", "Range",
             dataset,      // data
-            PlotOrientation.HORIZONTAL,
             true,         // include legend
             true,
-            true
-        );
+            true);
 
     }
 

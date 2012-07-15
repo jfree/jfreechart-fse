@@ -267,7 +267,7 @@ public class XYLineAndShapeRendererTest extends TestCase {
         XYSeriesCollection dataset
                 = RendererXYPackageTests.createTestXYSeriesCollection();
         JFreeChart chart = ChartFactory.createXYLineChart(
-                "Test Chart", "X", "Y", dataset, PlotOrientation.VERTICAL,
+                "Test Chart", "X", "Y", dataset,
                 false, false, false);
         XYPlot plot = (XYPlot) chart.getPlot();
         NumberAxis domainAxis = (NumberAxis) plot.getDomainAxis();
@@ -286,7 +286,7 @@ public class XYLineAndShapeRendererTest extends TestCase {
         TableXYDataset dataset
                 = RendererXYPackageTests.createTestTableXYDataset();
         JFreeChart chart = ChartFactory.createXYLineChart(
-                "Test Chart", "X", "Y", dataset, PlotOrientation.VERTICAL,
+                "Test Chart", "X", "Y", dataset,
                 false, false, false);
         XYPlot plot = (XYPlot) chart.getPlot();
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();

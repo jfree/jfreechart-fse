@@ -407,11 +407,9 @@ public class JFreeChartTest extends TestCase implements ChartChangeListener {
             "Category",                // domain axis label
             "Value",                   // range axis label
             dataset,                   // data
-            PlotOrientation.VERTICAL,  // orientation
             true,                      // include legend
             true,
-            false
-        );
+            false);
 
         JFreeChart c2 = null;
 

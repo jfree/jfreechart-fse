@@ -194,15 +194,13 @@ public class LineChartTest extends TestCase {
                 "C", data);
 
         // create the chart...
-        return ChartFactory.createLineChart(
+        return ChartFactory.createLineChart(  // FIXME: this was prev horizontal
             "Line Chart",
             "Domain", "Range",
             dataset,
-            PlotOrientation.HORIZONTAL,
             true,     // include legend
             true,
-            true
-        );
+            true);
 
     }
 

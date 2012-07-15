@@ -176,15 +176,14 @@ public class XYAreaChartTest extends TestCase {
 
         // create the chart...
         return ChartFactory.createXYAreaChart(
-            "Area Chart",  // chart title
+            "Area Chart",    // chart title
             "Domain",
             "Range",
             dataset,         // data
-            PlotOrientation.VERTICAL,
             true,            // include legend
             true,            // tooltips
-            true             // urls
-        );
+            true);           // urls
+
 
     }
 

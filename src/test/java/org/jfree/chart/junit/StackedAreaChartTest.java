@@ -198,11 +198,9 @@ public class StackedAreaChartTest extends TestCase {
             "Stacked Area Chart",  // chart title
             "Domain", "Range",
             dataset,      // data
-            PlotOrientation.HORIZONTAL,
             true,         // include legend
             true,
-            true
-        );
+            true);  // FIXME this was prev horizontal
 
     }
 
