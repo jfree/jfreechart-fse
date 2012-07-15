@@ -68,7 +68,6 @@ public class PlotPackageTests extends TestCase {
         TestSuite suite = new TestSuite("org.jfree.chart.plot");
         suite.addTestSuite(CategoryMarkerTest.class);
         suite.addTestSuite(CategoryPlotTest.class);
-        suite.addTestSuite(ColorPaletteTest.class);
         suite.addTestSuite(CombinedDomainCategoryPlotTest.class);
         suite.addTestSuite(CombinedDomainXYPlotTest.class);
         suite.addTestSuite(CombinedRangeCategoryPlotTest.class);
