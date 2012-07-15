@@ -140,7 +140,7 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
         this.guideLinesVisible = false;
         this.guideLinePaint = Color.DARK_GRAY;
         this.guideLineStroke = new BasicStroke();
-        setBaseShape(new Ellipse2D.Double(-5.0, -5.0, 10.0, 10.0));
+        setDefaultShape(new Ellipse2D.Double(-5.0, -5.0, 10.0, 10.0));
         setAutoPopulateSeriesShape(false);
     }
 

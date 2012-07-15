@@ -156,7 +156,7 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
                               XYURLGenerator urlGenerator) {
 
         super();
-        setBaseToolTipGenerator(toolTipGenerator);
+        setDefaultToolTipGenerator(toolTipGenerator);
         setURLGenerator(urlGenerator);
 
         if (type == AREA) {

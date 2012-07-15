@@ -195,10 +195,10 @@ public class BarRenderer3D extends BarRenderer
         // set the default item label positions
         ItemLabelPosition p1 = new ItemLabelPosition(ItemLabelAnchor.INSIDE12,
                 TextAnchor.TOP_CENTER);
-        setBasePositiveItemLabelPosition(p1);
+        setDefaultPositiveItemLabelPosition(p1);
         ItemLabelPosition p2 = new ItemLabelPosition(ItemLabelAnchor.INSIDE12,
                 TextAnchor.TOP_CENTER);
-        setBaseNegativeItemLabelPosition(p2);
+        setDefaultNegativeItemLabelPosition(p2);
 
     }
 
@@ -210,7 +210,7 @@ public class BarRenderer3D extends BarRenderer
      * @see #getYOffset()
      */
     @Override
-	public double getXOffset() {
+    public double getXOffset() {
         return this.xOffset;
     }
 
@@ -220,7 +220,7 @@ public class BarRenderer3D extends BarRenderer
      * @return The 3D effect.
      */
     @Override
-	public double getYOffset() {
+    public double getYOffset() {
         return this.yOffset;
     }
 
@@ -268,7 +268,7 @@ public class BarRenderer3D extends BarRenderer
      * @return The renderer state.
      */
     @Override
-	public CategoryItemRendererState initialise(Graphics2D g2,
+    public CategoryItemRendererState initialise(Graphics2D g2,
                                                 Rectangle2D dataArea,
                                                 CategoryPlot plot,
                                                 int rendererIndex,
@@ -291,7 +291,7 @@ public class BarRenderer3D extends BarRenderer
      * @param dataArea  the area inside the axes.
      */
     @Override
-	public void drawBackground(Graphics2D g2, CategoryPlot plot,
+    public void drawBackground(Graphics2D g2, CategoryPlot plot,
                                Rectangle2D dataArea) {
 
         float x0 = (float) dataArea.getX();
@@ -373,7 +373,7 @@ public class BarRenderer3D extends BarRenderer
      * @param dataArea  the area inside the axes.
      */
     @Override
-	public void drawOutline(Graphics2D g2, CategoryPlot plot,
+    public void drawOutline(Graphics2D g2, CategoryPlot plot,
                             Rectangle2D dataArea) {
 
         float x0 = (float) dataArea.getX();
@@ -417,7 +417,7 @@ public class BarRenderer3D extends BarRenderer
      *
      */
     @Override
-	public void drawDomainGridline(Graphics2D g2,
+    public void drawDomainGridline(Graphics2D g2,
                                    CategoryPlot plot,
                                    Rectangle2D dataArea,
                                    double value) {
@@ -464,7 +464,7 @@ public class BarRenderer3D extends BarRenderer
      *
      */
     @Override
-	public void drawRangeGridline(Graphics2D g2, CategoryPlot plot,
+    public void drawRangeGridline(Graphics2D g2, CategoryPlot plot,
             ValueAxis axis, Rectangle2D dataArea, double value) {
 
         Range range = axis.getRange();
@@ -526,7 +526,7 @@ public class BarRenderer3D extends BarRenderer
      * @since 1.0.13
      */
     @Override
-	public void drawRangeLine(Graphics2D g2, CategoryPlot plot, ValueAxis axis,
+    public void drawRangeGridline(Graphics2D g2, CategoryPlot plot, ValueAxis axis,
             Rectangle2D dataArea, double value, Paint paint, Stroke stroke) {
 
         Range range = axis.getRange();
@@ -578,12 +578,8 @@ public class BarRenderer3D extends BarRenderer
      * @param dataArea  the area for plotting data (not including 3D effect).
      */
     @Override
-	public void drawRangeMarker(Graphics2D g2,
-                                CategoryPlot plot,
-                                ValueAxis axis,
-                                Marker marker,
-                                Rectangle2D dataArea) {
-
+    public void drawRangeMarker(Graphics2D g2, CategoryPlot plot, 
+            ValueAxis axis, Marker marker, Rectangle2D dataArea) {
 
         Rectangle2D adjusted = new Rectangle2D.Double(dataArea.getX(),
                 dataArea.getY() + getYOffset(), dataArea.getWidth()
@@ -665,7 +661,7 @@ public class BarRenderer3D extends BarRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          CategoryItemRendererState state,
                          Rectangle2D dataArea,
                          CategoryPlot plot,
@@ -796,7 +792,7 @@ public class BarRenderer3D extends BarRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

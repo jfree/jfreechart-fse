@@ -134,7 +134,7 @@ public class CategoryStepRenderer extends AbstractCategoryItemRenderer
      */
     public CategoryStepRenderer(boolean stagger) {
         this.stagger = stagger;
-        setBaseLegendShape(new Rectangle2D.Double(-4.0, -3.0, 8.0, 6.0));
+        setDefaultLegendShape(new Rectangle2D.Double(-4.0, -3.0, 8.0, 6.0));
     }
 
     /**
@@ -167,7 +167,7 @@ public class CategoryStepRenderer extends AbstractCategoryItemRenderer
      * @return The legend item.
      */
     @Override
-	public LegendItem getLegendItem(int datasetIndex, int series) {
+    public LegendItem getLegendItem(int datasetIndex, int series) {
 
         CategoryPlot p = getPlot();
         if (p == null) {
@@ -221,7 +221,7 @@ public class CategoryStepRenderer extends AbstractCategoryItemRenderer
      * @return A new state instance.
      */
     @Override
-	protected CategoryItemRendererState createState(PlotRenderingInfo info) {
+    protected CategoryItemRendererState createState(PlotRenderingInfo info) {
         return new State(info);
     }
 
@@ -272,7 +272,7 @@ public class CategoryStepRenderer extends AbstractCategoryItemRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          CategoryItemRendererState state,
                          Rectangle2D dataArea,
                          CategoryPlot plot,
@@ -363,7 +363,7 @@ public class CategoryStepRenderer extends AbstractCategoryItemRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

@@ -293,7 +293,7 @@ public class CombinedDomainCategoryPlotTest extends TestCase
         NumberAxis rangeAxis1 = new NumberAxis("Value");
         rangeAxis1.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         LineAndShapeRenderer renderer1 = new LineAndShapeRenderer();
-        renderer1.setBaseToolTipGenerator(
+        renderer1.setDefaultToolTipGenerator(
             new StandardCategoryToolTipGenerator()
         );
         CategoryPlot subplot1 = new CategoryPlot(
@@ -305,7 +305,7 @@ public class CombinedDomainCategoryPlotTest extends TestCase
         NumberAxis rangeAxis2 = new NumberAxis("Value");
         rangeAxis2.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         BarRenderer renderer2 = new BarRenderer();
-        renderer2.setBaseToolTipGenerator(
+        renderer2.setDefaultToolTipGenerator(
             new StandardCategoryToolTipGenerator()
         );
         CategoryPlot subplot2 = new CategoryPlot(

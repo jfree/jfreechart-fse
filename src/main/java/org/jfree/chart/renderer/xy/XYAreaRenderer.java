@@ -242,7 +242,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
                           XYURLGenerator urlGenerator) {
 
         super();
-        setBaseToolTipGenerator(toolTipGenerator);
+        setDefaultToolTipGenerator(toolTipGenerator);
         setURLGenerator(urlGenerator);
 
         if (type == SHAPES) {

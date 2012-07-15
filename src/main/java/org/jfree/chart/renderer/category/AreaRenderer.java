@@ -118,7 +118,7 @@ public class AreaRenderer extends AbstractCategoryItemRenderer
     public AreaRenderer() {
         super();
         this.endType = AreaRendererEndType.TAPER;
-        setBaseLegendShape(new Rectangle2D.Double(-4.0, -4.0, 8.0, 8.0));
+        setDefaultLegendShape(new Rectangle2D.Double(-4.0, -4.0, 8.0, 8.0));
     }
 
     /**

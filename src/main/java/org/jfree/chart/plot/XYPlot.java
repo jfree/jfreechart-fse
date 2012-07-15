@@ -4011,7 +4011,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
                     }
                     if ((tick.getValue() != 0.0
                             || !isRangeZeroBaselineVisible()) && paintLine) {
-                        getRenderer().drawRangeLine(g2, this, getRangeAxis(),
+                        getRenderer().drawRangeGridline(g2, this, getRangeAxis(),
                                 area, tick.getValue(), gridPaint, gridStroke);
                     }
                 }
@@ -4054,7 +4054,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      */
     protected void drawZeroRangeBaseline(Graphics2D g2, Rectangle2D area) {
         if (isRangeZeroBaselineVisible()) {
-            getRenderer().drawRangeLine(g2, this, getRangeAxis(), area, 0.0,
+            getRenderer().drawRangeGridline(g2, this, getRangeAxis(), area, 0.0,
                     this.rangeZeroBaselinePaint, this.rangeZeroBaselineStroke);
         }
     }

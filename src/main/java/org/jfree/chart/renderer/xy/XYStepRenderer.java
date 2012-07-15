@@ -134,7 +134,7 @@ public class XYStepRenderer extends XYLineAndShapeRenderer
     public XYStepRenderer(XYToolTipGenerator toolTipGenerator,
                           XYURLGenerator urlGenerator) {
         super();
-        setBaseToolTipGenerator(toolTipGenerator);
+        setDefaultToolTipGenerator(toolTipGenerator);
         setURLGenerator(urlGenerator);
         setBaseShapesVisible(false);
     }

@@ -744,11 +744,11 @@ public abstract class ChartFactory {
         BarRenderer renderer = new BarRenderer();
         ItemLabelPosition position1 = new ItemLabelPosition(
                 ItemLabelAnchor.OUTSIDE12, TextAnchor.BOTTOM_CENTER);
-        renderer.setBasePositiveItemLabelPosition(position1);
+        renderer.setDefaultPositiveItemLabelPosition(position1);
         ItemLabelPosition position2 = new ItemLabelPosition(
                 ItemLabelAnchor.OUTSIDE6, TextAnchor.TOP_CENTER);
-        renderer.setBaseNegativeItemLabelPosition(position2);
-        renderer.setBaseToolTipGenerator(
+        renderer.setDefaultNegativeItemLabelPosition(position2);
+        renderer.setDefaultToolTipGenerator(
                     new StandardCategoryToolTipGenerator());
 
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
@@ -783,7 +783,7 @@ public abstract class ChartFactory {
         ValueAxis valueAxis = new NumberAxis(rangeAxisLabel);
 
         StackedBarRenderer renderer = new StackedBarRenderer();
-        renderer.setBaseToolTipGenerator(
+        renderer.setDefaultToolTipGenerator(
                 new StandardCategoryToolTipGenerator());
 
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
@@ -817,7 +817,7 @@ public abstract class ChartFactory {
         ValueAxis valueAxis = new NumberAxis3D(valueAxisLabel);
 
         BarRenderer3D renderer = new BarRenderer3D();
-        renderer.setBaseToolTipGenerator(
+        renderer.setDefaultToolTipGenerator(
                     new StandardCategoryToolTipGenerator());
 
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
@@ -866,7 +866,7 @@ public abstract class ChartFactory {
 
         // create the renderer...
         CategoryItemRenderer renderer = new StackedBarRenderer3D();
-        renderer.setBaseToolTipGenerator(
+        renderer.setDefaultToolTipGenerator(
                 new StandardCategoryToolTipGenerator());
 
         // create the plot...
@@ -912,7 +912,7 @@ public abstract class ChartFactory {
         ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
 
         AreaRenderer renderer = new AreaRenderer();
-        renderer.setBaseToolTipGenerator(
+        renderer.setDefaultToolTipGenerator(
                     new StandardCategoryToolTipGenerator());
 
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
@@ -948,7 +948,7 @@ public abstract class ChartFactory {
         ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
 
         StackedAreaRenderer renderer = new StackedAreaRenderer();
-        renderer.setBaseToolTipGenerator(
+        renderer.setDefaultToolTipGenerator(
                     new StandardCategoryToolTipGenerator());
 
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
@@ -982,7 +982,7 @@ public abstract class ChartFactory {
         ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
 
         LineAndShapeRenderer renderer = new LineAndShapeRenderer(true, false);
-        renderer.setBaseToolTipGenerator(
+        renderer.setDefaultToolTipGenerator(
                 new StandardCategoryToolTipGenerator());
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
                 renderer);
@@ -1015,7 +1015,7 @@ public abstract class ChartFactory {
         ValueAxis valueAxis = new NumberAxis3D(valueAxisLabel);
 
         LineRenderer3D renderer = new LineRenderer3D();
-        renderer.setBaseToolTipGenerator(
+        renderer.setDefaultToolTipGenerator(
                 new StandardCategoryToolTipGenerator());
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
                 renderer);
@@ -1049,7 +1049,7 @@ public abstract class ChartFactory {
         DateAxis dateAxis = new DateAxis(dateAxisLabel);
 
         CategoryItemRenderer renderer = new GanttRenderer();
-        renderer.setBaseToolTipGenerator(
+        renderer.setDefaultToolTipGenerator(
                 new IntervalCategoryToolTipGenerator(
                 "{3} - {4}", DateFormat.getDateInstance()));
 
@@ -1098,11 +1098,11 @@ public abstract class ChartFactory {
         ItemLabelPosition position = new ItemLabelPosition(
                 ItemLabelAnchor.CENTER, TextAnchor.CENTER,
                 TextAnchor.CENTER, 0.0);
-        renderer.setBasePositiveItemLabelPosition(position);
-        renderer.setBaseNegativeItemLabelPosition(position);
+        renderer.setDefaultPositiveItemLabelPosition(position);
+        renderer.setDefaultNegativeItemLabelPosition(position);
         StandardCategoryToolTipGenerator generator
                 = new StandardCategoryToolTipGenerator();
-        renderer.setBaseToolTipGenerator(generator);
+        renderer.setDefaultToolTipGenerator(generator);
 
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
                 renderer);
@@ -1168,7 +1168,7 @@ public abstract class ChartFactory {
         XYPlot plot = new XYPlot(dataset, xAxis, yAxis, null);
         XYItemRenderer renderer = new XYLineAndShapeRenderer(false, true);
         XYToolTipGenerator toolTipGenerator = new StandardXYToolTipGenerator();
-        renderer.setBaseToolTipGenerator(toolTipGenerator);
+        renderer.setDefaultToolTipGenerator(toolTipGenerator);
         plot.setRenderer(renderer);
 
         JFreeChart chart = new JFreeChart(title, plot);
@@ -1215,7 +1215,7 @@ public abstract class ChartFactory {
         else {
             tt = new StandardXYToolTipGenerator();
         }
-        renderer.setBaseToolTipGenerator(tt);
+        renderer.setDefaultToolTipGenerator(tt);
 
         XYPlot plot = new XYPlot(dataset, domainAxis, valueAxis, renderer);
 
@@ -1315,7 +1315,7 @@ public abstract class ChartFactory {
         NumberAxis yAxis = new NumberAxis(yAxisLabel);
         XYItemRenderer renderer = new XYLineAndShapeRenderer(true, false);
         XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
-        renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator());
+        renderer.setDefaultToolTipGenerator(new StandardXYToolTipGenerator());
 
         JFreeChart chart = new JFreeChart(title, plot);
         currentTheme.apply(chart);
@@ -1419,7 +1419,7 @@ public abstract class ChartFactory {
 
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true,
                 false);
-        renderer.setBaseToolTipGenerator(toolTipGenerator);
+        renderer.setDefaultToolTipGenerator(toolTipGenerator);
         plot.setRenderer(renderer);
 
         JFreeChart chart = new JFreeChart(title, plot);
@@ -1471,7 +1471,7 @@ public abstract class ChartFactory {
         ValueAxis timeAxis = new DateAxis(timeAxisLabel);
         NumberAxis valueAxis = new NumberAxis(valueAxisLabel);
         HighLowRenderer renderer = new HighLowRenderer();
-        renderer.setBaseToolTipGenerator(new HighLowItemLabelGenerator());
+        renderer.setDefaultToolTipGenerator(new HighLowItemLabelGenerator());
         XYPlot plot = new XYPlot(dataset, timeAxis, valueAxis, renderer);
         JFreeChart chart = new JFreeChart(title, plot);
         currentTheme.apply(chart);
@@ -1505,7 +1505,7 @@ public abstract class ChartFactory {
         timeAxis.setTimeline(timeline);
         NumberAxis valueAxis = new NumberAxis(valueAxisLabel);
         HighLowRenderer renderer = new HighLowRenderer();
-        renderer.setBaseToolTipGenerator(new HighLowItemLabelGenerator());
+        renderer.setDefaultToolTipGenerator(new HighLowItemLabelGenerator());
         XYPlot plot = new XYPlot(dataset, timeAxis, valueAxis, renderer);
         JFreeChart chart = new JFreeChart(title, plot);
         currentTheme.apply(chart);
@@ -1541,7 +1541,7 @@ public abstract class ChartFactory {
 
         XYItemRenderer renderer = new XYBubbleRenderer(
                 XYBubbleRenderer.SCALE_ON_RANGE_AXIS);
-        renderer.setBaseToolTipGenerator(new StandardXYZToolTipGenerator());
+        renderer.setDefaultToolTipGenerator(new StandardXYZToolTipGenerator());
         plot.setRenderer(renderer);
 
         JFreeChart chart = new JFreeChart(title, plot);
@@ -1570,7 +1570,7 @@ public abstract class ChartFactory {
         ValueAxis yAxis = new NumberAxis(yAxisLabel);
 
         XYItemRenderer renderer = new XYBarRenderer();
-        renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator());
+        renderer.setDefaultToolTipGenerator(new StandardXYToolTipGenerator());
 
         XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
         plot.setDomainZeroBaselineVisible(true);
@@ -1605,7 +1605,7 @@ public abstract class ChartFactory {
         valueAxis.setAutoRangeIncludesZero(false);
 
         BoxAndWhiskerRenderer renderer = new BoxAndWhiskerRenderer();
-        renderer.setBaseToolTipGenerator(new BoxAndWhiskerToolTipGenerator());
+        renderer.setDefaultToolTipGenerator(new BoxAndWhiskerToolTipGenerator());
 
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
                 renderer);
@@ -1659,7 +1659,7 @@ public abstract class ChartFactory {
         yAxis.setRange(-12.0, 12.0);
 
         WindItemRenderer renderer = new WindItemRenderer();
-        renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator());
+        renderer.setDefaultToolTipGenerator(new StandardXYToolTipGenerator());
         XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
         JFreeChart chart = new JFreeChart(title, plot);
         currentTheme.apply(chart);

@@ -315,7 +315,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
         this.negativeItemLabelPositionFallback = null;
         this.gradientPaintTransformer = new StandardGradientPaintTransformer();
         this.minimumBarLength = 0.0;
-        setBaseLegendShape(new Rectangle2D.Double(-4.0, -4.0, 8.0, 8.0));
+        setDefaultLegendShape(new Rectangle2D.Double(-4.0, -4.0, 8.0, 8.0));
         this.barPainter = getDefaultBarPainter();
         this.shadowsVisible = getDefaultShadowsVisible();
         this.shadowPaint = Color.GRAY;

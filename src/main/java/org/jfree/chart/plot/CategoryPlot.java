@@ -4057,7 +4057,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
                 if (r instanceof AbstractCategoryItemRenderer) {
                     AbstractCategoryItemRenderer aci
                             = (AbstractCategoryItemRenderer) r;
-                    aci.drawRangeLine(g2, this, axis, dataArea,
+                    aci.drawRangeGridline(g2, this, axis, dataArea,
                             tick.getValue(), gridPaint, gridStroke);
                 }
                 else {
@@ -4087,7 +4087,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
         CategoryItemRenderer r = getRenderer();
         if (r instanceof AbstractCategoryItemRenderer) {
             AbstractCategoryItemRenderer aci = (AbstractCategoryItemRenderer) r;
-            aci.drawRangeLine(g2, this, getRangeAxis(), area, 0.0,
+            aci.drawRangeGridline(g2, this, getRangeAxis(), area, 0.0,
                     this.rangeZeroBaselinePaint, this.rangeZeroBaselineStroke);
         }
         else {

@@ -95,10 +95,10 @@ public class AbstractCategoryItemRendererTest extends TestCase {
         assertTrue(r1.equals(r2));
 
         // baseToolTipGenerator
-        r1.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator("{2}",
+        r1.setDefaultToolTipGenerator(new StandardCategoryToolTipGenerator("{2}",
                 NumberFormat.getInstance()));
         assertFalse(r1.equals(r2));
-        r2.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator("{2}",
+        r2.setDefaultToolTipGenerator(new StandardCategoryToolTipGenerator("{2}",
                 NumberFormat.getInstance()));
         assertTrue(r1.equals(r2));
 
@@ -111,10 +111,10 @@ public class AbstractCategoryItemRendererTest extends TestCase {
         assertTrue(r1.equals(r2));
 
         // baseItemLabelGenerator
-        r1.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator(
+        r1.setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator(
                 "{2}", NumberFormat.getInstance()));
         assertFalse(r1.equals(r2));
-        r2.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator(
+        r2.setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator(
                 "{2}", NumberFormat.getInstance()));
         assertTrue(r1.equals(r2));
 
@@ -125,10 +125,10 @@ public class AbstractCategoryItemRendererTest extends TestCase {
         assertTrue(r1.equals(r2));
 
         // baseItemURLGenerator
-        r1.setBaseItemURLGenerator(new StandardCategoryURLGenerator(
+        r1.setDefaultItemURLGenerator(new StandardCategoryURLGenerator(
                 "abc.html"));
         assertFalse(r1.equals(r2));
-        r2.setBaseItemURLGenerator(new StandardCategoryURLGenerator(
+        r2.setDefaultItemURLGenerator(new StandardCategoryURLGenerator(
                 "abc.html"));
         assertTrue(r1.equals(r2));
 
@@ -177,7 +177,7 @@ public class AbstractCategoryItemRendererTest extends TestCase {
         assertTrue(r1.equals(r2));
 
         r1 = new BarRenderer();
-        r1.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+        r1.setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator());
         r2 = null;
         try {
             r2 = (BarRenderer) r1.clone();
@@ -210,7 +210,7 @@ public class AbstractCategoryItemRendererTest extends TestCase {
         assertTrue(r1.equals(r2));
 
         r1 = new BarRenderer();
-        r1.setBaseItemLabelGenerator(new IntervalCategoryItemLabelGenerator());
+        r1.setDefaultItemLabelGenerator(new IntervalCategoryItemLabelGenerator());
         r2 = null;
         try {
             r2 = (BarRenderer) r1.clone();

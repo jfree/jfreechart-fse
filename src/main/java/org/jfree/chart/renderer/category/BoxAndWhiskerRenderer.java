@@ -199,7 +199,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
         this.meanVisible = true;
         this.useOutlinePaintForWhiskers = false;
         this.whiskerWidth = 1.0;
-        setBaseLegendShape(new Rectangle2D.Double(-4.0, -4.0, 8.0, 8.0));
+        setDefaultLegendShape(new Rectangle2D.Double(-4.0, -4.0, 8.0, 8.0));
     }
 
     /**

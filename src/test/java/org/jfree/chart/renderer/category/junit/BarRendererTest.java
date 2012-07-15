@@ -213,7 +213,7 @@ public class BarRendererTest extends TestCase {
      */
     public void testCloning() {
         BarRenderer r1 = new BarRenderer();
-        r1.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+        r1.setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator());
         r1.setBarPainter(new GradientBarPainter(0.11, 0.22, 0.33));
         BarRenderer r2 = null;
         try {
@@ -271,7 +271,7 @@ public class BarRendererTest extends TestCase {
         r1.addChangeListener(detector);
 
         detector.setNotified(false);
-        r1.setBasePaint(Color.red);
+        r1.setDefaultPaint(Color.RED);
         assertTrue(detector.getNotified());
 
     }

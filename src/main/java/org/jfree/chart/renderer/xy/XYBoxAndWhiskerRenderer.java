@@ -168,7 +168,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
         this.boxWidth = boxWidth;
         this.boxPaint = Color.GREEN;
         this.fillBox = true;
-        setBaseToolTipGenerator(new BoxAndWhiskerXYToolTipGenerator());
+        setDefaultToolTipGenerator(new BoxAndWhiskerXYToolTipGenerator());
     }
 
     /**

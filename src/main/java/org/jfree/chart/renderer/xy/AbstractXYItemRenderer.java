@@ -364,8 +364,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param generator  the generator (<code>null</code> permitted).
      */
     @Override
-	public void setSeriesItemLabelGenerator(int series,
-                XYItemLabelGenerator generator, boolean notify) {
+    public void setSeriesItemLabelGenerator(int series,
+            XYItemLabelGenerator generator, boolean notify) {
         this.itemLabelGeneratorList.set(series, generator);
         if (notify) {
             fireChangeEvent();
@@ -373,35 +373,35 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     }
 
     /**
-     * Returns the base item label generator.
+     * Returns the default item label generator.
      *
-     * @return The generator (possibly <code>null</code>).
+     * @return The default item label generator (possibly <code>null</code>).
      */
     @Override
-	public XYItemLabelGenerator getBaseItemLabelGenerator() {
+    public XYItemLabelGenerator getDefaultItemLabelGenerator() {
         return this.baseItemLabelGenerator;
     }
 
     /**
-     * Sets the base item label generator and sends a
+     * Sets the default item label generator and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param generator  the generator (<code>null</code> permitted).
      */
     @Override
-	public void setBaseItemLabelGenerator(XYItemLabelGenerator generator) {
-        setBaseItemLabelGenerator(generator, true);
+    public void setDefaultItemLabelGenerator(XYItemLabelGenerator generator) {
+        setDefaultItemLabelGenerator(generator, true);
     }
 
     /**
-     * Sets the base item label generator and sends a
+     * Sets the default item label generator and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param generator  the generator (<code>null</code> permitted).
      */
     @Override
-	public void setBaseItemLabelGenerator(XYItemLabelGenerator generator, 
-	        boolean notify) {
+    public void setDefaultItemLabelGenerator(XYItemLabelGenerator generator, 
+            boolean notify) {
         this.baseItemLabelGenerator = generator;
         if (notify) {
             fireChangeEvent();
@@ -463,8 +463,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param generator  the generator (<code>null</code> permitted).
      */
     @Override
-	public void setSeriesToolTipGenerator(int series,
-                XYToolTipGenerator generator, boolean notify) {
+    public void setSeriesToolTipGenerator(int series,
+            XYToolTipGenerator generator, boolean notify) {
         this.toolTipGeneratorList.set(series, generator);
         if (notify) {
             fireChangeEvent();
@@ -472,28 +472,28 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     }
 
     /**
-     * Returns the base tool tip generator.
+     * Returns the default tool tip generator.
      *
-     * @return The generator (possibly <code>null</code>).
+     * @return The default tool tip generator (possibly <code>null</code>).
      *
-     * @see #setBaseToolTipGenerator(XYToolTipGenerator)
+     * @see #setDefaultToolTipGenerator(XYToolTipGenerator)
      */
     @Override
-	public XYToolTipGenerator getBaseToolTipGenerator() {
+    public XYToolTipGenerator getDefaultToolTipGenerator() {
         return this.baseToolTipGenerator;
     }
 
     /**
-     * Sets the base tool tip generator and sends a {@link RendererChangeEvent}
+     * Sets the default tool tip generator and sends a {@link RendererChangeEvent}
      * to all registered listeners.
      *
      * @param generator  the generator (<code>null</code> permitted).
      *
-     * @see #getBaseToolTipGenerator()
+     * @see #getDefaultToolTipGenerator()
      */
     @Override
-	public void setBaseToolTipGenerator(XYToolTipGenerator generator) {
-        setBaseToolTipGenerator(generator, true);
+    public void setDefaultToolTipGenerator(XYToolTipGenerator generator) {
+        setDefaultToolTipGenerator(generator, true);
     }
 
     /**
@@ -505,8 +505,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @see #getBaseToolTipGenerator()
      */
     @Override
-	public void setBaseToolTipGenerator(XYToolTipGenerator generator, 
-	        boolean notify) {
+    public void setDefaultToolTipGenerator(XYToolTipGenerator generator, 
+	    boolean notify) {
         this.baseToolTipGenerator = generator;
         if (notify) {
             fireChangeEvent();
@@ -1041,11 +1041,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param value  the value at which the grid line should be drawn.
      */
     @Override
-	public void drawDomainGridLine(Graphics2D g2,
-                                   XYPlot plot,
-                                   ValueAxis axis,
-                                   Rectangle2D dataArea,
-                                   double value) {
+    public void drawDomainGridline(Graphics2D g2, XYPlot plot,
+            ValueAxis axis, Rectangle2D dataArea, double value) {
 
         Range range = axis.getRange();
         if (!range.contains(value)) {
@@ -1127,13 +1124,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param stroke  the stroke.
      */
     @Override
-	public void drawRangeLine(Graphics2D g2,
-                              XYPlot plot,
-                              ValueAxis axis,
-                              Rectangle2D dataArea,
-                              double value,
-                              Paint paint,
-                              Stroke stroke) {
+    public void drawRangeGridline(Graphics2D g2, XYPlot plot, ValueAxis axis,
+            Rectangle2D dataArea, double value, Paint paint, Stroke stroke) {
 
         Range range = axis.getRange();
         if (!range.contains(value)) {
@@ -1168,11 +1160,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param dataArea  the axis data area.
      */
     @Override
-	public void drawDomainMarker(Graphics2D g2,
-                                 XYPlot plot,
-                                 ValueAxis domainAxis,
-                                 Marker marker,
-                                 Rectangle2D dataArea) {
+    public void drawDomainMarker(Graphics2D g2, XYPlot plot, 
+            ValueAxis domainAxis, Marker marker, Rectangle2D dataArea) {
 
         if (marker instanceof ValueMarker) {
             ValueMarker vm = (ValueMarker) marker;

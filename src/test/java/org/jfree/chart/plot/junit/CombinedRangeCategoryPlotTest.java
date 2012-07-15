@@ -292,7 +292,7 @@ public class CombinedRangeCategoryPlotTest extends TestCase
         CategoryDataset dataset1 = createDataset1();
         CategoryAxis catAxis1 = new CategoryAxis("Category");
         LineAndShapeRenderer renderer1 = new LineAndShapeRenderer();
-        renderer1.setBaseToolTipGenerator(
+        renderer1.setDefaultToolTipGenerator(
                 new StandardCategoryToolTipGenerator());
         CategoryPlot subplot1 = new CategoryPlot(dataset1, catAxis1, null,
                 renderer1);
@@ -301,7 +301,7 @@ public class CombinedRangeCategoryPlotTest extends TestCase
         CategoryDataset dataset2 = createDataset2();
         CategoryAxis catAxis2 = new CategoryAxis("Category");
         BarRenderer renderer2 = new BarRenderer();
-        renderer2.setBaseToolTipGenerator(
+        renderer2.setDefaultToolTipGenerator(
                 new StandardCategoryToolTipGenerator());
         CategoryPlot subplot2 = new CategoryPlot(dataset2, catAxis2, null,
                 renderer2);

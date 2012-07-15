@@ -98,9 +98,9 @@ public class XYStepRendererTest extends TestCase {
         assertTrue(r1.equals(r2));
 
         // try something from the base class
-        r1.setBaseCreateEntities(false);
+        r1.setDefaultCreateEntities(false);
         assertFalse(r1.equals(r2));
-        r2.setBaseCreateEntities(false);
+        r2.setDefaultCreateEntities(false);
         assertTrue(r1.equals(r2));
     }
 
