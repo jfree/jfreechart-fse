@@ -62,7 +62,7 @@ import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.annotations.XYAnnotation;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.common.ui.Layer;
+import org.jfree.chart.ui.Layer;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.XYItemLabelGenerator;
 import org.jfree.chart.labels.XYSeriesLabelGenerator;

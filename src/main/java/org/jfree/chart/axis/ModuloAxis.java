@@ -44,7 +44,7 @@ package org.jfree.chart.axis;
 
 import java.awt.geom.Rectangle2D;
 
-import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.event.AxisChangeEvent;
 import org.jfree.data.Range;
 

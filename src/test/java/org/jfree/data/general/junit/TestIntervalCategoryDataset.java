@@ -43,7 +43,7 @@ package org.jfree.data.general.junit;
 import java.io.Serializable;
 import java.util.List;
 
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.KeyedObjects2D;
 import org.jfree.data.UnknownKeyException;
 import org.jfree.data.category.IntervalCategoryDataset;

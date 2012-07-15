@@ -42,8 +42,8 @@
 
 package org.jfree.chart.axis;
 
-import org.jfree.chart.common.ui.TextAnchor;
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.text.TextBlock;
 import org.jfree.chart.text.TextBlockAnchor;
 

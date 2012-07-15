@@ -57,7 +57,7 @@ import junit.framework.TestSuite;
 import org.jfree.chart.block.AbstractBlock;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.block.EmptyBlock;
-import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.ui.RectangleInsets;
 
 /**
  * Tests for the {@link AbstractBlock} class.

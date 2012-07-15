@@ -67,12 +67,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import org.jfree.chart.common.ui.RectangleInsets;
-import org.jfree.chart.common.util.ObjectUtilities;
-import org.jfree.chart.common.util.PaintUtilities;
-import org.jfree.chart.common.util.Rotation;
-import org.jfree.chart.common.util.ShapeUtilities;
-import org.jfree.chart.common.util.UnitType;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.Rotation;
+import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.UnitType;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.PieSectionEntity;
 import org.jfree.chart.event.PlotChangeEvent;

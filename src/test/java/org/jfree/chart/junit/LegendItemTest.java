@@ -66,8 +66,8 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.common.ui.GradientPaintTransformType;
-import org.jfree.chart.common.ui.StandardGradientPaintTransformer;
+import org.jfree.chart.ui.GradientPaintTransformType;
+import org.jfree.chart.ui.StandardGradientPaintTransformer;
 
 /**
  * Tests for the {@link LegendItem} class.

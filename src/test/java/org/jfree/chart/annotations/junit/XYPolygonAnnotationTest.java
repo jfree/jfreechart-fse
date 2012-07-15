@@ -57,7 +57,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.annotations.XYPolygonAnnotation;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 
 /**
  * Tests for the {@link XYPolygonAnnotation} class.

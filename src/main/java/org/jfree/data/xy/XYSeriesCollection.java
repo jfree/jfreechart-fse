@@ -72,8 +72,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.HashUtilities;
-import org.jfree.chart.common.util.ObjectUtilities;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.DomainInfo;
 import org.jfree.data.DomainOrder;

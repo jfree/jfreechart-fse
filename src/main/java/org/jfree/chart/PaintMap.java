@@ -53,7 +53,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.SerialUtilities;
 
 /**

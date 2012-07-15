@@ -222,7 +222,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.event.EventListenerList;
 
-import org.jfree.chart.common.ui.ExtensionFileFilter;
+import org.jfree.chart.ui.ExtensionFileFilter;
 import org.jfree.chart.editor.ChartEditor;
 import org.jfree.chart.editor.ChartEditorManager;
 import org.jfree.chart.entity.ChartEntity;

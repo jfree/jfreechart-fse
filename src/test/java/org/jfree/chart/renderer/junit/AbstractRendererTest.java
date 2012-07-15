@@ -70,7 +70,7 @@ import junit.framework.TestSuite;
 
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.event.RendererChangeListener;
 import org.jfree.chart.labels.ItemLabelAnchor;

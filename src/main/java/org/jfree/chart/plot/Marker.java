@@ -74,12 +74,12 @@ import java.util.EventListener;
 
 import javax.swing.event.EventListenerList;
 
-import org.jfree.chart.common.ui.LengthAdjustmentType;
-import org.jfree.chart.common.ui.RectangleAnchor;
-import org.jfree.chart.common.ui.RectangleInsets;
-import org.jfree.chart.common.ui.TextAnchor;
-import org.jfree.chart.common.util.ObjectUtilities;
-import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.ui.LengthAdjustmentType;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.event.MarkerChangeEvent;
 import org.jfree.chart.event.MarkerChangeListener;
 import org.jfree.chart.util.SerialUtilities;

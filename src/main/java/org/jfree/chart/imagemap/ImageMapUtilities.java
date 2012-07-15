@@ -55,7 +55,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import org.jfree.chart.ChartRenderingInfo;
-import org.jfree.chart.common.util.StringUtils;
+import org.jfree.chart.util.StringUtils;
 import org.jfree.chart.entity.ChartEntity;
 import org.jfree.chart.entity.EntityCollection;
 

@@ -45,8 +45,8 @@ package org.jfree.data;
 
 import java.io.Serializable;
 
-import org.jfree.chart.common.util.ObjectUtilities;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PublicCloneable;
 
 /**
  * A (key, object) pair.

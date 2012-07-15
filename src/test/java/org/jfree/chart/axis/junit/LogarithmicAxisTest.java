@@ -55,7 +55,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.axis.LogarithmicAxis;
-import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleEdge;
 
 /**
  * Tests for the {@link LogarithmicAxis} class.

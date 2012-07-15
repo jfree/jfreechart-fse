@@ -57,7 +57,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.block.LabelBlock;
-import org.jfree.chart.common.ui.RectangleAnchor;
+import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.text.TextBlockAnchor;
 
 /**

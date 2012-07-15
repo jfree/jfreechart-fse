@@ -66,14 +66,14 @@ import org.jfree.chart.block.AbstractBlock;
 import org.jfree.chart.block.Block;
 import org.jfree.chart.block.LengthConstraintType;
 import org.jfree.chart.block.RectangleConstraint;
-import org.jfree.chart.common.ui.GradientPaintTransformer;
-import org.jfree.chart.common.ui.RectangleAnchor;
-import org.jfree.chart.common.ui.Size2D;
-import org.jfree.chart.common.ui.StandardGradientPaintTransformer;
-import org.jfree.chart.common.util.ObjectUtilities;
-import org.jfree.chart.common.util.PaintUtilities;
-import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.common.util.ShapeUtilities;
+import org.jfree.chart.ui.GradientPaintTransformer;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.Size2D;
+import org.jfree.chart.ui.StandardGradientPaintTransformer;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.util.SerialUtilities;
 
 /**

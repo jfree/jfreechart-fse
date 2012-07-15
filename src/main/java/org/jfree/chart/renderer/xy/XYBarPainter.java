@@ -44,7 +44,7 @@ package org.jfree.chart.renderer.xy;
 import java.awt.Graphics2D;
 import java.awt.geom.RectangularShape;
 
-import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleEdge;
 
 /**
  * The interface for plugin painter for the {@link XYBarRenderer} class.  When

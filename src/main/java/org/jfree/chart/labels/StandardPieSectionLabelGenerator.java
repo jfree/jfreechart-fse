@@ -55,8 +55,8 @@ import java.text.AttributedString;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import org.jfree.chart.common.util.ObjectList;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.ObjectList;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.general.PieDataset;
 
 /**

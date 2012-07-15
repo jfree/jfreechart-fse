@@ -113,10 +113,10 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
-import org.jfree.chart.common.ui.RectangleEdge;
-import org.jfree.chart.common.ui.RectangleInsets;
-import org.jfree.chart.common.ui.TextAnchor;
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.event.AxisChangeEvent;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;

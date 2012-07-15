@@ -49,7 +49,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.common.ui.Size2D;
+import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.title.ImageTitle;
 
 /**

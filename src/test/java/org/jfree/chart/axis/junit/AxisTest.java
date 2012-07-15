@@ -55,7 +55,7 @@ import junit.framework.TestSuite;
 
 import org.jfree.chart.axis.Axis;
 import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.ui.RectangleInsets;
 
 /**
  * Tests for the {@link Axis} class.

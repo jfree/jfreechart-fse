@@ -60,8 +60,8 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jfree.chart.common.ui.RectangleEdge;
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.text.TextUtilities;
 

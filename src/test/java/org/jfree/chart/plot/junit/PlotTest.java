@@ -57,8 +57,8 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.common.ui.Align;
-import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.ui.Align;
+import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.plot.DefaultDrawingSupplier;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.Plot;

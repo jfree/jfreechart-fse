@@ -62,7 +62,7 @@ import java.text.NumberFormat;
 import java.util.Date;
 
 import org.jfree.chart.HashUtilities;
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.xy.XYDataset;
 
 /**

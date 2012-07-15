@@ -51,7 +51,7 @@ package org.jfree.data.time;
 
 import java.io.Serializable;
 
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * Represents one data item in a time series.

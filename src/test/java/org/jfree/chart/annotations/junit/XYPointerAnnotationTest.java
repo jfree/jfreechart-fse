@@ -59,7 +59,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.annotations.XYPointerAnnotation;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 
 /**
  * Tests for the {@link XYPointerAnnotation} class.

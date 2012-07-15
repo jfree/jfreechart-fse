@@ -59,8 +59,8 @@ import java.io.Serializable;
 import org.jfree.chart.block.BlockContainer;
 import org.jfree.chart.block.BorderArrangement;
 import org.jfree.chart.block.RectangleConstraint;
-import org.jfree.chart.common.ui.Size2D;
-import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.ui.Size2D;
+import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.event.TitleChangeEvent;
 import org.jfree.chart.util.SerialUtilities;
 

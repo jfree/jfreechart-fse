@@ -46,7 +46,7 @@ package org.jfree.chart.labels;
 
 import java.io.Serializable;
 
-import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.ui.TextAnchor;
 
 /**
  * The attributes that control the position of the label for each data item on

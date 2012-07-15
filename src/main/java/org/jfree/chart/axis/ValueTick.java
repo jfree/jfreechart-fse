@@ -42,7 +42,7 @@
 
 package org.jfree.chart.axis;
 
-import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.ui.TextAnchor;
 
 /**
  * A value tick.

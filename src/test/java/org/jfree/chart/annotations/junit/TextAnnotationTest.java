@@ -53,7 +53,7 @@ import junit.framework.TestSuite;
 
 import org.jfree.chart.annotations.CategoryTextAnnotation;
 import org.jfree.chart.annotations.TextAnnotation;
-import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.ui.TextAnchor;
 
 /**
  * Tests for the {@link TextAnnotation} class.

@@ -53,7 +53,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 
 /**
  * A default implementation of the {@link WindDataset} interface.

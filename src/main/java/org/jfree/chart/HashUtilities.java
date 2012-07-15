@@ -50,9 +50,9 @@ import java.awt.GradientPaint;
 import java.awt.Paint;
 import java.awt.Stroke;
 
-import org.jfree.chart.common.util.BooleanList;
-import org.jfree.chart.common.util.PaintList;
-import org.jfree.chart.common.util.StrokeList;
+import org.jfree.chart.util.BooleanList;
+import org.jfree.chart.util.PaintList;
+import org.jfree.chart.util.StrokeList;
 
 /**
  * Some utility methods for calculating hash codes.  

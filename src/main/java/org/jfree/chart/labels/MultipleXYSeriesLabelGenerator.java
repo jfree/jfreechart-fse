@@ -53,7 +53,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jfree.chart.HashUtilities;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.xy.XYDataset;
 
 /**

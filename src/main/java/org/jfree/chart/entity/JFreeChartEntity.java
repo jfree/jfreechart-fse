@@ -48,7 +48,7 @@ import java.io.ObjectOutputStream;
 
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.SerialUtilities;
 
 /**

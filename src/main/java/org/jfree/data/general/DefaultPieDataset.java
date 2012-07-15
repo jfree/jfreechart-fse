@@ -61,8 +61,8 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.common.util.SortOrder;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.SortOrder;
 import org.jfree.data.DefaultKeyedValues;
 import org.jfree.data.KeyedValues;
 import org.jfree.data.UnknownKeyException;

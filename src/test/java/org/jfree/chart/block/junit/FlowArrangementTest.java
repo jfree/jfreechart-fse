@@ -53,8 +53,8 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.block.FlowArrangement;
-import org.jfree.chart.common.ui.HorizontalAlignment;
-import org.jfree.chart.common.ui.VerticalAlignment;
+import org.jfree.chart.ui.HorizontalAlignment;
+import org.jfree.chart.ui.VerticalAlignment;
 
 /**
  * Tests for the {@link FlowArrangement} class.

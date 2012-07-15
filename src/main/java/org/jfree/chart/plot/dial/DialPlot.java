@@ -57,8 +57,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.common.util.ObjectList;
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectList;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;

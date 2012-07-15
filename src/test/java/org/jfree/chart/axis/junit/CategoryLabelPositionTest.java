@@ -55,8 +55,8 @@ import junit.framework.TestSuite;
 
 import org.jfree.chart.axis.CategoryLabelPosition;
 import org.jfree.chart.axis.CategoryLabelWidthType;
-import org.jfree.chart.common.ui.RectangleAnchor;
-import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.text.TextBlockAnchor;
 
 /**

@@ -52,9 +52,9 @@ import java.awt.Paint;
 import java.awt.Stroke;
 import java.io.Serializable;
 
-import org.jfree.chart.common.ui.GradientPaintTransformer;
-import org.jfree.chart.common.ui.LengthAdjustmentType;
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.ui.GradientPaintTransformer;
+import org.jfree.chart.ui.LengthAdjustmentType;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.event.MarkerChangeEvent;
 
 /**

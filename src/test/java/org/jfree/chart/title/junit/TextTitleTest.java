@@ -58,7 +58,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.common.ui.HorizontalAlignment;
+import org.jfree.chart.ui.HorizontalAlignment;
 import org.jfree.chart.title.TextTitle;
 
 /**

@@ -43,7 +43,7 @@ package org.jfree.data.general;
 
 import java.io.Serializable;
 
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.DataUtilities;
 
 /**
