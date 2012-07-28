@@ -117,9 +117,7 @@ public abstract class Series implements Cloneable, Serializable {
      * @param description  the series description (<code>null</code> permitted).
      */
     protected Series(Comparable key, String description) {
-        if (key == null) {
-            throw new IllegalArgumentException("Null 'key' argument.");
-        }
+        ParamChecks.nullNotPermitted(key, "key");       
         this.key = key;
         this.description = description;
         this.listeners = new EventListenerList();
@@ -141,9 +139,9 @@ public abstract class Series implements Cloneable, Serializable {
 
     /**
      * Sets the key for the series and sends a <code>VetoableChangeEvent</code>
-     * (with the property name "Key") to all registered listeners.  For 
-     * backwards compatibility, this method also fires a regular 
-     * <code>PropertyChangeEvent</code>.
+     * (with the property name "Key") to all registered listeners.  If the
+     * change is vetoed by a listener, this method will throw an 
+     * IllegalArgumentException.
      *
      * @param key  the key (<code>null</code> not permitted).
      *
@@ -158,11 +156,8 @@ public abstract class Series implements Cloneable, Serializable {
             // same key
             this.vetoableChangeSupport.fireVetoableChange("Key", old, key);
             this.key = key;
-            // prior to 1.0.14, we just fired a PropertyChange - so we need to
-            // keep doing this
-            this.propertyChangeSupport.firePropertyChange("Key", old, key);
         } catch (PropertyVetoException e) {
-            throw new IllegalArgumentException(e.getMessage());
+            throw new IllegalArgumentException(e);
         }
     }
 
@@ -256,7 +251,7 @@ public abstract class Series implements Cloneable, Serializable {
      *         subclasses may differ.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         Series clone = (Series) super.clone();
         clone.listeners = new EventListenerList();
         clone.propertyChangeSupport = new PropertyChangeSupport(clone);
@@ -272,7 +267,7 @@ public abstract class Series implements Cloneable, Serializable {
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -295,7 +290,7 @@ public abstract class Series implements Cloneable, Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result;
         result = this.key.hashCode();
         result = 29 * result + (this.description != null

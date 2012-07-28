@@ -68,7 +68,6 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.io.Serializable;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.HashUtilities;
@@ -95,7 +94,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset
     private static final long serialVersionUID = -7590013825931496766L;
 
     /** The series that are included in the collection. */
-    private List data;
+    private List<XYSeries> data;
 
     /** The interval delegate (used to calculate the start and end x-values). */
     private IntervalXYDelegate intervalDelegate;
@@ -113,7 +112,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset
      * @param series  the series (<code>null</code> ignored).
      */
     public XYSeriesCollection(XYSeries series) {
-        this.data = new java.util.ArrayList();
+        this.data = new java.util.ArrayList<XYSeries>();
         this.intervalDelegate = new IntervalXYDelegate(this, false);
         addChangeListener(this.intervalDelegate);
         if (series != null) {
@@ -187,9 +186,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset
      * @param series  the series (<code>null</code> not permitted).
      */
     public void removeSeries(XYSeries series) {
-        if (series == null) {
-            throw new IllegalArgumentException("Null 'series' argument.");
-        }
+        ParamChecks.nullNotPermitted(series, "series");
         if (this.data.contains(series)) {
             series.removeChangeListener(this);
             series.removeVetoableChangeListener(this);
@@ -205,13 +202,10 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset
     public void removeAllSeries() {
         // Unregister the collection as a change listener to each series in
         // the collection.
-        for (int i = 0; i < this.data.size(); i++) {
-          XYSeries series = (XYSeries) this.data.get(i);
+        for (XYSeries series : this.data) {
           series.removeChangeListener(this);
           series.removeVetoableChangeListener(this);
         }
-
-        // Remove all the series from the collection and notify listeners.
         this.data.clear();
         fireDatasetChanged();
     }
@@ -231,7 +225,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The list (which is unmodifiable).
      */
-    public List getSeries() {
+    public List<XYSeries> getSeries() {
         return Collections.unmodifiableList(this.data);
     }
 
@@ -246,9 +240,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset
      * @since 1.0.6
      */
     public int indexOf(XYSeries series) {
-        if (series == null) {
-            throw new IllegalArgumentException("Null 'series' argument.");
-        }
+        ParamChecks.nullNotPermitted(series, "series");
         return this.data.indexOf(series);
     }
 
@@ -266,7 +258,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset
         if ((series < 0) || (series >= getSeriesCount())) {
             throw new IllegalArgumentException("Series index out of bounds");
         }
-        return (XYSeries) this.data.get(series);
+        return this.data.get(series);
     }
 
     /**
@@ -282,12 +274,8 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset
      * @since 1.0.9
      */
     public XYSeries getSeries(Comparable key) {
-        if (key == null) {
-            throw new IllegalArgumentException("Null 'key' argument.");
-        }
-        Iterator iterator = this.data.iterator();
-        while (iterator.hasNext()) {
-            XYSeries series = (XYSeries) iterator.next();
+        ParamChecks.nullNotPermitted(key, "key");
+        for (XYSeries series: this.data) {
             if (key.equals(series.getKey())) {
                 return series;
             }
@@ -360,7 +348,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset
      */
     @Override
     public Number getX(int series, int item) {
-        XYSeries s = (XYSeries) this.data.get(series);
+        XYSeries s = this.data.get(series);
         return s.getX(item);
     }
 
@@ -400,7 +388,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset
      */
     @Override
     public Number getY(int series, int index) {
-        XYSeries s = (XYSeries) this.data.get(series);
+        XYSeries s = this.data.get(series);
         return s.getY(index);
     }
 
@@ -752,14 +740,14 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset
         // to be defensive, let's check that the source series does in fact
         // belong to this collection
         Series s = (Series) e.getSource();
-        if (getSeries(s.getKey()) == null) {
+        if (getSeriesIndex(s.getKey()) == -1) {
             throw new IllegalStateException("Receiving events from a series " +
                     "that does not belong to this collection.");
         }
         // check if the new series name already exists for another series
         Comparable key = (Comparable) e.getNewValue();
-        if (this.getSeries(key) != null) {
-            throw new PropertyVetoException("Duplicate key2", e);
+        if (getSeriesIndex(key) >= 0) {
+            throw new PropertyVetoException("Duplicate key", e);
         }
     }
 
