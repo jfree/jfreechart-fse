@@ -59,7 +59,7 @@ import junit.framework.TestSuite;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.MinMaxCategoryRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -100,10 +100,10 @@ public class MinMaxCategoryRendererTest extends TestCase {
         r2.setDrawLines(true);
         assertTrue(r1.equals(r2));
 
-        r1.setGroupPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+        r1.setGroupPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.yellow));
         assertFalse(r1.equals(r2));
-        r2.setGroupPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+        r2.setGroupPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.yellow));
         assertTrue(r1.equals(r2));
 

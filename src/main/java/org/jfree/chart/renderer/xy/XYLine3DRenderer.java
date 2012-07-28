@@ -52,7 +52,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import org.jfree.chart.Effect3D;
-import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.util.SerialUtilities;
 

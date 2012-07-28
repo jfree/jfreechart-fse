@@ -59,8 +59,8 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.annotations.XYDrawableAnnotation;
-import org.jfree.chart.common.ui.Drawable;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.ui.Drawable;
+import org.jfree.chart.util.PublicCloneable;
 
 /**
  * Tests for the {@link XYDrawableAnnotation} class.

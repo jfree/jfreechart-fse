@@ -56,10 +56,10 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import org.jfree.chart.common.ui.HorizontalAlignment;
-import org.jfree.chart.common.ui.RectangleEdge;
-import org.jfree.chart.common.ui.RectangleInsets;
-import org.jfree.chart.common.ui.VerticalAlignment;
+import org.jfree.chart.ui.HorizontalAlignment;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.VerticalAlignment;
 
 /**
  * A chart title that displays the date.

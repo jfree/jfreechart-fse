@@ -57,8 +57,8 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.common.ui.Align;
-import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.ui.Align;
+import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.plot.DefaultDrawingSupplier;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.Plot;
@@ -109,11 +109,11 @@ public class PlotTest extends TestCase {
         assertTrue(plot1.equals(plot2));
 
         // noDataMessagePaint
-        plot1.setNoDataMessagePaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.blue));
+        plot1.setNoDataMessagePaint(new GradientPaint(1.0f, 2.0f, Color.RED,
+                3.0f, 4.0f, Color.BLUE));
         assertFalse(plot1.equals(plot2));
-        plot2.setNoDataMessagePaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.blue));
+        plot2.setNoDataMessagePaint(new GradientPaint(1.0f, 2.0f, Color.RED,
+                3.0f, 4.0f, Color.BLUE));
         assertTrue(plot1.equals(plot2));
 
         // insets
@@ -183,13 +183,13 @@ public class PlotTest extends TestCase {
 
         // drawingSupplier
         plot1.setDrawingSupplier(new DefaultDrawingSupplier(
-                new Paint[] {Color.blue}, new Paint[] {Color.red},
+                new Paint[] {Color.BLUE}, new Paint[] {Color.RED},
                 new Stroke[] {new BasicStroke(1.1f)},
                 new Stroke[] {new BasicStroke(9.9f)},
                 new Shape[] {new Rectangle(1, 2, 3, 4)}));
         assertFalse(plot1.equals(plot2));
         plot2.setDrawingSupplier(new DefaultDrawingSupplier(
-                new Paint[] {Color.blue}, new Paint[] {Color.red},
+                new Paint[] {Color.BLUE}, new Paint[] {Color.RED},
                 new Stroke[] {new BasicStroke(1.1f)},
                 new Stroke[] {new BasicStroke(9.9f)},
                 new Shape[] {new Rectangle(1, 2, 3, 4)}));

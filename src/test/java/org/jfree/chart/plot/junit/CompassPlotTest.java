@@ -108,18 +108,18 @@ public class CompassPlotTest extends TestCase {
         assertTrue(plot1.equals(plot2));
 
         // rosePaint
-        plot1.setRosePaint(new GradientPaint(1.0f, 2.0f, Color.blue,
+        plot1.setRosePaint(new GradientPaint(1.0f, 2.0f, Color.BLUE,
                 3.0f, 4.0f, Color.yellow));
         assertFalse(plot1.equals(plot2));
-        plot2.setRosePaint(new GradientPaint(1.0f, 2.0f, Color.blue,
+        plot2.setRosePaint(new GradientPaint(1.0f, 2.0f, Color.BLUE,
                 3.0f, 4.0f, Color.yellow));
         assertTrue(plot1.equals(plot2));
 
         // roseCenterPaint
-        plot1.setRoseCenterPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+        plot1.setRoseCenterPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.yellow));
         assertFalse(plot1.equals(plot2));
-        plot2.setRoseCenterPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+        plot2.setRoseCenterPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.yellow));
         assertTrue(plot1.equals(plot2));
 
@@ -138,11 +138,11 @@ public class CompassPlotTest extends TestCase {
     public void testSerialization() {
 
         CompassPlot p1 = new CompassPlot(null);
-        p1.setRosePaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
-                Color.blue));
-        p1.setRoseCenterPaint(new GradientPaint(4.0f, 3.0f, Color.red, 2.0f,
+        p1.setRosePaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
+                Color.BLUE));
+        p1.setRoseCenterPaint(new GradientPaint(4.0f, 3.0f, Color.RED, 2.0f,
                 1.0f, Color.green));
-        p1.setRoseHighlightPaint(new GradientPaint(4.0f, 3.0f, Color.red, 2.0f,
+        p1.setRoseHighlightPaint(new GradientPaint(4.0f, 3.0f, Color.RED, 2.0f,
                 1.0f, Color.green));
         CompassPlot p2 = null;
 

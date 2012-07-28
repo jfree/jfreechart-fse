@@ -67,11 +67,11 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import org.jfree.chart.axis.Axis;
-import org.jfree.chart.common.ui.LCBLayout;
-import org.jfree.chart.common.ui.PaintSample;
-import org.jfree.chart.common.ui.RectangleInsets;
-import org.jfree.chart.common.ui.StrokeChooserPanel;
-import org.jfree.chart.common.ui.StrokeSample;
+import org.jfree.chart.ui.LCBLayout;
+import org.jfree.chart.ui.PaintSample;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.StrokeChooserPanel;
+import org.jfree.chart.ui.StrokeSample;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;

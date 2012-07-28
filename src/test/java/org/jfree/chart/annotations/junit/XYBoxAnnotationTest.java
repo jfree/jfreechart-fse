@@ -59,7 +59,7 @@ import junit.framework.TestSuite;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.annotations.XYBoxAnnotation;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.DefaultTableXYDataset;
@@ -94,43 +94,43 @@ public class XYBoxAnnotationTest extends TestCase {
     public void testEquals() {
 
         XYBoxAnnotation a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
-                new BasicStroke(1.2f), Color.red, Color.blue);
+                new BasicStroke(1.2f), Color.RED, Color.BLUE);
         XYBoxAnnotation a2 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
-                new BasicStroke(1.2f), Color.red, Color.blue);
+                new BasicStroke(1.2f), Color.RED, Color.BLUE);
         assertTrue(a1.equals(a2));
         assertTrue(a2.equals(a1));
 
         // x0
         a1 = new XYBoxAnnotation(2.0, 2.0, 3.0, 4.0, new BasicStroke(1.2f),
-                Color.red, Color.blue);
+                Color.RED, Color.BLUE);
         assertFalse(a1.equals(a2));
         a2 = new XYBoxAnnotation(2.0, 2.0, 3.0, 4.0, new BasicStroke(1.2f),
-                Color.red, Color.blue);
+                Color.RED, Color.BLUE);
         assertTrue(a1.equals(a2));
 
         // stroke
         a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0, new BasicStroke(2.3f),
-                Color.red, Color.blue);
+                Color.RED, Color.BLUE);
         assertFalse(a1.equals(a2));
         a2 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0, new BasicStroke(2.3f),
-                Color.red, Color.blue);
+                Color.RED, Color.BLUE);
         assertTrue(a1.equals(a2));
 
-        GradientPaint gp1a = new GradientPaint(1.0f, 2.0f, Color.blue,
-                3.0f, 4.0f, Color.red);
-        GradientPaint gp1b = new GradientPaint(1.0f, 2.0f, Color.blue,
-                3.0f, 4.0f, Color.red);
+        GradientPaint gp1a = new GradientPaint(1.0f, 2.0f, Color.BLUE,
+                3.0f, 4.0f, Color.RED);
+        GradientPaint gp1b = new GradientPaint(1.0f, 2.0f, Color.BLUE,
+                3.0f, 4.0f, Color.RED);
         GradientPaint gp2a = new GradientPaint(5.0f, 6.0f, Color.pink,
-                7.0f, 8.0f, Color.white);
+                7.0f, 8.0f, Color.WHITE);
         GradientPaint gp2b = new GradientPaint(5.0f, 6.0f, Color.pink,
-                7.0f, 8.0f, Color.white);
+                7.0f, 8.0f, Color.WHITE);
 
         // outlinePaint
         a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0, new BasicStroke(2.3f),
-                gp1a, Color.blue);
+                gp1a, Color.BLUE);
         assertFalse(a1.equals(a2));
         a2 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0, new BasicStroke(2.3f),
-                gp1b, Color.blue);
+                gp1b, Color.BLUE);
         assertTrue(a1.equals(a2));
 
         // fillPaint
@@ -147,9 +147,9 @@ public class XYBoxAnnotationTest extends TestCase {
      */
     public void testHashCode() {
         XYBoxAnnotation a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
-                new BasicStroke(1.2f), Color.red, Color.blue);
+                new BasicStroke(1.2f), Color.RED, Color.BLUE);
         XYBoxAnnotation a2 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
-                new BasicStroke(1.2f), Color.red, Color.blue);
+                new BasicStroke(1.2f), Color.RED, Color.BLUE);
         assertTrue(a1.equals(a2));
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
@@ -161,7 +161,7 @@ public class XYBoxAnnotationTest extends TestCase {
      */
     public void testCloning() {
         XYBoxAnnotation a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
-                new BasicStroke(1.2f), Color.red, Color.blue);
+                new BasicStroke(1.2f), Color.RED, Color.BLUE);
         XYBoxAnnotation a2 = null;
         try {
             a2 = (XYBoxAnnotation) a1.clone();
@@ -179,7 +179,7 @@ public class XYBoxAnnotationTest extends TestCase {
      */
     public void testPublicCloneable() {
         XYBoxAnnotation a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
-                new BasicStroke(1.2f), Color.red, Color.blue);
+                new BasicStroke(1.2f), Color.RED, Color.BLUE);
         assertTrue(a1 instanceof PublicCloneable);
     }
 
@@ -189,7 +189,7 @@ public class XYBoxAnnotationTest extends TestCase {
     public void testSerialization() {
 
         XYBoxAnnotation a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
-                new BasicStroke(1.2f), Color.red, Color.blue);
+                new BasicStroke(1.2f), Color.RED, Color.BLUE);
         XYBoxAnnotation a2 = null;
 
         try {
@@ -235,7 +235,7 @@ public class XYBoxAnnotationTest extends TestCase {
                     new NumberAxis("X"), new NumberAxis("Y"),
                     new XYLineAndShapeRenderer());
             plot.addAnnotation(new XYBoxAnnotation(10.0, 12.0, 3.0, 4.0,
-                    new BasicStroke(1.2f), Color.red, Color.blue));
+                    new BasicStroke(1.2f), Color.RED, Color.BLUE));
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);

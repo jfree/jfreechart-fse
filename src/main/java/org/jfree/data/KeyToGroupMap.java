@@ -55,8 +55,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.jfree.chart.common.util.ObjectUtilities;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PublicCloneable;
 
 /**
  * A class that maps keys (instances of <code>Comparable</code>) to groups.

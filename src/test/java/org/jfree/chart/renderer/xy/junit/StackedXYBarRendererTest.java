@@ -59,7 +59,7 @@ import junit.framework.TestSuite;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StackedXYBarRenderer;
@@ -151,7 +151,7 @@ public class StackedXYBarRendererTest extends TestCase {
      */
     public void testSerialization() {
         StackedXYBarRenderer r1 = new StackedXYBarRenderer();
-        r1.setSeriesPaint(0, new GradientPaint(1.0f, 2.0f, Color.red, 3.0f,
+        r1.setSeriesPaint(0, new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
                 4.0f, Color.yellow));
         StackedXYBarRenderer r2 = null;
         try {

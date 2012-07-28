@@ -49,7 +49,7 @@ package org.jfree.data.xy;
 
 import java.io.Serializable;
 
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * Represents one (x, y) data item for an {@link XYSeries}.  Note that

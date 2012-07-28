@@ -76,7 +76,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jfree.chart.Effect3D;
-import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;

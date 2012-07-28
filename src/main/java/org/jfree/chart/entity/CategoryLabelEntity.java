@@ -46,7 +46,7 @@ import java.awt.Shape;
 
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * An entity to represent the labels on a {@link CategoryAxis}.

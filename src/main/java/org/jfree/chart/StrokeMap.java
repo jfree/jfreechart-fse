@@ -51,7 +51,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.SerialUtilities;
 
 /**

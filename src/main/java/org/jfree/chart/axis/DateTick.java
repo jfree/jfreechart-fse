@@ -46,8 +46,8 @@ package org.jfree.chart.axis;
 
 import java.util.Date;
 
-import org.jfree.chart.common.ui.TextAnchor;
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * A tick used by the {@link DateAxis} class.

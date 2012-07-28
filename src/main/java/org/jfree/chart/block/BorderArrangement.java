@@ -51,9 +51,9 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
-import org.jfree.chart.common.ui.RectangleEdge;
-import org.jfree.chart.common.ui.Size2D;
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.Size2D;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.Range;
 
 /**

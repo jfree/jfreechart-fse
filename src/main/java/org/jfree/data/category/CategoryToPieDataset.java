@@ -52,7 +52,7 @@ package org.jfree.data.category;
 import java.util.Collections;
 import java.util.List;
 
-import org.jfree.chart.common.util.TableOrder;
+import org.jfree.chart.util.TableOrder;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetChangeListener;

@@ -105,11 +105,11 @@ public class RingPlotTest extends TestCase {
         assertTrue(plot1.equals(plot2));
 
         // separatorPaint
-        plot1.setSeparatorPaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                2.0f, 1.0f, Color.blue));
+        plot1.setSeparatorPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
+                2.0f, 1.0f, Color.BLUE));
         assertFalse(plot1.equals(plot2));
-        plot2.setSeparatorPaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                2.0f, 1.0f, Color.blue));
+        plot2.setSeparatorPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
+                2.0f, 1.0f, Color.BLUE));
         assertTrue(plot1.equals(plot2));
 
         // innerSeparatorExtension
@@ -138,7 +138,7 @@ public class RingPlotTest extends TestCase {
     public void testCloning() {
         RingPlot p1 = new RingPlot(null);
         GradientPaint gp = new GradientPaint(1.0f, 2.0f, Color.yellow,
-                3.0f, 4.0f, Color.red);
+                3.0f, 4.0f, Color.RED);
         p1.setSeparatorPaint(gp);
         RingPlot p2 = null;
         try {
@@ -159,7 +159,7 @@ public class RingPlotTest extends TestCase {
 
         RingPlot p1 = new RingPlot(null);
         GradientPaint gp = new GradientPaint(1.0f, 2.0f, Color.yellow,
-                3.0f, 4.0f, Color.red);
+                3.0f, 4.0f, Color.RED);
         p1.setSeparatorPaint(gp);
         RingPlot p2 = null;
         try {

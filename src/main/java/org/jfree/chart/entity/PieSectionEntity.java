@@ -59,7 +59,7 @@ import java.awt.Shape;
 import java.io.Serializable;
 
 import org.jfree.chart.HashUtilities;
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.general.PieDataset;
 
 /**

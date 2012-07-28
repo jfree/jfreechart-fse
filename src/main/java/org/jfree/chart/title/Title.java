@@ -72,11 +72,11 @@ import javax.swing.event.EventListenerList;
 
 import org.jfree.chart.block.AbstractBlock;
 import org.jfree.chart.block.Block;
-import org.jfree.chart.common.ui.HorizontalAlignment;
-import org.jfree.chart.common.ui.RectangleEdge;
-import org.jfree.chart.common.ui.RectangleInsets;
-import org.jfree.chart.common.ui.VerticalAlignment;
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.ui.HorizontalAlignment;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.VerticalAlignment;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.event.TitleChangeEvent;
 import org.jfree.chart.event.TitleChangeListener;
 

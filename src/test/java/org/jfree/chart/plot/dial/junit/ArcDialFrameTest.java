@@ -89,18 +89,18 @@ public class ArcDialFrameTest extends TestCase {
         assertTrue(f1.equals(f2));
 
         // background paint
-        f1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+        f1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.yellow));
         assertFalse(f1.equals(f2));
-        f2.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+        f2.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.yellow));
         assertTrue(f1.equals(f2));
 
         // foreground paint
-        f1.setForegroundPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+        f1.setForegroundPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.yellow));
         assertFalse(f1.equals(f2));
-        f2.setForegroundPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+        f2.setForegroundPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.yellow));
         assertTrue(f1.equals(f2));
 

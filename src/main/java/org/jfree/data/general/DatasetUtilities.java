@@ -131,7 +131,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jfree.chart.common.util.ArrayUtilities;
+import org.jfree.chart.util.ArrayUtilities;
 import org.jfree.data.DomainInfo;
 import org.jfree.data.KeyToGroupMap;
 import org.jfree.data.KeyedValues;

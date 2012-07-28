@@ -47,7 +47,7 @@ import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
 

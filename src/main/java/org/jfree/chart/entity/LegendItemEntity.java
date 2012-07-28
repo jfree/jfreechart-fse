@@ -48,7 +48,7 @@ package org.jfree.chart.entity;
 import java.awt.Shape;
 import java.io.Serializable;
 
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.general.Dataset;
 
 /**

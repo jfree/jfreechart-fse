@@ -57,9 +57,9 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.common.ui.RectangleAnchor;
-import org.jfree.chart.common.ui.RectangleInsets;
-import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.plot.dial.DialValueIndicator;
 
 /**
@@ -130,18 +130,18 @@ public class DialValueIndicatorTest extends TestCase {
         assertTrue(i1.equals(i2));
 
         // paint
-        i1.setPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+        i1.setPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.green));
         assertFalse(i1.equals(i2));
-        i2.setPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+        i2.setPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.green));
         assertTrue(i1.equals(i2));
 
         // backgroundPaint
-        i1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f,
+        i1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
                 4.0f, Color.green));
         assertFalse(i1.equals(i2));
-        i2.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f,
+        i2.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
                 4.0f, Color.green));
         assertTrue(i1.equals(i2));
 
@@ -152,10 +152,10 @@ public class DialValueIndicatorTest extends TestCase {
         assertTrue(i1.equals(i2));
 
         // outlinePaint
-        i1.setOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+        i1.setOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.green));
         assertFalse(i1.equals(i2));
-        i2.setOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+        i2.setOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.green));
         assertTrue(i1.equals(i2));
 

@@ -54,8 +54,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.common.ui.GradientPaintTransformType;
-import org.jfree.chart.common.ui.StandardGradientPaintTransformer;
+import org.jfree.chart.ui.GradientPaintTransformType;
+import org.jfree.chart.ui.StandardGradientPaintTransformer;
 import org.jfree.chart.plot.dial.DialBackground;
 
 /**
@@ -90,10 +90,10 @@ public class DialBackgroundTest extends TestCase {
         assertTrue(b1.equals(b2));
 
         // paint
-        b1.setPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+        b1.setPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.yellow));
         assertFalse(b1.equals(b2));
-        b2.setPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+        b2.setPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.yellow));
         assertTrue(b1.equals(b2));
 
@@ -117,8 +117,8 @@ public class DialBackgroundTest extends TestCase {
      * Two objects that are equal are required to return the same hashCode.
      */
     public void testHashCode() {
-        DialBackground b1 = new DialBackground(Color.red);
-        DialBackground b2 = new DialBackground(Color.red);
+        DialBackground b1 = new DialBackground(Color.RED);
+        DialBackground b2 = new DialBackground(Color.RED);
         assertTrue(b1.equals(b2));
         int h1 = b1.hashCode();
         int h2 = b2.hashCode();
@@ -144,7 +144,7 @@ public class DialBackgroundTest extends TestCase {
 
         // test a customised instance
         b1 = new DialBackground();
-        b1.setPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+        b1.setPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.green));
         b1.setGradientPaintTransformer(new StandardGradientPaintTransformer(
                 GradientPaintTransformType.CENTER_VERTICAL));
@@ -193,7 +193,7 @@ public class DialBackgroundTest extends TestCase {
 
         // test a customised instance
         b1 = new DialBackground();
-        b1.setPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f, 4.0f,
+        b1.setPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.green));
         b1.setGradientPaintTransformer(new StandardGradientPaintTransformer(
                 GradientPaintTransformType.CENTER_VERTICAL));

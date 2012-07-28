@@ -48,8 +48,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import org.jfree.chart.common.util.ObjectUtilities;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.time.SimpleTimePeriod;
 import org.jfree.data.time.TimePeriod;
 

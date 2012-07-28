@@ -45,7 +45,7 @@ package org.jfree.data;
 
 import java.util.Comparator;
 
-import org.jfree.chart.common.util.SortOrder;
+import org.jfree.chart.util.SortOrder;
 
 /**
  * A utility class that can compare and order two {@link KeyedValue} instances

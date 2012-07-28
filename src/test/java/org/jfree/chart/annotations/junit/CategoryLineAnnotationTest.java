@@ -55,7 +55,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.annotations.CategoryLineAnnotation;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 
 /**
  * Tests for the {@link CategoryLineAnnotationTest} class.
@@ -88,9 +88,9 @@ public class CategoryLineAnnotationTest extends TestCase {
         BasicStroke s1 = new BasicStroke(1.0f);
         BasicStroke s2 = new BasicStroke(2.0f);
         CategoryLineAnnotation a1 = new CategoryLineAnnotation("Category 1",
-                1.0, "Category 2", 2.0, Color.red, s1);
+                1.0, "Category 2", 2.0, Color.RED, s1);
         CategoryLineAnnotation a2 = new CategoryLineAnnotation("Category 1",
-                1.0, "Category 2", 2.0, Color.red, s1);
+                1.0, "Category 2", 2.0, Color.RED, s1);
         assertTrue(a1.equals(a2));
         assertTrue(a2.equals(a1));
 
@@ -136,9 +136,9 @@ public class CategoryLineAnnotationTest extends TestCase {
      */
     public void testHashcode() {
         CategoryLineAnnotation a1 = new CategoryLineAnnotation("Category 1", 
-                1.0, "Category 2", 2.0, Color.red, new BasicStroke(1.0f));
+                1.0, "Category 2", 2.0, Color.RED, new BasicStroke(1.0f));
         CategoryLineAnnotation a2 = new CategoryLineAnnotation("Category 1", 
-                1.0, "Category 2", 2.0, Color.red, new BasicStroke(1.0f));
+                1.0, "Category 2", 2.0, Color.RED, new BasicStroke(1.0f));
         assertTrue(a1.equals(a2));
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
@@ -150,7 +150,7 @@ public class CategoryLineAnnotationTest extends TestCase {
      */
     public void testCloning() {
         CategoryLineAnnotation a1 = new CategoryLineAnnotation("Category 1", 
-                1.0, "Category 2", 2.0, Color.red, new BasicStroke(1.0f));
+                1.0, "Category 2", 2.0, Color.RED, new BasicStroke(1.0f));
         CategoryLineAnnotation a2 = null;
         try {
             a2 = (CategoryLineAnnotation) a1.clone();
@@ -168,7 +168,7 @@ public class CategoryLineAnnotationTest extends TestCase {
      */
     public void testPublicCloneable() {
         CategoryLineAnnotation a1 = new CategoryLineAnnotation(
-                "Category 1", 1.0, "Category 2", 2.0, Color.red,
+                "Category 1", 1.0, "Category 2", 2.0, Color.RED,
                 new BasicStroke(1.0f));
         assertTrue(a1 instanceof PublicCloneable);
     }
@@ -178,7 +178,7 @@ public class CategoryLineAnnotationTest extends TestCase {
      */
     public void testSerialization() {
         CategoryLineAnnotation a1 = new CategoryLineAnnotation("Category 1", 
-                1.0, "Category 2", 2.0, Color.red, new BasicStroke(1.0f));
+                1.0, "Category 2", 2.0, Color.RED, new BasicStroke(1.0f));
         CategoryLineAnnotation a2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();

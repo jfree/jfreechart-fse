@@ -54,7 +54,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jfree.chart.axis.CategoryTick;
-import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.text.TextBlock;
 import org.jfree.chart.text.TextBlockAnchor;
 import org.jfree.chart.text.TextLine;

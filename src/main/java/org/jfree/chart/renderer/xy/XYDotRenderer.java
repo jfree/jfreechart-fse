@@ -64,9 +64,9 @@ import java.io.ObjectOutputStream;
 
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.common.ui.RectangleEdge;
-import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.common.util.ShapeUtilities;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CrosshairState;
 import org.jfree.chart.plot.PlotOrientation;

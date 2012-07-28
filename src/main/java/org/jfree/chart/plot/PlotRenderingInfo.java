@@ -56,7 +56,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jfree.chart.ChartRenderingInfo;
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.SerialUtilities;
 
 /**

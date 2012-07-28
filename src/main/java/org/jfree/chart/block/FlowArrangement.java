@@ -49,9 +49,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jfree.chart.common.ui.HorizontalAlignment;
-import org.jfree.chart.common.ui.Size2D;
-import org.jfree.chart.common.ui.VerticalAlignment;
+import org.jfree.chart.ui.HorizontalAlignment;
+import org.jfree.chart.ui.Size2D;
+import org.jfree.chart.ui.VerticalAlignment;
 
 /**
  * Arranges blocks in a flow layout.  This class is immutable.

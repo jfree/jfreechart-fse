@@ -84,10 +84,10 @@ import java.io.Serializable;
 import java.util.Stack;
 
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.common.util.ObjectUtilities;
-import org.jfree.chart.common.util.PaintUtilities;
-import org.jfree.chart.common.util.PublicCloneable;
-import org.jfree.chart.common.util.ShapeUtilities;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.XYItemEntity;
 import org.jfree.chart.event.RendererChangeEvent;

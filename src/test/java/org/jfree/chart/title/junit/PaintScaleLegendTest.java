@@ -134,11 +134,11 @@ public class PaintScaleLegendTest extends TestCase {
         assertTrue(l1.equals(l2));
 
         // stripOutlinePaint
-        l1.setStripOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.blue));
+        l1.setStripOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.RED,
+                3.0f, 4.0f, Color.BLUE));
         assertFalse(l1.equals(l2));
-        l2.setStripOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.blue));
+        l2.setStripOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.RED,
+                3.0f, 4.0f, Color.BLUE));
         assertTrue(l1.equals(l2));
 
         // stripOutlineStroke
@@ -148,11 +148,11 @@ public class PaintScaleLegendTest extends TestCase {
         assertTrue(l1.equals(l2));
 
         // backgroundPaint
-        l1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.blue));
+        l1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
+                3.0f, 4.0f, Color.BLUE));
         assertFalse(l1.equals(l2));
-        l2.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.blue));
+        l2.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
+                3.0f, 4.0f, Color.BLUE));
         assertTrue(l1.equals(l2));
 
         l1.setSubdivisionCount(99);

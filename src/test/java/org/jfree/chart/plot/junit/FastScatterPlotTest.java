@@ -95,10 +95,10 @@ public class FastScatterPlotTest extends TestCase {
         assertTrue(plot1.equals(plot2));
         assertTrue(plot2.equals(plot1));
 
-        plot1.setPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+        plot1.setPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.yellow));
         assertFalse(plot1.equals(plot2));
-        plot2.setPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+        plot2.setPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.yellow));
         assertTrue(plot1.equals(plot2));
 
@@ -107,10 +107,10 @@ public class FastScatterPlotTest extends TestCase {
         plot2.setDomainGridlinesVisible(false);
         assertTrue(plot1.equals(plot2));
 
-        plot1.setDomainGridlinePaint(new GradientPaint(1.0f, 2.0f, Color.blue,
+        plot1.setDomainGridlinePaint(new GradientPaint(1.0f, 2.0f, Color.BLUE,
                 3.0f, 4.0f, Color.yellow));
         assertFalse(plot1.equals(plot2));
-        plot2.setDomainGridlinePaint(new GradientPaint(1.0f, 2.0f, Color.blue,
+        plot2.setDomainGridlinePaint(new GradientPaint(1.0f, 2.0f, Color.BLUE,
                 3.0f, 4.0f, Color.yellow));
         assertTrue(plot1.equals(plot2));
 

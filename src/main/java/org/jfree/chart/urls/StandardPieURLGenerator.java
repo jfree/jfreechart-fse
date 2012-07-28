@@ -53,7 +53,7 @@ package org.jfree.chart.urls;
 
 import java.io.Serializable;
 
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.general.PieDataset;
 
 /**

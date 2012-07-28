@@ -53,10 +53,10 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import org.jfree.chart.HashUtilities;
-import org.jfree.chart.common.ui.GradientPaintTransformer;
-import org.jfree.chart.common.ui.StandardGradientPaintTransformer;
-import org.jfree.chart.common.util.PaintUtilities;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.ui.GradientPaintTransformer;
+import org.jfree.chart.ui.StandardGradientPaintTransformer;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtilities;
 
 /**

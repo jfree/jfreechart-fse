@@ -44,7 +44,7 @@ package org.jfree.data.general;
 
 import java.io.Serializable;
 
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.DefaultKeyedValue;
 import org.jfree.data.KeyedValue;
 

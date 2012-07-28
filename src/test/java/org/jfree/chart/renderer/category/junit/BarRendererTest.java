@@ -65,10 +65,10 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.common.ui.GradientPaintTransformType;
-import org.jfree.chart.common.ui.StandardGradientPaintTransformer;
-import org.jfree.chart.common.ui.TextAnchor;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.ui.GradientPaintTransformType;
+import org.jfree.chart.ui.StandardGradientPaintTransformer;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.labels.ItemLabelAnchor;
 import org.jfree.chart.labels.ItemLabelPosition;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
@@ -177,9 +177,9 @@ public class BarRendererTest extends TestCase {
         r2.setShadowVisible(false);
         assertTrue(r1.equals(r2));
 
-        r1.setShadowPaint(Color.red);
+        r1.setShadowPaint(Color.RED);
         assertFalse(r1.equals(r2));
-        r2.setShadowPaint(Color.red);
+        r2.setShadowPaint(Color.RED);
         assertTrue(r1.equals(r2));
 
         // shadowXOffset

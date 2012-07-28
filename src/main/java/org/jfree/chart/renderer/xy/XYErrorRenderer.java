@@ -54,9 +54,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.common.ui.RectangleEdge;
-import org.jfree.chart.common.util.ObjectUtilities;
-import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CrosshairState;
 import org.jfree.chart.plot.PlotOrientation;

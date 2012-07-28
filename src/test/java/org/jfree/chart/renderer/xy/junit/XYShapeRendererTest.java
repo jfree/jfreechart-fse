@@ -93,9 +93,9 @@ public class XYShapeRendererTest extends TestCase {
         assertTrue(r1.equals(r2));
         assertTrue(r2.equals(r1));
 
-        r1.setPaintScale(new LookupPaintScale(1.0, 2.0, Color.white));
+        r1.setPaintScale(new LookupPaintScale(1.0, 2.0, Color.WHITE));
         assertFalse(r1.equals(r2));
-        r2.setPaintScale(new LookupPaintScale(1.0, 2.0, Color.white));
+        r2.setPaintScale(new LookupPaintScale(1.0, 2.0, Color.WHITE));
         assertTrue(r1.equals(r2));
 
         r1.setDrawOutlines(true);
@@ -118,9 +118,9 @@ public class XYShapeRendererTest extends TestCase {
         r2.setGuideLinesVisible(true);
         assertTrue(r1.equals(r2));
 
-        r1.setGuideLinePaint(Color.red);
+        r1.setGuideLinePaint(Color.RED);
         assertFalse(r1.equals(r2));
-        r2.setGuideLinePaint(Color.red);
+        r2.setGuideLinePaint(Color.RED);
         assertTrue(r1.equals(r2));
 
     }

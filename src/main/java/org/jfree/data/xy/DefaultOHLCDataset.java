@@ -49,7 +49,7 @@ package org.jfree.data.xy;
 import java.util.Arrays;
 import java.util.Date;
 
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 
 /**
  * A simple implementation of the {@link OHLCDataset} interface.  This

@@ -58,7 +58,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.renderer.xy.HighLowRenderer;
 import org.jfree.data.Range;
 import org.jfree.data.xy.DefaultOHLCDataset;
@@ -109,15 +109,15 @@ public class HighLowRendererTest extends TestCase {
         assertTrue(r1.equals(r2));
 
         // openTickPaint
-        r1.setOpenTickPaint(Color.red);
+        r1.setOpenTickPaint(Color.RED);
         assertFalse(r1.equals(r2));
-        r2.setOpenTickPaint(Color.red);
+        r2.setOpenTickPaint(Color.RED);
         assertTrue(r1.equals(r2));
 
         // closeTickPaint
-        r1.setCloseTickPaint(Color.blue);
+        r1.setCloseTickPaint(Color.BLUE);
         assertFalse(r1.equals(r2));
-        r2.setCloseTickPaint(Color.blue);
+        r2.setCloseTickPaint(Color.BLUE);
         assertTrue(r1.equals(r2));
 
         // tickLength

@@ -59,10 +59,10 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jfree.chart.common.ui.HorizontalAlignment;
-import org.jfree.chart.common.ui.Size2D;
-import org.jfree.chart.common.ui.TextAnchor;
-import org.jfree.chart.common.util.ShapeUtilities;
+import org.jfree.chart.ui.HorizontalAlignment;
+import org.jfree.chart.ui.Size2D;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ShapeUtilities;
 
 /**
  * A list of {@link TextLine} objects that form a block of text.

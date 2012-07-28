@@ -58,7 +58,7 @@ import junit.framework.TestSuite;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.StatisticalLineAndShapeRenderer;
 import org.jfree.data.Range;
@@ -98,9 +98,9 @@ public class StatisticalLineAndShapeRendererTest extends TestCase {
         assertTrue(r1.equals(r2));
         assertTrue(r2.equals(r1));
 
-        r1.setErrorIndicatorPaint(Color.red);
+        r1.setErrorIndicatorPaint(Color.RED);
         assertFalse(r1.equals(r2));
-        r2.setErrorIndicatorPaint(Color.red);
+        r2.setErrorIndicatorPaint(Color.RED);
         assertTrue(r2.equals(r1));
     }
 

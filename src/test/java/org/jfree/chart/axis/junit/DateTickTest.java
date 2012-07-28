@@ -56,7 +56,7 @@ import junit.framework.TestSuite;
 
 import org.jfree.chart.axis.DateTick;
 import org.jfree.chart.axis.TickType;
-import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.ui.TextAnchor;
 
 /**
  * Tests for the {@link DateTick} class.

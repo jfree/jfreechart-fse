@@ -60,7 +60,7 @@ import junit.framework.TestSuite;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.StatisticalBarRenderer;
@@ -98,9 +98,9 @@ public class StatisticalBarRendererTest extends TestCase {
         StatisticalBarRenderer r2 = new StatisticalBarRenderer();
         assertEquals(r1, r2);
 
-        r1.setErrorIndicatorPaint(Color.red);
+        r1.setErrorIndicatorPaint(Color.RED);
         assertFalse(r1.equals(r2));
-        r2.setErrorIndicatorPaint(Color.red);
+        r2.setErrorIndicatorPaint(Color.RED);
         assertTrue(r2.equals(r1));
 
         r1.setErrorIndicatorStroke(new BasicStroke(1.5f));

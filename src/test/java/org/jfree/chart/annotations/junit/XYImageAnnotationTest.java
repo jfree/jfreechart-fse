@@ -51,8 +51,8 @@ import junit.framework.TestSuite;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.annotations.XYImageAnnotation;
-import org.jfree.chart.common.ui.RectangleAnchor;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.util.PublicCloneable;
 
 /**
  * Tests for the {@link XYImageAnnotation} class.

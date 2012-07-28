@@ -45,7 +45,7 @@ package org.jfree.chart.block;
 
 import java.awt.Graphics2D;
 
-import org.jfree.chart.common.ui.Size2D;
+import org.jfree.chart.ui.Size2D;
 
 /**
  * An object that is responsible for arranging a collection of {@link Block}s

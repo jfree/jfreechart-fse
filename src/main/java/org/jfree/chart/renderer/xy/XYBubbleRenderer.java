@@ -73,8 +73,8 @@ import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.common.ui.RectangleEdge;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.plot.CrosshairState;
 import org.jfree.chart.plot.PlotOrientation;

@@ -59,7 +59,7 @@ import org.jfree.chart.block.EmptyBlock;
 import org.jfree.chart.block.GridArrangement;
 import org.jfree.chart.block.LengthConstraintType;
 import org.jfree.chart.block.RectangleConstraint;
-import org.jfree.chart.common.ui.Size2D;
+import org.jfree.chart.ui.Size2D;
 import org.jfree.data.Range;
 
 /**

@@ -51,10 +51,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.common.ui.LengthAdjustmentType;
-import org.jfree.chart.common.ui.RectangleAnchor;
-import org.jfree.chart.common.ui.RectangleInsets;
-import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.ui.LengthAdjustmentType;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.event.MarkerChangeEvent;
 import org.jfree.chart.event.MarkerChangeListener;
 import org.jfree.chart.plot.CategoryMarker;
@@ -98,8 +98,8 @@ public class MarkerTest extends TestCase implements MarkerChangeListener {
         m.addChangeListener(this);
         this.lastEvent = null;
         assertEquals(Color.gray, m.getPaint());
-        m.setPaint(Color.blue);
-        assertEquals(Color.blue, m.getPaint());
+        m.setPaint(Color.BLUE);
+        assertEquals(Color.BLUE, m.getPaint());
         assertEquals(m, this.lastEvent.getMarker());
 
         // check null argument...
@@ -243,9 +243,9 @@ public class MarkerTest extends TestCase implements MarkerChangeListener {
         ValueMarker m = new ValueMarker(1.1);
         m.addChangeListener(this);
         this.lastEvent = null;
-        assertEquals(Color.black, m.getLabelPaint());
-        m.setLabelPaint(Color.red);
-        assertEquals(Color.red, m.getLabelPaint());
+        assertEquals(Color.BLACK, m.getLabelPaint());
+        m.setLabelPaint(Color.RED);
+        assertEquals(Color.RED, m.getLabelPaint());
         assertEquals(m, this.lastEvent.getMarker());
 
         // check null argument...

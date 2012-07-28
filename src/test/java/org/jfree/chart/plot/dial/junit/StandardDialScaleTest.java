@@ -133,10 +133,10 @@ public class StandardDialScaleTest extends TestCase {
         assertTrue(s1.equals(s2));
 
         // majorTickPaint
-        s1.setMajorTickPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+        s1.setMajorTickPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.yellow));
         assertFalse(s1.equals(s2));
-        s2.setMajorTickPaint(new GradientPaint(1.0f, 2.0f, Color.red,
+        s2.setMajorTickPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.yellow));
         assertTrue(s1.equals(s2));
 
@@ -171,10 +171,10 @@ public class StandardDialScaleTest extends TestCase {
         assertTrue(s1.equals(s2));
 
         // tickLabelPaint
-        s1.setTickLabelPaint(new GradientPaint(1.0f, 2.0f, Color.white,
+        s1.setTickLabelPaint(new GradientPaint(1.0f, 2.0f, Color.WHITE,
                 3.0f, 4.0f, Color.green));
         assertFalse(s1.equals(s2));
-        s2.setTickLabelPaint(new GradientPaint(1.0f, 2.0f, Color.white,
+        s2.setTickLabelPaint(new GradientPaint(1.0f, 2.0f, Color.WHITE,
                 3.0f, 4.0f, Color.green));
         assertTrue(s1.equals(s2));
 
@@ -222,8 +222,8 @@ public class StandardDialScaleTest extends TestCase {
         // try a customised instance
         s1 = new StandardDialScale();
         s1.setExtent(123.4);
-        s1.setMajorTickPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f,
-                4.0f, Color.white));
+        s1.setMajorTickPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
+                4.0f, Color.WHITE));
         s1.setMajorTickStroke(new BasicStroke(2.0f));
         s2 = null;
         try {
@@ -270,8 +270,8 @@ public class StandardDialScaleTest extends TestCase {
         // try a customised instance
         s1 = new StandardDialScale();
         s1.setExtent(123.4);
-        s1.setMajorTickPaint(new GradientPaint(1.0f, 2.0f, Color.red, 3.0f,
-                4.0f, Color.white));
+        s1.setMajorTickPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
+                4.0f, Color.WHITE));
         s1.setMajorTickStroke(new BasicStroke(2.0f));
         s2 = null;
 

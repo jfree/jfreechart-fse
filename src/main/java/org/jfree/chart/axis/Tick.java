@@ -48,8 +48,8 @@ package org.jfree.chart.axis;
 
 import java.io.Serializable;
 
-import org.jfree.chart.common.ui.TextAnchor;
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * The base class used to represent labelled ticks along an axis.

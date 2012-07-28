@@ -45,9 +45,9 @@ package org.jfree.chart.axis;
 
 import java.io.Serializable;
 
-import org.jfree.chart.common.ui.RectangleAnchor;
-import org.jfree.chart.common.ui.RectangleEdge;
-import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.text.TextBlockAnchor;
 
 /**

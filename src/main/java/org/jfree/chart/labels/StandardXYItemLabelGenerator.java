@@ -65,7 +65,7 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.xy.XYDataset;
 
 /**

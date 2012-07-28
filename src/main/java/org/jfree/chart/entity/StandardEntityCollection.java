@@ -56,8 +56,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jfree.chart.common.util.ObjectUtilities;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PublicCloneable;
 
 /**
  * A standard implementation of the {@link EntityCollection} interface.

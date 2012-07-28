@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StackedXYAreaRenderer;
@@ -161,7 +161,7 @@ public class StackedXYAreaRendererTest extends TestCase {
      */
     public void testSerialization() {
         StackedXYAreaRenderer r1 = new StackedXYAreaRenderer();
-        r1.setShapePaint(Color.red);
+        r1.setShapePaint(Color.RED);
         r1.setShapeStroke(new BasicStroke(1.23f));
         StackedXYAreaRenderer r2 = null;
         try {

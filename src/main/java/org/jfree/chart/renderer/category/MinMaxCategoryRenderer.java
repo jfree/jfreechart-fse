@@ -81,7 +81,7 @@ import javax.swing.Icon;
 
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.common.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CategoryPlot;

@@ -62,10 +62,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.common.ui.LengthAdjustmentType;
-import org.jfree.chart.common.ui.RectangleAnchor;
-import org.jfree.chart.common.ui.RectangleInsets;
-import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.ui.LengthAdjustmentType;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.event.MarkerChangeEvent;
 import org.jfree.chart.event.MarkerChangeListener;
 import org.jfree.chart.plot.Marker;
@@ -110,10 +110,10 @@ public class ValueMarkerTest
         assertTrue(m2.equals(m1));
 
         m1.setPaint(new GradientPaint(1.0f, 2.0f, Color.green,
-                3.0f, 4.0f, Color.red));
+                3.0f, 4.0f, Color.RED));
         assertFalse(m1.equals(m2));
         m2.setPaint(new GradientPaint(1.0f, 2.0f, Color.green,
-                3.0f, 4.0f, Color.red));
+                3.0f, 4.0f, Color.RED));
         assertTrue(m1.equals(m2));
 
         BasicStroke stroke = new BasicStroke(2.2f);
@@ -123,10 +123,10 @@ public class ValueMarkerTest
         assertTrue(m1.equals(m2));
 
         m1.setOutlinePaint(new GradientPaint(4.0f, 3.0f, Color.yellow,
-                2.0f, 1.0f, Color.white));
+                2.0f, 1.0f, Color.WHITE));
         assertFalse(m1.equals(m2));
         m2.setOutlinePaint(new GradientPaint(4.0f, 3.0f, Color.yellow,
-                2.0f, 1.0f, Color.white));
+                2.0f, 1.0f, Color.WHITE));
         assertTrue(m1.equals(m2));
 
         m1.setOutlineStroke(stroke);
@@ -149,10 +149,10 @@ public class ValueMarkerTest
         m2.setLabelFont(new Font("SansSerif", Font.PLAIN, 10));
         assertTrue(m1.equals(m2));
 
-        m1.setLabelPaint(new GradientPaint(1.0f, 2.0f, Color.blue,
+        m1.setLabelPaint(new GradientPaint(1.0f, 2.0f, Color.BLUE,
                 3.0f, 4.0f, Color.yellow));
         assertFalse(m1.equals(m2));
-        m2.setLabelPaint(new GradientPaint(1.0f, 2.0f, Color.blue,
+        m2.setLabelPaint(new GradientPaint(1.0f, 2.0f, Color.BLUE,
                 3.0f, 4.0f, Color.yellow));
         assertTrue(m1.equals(m2));
 
@@ -295,12 +295,12 @@ public class ValueMarkerTest
     public void test1808376() {
         Stroke stroke = new BasicStroke(1.0f);
         Stroke outlineStroke = new BasicStroke(2.0f);
-        ValueMarker m = new ValueMarker(1.0, Color.red, stroke, Color.blue,
+        ValueMarker m = new ValueMarker(1.0, Color.RED, stroke, Color.BLUE,
                 outlineStroke, 0.5f);
         assertEquals(1.0, m.getValue(), EPSILON);
-        assertEquals(Color.red, m.getPaint());
+        assertEquals(Color.RED, m.getPaint());
         assertEquals(stroke, m.getStroke());
-        assertEquals(Color.blue, m.getOutlinePaint());
+        assertEquals(Color.BLUE, m.getOutlinePaint());
         assertEquals(outlineStroke, m.getOutlineStroke());
         assertEquals(0.5f, m.getAlpha(), EPSILON);
     }

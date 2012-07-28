@@ -49,7 +49,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * Represents one data item within a box-and-whisker dataset.  Instances of

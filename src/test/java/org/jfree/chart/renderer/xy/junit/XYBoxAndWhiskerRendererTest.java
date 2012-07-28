@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.renderer.xy.XYBoxAndWhiskerRenderer;
 import org.jfree.data.statistics.BoxAndWhiskerItem;
 import org.jfree.data.statistics.DefaultBoxAndWhiskerXYDataset;
@@ -100,10 +100,10 @@ public class XYBoxAndWhiskerRendererTest extends TestCase {
         assertEquals(r1, r2);
 
         r1.setArtifactPaint(new GradientPaint(1.0f, 2.0f, Color.green,
-                3.0f, 4.0f, Color.red));
+                3.0f, 4.0f, Color.RED));
         assertFalse(r1.equals(r2));
         r2.setArtifactPaint(new GradientPaint(1.0f, 2.0f, Color.green,
-                3.0f, 4.0f, Color.red));
+                3.0f, 4.0f, Color.RED));
         assertEquals(r1, r2);
 
         r1.setBoxWidth(0.55);

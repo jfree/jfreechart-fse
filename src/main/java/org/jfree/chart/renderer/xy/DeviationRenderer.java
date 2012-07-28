@@ -52,7 +52,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CrosshairState;

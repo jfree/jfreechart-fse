@@ -62,7 +62,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * A tick unit for use by subclasses of {@link DateAxis}.  Instances of this

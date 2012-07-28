@@ -71,8 +71,8 @@ import java.awt.geom.Rectangle2D;
 import java.text.AttributedString;
 import java.text.BreakIterator;
 
-import org.jfree.chart.common.ui.TextAnchor;
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * Some utility methods for working with text.

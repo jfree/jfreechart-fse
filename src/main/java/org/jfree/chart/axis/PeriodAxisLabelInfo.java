@@ -61,7 +61,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.time.RegularTimePeriod;
 

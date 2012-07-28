@@ -55,7 +55,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.renderer.GrayPaintScale;
 import org.jfree.chart.renderer.LookupPaintScale;
 import org.jfree.chart.renderer.xy.XYBlockRenderer;
@@ -151,10 +151,10 @@ public class XYBlockRendererTest extends TestCase {
         assertTrue(r1.equals(r2));
 
         // check independence
-        scale1.add(0.5, Color.red);
+        scale1.add(0.5, Color.RED);
         assertFalse(r1.equals(r2));
         LookupPaintScale scale2 = (LookupPaintScale) r2.getPaintScale();
-        scale2.add(0.5, Color.red);
+        scale2.add(0.5, Color.RED);
         assertTrue(r1.equals(r2));
     }
 

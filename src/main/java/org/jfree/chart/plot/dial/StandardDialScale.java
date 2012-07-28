@@ -64,9 +64,9 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import org.jfree.chart.common.ui.TextAnchor;
-import org.jfree.chart.common.util.PaintUtilities;
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.util.SerialUtilities;
 

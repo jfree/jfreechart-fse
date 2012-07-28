@@ -57,8 +57,8 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jfree.chart.common.ui.Size2D;
-import org.jfree.chart.common.ui.TextAnchor;
+import org.jfree.chart.ui.Size2D;
+import org.jfree.chart.ui.TextAnchor;
 
 /**
  * A sequence of {@link TextFragment} objects that together form a line of 

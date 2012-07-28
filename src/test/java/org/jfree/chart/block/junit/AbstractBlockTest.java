@@ -57,7 +57,7 @@ import junit.framework.TestSuite;
 import org.jfree.chart.block.AbstractBlock;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.block.EmptyBlock;
-import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.ui.RectangleInsets;
 
 /**
  * Tests for the {@link AbstractBlock} class.
@@ -101,9 +101,9 @@ public class AbstractBlockTest extends TestCase {
         b2.setMargin(new RectangleInsets(1.0, 2.0, 3.0, 4.0));
         assertTrue(b1.equals(b2));
 
-        b1.setFrame(new BlockBorder(Color.red));
+        b1.setFrame(new BlockBorder(Color.RED));
         assertFalse(b1.equals(b2));
-        b2.setFrame(new BlockBorder(Color.red));
+        b2.setFrame(new BlockBorder(Color.RED));
         assertTrue(b1.equals(b2));
 
         b1.setPadding(new RectangleInsets(2.0, 4.0, 6.0, 8.0));

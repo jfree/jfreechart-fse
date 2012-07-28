@@ -65,7 +65,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.Range;
 import org.jfree.data.RangeInfo;
 import org.jfree.data.general.DatasetChangeEvent;

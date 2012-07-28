@@ -55,7 +55,7 @@ import junit.framework.TestSuite;
 
 import org.jfree.chart.axis.Axis;
 import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.ui.RectangleInsets;
 
 /**
  * Tests for the {@link Axis} class.
@@ -85,7 +85,7 @@ public class AxisTest extends TestCase {
      */
     public void testCloning() {
         CategoryAxis a1 = new CategoryAxis("Test");
-        a1.setAxisLinePaint(Color.red);
+        a1.setAxisLinePaint(Color.RED);
         CategoryAxis a2 = null;
         try {
             a2 = (CategoryAxis) a1.clone();
@@ -126,11 +126,11 @@ public class AxisTest extends TestCase {
         assertTrue(a1.equals(a2));
 
         // label paint...
-        a1.setLabelPaint(new GradientPaint(1.0f, 2.0f, Color.white,
-                3.0f, 4.0f, Color.black));
+        a1.setLabelPaint(new GradientPaint(1.0f, 2.0f, Color.WHITE,
+                3.0f, 4.0f, Color.BLACK));
         assertFalse(a1.equals(a2));
-        a2.setLabelPaint(new GradientPaint(1.0f, 2.0f, Color.white,
-                3.0f, 4.0f, Color.black));
+        a2.setLabelPaint(new GradientPaint(1.0f, 2.0f, Color.WHITE,
+                3.0f, 4.0f, Color.BLACK));
         assertTrue(a1.equals(a2));
 
         // label insets...
@@ -159,11 +159,11 @@ public class AxisTest extends TestCase {
         assertTrue(a1.equals(a2));
 
         // axis line paint...
-        a1.setAxisLinePaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.black));
+        a1.setAxisLinePaint(new GradientPaint(1.0f, 2.0f, Color.RED,
+                3.0f, 4.0f, Color.BLACK));
         assertFalse(a1.equals(a2));
-        a2.setAxisLinePaint(new GradientPaint(1.0f, 2.0f, Color.red,
-                3.0f, 4.0f, Color.black));
+        a2.setAxisLinePaint(new GradientPaint(1.0f, 2.0f, Color.RED,
+                3.0f, 4.0f, Color.BLACK));
         assertTrue(a1.equals(a2));
 
         // tick labels visible flag...
@@ -180,10 +180,10 @@ public class AxisTest extends TestCase {
 
         // tick label paint...
         a1.setTickLabelPaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
-                3.0f, 4.0f, Color.black));
+                3.0f, 4.0f, Color.BLACK));
         assertFalse(a1.equals(a2));
         a2.setTickLabelPaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
-                3.0f, 4.0f, Color.black));
+                3.0f, 4.0f, Color.BLACK));
         assertTrue(a1.equals(a2));
 
         // tick label insets...
@@ -218,10 +218,10 @@ public class AxisTest extends TestCase {
 
         // tick mark paint...
         a1.setTickMarkPaint(new GradientPaint(1.0f, 2.0f, Color.cyan,
-                3.0f, 4.0f, Color.black));
+                3.0f, 4.0f, Color.BLACK));
         assertFalse(a1.equals(a2));
         a2.setTickMarkPaint(new GradientPaint(1.0f, 2.0f, Color.cyan,
-                3.0f, 4.0f, Color.black));
+                3.0f, 4.0f, Color.BLACK));
         assertTrue(a1.equals(a2));
 
         // tick mark outside length...

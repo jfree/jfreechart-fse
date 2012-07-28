@@ -52,7 +52,7 @@ package org.jfree.chart.labels;
 
 import java.io.Serializable;
 
-import org.jfree.chart.common.util.PublicCloneable;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.time.RegularTimePeriod;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;

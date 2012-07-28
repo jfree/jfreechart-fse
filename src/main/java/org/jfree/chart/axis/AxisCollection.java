@@ -43,7 +43,7 @@ package org.jfree.chart.axis;
 
 import java.util.List;
 
-import org.jfree.chart.common.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleEdge;
 
 /**
  * A collection of axes that have been assigned to the TOP, BOTTOM, LEFT or

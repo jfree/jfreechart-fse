@@ -110,7 +110,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jfree.chart.common.ui.RectangleInsets;
+import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.PieSectionEntity;
 import org.jfree.chart.event.PlotChangeEvent;

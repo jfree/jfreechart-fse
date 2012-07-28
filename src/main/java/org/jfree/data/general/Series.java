@@ -65,7 +65,7 @@ import java.io.Serializable;
 
 import javax.swing.event.EventListenerList;
 
-import org.jfree.chart.common.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.ParamChecks;
 
 /**
