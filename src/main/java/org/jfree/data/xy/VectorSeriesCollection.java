@@ -49,6 +49,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.general.DatasetChangeEvent;
 
@@ -61,13 +62,13 @@ public class VectorSeriesCollection extends AbstractXYDataset
         implements VectorXYDataset, PublicCloneable, Serializable {
 
     /** Storage for the data series. */
-    private List data;
+    private List<VectorSeries> data;
 
     /**
      * Creates a new instance of <code>VectorSeriesCollection</code>.
      */
     public VectorSeriesCollection() {
-        this.data = new java.util.ArrayList();
+        this.data = new java.util.ArrayList<VectorSeries>();
     }
 
     /**
@@ -77,9 +78,7 @@ public class VectorSeriesCollection extends AbstractXYDataset
      * @param series  the series (<code>null</code> not permitted).
      */
     public void addSeries(VectorSeries series) {
-        if (series == null) {
-            throw new IllegalArgumentException("Null 'series' argument.");
-        }
+        ParamChecks.nullNotPermitted(series, "series");
         this.data.add(series);
         series.addChangeListener(this);
         fireDatasetChanged();
@@ -95,9 +94,7 @@ public class VectorSeriesCollection extends AbstractXYDataset
      *         removed.
      */
     public boolean removeSeries(VectorSeries series) {
-        if (series == null) {
-            throw new IllegalArgumentException("Null 'series' argument.");
-        }
+        ParamChecks.nullNotPermitted(series, "series");
         boolean removed = this.data.remove(series);
         if (removed) {
             series.removeChangeListener(this);
@@ -114,8 +111,7 @@ public class VectorSeriesCollection extends AbstractXYDataset
 
         // deregister the collection as a change listener to each series in the
         // collection
-        for (int i = 0; i < this.data.size(); i++) {
-            VectorSeries series = (VectorSeries) this.data.get(i);
+        for (VectorSeries series : this.data) {
             series.removeChangeListener(this);
         }
 
@@ -131,7 +127,7 @@ public class VectorSeriesCollection extends AbstractXYDataset
      * @return The series count.
      */
     @Override
-	public int getSeriesCount() {
+    public int getSeriesCount() {
         return this.data.size();
     }
 
@@ -164,7 +160,7 @@ public class VectorSeriesCollection extends AbstractXYDataset
      *     specified range.
      */
     @Override
-	public Comparable getSeriesKey(int series) {
+    public Comparable getSeriesKey(int series) {
         // defer argument checking
         return getSeries(series).getKey();
     }
@@ -178,9 +174,7 @@ public class VectorSeriesCollection extends AbstractXYDataset
      * @return The series index.
      */
     public int indexOf(VectorSeries series) {
-        if (series == null) {
-            throw new IllegalArgumentException("Null 'series' argument.");
-        }
+        ParamChecks.nullNotPermitted(series, "series");
         return this.data.indexOf(series);
     }
 
@@ -195,7 +189,7 @@ public class VectorSeriesCollection extends AbstractXYDataset
      *     range <code>0</code> to <code>getSeriesCount() - 1</code>.
      */
     @Override
-	public int getItemCount(int series) {
+    public int getItemCount(int series) {
         // defer argument checking
         return getSeries(series).getItemCount();
     }
@@ -209,8 +203,8 @@ public class VectorSeriesCollection extends AbstractXYDataset
      * @return The x-value.
      */
     @Override
-	public double getXValue(int series, int item) {
-        VectorSeries s = (VectorSeries) this.data.get(series);
+    public double getXValue(int series, int item) {
+        VectorSeries s = this.data.get(series);
         VectorDataItem di = (VectorDataItem) s.getDataItem(item);
         return di.getXValue();
     }
@@ -226,7 +220,7 @@ public class VectorSeriesCollection extends AbstractXYDataset
      * @return The x-value.
      */
     @Override
-	public Number getX(int series, int item) {
+    public Number getX(int series, int item) {
         return new Double(getXValue(series, item));
     }
 
@@ -239,7 +233,7 @@ public class VectorSeriesCollection extends AbstractXYDataset
      * @return The y-value.
      */
     @Override
-	public double getYValue(int series, int item) {
+    public double getYValue(int series, int item) {
         VectorSeries s = (VectorSeries) this.data.get(series);
         VectorDataItem di = (VectorDataItem) s.getDataItem(item);
         return di.getYValue();
@@ -256,7 +250,7 @@ public class VectorSeriesCollection extends AbstractXYDataset
      * @return The y-value.
      */
     @Override
-	public Number getY(int series, int item) {
+    public Number getY(int series, int item) {
         return new Double(getYValue(series, item));
     }
 
@@ -269,8 +263,8 @@ public class VectorSeriesCollection extends AbstractXYDataset
      * @return The vector (possibly <code>null</code>).
      */
     @Override
-	public Vector getVector(int series, int item) {
-        VectorSeries s = (VectorSeries) this.data.get(series);
+    public Vector getVector(int series, int item) {
+        VectorSeries s = this.data.get(series);
         VectorDataItem di = (VectorDataItem) s.getDataItem(item);
         return di.getVector();
     }
@@ -284,8 +278,8 @@ public class VectorSeriesCollection extends AbstractXYDataset
      * @return The x-component of the vector.
      */
     @Override
-	public double getVectorXValue(int series, int item) {
-        VectorSeries s = (VectorSeries) this.data.get(series);
+    public double getVectorXValue(int series, int item) {
+        VectorSeries s = this.data.get(series);
         VectorDataItem di = (VectorDataItem) s.getDataItem(item);
         return di.getVectorX();
     }
@@ -299,8 +293,8 @@ public class VectorSeriesCollection extends AbstractXYDataset
      * @return The y-component of the vector.
      */
     @Override
-	public double getVectorYValue(int series, int item) {
-        VectorSeries s = (VectorSeries) this.data.get(series);
+    public double getVectorYValue(int series, int item) {
+        VectorSeries s = this.data.get(series);
         VectorDataItem di = (VectorDataItem) s.getDataItem(item);
         return di.getVectorY();
     }
@@ -313,7 +307,7 @@ public class VectorSeriesCollection extends AbstractXYDataset
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -332,7 +326,7 @@ public class VectorSeriesCollection extends AbstractXYDataset
      * @throws CloneNotSupportedException if there is a problem.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         VectorSeriesCollection clone
                 = (VectorSeriesCollection) super.clone();
         clone.data = (List) ObjectUtilities.deepClone(this.data);
