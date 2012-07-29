@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * AbstractXYZDataset.java
  * -----------------------
- * (C) Copyright 2004-2008, by Object Refinery Limited.
+ * (C) Copyright 2004-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited).
  * Contributor(s):   -;
@@ -57,7 +57,7 @@ public abstract class AbstractXYZDataset extends AbstractXYDataset
      * @return The z-value.
      */
     @Override
-	public double getZValue(int series, int item) {
+    public double getZValue(int series, int item) {
         double result = Double.NaN;
         Number z = getZ(series, item);
         if (z != null) {

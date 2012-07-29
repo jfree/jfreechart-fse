@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -59,7 +59,7 @@ public abstract class AbstractXYDataset extends AbstractSeriesDataset
      * @return The domain order.
      */
     @Override
-	public DomainOrder getDomainOrder() {
+    public DomainOrder getDomainOrder() {
         return DomainOrder.NONE;
     }
 
@@ -72,7 +72,7 @@ public abstract class AbstractXYDataset extends AbstractSeriesDataset
      * @return The value.
      */
     @Override
-	public double getXValue(int series, int item) {
+    public double getXValue(int series, int item) {
         double result = Double.NaN;
         Number x = getX(series, item);
         if (x != null) {
@@ -90,7 +90,7 @@ public abstract class AbstractXYDataset extends AbstractSeriesDataset
      * @return The value.
      */
     @Override
-	public double getYValue(int series, int item) {
+    public double getYValue(int series, int item) {
         double result = Double.NaN;
         Number y = getY(series, item);
         if (y != null) {
