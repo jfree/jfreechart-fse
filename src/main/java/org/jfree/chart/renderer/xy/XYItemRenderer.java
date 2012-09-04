@@ -145,7 +145,7 @@ public interface XYItemRenderer extends Renderer {
     public void setLegendItemLabelGenerator(XYSeriesLabelGenerator generator);
 
     public void setLegendItemLabelGenerator(XYSeriesLabelGenerator generator,
-    		boolean notify);
+            boolean notify);
 
     
     //// TOOL TIP GENERATOR ///////////////////////////////////////////////////
@@ -206,7 +206,7 @@ public interface XYItemRenderer extends Renderer {
     public void setDefaultToolTipGenerator(XYToolTipGenerator generator);
 
     public void setDefaultToolTipGenerator(XYToolTipGenerator generator, 
-    		boolean notify);
+            boolean notify);
 
 
     //// ITEM LABEL GENERATOR /////////////////////////////////////////////////
