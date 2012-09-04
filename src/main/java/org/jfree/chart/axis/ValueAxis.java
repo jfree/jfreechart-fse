@@ -530,7 +530,7 @@ public abstract class ValueAxis extends Axis
      * @param edge  the edge.
      */
     @Override
-	protected void drawAxisLine(Graphics2D g2, double cursor,
+    protected void drawAxisLine(Graphics2D g2, double cursor,
                                 Rectangle2D dataArea, RectangleEdge edge) {
         Line2D axisLine = null;
         if (edge == RectangleEdge.TOP) {
@@ -768,7 +768,7 @@ public abstract class ValueAxis extends Axis
      *         space).
      */
     @Override
-	public AxisSpace reserveSpace(Graphics2D g2, Plot plot,
+    public AxisSpace reserveSpace(Graphics2D g2, Plot plot,
                                   Rectangle2D plotArea,
                                   RectangleEdge edge, AxisSpace space) {
 
@@ -785,7 +785,8 @@ public abstract class ValueAxis extends Axis
         // if the axis has a fixed dimension, return it...
         double dimension = getFixedDimension();
         if (dimension > 0.0) {
-            space.ensureAtLeast(dimension, edge);
+            space.add(dimension, edge);
+            return space;
         }
 
         // calculate the max size of the tick labels (if visible)...
@@ -806,8 +807,8 @@ public abstract class ValueAxis extends Axis
 
         // get the axis label size and update the space object...
         Rectangle2D labelEnclosure = getLabelEnclosure(g2, edge);
-        double labelHeight = 0.0;
-        double labelWidth = 0.0;
+        double labelHeight;
+        double labelWidth;
         if (RectangleEdge.isTopOrBottom(edge)) {
             labelHeight = labelEnclosure.getHeight();
             space.add(labelHeight + tickLabelHeight, edge);
@@ -1648,7 +1649,7 @@ public abstract class ValueAxis extends Axis
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -1712,7 +1713,7 @@ public abstract class ValueAxis extends Axis
      *         not support cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         ValueAxis clone = (ValueAxis) super.clone();
         return clone;
     }
