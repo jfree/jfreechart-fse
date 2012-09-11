@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------------
@@ -95,7 +95,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
     private static final long serialVersionUID = 8207194522653701572L;
 
     /** Storage for the subplot references. */
-    private List subplots;
+    private List<CategoryPlot> subplots;
 
     /** The gap between subplots. */
     private double gap;
@@ -119,7 +119,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      */
     public CombinedDomainCategoryPlot(CategoryAxis domainAxis) {
         super(null, domainAxis, null, null);
-        this.subplots = new java.util.ArrayList();
+        this.subplots = new java.util.ArrayList<CategoryPlot>();
         this.gap = 5.0;
     }
 
@@ -226,7 +226,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      *
      * @return An unmodifiable list of subplots.
      */
-    public List getSubplots() {
+    public List<CategoryPlot> getSubplots() {
         if (this.subplots != null) {
             return Collections.unmodifiableList(this.subplots);
         }
@@ -254,7 +254,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
         CategoryPlot result = null;
         int subplotIndex = info.getSubplotIndex(source);
         if (subplotIndex >= 0) {
-            result =  (CategoryPlot) this.subplots.get(subplotIndex);
+            result = this.subplots.get(subplotIndex);
         }
         return result;
     }
@@ -267,7 +267,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @param source  the source point (<code>null</code> not permitted).
      */
     @Override
-	public void zoomRangeAxes(double factor, PlotRenderingInfo info,
+    public void zoomRangeAxes(double factor, PlotRenderingInfo info,
                               Point2D source) {
         zoomRangeAxes(factor, info, source, false);
     }
@@ -281,7 +281,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @param useAnchor  zoom about the anchor point?
      */
     @Override
-	public void zoomRangeAxes(double factor, PlotRenderingInfo info,
+    public void zoomRangeAxes(double factor, PlotRenderingInfo info,
                               Point2D source, boolean useAnchor) {
         // delegate 'info' and 'source' argument checks...
         CategoryPlot subplot = findSubplot(info, source);
@@ -308,7 +308,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @param source  the source point (<code>null</code> not permitted).
      */
     @Override
-	public void zoomRangeAxes(double lowerPercent, double upperPercent,
+    public void zoomRangeAxes(double lowerPercent, double upperPercent,
                               PlotRenderingInfo info, Point2D source) {
         // delegate 'info' and 'source' argument checks...
         CategoryPlot subplot = findSubplot(info, source);
@@ -335,7 +335,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @return The space required for the axes.
      */
     @Override
-	protected AxisSpace calculateAxisSpace(Graphics2D g2,
+    protected AxisSpace calculateAxisSpace(Graphics2D g2,
                                            Rectangle2D plotArea) {
 
         AxisSpace space = new AxisSpace();
@@ -390,7 +390,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
         }
 
         for (int i = 0; i < n; i++) {
-            CategoryPlot plot = (CategoryPlot) this.subplots.get(i);
+            CategoryPlot plot = this.subplots.get(i);
 
             // calculate sub-plot area
             if (orientation == PlotOrientation.HORIZONTAL) {
@@ -429,11 +429,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      *              permitted).
      */
     @Override
-	public void draw(Graphics2D g2,
-                     Rectangle2D area,
-                     Point2D anchor,
-                     PlotState parentState,
-                     PlotRenderingInfo info) {
+    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+            PlotState parentState, PlotRenderingInfo info) {
 
         // set up info collection...
         if (info != null) {
@@ -469,7 +466,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
 
         // draw all the subplots
         for (int i = 0; i < this.subplots.size(); i++) {
-            CategoryPlot plot = (CategoryPlot) this.subplots.get(i);
+            CategoryPlot plot = this.subplots.get(i);
             PlotRenderingInfo subplotInfo = null;
             if (info != null) {
                 subplotInfo = new PlotRenderingInfo(info.getOwner());
@@ -496,9 +493,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @param space  the space (<code>null</code> permitted).
      */
     protected void setFixedRangeAxisSpaceForSubplots(AxisSpace space) {
-        Iterator iterator = this.subplots.iterator();
-        while (iterator.hasNext()) {
-            CategoryPlot plot = (CategoryPlot) iterator.next();
+        for (CategoryPlot plot : this.subplots) {
             plot.setFixedRangeAxisSpace(space, false);
         }
     }
@@ -509,16 +504,11 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @param orientation  the orientation (<code>null</code> not permitted).
      */
     @Override
-	public void setOrientation(PlotOrientation orientation) {
-
+    public void setOrientation(PlotOrientation orientation) {
         super.setOrientation(orientation);
-
-        Iterator iterator = this.subplots.iterator();
-        while (iterator.hasNext()) {
-            CategoryPlot plot = (CategoryPlot) iterator.next();
+        for (CategoryPlot plot : this.subplots) {
             plot.setOrientation(orientation);
         }
-
     }
 
     /**
@@ -530,31 +520,29 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * (not a <code>ValueAxis</code}) and subplots have independent range axes,
      * the JFreeChart code will never call this method (although this is not
      * checked/enforced).
-      *
-      * @param axis  the axis.
-      *
-      * @return The range.
-      */
-     @Override
-	public Range getDataRange(ValueAxis axis) {
-         // override is only for documentation purposes
-         return super.getDataRange(axis);
-     }
+     *
+     * @param axis  the axis.
+     *
+     * @return The range.
+     */
+    @Override
+    public Range getDataRange(ValueAxis axis) {
+        // override is only for documentation purposes
+        return super.getDataRange(axis);
+    }
 
-     /**
+    /**
      * Returns a collection of legend items for the plot.
      *
      * @return The legend items.
      */
     @Override
-	public LegendItemCollection getLegendItems() {
+    public LegendItemCollection getLegendItems() {
         LegendItemCollection result = getFixedLegendItems();
         if (result == null) {
             result = new LegendItemCollection();
             if (this.subplots != null) {
-                Iterator iterator = this.subplots.iterator();
-                while (iterator.hasNext()) {
-                    CategoryPlot plot = (CategoryPlot) iterator.next();
+                for (CategoryPlot plot : this.subplots) {
                     LegendItemCollection more = plot.getLegendItems();
                     result.addAll(more);
                 }
@@ -570,12 +558,10 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @return The list.
      */
     @Override
-	public List getCategories() {
+    public List getCategories() {
         List result = new java.util.ArrayList();
         if (this.subplots != null) {
-            Iterator iterator = this.subplots.iterator();
-            while (iterator.hasNext()) {
-                CategoryPlot plot = (CategoryPlot) iterator.next();
+            for (CategoryPlot plot : this.subplots) {
                 List more = plot.getCategories();
                 Iterator moreIterator = more.iterator();
                 while (moreIterator.hasNext()) {
@@ -599,7 +585,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @since 1.0.3
      */
     @Override
-	public List getCategoriesForAxis(CategoryAxis axis) {
+    public List getCategoriesForAxis(CategoryAxis axis) {
         // FIXME:  this code means that it is not possible to use more than
         // one domain axis for the combined plots...
         return getCategories();
@@ -611,10 +597,9 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @param x  x-coordinate of the click.
      * @param y  y-coordinate of the click.
      * @param info  information about the plot's dimensions.
-     *
      */
     @Override
-	public void handleClick(int x, int y, PlotRenderingInfo info) {
+    public void handleClick(int x, int y, PlotRenderingInfo info) {
 
         Rectangle2D dataArea = info.getDataArea();
         if (dataArea.contains(x, y)) {
@@ -634,7 +619,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @param event  the event.
      */
     @Override
-	public void plotChanged(PlotChangeEvent event) {
+    public void plotChanged(PlotChangeEvent event) {
         notifyListeners(event);
     }
 
@@ -646,7 +631,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -672,17 +657,14 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      *         exception, but subclasses (if any) might.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
-
+    public Object clone() throws CloneNotSupportedException {
         CombinedDomainCategoryPlot result
             = (CombinedDomainCategoryPlot) super.clone();
         result.subplots = (List) ObjectUtilities.deepClone(this.subplots);
-        for (Iterator it = result.subplots.iterator(); it.hasNext();) {
-            Plot child = (Plot) it.next();
+        for (CategoryPlot child : this.subplots) {
             child.setParent(result);
         }
         return result;
-
     }
 
 }
