@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -129,7 +129,7 @@ public class CombinedDomainXYPlot extends XYPlot
     private static final long serialVersionUID = -7765545541261907383L;
 
     /** Storage for the subplot references. */
-    private List subplots;
+    private List<XYPlot> subplots;
 
     /** The gap between subplots. */
     private double gap = 5.0;
@@ -154,14 +154,12 @@ public class CombinedDomainXYPlot extends XYPlot
      */
     public CombinedDomainXYPlot(ValueAxis domainAxis) {
 
-        super(
-            null,        // no data in the parent plot
+        super(null,        // no data in the parent plot
             domainAxis,
-            null,        // no range axis
-            null         // no rendereer
-        );
+            null,          // no range axis
+            null);         // no rendereer
 
-        this.subplots = new java.util.ArrayList();
+        this.subplots = new java.util.ArrayList<XYPlot>();
 
     }
 
@@ -171,7 +169,7 @@ public class CombinedDomainXYPlot extends XYPlot
      * @return The type of plot.
      */
     @Override
-	public String getPlotType() {
+    public String getPlotType() {
         return "Combined_Domain_XYPlot";
     }
 
@@ -182,15 +180,11 @@ public class CombinedDomainXYPlot extends XYPlot
      * @param orientation  the orientation (<code>null</code> not allowed).
      */
     @Override
-	public void setOrientation(PlotOrientation orientation) {
-
+    public void setOrientation(PlotOrientation orientation) {
         super.setOrientation(orientation);
-        Iterator iterator = this.subplots.iterator();
-        while (iterator.hasNext()) {
-            XYPlot plot = (XYPlot) iterator.next();
-            plot.setOrientation(orientation);
+        for (XYPlot subplot : this.subplots) {
+            subplot.setOrientation(orientation);
         }
-
     }
 
     /**
@@ -207,12 +201,10 @@ public class CombinedDomainXYPlot extends XYPlot
      * @return The range (possibly <code>null</code>).
      */
     @Override
-	public Range getDataRange(ValueAxis axis) {
+    public Range getDataRange(ValueAxis axis) {
         Range result = null;
         if (this.subplots != null) {
-            Iterator iterator = this.subplots.iterator();
-            while (iterator.hasNext()) {
-                XYPlot subplot = (XYPlot) iterator.next();
+            for (XYPlot subplot : this.subplots) {
                 result = Range.combine(result, subplot.getDataRange(axis));
             }
         }
@@ -326,7 +318,7 @@ public class CombinedDomainXYPlot extends XYPlot
      *
      * @return An unmodifiable list of subplots.
      */
-    public List getSubplots() {
+    public List<XYPlot> getSubplots() {
         if (this.subplots != null) {
             return Collections.unmodifiableList(this.subplots);
         }
@@ -344,7 +336,7 @@ public class CombinedDomainXYPlot extends XYPlot
      * @return The space.
      */
     @Override
-	protected AxisSpace calculateAxisSpace(Graphics2D g2,
+    protected AxisSpace calculateAxisSpace(Graphics2D g2,
                                            Rectangle2D plotArea) {
 
         AxisSpace space = new AxisSpace();
@@ -377,7 +369,7 @@ public class CombinedDomainXYPlot extends XYPlot
         int n = this.subplots.size();
         int totalWeight = 0;
         for (int i = 0; i < n; i++) {
-            XYPlot sub = (XYPlot) this.subplots.get(i);
+            XYPlot sub = this.subplots.get(i);
             totalWeight += sub.getWeight();
         }
         this.subplotAreas = new Rectangle2D[n];
@@ -392,7 +384,7 @@ public class CombinedDomainXYPlot extends XYPlot
         }
 
         for (int i = 0; i < n; i++) {
-            XYPlot plot = (XYPlot) this.subplots.get(i);
+            XYPlot plot = this.subplots.get(i);
 
             // calculate sub-plot area
             if (orientation == PlotOrientation.HORIZONTAL) {
@@ -430,11 +422,8 @@ public class CombinedDomainXYPlot extends XYPlot
      *              permitted).
      */
     @Override
-	public void draw(Graphics2D g2,
-                     Rectangle2D area,
-                     Point2D anchor,
-                     PlotState parentState,
-                     PlotRenderingInfo info) {
+    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+            PlotState parentState, PlotRenderingInfo info) {
 
         // set up info collection...
         if (info != null) {
@@ -464,7 +453,7 @@ public class CombinedDomainXYPlot extends XYPlot
 
         // draw all the subplots
         for (int i = 0; i < this.subplots.size(); i++) {
-            XYPlot plot = (XYPlot) this.subplots.get(i);
+            XYPlot plot = this.subplots.get(i);
             PlotRenderingInfo subplotInfo = null;
             if (info != null) {
                 subplotInfo = new PlotRenderingInfo(info.getOwner());
@@ -486,14 +475,12 @@ public class CombinedDomainXYPlot extends XYPlot
      * @return The legend items.
      */
     @Override
-	public LegendItemCollection getLegendItems() {
+    public LegendItemCollection getLegendItems() {
         LegendItemCollection result = getFixedLegendItems();
         if (result == null) {
             result = new LegendItemCollection();
             if (this.subplots != null) {
-                Iterator iterator = this.subplots.iterator();
-                while (iterator.hasNext()) {
-                    XYPlot plot = (XYPlot) iterator.next();
+                for (XYPlot plot : this.subplots) {
                     LegendItemCollection more = plot.getLegendItems();
                     result.addAll(more);
                 }
@@ -510,7 +497,7 @@ public class CombinedDomainXYPlot extends XYPlot
      * @param source  the source point (<code>null</code> not permitted).
      */
     @Override
-	public void zoomRangeAxes(double factor, PlotRenderingInfo info,
+    public void zoomRangeAxes(double factor, PlotRenderingInfo info,
                               Point2D source) {
         zoomRangeAxes(factor, info, source, false);
     }
@@ -524,7 +511,7 @@ public class CombinedDomainXYPlot extends XYPlot
      * @param useAnchor  use source point as zoom anchor?
      */
     @Override
-	public void zoomRangeAxes(double factor, PlotRenderingInfo state,
+    public void zoomRangeAxes(double factor, PlotRenderingInfo state,
                               Point2D source, boolean useAnchor) {
         // delegate 'state' and 'source' argument checks...
         XYPlot subplot = findSubplot(state, source);
@@ -534,9 +521,7 @@ public class CombinedDomainXYPlot extends XYPlot
         else {
             // if the source point doesn't fall within a subplot, we do the
             // zoom on all subplots...
-            Iterator iterator = getSubplots().iterator();
-            while (iterator.hasNext()) {
-                subplot = (XYPlot) iterator.next();
+            for (XYPlot subPlot : getSubplots()) {
                 subplot.zoomRangeAxes(factor, state, source, useAnchor);
             }
         }
@@ -551,7 +536,7 @@ public class CombinedDomainXYPlot extends XYPlot
      * @param source  the source point (<code>null</code> not permitted).
      */
     @Override
-	public void zoomRangeAxes(double lowerPercent, double upperPercent,
+    public void zoomRangeAxes(double lowerPercent, double upperPercent,
                               PlotRenderingInfo info, Point2D source) {
         // delegate 'info' and 'source' argument checks...
         XYPlot subplot = findSubplot(info, source);
@@ -561,10 +546,8 @@ public class CombinedDomainXYPlot extends XYPlot
         else {
             // if the source point doesn't fall within a subplot, we do the
             // zoom on all subplots...
-            Iterator iterator = getSubplots().iterator();
-            while (iterator.hasNext()) {
-                subplot = (XYPlot) iterator.next();
-                subplot.zoomRangeAxes(lowerPercent, upperPercent, info, source);
+            for (XYPlot sp : getSubplots()) {
+                sp.zoomRangeAxes(lowerPercent, upperPercent, info, source);
             }
         }
     }
@@ -579,7 +562,7 @@ public class CombinedDomainXYPlot extends XYPlot
      * @since 1.0.15
      */
     @Override
-	public void panRangeAxes(double panRange, PlotRenderingInfo info,
+    public void panRangeAxes(double panRange, PlotRenderingInfo info,
             Point2D source) {
 
         XYPlot subplot = findSubplot(info, source);
@@ -596,7 +579,7 @@ public class CombinedDomainXYPlot extends XYPlot
             }
         }
     }
-    
+
     /**
      * Returns the subplot (if any) that contains the (x, y) point (specified
      * in Java2D space).
@@ -616,7 +599,7 @@ public class CombinedDomainXYPlot extends XYPlot
         XYPlot result = null;
         int subplotIndex = info.getSubplotIndex(source);
         if (subplotIndex >= 0) {
-            result =  (XYPlot) this.subplots.get(subplotIndex);
+            result = this.subplots.get(subplotIndex);
         }
         return result;
     }
@@ -631,18 +614,13 @@ public class CombinedDomainXYPlot extends XYPlot
      * @param renderer the new renderer.
      */
     @Override
-	public void setRenderer(XYItemRenderer renderer) {
-
+    public void setRenderer(XYItemRenderer renderer) {
         super.setRenderer(renderer);  // not strictly necessary, since the
                                       // renderer set for the
                                       // parent plot is not used
-
-        Iterator iterator = this.subplots.iterator();
-        while (iterator.hasNext()) {
-            XYPlot plot = (XYPlot) iterator.next();
-            plot.setRenderer(renderer);
+        for (XYPlot subplot : this.subplots) {
+            subplot.setRenderer(renderer);
         }
-
     }
 
     /**
@@ -652,7 +630,7 @@ public class CombinedDomainXYPlot extends XYPlot
      * @param space  the space (<code>null</code> permitted).
      */
     @Override
-	public void setFixedRangeAxisSpace(AxisSpace space) {
+    public void setFixedRangeAxisSpace(AxisSpace space) {
         super.setFixedRangeAxisSpace(space);
         setFixedRangeAxisSpaceForSubplots(space);
         fireChangeEvent();
@@ -662,13 +640,11 @@ public class CombinedDomainXYPlot extends XYPlot
      * Sets the size (width or height, depending on the orientation of the
      * plot) for the domain axis of each subplot.
      *
-     * @param space  the space.
+     * @param space  the space (<code>null</code> permitted).
      */
     protected void setFixedRangeAxisSpaceForSubplots(AxisSpace space) {
-        Iterator iterator = this.subplots.iterator();
-        while (iterator.hasNext()) {
-            XYPlot plot = (XYPlot) iterator.next();
-            plot.setFixedRangeAxisSpace(space, false);
+        for (XYPlot subplot : this.subplots) {
+            subplot.setFixedRangeAxisSpace(space, false);
         }
     }
 
@@ -680,11 +656,11 @@ public class CombinedDomainXYPlot extends XYPlot
      * @param info  object containing information about the plot dimensions.
      */
     @Override
-	public void handleClick(int x, int y, PlotRenderingInfo info) {
+    public void handleClick(int x, int y, PlotRenderingInfo info) {
         Rectangle2D dataArea = info.getDataArea();
         if (dataArea.contains(x, y)) {
             for (int i = 0; i < this.subplots.size(); i++) {
-                XYPlot subplot = (XYPlot) this.subplots.get(i);
+                XYPlot subplot = this.subplots.get(i);
                 PlotRenderingInfo subplotInfo = info.getSubplotInfo(i);
                 subplot.handleClick(x, y, subplotInfo);
             }
@@ -698,7 +674,7 @@ public class CombinedDomainXYPlot extends XYPlot
      * @param event  the event.
      */
     @Override
-	public void plotChanged(PlotChangeEvent event) {
+    public void plotChanged(PlotChangeEvent event) {
         notifyListeners(event);
     }
 
@@ -710,7 +686,7 @@ public class CombinedDomainXYPlot extends XYPlot
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -736,7 +712,7 @@ public class CombinedDomainXYPlot extends XYPlot
      *         exception, but subclasses (if any) might.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
 
         CombinedDomainXYPlot result = (CombinedDomainXYPlot) super.clone();
         result.subplots = (List) ObjectUtilities.deepClone(this.subplots);
