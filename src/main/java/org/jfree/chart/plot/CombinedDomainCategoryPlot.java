@@ -124,9 +124,11 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
     }
 
     /**
-     * Returns the space between subplots.
+     * Returns the space between subplots.  The default value is 5.0.
      *
      * @return The gap (in Java2D units).
+     *
+     * @see #setGap(double)
      */
     public double getGap() {
         return this.gap;
@@ -137,6 +139,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * {@link PlotChangeEvent} to all registered listeners.
      *
      * @param gap  the gap between subplots (in Java2D units).
+     *
+     * @see #getGap()
      */
     public void setGap(double gap) {
         this.gap = gap;

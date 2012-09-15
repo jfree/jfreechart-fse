@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
  * AbstractRenderer.java
  * ---------------------
- * (C) Copyright 2002-2011, by Object Refinery Limited.
+ * (C) Copyright 2002-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Nicolas Brodu;
@@ -461,7 +461,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      */
     public abstract DrawingSupplier getDrawingSupplier();
 
-    
+
     // SERIES VISIBLE (not yet respected by all renderers)
 
     /**
@@ -2461,9 +2461,9 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     /**
      * Returns the flag that controls whether or not the legend shape is
      * treated as a line when creating legend items.
-     * 
+     *
      * @return A boolean.
-     * 
+     *
      * @since 1.0.14
      */
     protected boolean getTreatLegendShapeAsLine() {
@@ -2890,7 +2890,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
                 that.seriesVisibleInLegendList)) {
             return false;
         }
-        if (this.defaultSeriesVisibleInLegend 
+        if (this.defaultSeriesVisibleInLegend
                 != that.defaultSeriesVisibleInLegend) {
             return false;
         }
@@ -2903,7 +2903,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         if (!ObjectUtilities.equal(this.fillPaintList, that.fillPaintList)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.defaultFillPaint, 
+        if (!PaintUtilities.equal(this.defaultFillPaint,
                 that.defaultFillPaint)) {
             return false;
         }
@@ -2925,7 +2925,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
                 that.outlineStrokeList)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.defaultOutlineStroke, 
+        if (!ObjectUtilities.equal(this.defaultOutlineStroke,
                 that.defaultOutlineStroke)) {
             return false;
         }
