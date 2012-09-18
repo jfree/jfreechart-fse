@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------------
@@ -56,7 +56,7 @@
  * 03-Oct-2011 : Added support for PolarPlot's angleOffset and direction (MH);
  * 16-Oct-2011 : Fixed serialization problems with fillComposite (MH);
  * 15-Jun-2012 : Remove JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.renderer;
@@ -127,7 +127,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
 
     /**
      * The composite to use when filling series.
-     * 
+     *
      * @since 1.0.14
      */
     private transient Composite fillComposite;
@@ -135,21 +135,21 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     /**
      * A flag that controls whether the fill paint is used for filling
      * shapes.
-     * 
+     *
      * @since 1.0.14
      */
     private boolean useFillPaint;
 
     /**
      * The shape that is used to represent a line in the legend.
-     * 
+     *
      * @since 1.0.14
      */
     private transient Shape legendLine;
 
     /**
      * Flag that controls whether item shapes are visible or not.
-     * 
+     *
      * @since 1.0.14
      */
     private boolean shapesVisible;
@@ -157,42 +157,42 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     /**
      * Flag that controls if the first and last point of the dataset should be
      * connected or not.
-     * 
+     *
      *  @since 1.0.14
      */
     private boolean connectFirstAndLastPoint;
-    
+
     /**
      * A list of tool tip generators (one per series).
-     * 
+     *
      * @since 1.0.14
      */
     private ObjectList toolTipGeneratorList;
 
     /**
      * The base tool tip generator.
-     * 
+     *
      * @since 1.0.14
      */
     private XYToolTipGenerator baseToolTipGenerator;
 
     /**
      * The URL text generator.
-     * 
+     *
      * @since 1.0.14
      */
     private XYURLGenerator urlGenerator;
 
     /**
      * The legend item tool tip generator.
-     * 
+     *
      * @since 1.0.14
      */
     private XYSeriesLabelGenerator legendItemToolTipGenerator;
 
     /**
      * The legend item URL generator.
-     * 
+     *
      * @since 1.0.14
      */
     private XYSeriesLabelGenerator legendItemURLGenerator;
@@ -210,7 +210,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         this.legendLine = new Line2D.Double(-7.0, 0.0, 7.0, 0.0);
         this.shapesVisible = true;
         this.connectFirstAndLastPoint = true;
-        
+
         this.toolTipGeneratorList = new ObjectList();
         this.urlGenerator = null;
         this.legendItemToolTipGenerator = null;
@@ -225,7 +225,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @see #getPlot()
      */
     @Override
-	public void setPlot(PolarPlot plot) {
+    public void setPlot(PolarPlot plot) {
         this.plot = plot;
     }
 
@@ -237,7 +237,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @see #setPlot(PolarPlot)
      */
     @Override
-	public PolarPlot getPlot() {
+    public PolarPlot getPlot() {
         return this.plot;
     }
 
@@ -324,9 +324,9 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     /**
      * Returns <code>true</code> if first and last point of a series will be
      * connected, <code>false</code> otherwise.
-     * 
+     *
      * @return The current status of the flag.
-     * 
+     *
      * @since 1.0.14
      */
     public boolean getConnectFirstAndLastPoint() {
@@ -337,13 +337,12 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * Set the flag that controls whether the first and last point of a series
      * will be connected or not and sends a {@link RendererChangeEvent} to all
      * registered listeners.
-     * 
+     *
      * @param connect the flag.
-     * 
+     *
      * @since 1.0.14
      */
-    public void setConnectFirstAndLastPoint(boolean connect)
-    {
+    public void setConnectFirstAndLastPoint(boolean connect) {
         this.connectFirstAndLastPoint = connect;
         fireChangeEvent();
     }
@@ -354,7 +353,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @return The drawing supplier.
      */
     @Override
-	public DrawingSupplier getDrawingSupplier() {
+    public DrawingSupplier getDrawingSupplier() {
         DrawingSupplier result = null;
         PolarPlot p = getPlot();
         if (p != null) {
@@ -503,11 +502,10 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @param seriesIndex  the series index.
      */
     @Override
-	public void drawSeries(Graphics2D g2, Rectangle2D dataArea,
+    public void drawSeries(Graphics2D g2, Rectangle2D dataArea,
             PlotRenderingInfo info, PolarPlot plot, XYDataset dataset,
             int seriesIndex) {
 
-        
         GeneralPath poly = null;
         ValueAxis axis = plot.getAxisForDataset(plot.indexOf(dataset));
         final int numPoints = dataset.getItemCount(seriesIndex);
@@ -545,7 +543,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
             // just the lines, no filling
             g2.draw(poly);
         }
-        
+
         // draw the item shapes
         if (this.shapesVisible) {
             // setup for collecting optional entity info...
@@ -561,18 +559,21 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
                 final int segType = pi.currentSegment(coords);
                 pi.next();
                 if (segType != PathIterator.SEG_LINETO &&
-                        segType != PathIterator.SEG_MOVETO)
+                        segType != PathIterator.SEG_MOVETO) {
                     continue;
+                }
                 final int x = Math.round(coords[0]);
                 final int y = Math.round(coords[1]);
                 final Shape shape = ShapeUtilities.createTranslatedShape(
                         getItemShape(seriesIndex, i++), x,  y);
 
                 Paint paint;
-                if (useFillPaint)
+                if (useFillPaint) {
                     paint = lookupSeriesFillPaint(seriesIndex);
-                else
+                }
+                else {
                     paint = lookupSeriesPaint(seriesIndex);
+                }
                 g2.setPaint(paint);
                 g2.fill(shape);
                 if (isSeriesFilled(seriesIndex) && this.drawOutlineWhenFilled) {
@@ -600,7 +601,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @param dataArea  the data area.
      */
     @Override
-	public void drawAngularGridLines(Graphics2D g2, PolarPlot plot,
+    public void drawAngularGridLines(Graphics2D g2, PolarPlot plot,
                 List<ValueTick> ticks, Rectangle2D dataArea) {
         g2.setFont(plot.getAngleLabelFont());
         g2.setStroke(plot.getAngleGridlineStroke());
@@ -624,7 +625,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
                         tick.getTextAnchor());
             }
         }
-     }
+    }
 
     /**
      * Draw the radial gridlines - the rings.
@@ -636,11 +637,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @param dataArea  the data area.
      */
     @Override
-    public void drawRadialGridLines(Graphics2D g2,
-                                    PolarPlot plot,
-                                    ValueAxis radialAxis,
-                                    List ticks,
-                                    Rectangle2D dataArea) {
+    public void drawRadialGridLines(Graphics2D g2, PolarPlot plot,
+            ValueAxis radialAxis, List ticks, Rectangle2D dataArea) {
 
         g2.setFont(radialAxis.getTickLabelFont());
         g2.setPaint(plot.getRadiusGridlinePaint());
@@ -653,7 +651,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         Iterator iterator = ticks.iterator();
         while (iterator.hasNext()) {
             NumberTick tick = (NumberTick) iterator.next();
-            double angleDegrees = plot.isCounterClockwise() ? plot.getAngleOffset() : -plot.getAngleOffset();
+            double angleDegrees = plot.isCounterClockwise()
+                    ? plot.getAngleOffset() : -plot.getAngleOffset();
             Point p = plot.translateToJava2D(angleDegrees,
                     tick.getNumber().doubleValue(), radialAxis, dataArea);
             int r = p.x - center.x;
@@ -674,8 +673,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @return The legend item.
      */
     @Override
-	public LegendItem getLegendItem(int series) {
-        LegendItem result = null;
+    public LegendItem getLegendItem(int series) {
+        LegendItem result;
         PolarPlot plot = getPlot();
         if (plot == null) {
             return null;
@@ -684,7 +683,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         if (dataset == null) {
             return null;
         }
-        
+
         String toolTipText = null;
         if (getLegendItemToolTipGenerator() != null) {
             toolTipText = getLegendItemToolTipGenerator().generateLabel(
@@ -696,7 +695,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
                     series);
         }
 
-        String label = dataset.getSeriesKey(series).toString();
+        Comparable seriesKey = dataset.getSeriesKey(series);
+        String label = seriesKey.toString();
         String description = label;
         Shape shape = lookupSeriesShape(series);
         Paint paint;
@@ -713,11 +713,13 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
                 && this.drawOutlineWhenFilled;
         result = new LegendItem(label, description, toolTipText, urlText,
                 getShapesVisible(), shape, /* shapeFilled=*/ true, paint,
-                shapeOutlined, outlinePaint, outlineStroke, 
+                shapeOutlined, outlinePaint, outlineStroke,
                 /* lineVisible= */ true, this.legendLine, stroke, paint);
         result.setToolTipText(toolTipText);
         result.setURLText(urlText);
         result.setDataset(dataset);
+        result.setSeriesKey(seriesKey);
+        result.setSeriesIndex(series);
 
         return result;
     }
@@ -726,8 +728,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @since 1.0.14
      */
     @Override
-	public XYToolTipGenerator getToolTipGenerator(int series, int item)
-    {
+    public XYToolTipGenerator getToolTipGenerator(int series, int item) {
         XYToolTipGenerator generator
             = (XYToolTipGenerator) this.toolTipGeneratorList.get(series);
         if (generator == null) {
@@ -740,8 +741,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @since 1.0.14
      */
     @Override
-	public XYToolTipGenerator getSeriesToolTipGenerator(int series)
-    {
+    public XYToolTipGenerator getSeriesToolTipGenerator(int series) {
         return (XYToolTipGenerator) this.toolTipGeneratorList.get(series);
     }
 
@@ -749,9 +749,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @since 1.0.14
      */
     @Override
-	public void setSeriesToolTipGenerator(int series,
-            XYToolTipGenerator generator)
-    {
+    public void setSeriesToolTipGenerator(int series,
+            XYToolTipGenerator generator) {
         this.toolTipGeneratorList.set(series, generator);
         fireChangeEvent();
     }
@@ -760,8 +759,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @since 1.0.14
      */
     @Override
-	public XYToolTipGenerator getBaseToolTipGenerator()
-    {
+    public XYToolTipGenerator getBaseToolTipGenerator() {
         return this.baseToolTipGenerator;
     }
 
@@ -769,8 +767,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @since 1.0.14
      */
     @Override
-	public void setBaseToolTipGenerator(XYToolTipGenerator generator)
-    {
+    public void setBaseToolTipGenerator(XYToolTipGenerator generator) {
         this.baseToolTipGenerator = generator;
         fireChangeEvent();
     }
@@ -779,8 +776,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @since 1.0.14
      */
     @Override
-	public XYURLGenerator getURLGenerator()
-    {
+    public XYURLGenerator getURLGenerator() {
         return this.urlGenerator;
     }
 
@@ -788,8 +784,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @since 1.0.14
      */
     @Override
-	public void setURLGenerator(XYURLGenerator urlGenerator)
-    {
+    public void setURLGenerator(XYURLGenerator urlGenerator) {
         this.urlGenerator = urlGenerator;
         fireChangeEvent();
     }
@@ -856,7 +851,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      *     and <code>false</code> otherwise.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
@@ -914,7 +909,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @throws CloneNotSupportedException if the renderer cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         DefaultPolarItemRenderer clone
                 = (DefaultPolarItemRenderer) super.clone();
         if (this.legendLine != null) {
