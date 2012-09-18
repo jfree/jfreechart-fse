@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
@@ -360,7 +360,7 @@ public abstract class ChartFactory {
      */
     public static JFreeChart createPieChart(String title, PieDataset dataset,
             PieDataset previousDataset, int percentDiffForMaxScale,
-            boolean greenForIncrease, Locale locale, boolean subTitle, 
+            boolean greenForIncrease, Locale locale, boolean subTitle,
             boolean showDifference) {
 
         PiePlot plot = new PiePlot(dataset);
@@ -422,8 +422,8 @@ public abstract class ChartFactory {
         JFreeChart chart =  new JFreeChart(title, plot);
 
         if (subTitle) {
-            TextTitle subtitle = new TextTitle("Bright " 
-                    + (greenForIncrease ? "red" : "green") + "=change >=-" 
+            TextTitle subtitle = new TextTitle("Bright "
+                    + (greenForIncrease ? "red" : "green") + "=change >=-"
                     + percentDiffForMaxScale
                     + "%, Bright " + (!greenForIncrease ? "red" : "green")
                     + "=change >=+" + percentDiffForMaxScale + "%",
@@ -617,7 +617,7 @@ public abstract class ChartFactory {
         plot.setBackgroundPaint(null);
         plot.setOutlineStroke(null);
 
-        PieToolTipGenerator tooltipGenerator 
+        PieToolTipGenerator tooltipGenerator
                 = new StandardPieToolTipGenerator();
         PiePlot pp = (PiePlot) plot.getPieChart().getPlot();
         pp.setToolTipGenerator(tooltipGenerator);
@@ -687,7 +687,7 @@ public abstract class ChartFactory {
      *
      * @return A chart.
      */
-    public static JFreeChart createMultiplePieChart3D(String title, 
+    public static JFreeChart createMultiplePieChart3D(String title,
             CategoryDataset dataset, TableOrder order) {
 
         if (order == null) {
@@ -707,7 +707,7 @@ public abstract class ChartFactory {
         pieChart.setBackgroundPaint(null);
         plot.setPieChart(pieChart);
 
-        PieToolTipGenerator tooltipGenerator 
+        PieToolTipGenerator tooltipGenerator
                 = new StandardPieToolTipGenerator();
         PiePlot pp = (PiePlot) plot.getPieChart().getPlot();
             pp.setToolTipGenerator(tooltipGenerator);
@@ -719,10 +719,10 @@ public abstract class ChartFactory {
     }
 
     /**
-     * Creates a bar chart with a vertical orientation.  The chart object 
-     * returned by this method uses a {@link CategoryPlot} instance as the 
-     * plot, with a {@link CategoryAxis} for the domain axis, a 
-     * {@link NumberAxis} as the range axis, and a {@link BarRenderer} as the 
+     * Creates a bar chart with a vertical orientation.  The chart object
+     * returned by this method uses a {@link CategoryPlot} instance as the
+     * plot, with a {@link CategoryAxis} for the domain axis, a
+     * {@link NumberAxis} as the range axis, and a {@link BarRenderer} as the
      * renderer.
      *
      * @param title  the chart title (<code>null</code> permitted).
@@ -851,9 +851,6 @@ public abstract class ChartFactory {
      * @param valueAxisLabel  the label for the value axis (<code>null</code>
      *                        permitted).
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
-     * @param tooltips  configure chart to generate tool tips?
-     * @param urls  configure chart to generate URLs?
      *
      * @return A stacked bar chart with a 3D effect.
      */
@@ -1268,13 +1265,10 @@ public abstract class ChartFactory {
      * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
      * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
-     * @param tooltips  configure chart to generate tool tips?
-     * @param urls  configure chart to generate URLs?
      *
      * @return A stacked XY area chart.
      */
-    public static JFreeChart createStackedXYAreaChart(String title, 
+    public static JFreeChart createStackedXYAreaChart(String title,
             String xAxisLabel, String yAxisLabel, TableXYDataset dataset) {
 
         NumberAxis xAxis = new NumberAxis(xAxisLabel);
@@ -1414,7 +1408,7 @@ public abstract class ChartFactory {
         valueAxis.setAutoRangeIncludesZero(false);  // override default
         XYPlot plot = new XYPlot(dataset, timeAxis, valueAxis, null);
 
-        XYToolTipGenerator toolTipGenerator 
+        XYToolTipGenerator toolTipGenerator
                 = StandardXYToolTipGenerator.getTimeSeriesInstance();
 
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true,
@@ -1523,9 +1517,6 @@ public abstract class ChartFactory {
      * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
      * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
      * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     * @param legend  a flag specifying whether or not a legend is required.
-     * @param tooltips  configure chart to generate tool tips?
-     * @param urls  configure chart to generate URLs?
      *
      * @return A bubble chart.
      */
