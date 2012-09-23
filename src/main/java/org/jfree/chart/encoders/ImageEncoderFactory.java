@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------
  * ImageEncoderFactory.java
  * ------------------------
- * (C) Copyright 2004-2008, by Richard Atkinson and Contributors.
+ * (C) Copyright 2004-2012, by Richard Atkinson and Contributors.
  *
  * Original Author:  Richard Atkinson;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -44,7 +44,7 @@
 
 package org.jfree.chart.encoders;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 
 /**
  * Factory class for returning {@link ImageEncoder}s for different
@@ -53,7 +53,7 @@ import java.util.Hashtable;
 public class ImageEncoderFactory {
 
     /** Storage for the encoders. */
-    private static Hashtable encoders = null;
+    private static HashMap<String, String> encoders = null;
 
     static {
         init();
@@ -64,22 +64,9 @@ public class ImageEncoderFactory {
      * SunPNGEncoderAdapter class is available).
      */
     private static void init() {
-        encoders = new Hashtable();
+        encoders = new HashMap<String, String>();
         encoders.put("jpeg", "org.jfree.chart.encoders.SunJPEGEncoderAdapter");
-        try {
-            //  Test for being run under JDK 1.4+
-            Class.forName("javax.imageio.ImageIO");
-            //  Test for JFreeChart being compiled under JDK 1.4+
-            Class.forName("org.jfree.chart.encoders.SunPNGEncoderAdapter");
-            encoders.put("png",
-                    "org.jfree.chart.encoders.SunPNGEncoderAdapter");
-            encoders.put("jpeg",
-                    "org.jfree.chart.encoders.SunJPEGEncoderAdapter");
-        }
-        catch (ClassNotFoundException e) {
-            encoders.put("png",
-                    "org.jfree.chart.encoders.KeypointPNGEncoderAdapter");
-        }
+        encoders.put("png", "org.jfree.chart.encoders.SunPNGEncoderAdapter");
     }
 
     /**
@@ -102,7 +89,7 @@ public class ImageEncoderFactory {
      */
     public static ImageEncoder newInstance(String format) {
         ImageEncoder imageEncoder = null;
-        String className = (String) encoders.get(format);
+        String className = encoders.get(format);
         if (className == null) {
             throw new IllegalArgumentException("Unsupported image format - "
                     + format);
