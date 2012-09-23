@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------
@@ -56,7 +56,7 @@
  * 05-Sep-2006 : Added MarkerChangeListener support (DG);
  * 26-Sep-2007 : Fix for serialization bug 1802195 (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.plot;
@@ -178,9 +178,10 @@ public abstract class Marker implements Cloneable, Serializable {
         if (stroke == null) {
             throw new IllegalArgumentException("Null 'stroke' argument.");
         }
-        if (alpha < 0.0f || alpha > 1.0f)
+        if (alpha < 0.0f || alpha > 1.0f) {
             throw new IllegalArgumentException(
                     "The 'alpha' value must be in the range 0.0f to 1.0f");
+        }
 
         this.paint = paint;
         this.stroke = stroke;
@@ -326,9 +327,10 @@ public abstract class Marker implements Cloneable, Serializable {
      * @see #getAlpha()
      */
     public void setAlpha(float alpha) {
-        if (alpha < 0.0f || alpha > 1.0f)
+        if (alpha < 0.0f || alpha > 1.0f) {
             throw new IllegalArgumentException(
                     "The 'alpha' value must be in the range 0.0f to 1.0f");
+        }
         this.alpha = alpha;
         notifyListeners(new MarkerChangeEvent(this));
     }
