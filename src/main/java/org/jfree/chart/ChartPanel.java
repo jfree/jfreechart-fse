@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -150,7 +150,7 @@
  *               change event (DG);
  * 16-Jan-2009 : Use XOR for zoom rectangle only if useBuffer is false (DG);
  * 18-Mar-2009 : Added mouse wheel support (DG);
- * 19-Mar-2009 : Added panning on mouse drag support - based on Ulrich 
+ * 19-Mar-2009 : Added panning on mouse drag support - based on Ulrich
  *               Voigt's patch 2686040 (DG);
  * 26-Mar-2009 : Changed fillZoomRectangle default to true, and only change
  *               cursor for CTRL-mouse-click if panning is enabled (DG);
@@ -166,7 +166,7 @@
  * 06-Jul-2009 : Clear off-screen buffer to fully transparent (DG);
  * 10-Oct-2011 : localization fix: bug #3353913 (MH);
  * 15-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart;
@@ -515,8 +515,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             = ResourceBundleWrapper.getBundle(
                     "org.jfree.chart.LocalizationBundle");
 
-    /** 
-     * Temporary storage for the width and height of the chart 
+    /**
+     * Temporary storage for the width and height of the chart
      * drawing area during panning.
      */
     private double panW, panH;
@@ -1378,7 +1378,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @since 1.0.13
      */
     @Override
-	public void overlayChanged(OverlayChangeEvent event) {
+    public void overlayChanged(OverlayChangeEvent event) {
         repaint();
     }
 
@@ -1407,7 +1407,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @return A tool tip or <code>null</code> if no tooltip is available.
      */
     @Override
-	public String getToolTipText(MouseEvent e) {
+    public String getToolTipText(MouseEvent e) {
 
         String result = null;
         if (this.info != null) {
@@ -1527,7 +1527,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @param g  the graphics device for drawing on.
      */
     @Override
-	public void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (this.chart == null) {
             return;
@@ -1607,7 +1607,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                         this.chartBufferHeight);
                 bufferG2.fill(r);
                 bufferG2.setComposite(savedComposite);
-                
+
                 if (scale) {
                     AffineTransform saved = bufferG2.getTransform();
                     AffineTransform st = AffineTransform.getScaleInstance(
@@ -1669,7 +1669,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @param event  details of the chart change event.
      */
     @Override
-	public void chartChanged(ChartChangeEvent event) {
+    public void chartChanged(ChartChangeEvent event) {
         this.refreshBuffer = true;
         Plot plot = this.chart.getPlot();
         if (plot instanceof Zoomable) {
@@ -1685,7 +1685,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @param event  the event.
      */
     @Override
-	public void chartProgress(ChartProgressEvent event) {
+    public void chartProgress(ChartProgressEvent event) {
         // does nothing - override if necessary
     }
 
@@ -1764,7 +1764,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @param e  the mouse event.
      */
     @Override
-	public void mouseEntered(MouseEvent e) {
+    public void mouseEntered(MouseEvent e) {
         if (!this.ownToolTipDelaysActive) {
             ToolTipManager ttm = ToolTipManager.sharedInstance();
 
@@ -1789,7 +1789,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @param e  the mouse event.
      */
     @Override
-	public void mouseExited(MouseEvent e) {
+    public void mouseExited(MouseEvent e) {
         if (this.ownToolTipDelaysActive) {
             // restore original tooltip dealys
             ToolTipManager ttm = ToolTipManager.sharedInstance();
@@ -1809,7 +1809,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @param e  The mouse event.
      */
     @Override
-	public void mousePressed(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {
         if (this.chart == null) {
             return;
         }
@@ -1831,7 +1831,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                                 Cursor.MOVE_CURSOR));
                     }
                 }
-                // the actual panning occurs later in the mouseDragged() 
+                // the actual panning occurs later in the mouseDragged()
                 // method
             }
         }
@@ -1874,7 +1874,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @param e  the mouse event.
      */
     @Override
-	public void mouseDragged(MouseEvent e) {
+    public void mouseDragged(MouseEvent e) {
 
         // if the popup menu has already been triggered, then ignore dragging...
         if (this.popup != null && this.popup.isShowing()) {
@@ -1978,9 +1978,9 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @param e  information about the event.
      */
     @Override
-	public void mouseReleased(MouseEvent e) {
+    public void mouseReleased(MouseEvent e) {
 
-        // if we've been panning, we need to reset now that the mouse is 
+        // if we've been panning, we need to reset now that the mouse is
         // released...
         if (this.panLast != null) {
             this.panLast = null;
@@ -2077,7 +2077,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @param event  Information about the mouse event.
      */
     @Override
-	public void mouseClicked(MouseEvent event) {
+    public void mouseClicked(MouseEvent event) {
 
         Insets insets = getInsets();
         int x = (int) ((event.getX() - insets.left) / this.scaleX);
@@ -2116,7 +2116,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @param e  the event.
      */
     @Override
-	public void mouseMoved(MouseEvent e) {
+    public void mouseMoved(MouseEvent e) {
         Graphics2D g2 = (Graphics2D) getGraphics();
         if (this.horizontalAxisTrace) {
             drawHorizontalAxisTrace(g2, e.getX());
@@ -2669,7 +2669,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
     /**
      * Copies the current chart to the system clipboard.
-     * 
+     *
      * @since 1.0.13
      */
     public void doCopy() {
@@ -2745,7 +2745,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @return The result of printing.
      */
     @Override
-	public int print(Graphics g, PageFormat pf, int pageIndex) {
+    public int print(Graphics g, PageFormat pf, int pageIndex) {
 
         if (pageIndex != 0) {
             return NO_SUCH_PAGE;
@@ -2792,7 +2792,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @return An array of listeners.
      */
     @Override
-	public EventListener[] getListeners(Class listenerType) {
+    public EventListener[] getListeners(Class listenerType) {
         if (listenerType == ChartMouseListener.class) {
             // fetch listeners from local storage
             return this.chartMouseListeners.getListeners(listenerType);
@@ -3039,7 +3039,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * Updates the UI for a LookAndFeel change.
      */
     @Override
-	public void updateUI() {
+    public void updateUI() {
         // here we need to update the UI for the popup menu, if the panel
         // has one...
         if (this.popup != null) {
