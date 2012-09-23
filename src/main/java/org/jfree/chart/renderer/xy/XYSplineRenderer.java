@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -48,6 +48,8 @@ package org.jfree.chart.renderer.xy;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import org.jfree.chart.axis.ValueAxis;
@@ -75,7 +77,7 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
     /**
      * To collect data points for later splining.
      */
-    private Vector points;
+    private List<ControlPoint> points;
 
     /**
      * Resolution of splines (number of line segments between points)
@@ -152,7 +154,7 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
 
         State state = (State) super.initialise(g2, dataArea, plot, data, info);
         state.setProcessVisibleItemsOnly(false);
-        this.points = new Vector();
+        this.points = new ArrayList<ControlPoint>();
         setDrawSeriesLineAsPath(true);
         return state;
     }
@@ -206,12 +208,12 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
             // construct path
             if (this.points.size() > 1) {
                 // we need at least two points to draw something
-                ControlPoint cp0 = (ControlPoint) this.points.get(0);
+                ControlPoint cp0 = this.points.get(0);
                 s.seriesPath.moveTo(cp0.x, cp0.y);
                 if (this.points.size() == 2) {
                     // we need at least 3 points to spline. Draw simple line
                     // for two points
-                    ControlPoint cp1 = (ControlPoint) this.points.get(1);
+                    ControlPoint cp1 = this.points.get(1);
                     s.seriesPath.lineTo(cp1.x, cp1.y);
                 }
                 else {
@@ -230,7 +232,7 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
                     float[] h = new float[np];
 
                     for (int i = 0; i < np; i++) {
-                        ControlPoint cpi = (ControlPoint) this.points.get(i);
+                        ControlPoint cpi = this.points.get(i);
                         x[i] = cpi.x;
                         d[i] = cpi.y;
                     }
@@ -274,7 +276,7 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
             }
 
             // reset points vector
-            this.points = new Vector();
+            this.points = new ArrayList<ControlPoint>();
         }
     }
 
