@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------
@@ -115,7 +115,7 @@ public class ResourceBundleWrapper {
      *
      * @return The resource bundle.
      */
-    public static final ResourceBundle getBundle(String baseName) {
+    public static ResourceBundle getBundle(String baseName) {
         // the noCodeBaseClassLoader is configured by a call to the
         // removeCodeBase() method, typically in the init() method of an
         // applet...
@@ -137,8 +137,7 @@ public class ResourceBundleWrapper {
      *
      * @return The resource bundle.
      */
-    public static final ResourceBundle getBundle(String baseName,
-            Locale locale) {
+    public static ResourceBundle getBundle(String baseName, Locale locale) {
 
         // the noCodeBaseClassLoader is configured by a call to the
         // removeCodeBase() method, typically in the init() method of an
