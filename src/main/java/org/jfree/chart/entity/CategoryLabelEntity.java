@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------
@@ -89,7 +89,7 @@ public class CategoryLabelEntity extends TickLabelEntity {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -109,7 +109,7 @@ public class CategoryLabelEntity extends TickLabelEntity {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = super.hashCode();
         result = HashUtilities.hashCode(result, this.key);
         return result;
@@ -122,12 +122,12 @@ public class CategoryLabelEntity extends TickLabelEntity {
      * @return A string representation of this entity.
      */
     @Override
-	public String toString() {
-        StringBuffer buf = new StringBuffer("CategoryLabelEntity: ");
+    public String toString() {
+        StringBuilder buf = new StringBuilder("CategoryLabelEntity: ");
         buf.append("category=");
         buf.append(this.key);
-        buf.append(", tooltip=" + getToolTipText());
-        buf.append(", url=" + getURLText());
+        buf.append(", tooltip=").append(getToolTipText());
+        buf.append(", url=").append(getURLText());
         return buf.toString();
     }
 }

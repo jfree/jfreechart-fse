@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------
@@ -279,7 +279,7 @@ public class ChartEntity implements Cloneable, PublicCloneable, Serializable {
         if (shape == null) {
             throw new IllegalArgumentException("Null 'shape' argument.");
         }
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         boolean first = true;
         float[] coords = new float[6];
         PathIterator pi = shape.getPathIterator(null, 1.0);
@@ -318,7 +318,7 @@ public class ChartEntity implements Cloneable, PublicCloneable, Serializable {
             ToolTipTagFragmentGenerator toolTipTagFragmentGenerator,
             URLTagFragmentGenerator urlTagFragmentGenerator) {
 
-        StringBuffer tag = new StringBuffer();
+        StringBuilder tag = new StringBuilder();
         boolean hasURL = (this.urlText == null ? false
                 : !this.urlText.equals(""));
         boolean hasToolTip = (this.toolTipText == null ? false
@@ -354,8 +354,8 @@ public class ChartEntity implements Cloneable, PublicCloneable, Serializable {
      * @return A string.
      */
     @Override
-	public String toString() {
-        StringBuffer buf = new StringBuffer("ChartEntity: ");
+    public String toString() {
+        StringBuilder buf = new StringBuilder("ChartEntity: ");
         buf.append("tooltip = ");
         buf.append(this.toolTipText);
         return buf.toString();
@@ -369,7 +369,7 @@ public class ChartEntity implements Cloneable, PublicCloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -395,7 +395,7 @@ public class ChartEntity implements Cloneable, PublicCloneable, Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 37;
         result = HashUtilities.hashCode(result, this.toolTipText);
         result = HashUtilities.hashCode(result, this.urlText);
@@ -411,7 +411,7 @@ public class ChartEntity implements Cloneable, PublicCloneable, Serializable {
      *         entity.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
