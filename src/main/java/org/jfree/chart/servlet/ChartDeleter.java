@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
  * ChartDeleter.java
  * -----------------
-  * (C) Copyright 2002-2008, by Richard Atkinson and Contributors.
+  * (C) Copyright 2002-2012, by Richard Atkinson and Contributors.
  *
  * Original Author:  Richard Atkinson;
  * Contributor(s):   -;
@@ -58,7 +58,7 @@ import javax.servlet.http.HttpSessionBindingListener;
 public class ChartDeleter implements HttpSessionBindingListener, Serializable {
 
     /** The chart names. */
-    private List chartNames = new java.util.ArrayList();
+    private List<String> chartNames = new java.util.ArrayList<String>();
 
     /**
      * Blank constructor.
@@ -95,8 +95,8 @@ public class ChartDeleter implements HttpSessionBindingListener, Serializable {
      * @param event  the session bind event.
      */
     @Override
-	public void valueBound(HttpSessionBindingEvent event) {
-        return;
+    public void valueBound(HttpSessionBindingEvent event) {
+        // do nothing
     }
 
     /**
@@ -107,20 +107,14 @@ public class ChartDeleter implements HttpSessionBindingListener, Serializable {
      * @param event  the session unbind event.
      */
     @Override
-	public void valueUnbound(HttpSessionBindingEvent event) {
-
-        Iterator iter = this.chartNames.listIterator();
-        while (iter.hasNext()) {
-            String filename = (String) iter.next();
-            File file = new File(
-                System.getProperty("java.io.tmpdir"), filename
-            );
+    public void valueUnbound(HttpSessionBindingEvent event) {
+        File tempDir = new File(System.getProperty("java.io.tmpdir"));
+        for (String filename : this.chartNames) {
+            File file = new File(tempDir, filename);
             if (file.exists()) {
                 file.delete();
             }
         }
-        return;
-
     }
 
 }
