@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------
@@ -95,11 +95,11 @@ public class LookupPaintScaleTest extends TestCase {
         g2 = new LookupPaintScale(1.0, 2.0, Color.RED);
         assertTrue(g1.equals(g2));
 
-        g1.add(new Double(1.5), new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
-                4.0f, Color.BLUE));
+        g1.add(1.5, new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
+                Color.BLUE));
         assertFalse(g1.equals(g2));
-        g2.add(new Double(1.5), new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
-                4.0f, Color.BLUE));
+        g2.add(1.5, new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
+                Color.BLUE));
         assertTrue(g1.equals(g2));
     }
 
@@ -166,8 +166,8 @@ public class LookupPaintScaleTest extends TestCase {
 
         g1 = new LookupPaintScale(1.0, 2.0, new GradientPaint(1.0f, 2.0f,
                 Color.RED, 3.0f, 4.0f, Color.yellow));
-        g1.add(new Double(1.5), new GradientPaint(1.1f, 2.2f, Color.RED, 3.3f,
-                4.4f, Color.BLUE));
+        g1.add(1.5, new GradientPaint(1.1f, 2.2f, Color.RED, 3.3f, 4.4f,
+                Color.BLUE));
         g2 = null;
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -219,21 +219,21 @@ public class LookupPaintScaleTest extends TestCase {
         assertEquals(Color.BLACK, s.getPaint(100.0));
         assertEquals(Color.BLACK, s.getPaint(101.0));
 
-        s.add(new Double(50.0), Color.BLUE);
+        s.add(50.0, Color.BLUE);
         assertEquals(Color.BLACK, s.getPaint(-1.0));
         assertEquals(Color.BLACK, s.getPaint(0.0));
         assertEquals(Color.BLUE, s.getPaint(50.0));
         assertEquals(Color.BLUE, s.getPaint(100.0));
         assertEquals(Color.BLACK, s.getPaint(101.0));
 
-        s.add(new Double(50.0), Color.RED);
+        s.add(50.0, Color.RED);
         assertEquals(Color.BLACK, s.getPaint(-1.0));
         assertEquals(Color.BLACK, s.getPaint(0.0));
         assertEquals(Color.RED, s.getPaint(50.0));
         assertEquals(Color.RED, s.getPaint(100.0));
         assertEquals(Color.BLACK, s.getPaint(101.0));
 
-        s.add(new Double(25.0), Color.green);
+        s.add(25.0, Color.green);
         assertEquals(Color.BLACK, s.getPaint(-1.0));
         assertEquals(Color.BLACK, s.getPaint(0.0));
         assertEquals(Color.green, s.getPaint(25.0));
@@ -241,7 +241,7 @@ public class LookupPaintScaleTest extends TestCase {
         assertEquals(Color.RED, s.getPaint(100.0));
         assertEquals(Color.BLACK, s.getPaint(101.0));
 
-        s.add(new Double(75.0), Color.yellow);
+        s.add(75.0, Color.yellow);
         assertEquals(Color.BLACK, s.getPaint(-1.0));
         assertEquals(Color.BLACK, s.getPaint(0.0));
         assertEquals(Color.green, s.getPaint(25.0));

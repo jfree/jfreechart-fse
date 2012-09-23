@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -99,7 +99,7 @@ public class LookupPaintScale
          * @return An int defining the relative order of the objects.
          */
         @Override
-		public int compareTo(Object obj) {
+        public int compareTo(Object obj) {
             PaintItem that = (PaintItem) obj;
             double d1 = this.value;
             double d2 = that.value;
@@ -120,7 +120,7 @@ public class LookupPaintScale
          * @return A boolean.
          */
         @Override
-		public boolean equals(Object obj) {
+        public boolean equals(Object obj) {
             if (obj == this) {
                 return true;
             }
@@ -227,7 +227,7 @@ public class LookupPaintScale
      * @see #getUpperBound()
      */
     @Override
-	public double getLowerBound() {
+    public double getLowerBound() {
         return this.lowerBound;
     }
 
@@ -239,7 +239,7 @@ public class LookupPaintScale
      * @see #getLowerBound()
      */
     @Override
-	public double getUpperBound() {
+    public double getUpperBound() {
         return this.upperBound;
     }
 
@@ -274,7 +274,7 @@ public class LookupPaintScale
      * @see #getDefaultPaint()
      */
     @Override
-	public Paint getPaint(double value) {
+    public Paint getPaint(double value) {
 
         // handle value outside bounds...
         if (value < this.lowerBound) {
@@ -326,7 +326,7 @@ public class LookupPaintScale
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -358,7 +358,7 @@ public class LookupPaintScale
      *     instance.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         LookupPaintScale clone = (LookupPaintScale) super.clone();
         clone.lookupTable = new java.util.ArrayList(this.lookupTable);
         return clone;
