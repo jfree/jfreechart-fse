@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -43,7 +43,9 @@
 
 package org.jfree.data;
 
+import java.io.Serializable;
 import java.util.Comparator;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.util.SortOrder;
 
@@ -51,7 +53,7 @@ import org.jfree.chart.util.SortOrder;
  * A utility class that can compare and order two {@link KeyedValue} instances
  * and sort them into ascending or descending order by key or by value.
  */
-public class KeyedValueComparator implements Comparator {
+public class KeyedValueComparator implements Comparator, Serializable {
 
     /** The comparator type. */
     private KeyedValueComparatorType type;
@@ -68,9 +70,8 @@ public class KeyedValueComparator implements Comparator {
      */
     public KeyedValueComparator(KeyedValueComparatorType type,
                                 SortOrder order) {
-        if (order == null) {
-            throw new IllegalArgumentException("Null 'order' argument.");
-        }
+        ParamChecks.nullNotPermitted(type, "type");
+        ParamChecks.nullNotPermitted(order, "order");
         this.type = type;
         this.order = order;
     }
