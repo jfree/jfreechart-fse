@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------
@@ -596,11 +596,11 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
 
     /**
      * The shadow generator (<code>null</code> permitted).
-     * 
+     *
      * @since 1.0.14
      */
     private ShadowGenerator shadowGenerator;
-    
+
     /**
      * Creates a new <code>XYPlot</code> instance with no dataset, no axes and
      * no renderer.  You should specify these items before using the plot.
@@ -1058,12 +1058,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      */
     public RectangleEdge getDomainAxisEdge(int index) {
         AxisLocation location = getDomainAxisLocation(index);
-        RectangleEdge result = Plot.resolveDomainAxisLocation(location,
-                this.orientation);
-        if (result == null) {
-            result = RectangleEdge.opposite(getDomainAxisEdge());
-        }
-        return result;
+        return Plot.resolveDomainAxisLocation(location, this.orientation);
     }
 
     /**
@@ -1358,12 +1353,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      */
     public RectangleEdge getRangeAxisEdge(int index) {
         AxisLocation location = getRangeAxisLocation(index);
-        RectangleEdge result = Plot.resolveRangeAxisLocation(location,
-                this.orientation);
-        if (result == null) {
-            result = RectangleEdge.opposite(getRangeAxisEdge());
-        }
-        return result;
+        return Plot.resolveRangeAxisLocation(location, this.orientation);
     }
 
     /**
@@ -1490,7 +1480,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         }
         checkAxisIndices(axisIndices);
         Integer key = new Integer(index);
-        this.datasetToDomainAxesMap.put(key, 
+        this.datasetToDomainAxesMap.put(key,
                 new ArrayList<Integer>(axisIndices));
         // fake a dataset change event to update axes...
         datasetChanged(new DatasetChangeEvent(this, getDataset(index)));
@@ -1527,7 +1517,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         }
         checkAxisIndices(axisIndices);
         Integer key = new Integer(index);
-        this.datasetToRangeAxesMap.put(key, 
+        this.datasetToRangeAxesMap.put(key,
                 new ArrayList<Integer>(axisIndices));
         // fake a dataset change event to update axes...
         datasetChanged(new DatasetChangeEvent(this, getDataset(index)));
@@ -2136,7 +2126,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
     }
 
     /**
-     * Returns the paint for the minor grid lines (if any) plotted against the 
+     * Returns the paint for the minor grid lines (if any) plotted against the
      * range axis.
      *
      * @return The paint (never <code>null</code>).
@@ -3466,9 +3456,9 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
             BufferedImage shadowImage
                     = this.shadowGenerator.createDropShadow(dataImage);
             g2 = savedG2;
-            g2.drawImage(shadowImage, (int) dataArea.getX() 
+            g2.drawImage(shadowImage, (int) dataArea.getX()
                     + this.shadowGenerator.calculateOffsetX(),
-                    (int) dataArea.getY() 
+                    (int) dataArea.getY()
                     + this.shadowGenerator.calculateOffsetY(), null);
             g2.drawImage(dataImage, (int) dataArea.getX(),
                     (int) dataArea.getY(), null);
@@ -3879,7 +3869,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
             throw new IllegalArgumentException("Index " + index
                     + " out of bounds.");
         }
-        ValueAxis valueAxis = null;
+        ValueAxis valueAxis;
         List axisIndices = (List) this.datasetToDomainAxesMap.get(
                 new Integer(index));
         if (axisIndices != null) {
@@ -3946,13 +3936,13 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
             while (iterator.hasNext()) {
                 paintLine = false;
                 ValueTick tick = (ValueTick) iterator.next();
-                if ((tick.getTickType() == TickType.MINOR) 
+                if ((tick.getTickType() == TickType.MINOR)
                         && isDomainMinorGridlinesVisible()) {
                     gridStroke = getDomainMinorGridlineStroke();
                     gridPaint = getDomainMinorGridlinePaint();
                     paintLine = true;
                 }
-                else if ((tick.getTickType() == TickType.MAJOR) 
+                else if ((tick.getTickType() == TickType.MAJOR)
                         && isDomainGridlinesVisible()) {
                     gridStroke = getDomainGridlineStroke();
                     gridPaint = getDomainGridlinePaint();
@@ -3993,7 +3983,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
             ValueAxis axis = getRangeAxis();
             if (axis != null) {
                 Iterator iterator = ticks.iterator();
-                boolean paintLine = false;
+                boolean paintLine;
                 while (iterator.hasNext()) {
                     paintLine = false;
                     ValueTick tick = (ValueTick) iterator.next();
@@ -4270,7 +4260,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
             Stroke stroke, Paint paint) {
 
         if (axis.getRange().contains(value)) {
-            Line2D line = null;
+            Line2D line;
             if (orientation == PlotOrientation.VERTICAL) {
                 double xx = axis.valueToJava2D(value, dataArea,
                         RectangleEdge.BOTTOM);
@@ -4336,7 +4326,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
             Stroke stroke, Paint paint) {
 
         if (axis.getRange().contains(value)) {
-            Line2D line = null;
+            Line2D line;
             if (orientation == PlotOrientation.HORIZONTAL) {
                 double xx = axis.valueToJava2D(value, dataArea,
                         RectangleEdge.BOTTOM);
