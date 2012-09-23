@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -82,15 +82,16 @@
  *               changes (DG);
  * 10-Jun-2009 : Added addOrUpdate(TimeSeriesDataItem) method (DG);
  * 31-Aug-2009 : Clear minY and maxY cache values in createCopy (DG);
- * 03-Dec-2011 : Fixed bug 3446965 which affects the y-range calculation for 
+ * 03-Dec-2011 : Fixed bug 3446965 which affects the y-range calculation for
  *               the series (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.data.time;
 
 import java.io.Serializable;
+import java.lang.StringBuilder;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
@@ -147,7 +148,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
 
     /**
      * The minimum y-value in the series.
-     * 
+     *
      * @since 1.0.14
      */
     private double minY;
@@ -252,7 +253,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
      * @return The item count.
      */
     @Override
-	public int getItemCount() {
+    public int getItemCount() {
         return this.data.size();
     }
 
@@ -378,11 +379,11 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
 
     /**
      * Returns a data item from the dataset.  Note that the returned object
-     * is a clone of the item in the series, so modifying it will have no 
+     * is a clone of the item in the series, so modifying it will have no
      * effect on the data series.
-     * 
+     *
      * @param index  the item index.
-     * 
+     *
      * @return The data item.
      */
     public TimeSeriesDataItem getDataItem(int index) {
@@ -576,7 +577,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
             this.timePeriodClass = c;
         }
         else if (!this.timePeriodClass.equals(c)) {
-            StringBuffer b = new StringBuffer();
+            StringBuilder b = new StringBuilder();
             b.append("You are trying to add data where the time period class ");
             b.append("is ");
             b.append(item.getPeriod().getClass().getName());
@@ -606,7 +607,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
                     added = true;
                 }
                 else {
-                    StringBuffer b = new StringBuffer();
+                    StringBuilder b = new StringBuilder();
                     b.append("You are attempting to add an observation for ");
                     b.append("the time period ");
                     b.append(item.getPeriod().toString());
@@ -694,7 +695,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
      *
      * @param period  the period (<code>null</code> not permitted).
      * @param value  the value.
-     * 
+     *
      * @since 1.0.14
      */
     public void update(RegularTimePeriod period, double value) {
@@ -1020,7 +1021,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
      *         subclasses may differ.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         TimeSeries clone = (TimeSeries) super.clone();
         clone.data = (List) ObjectUtilities.deepClone(this.data);
         return clone;
@@ -1125,7 +1126,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -1167,7 +1168,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
      * @return The hashcode
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = super.hashCode();
         result = 29 * result + (this.domain != null ? this.domain.hashCode()
                 : 0);
@@ -1209,7 +1210,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
             this.maxY = maxIgnoreNaN(this.maxY, y);
         }
     }
-    
+
     /**
      * Updates the cached values for the minimum and maximum data values on
      * the basis that the specified item has just been removed.
