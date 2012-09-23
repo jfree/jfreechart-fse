@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
@@ -40,7 +40,7 @@
  * ------------- JFREECHART 1.0.x ---------------------------------------------
  * 02-Feb-2007 : Removed author tags all over JFreeChart sources (DG);
  * 03-Dec-2011 : Fixed path disclosure vulnerability - see bug 2879650 (DG);
- * 
+ *
  */
 
 package org.jfree.chart.servlet;
@@ -84,8 +84,8 @@ public class DisplayChart extends HttpServlet {
      * @throws ServletException never.
      */
     @Override
-	public void init() throws ServletException {
-        return;
+    public void init() throws ServletException {
+        // do nothing
     }
 
     /**
@@ -98,9 +98,8 @@ public class DisplayChart extends HttpServlet {
      * @throws IOException ??.
      */
     @Override
-	public void service(HttpServletRequest request,
-                        HttpServletResponse response)
-            throws ServletException, IOException {
+    public void service(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
         String filename = request.getParameter("filename");
@@ -117,7 +116,7 @@ public class DisplayChart extends HttpServlet {
         File file = new File(System.getProperty("java.io.tmpdir"), filename);
         if (!file.exists()) {
             throw new ServletException(
-                    "Unable to display the chart with the filename '" 
+                    "Unable to display the chart with the filename '"
                     + filename + "'.");
         }
 
@@ -152,7 +151,6 @@ public class DisplayChart extends HttpServlet {
         else {
             throw new ServletException("Chart image not found");
         }
-        return;
     }
 
 }
