@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -144,12 +144,6 @@ public class XYBarRendererTest extends TestCase {
                 GradientPaintTransformType.CENTER_HORIZONTAL));
         assertTrue(r1.equals(r2));
 
-        // legendBar
-        r1.setLegendBar(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
-        assertFalse(r1.equals(r2));
-        r2.setLegendBar(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
-        assertTrue(r1.equals(r2));
-
         // positiveItemLabelFallbackPosition
         r1.setPositiveItemLabelPositionFallback(new ItemLabelPosition());
         assertFalse(r1.equals(r2));
@@ -205,8 +199,6 @@ public class XYBarRendererTest extends TestCase {
      */
     public void testCloning() {
         XYBarRenderer r1 = new XYBarRenderer();
-        Rectangle2D rect = new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0);
-        r1.setLegendBar(rect);
         XYBarRenderer r2 = null;
         try {
             r2 = (XYBarRenderer) r1.clone();
@@ -216,12 +208,6 @@ public class XYBarRendererTest extends TestCase {
         }
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
-
-        // check independence
-        rect.setRect(4.0, 3.0, 2.0, 1.0);
-        assertFalse(r1.equals(r2));
-        r2.setLegendBar(new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0));
         assertTrue(r1.equals(r2));
     }
 
@@ -305,7 +291,7 @@ public class XYBarRendererTest extends TestCase {
     }
 
     /**
-     * A test for the findDomainBounds method to ensure it correctly accounts 
+     * A test for the findDomainBounds method to ensure it correctly accounts
      * for the series visibility.
      */
     public void testFindDomainBounds2() {
@@ -318,12 +304,12 @@ public class XYBarRendererTest extends TestCase {
         XYIntervalSeriesCollection dataset = new XYIntervalSeriesCollection();
         dataset.addSeries(s1);
         dataset.addSeries(s2);
-        
+
         XYBarRenderer renderer = new XYBarRenderer();
         Range r = renderer.findDomainBounds(dataset);
         assertEquals(0.5, r.getLowerBound(), EPSILON);
         assertEquals(4.1, r.getUpperBound(), EPSILON);
-        
+
         renderer.setSeriesVisible(1, Boolean.FALSE);
         r = renderer.findDomainBounds(dataset);
         assertEquals(0.5, r.getLowerBound(), EPSILON);
@@ -358,7 +344,7 @@ public class XYBarRendererTest extends TestCase {
     }
 
     /**
-     * A test for the findRangeBounds method to ensure it correctly accounts 
+     * A test for the findRangeBounds method to ensure it correctly accounts
      * for the series visibility.
      */
     public void testFindRangeBounds2() {
@@ -371,13 +357,13 @@ public class XYBarRendererTest extends TestCase {
         XYIntervalSeriesCollection dataset = new XYIntervalSeriesCollection();
         dataset.addSeries(s1);
         dataset.addSeries(s2);
-        
+
         XYBarRenderer renderer = new XYBarRenderer();
         renderer.setUseYInterval(false);
         Range r = renderer.findRangeBounds(dataset);
         assertEquals(9.0, r.getLowerBound(), EPSILON);
         assertEquals(30.0, r.getUpperBound(), EPSILON);
-        
+
         renderer.setSeriesVisible(1, Boolean.FALSE);
         r = renderer.findRangeBounds(dataset);
         assertEquals(10.0, r.getLowerBound(), EPSILON);
