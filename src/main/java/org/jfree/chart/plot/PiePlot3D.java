@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------
@@ -84,7 +84,7 @@
  * 10-Oct-2011 : Localization fix: bug #3353913 (MH);
  * 18-Oct-2011 : Fix tooltip offset with shadow generator (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.plot;
@@ -379,9 +379,9 @@ public class PiePlot3D extends PiePlot implements Serializable {
                     plotArea.getCenterY() - min, 2 * min, 2 * min);
         }
         // get a list of keys...
-        List sectionKeys = dataset.getKeys();
+        List<Comparable> sectionKeys = dataset.getKeys();
 
-        if (sectionKeys.size() == 0) {
+        if (sectionKeys.isEmpty()) {
             return;
         }
 
@@ -406,10 +406,7 @@ public class PiePlot3D extends PiePlot implements Serializable {
         Paint outlinePaint;
         Stroke outlineStroke;
 
-        Iterator iterator = sectionKeys.iterator();
-        while (iterator.hasNext()) {
-
-            Comparable currentKey = (Comparable) iterator.next();
+        for (Comparable currentKey : sectionKeys) {
             Number dataValue = dataset.getValue(currentKey);
             if (dataValue == null) {
                 arcList.add(null);
@@ -510,7 +507,7 @@ public class PiePlot3D extends PiePlot implements Serializable {
 
         // cycle through once drawing only the sides at the back...
         int cat = 0;
-        iterator = arcList.iterator();
+        Iterator iterator = arcList.iterator();
         while (iterator.hasNext()) {
             Arc2D segment = (Arc2D) iterator.next();
             if (segment != null) {
@@ -554,7 +551,7 @@ public class PiePlot3D extends PiePlot implements Serializable {
                     pieArea.getHeight() - depth, arc.getAngleStart(),
                     arc.getAngleExtent(), Arc2D.PIE);
 
-            Comparable currentKey = (Comparable) sectionKeys.get(sectionIndex);
+            Comparable currentKey = sectionKeys.get(sectionIndex);
             paint = lookupSectionPaint(currentKey, true);
             outlinePaint = lookupSectionOutlinePaint(currentKey);
             outlineStroke = lookupSectionOutlineStroke(currentKey);
@@ -588,7 +585,7 @@ public class PiePlot3D extends PiePlot implements Serializable {
             }
         }
 
-        List keys = dataset.getKeys();
+        List<Comparable> keys = dataset.getKeys();
         Rectangle2D adjustedPlotArea = new Rectangle2D.Double(
                 originalPlotArea.getX(), originalPlotArea.getY(),
                 originalPlotArea.getWidth(), originalPlotArea.getHeight()
@@ -603,12 +600,12 @@ public class PiePlot3D extends PiePlot implements Serializable {
         }
 
         if (getShadowGenerator() != null) {
-            BufferedImage shadowImage 
+            BufferedImage shadowImage
                     = getShadowGenerator().createDropShadow(dataImage);
             g2 = savedG2;
-            g2.drawImage(shadowImage, (int) plotArea.getX() 
+            g2.drawImage(shadowImage, (int) plotArea.getX()
                     + getShadowGenerator().calculateOffsetX(),
-                    (int) plotArea.getY() 
+                    (int) plotArea.getY()
                     + getShadowGenerator().calculateOffsetY(), null);
             g2.drawImage(dataImage, (int) plotArea.getX(),
                     (int) plotArea.getY(), null);

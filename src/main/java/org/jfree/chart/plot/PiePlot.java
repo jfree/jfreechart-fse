@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------
@@ -169,7 +169,7 @@
  * 20-Nov-2011 : Initialise shadow generator as null (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
  * 01-Jul-2012 : Removed deprecated code (DG);
- * 
+ *
  */
 
 package org.jfree.chart.plot;
@@ -515,7 +515,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
 
     /**
      * The shadow generator for the plot (<code>null</code> permitted).
-     * 
+     *
      * @since 1.0.14
      */
     private ShadowGenerator shadowGenerator;
@@ -2293,9 +2293,9 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
 
     /**
      * Returns the shadow generator for the plot, if any.
-     * 
+     *
      * @return The shadow generator (possibly <code>null</code>).
-     * 
+     *
      * @since 1.0.14
      */
     public ShadowGenerator getShadowGenerator() {
@@ -2371,8 +2371,8 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      *              (<code>null</code> permitted).
      */
     @Override
-	public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
-                     PlotState parentState, PlotRenderingInfo info) {
+    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+            PlotState parentState, PlotRenderingInfo info) {
 
         // adjust for insets...
         RectangleInsets insets = getInsets();
@@ -2407,11 +2407,11 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             if (this.shadowGenerator != null) {
                 BufferedImage shadowImage = this.shadowGenerator.createDropShadow(dataImage);
                 g2 = savedG2;
-                g2.drawImage(shadowImage, (int) area.getX() 
-                        + this.shadowGenerator.calculateOffsetX(), 
+                g2.drawImage(shadowImage, (int) area.getX()
+                        + this.shadowGenerator.calculateOffsetX(),
                         (int) area.getY()
                         + this.shadowGenerator.calculateOffsetY(), null);
-                g2.drawImage(dataImage, (int) area.getX(), (int) area.getY(), 
+                g2.drawImage(dataImage, (int) area.getX(), (int) area.getY(),
                         null);
             }
         }
@@ -2528,7 +2528,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         // plot the data (unless the dataset is null)...
         if ((this.dataset != null) && (this.dataset.getKeys().size() > 0)) {
 
-            List keys = this.dataset.getKeys();
+            List<Comparable> keys = this.dataset.getKeys();
             double totalValue = DatasetUtilities.calculatePieDatasetTotal(
                     this.dataset);
 
@@ -2665,7 +2665,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      *
      * @since 1.0.7
      */
-    protected void drawSimpleLabels(Graphics2D g2, List keys,
+    protected void drawSimpleLabels(Graphics2D g2, List<Comparable> keys,
             double totalValue, Rectangle2D plotArea, Rectangle2D pieArea,
             PiePlotState state) {
 
@@ -2676,9 +2676,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         Rectangle2D labelsArea = this.simpleLabelOffset.createInsetRectangle(
                 pieArea);
         double runningTotal = 0.0;
-        Iterator iterator = keys.iterator();
-        while (iterator.hasNext()) {
-            Comparable key = (Comparable) iterator.next();
+        for (Comparable key : keys) {
             boolean include;
             double v = 0.0;
             Number n = getDataset().getValue(key);
@@ -2738,7 +2736,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
 
                 g2.setPaint(this.labelPaint);
                 g2.setFont(this.labelFont);
-                TextUtilities.drawAlignedString(label, g2, x, y, 
+                TextUtilities.drawAlignedString(label, g2, x, y,
                         TextAnchor.CENTER);
 
             }
@@ -2758,9 +2756,9 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @param linkArea  the link area.
      * @param state  the state.
      */
-    protected void drawLabels(Graphics2D g2, List keys, double totalValue,
-                              Rectangle2D plotArea, Rectangle2D linkArea,
-                              PiePlotState state) {
+    protected void drawLabels(Graphics2D g2, List<Comparable> keys,
+            double totalValue, Rectangle2D plotArea, Rectangle2D linkArea,
+            PiePlotState state) {
 
         Composite originalComposite = g2.getComposite();
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
@@ -2771,9 +2769,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         DefaultKeyedValues rightKeys = new DefaultKeyedValues();
 
         double runningTotal = 0.0;
-        Iterator iterator = keys.iterator();
-        while (iterator.hasNext()) {
-            Comparable key = (Comparable) iterator.next();
+        for (Comparable key : keys) {
             boolean include;
             double v = 0.0;
             Number n = this.dataset.getValue(key);
@@ -2953,12 +2949,10 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         if (this.dataset == null) {
             return result;
         }
-        List keys = this.dataset.getKeys();
+        List<Comparable> keys = this.dataset.getKeys();
         int section = 0;
         Shape shape = getLegendItemShape();
-        Iterator iterator = keys.iterator();
-        while (iterator.hasNext()) {
-            Comparable key = (Comparable) iterator.next();
+        for (Comparable key : keys) {
             Number n = this.dataset.getValue(key);
             boolean include;
             if (n == null) {
@@ -3016,7 +3010,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @return The plot type.
      */
     @Override
-	public String getPlotType() {
+    public String getPlotType() {
         return localizationResources.getString("Pie_Plot");
     }
 
