@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
@@ -173,7 +173,7 @@ public class ImageMapUtilities {
             ToolTipTagFragmentGenerator toolTipTagFragmentGenerator,
             URLTagFragmentGenerator urlTagFragmentGenerator) {
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("<map id=\"" + htmlEscape(name) + "\" name=\""
                 + htmlEscape(name) + "\">");
         sb.append(StringUtils.getLineSeparator());
@@ -213,7 +213,7 @@ public class ImageMapUtilities {
         if (input == null) {
             throw new IllegalArgumentException("Null 'input' argument.");
         }
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         int length = input.length();
         for (int i = 0; i < length; i++) {
             char c = input.charAt(i);
@@ -256,7 +256,7 @@ public class ImageMapUtilities {
         if (input == null) {
             throw new IllegalArgumentException("Null 'input' argument.");
         }
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         int length = input.length();
         for (int i = 0; i < length; i++) {
             char c = input.charAt(i);
