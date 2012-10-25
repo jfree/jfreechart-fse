@@ -3,16 +3,39 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jfree.chart</groupId>
   <artifactId>jfreechart-fse</artifactId>
-  <packaging>jar</packaging>
+  <packaging>bundle</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>jfreechart-fse</name>
   <url>http://maven.apache.org</url>
+ 
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- used as Bundle-Version in bnd.properties -->
+    <jfreechart.bundle.version>1.0.20.SNAPSHOT</jfreechart.bundle.version>
+  </properties>
+
   <build>
     <resources>
       <resource>
         <directory>src/main/resources</directory>
       </resource>
     </resources>
+    <!-- Use maven-bundle-plugin in order to generate OSGi metadata -->
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>2.3.7</version>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <!-- include src/bnd.properties which has all Bnd
+                 instructions -->
+            <_include>src/bnd.properties</_include>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
   <dependencies>
     <dependency>
