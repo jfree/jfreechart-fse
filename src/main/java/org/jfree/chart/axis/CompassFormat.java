@@ -49,29 +49,38 @@ import java.text.ParsePosition;
  */
 public class CompassFormat extends NumberFormat {
 
-    /** North. */
-    private static final String N = "N";
-
-    /** East. */
-    private static final String E = "E";
-
-    /** South. */
-    private static final String S = "S";
-
-    /** West. */
-    private static final String W = "W";
-
     /** The directions. */
-    public static final String[] DIRECTIONS = {
-        N, N + N + E, N + E, E + N + E, E, E + S + E, S + E, S + S + E, S,
-        S + S + W, S + W, W + S + W, W, W + N + W, N + W, N + N + W, N
-    };
+    public final String[] directions;
 
     /**
-     * Creates a new formatter.
+     * Creates a new formatter using english identifiers.
      */
     public CompassFormat() {
+        this("N", "E", "S", "W");
+    }
+
+    /**
+     * Creates a new formatter using the specified identifiers for
+     * the base wind directions.
+     */
+    public CompassFormat(String n, String e, String s, String w) {
+        this(new String[] {
+            n, n + n + e, n + e, e + n + e, e, e + s + e, s + e, s + s + e, s,
+            s + s + w, s + w, w + s + w, w, w + n + w, n + w, n + n + w, n
+        });
+    }
+
+    /**
+     * Creates a new formatter using the specified identifiers.
+     */
+    public CompassFormat(String[] directions) {
         super();
+        if (directions == null) {
+            throw new IllegalArgumentException("directions must not be null");
+        } else if (directions.length != 16) {
+            throw new IllegalArgumentException("directions must contain exactly 16 elements");
+        }
+        this.directions = directions;
     }
 
     /**
@@ -88,7 +97,7 @@ public class CompassFormat extends NumberFormat {
             direction = direction + 360.0;
         }
         int index = ((int) Math.floor(direction / 11.25) + 1) / 2;
-        return DIRECTIONS[index];
+        return directions[index];
 
     }
 
