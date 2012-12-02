@@ -42,6 +42,9 @@
 
 package org.jfree.data.xy;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -49,38 +52,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.util.PublicCloneable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for {@link DefaultXYZDataset}.
  */
-public class DefaultXYZDatasetTest extends TestCase {
+public class DefaultXYZDatasetTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(DefaultXYZDatasetTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public DefaultXYZDatasetTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         DefaultXYZDataset d1 = new DefaultXYZDataset();
@@ -105,6 +93,7 @@ public class DefaultXYZDatasetTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         DefaultXYZDataset d1 = new DefaultXYZDataset();
         DefaultXYZDataset d2 = null;
@@ -144,6 +133,7 @@ public class DefaultXYZDatasetTest extends TestCase {
     /**
      * Verify that this class implements {@link PublicCloneable}.
      */
+    @Test
     public void testPublicCloneable() {
         DefaultXYZDataset d1 = new DefaultXYZDataset();
         assertTrue(d1 instanceof PublicCloneable);
@@ -152,6 +142,7 @@ public class DefaultXYZDatasetTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         DefaultXYZDataset d1 = new DefaultXYZDataset();
@@ -201,6 +192,7 @@ public class DefaultXYZDatasetTest extends TestCase {
     /**
      * Some checks for the getSeriesKey(int) method.
      */
+    @Test
     public void testGetSeriesKey() {
         DefaultXYZDataset d = createSampleDataset1();
         assertEquals("S1", d.getSeriesKey(0));
@@ -229,6 +221,7 @@ public class DefaultXYZDatasetTest extends TestCase {
     /**
      * Some checks for the indexOf(Comparable) method.
      */
+    @Test
     public void testIndexOf() {
         DefaultXYZDataset d = createSampleDataset1();
         assertEquals(0, d.indexOf("S1"));
@@ -242,6 +235,7 @@ public class DefaultXYZDatasetTest extends TestCase {
     /**
      * Some tests for the addSeries() method.
      */
+    @Test
     public void testAddSeries() {
         DefaultXYZDataset d = new DefaultXYZDataset();
         d.addSeries("S1", new double[][] {{1.0}, {2.0}, {3.0}});

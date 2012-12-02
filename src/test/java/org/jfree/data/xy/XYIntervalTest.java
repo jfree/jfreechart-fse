@@ -40,6 +40,8 @@
 
 package org.jfree.data.xy;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -47,36 +49,25 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+
 
 /**
  * Tests for the {@link XYInterval} class.
  */
-public class XYIntervalTest extends TestCase {
+public class XYIntervalTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(XYIntervalTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public XYIntervalTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         XYInterval i1 = new XYInterval(1.0, 2.0, 3.0, 2.5, 3.5);
         XYInterval i2 = new XYInterval(1.0, 2.0, 3.0, 2.5, 3.5);
@@ -111,6 +102,7 @@ public class XYIntervalTest extends TestCase {
     /**
      * This class is immutable.
      */
+    @Test
     public void testCloning() {
         XYInterval i1 = new XYInterval(1.0, 2.0, 3.0, 2.5, 3.5);
         assertFalse(i1 instanceof Cloneable);
@@ -119,6 +111,7 @@ public class XYIntervalTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         XYInterval i1 = new XYInterval(1.0, 2.0, 3.0, 2.5, 3.5);
         XYInterval i2 = null;

@@ -41,8 +41,9 @@
 
 package org.jfree.chart;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
+import org.junit.Test;
+
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -50,38 +51,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.PaintMap;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Some tests for the {@link PaintMap} class.
  */
-public class PaintMapTest extends TestCase {
+public class PaintMapTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(PaintMapTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public PaintMapTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the getPaint() method.
      */
+    @Test
     public void testGetPaint() {
         PaintMap m1 = new PaintMap();
         assertEquals(null, m1.getPaint("A"));
@@ -104,6 +90,7 @@ public class PaintMapTest extends TestCase {
     /**
      * Some checks for the put() method.
      */
+    @Test
     public void testPut() {
         PaintMap m1 = new PaintMap();
         m1.put("A", Color.RED);
@@ -123,6 +110,7 @@ public class PaintMapTest extends TestCase {
     /**
      * Some checks for the equals() method.
      */
+    @Test
     public void testEquals() {
         PaintMap m1 = new PaintMap();
         PaintMap m2 = new PaintMap();
@@ -152,6 +140,7 @@ public class PaintMapTest extends TestCase {
     /**
      * Some checks for cloning.
      */
+    @Test
     public void testCloning() {
         PaintMap m1 = new PaintMap();
         PaintMap m2 = null;
@@ -178,6 +167,7 @@ public class PaintMapTest extends TestCase {
     /**
      * A check for serialization.
      */
+    @Test
     public void testSerialization1() {
         PaintMap m1 = new PaintMap();
         PaintMap m2 = null;
@@ -201,6 +191,7 @@ public class PaintMapTest extends TestCase {
     /**
      * A check for serialization.
      */
+    @Test
     public void testSerialization2() {
         PaintMap m1 = new PaintMap();
         m1.put("K1", Color.RED);
@@ -229,6 +220,7 @@ public class PaintMapTest extends TestCase {
      *
      * http://www.jfree.org/phpBB2/viewtopic.php?t=19980
      */
+    @Test
     public void testKeysOfDifferentClasses() {
         PaintMap m = new PaintMap();
         m.put("ABC", Color.RED);

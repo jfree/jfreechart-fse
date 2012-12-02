@@ -44,41 +44,15 @@
 
 package org.jfree.chart.renderer;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 /**
  * A collection of tests for the org.jfree.chart.renderer package.
  * <P>
  * These tests can be run using JUnit (http://www.junit.org).
  */
-public class RendererPackageTests extends TestCase {
+public class RendererPackageTests  {
 
-    /**
-     * Returns a test suite to the JUnit test runner.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        TestSuite suite = new TestSuite("org.jfree.chart.renderer");
-        suite.addTestSuite(AbstractRendererTest.class);
-        suite.addTestSuite(AreaRendererEndTypeTest.class);
-        suite.addTestSuite(DefaultPolarItemRendererTest.class);
-        suite.addTestSuite(GrayPaintScaleTest.class);
-        suite.addTestSuite(LookupPaintScaleTest.class);
-        suite.addTestSuite(OutlierTest.class);
-        suite.addTestSuite(RendererUtilitiesTest.class);
-        return suite;
-    }
 
-    /**
-     * Constructs the test suite.
-     *
-     * @param name  the suite name.
-     */
-    public RendererPackageTests(String name) {
-        super(name);
-    }
+
+
 
 }

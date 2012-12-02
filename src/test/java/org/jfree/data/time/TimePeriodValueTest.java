@@ -40,6 +40,9 @@
 
 package org.jfree.data.time;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -47,47 +50,30 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.data.time.Day;
-import org.jfree.data.time.TimePeriodValue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link TimePeriodValue} class.
  */
-public class TimePeriodValueTest extends TestCase {
+public class TimePeriodValueTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(TimePeriodValueTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public TimePeriodValueTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Common test setup.
      */
-    @Override
-	protected void setUp() {
+    @Before
+	public void setUp() {
         // no setup
     }
 
     /**
      * Test that an instance is equal to itself.
      */
+    @Test
     public void testEqualsSelf() {
         TimePeriodValue tpv = new TimePeriodValue(new Day(), 55.75);
         assertTrue(tpv.equals(tpv));
@@ -96,6 +82,7 @@ public class TimePeriodValueTest extends TestCase {
     /**
      * Tests the equals() method.
      */
+    @Test
     public void testEquals() {
         TimePeriodValue tpv1 = new TimePeriodValue(new Day(30, 7, 2003), 55.75);
         TimePeriodValue tpv2 = new TimePeriodValue(new Day(30, 7, 2003), 55.75);
@@ -106,6 +93,7 @@ public class TimePeriodValueTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         TimePeriodValue tpv1 = new TimePeriodValue(new Day(30, 7, 2003), 55.75);

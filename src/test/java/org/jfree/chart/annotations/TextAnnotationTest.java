@@ -43,44 +43,29 @@
 
 package org.jfree.chart.annotations;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.annotations.CategoryTextAnnotation;
-import org.jfree.chart.annotations.TextAnnotation;
 import org.jfree.chart.ui.TextAnchor;
+import org.junit.Test;
+
+import java.awt.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link TextAnnotation} class.
  */
-public class TextAnnotationTest extends TestCase {
+public class TextAnnotationTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(TextAnnotationTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public TextAnnotationTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         TextAnnotation a1 = new CategoryTextAnnotation("Test", "Category", 1.0);
@@ -130,6 +115,7 @@ public class TextAnnotationTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashCode() {
         TextAnnotation a1 = new CategoryTextAnnotation("Test", "Category", 1.0);
         TextAnnotation a2 = new CategoryTextAnnotation("Test", "Category", 1.0);
@@ -142,6 +128,7 @@ public class TextAnnotationTest extends TestCase {
     /**
      * Test null-argument (Bug #3428870).
      */
+    @Test
     public void testSetRotationAnchor() {
         TextAnnotation a = new CategoryTextAnnotation("Test", "Category", 1.0);
         try {

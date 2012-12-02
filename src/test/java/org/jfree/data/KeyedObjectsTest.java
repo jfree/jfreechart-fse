@@ -42,6 +42,10 @@
 
 package org.jfree.data;
 
+import org.jfree.data.general.DefaultPieDataset;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -50,48 +54,31 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.data.KeyedObjects;
-import org.jfree.data.UnknownKeyException;
-import org.jfree.data.general.DefaultPieDataset;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link KeyedObjects} class.
  */
-public class KeyedObjectsTest extends TestCase {
+public class KeyedObjectsTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(KeyedObjectsTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public KeyedObjectsTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Common test setup.
      */
-    @Override
-	protected void setUp() {
+    @Before
+	public void setUp() {
         // no setup required
     }
 
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         KeyedObjects ko1 = new KeyedObjects();
         ko1.addObject("V1", new Integer(1));
@@ -112,6 +99,7 @@ public class KeyedObjectsTest extends TestCase {
     /**
      * Confirm special features of cloning.
      */
+    @Test
     public void testCloning2() {
         // case 1 - object is mutable but not PublicCloneable
         Object obj1 = new ArrayList();
@@ -153,6 +141,7 @@ public class KeyedObjectsTest extends TestCase {
     /**
      * Check that inserting and retrieving values works as expected.
      */
+    @Test
     public void testInsertAndRetrieve() {
 
         KeyedObjects data = new KeyedObjects();
@@ -193,6 +182,7 @@ public class KeyedObjectsTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         KeyedObjects ko1 = new KeyedObjects();
@@ -223,6 +213,7 @@ public class KeyedObjectsTest extends TestCase {
     /**
      * Simple checks for the getObject(int) method.
      */
+    @Test
     public void testGetObject() {
         // retrieve an item
         KeyedObjects ko1 = new KeyedObjects();
@@ -257,6 +248,7 @@ public class KeyedObjectsTest extends TestCase {
     /**
      * Simple checks for the getKey(int) method.
      */
+    @Test
     public void testGetKey() {
         // retrieve an item
         KeyedObjects ko1 = new KeyedObjects();
@@ -291,6 +283,7 @@ public class KeyedObjectsTest extends TestCase {
     /**
      * Simple checks for the getIndex(Comparable) method.
      */
+    @Test
     public void testGetIndex() {
         KeyedObjects ko1 = new KeyedObjects();
         ko1.addObject("Key 1", "Object 1");
@@ -314,6 +307,7 @@ public class KeyedObjectsTest extends TestCase {
     /**
      * Some checks for the setObject(Comparable, Object) method.
      */
+    @Test
     public void testSetObject() {
         KeyedObjects ko1 = new KeyedObjects();
         ko1.setObject("Key 1", "Object 1");
@@ -344,6 +338,7 @@ public class KeyedObjectsTest extends TestCase {
     /**
      * Some checks for the removeValue() methods.
      */
+    @Test
     public void testRemoveValue() {
         KeyedObjects ko1 = new KeyedObjects();
         ko1.setObject("Key 1", "Object 1");
@@ -382,6 +377,7 @@ public class KeyedObjectsTest extends TestCase {
     /**
      * Some checks for the removeValue(int) method.
      */
+    @Test
     public void testRemoveValueInt() {
         KeyedObjects ko1 = new KeyedObjects();
         ko1.setObject("Key 1", "Object 1");

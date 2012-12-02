@@ -40,38 +40,24 @@
 
 package org.jfree.chart;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
 
-import org.jfree.chart.HashUtilities;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link HashUtilities} class.
  */
-public class HashUtilitiesTest extends TestCase {
+public class HashUtilitiesTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(HashUtilitiesTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public HashUtilitiesTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some sanity checks for the hashCodeForDoubleArray() method.
      */
+    @Test
     public void testHashCodeForDoubleArray() {
         double[] a1 = new double[] {1.0};
         double[] a2 = new double[] {1.0};

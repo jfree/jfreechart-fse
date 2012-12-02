@@ -40,6 +40,8 @@
 
 package org.jfree.data.xy;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -47,36 +49,25 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+
 
 /**
  * Tests for the {@link XYDataItem} class.
  */
-public class XYDataItemTest extends TestCase {
+public class XYDataItemTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(XYDataItemTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public XYDataItemTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         XYDataItem i1 = new XYDataItem(1.0, 1.1);
@@ -95,6 +86,7 @@ public class XYDataItemTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         XYDataItem i1 = new XYDataItem(1.0, 1.1);
         XYDataItem i2 = null;
@@ -107,6 +99,7 @@ public class XYDataItemTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         XYDataItem i1 = new XYDataItem(1.0, 1.1);

@@ -40,36 +40,25 @@
 
 package org.jfree.chart.imagemap;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+
 
 /**
  * Tests for the {@link DynamicDriveToolTipTagFragmentGenerator} class.
  */
-public class DynamicDriveToolTipTagFragmentGeneratorTest extends TestCase {
+public class DynamicDriveToolTipTagFragmentGeneratorTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(DynamicDriveToolTipTagFragmentGeneratorTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public DynamicDriveToolTipTagFragmentGeneratorTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the generateURLFragment() method.
      */
+    @Test
     public void testGenerateURLFragment() {
         OverLIBToolTipTagFragmentGenerator g
                 = new OverLIBToolTipTagFragmentGenerator();

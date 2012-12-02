@@ -40,6 +40,8 @@
 
 package org.jfree.chart.axis;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -47,38 +49,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.axis.CategoryLabelWidthType;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link CategoryLabelWidthType} class.
  */
-public class CategoryLabelWidthTypeTest extends TestCase {
+public class CategoryLabelWidthTypeTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(CategoryLabelWidthTypeTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public CategoryLabelWidthTypeTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals() method distinguishes the known values.
      */
+    @Test
     public void testEquals() {
         assertEquals(CategoryLabelWidthType.CATEGORY,
                 CategoryLabelWidthType.CATEGORY);
@@ -89,6 +75,7 @@ public class CategoryLabelWidthTypeTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashCode() {
         CategoryLabelWidthType a1 = CategoryLabelWidthType.CATEGORY;
         CategoryLabelWidthType a2 = CategoryLabelWidthType.CATEGORY;
@@ -101,6 +88,7 @@ public class CategoryLabelWidthTypeTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         CategoryLabelWidthType w1 = CategoryLabelWidthType.RANGE;
         CategoryLabelWidthType w2 = null;

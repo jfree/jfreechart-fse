@@ -40,6 +40,8 @@
 
 package org.jfree.chart.block;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -47,36 +49,26 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+
 
 /**
  * Tests for the {@link BlockContainer} class.
  */
-public class BlockContainerTest extends TestCase {
+public class BlockContainerTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(BlockContainerTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public BlockContainerTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals() method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         BlockContainer c1 = new BlockContainer(new FlowArrangement());
         BlockContainer c2 = new BlockContainer(new FlowArrangement());
@@ -97,6 +89,7 @@ public class BlockContainerTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         BlockContainer c1 = new BlockContainer(new FlowArrangement());
         c1.add(new EmptyBlock(1.2, 3.4));
@@ -117,6 +110,7 @@ public class BlockContainerTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         BlockContainer c1 = new BlockContainer();
         c1.add(new EmptyBlock(1.2, 3.4));

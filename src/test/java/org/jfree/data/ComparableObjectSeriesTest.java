@@ -41,6 +41,8 @@
 
 package org.jfree.data;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -48,19 +50,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.data.ComparableObjectItem;
-import org.jfree.data.ComparableObjectSeries;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link ComparableObjectSeries} class.
  */
-public class ComparableObjectSeriesTest extends TestCase {
+public class ComparableObjectSeriesTest  {
 
     static class MyComparableObjectSeries extends ComparableObjectSeries {
+
         /**
          * Creates a new instance.
          *
@@ -91,27 +92,14 @@ public class ComparableObjectSeriesTest extends TestCase {
         }
     }
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(ComparableObjectSeriesTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public ComparableObjectSeriesTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the constructor.
      */
+    @Test
     public void testConstructor1() {
         ComparableObjectSeries s1 = new ComparableObjectSeries("s1");
         assertEquals("s1", s1.getKey());
@@ -135,6 +123,7 @@ public class ComparableObjectSeriesTest extends TestCase {
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         MyComparableObjectSeries s1 = new MyComparableObjectSeries("A");
         MyComparableObjectSeries s2 = new MyComparableObjectSeries("A");
@@ -181,6 +170,7 @@ public class ComparableObjectSeriesTest extends TestCase {
     /**
      * Some checks for the clone() method.
      */
+    @Test
     public void testCloning() {
         MyComparableObjectSeries s1 = new MyComparableObjectSeries("A");
         s1.add(new Integer(1), "ABC");
@@ -199,6 +189,7 @@ public class ComparableObjectSeriesTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         MyComparableObjectSeries s1 = new MyComparableObjectSeries("A");
         s1.add(new Integer(1), "ABC");
@@ -223,6 +214,7 @@ public class ComparableObjectSeriesTest extends TestCase {
     /**
      * Some simple checks for the hashCode() method.
      */
+    @Test
     public void testHashCode() {
         MyComparableObjectSeries s1 = new MyComparableObjectSeries("Test");
         MyComparableObjectSeries s2 = new MyComparableObjectSeries("Test");

@@ -43,61 +43,45 @@
 
 package org.jfree.chart;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.event.ChartChangeEvent;
 import org.jfree.chart.event.ChartChangeListener;
 import org.jfree.chart.labels.CategoryToolTipGenerator;
 import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.chart.urls.CategoryURLGenerator;
 import org.jfree.chart.urls.StandardCategoryURLGenerator;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.general.DatasetUtilities;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for a 3D bar chart.
  */
-public class BarChart3DTest extends TestCase {
+public class BarChart3DTest  {
 
     /** The chart. */
     private JFreeChart chart;
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(BarChart3DTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public BarChart3DTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Common test setup.
      */
-    @Override
-	protected void setUp() {
+    @Before
+	public void setUp() {
         this.chart = createBarChart3D();
     }
 
@@ -105,6 +89,7 @@ public class BarChart3DTest extends TestCase {
      * Draws the chart with a null info object to make sure that no exceptions
      * are thrown (a problem that was occurring at one point).
      */
+    @Test
     public void testDrawWithNullInfo() {
         boolean success = false;
         try {
@@ -125,6 +110,7 @@ public class BarChart3DTest extends TestCase {
     /**
      * Replaces the dataset and checks that the data range is as expected.
      */
+    @Test
     public void testReplaceDataset() {
 
         // create a dataset...
@@ -154,6 +140,7 @@ public class BarChart3DTest extends TestCase {
      * Check that setting a tool tip generator for a series does override the
      * default generator.
      */
+    @Test
     public void testSetSeriesToolTipGenerator() {
         CategoryPlot plot = (CategoryPlot) this.chart.getPlot();
         CategoryItemRenderer renderer = plot.getRenderer();
@@ -168,6 +155,7 @@ public class BarChart3DTest extends TestCase {
      * Check that setting a URL generator for a series does override the
      * default generator.
      */
+    @Test
     public void testSetSeriesURLGenerator() {
         CategoryPlot plot = (CategoryPlot) this.chart.getPlot();
         CategoryItemRenderer renderer = plot.getRenderer();

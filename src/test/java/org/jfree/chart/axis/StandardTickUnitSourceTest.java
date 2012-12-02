@@ -40,6 +40,8 @@
 
 package org.jfree.chart.axis;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -47,38 +49,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.axis.StandardTickUnitSource;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link StandardTickUnitSource} class.
  */
-public class StandardTickUnitSourceTest extends TestCase {
+public class StandardTickUnitSourceTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(StandardTickUnitSourceTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public StandardTickUnitSourceTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         StandardTickUnitSource t1 = new StandardTickUnitSource();
         StandardTickUnitSource t2 = new StandardTickUnitSource();
@@ -88,6 +74,7 @@ public class StandardTickUnitSourceTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         StandardTickUnitSource t1 = new StandardTickUnitSource();

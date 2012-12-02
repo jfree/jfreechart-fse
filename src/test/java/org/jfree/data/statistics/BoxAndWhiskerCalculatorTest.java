@@ -40,42 +40,27 @@
 
 package org.jfree.data.statistics;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.data.statistics.BoxAndWhiskerCalculator;
-import org.jfree.data.statistics.BoxAndWhiskerItem;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link BoxAndWhiskerCalculator} class.
  */
-public class BoxAndWhiskerCalculatorTest extends TestCase {
+public class BoxAndWhiskerCalculatorTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(BoxAndWhiskerCalculatorTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public BoxAndWhiskerCalculatorTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the calculateBoxAndWhiskerStatistics() method.
      */
+    @Test
     public void testCalculateBoxAndWhiskerStatistics() {
 
         // try null list
@@ -104,6 +89,7 @@ public class BoxAndWhiskerCalculatorTest extends TestCase {
     /**
      * Tests the Q1 calculation.
      */
+    @Test
     public void testCalculateQ1() {
 
         // try null argument
@@ -136,6 +122,7 @@ public class BoxAndWhiskerCalculatorTest extends TestCase {
     /**
      * Tests the Q3 calculation.
      */
+    @Test
     public void testCalculateQ3() {
         // try null argument
         boolean pass = false;
@@ -167,6 +154,7 @@ public class BoxAndWhiskerCalculatorTest extends TestCase {
     /**
      * The test case included in bug report 1593149.
      */
+    @Test
     public void test1593149() {
         ArrayList theList = new ArrayList(5);
         theList.add(0, new Double(1.0));

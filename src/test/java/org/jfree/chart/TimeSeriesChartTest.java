@@ -40,16 +40,6 @@
 
 package org.jfree.chart;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.event.ChartChangeEvent;
 import org.jfree.chart.event.ChartChangeListener;
@@ -61,38 +51,33 @@ import org.jfree.data.Range;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Some tests for a time series chart.
  */
-public class TimeSeriesChartTest extends TestCase {
+public class TimeSeriesChartTest  {
 
     /** A chart. */
     private JFreeChart chart;
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(TimeSeriesChartTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public TimeSeriesChartTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Common test setup.
      */
-    @Override
-	protected void setUp() {
+    @Before
+	public void setUp() {
         this.chart = createChart();
     }
 
@@ -100,6 +85,7 @@ public class TimeSeriesChartTest extends TestCase {
      * Draws the chart with a null info object to make sure that no exceptions
      * are thrown (a problem that was occurring at one point).
      */
+    @Test
     public void testDrawWithNullInfo() {
 
         boolean success = false;
@@ -123,6 +109,7 @@ public class TimeSeriesChartTest extends TestCase {
     /**
      * Replaces the dataset and checks that it has changed as expected.
      */
+    @Test
     public void testReplaceDataset() {
 
         // create a dataset...
@@ -150,6 +137,7 @@ public class TimeSeriesChartTest extends TestCase {
      * Check that setting a tool tip generator for a series does override the
      * default generator.
      */
+    @Test
     public void testSetSeriesToolTipGenerator() {
         XYPlot plot = (XYPlot) this.chart.getPlot();
         XYItemRenderer renderer = plot.getRenderer();

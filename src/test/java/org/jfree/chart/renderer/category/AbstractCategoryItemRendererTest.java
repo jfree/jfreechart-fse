@@ -44,12 +44,6 @@
 
 package org.jfree.chart.renderer.category;
 
-import java.text.NumberFormat;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.labels.IntervalCategoryItemLabelGenerator;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
@@ -59,24 +53,27 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.urls.StandardCategoryURLGenerator;
 import org.jfree.data.Range;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.junit.Test;
+
+import java.text.NumberFormat;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link AbstractCategoryItemRenderer} class.
  */
-public class AbstractCategoryItemRendererTest extends TestCase {
+public class AbstractCategoryItemRendererTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(AbstractCategoryItemRendererTest.class);
-    }
+
 
     /**
      * Checks that all fields are distinguished.
      */
+    @Test
     public void testEquals() {
         BarRenderer r1 = new BarRenderer();
         BarRenderer r2 = new BarRenderer();
@@ -157,6 +154,7 @@ public class AbstractCategoryItemRendererTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning1() {
         AbstractCategoryItemRenderer r1 = new BarRenderer();
         AbstractCategoryItemRenderer r2 = null;
@@ -190,6 +188,7 @@ public class AbstractCategoryItemRendererTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning2() {
         BarRenderer r1 = new BarRenderer();
         BarRenderer r2 = null;
@@ -223,6 +222,7 @@ public class AbstractCategoryItemRendererTest extends TestCase {
     /**
      * Check that the legendItemLabelGenerator is cloned.
      */
+    @Test
     public void testCloning_LegendItemLabelGenerator() {
         StandardCategorySeriesLabelGenerator generator
                 = new StandardCategorySeriesLabelGenerator("Series {0}");
@@ -247,6 +247,7 @@ public class AbstractCategoryItemRendererTest extends TestCase {
     /**
      * Check that the legendItemToolTipGenerator is cloned.
      */
+    @Test
     public void testCloning_LegendItemToolTipGenerator() {
         StandardCategorySeriesLabelGenerator generator
                 = new StandardCategorySeriesLabelGenerator("Series {0}");
@@ -271,6 +272,7 @@ public class AbstractCategoryItemRendererTest extends TestCase {
     /**
      * Check that the legendItemURLGenerator is cloned.
      */
+    @Test
     public void testCloning_LegendItemURLGenerator() {
         StandardCategorySeriesLabelGenerator generator
                 = new StandardCategorySeriesLabelGenerator("Series {0}");
@@ -295,6 +297,7 @@ public class AbstractCategoryItemRendererTest extends TestCase {
     /**
      * Some checks for the findRangeBounds() method.
      */
+    @Test
     public void testFindRangeBounds() {
         AbstractCategoryItemRenderer r = new LineAndShapeRenderer();
         assertNull(r.findRangeBounds(null));
@@ -316,6 +319,7 @@ public class AbstractCategoryItemRendererTest extends TestCase {
     /**
      * A test that reproduces the problem reported in bug 2947660.
      */
+    @Test
     public void test2947660() {
         AbstractCategoryItemRenderer r = new LineAndShapeRenderer();
         assertNotNull(r.getLegendItems());

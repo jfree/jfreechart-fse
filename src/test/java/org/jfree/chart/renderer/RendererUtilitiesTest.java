@@ -41,43 +41,28 @@
 
 package org.jfree.chart.renderer;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.renderer.RendererUtilities;
 import org.jfree.data.DomainOrder;
 import org.jfree.data.xy.DefaultXYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Some checks for the {@link RendererUtilities} class.
  */
-public class RendererUtilitiesTest extends TestCase {
+public class RendererUtilitiesTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(RendererUtilitiesTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public RendererUtilitiesTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the findLiveItemsLowerBound() method when the dataset is
      * unordered.
      */
+    @Test
     public void testFindLiveItemsLowerBound_Unordered() {
         DefaultXYDataset d = new DefaultXYDataset();
 
@@ -134,6 +119,7 @@ public class RendererUtilitiesTest extends TestCase {
      * Some checks for the findLiveItemsLowerBound() method when the dataset is
      * ASCENDING.
      */
+    @Test
     public void testFindLiveItemsLowerBound_Ascending() {
         DefaultXYDataset d = new DefaultXYDataset() {
             @Override
@@ -209,6 +195,7 @@ public class RendererUtilitiesTest extends TestCase {
      * Some checks for the findLiveItemsLowerBound() method when the dataset is
      * DESCENDING.
      */
+    @Test
     public void testFindLiveItemsLowerBound_Descending() {
         DefaultXYDataset d = new DefaultXYDataset() {
             @Override
@@ -287,6 +274,7 @@ public class RendererUtilitiesTest extends TestCase {
      * Some checks for the findLiveItemsUpperBound() method when the dataset is
      * unordered.
      */
+    @Test
     public void testFindLiveItemsUpperBound_Unordered() {
         DefaultXYDataset d = new DefaultXYDataset();
 
@@ -343,6 +331,7 @@ public class RendererUtilitiesTest extends TestCase {
      * Some checks for the findLiveItemsUpperBound() method when the dataset is
      * ASCENDING.
      */
+    @Test
     public void testFindLiveItemsUpperBound_Ascending() {
         DefaultXYDataset d = new DefaultXYDataset() {
             @Override
@@ -418,6 +407,7 @@ public class RendererUtilitiesTest extends TestCase {
      * Some checks for the findLiveItemsUpperBound() method when the dataset is
      * DESCENDING.
      */
+    @Test
     public void testFindLiveItemsUpperBound_Descending() {
         DefaultXYDataset d = new DefaultXYDataset() {
             @Override
@@ -496,6 +486,7 @@ public class RendererUtilitiesTest extends TestCase {
      * Checks the bounds calculation for a series where the x-ordering is not
      * known.  See bug 3561093.
      */
+    @Test
     public void test3561093() {
         XYSeries s = new XYSeries("S1", false);
         s.add(0.0, 0.0);

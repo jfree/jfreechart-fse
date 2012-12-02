@@ -41,8 +41,10 @@
 
 package org.jfree.chart.annotations;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
+import org.jfree.chart.util.PublicCloneable;
+import org.junit.Test;
+
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -50,39 +52,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.annotations.CategoryLineAnnotation;
-import org.jfree.chart.util.PublicCloneable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link CategoryLineAnnotationTest} class.
  */
-public class CategoryLineAnnotationTest extends TestCase {
+public class CategoryLineAnnotationTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(CategoryLineAnnotationTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public CategoryLineAnnotationTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         BasicStroke s1 = new BasicStroke(1.0f);
@@ -134,6 +120,7 @@ public class CategoryLineAnnotationTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         CategoryLineAnnotation a1 = new CategoryLineAnnotation("Category 1", 
                 1.0, "Category 2", 2.0, Color.RED, new BasicStroke(1.0f));
@@ -148,6 +135,7 @@ public class CategoryLineAnnotationTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         CategoryLineAnnotation a1 = new CategoryLineAnnotation("Category 1", 
                 1.0, "Category 2", 2.0, Color.RED, new BasicStroke(1.0f));
@@ -166,6 +154,7 @@ public class CategoryLineAnnotationTest extends TestCase {
     /**
      * Checks that this class implements PublicCloneable.
      */
+    @Test
     public void testPublicCloneable() {
         CategoryLineAnnotation a1 = new CategoryLineAnnotation(
                 "Category 1", 1.0, "Category 2", 2.0, Color.RED,
@@ -176,6 +165,7 @@ public class CategoryLineAnnotationTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         CategoryLineAnnotation a1 = new CategoryLineAnnotation("Category 1", 
                 1.0, "Category 2", 2.0, Color.RED, new BasicStroke(1.0f));

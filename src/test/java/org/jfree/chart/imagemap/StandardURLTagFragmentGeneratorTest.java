@@ -40,36 +40,25 @@
 
 package org.jfree.chart.imagemap;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+
 
 /**
  * Tests for the {@link StandardURLTagFragmentGeneratorTests} class.
  */
-public class StandardURLTagFragmentGeneratorTest extends TestCase {
+public class StandardURLTagFragmentGeneratorTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(StandardURLTagFragmentGeneratorTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public StandardURLTagFragmentGeneratorTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the generateURLFragment() method.
      */
+    @Test
     public void testGenerateURLFragment() {
         StandardURLTagFragmentGenerator g
                 = new StandardURLTagFragmentGenerator();

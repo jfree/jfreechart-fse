@@ -40,6 +40,8 @@
 
 package org.jfree.data.gantt;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -48,36 +50,25 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.Date;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+
 
 /**
  * Tests for the {@link XYTaskDataset} class.
  */
-public class XYTaskDatasetTest extends TestCase {
+public class XYTaskDatasetTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(XYTaskDatasetTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public XYTaskDatasetTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the equals() method.
      */
+    @Test
     public void testEquals() {
         TaskSeries s1 = new TaskSeries("Series");
         s1.add(new Task("Task 1", new Date(0L), new Date(1L)));
@@ -114,6 +105,7 @@ public class XYTaskDatasetTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         TaskSeries s1 = new TaskSeries("Series");
         s1.add(new Task("Task 1", new Date(0L), new Date(1L)));
@@ -143,6 +135,7 @@ public class XYTaskDatasetTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         TaskSeries s1 = new TaskSeries("Series");
         s1.add(new Task("Task 1", new Date(0L), new Date(1L)));

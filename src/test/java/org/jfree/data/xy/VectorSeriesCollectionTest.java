@@ -43,6 +43,9 @@
 
 package org.jfree.data.xy;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -50,38 +53,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.util.PublicCloneable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link VectorSeriesCollection} class.
  */
-public class VectorSeriesCollectionTest extends TestCase {
+public class VectorSeriesCollectionTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(VectorSeriesCollectionTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public VectorSeriesCollectionTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         VectorSeries s1 = new VectorSeries("Series");
         s1.add(1.0, 1.1, 1.2, 1.3);
@@ -104,6 +92,7 @@ public class VectorSeriesCollectionTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         VectorSeries s1 = new VectorSeries("Series");
         s1.add(1.0, 1.1, 1.2, 1.3);
@@ -128,6 +117,7 @@ public class VectorSeriesCollectionTest extends TestCase {
     /**
      * Verify that this class implements {@link PublicCloneable}.
      */
+    @Test
     public void testPublicCloneable() {
         VectorSeriesCollection d1 = new VectorSeriesCollection();
         assertTrue(d1 instanceof PublicCloneable);
@@ -136,6 +126,7 @@ public class VectorSeriesCollectionTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         VectorSeries s1 = new VectorSeries("Series");
         s1.add(1.0, 1.1, 1.2, 1.3);
@@ -163,6 +154,7 @@ public class VectorSeriesCollectionTest extends TestCase {
     /**
      * Some checks for the removeSeries() method.
      */
+    @Test
     public void testRemoveSeries() {
         VectorSeries s1 = new VectorSeries("S1");
         VectorSeries s2 = new VectorSeries("S2");

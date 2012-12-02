@@ -41,11 +41,12 @@
 
 package org.jfree.chart.axis;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Paint;
-import java.awt.Stroke;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.Month;
+import org.junit.Test;
+
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -58,41 +59,23 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.axis.PeriodAxisLabelInfo;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.data.time.Day;
-import org.jfree.data.time.Month;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link PeriodAxisLabelInfo} class.
  */
-public class PeriodAxisLabelInfoTest extends TestCase {
+public class PeriodAxisLabelInfoTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(PeriodAxisLabelInfoTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public PeriodAxisLabelInfoTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         PeriodAxisLabelInfo info1 = new PeriodAxisLabelInfo(Day.class,
                 new SimpleDateFormat("d"));
@@ -164,6 +147,7 @@ public class PeriodAxisLabelInfoTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashCode() {
         PeriodAxisLabelInfo info1 = new PeriodAxisLabelInfo(Day.class,
                 new SimpleDateFormat("d"));
@@ -178,6 +162,7 @@ public class PeriodAxisLabelInfoTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         PeriodAxisLabelInfo info1 = new PeriodAxisLabelInfo(Day.class,
                 new SimpleDateFormat("d"));
@@ -196,6 +181,7 @@ public class PeriodAxisLabelInfoTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         PeriodAxisLabelInfo info1 = new PeriodAxisLabelInfo(Day.class,
                 new SimpleDateFormat("d"));
@@ -221,6 +207,7 @@ public class PeriodAxisLabelInfoTest extends TestCase {
     /**
      * A test for the createInstance() method.
      */
+    @Test
     public void testCreateInstance() {
         PeriodAxisLabelInfo info = new PeriodAxisLabelInfo(Day.class, 
                 new SimpleDateFormat("d"));

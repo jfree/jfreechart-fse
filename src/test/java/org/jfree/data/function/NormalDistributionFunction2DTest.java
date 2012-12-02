@@ -40,6 +40,8 @@
 
 package org.jfree.data.function;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -47,38 +49,27 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+
 
 /**
  * Tests for the {@link NormalDistributionFunction2D} class.
  */
-public class NormalDistributionFunction2DTest extends TestCase {
+public class NormalDistributionFunction2DTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(NormalDistributionFunction2DTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public NormalDistributionFunction2DTest(String name) {
-        super(name);
-    }
+
+
 
     private static final double EPSILON = 0.000000001;
 
     /**
      * Some tests for the constructor.
      */
+    @Test
     public void testConstructor() {
         NormalDistributionFunction2D f = new NormalDistributionFunction2D(1.0,
                 2.0);
@@ -89,6 +80,7 @@ public class NormalDistributionFunction2DTest extends TestCase {
     /**
      * For datasets, the equals() method just checks keys and values.
      */
+    @Test
     public void testEquals() {
         NormalDistributionFunction2D f1 = new NormalDistributionFunction2D(1.0,
                 2.0);
@@ -104,6 +96,7 @@ public class NormalDistributionFunction2DTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         NormalDistributionFunction2D f1 = new NormalDistributionFunction2D(1.0,
                 2.0);
@@ -130,6 +123,7 @@ public class NormalDistributionFunction2DTest extends TestCase {
      * Objects that are equal should have the same hash code otherwise FindBugs
      * will tell on us...
      */
+    @Test
     public void testHashCode() {
         NormalDistributionFunction2D f1 = new NormalDistributionFunction2D(1.0,
                 2.0);

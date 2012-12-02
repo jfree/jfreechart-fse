@@ -41,8 +41,11 @@
 
 package org.jfree.chart.plot.dial;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
+import org.jfree.chart.ui.GradientPaintTransformType;
+import org.jfree.chart.ui.StandardGradientPaintTransformer;
+import org.junit.Test;
+
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -50,39 +53,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.ui.GradientPaintTransformType;
-import org.jfree.chart.ui.StandardGradientPaintTransformer;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link DialBackground} class.
  */
-public class DialBackgroundTest extends TestCase {
+public class DialBackgroundTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(DialBackgroundTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public DialBackgroundTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         DialBackground b1 = new DialBackground();
         DialBackground b2 = new DialBackground();
@@ -115,6 +102,7 @@ public class DialBackgroundTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashCode() {
         DialBackground b1 = new DialBackground(Color.RED);
         DialBackground b2 = new DialBackground(Color.RED);
@@ -127,6 +115,7 @@ public class DialBackgroundTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         // test default instance
         DialBackground b1 = new DialBackground();
@@ -169,6 +158,7 @@ public class DialBackgroundTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         // test a default instance
         DialBackground b1 = new DialBackground();

@@ -42,6 +42,13 @@
 
 package org.jfree.chart.plot;
 
+import org.jfree.chart.event.MarkerChangeEvent;
+import org.jfree.chart.event.MarkerChangeListener;
+import org.jfree.chart.ui.GradientPaintTransformType;
+import org.jfree.chart.ui.GradientPaintTransformer;
+import org.jfree.chart.ui.StandardGradientPaintTransformer;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -49,22 +56,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.ui.GradientPaintTransformType;
-import org.jfree.chart.ui.GradientPaintTransformer;
-import org.jfree.chart.ui.StandardGradientPaintTransformer;
-import org.jfree.chart.event.MarkerChangeEvent;
-import org.jfree.chart.event.MarkerChangeListener;
-import org.jfree.chart.plot.IntervalMarker;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link IntervalMarker} class.
  */
 public class IntervalMarkerTest
-    extends TestCase
+
     implements MarkerChangeListener {
 
     MarkerChangeEvent lastEvent;
@@ -79,27 +79,14 @@ public class IntervalMarkerTest
         this.lastEvent = event;
     }
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(IntervalMarkerTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public IntervalMarkerTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         IntervalMarker m1 = new IntervalMarker(45.0, 50.0);
@@ -129,6 +116,7 @@ public class IntervalMarkerTest
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         IntervalMarker m1 = new IntervalMarker(45.0, 50.0);
         IntervalMarker m2 = null;
@@ -146,6 +134,7 @@ public class IntervalMarkerTest
    /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         IntervalMarker m1 = new IntervalMarker(45.0, 50.0);
@@ -174,6 +163,7 @@ public class IntervalMarkerTest
     /**
      * Some checks for the getStartValue() and setStartValue() methods.
      */
+    @Test
     public void testGetSetStartValue() {
         IntervalMarker m = new IntervalMarker(1.0, 2.0);
         m.addChangeListener(this);
@@ -187,6 +177,7 @@ public class IntervalMarkerTest
     /**
      * Some checks for the getEndValue() and setEndValue() methods.
      */
+    @Test
     public void testGetSetEndValue() {
         IntervalMarker m = new IntervalMarker(1.0, 2.0);
         m.addChangeListener(this);

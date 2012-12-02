@@ -40,6 +40,8 @@
 
 package org.jfree.chart.axis;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -48,38 +50,23 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.axis.NumberTickUnit;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Some tests for the {@link NumberTickUnit} class.
  */
-public class NumberTickUnitTest extends TestCase {
+public class NumberTickUnitTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(NumberTickUnitTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public NumberTickUnitTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         NumberTickUnit t1 = new NumberTickUnit(1.23, new DecimalFormat("0.00"));
         NumberTickUnit t2 = new NumberTickUnit(1.23, new DecimalFormat("0.00"));
@@ -100,6 +87,7 @@ public class NumberTickUnitTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashCode() {
         NumberTickUnit t1 = new NumberTickUnit(1.23, new DecimalFormat("0.00"));
         NumberTickUnit t2 = new NumberTickUnit(1.23, new DecimalFormat("0.00"));
@@ -111,6 +99,7 @@ public class NumberTickUnitTest extends TestCase {
     /**
      * This is an immutable class so it doesn't need to be cloneable.
      */
+    @Test
     public void testCloning() {
         NumberTickUnit t1 = new NumberTickUnit(1.23, new DecimalFormat("0.00"));
         assertFalse(t1 instanceof Cloneable);
@@ -119,6 +108,7 @@ public class NumberTickUnitTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         NumberTickUnit t1 = new NumberTickUnit(1.23, new DecimalFormat("0.00"));
         NumberTickUnit t2 = null;

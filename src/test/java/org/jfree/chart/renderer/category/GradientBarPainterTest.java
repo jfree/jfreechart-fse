@@ -40,6 +40,9 @@
 
 package org.jfree.chart.renderer.category;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -47,38 +50,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.util.PublicCloneable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link GradientBarPainter} class.
  */
-public class GradientBarPainterTest extends TestCase {
+public class GradientBarPainterTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(GradientBarPainterTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public GradientBarPainterTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Check that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
         GradientBarPainter p1 = new GradientBarPainter(0.1, 0.2, 0.3);
         GradientBarPainter p2 = new GradientBarPainter(0.1, 0.2, 0.3);
@@ -103,6 +91,7 @@ public class GradientBarPainterTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         GradientBarPainter p1 = new GradientBarPainter(0.1, 0.2, 0.3);
         GradientBarPainter p2 = new GradientBarPainter(0.1, 0.2, 0.3);
@@ -116,6 +105,7 @@ public class GradientBarPainterTest extends TestCase {
      * Confirm that cloning isn't implemented (it isn't required, because
      * instances of the class are immutable).
      */
+    @Test
     public void testCloning() {
         GradientBarPainter p1 = new GradientBarPainter(0.1, 0.2, 0.3);
         assertFalse(p1 instanceof Cloneable);
@@ -125,6 +115,7 @@ public class GradientBarPainterTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         GradientBarPainter p1 = new GradientBarPainter(0.1, 0.2, 0.3);
         GradientBarPainter p2 = null;

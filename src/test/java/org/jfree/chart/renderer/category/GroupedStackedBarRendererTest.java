@@ -41,6 +41,16 @@
 
 package org.jfree.chart.renderer.category;
 
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.KeyToGroupMap;
+import org.jfree.data.Range;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -48,45 +58,24 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.data.KeyToGroupMap;
-import org.jfree.data.Range;
-import org.jfree.data.category.DefaultCategoryDataset;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link GroupedStackedBarRenderer} class.
  */
-public class GroupedStackedBarRendererTest extends TestCase {
+public class GroupedStackedBarRendererTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(GroupedStackedBarRendererTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public GroupedStackedBarRendererTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Test that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
         GroupedStackedBarRenderer r1 = new GroupedStackedBarRenderer();
         GroupedStackedBarRenderer r2 = new GroupedStackedBarRenderer();
@@ -107,6 +96,7 @@ public class GroupedStackedBarRendererTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         GroupedStackedBarRenderer r1 = new GroupedStackedBarRenderer();
         GroupedStackedBarRenderer r2 = null;
@@ -124,6 +114,7 @@ public class GroupedStackedBarRendererTest extends TestCase {
     /**
      * Check that this class implements PublicCloneable.
      */
+    @Test
     public void testPublicCloneable() {
         GroupedStackedBarRenderer r1 = new GroupedStackedBarRenderer();
         assertTrue(r1 instanceof PublicCloneable);
@@ -132,6 +123,7 @@ public class GroupedStackedBarRendererTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         GroupedStackedBarRenderer r1 = new GroupedStackedBarRenderer();
@@ -158,6 +150,7 @@ public class GroupedStackedBarRendererTest extends TestCase {
      * Draws the chart with a <code>null</code> info object to make sure that
      * no exceptions are thrown (particularly by code in the renderer).
      */
+    @Test
     public void testDrawWithNullInfo() {
         boolean success = false;
         try {
@@ -186,6 +179,7 @@ public class GroupedStackedBarRendererTest extends TestCase {
     /**
      * Some checks for the findRangeBounds() method.
      */
+    @Test
     public void testFindRangeBounds() {
         GroupedStackedBarRenderer r = new GroupedStackedBarRenderer();
         assertNull(r.findRangeBounds(null));

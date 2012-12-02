@@ -42,6 +42,12 @@
 
 package org.jfree.data.time.ohlc;
 
+import org.jfree.data.general.DatasetChangeEvent;
+import org.jfree.data.general.DatasetChangeListener;
+import org.jfree.data.time.TimePeriodAnchor;
+import org.jfree.data.time.Year;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -49,42 +55,26 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.data.general.DatasetChangeEvent;
-import org.jfree.data.general.DatasetChangeListener;
-import org.jfree.data.time.TimePeriodAnchor;
-import org.jfree.data.time.Year;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link OHLCSeriesCollectionTests} class.
  */
-public class OHLCSeriesCollectionTest extends TestCase
+public class OHLCSeriesCollectionTest
         implements DatasetChangeListener {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(OHLCSeriesCollectionTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public OHLCSeriesCollectionTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         OHLCSeriesCollection c1 = new OHLCSeriesCollection();
         OHLCSeriesCollection c2 = new OHLCSeriesCollection();
@@ -116,6 +106,7 @@ public class OHLCSeriesCollectionTest extends TestCase
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         OHLCSeriesCollection c1 = new OHLCSeriesCollection();
         OHLCSeries s1 = new OHLCSeries("Series");
@@ -140,6 +131,7 @@ public class OHLCSeriesCollectionTest extends TestCase
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         OHLCSeriesCollection c1 = new OHLCSeriesCollection();
         OHLCSeries s1 = new OHLCSeries("Series");
@@ -168,6 +160,7 @@ public class OHLCSeriesCollectionTest extends TestCase
      * A test for bug report 1170825 (originally affected XYSeriesCollection,
      * this test is just copied over).
      */
+    @Test
     public void test1170825() {
         OHLCSeries s1 = new OHLCSeries("Series1");
         OHLCSeriesCollection dataset = new OHLCSeriesCollection();
@@ -186,6 +179,7 @@ public class OHLCSeriesCollectionTest extends TestCase
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         OHLCSeriesCollection c1 = new OHLCSeriesCollection();
         OHLCSeries s1 = new OHLCSeries("S");
@@ -205,6 +199,7 @@ public class OHLCSeriesCollectionTest extends TestCase
      * Some checks for the {@link OHLCSeriesCollection#removeSeries(int)}
      * method.
      */
+    @Test
     public void testRemoveSeries_int() {
         OHLCSeriesCollection c1 = new OHLCSeriesCollection();
         OHLCSeries s1 = new OHLCSeries("Series 1");
@@ -226,6 +221,7 @@ public class OHLCSeriesCollectionTest extends TestCase
      * Some checks for the
      * {@link OHLCSeriesCollection#removeSeries(OHLCSeries)} method.
      */
+    @Test
     public void testRemoveSeries() {
         OHLCSeriesCollection c1 = new OHLCSeriesCollection();
         OHLCSeries s1 = new OHLCSeries("Series 1");
@@ -246,6 +242,7 @@ public class OHLCSeriesCollectionTest extends TestCase
     /**
      * A simple check for the removeAllSeries() method.
      */
+    @Test
     public void testRemoveAllSeries() {
         OHLCSeriesCollection c1 = new OHLCSeriesCollection();
         c1.addChangeListener(this);

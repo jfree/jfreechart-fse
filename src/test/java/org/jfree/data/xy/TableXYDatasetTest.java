@@ -49,6 +49,9 @@
 
 package org.jfree.data.xy;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -56,38 +59,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.util.PublicCloneable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for {@link DefaultTableXYDataset}.
  */
-public class TableXYDatasetTest extends TestCase {
+public class TableXYDatasetTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(TableXYDatasetTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public TableXYDatasetTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         DefaultTableXYDataset d1 = new DefaultTableXYDataset();
@@ -106,6 +94,7 @@ public class TableXYDatasetTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         DefaultTableXYDataset d1 = new DefaultTableXYDataset();
         d1.addSeries(createSeries1());
@@ -124,6 +113,7 @@ public class TableXYDatasetTest extends TestCase {
     /**
      * Verify that this class implements {@link PublicCloneable}.
      */
+    @Test
     public void testPublicCloneable() {
         DefaultTableXYDataset d1 = new DefaultTableXYDataset();
         assertTrue(d1 instanceof PublicCloneable);
@@ -132,6 +122,7 @@ public class TableXYDatasetTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         DefaultTableXYDataset d1 = new DefaultTableXYDataset();
@@ -160,6 +151,7 @@ public class TableXYDatasetTest extends TestCase {
     /**
      * Assorted tests.
      */
+    @Test
     public void testTableXYDataset() {
 
         XYSeries series1 = createSeries1();
@@ -201,6 +193,7 @@ public class TableXYDatasetTest extends TestCase {
     /**
      * A test for bug report 788597.
      */
+    @Test
     public void test788597() {
         DefaultTableXYDataset dataset = new DefaultTableXYDataset();
         dataset.addSeries(createSeries1());
@@ -212,6 +205,7 @@ public class TableXYDatasetTest extends TestCase {
     /**
      * Test that removing all values for a given x works.
      */
+    @Test
     public void testRemoveAllValuesForX() {
         DefaultTableXYDataset dataset = new DefaultTableXYDataset();
         dataset.addSeries(createSeries1());
@@ -228,6 +222,7 @@ public class TableXYDatasetTest extends TestCase {
     /**
      * Tests to see that pruning removes unwanted x values.
      */
+    @Test
     public void testPrune() {
         DefaultTableXYDataset dataset = new DefaultTableXYDataset();
         dataset.addSeries(createSeries1());
@@ -240,6 +235,7 @@ public class TableXYDatasetTest extends TestCase {
     /**
      * Tests the auto-pruning feature.
      */
+    @Test
     public void testAutoPrune() {
 
         // WITH AUTOPRUNING

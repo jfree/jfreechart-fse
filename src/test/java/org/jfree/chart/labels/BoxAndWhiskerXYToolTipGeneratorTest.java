@@ -43,6 +43,9 @@
 
 package org.jfree.chart.labels;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -52,39 +55,23 @@ import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.labels.BoxAndWhiskerXYToolTipGenerator;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link BoxAndWhiskerXYToolTipGenerator} class.
  */
-public class BoxAndWhiskerXYToolTipGeneratorTest extends TestCase {
+public class BoxAndWhiskerXYToolTipGeneratorTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(BoxAndWhiskerXYToolTipGeneratorTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public BoxAndWhiskerXYToolTipGeneratorTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * A series of tests for the equals() method.
      */
+    @Test
     public void testEquals() {
 
         // standard test
@@ -129,6 +116,7 @@ public class BoxAndWhiskerXYToolTipGeneratorTest extends TestCase {
     /**
      * Simple check that hashCode is implemented.
      */
+    @Test
     public void testHashCode() {
         BoxAndWhiskerXYToolTipGenerator g1
                 = new BoxAndWhiskerXYToolTipGenerator();
@@ -141,6 +129,7 @@ public class BoxAndWhiskerXYToolTipGeneratorTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         BoxAndWhiskerXYToolTipGenerator g1
                 = new BoxAndWhiskerXYToolTipGenerator();
@@ -159,6 +148,7 @@ public class BoxAndWhiskerXYToolTipGeneratorTest extends TestCase {
     /**
      * Check to ensure that this class implements PublicCloneable.
      */
+    @Test
     public void testPublicCloneable() {
         BoxAndWhiskerXYToolTipGenerator g1
                 = new BoxAndWhiskerXYToolTipGenerator();
@@ -168,6 +158,7 @@ public class BoxAndWhiskerXYToolTipGeneratorTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         BoxAndWhiskerXYToolTipGenerator g1

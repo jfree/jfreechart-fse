@@ -44,6 +44,9 @@
 
 package org.jfree.chart.labels;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -55,39 +58,23 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.labels.StandardXYItemLabelGenerator;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link StandardXYItemLabelGenerator} class.
  */
-public class StandardXYItemLabelGeneratorTest extends TestCase {
+public class StandardXYItemLabelGeneratorTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(StandardXYItemLabelGeneratorTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public StandardXYItemLabelGeneratorTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * A series of tests for the equals() method.
      */
+    @Test
     public void testEquals() {
 
         // some setup...
@@ -146,6 +133,7 @@ public class StandardXYItemLabelGeneratorTest extends TestCase {
     /**
      * Simple check that hashCode is implemented.
      */
+    @Test
     public void testHashCode() {
         StandardXYItemLabelGenerator g1
                 = new StandardXYItemLabelGenerator();
@@ -158,6 +146,7 @@ public class StandardXYItemLabelGeneratorTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         StandardXYItemLabelGenerator g1 = new StandardXYItemLabelGenerator();
         StandardXYItemLabelGenerator g2 = null;
@@ -211,6 +200,7 @@ public class StandardXYItemLabelGeneratorTest extends TestCase {
     /**
      * Check to ensure that this class implements PublicCloneable.
      */
+    @Test
     public void testPublicCloneable() {
         StandardXYItemLabelGenerator g1 = new StandardXYItemLabelGenerator();
         assertTrue(g1 instanceof PublicCloneable);
@@ -219,6 +209,7 @@ public class StandardXYItemLabelGeneratorTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         StandardXYItemLabelGenerator g1 = new StandardXYItemLabelGenerator();

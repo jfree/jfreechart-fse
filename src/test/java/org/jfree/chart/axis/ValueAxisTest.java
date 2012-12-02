@@ -41,59 +41,41 @@
 
 package org.jfree.chart.axis;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartRenderingInfo;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.data.Range;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.junit.Test;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link ValueAxis} class.
  */
-public class ValueAxisTest extends TestCase {
+public class ValueAxisTest  {
 
     private static final double EPSILON = 0.000000001;
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(ValueAxisTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public ValueAxisTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         ValueAxis a1 = new NumberAxis("Test");
         ValueAxis a2 = null;
@@ -111,6 +93,7 @@ public class ValueAxisTest extends TestCase {
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         NumberAxis a1 = new NumberAxis("Test");
@@ -232,6 +215,7 @@ public class ValueAxisTest extends TestCase {
      * Tests the the lower and upper margin settings produce the expected
      * results.
      */
+    @Test
     public void testAxisMargins() {
         XYSeries series = new XYSeries("S1");
         series.add(100.0, 1.1);
@@ -253,6 +237,7 @@ public class ValueAxisTest extends TestCase {
      * A test for bug 3555275 (where the fixed axis space is calculated 
      * incorrectly).
      */
+    @Test
     public void test3555275() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         JFreeChart chart = ChartFactory.createLineChart("Title", "X", "Y",

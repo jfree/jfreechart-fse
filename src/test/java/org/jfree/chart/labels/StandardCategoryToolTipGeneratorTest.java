@@ -43,6 +43,9 @@
 
 package org.jfree.chart.labels;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -53,40 +56,23 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
-import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link StandardCategoryToolTipGenerator} class.
  */
-public class StandardCategoryToolTipGeneratorTest extends TestCase {
+public class StandardCategoryToolTipGeneratorTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(StandardCategoryToolTipGeneratorTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public StandardCategoryToolTipGeneratorTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Tests the equals() method.
      */
+    @Test
     public void testEquals() {
 
         StandardCategoryToolTipGenerator g1
@@ -122,6 +108,7 @@ public class StandardCategoryToolTipGeneratorTest extends TestCase {
     /**
      * Simple check that hashCode is implemented.
      */
+    @Test
     public void testHashCode() {
         StandardCategoryToolTipGenerator g1
                 = new StandardCategoryToolTipGenerator();
@@ -134,6 +121,7 @@ public class StandardCategoryToolTipGeneratorTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         StandardCategoryToolTipGenerator g1
                 = new StandardCategoryToolTipGenerator();
@@ -152,6 +140,7 @@ public class StandardCategoryToolTipGeneratorTest extends TestCase {
     /**
      * Check to ensure that this class implements PublicCloneable.
      */
+    @Test
     public void testPublicCloneable() {
         StandardCategoryToolTipGenerator g1
                 = new StandardCategoryToolTipGenerator();
@@ -161,6 +150,7 @@ public class StandardCategoryToolTipGeneratorTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         StandardCategoryToolTipGenerator g1
@@ -189,6 +179,7 @@ public class StandardCategoryToolTipGeneratorTest extends TestCase {
     /**
      * A test for bug 1481087.
      */
+    @Test
     public void testEquals1481087() {
         StandardCategoryToolTipGenerator g1
                 = new StandardCategoryToolTipGenerator("{0}",

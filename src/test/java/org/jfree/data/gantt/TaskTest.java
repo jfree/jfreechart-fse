@@ -40,6 +40,9 @@
 
 package org.jfree.data.gantt;
 
+import org.jfree.data.time.SimpleTimePeriod;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -48,38 +51,23 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.Date;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.data.time.SimpleTimePeriod;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link Task} class.
  */
-public class TaskTest extends TestCase {
+public class TaskTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(TaskTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public TaskTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         Task t1 = new Task("T", new Date(1), new Date(2));
@@ -113,6 +101,7 @@ public class TaskTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         Task t1 = new Task("T", new Date(1), new Date(2));
         Task t2 = null;
@@ -130,6 +119,7 @@ public class TaskTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         Task t1 = new Task("T", new Date(1), new Date(2));
@@ -157,6 +147,7 @@ public class TaskTest extends TestCase {
     /**
      * Check the getSubTaskCount() method.
      */
+    @Test
     public void testGetSubTaskCount() {
         Task t1 = new Task("T", new Date(100), new Date(200));
         assertEquals(0, t1.getSubtaskCount());

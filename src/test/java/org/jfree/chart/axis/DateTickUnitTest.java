@@ -41,6 +41,8 @@
 
 package org.jfree.chart.axis;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -48,39 +50,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.axis.DateTickUnit;
-import org.jfree.chart.axis.DateTickUnitType;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link DateTickUnit} class.
  */
-public class DateTickUnitTest extends TestCase {
+public class DateTickUnitTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(DateTickUnitTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public DateTickUnitTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         DateTickUnit t1 = new DateTickUnit(DateTickUnitType.DAY, 1);
         DateTickUnit t2 = new DateTickUnit(DateTickUnitType.DAY, 1);
@@ -90,6 +75,7 @@ public class DateTickUnitTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashCode() {
         DateTickUnit t1 = new DateTickUnit(DateTickUnitType.DAY, 1);
         DateTickUnit t2 = new DateTickUnit(DateTickUnitType.DAY, 1);
@@ -102,6 +88,7 @@ public class DateTickUnitTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         DateTickUnit a1 = new DateTickUnit(DateTickUnitType.DAY, 7);

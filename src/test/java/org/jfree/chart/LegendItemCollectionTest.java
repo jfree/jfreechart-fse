@@ -41,8 +41,9 @@
 
 package org.jfree.chart;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
+import org.junit.Test;
+
+import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
@@ -52,39 +53,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link LegendItemCollection} class.
  */
-public class LegendItemCollectionTest extends TestCase {
+public class LegendItemCollectionTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(LegendItemCollectionTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public LegendItemCollectionTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         LegendItemCollection c1 = new LegendItemCollection();
@@ -115,6 +100,7 @@ public class LegendItemCollectionTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         LegendItemCollection c1 = new LegendItemCollection();
         c1.add(new LegendItem("Item", "Description", "ToolTip", "URL",
@@ -140,6 +126,7 @@ public class LegendItemCollectionTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         LegendItemCollection c1 = new LegendItemCollection();
         LegendItem item1 = new LegendItem("Item 1");

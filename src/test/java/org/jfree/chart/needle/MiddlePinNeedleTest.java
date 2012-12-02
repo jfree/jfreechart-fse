@@ -40,6 +40,8 @@
 
 package org.jfree.chart.needle;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -47,36 +49,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertTrue;
+
+
 
 /**
  * Tests for the {@link MiddlePinNeedle} class.
  */
-public class MiddlePinNeedleTest extends TestCase {
+public class MiddlePinNeedleTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(MiddlePinNeedleTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public MiddlePinNeedleTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Check that the equals() method can distinguish all fields.
      */
+    @Test
     public void testEquals() {
        MiddlePinNeedle n1 = new MiddlePinNeedle();
        MiddlePinNeedle n2 = new MiddlePinNeedle();
@@ -87,6 +76,7 @@ public class MiddlePinNeedleTest extends TestCase {
     /**
      * Check that cloning works.
      */
+    @Test
     public void testCloning() {
         MiddlePinNeedle n1 = new MiddlePinNeedle();
         MiddlePinNeedle n2 = null;
@@ -105,6 +95,7 @@ public class MiddlePinNeedleTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         MiddlePinNeedle n1 = new MiddlePinNeedle();
         MiddlePinNeedle n2 = null;

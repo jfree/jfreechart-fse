@@ -50,7 +50,17 @@
 
 package org.jfree.chart.axis;
 
-import java.awt.Graphics2D;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.data.time.DateRange;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.Hour;
+import org.jfree.data.time.Millisecond;
+import org.jfree.data.time.Month;
+import org.jfree.data.time.Second;
+import org.jfree.data.time.Year;
+import org.junit.Test;
+
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -67,29 +77,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.axis.AxisState;
-import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.axis.DateTick;
-import org.jfree.chart.axis.DateTickMarkPosition;
-import org.jfree.chart.axis.DateTickUnit;
-import org.jfree.chart.axis.DateTickUnitType;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.data.time.DateRange;
-import org.jfree.data.time.Day;
-import org.jfree.data.time.Hour;
-import org.jfree.data.time.Millisecond;
-import org.jfree.data.time.Month;
-import org.jfree.data.time.Second;
-import org.jfree.data.time.Year;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link DateAxis} class.
  */
-public class DateAxisTest extends TestCase {
+public class DateAxisTest  {
 
     static class MyDateAxis extends DateAxis {
 
@@ -102,33 +97,21 @@ public class DateAxisTest extends TestCase {
             super(label);
         }
 
+
         @Override
 		public Date previousStandardDate(Date d, DateTickUnit unit) {
             return super.previousStandardDate(d, unit);
         }
     }
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(DateAxisTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public DateAxisTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         DateAxis a1 = new DateAxis("Test");
@@ -161,6 +144,7 @@ public class DateAxisTest extends TestCase {
      * A test for bug report 1472942.  The DateFormat.equals() method is not
      * checking the range attribute.
      */
+    @Test
     public void test1472942() {
         DateAxis a1 = new DateAxis("Test");
         DateAxis a2 = new DateAxis("Test");
@@ -176,6 +160,7 @@ public class DateAxisTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashCode() {
         DateAxis a1 = new DateAxis("Test");
         DateAxis a2 = new DateAxis("Test");
@@ -188,6 +173,7 @@ public class DateAxisTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         DateAxis a1 = new DateAxis("Test");
         DateAxis a2 = null;
@@ -205,6 +191,7 @@ public class DateAxisTest extends TestCase {
     /**
      * Test that the setRange() method works.
      */
+    @Test
     public void testSetRange() {
 
         DateAxis axis = new DateAxis("Test Axis");
@@ -224,6 +211,7 @@ public class DateAxisTest extends TestCase {
     /**
      * Test that the setMaximumDate() method works.
      */
+    @Test
     public void testSetMaximumDate() {
         DateAxis axis = new DateAxis("Test Axis");
         Date date = new Date();
@@ -244,6 +232,7 @@ public class DateAxisTest extends TestCase {
     /**
      * Test that the setMinimumDate() method works.
      */
+    @Test
     public void testSetMinimumDate() {
         DateAxis axis = new DateAxis("Test Axis");
         Date d1 = new Date();
@@ -275,6 +264,7 @@ public class DateAxisTest extends TestCase {
     /**
      * Test the translation of Java2D values to data values.
      */
+    @Test
     public void testJava2DToValue() {
         DateAxis axis = new DateAxis();
         axis.setRange(50.0, 100.0);
@@ -301,6 +291,7 @@ public class DateAxisTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         DateAxis a1 = new DateAxis("Test Axis");
@@ -329,6 +320,7 @@ public class DateAxisTest extends TestCase {
      * A basic check for the testPreviousStandardDate() method when the
      * tick unit is 1 year.
      */
+    @Test
     public void testPreviousStandardDateYearA() {
         TimeZone tz = TimeZone.getDefault();
         MyDateAxis axis = new MyDateAxis("Year");
@@ -403,6 +395,7 @@ public class DateAxisTest extends TestCase {
      * A basic check for the testPreviousStandardDate() method when the
      * tick unit is 10 years (just for the sake of having a multiple).
      */
+    @Test
     public void testPreviousStandardDateYearB() {
         TimeZone tz = TimeZone.getDefault();
         MyDateAxis axis = new MyDateAxis("Year");
@@ -477,6 +470,7 @@ public class DateAxisTest extends TestCase {
      * A basic check for the testPreviousStandardDate() method when the
      * tick unit is 1 month.
      */
+    @Test
     public void testPreviousStandardDateMonthA() {
         TimeZone tz = TimeZone.getDefault();
         MyDateAxis axis = new MyDateAxis("Month");
@@ -551,6 +545,7 @@ public class DateAxisTest extends TestCase {
      * A basic check for the testPreviousStandardDate() method when the
      * tick unit is 3 months (just for the sake of having a multiple).
      */
+    @Test
     public void testPreviousStandardDateMonthB() {
         TimeZone tz = TimeZone.getDefault();
         MyDateAxis axis = new MyDateAxis("Month");
@@ -625,6 +620,7 @@ public class DateAxisTest extends TestCase {
      * A basic check for the testPreviousStandardDate() method when the
      * tick unit is 1 day.
      */
+    @Test
     public void testPreviousStandardDateDayA() {
         TimeZone tz = TimeZone.getDefault();
         MyDateAxis axis = new MyDateAxis("Day");
@@ -699,6 +695,7 @@ public class DateAxisTest extends TestCase {
      * A basic check for the testPreviousStandardDate() method when the
      * tick unit is 7 days (just for the sake of having a multiple).
      */
+    @Test
     public void testPreviousStandardDateDayB() {
         TimeZone tz = TimeZone.getDefault();
         MyDateAxis axis = new MyDateAxis("Day");
@@ -773,6 +770,7 @@ public class DateAxisTest extends TestCase {
      * A basic check for the testPreviousStandardDate() method when the
      * tick unit is 1 hour.
      */
+    @Test
     public void testPreviousStandardDateHourA() {
         TimeZone tz = TimeZone.getDefault();
         MyDateAxis axis = new MyDateAxis("Hour");
@@ -847,6 +845,7 @@ public class DateAxisTest extends TestCase {
      * A basic check for the testPreviousStandardDate() method when the
      * tick unit is 6 hours (just for the sake of having a multiple).
      */
+    @Test
     public void testPreviousStandardDateHourB() {
         TimeZone tz = TimeZone.getDefault();
         MyDateAxis axis = new MyDateAxis("Hour");
@@ -921,6 +920,7 @@ public class DateAxisTest extends TestCase {
      * A basic check for the testPreviousStandardDate() method when the
      * tick unit is 1 second.
      */
+    @Test
     public void testPreviousStandardDateSecondA() {
         TimeZone tz = TimeZone.getDefault();
         MyDateAxis axis = new MyDateAxis("Second");
@@ -995,6 +995,7 @@ public class DateAxisTest extends TestCase {
      * A basic check for the testPreviousStandardDate() method when the
      * tick unit is 5 seconds (just for the sake of having a multiple).
      */
+    @Test
     public void testPreviousStandardDateSecondB() {
         TimeZone tz = TimeZone.getDefault();
         MyDateAxis axis = new MyDateAxis("Second");
@@ -1069,6 +1070,7 @@ public class DateAxisTest extends TestCase {
      * A basic check for the testPreviousStandardDate() method when the
      * tick unit is 1 millisecond.
      */
+    @Test
     public void testPreviousStandardDateMillisecondA() {
         TimeZone tz = TimeZone.getDefault();
         MyDateAxis axis = new MyDateAxis("Millisecond");
@@ -1113,6 +1115,7 @@ public class DateAxisTest extends TestCase {
      * A basic check for the testPreviousStandardDate() method when the
      * tick unit is 10 milliseconds (just for the sake of having a multiple).
      */
+    @Test
     public void testPreviousStandardDateMillisecondB() {
         TimeZone tz = TimeZone.getDefault();
         MyDateAxis axis = new MyDateAxis("Millisecond");
@@ -1156,6 +1159,7 @@ public class DateAxisTest extends TestCase {
     /**
      * A test to reproduce bug 2201869.
      */
+    @Test
     public void testBug2201869() {
         TimeZone tz = TimeZone.getTimeZone("GMT");
         GregorianCalendar c = new GregorianCalendar(tz, Locale.UK);

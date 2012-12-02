@@ -42,6 +42,8 @@
 
 package org.jfree.data;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -49,39 +51,24 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.data.KeyedObjects2D;
-import org.jfree.data.UnknownKeyException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link KeyedObjects2D} class.
  */
-public class KeyedObjects2DTest extends TestCase {
+public class KeyedObjects2DTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(KeyedObjects2DTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public KeyedObjects2DTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the equals() method.
      */
+    @Test
     public void testEquals() {
         KeyedObjects2D k1 = new KeyedObjects2D();
         KeyedObjects2D k2 = new KeyedObjects2D();
@@ -97,6 +84,7 @@ public class KeyedObjects2DTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         KeyedObjects2D o1 = new KeyedObjects2D();
         o1.setObject(new Integer(1), "V1", "C1");
@@ -121,6 +109,7 @@ public class KeyedObjects2DTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         KeyedObjects2D ko2D1 = new KeyedObjects2D();
@@ -152,6 +141,7 @@ public class KeyedObjects2DTest extends TestCase {
     /**
      * Some checks for the getValue(int, int) method.
      */
+    @Test
     public void testGetValueByIndex() {
         KeyedObjects2D data = new KeyedObjects2D();
         data.addObject("Obj1", "R1", "C1");
@@ -202,6 +192,7 @@ public class KeyedObjects2DTest extends TestCase {
     /**
      * Some checks for the getValue(Comparable, Comparable) method.
      */
+    @Test
     public void testGetValueByKey() {
         KeyedObjects2D data = new KeyedObjects2D();
         data.addObject("Obj1", "R1", "C1");
@@ -252,6 +243,7 @@ public class KeyedObjects2DTest extends TestCase {
     /**
      * Some checks for the setObject(Object, Comparable, Comparable) method.
      */
+    @Test
     public void testSetObject() {
         KeyedObjects2D data = new KeyedObjects2D();
         data.setObject("Obj1", "R1", "C1");
@@ -288,6 +280,7 @@ public class KeyedObjects2DTest extends TestCase {
     /**
      * Some checks for the removeRow(int) method.
      */
+    @Test
     public void testRemoveRowByIndex() {
         KeyedObjects2D data = new KeyedObjects2D();
         data.setObject("Obj1", "R1", "C1");
@@ -320,6 +313,7 @@ public class KeyedObjects2DTest extends TestCase {
     /**
      * Some checks for the removeColumn(int) method.
      */
+    @Test
     public void testRemoveColumnByIndex() {
         KeyedObjects2D data = new KeyedObjects2D();
         data.setObject("Obj1", "R1", "C1");
@@ -352,6 +346,7 @@ public class KeyedObjects2DTest extends TestCase {
     /**
      * Some checks for the removeRow(Comparable) method.
      */
+    @Test
     public void testRemoveRowByKey() {
         KeyedObjects2D data = new KeyedObjects2D();
         data.setObject("Obj1", "R1", "C1");
@@ -384,6 +379,7 @@ public class KeyedObjects2DTest extends TestCase {
     /**
      * Some checks for the removeColumn(Comparable) method.
      */
+    @Test
     public void testRemoveColumnByKey() {
         KeyedObjects2D data = new KeyedObjects2D();
         data.setObject("Obj1", "R1", "C1");
@@ -416,6 +412,7 @@ public class KeyedObjects2DTest extends TestCase {
     /**
      * A simple check for the removeValue() method.
      */
+    @Test
     public void testRemoveValue() {
         KeyedObjects2D data = new KeyedObjects2D();
         data.setObject("Obj1", "R1", "C1");

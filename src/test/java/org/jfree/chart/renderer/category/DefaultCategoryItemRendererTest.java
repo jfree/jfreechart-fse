@@ -42,6 +42,9 @@
 
 package org.jfree.chart.renderer.category;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -49,38 +52,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.util.PublicCloneable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link DefaultCategoryItemRenderer} class.
  */
-public class DefaultCategoryItemRendererTest extends TestCase {
+public class DefaultCategoryItemRendererTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(DefaultCategoryItemRendererTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public DefaultCategoryItemRendererTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Check that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
         DefaultCategoryItemRenderer r1 = new DefaultCategoryItemRenderer();
         DefaultCategoryItemRenderer r2 = new DefaultCategoryItemRenderer();
@@ -90,6 +77,7 @@ public class DefaultCategoryItemRendererTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         DefaultCategoryItemRenderer r1 = new DefaultCategoryItemRenderer();
         DefaultCategoryItemRenderer r2 = new DefaultCategoryItemRenderer();
@@ -102,6 +90,7 @@ public class DefaultCategoryItemRendererTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         DefaultCategoryItemRenderer r1 = new DefaultCategoryItemRenderer();
         DefaultCategoryItemRenderer r2 = null;
@@ -119,6 +108,7 @@ public class DefaultCategoryItemRendererTest extends TestCase {
     /**
      * Check that this class implements PublicCloneable.
      */
+    @Test
     public void testPublicCloneable() {
         DefaultCategoryItemRenderer r1 = new DefaultCategoryItemRenderer();
         assertTrue(r1 instanceof PublicCloneable);
@@ -127,6 +117,7 @@ public class DefaultCategoryItemRendererTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         DefaultCategoryItemRenderer r1 = new DefaultCategoryItemRenderer();

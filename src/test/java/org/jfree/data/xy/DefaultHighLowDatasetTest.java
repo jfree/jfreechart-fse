@@ -41,6 +41,9 @@
 
 package org.jfree.data.xy;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -49,38 +52,23 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.Date;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.util.PublicCloneable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link DefaultHighLowDataset} class.
  */
-public class DefaultHighLowDatasetTest extends TestCase {
+public class DefaultHighLowDatasetTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(DefaultHighLowDatasetTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public DefaultHighLowDatasetTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         DefaultHighLowDataset d1 = new DefaultHighLowDataset("Series 1",
                 new Date[0], new double[0], new double[0], new double[0],
@@ -167,6 +155,7 @@ public class DefaultHighLowDatasetTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         DefaultHighLowDataset d1 = new DefaultHighLowDataset("Series 1",
                 new Date[] {new Date(123L)}, new double[] {1.2},
@@ -187,6 +176,7 @@ public class DefaultHighLowDatasetTest extends TestCase {
     /**
      * Verify that this class implements {@link PublicCloneable}.
      */
+    @Test
     public void testPublicCloneable() {
         DefaultHighLowDataset d1 = new DefaultHighLowDataset("Series 1",
                 new Date[0], new double[0], new double[0], new double[0],
@@ -197,6 +187,7 @@ public class DefaultHighLowDatasetTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         DefaultHighLowDataset d1 = new DefaultHighLowDataset("Series 1",
                 new Date[] {new Date(123L)}, new double[] {1.2},

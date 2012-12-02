@@ -40,6 +40,8 @@
 
 package org.jfree.data.xy;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -47,36 +49,25 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+
 
 /**
  * Tests for the {@link XYCoordinate} class.
  */
-public class XYCoordinateTest extends TestCase {
+public class XYCoordinateTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(XYCoordinateTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public XYCoordinateTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Test that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
         // default instances
         XYCoordinate v1 = new XYCoordinate(1.0, 2.0);
@@ -98,6 +89,7 @@ public class XYCoordinateTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         XYCoordinate v1 = new XYCoordinate(1.0, 2.0);
         XYCoordinate v2 = new XYCoordinate(1.0, 2.0);
@@ -110,6 +102,7 @@ public class XYCoordinateTest extends TestCase {
     /**
      * Immutable class is not cloneable.
      */
+    @Test
     public void testCloning() {
         XYCoordinate v1 = new XYCoordinate(1.0, 2.0);
         assertFalse(v1 instanceof Cloneable);
@@ -118,6 +111,7 @@ public class XYCoordinateTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         XYCoordinate v1 = new XYCoordinate(1.0, 2.0);
         XYCoordinate v2 = null;

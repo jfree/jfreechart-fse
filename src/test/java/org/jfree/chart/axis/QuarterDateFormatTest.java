@@ -41,6 +41,8 @@
 
 package org.jfree.chart.axis;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -49,38 +51,24 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.TimeZone;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.axis.QuarterDateFormat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link QuarterDateFormat} class.
  */
-public class QuarterDateFormatTest extends TestCase {
+public class QuarterDateFormatTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(QuarterDateFormatTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public QuarterDateFormatTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         QuarterDateFormat qf1 = new QuarterDateFormat(TimeZone.getTimeZone(
                 "GMT"), new String[] {"1", "2", "3", "4"});
@@ -114,6 +102,7 @@ public class QuarterDateFormatTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashCode() {
         QuarterDateFormat qf1 = new QuarterDateFormat(TimeZone.getTimeZone(
                 "GMT"), new String[] {"1", "2", "3", "4"});
@@ -128,6 +117,7 @@ public class QuarterDateFormatTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         QuarterDateFormat qf1 = new QuarterDateFormat(TimeZone.getTimeZone(
                 "GMT"), new String[] {"1", "2", "3", "4"});
@@ -141,6 +131,7 @@ public class QuarterDateFormatTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         QuarterDateFormat qf1 = new QuarterDateFormat(TimeZone.getTimeZone(
                 "GMT"), new String[] {"1", "2", "3", "4"});

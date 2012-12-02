@@ -40,53 +40,39 @@
 
 package org.jfree.chart;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
 import org.jfree.chart.event.ChartChangeEvent;
 import org.jfree.chart.event.ChartChangeListener;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for a pie chart with a 3D effect.
  */
-public class PieChart3DTest extends TestCase {
+public class PieChart3DTest  {
 
     /** A chart. */
     private JFreeChart pieChart;
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(PieChart3DTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public PieChart3DTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Common test setup.
      */
-    @Override
-	protected void setUp() {
+    @Before
+	public void setUp() {
         // create a dataset...
         DefaultPieDataset dataset = new DefaultPieDataset();
         dataset.setValue("Java", new Double(43.2));
@@ -100,6 +86,7 @@ public class PieChart3DTest extends TestCase {
      * receive notification of a chart change event, and (of course) the
      * dataset should be null.
      */
+    @Test
     public void testReplaceDatasetOnPieChart() {
         LocalListener l = new LocalListener();
         this.pieChart.addChangeListener(l);
@@ -113,6 +100,7 @@ public class PieChart3DTest extends TestCase {
      * Tests that no exceptions are thrown when there is a <code>null</code>
      * value in the dataset.
      */
+    @Test
     public void testNullValueInDataset() {
         DefaultPieDataset dataset = new DefaultPieDataset();
         dataset.setValue("Section 1", 10.0);

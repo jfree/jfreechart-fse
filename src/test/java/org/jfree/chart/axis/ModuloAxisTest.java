@@ -40,6 +40,9 @@
 
 package org.jfree.chart.axis;
 
+import org.jfree.data.Range;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -47,39 +50,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.axis.ModuloAxis;
-import org.jfree.data.Range;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link ModuloAxis} class.
  */
-public class ModuloAxisTest extends TestCase {
+public class ModuloAxisTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(ModuloAxisTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public ModuloAxisTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         ModuloAxis a1 = new ModuloAxis("Test", new Range(0.0, 1.0));
         ModuloAxis a2 = null;
@@ -97,6 +84,7 @@ public class ModuloAxisTest extends TestCase {
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         ModuloAxis a1 = new ModuloAxis("Test", new Range(0.0, 1.0));
         ModuloAxis a2 = new ModuloAxis("Test", new Range(0.0, 1.0));
@@ -111,6 +99,7 @@ public class ModuloAxisTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashCode() {
         ModuloAxis a1 = new ModuloAxis("Test", new Range(0.0, 1.0));
         ModuloAxis a2 = new ModuloAxis("Test", new Range(0.0, 1.0));
@@ -123,6 +112,7 @@ public class ModuloAxisTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         ModuloAxis a1 = new ModuloAxis("Test", new Range(0.0, 1.0));

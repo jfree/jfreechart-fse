@@ -41,6 +41,9 @@
 
 package org.jfree.chart.labels;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -48,39 +51,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.labels.SymbolicXYItemLabelGenerator;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link SymbolicXYItemLabelGenerator} class.
  */
-public class SymbolicXYItemLabelGeneratorTest extends TestCase {
+public class SymbolicXYItemLabelGeneratorTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(SymbolicXYItemLabelGeneratorTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public SymbolicXYItemLabelGeneratorTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Tests the equals method.
      */
+    @Test
     public void testEquals() {
         SymbolicXYItemLabelGenerator g1 = new SymbolicXYItemLabelGenerator();
         SymbolicXYItemLabelGenerator g2 = new SymbolicXYItemLabelGenerator();
@@ -91,6 +77,7 @@ public class SymbolicXYItemLabelGeneratorTest extends TestCase {
     /**
      * Simple check that hashCode is implemented.
      */
+    @Test
     public void testHashCode() {
         SymbolicXYItemLabelGenerator g1
                 = new SymbolicXYItemLabelGenerator();
@@ -103,6 +90,7 @@ public class SymbolicXYItemLabelGeneratorTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         SymbolicXYItemLabelGenerator g1 = new SymbolicXYItemLabelGenerator();
         SymbolicXYItemLabelGenerator g2 = null;
@@ -120,6 +108,7 @@ public class SymbolicXYItemLabelGeneratorTest extends TestCase {
     /**
      * Check to ensure that this class implements PublicCloneable.
      */
+    @Test
     public void testPublicCloneable() {
         SymbolicXYItemLabelGenerator g1 = new SymbolicXYItemLabelGenerator();
         assertTrue(g1 instanceof PublicCloneable);
@@ -128,6 +117,7 @@ public class SymbolicXYItemLabelGeneratorTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         SymbolicXYItemLabelGenerator g1 = new SymbolicXYItemLabelGenerator();
         SymbolicXYItemLabelGenerator g2 = null;

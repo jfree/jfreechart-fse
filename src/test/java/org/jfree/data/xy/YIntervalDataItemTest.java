@@ -40,6 +40,8 @@
 
 package org.jfree.data.xy;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -47,38 +49,27 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+
 
 /**
  * Tests for the {@link YIntervalDataItem} class.
  */
-public class YIntervalDataItemTest extends TestCase {
+public class YIntervalDataItemTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(YIntervalDataItemTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public YIntervalDataItemTest(String name) {
-        super(name);
-    }
+
+
 
     private static final double EPSILON = 0.00000000001;
 
     /**
      * Some checks for the constructor.
      */
+    @Test
     public void testConstructor1() {
         YIntervalDataItem item1 = new YIntervalDataItem(1.0, 2.0, 3.0, 4.0);
         assertEquals(new Double(1.0), item1.getX());
@@ -90,6 +81,7 @@ public class YIntervalDataItemTest extends TestCase {
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         YIntervalDataItem item1 = new YIntervalDataItem(1.0, 2.0, 1.5, 2.5);
         YIntervalDataItem item2 = new YIntervalDataItem(1.0, 2.0, 1.5, 2.5);
@@ -124,6 +116,7 @@ public class YIntervalDataItemTest extends TestCase {
     /**
      * Some checks for the clone() method.
      */
+    @Test
     public void testCloning() {
         YIntervalDataItem item1 = new YIntervalDataItem(1.0, 2.0, 1.5, 2.5);
         YIntervalDataItem item2 = null;
@@ -141,6 +134,7 @@ public class YIntervalDataItemTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         YIntervalDataItem item1 = new YIntervalDataItem(1.0, 2.0, 1.5, 2.5);
         YIntervalDataItem item2 = null;

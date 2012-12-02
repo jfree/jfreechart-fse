@@ -49,6 +49,10 @@
 
 package org.jfree.data.time;
 
+import org.jfree.chart.date.MonthConstants;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -61,19 +65,15 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.date.MonthConstants;
-import org.jfree.data.time.Month;
-import org.jfree.data.time.TimePeriodFormatException;
-import org.jfree.data.time.Year;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link Month} class.
  */
-public class MonthTest extends TestCase {
+public class MonthTest  {
 
     /** A month. */
     private Month jan1900;
@@ -87,29 +87,15 @@ public class MonthTest extends TestCase {
     /** A month. */
     private Month dec9999;
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(MonthTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public MonthTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Common test setup.
      */
-    @Override
-	protected void setUp() {
+    @Before
+	public void setUp() {
         this.jan1900 = new Month(MonthConstants.JANUARY, 1900);
         this.feb1900 = new Month(MonthConstants.FEBRUARY, 1900);
         this.nov9999 = new Month(MonthConstants.NOVEMBER, 9999);
@@ -121,6 +107,7 @@ public class MonthTest extends TestCase {
      *
      * SourceForge Bug ID: 558850.
      */
+    @Test
     public void testEqualsSelf() {
         Month month = new Month();
         assertTrue(month.equals(month));
@@ -129,6 +116,7 @@ public class MonthTest extends TestCase {
     /**
      * Tests the equals method.
      */
+    @Test
     public void testEquals() {
         Month m1 = new Month(MonthConstants.MAY, 2002);
         Month m2 = new Month(MonthConstants.MAY, 2002);
@@ -139,6 +127,7 @@ public class MonthTest extends TestCase {
      * In GMT, the end of Feb 2000 is java.util.Date(951,868,799,999L).  Use
      * this to check the Month constructor.
      */
+    @Test
     public void testDateConstructor1() {
 
         TimeZone zone = TimeZone.getTimeZone("GMT");
@@ -159,6 +148,7 @@ public class MonthTest extends TestCase {
      * In Auckland, the end of Feb 2000 is java.util.Date(951,821,999,999L).
      * Use this to check the Month constructor.
      */
+    @Test
     public void testDateConstructor2() {
 
         TimeZone zone = TimeZone.getTimeZone("Pacific/Auckland");
@@ -178,6 +168,7 @@ public class MonthTest extends TestCase {
      * Set up a month equal to Jan 1900.  Request the previous month, it should
      * be null.
      */
+    @Test
     public void testJan1900Previous() {
         Month previous = (Month) this.jan1900.previous();
         assertNull(previous);
@@ -187,6 +178,7 @@ public class MonthTest extends TestCase {
      * Set up a month equal to Jan 1900.  Request the next month, it should be
      * Feb 1900.
      */
+    @Test
     public void testJan1900Next() {
         Month next = (Month) this.jan1900.next();
         assertEquals(this.feb1900, next);
@@ -196,6 +188,7 @@ public class MonthTest extends TestCase {
      * Set up a month equal to Dec 9999.  Request the previous month, it should
      * be Nov 9999.
      */
+    @Test
     public void testDec9999Previous() {
         Month previous = (Month) this.dec9999.previous();
         assertEquals(this.nov9999, previous);
@@ -205,6 +198,7 @@ public class MonthTest extends TestCase {
      * Set up a month equal to Dec 9999.  Request the next month, it should be
      * null.
      */
+    @Test
     public void testDec9999Next() {
         Month next = (Month) this.dec9999.next();
         assertNull(next);
@@ -213,6 +207,7 @@ public class MonthTest extends TestCase {
     /**
      * Tests the string parsing code...
      */
+    @Test
     public void testParseMonth() {
 
         Month month;
@@ -252,6 +247,7 @@ public class MonthTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         Month m1 = new Month(12, 1999);
@@ -279,6 +275,7 @@ public class MonthTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         Month m1 = new Month(2, 2003);
         Month m2 = new Month(2, 2003);
@@ -291,6 +288,7 @@ public class MonthTest extends TestCase {
     /**
      * The {@link Month} class is immutable, so should not be {@link Cloneable}.
      */
+    @Test
     public void testNotCloneable() {
         Month m = new Month(2, 2003);
         assertFalse(m instanceof Cloneable);
@@ -299,6 +297,7 @@ public class MonthTest extends TestCase {
     /**
      * Some checks for the getFirstMillisecond() method.
      */
+    @Test
     public void testGetFirstMillisecond() {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -313,6 +312,7 @@ public class MonthTest extends TestCase {
     /**
      * Some checks for the getFirstMillisecond(TimeZone) method.
      */
+    @Test
     public void testGetFirstMillisecondWithTimeZone() {
         Month m = new Month(2, 1950);
         TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
@@ -333,6 +333,7 @@ public class MonthTest extends TestCase {
     /**
      * Some checks for the getFirstMillisecond(TimeZone) method.
      */
+    @Test
     public void testGetFirstMillisecondWithCalendar() {
         Month m = new Month(1, 2001);
         GregorianCalendar calendar = new GregorianCalendar(Locale.GERMANY);
@@ -353,6 +354,7 @@ public class MonthTest extends TestCase {
     /**
      * Some checks for the getLastMillisecond() method.
      */
+    @Test
     public void testGetLastMillisecond() {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -367,6 +369,7 @@ public class MonthTest extends TestCase {
     /**
      * Some checks for the getLastMillisecond(TimeZone) method.
      */
+    @Test
     public void testGetLastMillisecondWithTimeZone() {
         Month m = new Month(2, 1950);
         TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
@@ -387,6 +390,7 @@ public class MonthTest extends TestCase {
     /**
      * Some checks for the getLastMillisecond(TimeZone) method.
      */
+    @Test
     public void testGetLastMillisecondWithCalendar() {
         Month m = new Month(3, 2001);
         GregorianCalendar calendar = new GregorianCalendar(Locale.GERMANY);
@@ -407,6 +411,7 @@ public class MonthTest extends TestCase {
     /**
      * Some checks for the getSerialIndex() method.
      */
+    @Test
     public void testGetSerialIndex() {
         Month m = new Month(1, 2000);
         assertEquals(24001L, m.getSerialIndex());
@@ -417,6 +422,7 @@ public class MonthTest extends TestCase {
     /**
      * Some checks for the testNext() method.
      */
+    @Test
     public void testNext() {
         Month m = new Month(12, 2000);
         m = (Month) m.next();
@@ -429,6 +435,7 @@ public class MonthTest extends TestCase {
     /**
      * Some checks for the getStart() method.
      */
+    @Test
     public void testGetStart() {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.ITALY);
@@ -443,6 +450,7 @@ public class MonthTest extends TestCase {
     /**
      * Some checks for the getEnd() method.
      */
+    @Test
     public void testGetEnd() {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.ITALY);

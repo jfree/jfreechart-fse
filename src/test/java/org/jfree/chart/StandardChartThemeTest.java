@@ -41,13 +41,14 @@
 
 package org.jfree.chart;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
+import org.jfree.chart.plot.DefaultDrawingSupplier;
+import org.jfree.chart.plot.PieLabelLinkStyle;
+import org.jfree.chart.renderer.category.StandardBarPainter;
+import org.jfree.chart.renderer.xy.StandardXYBarPainter;
+import org.jfree.chart.ui.RectangleInsets;
+import org.junit.Test;
+
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -56,43 +57,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.StandardChartTheme;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.plot.DefaultDrawingSupplier;
-import org.jfree.chart.plot.PieLabelLinkStyle;
-import org.jfree.chart.renderer.category.StandardBarPainter;
-import org.jfree.chart.renderer.xy.StandardXYBarPainter;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link StandardChartTheme} class.
  */
-public class StandardChartThemeTest extends TestCase {
+public class StandardChartThemeTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(StandardChartThemeTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public StandardChartThemeTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         StandardChartTheme t1 = new StandardChartTheme("Name");
@@ -288,6 +268,7 @@ public class StandardChartThemeTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         StandardChartTheme t1 = new StandardChartTheme("Name");
         StandardChartTheme t2 = null;
@@ -311,6 +292,7 @@ public class StandardChartThemeTest extends TestCase {
     /**
      * Basic checks for cloning.
      */
+    @Test
     public void testCloning() {
         StandardChartTheme t1 = new StandardChartTheme("Name");
         StandardChartTheme t2 = null;

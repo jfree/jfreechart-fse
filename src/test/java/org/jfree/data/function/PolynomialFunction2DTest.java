@@ -40,6 +40,8 @@
 
 package org.jfree.data.function;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -48,36 +50,25 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+
 
 /**
  * Tests for the {@link PolynomialFunction2D} class.
  */
-public class PolynomialFunction2DTest extends TestCase {
+public class PolynomialFunction2DTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(PolynomialFunction2DTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public PolynomialFunction2DTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some tests for the constructor.
      */
+    @Test
     public void testConstructor() {
         PolynomialFunction2D f = new PolynomialFunction2D(new double[] {1.0,
                 2.0});
@@ -96,6 +87,7 @@ public class PolynomialFunction2DTest extends TestCase {
     /**
      * Some checks for the getCoefficients() method.
      */
+    @Test
     public void testGetCoefficients() {
         PolynomialFunction2D f = new PolynomialFunction2D(new double[] {1.0,
                 2.0});
@@ -111,6 +103,7 @@ public class PolynomialFunction2DTest extends TestCase {
     /**
      * Some checks for the getOrder() method.
      */
+    @Test
     public void testGetOrder() {
         PolynomialFunction2D f = new PolynomialFunction2D(new double[] {1.0,
                 2.0});
@@ -120,6 +113,7 @@ public class PolynomialFunction2DTest extends TestCase {
     /**
      * For datasets, the equals() method just checks keys and values.
      */
+    @Test
     public void testEquals() {
         PolynomialFunction2D f1 = new PolynomialFunction2D(new double[] {1.0,
                 2.0});
@@ -135,6 +129,7 @@ public class PolynomialFunction2DTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         PolynomialFunction2D f1 = new PolynomialFunction2D(new double[] {1.0,
                 2.0});
@@ -161,6 +156,7 @@ public class PolynomialFunction2DTest extends TestCase {
      * Objects that are equal should have the same hash code otherwise FindBugs
      * will tell on us...
      */
+    @Test
     public void testHashCode() {
         PolynomialFunction2D f1 = new PolynomialFunction2D(new double[] {1.0,
                 2.0});

@@ -42,10 +42,12 @@
 
 package org.jfree.chart.plot.dial;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.TextAnchor;
+import org.junit.Test;
+
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -53,40 +55,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.ui.RectangleAnchor;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.TextAnchor;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link DialValueIndicator} class.
  */
-public class DialValueIndicatorTest extends TestCase {
+public class DialValueIndicatorTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(DialValueIndicatorTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public DialValueIndicatorTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         DialValueIndicator i1 = new DialValueIndicator(0);
         DialValueIndicator i2 = new DialValueIndicator(0);
@@ -186,6 +171,7 @@ public class DialValueIndicatorTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashCode() {
         DialValueIndicator i1 = new DialValueIndicator(0);
         DialValueIndicator i2 = new DialValueIndicator(0);
@@ -198,6 +184,7 @@ public class DialValueIndicatorTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         // test a default instance
         DialValueIndicator i1 = new DialValueIndicator(0);
@@ -223,6 +210,7 @@ public class DialValueIndicatorTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         // test a default instance
         DialValueIndicator i1 = new DialValueIndicator(0);

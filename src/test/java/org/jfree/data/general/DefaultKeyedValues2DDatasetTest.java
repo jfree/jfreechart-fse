@@ -40,6 +40,8 @@
 
 package org.jfree.data.general;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -47,36 +49,24 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+
 
 /**
  * Tests for the {@link DefaultKeyedValues2DDataset} class.
  */
-public class DefaultKeyedValues2DDatasetTest extends TestCase {
+public class DefaultKeyedValues2DDatasetTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(DefaultKeyedValues2DDatasetTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public DefaultKeyedValues2DDatasetTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         DefaultKeyedValues2DDataset d1 = new DefaultKeyedValues2DDataset();
         d1.setValue(new Integer(1), "V1", "C1");
@@ -97,6 +87,7 @@ public class DefaultKeyedValues2DDatasetTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         DefaultKeyedValues2DDataset d1 = new DefaultKeyedValues2DDataset();

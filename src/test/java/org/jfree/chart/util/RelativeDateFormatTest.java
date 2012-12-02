@@ -43,46 +43,37 @@
 
 package org.jfree.chart.util;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+
 
 /**
  * Tests for the {@link RelativeDateFormat} class.
  */
-public class RelativeDateFormatTest extends TestCase {
+public class RelativeDateFormatTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(RelativeDateFormatTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public RelativeDateFormatTest(String name) {
-        super(name);
-    }
+
+
 
     private Locale savedLocale;
 
     /**
      * Set a known locale for the tests.
      */
-    @Override
-	protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+	public void setUp() throws Exception {
         this.savedLocale = Locale.getDefault();
         Locale.setDefault(Locale.UK);
     }
@@ -90,15 +81,15 @@ public class RelativeDateFormatTest extends TestCase {
     /**
      * Restore the default locale after the tests complete.
      */
-    @Override
-	protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+	public void tearDown() throws Exception {
         Locale.setDefault(this.savedLocale);
     }
 
     /**
      * Some checks for the formatting.
      */
+    @Test
     public void testFormat() {
         RelativeDateFormat rdf = new RelativeDateFormat();
         String s = rdf.format(new Date(2 * 60L * 60L * 1000L + 122500L));
@@ -109,6 +100,7 @@ public class RelativeDateFormatTest extends TestCase {
      * Test that we can configure the RelativeDateFormat to show
      * hh:mm:ss.
      */
+    @Test
     public void test2033092() {
         RelativeDateFormat rdf = new RelativeDateFormat();
         rdf.setShowZeroDays(false);
@@ -138,6 +130,7 @@ public class RelativeDateFormatTest extends TestCase {
     /**
      * Check that the equals() method can distinguish all fields.
      */
+    @Test
     public void testEquals() {
         RelativeDateFormat df1 = new RelativeDateFormat();
         RelativeDateFormat df2 = new RelativeDateFormat();
@@ -197,6 +190,7 @@ public class RelativeDateFormatTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashCode() {
         RelativeDateFormat df1 = new RelativeDateFormat(123L);
         RelativeDateFormat df2 = new RelativeDateFormat(123L);
@@ -209,6 +203,7 @@ public class RelativeDateFormatTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         NumberFormat nf = new DecimalFormat("0");
         RelativeDateFormat df1 = new RelativeDateFormat();
@@ -227,6 +222,7 @@ public class RelativeDateFormatTest extends TestCase {
     /**
      * Some tests for negative dates.
      */
+    @Test
     public void testNegative() {
         NumberFormat nf = new DecimalFormat("0");
         RelativeDateFormat df1 = new RelativeDateFormat();

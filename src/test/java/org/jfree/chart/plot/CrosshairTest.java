@@ -41,10 +41,12 @@
 
 package org.jfree.chart.plot;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
+import org.jfree.chart.labels.StandardCrosshairLabelGenerator;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.util.PublicCloneable;
+import org.junit.Test;
+
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -53,41 +55,23 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.text.NumberFormat;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.ui.RectangleAnchor;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.labels.StandardCrosshairLabelGenerator;
-import org.jfree.chart.plot.Crosshair;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link Crosshair} class.
  */
-public class CrosshairTest extends TestCase {
+public class CrosshairTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(CrosshairTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public CrosshairTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the equals() method.
      */
+    @Test
     public void testEquals() {
         Crosshair c1 = new Crosshair(1.0, Color.BLUE, new BasicStroke(1.0f));
         Crosshair c2 = new Crosshair(1.0, Color.BLUE, new BasicStroke(1.0f));
@@ -176,6 +160,7 @@ public class CrosshairTest extends TestCase {
     /**
      * Simple check that hashCode is implemented.
      */
+    @Test
     public void testHashCode() {
         Crosshair c1 = new Crosshair(1.0);
         Crosshair c2 = new Crosshair(1.0);
@@ -186,6 +171,7 @@ public class CrosshairTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         Crosshair c1 = new Crosshair(1.0, new GradientPaint(1.0f, 2.0f,
                 Color.RED, 3.0f, 4.0f, Color.BLUE), new BasicStroke(1.0f));
@@ -204,6 +190,7 @@ public class CrosshairTest extends TestCase {
     /**
      * Check to ensure that this class implements PublicCloneable.
      */
+    @Test
     public void testPublicCloneable() {
         Crosshair c1 = new Crosshair(1.0);
         assertTrue(c1 instanceof PublicCloneable);
@@ -212,6 +199,7 @@ public class CrosshairTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         Crosshair c1 = new Crosshair(1.0, new GradientPaint(1.0f, 2.0f,
                 Color.RED, 3.0f, 4.0f, Color.BLUE), new BasicStroke(1.0f));

@@ -40,18 +40,6 @@
 
 package org.jfree.chart;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.util.Calendar;
-import java.util.Date;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
 import org.jfree.chart.event.ChartChangeEvent;
 import org.jfree.chart.event.ChartChangeListener;
 import org.jfree.chart.labels.CategoryToolTipGenerator;
@@ -65,38 +53,35 @@ import org.jfree.data.gantt.Task;
 import org.jfree.data.gantt.TaskSeries;
 import org.jfree.data.gantt.TaskSeriesCollection;
 import org.jfree.data.time.SimpleTimePeriod;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.util.Calendar;
+import java.util.Date;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Some tests for a Gantt chart.
  */
-public class GanttChartTest extends TestCase {
+public class GanttChartTest  {
 
     /** A chart. */
     private JFreeChart chart;
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(GanttChartTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public GanttChartTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Common test setup.
      */
-    @Override
-	protected void setUp() {
+    @Before
+	public void setUp() {
         this.chart = createGanttChart();
     }
 
@@ -104,6 +89,7 @@ public class GanttChartTest extends TestCase {
      * Draws the chart with a <code>null</code> info object to make sure that
      * no exceptions are thrown (a problem that was occurring at one point).
      */
+    @Test
     public void testDrawWithNullInfo() {
         boolean success = false;
         try {
@@ -126,6 +112,7 @@ public class GanttChartTest extends TestCase {
      * Draws the chart with a <code>null</code> info object to make sure that
      * no exceptions are thrown (a problem that was occurring at one point).
      */
+    @Test
     public void testDrawWithNullInfo2() {
         boolean success = false;
         try {
@@ -144,6 +131,7 @@ public class GanttChartTest extends TestCase {
     /**
      * Replaces the chart's dataset and then checks that the new dataset is OK.
      */
+    @Test
     public void testReplaceDataset() {
         LocalListener l = new LocalListener();
         this.chart.addChangeListener(l);
@@ -156,6 +144,7 @@ public class GanttChartTest extends TestCase {
      * Check that setting a tool tip generator for a series does override the
      * default generator.
      */
+    @Test
     public void testSetSeriesToolTipGenerator() {
         CategoryPlot plot = (CategoryPlot) this.chart.getPlot();
         CategoryItemRenderer renderer = plot.getRenderer();
@@ -170,6 +159,7 @@ public class GanttChartTest extends TestCase {
      * Check that setting a URL generator for a series does override the
      * default generator.
      */
+    @Test
     public void testSetSeriesURLGenerator() {
         CategoryPlot plot = (CategoryPlot) this.chart.getPlot();
         CategoryItemRenderer renderer = plot.getRenderer();

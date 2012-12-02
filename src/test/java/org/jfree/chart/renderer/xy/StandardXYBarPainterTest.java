@@ -40,6 +40,9 @@
 
 package org.jfree.chart.renderer.xy;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -47,38 +50,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.util.PublicCloneable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link StandardXYBarPainter} class.
  */
-public class StandardXYBarPainterTest extends TestCase {
+public class StandardXYBarPainterTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(StandardXYBarPainterTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public StandardXYBarPainterTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Check that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
         StandardXYBarPainter p1 = new StandardXYBarPainter();
         StandardXYBarPainter p2 = new StandardXYBarPainter();
@@ -88,6 +76,7 @@ public class StandardXYBarPainterTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         StandardXYBarPainter p1 = new StandardXYBarPainter();
         StandardXYBarPainter p2 = new StandardXYBarPainter();
@@ -101,6 +90,7 @@ public class StandardXYBarPainterTest extends TestCase {
      * Confirm that cloning isn't implemented (it isn't required, because
      * instances of the class are immutable).
      */
+    @Test
     public void testCloning() {
         StandardXYBarPainter p1 = new StandardXYBarPainter();
         assertFalse(p1 instanceof Cloneable);
@@ -110,6 +100,7 @@ public class StandardXYBarPainterTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         StandardXYBarPainter p1 = new StandardXYBarPainter();
         StandardXYBarPainter p2 = null;

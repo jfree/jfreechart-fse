@@ -47,7 +47,22 @@
 
 package org.jfree.chart.renderer.xy;
 
-import java.awt.Graphics2D;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartRenderingInfo;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.TestUtilities;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.entity.EntityCollection;
+import org.jfree.chart.entity.XYItemEntity;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.UnitType;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.junit.Test;
+
+import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -58,50 +73,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartRenderingInfo;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.UnitType;
-import org.jfree.chart.entity.EntityCollection;
-import org.jfree.chart.entity.XYItemEntity;
-import org.jfree.chart.TestUtilities;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link StandardXYItemRenderer} class.
  */
-public class StandardXYItemRendererTest extends TestCase {
+public class StandardXYItemRendererTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(StandardXYItemRendererTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public StandardXYItemRendererTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Test that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
         StandardXYItemRenderer r1 = new StandardXYItemRenderer();
         StandardXYItemRenderer r2 = new StandardXYItemRenderer();
@@ -161,6 +149,7 @@ public class StandardXYItemRendererTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         StandardXYItemRenderer r1 = new StandardXYItemRenderer();
         StandardXYItemRenderer r2 = new StandardXYItemRenderer();
@@ -173,6 +162,7 @@ public class StandardXYItemRendererTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         StandardXYItemRenderer r1 = new StandardXYItemRenderer();
         Rectangle2D rect1 = new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0);
@@ -203,6 +193,7 @@ public class StandardXYItemRendererTest extends TestCase {
     /**
      * Verify that this class implements {@link PublicCloneable}.
      */
+    @Test
     public void testPublicCloneable() {
         StandardXYItemRenderer r1 = new StandardXYItemRenderer();
         assertTrue(r1 instanceof PublicCloneable);
@@ -211,6 +202,7 @@ public class StandardXYItemRendererTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         StandardXYItemRenderer r1 = new StandardXYItemRenderer();
         StandardXYItemRenderer r2 = null;
@@ -235,6 +227,7 @@ public class StandardXYItemRendererTest extends TestCase {
      * A check for the datasetIndex and seriesIndex fields in the LegendItem
      * returned by the getLegendItem() method.
      */
+    @Test
     public void testGetLegendItemSeriesIndex() {
         XYSeriesCollection d1 = new XYSeriesCollection();
         XYSeries s1 = new XYSeries("S1");
@@ -270,6 +263,7 @@ public class StandardXYItemRendererTest extends TestCase {
      * A check to ensure that an item that falls outside the plot's data area
      * does NOT generate an item entity.
      */
+    @Test
     public void testNoDisplayedItem() {
         XYSeriesCollection dataset = new XYSeriesCollection();
         XYSeries s1 = new XYSeries("S1");

@@ -41,6 +41,9 @@
 
 package org.jfree.chart.renderer.xy;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -48,38 +51,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.util.PublicCloneable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link DeviationRenderer} class.
  */
-public class DeviationRendererTest extends TestCase {
+public class DeviationRendererTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(DeviationRendererTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public DeviationRendererTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Test that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
 
         // default instances
@@ -98,6 +86,7 @@ public class DeviationRendererTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         DeviationRenderer r1 = new DeviationRenderer();
         DeviationRenderer r2 = new DeviationRenderer();
@@ -110,6 +99,7 @@ public class DeviationRendererTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         DeviationRenderer r1 = new DeviationRenderer();
         DeviationRenderer r2 = null;
@@ -130,6 +120,7 @@ public class DeviationRendererTest extends TestCase {
     /**
      * Verify that this class implements {@link PublicCloneable}.
      */
+    @Test
     public void testPublicCloneable() {
         DeviationRenderer r1 = new DeviationRenderer();
         assertTrue(r1 instanceof PublicCloneable);
@@ -138,6 +129,7 @@ public class DeviationRendererTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         DeviationRenderer r1 = new DeviationRenderer();

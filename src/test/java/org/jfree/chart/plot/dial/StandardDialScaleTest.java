@@ -42,10 +42,9 @@
 
 package org.jfree.chart.plot.dial;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
+import org.junit.Test;
+
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -53,36 +52,25 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+
 
 /**
  * Tests for the {@link StandardDialScale} class.
  */
-public class StandardDialScaleTest extends TestCase {
+public class StandardDialScaleTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(StandardDialScaleTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public StandardDialScaleTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         StandardDialScale s1 = new StandardDialScale();
         StandardDialScale s2 = new StandardDialScale();
@@ -191,6 +179,7 @@ public class StandardDialScaleTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashCode() {
         StandardDialScale s1 = new StandardDialScale();
         StandardDialScale s2 = new StandardDialScale();
@@ -203,6 +192,7 @@ public class StandardDialScaleTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         // try a default instance
         StandardDialScale s1 = new StandardDialScale();
@@ -244,6 +234,7 @@ public class StandardDialScaleTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         // try a default instance
         StandardDialScale s1 = new StandardDialScale();
@@ -295,6 +286,7 @@ public class StandardDialScaleTest extends TestCase {
     /**
      * Some checks for the valueToAngle() method.
      */
+    @Test
     public void testValueToAngle() {
         StandardDialScale s = new StandardDialScale();
         assertEquals(175.0, s.valueToAngle(0.0), EPSILON);
@@ -312,6 +304,7 @@ public class StandardDialScaleTest extends TestCase {
     /**
      * Some checks for the angleToValue() method.
      */
+    @Test
     public void testAngleToValue() {
         StandardDialScale s = new StandardDialScale();
         assertEquals(0.0, s.angleToValue(175.0), EPSILON);

@@ -42,8 +42,12 @@
 
 package org.jfree.chart.title;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
+import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.block.BlockContainer;
+import org.jfree.chart.ui.RectangleInsets;
+import org.junit.Test;
+
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -51,40 +55,25 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.block.BlockBorder;
-import org.jfree.chart.block.BlockContainer;
-import org.jfree.chart.ui.RectangleInsets;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link CompositeTitle} class.
  */
-public class CompositeTitleTest extends TestCase {
+public class CompositeTitleTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(CompositeTitleTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public CompositeTitleTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the constructor.
      */
+    @Test
     public void testConstructor() {
         CompositeTitle t = new CompositeTitle();
         assertNull(t.getBackgroundPaint());
@@ -93,6 +82,7 @@ public class CompositeTitleTest extends TestCase {
     /**
      * Check that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
         CompositeTitle t1 = new CompositeTitle(new BlockContainer());
         CompositeTitle t2 = new CompositeTitle(new BlockContainer());
@@ -135,6 +125,7 @@ public class CompositeTitleTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         CompositeTitle t1 = new CompositeTitle(new BlockContainer());
         t1.getContainer().add(new TextTitle("T1"));
@@ -149,6 +140,7 @@ public class CompositeTitleTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         CompositeTitle t1 = new CompositeTitle(new BlockContainer());
         t1.getContainer().add(new TextTitle("T1"));
@@ -169,6 +161,7 @@ public class CompositeTitleTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         CompositeTitle t1 = new CompositeTitle(new BlockContainer());
         t1.getContainer().add(new TextTitle("T1"));

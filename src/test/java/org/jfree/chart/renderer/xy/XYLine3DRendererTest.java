@@ -41,8 +41,10 @@
 
 package org.jfree.chart.renderer.xy;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
+import org.jfree.chart.util.PublicCloneable;
+import org.junit.Test;
+
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -50,38 +52,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.util.PublicCloneable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link XYLine3DRenderer} class.
  */
-public class XYLine3DRendererTest extends TestCase {
+public class XYLine3DRendererTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(XYLine3DRendererTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public XYLine3DRendererTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Check that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
         XYLine3DRenderer r1 = new XYLine3DRenderer();
         XYLine3DRenderer r2 = new XYLine3DRenderer();
@@ -108,6 +95,7 @@ public class XYLine3DRendererTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         XYLine3DRenderer r1 = new XYLine3DRenderer();
         XYLine3DRenderer r2 = new XYLine3DRenderer();
@@ -120,6 +108,7 @@ public class XYLine3DRendererTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         XYLine3DRenderer r1 = new XYLine3DRenderer();
         r1.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
@@ -139,6 +128,7 @@ public class XYLine3DRendererTest extends TestCase {
     /**
      * Verify that this class implements {@link PublicCloneable}.
      */
+    @Test
     public void testPublicCloneable() {
         XYLine3DRenderer r1 = new XYLine3DRenderer();
         assertTrue(r1 instanceof PublicCloneable);
@@ -147,6 +137,7 @@ public class XYLine3DRendererTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         XYLine3DRenderer r1 = new XYLine3DRenderer();

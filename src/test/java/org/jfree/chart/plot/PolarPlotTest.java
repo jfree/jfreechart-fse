@@ -46,12 +46,19 @@
 
 package org.jfree.chart.plot;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Point;
-import java.awt.Stroke;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.axis.LogAxis;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.renderer.DefaultPolarItemRenderer;
+import org.jfree.data.xy.DefaultXYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.junit.Test;
+
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -60,48 +67,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
-import org.jfree.chart.axis.LogAxis;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.plot.PolarPlot;
-import org.jfree.chart.renderer.DefaultPolarItemRenderer;
-import org.jfree.data.xy.DefaultXYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Some tests for the {@link PolarPlot} class.
  */
-public class PolarPlotTest extends TestCase {
+public class PolarPlotTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(PolarPlotTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public PolarPlotTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the getLegendItems() method.
      */
+    @Test
     public void testGetLegendItems() {
         XYSeriesCollection d = new XYSeriesCollection();
         d.addSeries(new XYSeries("A"));
@@ -121,6 +103,7 @@ public class PolarPlotTest extends TestCase {
     /**
      * Some checks for the getLegendItems() method with multiple datasets.
      */
+    @Test
     public void testGetLegendItems2() {
         XYSeriesCollection d1 = new XYSeriesCollection();
         d1.addSeries(new XYSeries("A"));
@@ -149,6 +132,7 @@ public class PolarPlotTest extends TestCase {
     /**
      * Some checks for the equals() method.
      */
+    @Test
     public void testEquals() {
         PolarPlot plot1 = new PolarPlot();
         PolarPlot plot2 = new PolarPlot();
@@ -245,6 +229,7 @@ public class PolarPlotTest extends TestCase {
     /**
      * Some basic checks for the clone() method.
      */
+    @Test
     public void testCloning() {
         PolarPlot p1 = new PolarPlot();
         PolarPlot p2 = null;
@@ -289,6 +274,7 @@ public class PolarPlotTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         PolarPlot p1 = new PolarPlot();
@@ -317,6 +303,8 @@ public class PolarPlotTest extends TestCase {
         assertEquals(p1, p2);
 
     }
+
+    @Test
 
     public void testTranslateToJava2D_NumberAxis() {
         
@@ -362,6 +350,8 @@ public class PolarPlotTest extends TestCase {
         
     }
 
+    @Test
+
     public void testTranslateToJava2D_NumberAxisAndMargin() {
         
         Rectangle2D dataArea = new Rectangle2D.Double(10.0, 10.0, 80.0, 80.0);
@@ -404,6 +394,8 @@ public class PolarPlotTest extends TestCase {
         assertEquals(64.0, point.getY(), 0.5);
         
     }
+
+    @Test
 
     public void testTranslateToJava2D_LogAxis() {
         

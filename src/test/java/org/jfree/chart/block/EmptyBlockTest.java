@@ -40,6 +40,8 @@
 
 package org.jfree.chart.block;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -47,36 +49,26 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+
 
 /**
  * Tests for the {@link EmptyBlock} class.
  */
-public class EmptyBlockTest extends TestCase {
+public class EmptyBlockTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(EmptyBlockTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public EmptyBlockTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals() method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         EmptyBlock b1 = new EmptyBlock(1.0, 2.0);
         EmptyBlock b2 = new EmptyBlock(1.0, 2.0);
@@ -97,6 +89,7 @@ public class EmptyBlockTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         EmptyBlock b1 = new EmptyBlock(1.0, 2.0);
         EmptyBlock b2 = null;
@@ -115,6 +108,7 @@ public class EmptyBlockTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         EmptyBlock b1 = new EmptyBlock(1.0, 2.0);
         EmptyBlock b2 = null;

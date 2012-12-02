@@ -40,7 +40,9 @@
 
 package org.jfree.chart;
 
-import java.awt.BasicStroke;
+import org.junit.Test;
+
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -48,38 +50,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.StrokeMap;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Some tests for the {@link StrokeMap} class.
  */
-public class StrokeMapTest extends TestCase {
+public class StrokeMapTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(StrokeMapTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public StrokeMapTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the getStroke() method.
      */
+    @Test
     public void testGetStroke() {
         StrokeMap m1 = new StrokeMap();
         assertEquals(null, m1.getStroke("A"));
@@ -102,6 +89,7 @@ public class StrokeMapTest extends TestCase {
     /**
      * Some checks for the put() method.
      */
+    @Test
     public void testPut() {
         StrokeMap m1 = new StrokeMap();
         m1.put("A", new BasicStroke(1.1f));
@@ -121,6 +109,7 @@ public class StrokeMapTest extends TestCase {
     /**
      * Some checks for the equals() method.
      */
+    @Test
     public void testEquals() {
         StrokeMap m1 = new StrokeMap();
         StrokeMap m2 = new StrokeMap();
@@ -148,6 +137,7 @@ public class StrokeMapTest extends TestCase {
     /**
      * Some checks for cloning.
      */
+    @Test
     public void testCloning() {
         StrokeMap m1 = new StrokeMap();
         StrokeMap m2 = null;
@@ -173,6 +163,7 @@ public class StrokeMapTest extends TestCase {
     /**
      * A check for serialization.
      */
+    @Test
     public void testSerialization1() {
         StrokeMap m1 = new StrokeMap();
         StrokeMap m2 = null;
@@ -196,6 +187,7 @@ public class StrokeMapTest extends TestCase {
     /**
      * A check for serialization.
      */
+    @Test
     public void testSerialization2() {
         StrokeMap m1 = new StrokeMap();
         m1.put("K1", new BasicStroke(1.1f));

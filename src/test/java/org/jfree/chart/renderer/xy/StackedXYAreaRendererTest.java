@@ -45,10 +45,18 @@
 
 package org.jfree.chart.renderer.xy;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Stroke;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.Range;
+import org.jfree.data.xy.DefaultTableXYDataset;
+import org.jfree.data.xy.TableXYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.junit.Test;
+
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -56,46 +64,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.Range;
-import org.jfree.data.xy.DefaultTableXYDataset;
-import org.jfree.data.xy.TableXYDataset;
-import org.jfree.data.xy.XYSeries;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link StackedXYAreaRenderer} class.
  */
-public class StackedXYAreaRendererTest extends TestCase {
+public class StackedXYAreaRendererTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(StackedXYAreaRendererTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public StackedXYAreaRendererTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Test that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
         StackedXYAreaRenderer r1 = new StackedXYAreaRenderer();
         StackedXYAreaRenderer r2 = new StackedXYAreaRenderer();
@@ -119,6 +104,7 @@ public class StackedXYAreaRendererTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         StackedXYAreaRenderer r1 = new StackedXYAreaRenderer();
         StackedXYAreaRenderer r2 = new StackedXYAreaRenderer();
@@ -131,6 +117,7 @@ public class StackedXYAreaRendererTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         StackedXYAreaRenderer r1 = new StackedXYAreaRenderer();
         StackedXYAreaRenderer r2 = null;
@@ -148,6 +135,7 @@ public class StackedXYAreaRendererTest extends TestCase {
     /**
      * Verify that this class implements {@link PublicCloneable}.
      */
+    @Test
     public void testPublicCloneable() {
         StackedXYAreaRenderer r1 = new StackedXYAreaRenderer();
         assertTrue(r1 instanceof PublicCloneable);
@@ -156,6 +144,7 @@ public class StackedXYAreaRendererTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         StackedXYAreaRenderer r1 = new StackedXYAreaRenderer();
         r1.setShapePaint(Color.RED);
@@ -181,6 +170,7 @@ public class StackedXYAreaRendererTest extends TestCase {
     /**
      * Check that the renderer is calculating the range bounds correctly.
      */
+    @Test
     public void testFindRangeBounds() {
         TableXYDataset dataset
                 = RendererXYPackageTests.createTestTableXYDataset();
@@ -197,6 +187,7 @@ public class StackedXYAreaRendererTest extends TestCase {
      * Draws the chart with a <code>null</code> info object to make sure that
      * no exceptions are thrown (particularly by code in the renderer).
      */
+    @Test
     public void testDrawWithNullInfo() {
         boolean success = false;
         try {
@@ -233,6 +224,7 @@ public class StackedXYAreaRendererTest extends TestCase {
     /**
      * A test for bug 1593156.
      */
+    @Test
     public void testBug1593156() {
         boolean success = false;
         try {

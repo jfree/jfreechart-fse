@@ -43,6 +43,10 @@
 
 package org.jfree.chart.labels;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -53,41 +57,23 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
-import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
-import org.jfree.data.category.DefaultCategoryDataset;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link StandardCategoryItemLabelGenerator} class.
  */
-public class StandardCategoryItemLabelGeneratorTest extends TestCase {
+public class StandardCategoryItemLabelGeneratorTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(StandardCategoryItemLabelGeneratorTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public StandardCategoryItemLabelGeneratorTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the generalLabel() method.
      */
+    @Test
     public void testGenerateLabel() {
         StandardCategoryItemLabelGenerator g
                 = new StandardCategoryItemLabelGenerator("{2}",
@@ -109,6 +95,7 @@ public class StandardCategoryItemLabelGeneratorTest extends TestCase {
     /**
      * Some checks for the equals() method.
      */
+    @Test
     public void testEquals() {
 
         StandardCategoryItemLabelGenerator g1
@@ -144,6 +131,7 @@ public class StandardCategoryItemLabelGeneratorTest extends TestCase {
     /**
      * Simple check that hashCode is implemented.
      */
+    @Test
     public void testHashCode() {
         StandardCategoryItemLabelGenerator g1
                 = new StandardCategoryItemLabelGenerator();
@@ -156,6 +144,7 @@ public class StandardCategoryItemLabelGeneratorTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         StandardCategoryItemLabelGenerator g1
                 = new StandardCategoryItemLabelGenerator();
@@ -174,6 +163,7 @@ public class StandardCategoryItemLabelGeneratorTest extends TestCase {
     /**
      * Check to ensure that this class implements PublicCloneable.
      */
+    @Test
     public void testPublicCloneable() {
         StandardCategoryItemLabelGenerator g1
                 = new StandardCategoryItemLabelGenerator();
@@ -183,6 +173,7 @@ public class StandardCategoryItemLabelGeneratorTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         StandardCategoryItemLabelGenerator g1
@@ -211,6 +202,7 @@ public class StandardCategoryItemLabelGeneratorTest extends TestCase {
     /**
      * A test for bug 1481087.
      */
+    @Test
     public void testEquals1481087() {
         StandardCategoryItemLabelGenerator g1
                 = new StandardCategoryItemLabelGenerator("{0}",

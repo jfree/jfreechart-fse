@@ -40,6 +40,9 @@
 
 package org.jfree.data.statistics;
 
+import org.jfree.data.UnknownKeyException;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -49,39 +52,23 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.data.UnknownKeyException;
-import org.jfree.data.statistics.DefaultMultiValueCategoryDataset;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link DefaultMultiValueCategoryDataset} class.
  */
-public class DefaultMultiValueCategoryDatasetTest extends TestCase {
+public class DefaultMultiValueCategoryDatasetTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(DefaultMultiValueCategoryDatasetTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public DefaultMultiValueCategoryDatasetTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the getValue() method.
      */
+    @Test
     public void testGetValue() {
         DefaultMultiValueCategoryDataset d
                 = new DefaultMultiValueCategoryDataset();
@@ -112,6 +99,7 @@ public class DefaultMultiValueCategoryDatasetTest extends TestCase {
     /**
      * A simple check for the getValue(int, int) method.
      */
+    @Test
     public void testGetValue2() {
         DefaultMultiValueCategoryDataset d
                 = new DefaultMultiValueCategoryDataset();
@@ -128,6 +116,7 @@ public class DefaultMultiValueCategoryDatasetTest extends TestCase {
     /**
      * Some tests for the getRowCount() method.
      */
+    @Test
     public void testGetRowCount() {
         DefaultMultiValueCategoryDataset d
                 = new DefaultMultiValueCategoryDataset();
@@ -146,6 +135,7 @@ public class DefaultMultiValueCategoryDatasetTest extends TestCase {
     /**
      * Some tests for the getColumnCount() method.
      */
+    @Test
     public void testGetColumnCount() {
         DefaultMultiValueCategoryDataset d
                 = new DefaultMultiValueCategoryDataset();
@@ -166,6 +156,7 @@ public class DefaultMultiValueCategoryDatasetTest extends TestCase {
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         DefaultMultiValueCategoryDataset d1
                 = new DefaultMultiValueCategoryDataset();
@@ -196,6 +187,7 @@ public class DefaultMultiValueCategoryDatasetTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         DefaultMultiValueCategoryDataset d1
@@ -224,6 +216,7 @@ public class DefaultMultiValueCategoryDatasetTest extends TestCase {
     /**
      * Some checks for the add() method.
      */
+    @Test
     public void testAddValue() {
         DefaultMultiValueCategoryDataset d1
                 = new DefaultMultiValueCategoryDataset();
@@ -254,6 +247,7 @@ public class DefaultMultiValueCategoryDatasetTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         DefaultMultiValueCategoryDataset d1
                 = new DefaultMultiValueCategoryDataset();

@@ -47,6 +47,9 @@
 
 package org.jfree.data.time;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -59,41 +62,25 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.data.time.TimePeriodFormatException;
-import org.jfree.data.time.Year;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link Year} class.
  */
-public class YearTest extends TestCase {
+public class YearTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(YearTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public YearTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Common test setup.
      */
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         // no setup
     }
 
@@ -102,6 +89,7 @@ public class YearTest extends TestCase {
      *
      * SourceForge Bug ID: 558850.
      */
+    @Test
     public void testEqualsSelf() {
         Year year = new Year();
         assertTrue(year.equals(year));
@@ -110,6 +98,7 @@ public class YearTest extends TestCase {
     /**
      * Tests the equals method.
      */
+    @Test
     public void testEquals() {
         Year year1 = new Year(2002);
         Year year2 = new Year(2002);
@@ -125,6 +114,7 @@ public class YearTest extends TestCase {
      * In GMT, the end of 2001 is java.util.Date(1009843199999L).  Use this to
      * check the year constructor.
      */
+    @Test
     public void testDateConstructor1() {
 
         TimeZone zone = TimeZone.getTimeZone("GMT");
@@ -146,6 +136,7 @@ public class YearTest extends TestCase {
      * In Los Angeles, the end of 2001 is java.util.Date(1009871999999L).  Use
      * this to check the year constructor.
      */
+    @Test
     public void testDateConstructor2() {
 
         TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
@@ -165,6 +156,7 @@ public class YearTest extends TestCase {
      * Set up a year equal to 1900.  Request the previous year, it should be
      * null.
      */
+    @Test
     public void testMinuss9999Previous() {
         Year current = new Year(-9999);
         Year previous = (Year) current.previous();
@@ -174,6 +166,7 @@ public class YearTest extends TestCase {
     /**
      * Set up a year equal to 1900.  Request the next year, it should be 1901.
      */
+    @Test
     public void test1900Next() {
         Year current = new Year(1900);
         Year next = (Year) current.next();
@@ -184,6 +177,7 @@ public class YearTest extends TestCase {
      * Set up a year equal to 9999.  Request the previous year, it should be
      * 9998.
      */
+    @Test
     public void test9999Previous() {
         Year current = new Year(9999);
         Year previous = (Year) current.previous();
@@ -193,6 +187,7 @@ public class YearTest extends TestCase {
     /**
      * Set up a year equal to 9999.  Request the next year, it should be null.
      */
+    @Test
     public void test9999Next() {
         Year current = new Year(9999);
         Year next = (Year) current.next();
@@ -202,6 +197,7 @@ public class YearTest extends TestCase {
     /**
      * Tests the year string parser.
      */
+    @Test
     public void testParseYear() {
 
         Year year = null;
@@ -238,6 +234,7 @@ public class YearTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         Year y1 = new Year(1999);
@@ -265,6 +262,7 @@ public class YearTest extends TestCase {
     /**
      * The {@link Year} class is immutable, so should not be {@link Cloneable}.
      */
+    @Test
     public void testNotCloneable() {
         Year y = new Year(1999);
         assertFalse(y instanceof Cloneable);
@@ -273,6 +271,7 @@ public class YearTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         Year y1 = new Year(1988);
         Year y2 = new Year(1988);
@@ -285,6 +284,7 @@ public class YearTest extends TestCase {
     /**
      * Some checks for the getFirstMillisecond() method.
      */
+    @Test
     public void testGetFirstMillisecond() {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -300,6 +300,7 @@ public class YearTest extends TestCase {
     /**
      * Some checks for the getFirstMillisecond(TimeZone) method.
      */
+    @Test
     public void testGetFirstMillisecondWithTimeZone() {
         Year y = new Year(1950);
         TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
@@ -320,6 +321,7 @@ public class YearTest extends TestCase {
     /**
      * Some checks for the getFirstMillisecond(TimeZone) method.
      */
+    @Test
     public void testGetFirstMillisecondWithCalendar() {
         Year y = new Year(2001);
         GregorianCalendar calendar = new GregorianCalendar(Locale.GERMANY);
@@ -340,6 +342,7 @@ public class YearTest extends TestCase {
     /**
      * Some checks for the getLastMillisecond() method.
      */
+    @Test
     public void testGetLastMillisecond() {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -355,6 +358,7 @@ public class YearTest extends TestCase {
     /**
      * Some checks for the getLastMillisecond(TimeZone) method.
      */
+    @Test
     public void testGetLastMillisecondWithTimeZone() {
         Year y = new Year(1950);
         TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
@@ -376,6 +380,7 @@ public class YearTest extends TestCase {
     /**
      * Some checks for the getLastMillisecond(TimeZone) method.
      */
+    @Test
     public void testGetLastMillisecondWithCalendar() {
         Year y = new Year(2001);
         GregorianCalendar calendar = new GregorianCalendar(Locale.GERMANY);
@@ -396,6 +401,7 @@ public class YearTest extends TestCase {
     /**
      * Some checks for the getSerialIndex() method.
      */
+    @Test
     public void testGetSerialIndex() {
         Year y = new Year(2000);
         assertEquals(2000L, y.getSerialIndex());
@@ -404,6 +410,7 @@ public class YearTest extends TestCase {
     /**
      * Some checks for the testNext() method.
      */
+    @Test
     public void testNext() {
         Year y = new Year(2000);
         y = (Year) y.next();
@@ -415,6 +422,7 @@ public class YearTest extends TestCase {
     /**
      * Some checks for the getStart() method.
      */
+    @Test
     public void testGetStart() {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.ITALY);
@@ -429,6 +437,7 @@ public class YearTest extends TestCase {
     /**
      * Some checks for the getEnd() method.
      */
+    @Test
     public void testGetEnd() {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.ITALY);

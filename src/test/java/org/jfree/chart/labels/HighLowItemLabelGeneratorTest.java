@@ -41,6 +41,9 @@
 
 package org.jfree.chart.labels;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -51,39 +54,23 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.labels.HighLowItemLabelGenerator;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link HighLowItemLabelGenerator} class.
  */
-public class HighLowItemLabelGeneratorTest extends TestCase {
+public class HighLowItemLabelGeneratorTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(HighLowItemLabelGeneratorTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public HighLowItemLabelGeneratorTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Tests that the equals method can distinguish all fields.
      */
+    @Test
     public void testEquals() {
         HighLowItemLabelGenerator g1 = new HighLowItemLabelGenerator();
         HighLowItemLabelGenerator g2 = new HighLowItemLabelGenerator();
@@ -108,6 +95,7 @@ public class HighLowItemLabelGeneratorTest extends TestCase {
     /**
      * Simple check that hashCode is implemented.
      */
+    @Test
     public void testHashCode() {
         HighLowItemLabelGenerator g1 = new HighLowItemLabelGenerator();
         HighLowItemLabelGenerator g2 = new HighLowItemLabelGenerator();
@@ -118,6 +106,7 @@ public class HighLowItemLabelGeneratorTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         HighLowItemLabelGenerator g1 = new HighLowItemLabelGenerator();
         HighLowItemLabelGenerator g2 = null;
@@ -135,6 +124,7 @@ public class HighLowItemLabelGeneratorTest extends TestCase {
     /**
      * Check to ensure that this class implements PublicCloneable.
      */
+    @Test
     public void testPublicCloneable() {
         HighLowItemLabelGenerator g1 = new HighLowItemLabelGenerator();
         assertTrue(g1 instanceof PublicCloneable);
@@ -143,6 +133,7 @@ public class HighLowItemLabelGeneratorTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         HighLowItemLabelGenerator g1 = new HighLowItemLabelGenerator();

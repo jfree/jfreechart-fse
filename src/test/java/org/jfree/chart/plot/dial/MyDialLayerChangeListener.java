@@ -40,9 +40,6 @@
 
 package org.jfree.chart.plot.dial;
 
-import org.jfree.chart.plot.dial.DialLayerChangeEvent;
-import org.jfree.chart.plot.dial.DialLayerChangeListener;
-
 /**
  * A dial layer change listener.
  */

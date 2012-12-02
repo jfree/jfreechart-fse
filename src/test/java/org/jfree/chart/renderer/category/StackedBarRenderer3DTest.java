@@ -43,6 +43,12 @@
 
 package org.jfree.chart.renderer.category;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.Range;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -51,19 +57,14 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.data.Range;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link StackedBarRenderer3D} class.
  */
-public class StackedBarRenderer3DTest extends TestCase {
+public class StackedBarRenderer3DTest  {
 
     /**
      * Provide access to protected method.
@@ -78,27 +79,14 @@ public class StackedBarRenderer3DTest extends TestCase {
         }
     }
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(StackedBarRenderer3DTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public StackedBarRenderer3DTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the findRangeBounds() method.
      */
+    @Test
     public void testFindRangeBounds() {
         StackedBarRenderer3D r = new StackedBarRenderer3D();
         assertNull(r.findRangeBounds(null));
@@ -126,6 +114,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * Check that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
         StackedBarRenderer3D r1 = new StackedBarRenderer3D();
         StackedBarRenderer3D r2 = new StackedBarRenderer3D();
@@ -135,6 +124,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         StackedBarRenderer3D r1 = new StackedBarRenderer3D();
         StackedBarRenderer3D r2 = new StackedBarRenderer3D();
@@ -147,6 +137,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         StackedBarRenderer3D r1 = new StackedBarRenderer3D();
         StackedBarRenderer3D r2 = null;
@@ -164,6 +155,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * Check that this class implements PublicCloneable.
      */
+    @Test
     public void testPublicCloneable() {
         StackedBarRenderer3D r1 = new StackedBarRenderer3D();
         assertTrue(r1 instanceof PublicCloneable);
@@ -172,6 +164,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         StackedBarRenderer3D r1 = new StackedBarRenderer3D();
@@ -198,6 +191,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * A test for the createStackedValueList() method.
      */
+    @Test
     public void testCreateStackedValueList1() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(1.0, "s0", "c0");
@@ -211,6 +205,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * A test for the createStackedValueList() method.
      */
+    @Test
     public void testCreateStackedValueList2() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(-1.0, "s0", "c0");
@@ -224,6 +219,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * A test for the createStackedValueList() method.
      */
+    @Test
     public void testCreateStackedValueList3() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(0.0, "s0", "c0");
@@ -237,6 +233,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * A test for the createStackedValueList() method.
      */
+    @Test
     public void testCreateStackedValueList4() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(null, "s0", "c0");
@@ -248,6 +245,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * A test for the createStackedValueList() method.
      */
+    @Test
     public void testCreateStackedValueList1a() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(1.0, "s0", "c0");
@@ -264,6 +262,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * A test for the createStackedValueList() method.
      */
+    @Test
     public void testCreateStackedValueList1b() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(1.0, "s0", "c0");
@@ -280,6 +279,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * A test for the createStackedValueList() method.
      */
+    @Test
     public void testCreateStackedValueList1c() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(1.0, "s0", "c0");
@@ -296,6 +296,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * A test for the createStackedValueList() method.
      */
+    @Test
     public void testCreateStackedValueList1d() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(1.0, "s0", "c0");
@@ -311,6 +312,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * A test for the createStackedValueList() method.
      */
+    @Test
     public void testCreateStackedValueList2a() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(-1.0, "s0", "c0");
@@ -327,6 +329,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * A test for the createStackedValueList() method.
      */
+    @Test
     public void testCreateStackedValueList2b() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(-1.0, "s0", "c0");
@@ -343,6 +346,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * A test for the createStackedValueList() method.
      */
+    @Test
     public void testCreateStackedValueList2c() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(-1.0, "s0", "c0");
@@ -359,6 +363,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * A test for the createStackedValueList() method.
      */
+    @Test
     public void testCreateStackedValueList2d() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(-1.0, "s0", "c0");
@@ -374,6 +379,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * A test for the createStackedValueList() method.
      */
+    @Test
     public void testCreateStackedValueList3a() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(0.0, "s0", "c0");
@@ -390,6 +396,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * A test for the createStackedValueList() method.
      */
+    @Test
     public void testCreateStackedValueList3b() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(0.0, "s0", "c0");
@@ -406,6 +413,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * A test for the createStackedValueList() method.
      */
+    @Test
     public void testCreateStackedValueList3c() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(0.0, "s0", "c0");
@@ -422,6 +430,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * A test for the createStackedValueList() method.
      */
+    @Test
     public void testCreateStackedValueList3d() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(0.0, "s0", "c0");
@@ -437,6 +446,7 @@ public class StackedBarRenderer3DTest extends TestCase {
     /**
      * A test for the createStackedValueList() method.
      */
+    @Test
     public void testCreateStackedValueList5() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(1.0, "s0", "c0");

@@ -41,6 +41,9 @@
 
 package org.jfree.data;
 
+import org.jfree.data.general.DefaultPieDataset;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -49,39 +52,23 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.data.KeyedObject;
-import org.jfree.data.general.DefaultPieDataset;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link KeyedObject} class.
  */
-public class KeyedObjectTest extends TestCase {
+public class KeyedObjectTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(KeyedObjectTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public KeyedObjectTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         KeyedObject ko1 = new KeyedObject("Test", "Object");
@@ -102,6 +89,7 @@ public class KeyedObjectTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         KeyedObject ko1 = new KeyedObject("Test", "Object");
         KeyedObject ko2 = null;
@@ -119,6 +107,7 @@ public class KeyedObjectTest extends TestCase {
     /**
      * Confirm special features of cloning.
      */
+    @Test
     public void testCloning2() {
         // case 1 - object is mutable but not PublicCloneable
         Object obj1 = new ArrayList();
@@ -158,6 +147,7 @@ public class KeyedObjectTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         KeyedObject ko1 = new KeyedObject("Test", "Object");

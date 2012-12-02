@@ -50,6 +50,9 @@
 
 package org.jfree.data.time;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -62,17 +65,15 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.data.time.Week;
-import org.jfree.data.time.Year;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link Week} class.
  */
-public class WeekTest extends TestCase {
+public class WeekTest  {
 
     /** A week. */
     private Week w1Y1900;
@@ -86,29 +87,15 @@ public class WeekTest extends TestCase {
     /** A week. */
     private Week w52Y9999;
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(WeekTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public WeekTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Common test setup.
      */
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         this.w1Y1900 = new Week(1, 1900);
         this.w2Y1900 = new Week(2, 1900);
         this.w51Y9999 = new Week(51, 9999);
@@ -118,6 +105,7 @@ public class WeekTest extends TestCase {
     /**
      * Tests the equals method.
      */
+    @Test
     public void testEquals() {
         Week w1 = new Week(1, 2002);
         Week w2 = new Week(1, 2002);
@@ -138,6 +126,7 @@ public class WeekTest extends TestCase {
     /**
      * Request the week before week 1, 1900: it should be <code>null</code>.
      */
+    @Test
     public void testW1Y1900Previous() {
         Week previous = (Week) this.w1Y1900.previous();
         assertNull(previous);
@@ -146,6 +135,7 @@ public class WeekTest extends TestCase {
     /**
      * Request the week after week 1, 1900: it should be week 2, 1900.
      */
+    @Test
     public void testW1Y1900Next() {
         Week next = (Week) this.w1Y1900.next();
         assertEquals(this.w2Y1900, next);
@@ -154,6 +144,7 @@ public class WeekTest extends TestCase {
     /**
      * Request the week before w52, 9999: it should be week 51, 9999.
      */
+    @Test
     public void testW52Y9999Previous() {
         Week previous = (Week) this.w52Y9999.previous();
         assertEquals(this.w51Y9999, previous);
@@ -162,6 +153,7 @@ public class WeekTest extends TestCase {
     /**
      * Request the week after w52, 9999: it should be <code>null</code>.
      */
+    @Test
     public void testW52Y9999Next() {
         Week next = (Week) this.w52Y9999.next();
         assertNull(next);
@@ -170,6 +162,7 @@ public class WeekTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         Week w1 = new Week(24, 1999);
@@ -196,6 +189,7 @@ public class WeekTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         Week w1 = new Week(2, 2003);
         Week w2 = new Week(2, 2003);
@@ -208,6 +202,7 @@ public class WeekTest extends TestCase {
     /**
      * The {@link Week} class is immutable, so should not be {@link Cloneable}.
      */
+    @Test
     public void testNotCloneable() {
         Week w = new Week(1, 1999);
         assertFalse(w instanceof Cloneable);
@@ -233,6 +228,7 @@ public class WeekTest extends TestCase {
      * Europe/Paris     | 1104102000000 | 1104706799999 | 27-Dec-2004 | 2-Jan-2005
      * America/New_York | 1104037200000 | 1104641999999 | 26-Dec-2004 | 1-Jan-2005
      */
+    @Test
     public void testWeek12005() {
         Week w1 = new Week(1, 2005);
         Calendar c1 = Calendar.getInstance(
@@ -268,6 +264,7 @@ public class WeekTest extends TestCase {
      * In London and Paris, Monday is the first day of the week, while in the
      * US it is Sunday.
      */
+    @Test
     public void testWeek532005() {
         Week w1 = new Week(53, 2004);
         Calendar c1 = Calendar.getInstance(
@@ -290,6 +287,7 @@ public class WeekTest extends TestCase {
     /**
      * A test case for bug 1448828.
      */
+    @Test
     public void testBug1448828() {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -307,6 +305,7 @@ public class WeekTest extends TestCase {
     /**
      * A test case for bug 1498805.
      */
+    @Test
     public void testBug1498805() {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -326,6 +325,7 @@ public class WeekTest extends TestCase {
     /**
      * Some checks for the getFirstMillisecond() method.
      */
+    @Test
     public void testGetFirstMillisecond() {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -340,6 +340,7 @@ public class WeekTest extends TestCase {
     /**
      * Some checks for the getFirstMillisecond(TimeZone) method.
      */
+    @Test
     public void testGetFirstMillisecondWithTimeZone() {
         Week w = new Week(47, 1950);
         Locale saved = Locale.getDefault();
@@ -367,6 +368,7 @@ public class WeekTest extends TestCase {
     /**
      * Some checks for the getFirstMillisecond(TimeZone) method.
      */
+    @Test
     public void testGetFirstMillisecondWithCalendar() {
         Week w = new Week(1, 2001);
         GregorianCalendar calendar = new GregorianCalendar(Locale.GERMANY);
@@ -387,6 +389,7 @@ public class WeekTest extends TestCase {
     /**
      * Some checks for the getLastMillisecond() method.
      */
+    @Test
     public void testGetLastMillisecond() {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -401,6 +404,7 @@ public class WeekTest extends TestCase {
     /**
      * Some checks for the getLastMillisecond(TimeZone) method.
      */
+    @Test
     public void testGetLastMillisecondWithTimeZone() {
         Week w = new Week(2, 1950);
         Locale saved = Locale.getDefault();
@@ -428,6 +432,7 @@ public class WeekTest extends TestCase {
     /**
      * Some checks for the getLastMillisecond(TimeZone) method.
      */
+    @Test
     public void testGetLastMillisecondWithCalendar() {
         Week w = new Week(52, 2001);
         GregorianCalendar calendar = new GregorianCalendar(Locale.GERMANY);
@@ -448,6 +453,7 @@ public class WeekTest extends TestCase {
     /**
      * Some checks for the getSerialIndex() method.
      */
+    @Test
     public void testGetSerialIndex() {
         Week w = new Week(1, 2000);
         assertEquals(106001L, w.getSerialIndex());
@@ -458,6 +464,7 @@ public class WeekTest extends TestCase {
     /**
      * Some checks for the testNext() method.
      */
+    @Test
     public void testNext() {
         Week w = new Week(12, 2000);
         w = (Week) w.next();
@@ -470,6 +477,7 @@ public class WeekTest extends TestCase {
     /**
      * Some checks for the getStart() method.
      */
+    @Test
     public void testGetStart() {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.ITALY);
@@ -484,6 +492,7 @@ public class WeekTest extends TestCase {
     /**
      * Some checks for the getEnd() method.
      */
+    @Test
     public void testGetEnd() {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.ITALY);
@@ -498,6 +507,7 @@ public class WeekTest extends TestCase {
     /**
      * A test for a problem in constructing a new Week instance.
      */
+    @Test
     public void testConstructor() {
         Locale savedLocale = Locale.getDefault();
         TimeZone savedZone = TimeZone.getDefault();

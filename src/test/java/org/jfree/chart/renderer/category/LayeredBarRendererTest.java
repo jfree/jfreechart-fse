@@ -41,6 +41,14 @@
 
 package org.jfree.chart.renderer.category;
 
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -48,43 +56,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.data.category.DefaultCategoryDataset;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link LayeredBarRenderer} class.
  */
-public class LayeredBarRendererTest extends TestCase {
+public class LayeredBarRendererTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(LayeredBarRendererTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public LayeredBarRendererTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Check that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
         LayeredBarRenderer r1 = new LayeredBarRenderer();
         LayeredBarRenderer r2 = new LayeredBarRenderer();
@@ -94,6 +81,7 @@ public class LayeredBarRendererTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         LayeredBarRenderer r1 = new LayeredBarRenderer();
         LayeredBarRenderer r2 = new LayeredBarRenderer();
@@ -106,6 +94,7 @@ public class LayeredBarRendererTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         LayeredBarRenderer r1 = new LayeredBarRenderer();
         LayeredBarRenderer r2 = null;
@@ -123,6 +112,7 @@ public class LayeredBarRendererTest extends TestCase {
     /**
      * Check that this class implements PublicCloneable.
      */
+    @Test
     public void testPublicCloneable() {
         LayeredBarRenderer r1 = new LayeredBarRenderer();
         assertTrue(r1 instanceof PublicCloneable);
@@ -131,6 +121,7 @@ public class LayeredBarRendererTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         LayeredBarRenderer r1 = new LayeredBarRenderer();
@@ -159,6 +150,7 @@ public class LayeredBarRendererTest extends TestCase {
      * Draws the chart with a <code>null</code> info object to make sure that
      * no exceptions are thrown (particularly by code in the renderer).
      */
+    @Test
     public void testDrawWithNullInfo() {
         boolean success = false;
         try {

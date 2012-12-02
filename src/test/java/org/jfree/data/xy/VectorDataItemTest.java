@@ -40,6 +40,8 @@
 
 package org.jfree.data.xy;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -47,36 +49,25 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+
 
 /**
  * Tests for the {@link VectorDataItem} class.
  */
-public class VectorDataItemTest extends TestCase {
+public class VectorDataItemTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(VectorDataItemTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public VectorDataItemTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Test that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
         // default instances
         VectorDataItem v1 = new VectorDataItem(1.0, 2.0, 3.0, 4.0);
@@ -108,6 +99,7 @@ public class VectorDataItemTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         VectorDataItem v1 = new VectorDataItem(1.0, 2.0, 3.0, 4.0);
         VectorDataItem v2 = new VectorDataItem(1.0, 2.0, 3.0, 4.0);
@@ -120,6 +112,7 @@ public class VectorDataItemTest extends TestCase {
     /**
      * Check cloning.
      */
+    @Test
     public void testCloning() {
         VectorDataItem v1 = new VectorDataItem(1.0, 2.0, 3.0, 4.0);
         VectorDataItem v2 = null;
@@ -137,6 +130,7 @@ public class VectorDataItemTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         VectorDataItem v1 = new VectorDataItem(1.0, 2.0, 3.0, 4.0);
         VectorDataItem v2 = null;

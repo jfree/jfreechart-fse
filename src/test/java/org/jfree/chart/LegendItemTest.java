@@ -46,10 +46,11 @@
 
 package org.jfree.chart;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
+import org.jfree.chart.ui.GradientPaintTransformType;
+import org.jfree.chart.ui.StandardGradientPaintTransformer;
+import org.junit.Test;
+
+import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -61,40 +62,23 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.text.AttributedString;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.ui.GradientPaintTransformType;
-import org.jfree.chart.ui.StandardGradientPaintTransformer;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link LegendItem} class.
  */
-public class LegendItemTest extends TestCase {
+public class LegendItemTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(LegendItemTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public LegendItemTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         LegendItem item1 = new LegendItem("Label", "Description",
@@ -332,6 +316,7 @@ public class LegendItemTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         LegendItem item1 = new LegendItem("Item", "Description",
                 "ToolTip", "URL",
@@ -364,6 +349,7 @@ public class LegendItemTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization2() {
         AttributedString as = new AttributedString("Test String");
         as.addAttribute(TextAttribute.FONT, new Font("Dialog", Font.PLAIN, 12));
@@ -390,6 +376,7 @@ public class LegendItemTest extends TestCase {
     /**
      * Basic checks for cloning.
      */
+    @Test
     public void testCloning() {
         LegendItem item1 = new LegendItem("Item");
         LegendItem item2 = null;

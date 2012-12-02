@@ -41,6 +41,8 @@
 
 package org.jfree.data.time;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -49,41 +51,25 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.TimeZone;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.data.time.TimeTableXYDataset;
-import org.jfree.data.time.Year;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * A collection of test cases for the {@link TimeTableXYDataset} class.
  */
-public class TimeTableXYDatasetTest extends TestCase {
+public class TimeTableXYDatasetTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(TimeTableXYDatasetTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public TimeTableXYDatasetTest(String name) {
-        super(name);
-    }
+
+
 
     private static final double DELTA = 0.0000000001;
 
     /**
      * Some checks for a simple dataset.
      */
+    @Test
     public void testStandard() {
         TimeTableXYDataset d = new TimeTableXYDataset();
         d.add(new Year(1999), 1.0, "Series 1");
@@ -101,6 +87,7 @@ public class TimeTableXYDatasetTest extends TestCase {
     /**
      * Some checks for the getTimePeriod() method.
      */
+    @Test
     public void testGetTimePeriod()  {
         TimeTableXYDataset d = new TimeTableXYDataset();
         d.add(new Year(1999), 1.0, "Series 1");
@@ -114,6 +101,7 @@ public class TimeTableXYDatasetTest extends TestCase {
     /**
      * Some checks for the equals() method.
      */
+    @Test
     public void testEquals() {
         TimeTableXYDataset d1 = new TimeTableXYDataset();
         TimeTableXYDataset d2 = new TimeTableXYDataset();
@@ -139,6 +127,7 @@ public class TimeTableXYDatasetTest extends TestCase {
     /**
      * Some checks for cloning.
      */
+    @Test
     public void testClone() {
 
         TimeTableXYDataset d = new TimeTableXYDataset();
@@ -161,6 +150,7 @@ public class TimeTableXYDatasetTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         TimeTableXYDataset d1 = new TimeTableXYDataset();
@@ -188,6 +178,7 @@ public class TimeTableXYDatasetTest extends TestCase {
     /**
      * Test clearing data.
      */
+    @Test
     public void testClear() {
         TimeTableXYDataset d = new TimeTableXYDataset();
         d.add(new Year(1999), 1.0, "Series 1");

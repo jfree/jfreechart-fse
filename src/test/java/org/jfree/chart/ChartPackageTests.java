@@ -45,54 +45,13 @@
 
 package org.jfree.chart;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 /**
  * A collection of tests for the <code>org.jfree.chart</code> package.
  * <P>
  * These tests can be run using JUnit (http://www.junit.org).
  */
-public class ChartPackageTests extends TestCase {
+public class ChartPackageTests  {
 
-    /**
-     * Returns a test suite to the JUnit test runner.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        TestSuite suite = new TestSuite("org.jfree.chart");
-        suite.addTestSuite(AreaChartTest.class);
-        suite.addTestSuite(BarChartTest.class);
-        suite.addTestSuite(BarChart3DTest.class);
-        suite.addTestSuite(ChartPanelTest.class);
-        suite.addTestSuite(ChartRenderingInfoTest.class);
-        suite.addTestSuite(GanttChartTest.class);
-        suite.addTestSuite(HashUtilitiesTest.class);
-        suite.addTestSuite(JFreeChartTest.class);
-        suite.addTestSuite(LegendItemTest.class);
-        suite.addTestSuite(LegendItemCollectionTest.class);
-        suite.addTestSuite(LineChartTest.class);
-        suite.addTestSuite(LineChart3DTest.class);
-        suite.addTestSuite(MeterChartTest.class);
-        suite.addTestSuite(PaintMapTest.class);
-        suite.addTestSuite(PieChartTest.class);
-        suite.addTestSuite(PieChart3DTest.class);
-        suite.addTestSuite(ScatterPlotTest.class);
-        suite.addTestSuite(StackedAreaChartTest.class);
-        suite.addTestSuite(StackedBarChartTest.class);
-        suite.addTestSuite(StackedBarChart3DTest.class);
-        suite.addTestSuite(StandardChartThemeTest.class);
-        suite.addTestSuite(StrokeMapTest.class);
-        suite.addTestSuite(TimeSeriesChartTest.class);
-        suite.addTestSuite(WaterfallChartTest.class);
-        suite.addTestSuite(XYAreaChartTest.class);
-        suite.addTestSuite(XYBarChartTest.class);
-        suite.addTestSuite(XYLineChartTest.class);
-        suite.addTestSuite(XYStepAreaChartTest.class);
-        suite.addTestSuite(XYStepChartTest.class);
-        return suite;
-    }
+
 
 }

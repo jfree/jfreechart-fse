@@ -40,6 +40,8 @@
 
 package org.jfree.data.statistics;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -48,38 +50,22 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.data.statistics.BoxAndWhiskerItem;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link BoxAndWhiskerItem} class.
  */
-public class BoxAndWhiskerItemTest extends TestCase {
+public class BoxAndWhiskerItemTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(BoxAndWhiskerItemTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public BoxAndWhiskerItemTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         BoxAndWhiskerItem i1 = new BoxAndWhiskerItem(
@@ -100,6 +86,7 @@ public class BoxAndWhiskerItemTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         BoxAndWhiskerItem i1 = new BoxAndWhiskerItem(

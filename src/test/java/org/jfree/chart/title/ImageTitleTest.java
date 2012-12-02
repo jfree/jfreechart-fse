@@ -41,42 +41,30 @@
 
 package org.jfree.chart.title;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ui.Size2D;
+import org.junit.Test;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link ImageTitle} class.
  */
-public class ImageTitleTest extends TestCase {
+public class ImageTitleTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(ImageTitleTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public ImageTitleTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Check that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
         ImageTitle t1 = new ImageTitle(JFreeChart.INFO.getLogo());
         ImageTitle t2 = new ImageTitle(JFreeChart.INFO.getLogo());
@@ -93,6 +81,7 @@ public class ImageTitleTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         ImageTitle t1 = new ImageTitle(JFreeChart.INFO.getLogo());
         ImageTitle t2 = new ImageTitle(JFreeChart.INFO.getLogo());
@@ -105,6 +94,7 @@ public class ImageTitleTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         ImageTitle t1 = new ImageTitle(JFreeChart.INFO.getLogo());
         ImageTitle t2 = null;
@@ -122,6 +112,7 @@ public class ImageTitleTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         // TODO: add serialization support for images
     }
@@ -131,6 +122,7 @@ public class ImageTitleTest extends TestCase {
     /**
      * Check the width and height.
      */
+    @Test
     public void testWidthAndHeight() {
         ImageTitle t1 = new ImageTitle(JFreeChart.INFO.getLogo());
         assertEquals(100, t1.getWidth(), EPSILON);
@@ -140,6 +132,7 @@ public class ImageTitleTest extends TestCase {
     /**
      * Some checks for the arrange method.
      */
+    @Test
     public void testArrangeNN() {
         BufferedImage image = new BufferedImage(100, 100,
                 BufferedImage.TYPE_INT_RGB);

@@ -44,6 +44,16 @@
 
 package org.jfree.chart.renderer.category;
 
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.Range;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -51,45 +61,24 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.data.Range;
-import org.jfree.data.category.DefaultCategoryDataset;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link LineAndShapeRenderer} class.
  */
-public class LineAndShapeRendererTest extends TestCase {
+public class LineAndShapeRendererTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(LineAndShapeRendererTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public LineAndShapeRendererTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Test that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
 
         LineAndShapeRenderer r1 = new LineAndShapeRenderer();
@@ -146,6 +135,7 @@ public class LineAndShapeRendererTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         LineAndShapeRenderer r1 = new LineAndShapeRenderer();
         LineAndShapeRenderer r2 = new LineAndShapeRenderer();
@@ -158,6 +148,7 @@ public class LineAndShapeRendererTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         LineAndShapeRenderer r1 = new LineAndShapeRenderer();
         LineAndShapeRenderer r2 = null;
@@ -178,6 +169,7 @@ public class LineAndShapeRendererTest extends TestCase {
     /**
      * Check that this class implements PublicCloneable.
      */
+    @Test
     public void testPublicCloneable() {
         LineAndShapeRenderer r1 = new LineAndShapeRenderer();
         assertTrue(r1 instanceof PublicCloneable);
@@ -262,6 +254,7 @@ public class LineAndShapeRendererTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         LineAndShapeRenderer r1 = new LineAndShapeRenderer();
@@ -289,6 +282,7 @@ public class LineAndShapeRendererTest extends TestCase {
      * A check for the datasetIndex and seriesIndex fields in the LegendItem
      * returned by the getLegendItem() method.
      */
+    @Test
     public void testGetLegendItemSeriesIndex() {
         DefaultCategoryDataset dataset0 = new DefaultCategoryDataset();
         dataset0.addValue(21.0, "R1", "C1");
@@ -311,6 +305,7 @@ public class LineAndShapeRendererTest extends TestCase {
     /**
      * Some checks for the findRangeBounds() method.
      */
+    @Test
     public void testFindRangeBounds() {
         LineAndShapeRenderer r = new LineAndShapeRenderer();
         assertNull(r.findRangeBounds(null));

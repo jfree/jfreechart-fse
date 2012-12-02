@@ -41,49 +41,34 @@
 
 package org.jfree.chart;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
 import org.jfree.chart.event.ChartChangeEvent;
 import org.jfree.chart.event.ChartChangeListener;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Tests for a pie chart.
  *
  */
-public class PieChartTest extends TestCase {
+public class PieChartTest  {
 
     /** A chart. */
     private JFreeChart pieChart;
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(PieChartTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public PieChartTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Common test setup.
      */
-    @Override
-	protected void setUp() {
+    @Before
+	public void setUp() {
 
         this.pieChart = createPieChart();
 
@@ -94,6 +79,7 @@ public class PieChartTest extends TestCase {
      * receive notification of a chart change event, and (of course) the
      * dataset should be null.
      */
+    @Test
     public void testReplaceDatasetOnPieChart() {
         LocalListener l = new LocalListener();
         this.pieChart.addChangeListener(l);

@@ -40,6 +40,8 @@
 
 package org.jfree.data;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -47,38 +49,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.data.RangeType;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link RangeType} class.
  */
-public class RangeTypeTest extends TestCase {
+public class RangeTypeTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(RangeTypeTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public RangeTypeTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the equals() method.
      */
+    @Test
     public void testEquals() {
         assertEquals(RangeType.FULL, RangeType.FULL);
         assertEquals(RangeType.NEGATIVE, RangeType.NEGATIVE);
@@ -97,6 +84,7 @@ public class RangeTypeTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashCode() {
         RangeType r1 = RangeType.FULL;
         RangeType r2 = RangeType.FULL;
@@ -109,6 +97,7 @@ public class RangeTypeTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         RangeType r1 = RangeType.FULL;
         RangeType r2 = null;

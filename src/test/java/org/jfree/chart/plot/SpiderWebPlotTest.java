@@ -44,12 +44,18 @@
 
 package org.jfree.chart.plot;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
+import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
+import org.jfree.chart.urls.StandardCategoryURLGenerator;
+import org.jfree.chart.util.Rotation;
+import org.jfree.chart.util.TableOrder;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.junit.Test;
+
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -60,47 +66,23 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
-import org.jfree.chart.util.Rotation;
-import org.jfree.chart.util.TableOrder;
-import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
-import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
-import org.jfree.chart.plot.SpiderWebPlot;
-import org.jfree.chart.urls.StandardCategoryURLGenerator;
-import org.jfree.data.category.DefaultCategoryDataset;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link SpiderWebPlot} class.
  */
-public class SpiderWebPlotTest extends TestCase {
+public class SpiderWebPlotTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(SpiderWebPlotTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public SpiderWebPlotTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the equals() method.
      */
+    @Test
     public void testEquals() {
         SpiderWebPlot p1 = new SpiderWebPlot(new DefaultCategoryDataset());
         SpiderWebPlot p2 = new SpiderWebPlot(new DefaultCategoryDataset());
@@ -278,6 +260,7 @@ public class SpiderWebPlotTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         SpiderWebPlot p1 = new SpiderWebPlot(new DefaultCategoryDataset());
         Rectangle2D legendShape = new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0);
@@ -322,6 +305,7 @@ public class SpiderWebPlotTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         SpiderWebPlot p1 = new SpiderWebPlot(new DefaultCategoryDataset());
@@ -349,6 +333,7 @@ public class SpiderWebPlotTest extends TestCase {
      * Draws the chart with a null info object to make sure that no exceptions
      * are thrown.
      */
+    @Test
     public void testDrawWithNullInfo() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         dataset.addValue(35.0, "S1", "C1");
@@ -376,6 +361,7 @@ public class SpiderWebPlotTest extends TestCase {
     /**
      * Fetches the legend items and checks the values.
      */
+    @Test
     public void testGetLegendItems() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         dataset.addValue(35.0, "S1", "C1");

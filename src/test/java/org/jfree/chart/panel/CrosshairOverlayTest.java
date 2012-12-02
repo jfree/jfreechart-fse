@@ -40,9 +40,10 @@
 
 package org.jfree.chart.panel;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.GradientPaint;
+import org.jfree.chart.plot.Crosshair;
+import org.junit.Test;
+
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -50,38 +51,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.plot.Crosshair;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link CrosshairOverlay} class.
  */
-public class CrosshairOverlayTest extends TestCase {
+public class CrosshairOverlayTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(CrosshairOverlayTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public CrosshairOverlayTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         CrosshairOverlay o1 = new CrosshairOverlay();
         CrosshairOverlay o2 = new CrosshairOverlay();
@@ -91,6 +77,7 @@ public class CrosshairOverlayTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         CrosshairOverlay o1 = new CrosshairOverlay();
         o1.addDomainCrosshair(new Crosshair(99.9));
@@ -117,6 +104,7 @@ public class CrosshairOverlayTest extends TestCase {
     /**
      * Basic checks for cloning.
      */
+    @Test
     public void testCloning() {
         CrosshairOverlay o1 = new CrosshairOverlay();
         o1.addDomainCrosshair(new Crosshair(99.9));

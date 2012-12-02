@@ -43,6 +43,11 @@
 
 package org.jfree.chart.renderer.category;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.Range;
+import org.jfree.data.statistics.DefaultMultiValueCategoryDataset;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -52,40 +57,24 @@ import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.data.Range;
-import org.jfree.data.statistics.DefaultMultiValueCategoryDataset;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link ScatterRenderer} class.
  */
-public class ScatterRendererTest extends TestCase {
+public class ScatterRendererTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(ScatterRendererTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public ScatterRendererTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Test that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
 
         ScatterRenderer r1 = new ScatterRenderer();
@@ -127,6 +116,7 @@ public class ScatterRendererTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         ScatterRenderer r1 = new ScatterRenderer();
         ScatterRenderer r2 = new ScatterRenderer();
@@ -139,6 +129,7 @@ public class ScatterRendererTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         ScatterRenderer r1 = new ScatterRenderer();
         ScatterRenderer r2 = null;
@@ -158,6 +149,7 @@ public class ScatterRendererTest extends TestCase {
     /**
      * Check that this class implements PublicCloneable.
      */
+    @Test
     public void testPublicCloneable() {
         ScatterRenderer r1 = new ScatterRenderer();
         assertTrue(r1 instanceof PublicCloneable);
@@ -205,6 +197,7 @@ public class ScatterRendererTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         ScatterRenderer r1 = new ScatterRenderer();
         ScatterRenderer r2 = null;
@@ -228,6 +221,7 @@ public class ScatterRendererTest extends TestCase {
     /**
      * Some checks for the findRangeBounds() method.
      */
+    @Test
     public void testFindRangeBounds() {
         ScatterRenderer r = new ScatterRenderer();
         assertNull(r.findRangeBounds(null));

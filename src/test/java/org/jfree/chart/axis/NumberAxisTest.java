@@ -47,6 +47,18 @@
 
 package org.jfree.chart.axis;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.data.RangeType;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.junit.Test;
+
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -56,50 +68,23 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.data.RangeType;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link NumberAxis} class.
  */
-public class NumberAxisTest extends TestCase {
+public class NumberAxisTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(NumberAxisTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public NumberAxisTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         NumberAxis a1 = new NumberAxis("Test");
         NumberAxis a2 = null;
@@ -117,6 +102,7 @@ public class NumberAxisTest extends TestCase {
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         NumberAxis a1 = new NumberAxis("Test");
@@ -157,6 +143,7 @@ public class NumberAxisTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashCode() {
         NumberAxis a1 = new NumberAxis("Test");
         NumberAxis a2 = new NumberAxis("Test");
@@ -171,6 +158,7 @@ public class NumberAxisTest extends TestCase {
     /**
      * Test the translation of Java2D values to data values.
      */
+    @Test
     public void testTranslateJava2DToValue() {
         NumberAxis axis = new NumberAxis();
         axis.setRange(50.0, 100.0);
@@ -197,6 +185,7 @@ public class NumberAxisTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         NumberAxis a1 = new NumberAxis("Test Axis");
@@ -224,6 +213,7 @@ public class NumberAxisTest extends TestCase {
      * A simple test for the auto-range calculation looking at a
      * NumberAxis used as the range axis for a CategoryPlot.
      */
+    @Test
     public void testAutoRange1() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         dataset.setValue(100.0, "Row 1", "Column 1");
@@ -241,6 +231,7 @@ public class NumberAxisTest extends TestCase {
      * NumberAxis used as the range axis for a CategoryPlot.  In this
      * case, the 'autoRangeIncludesZero' flag is set to false.
      */
+    @Test
     public void testAutoRange2() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         dataset.setValue(100.0, "Row 1", "Column 1");
@@ -260,6 +251,7 @@ public class NumberAxisTest extends TestCase {
      * case, the 'autoRangeIncludesZero' flag is set to false AND the
      * original dataset is replaced with a new dataset.
      */
+    @Test
     public void testAutoRange3() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         dataset.setValue(100.0, "Row 1", "Column 1");
@@ -285,6 +277,7 @@ public class NumberAxisTest extends TestCase {
      * A check for the interaction between the 'autoRangeIncludesZero' flag
      * and the base setting in the BarRenderer.
      */
+    @Test
     public void testAutoRange4() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         dataset.setValue(100.0, "Row 1", "Column 1");
@@ -332,6 +325,7 @@ public class NumberAxisTest extends TestCase {
      * Checks that the auto-range for the domain axis on an XYPlot is
      * working as expected.
      */
+    @Test
     public void testXYAutoRange1() {
         XYSeries series = new XYSeries("Series 1");
         series.add(1.0, 1.0);
@@ -352,6 +346,7 @@ public class NumberAxisTest extends TestCase {
      * Checks that the auto-range for the range axis on an XYPlot is
      * working as expected.
      */
+    @Test
     public void testXYAutoRange2() {
         XYSeries series = new XYSeries("Series 1");
         series.add(1.0, 1.0);
@@ -415,6 +410,7 @@ public class NumberAxisTest extends TestCase {
     /**
      * Some checks for the setLowerBound() method.
      */
+    @Test
     public void testSetLowerBound() {
         NumberAxis axis = new NumberAxis("X");
         axis.setRange(0.0, 10.0);

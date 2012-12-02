@@ -41,43 +41,26 @@
 
 package org.jfree.data.time;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.jfree.chart.date.MonthConstants;
-import org.jfree.data.time.Day;
-import org.jfree.data.time.MovingAverage;
-import org.jfree.data.time.TimeSeries;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for the {@link MovingAverage} class.
  */
-public class MovingAverageTest extends TestCase {
+public class MovingAverageTest  {
 
     private static final double EPSILON = 0.0000000001;
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(MovingAverageTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public MovingAverageTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * A test for the values calculated from a time series.
      */
+    @Test
     public void test1() {
         TimeSeries source = createDailyTimeSeries1();
         TimeSeries maverage = MovingAverage.createMovingAverage(

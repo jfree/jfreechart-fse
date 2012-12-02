@@ -42,6 +42,12 @@
 
 package org.jfree.chart.axis;
 
+import org.jfree.chart.text.TextBlock;
+import org.jfree.chart.text.TextBlockAnchor;
+import org.jfree.chart.text.TextLine;
+import org.jfree.chart.ui.TextAnchor;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -49,42 +55,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.axis.CategoryTick;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.text.TextBlock;
-import org.jfree.chart.text.TextBlockAnchor;
-import org.jfree.chart.text.TextLine;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link CategoryTick} class.
  */
-public class CategoryTickTest extends TestCase {
+public class CategoryTickTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(CategoryTickTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public CategoryTickTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         Comparable c1 = "C1";
@@ -132,6 +119,7 @@ public class CategoryTickTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashCode() {
         Comparable c1 = "C1";
         TextBlock tb1 = new TextBlock();
@@ -151,6 +139,7 @@ public class CategoryTickTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         CategoryTick t1 = new CategoryTick(
             "C1", new TextBlock(), TextBlockAnchor.CENTER,
@@ -171,6 +160,7 @@ public class CategoryTickTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         CategoryTick t1 = new CategoryTick("C1", new TextBlock(),

@@ -41,44 +41,30 @@
 
 package org.jfree.data.statistics;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.data.statistics.Statistics;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link Statistics} class.
  */
-public class StatisticsTest extends TestCase {
+public class StatisticsTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(StatisticsTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public StatisticsTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the calculateMean(Number[]) and
      * calculateMean(Number[], boolean) methods.
      */
+    @Test
     public void testCalculateMean_Array() {
 
         // try null array
@@ -128,6 +114,7 @@ public class StatisticsTest extends TestCase {
      * Some checks for the calculateMean(Collection) and
      * calculateMean(Collection, boolean) methods.
      */
+    @Test
     public void testCalculateMean_Collection() {
 
         // try a null collection
@@ -194,6 +181,7 @@ public class StatisticsTest extends TestCase {
     /**
      * Some checks for the calculateMedian(List, boolean) method.
      */
+    @Test
     public void testCalculateMedian() {
 
         // check null list
@@ -230,6 +218,7 @@ public class StatisticsTest extends TestCase {
     /**
      * A test for the calculateMedian() method.
      */
+    @Test
     public void testCalculateMedian1() {
         List<Number> values = new ArrayList<Number>();
         values.add(new Double(1.0));
@@ -240,6 +229,7 @@ public class StatisticsTest extends TestCase {
     /**
      * A test for the calculateMedian() method.
      */
+    @Test
     public void testCalculateMedian2() {
         List<Number> values = new ArrayList<Number>();
         values.add(new Double(2.0));
@@ -251,6 +241,7 @@ public class StatisticsTest extends TestCase {
     /**
      * A test for the calculateMedian() method.
      */
+    @Test
     public void testCalculateMedian3() {
         List<Number> values = new ArrayList<Number>();
         values.add(new Double(1.0));
@@ -266,6 +257,7 @@ public class StatisticsTest extends TestCase {
     /**
      * A test for the calculateMedian() method.
      */
+    @Test
     public void testCalculateMedian4() {
         List<Number> values = new ArrayList<Number>();
         values.add(new Double(7.0));
@@ -282,6 +274,7 @@ public class StatisticsTest extends TestCase {
     /**
      * A test using some real data that caused a problem at one point.
      */
+    @Test
     public void testCalculateMedian5() {
         List<Number> values = new ArrayList<Number>();
         values.add(new Double(11.228692993861783));
@@ -338,6 +331,7 @@ public class StatisticsTest extends TestCase {
     /**
      * A test for the calculateMedian() method.
      */
+    @Test
     public void testCalculateMedian6() {
         List<Number> values = new ArrayList<Number>();
         values.add(new Double(7.0));
@@ -354,6 +348,7 @@ public class StatisticsTest extends TestCase {
     /**
      * A simple test for the correlation calculation.
      */
+    @Test
     public void testCorrelation1() {
         Number[] data1 = new Number[3];
         data1[0] = new Double(1);
@@ -372,6 +367,7 @@ public class StatisticsTest extends TestCase {
      *
      * http://trochim.human.cornell.edu/kb/statcorr.htm
      */
+    @Test
     public void testCorrelation2() {
         Number[] data1 = new Number[20];
         data1[0] = new Double(68);
@@ -422,6 +418,7 @@ public class StatisticsTest extends TestCase {
     /**
      * Some checks for the getStdDev() method.
      */
+    @Test
     public void testGetStdDev() {
 
         // try null argument

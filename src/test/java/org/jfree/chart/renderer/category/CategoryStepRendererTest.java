@@ -43,6 +43,15 @@
 
 package org.jfree.chart.renderer.category;
 
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -50,44 +59,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.data.category.DefaultCategoryDataset;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link CategoryStepRenderer} class.
  */
-public class CategoryStepRendererTest extends TestCase {
+public class CategoryStepRendererTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(CategoryStepRendererTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public CategoryStepRendererTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Check that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
         CategoryStepRenderer r1 = new CategoryStepRenderer(false);
         CategoryStepRenderer r2 = new CategoryStepRenderer(false);
@@ -102,6 +90,7 @@ public class CategoryStepRendererTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         CategoryStepRenderer r1 = new CategoryStepRenderer(false);
         CategoryStepRenderer r2 = null;
@@ -119,6 +108,7 @@ public class CategoryStepRendererTest extends TestCase {
     /**
      * Check that this class implements PublicCloneable.
      */
+    @Test
     public void testPublicCloneable() {
         CategoryStepRenderer r1 = new CategoryStepRenderer(false);
         assertTrue(r1 instanceof PublicCloneable);
@@ -127,6 +117,7 @@ public class CategoryStepRendererTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         CategoryStepRenderer r1 = new CategoryStepRenderer();
@@ -154,6 +145,7 @@ public class CategoryStepRendererTest extends TestCase {
      * A check for the datasetIndex and seriesIndex fields in the LegendItem
      * returned by the getLegendItem() method.
      */
+    @Test
     public void testGetLegendItemSeriesIndex() {
         DefaultCategoryDataset dataset0 = new DefaultCategoryDataset();
         dataset0.addValue(21.0, "R1", "C1");

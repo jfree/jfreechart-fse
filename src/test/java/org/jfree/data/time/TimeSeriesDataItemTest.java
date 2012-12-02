@@ -40,6 +40,9 @@
 
 package org.jfree.data.time;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -47,41 +50,24 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.data.time.Day;
-import org.jfree.data.time.TimeSeriesDataItem;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link TimeSeriesDataItem} class.
  */
-public class TimeSeriesDataItemTest extends TestCase {
+public class TimeSeriesDataItemTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(TimeSeriesDataItemTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public TimeSeriesDataItemTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Common test setup.
      */
-    @Override
-	protected void setUp() {
+    @Before
+	public void setUp() {
         // no setup
     }
 
@@ -90,6 +76,7 @@ public class TimeSeriesDataItemTest extends TestCase {
      *
      * SourceForge Bug ID: 558850.
      */
+    @Test
     public void testEqualsSelf() {
         TimeSeriesDataItem item = new TimeSeriesDataItem(
             new Day(23, 9, 2001), 99.7
@@ -100,6 +87,7 @@ public class TimeSeriesDataItemTest extends TestCase {
     /**
      * Test the equals() method.
      */
+    @Test
     public void testEquals() {
         TimeSeriesDataItem item1 = new TimeSeriesDataItem(
             new Day(23, 9, 2001), 99.7
@@ -119,6 +107,7 @@ public class TimeSeriesDataItemTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         TimeSeriesDataItem item1 = new TimeSeriesDataItem(

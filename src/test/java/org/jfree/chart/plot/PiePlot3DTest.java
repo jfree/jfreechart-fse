@@ -43,7 +43,11 @@
 
 package org.jfree.chart.plot;
 
-import java.awt.Graphics2D;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.junit.Test;
+
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -53,40 +57,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PiePlot3D;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link PiePlot3D} class.
  */
-public class PiePlot3DTest extends TestCase {
+public class PiePlot3DTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(PiePlot3DTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public PiePlot3DTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the equals() method.
      */
+    @Test
     public void testEquals() {
         PiePlot3D p1 = new PiePlot3D();
         PiePlot3D p2 = new PiePlot3D();
@@ -107,6 +94,7 @@ public class PiePlot3DTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         PiePlot3D p1 = new PiePlot3D(null);
@@ -133,6 +121,7 @@ public class PiePlot3DTest extends TestCase {
     /**
      * Draws a pie chart where the label generator returns null.
      */
+    @Test
     public void testDrawWithNullDataset() {
         JFreeChart chart = ChartFactory.createPieChart3D("Test", null);
         boolean success = false;

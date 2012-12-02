@@ -44,6 +44,19 @@
 
 package org.jfree.chart.renderer.xy;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.urls.TimeSeriesURLGenerator;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.Range;
+import org.jfree.data.xy.TableXYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.junit.Test;
+
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
@@ -53,48 +66,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.urls.TimeSeriesURLGenerator;
-import org.jfree.data.Range;
-import org.jfree.data.xy.TableXYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link XYLineAndShapeRenderer} class.
  */
-public class XYLineAndShapeRendererTest extends TestCase {
+public class XYLineAndShapeRendererTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(XYLineAndShapeRendererTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public XYLineAndShapeRendererTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Test that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
 
         XYLineAndShapeRenderer r1 = new XYLineAndShapeRenderer();
@@ -161,6 +149,7 @@ public class XYLineAndShapeRendererTest extends TestCase {
     /**
      * Test that the equals() method works for a TimeSeriesURLGenerator.
      */
+    @Test
     public void testEquals2() {
         XYLineAndShapeRenderer r1 = new XYLineAndShapeRenderer();
         XYLineAndShapeRenderer r2 = new XYLineAndShapeRenderer();
@@ -177,6 +166,7 @@ public class XYLineAndShapeRendererTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         XYLineAndShapeRenderer r1 = new XYLineAndShapeRenderer();
         XYLineAndShapeRenderer r2 = new XYLineAndShapeRenderer();
@@ -189,6 +179,7 @@ public class XYLineAndShapeRendererTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         Rectangle2D legendShape = new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0);
         XYLineAndShapeRenderer r1 = new XYLineAndShapeRenderer();
@@ -228,6 +219,7 @@ public class XYLineAndShapeRendererTest extends TestCase {
     /**
      * Verify that this class implements {@link PublicCloneable}.
      */
+    @Test
     public void testPublicCloneable() {
         XYLineAndShapeRenderer r1 = new XYLineAndShapeRenderer();
         assertTrue(r1 instanceof PublicCloneable);
@@ -236,6 +228,7 @@ public class XYLineAndShapeRendererTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         XYLineAndShapeRenderer r1 = new XYLineAndShapeRenderer();
@@ -261,6 +254,7 @@ public class XYLineAndShapeRendererTest extends TestCase {
     /**
      * Check that the renderer is calculating the domain bounds correctly.
      */
+    @Test
     public void testFindDomainBounds() {
         XYSeriesCollection dataset
                 = RendererXYPackageTests.createTestXYSeriesCollection();
@@ -279,6 +273,7 @@ public class XYLineAndShapeRendererTest extends TestCase {
     /**
      * Check that the renderer is calculating the range bounds correctly.
      */
+    @Test
     public void testFindRangeBounds() {
         TableXYDataset dataset
                 = RendererXYPackageTests.createTestTableXYDataset();
@@ -298,6 +293,7 @@ public class XYLineAndShapeRendererTest extends TestCase {
      * A check for the datasetIndex and seriesIndex fields in the LegendItem
      * returned by the getLegendItem() method.
      */
+    @Test
     public void testGetLegendItemSeriesIndex() {
         XYSeriesCollection d1 = new XYSeriesCollection();
         XYSeries s1 = new XYSeries("S1");

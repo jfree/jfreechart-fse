@@ -55,6 +55,13 @@
 
 package org.jfree.data.time;
 
+import org.jfree.chart.date.MonthConstants;
+import org.jfree.data.general.SeriesChangeEvent;
+import org.jfree.data.general.SeriesChangeListener;
+import org.jfree.data.general.SeriesException;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -62,26 +69,16 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.date.MonthConstants;
-import org.jfree.data.general.SeriesChangeEvent;
-import org.jfree.data.general.SeriesChangeListener;
-import org.jfree.data.general.SeriesException;
-import org.jfree.data.time.Day;
-import org.jfree.data.time.FixedMillisecond;
-import org.jfree.data.time.Month;
-import org.jfree.data.time.RegularTimePeriod;
-import org.jfree.data.time.TimeSeries;
-import org.jfree.data.time.TimeSeriesDataItem;
-import org.jfree.data.time.Year;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * A collection of test cases for the {@link TimeSeries} class.
  */
-public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
+public class TimeSeriesTest  implements SeriesChangeListener {
 
     /** A time series. */
     private TimeSeries seriesA;
@@ -95,29 +92,15 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /** A flag that indicates whether or not a change event was fired. */
     private boolean gotSeriesChangeEvent = false;
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(TimeSeriesTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public TimeSeriesTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Common test setup.
      */
-    @Override
-	protected void setUp() {
+    @Before
+	public void setUp() {
 
         this.seriesA = new TimeSeries("Series A");
         try {
@@ -168,6 +151,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Check that cloning works.
      */
+    @Test
     public void testClone() {
 
         TimeSeries series = new TimeSeries("Test Series");
@@ -216,6 +200,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Another test of the clone() method.
      */
+    @Test
     public void testClone2() {
         TimeSeries s1 = new TimeSeries("S1");
         s1.add(new Year(2007), 100.0);
@@ -240,6 +225,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Add a value to series A for 1999.  It should be added at index 0.
      */
+    @Test
     public void testAddValue() {
 
         try {
@@ -257,6 +243,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Tests the retrieval of values.
      */
+    @Test
     public void testGetValue() {
 
         Number value1 = this.seriesA.getValue(new Year(1999));
@@ -269,6 +256,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Tests the deletion of values.
      */
+    @Test
     public void testDelete() {
         this.seriesA.delete(0, 0);
         assertEquals(5, this.seriesA.getItemCount());
@@ -279,6 +267,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Basic tests for the delete() method.
      */
+    @Test
     public void testDelete2() {
         TimeSeries s1 = new TimeSeries("Series");
         s1.add(new Year(2000), 13.75);
@@ -309,6 +298,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Some checks for the delete(int, int) method.
      */
+    @Test
     public void testDelete3() {
         TimeSeries s1 = new TimeSeries("S1");
         s1.add(new Year(2011), 1.1);
@@ -329,6 +319,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
      * Check that the item bounds are determined correctly when there is a
      * maximum item count and a new value is added.
      */
+    @Test
     public void testDelete_RegularTimePeriod() {
         TimeSeries s1 = new TimeSeries("S1");
         s1.add(new Year(2010), 1.1);
@@ -344,6 +335,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         TimeSeries s1 = new TimeSeries("A test");
         s1.add(new Year(2000), 13.75);
@@ -371,6 +363,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Tests the equals method.
      */
+    @Test
     public void testEquals() {
         TimeSeries s1 = new TimeSeries("Time Series 1");
         TimeSeries s2 = new TimeSeries("Time Series 2");
@@ -414,6 +407,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
      * Tests a specific bug report where null arguments in the constructor
      * cause the equals() method to fail.  Fixed for 0.9.21.
      */
+    @Test
     public void testEquals2() {
         TimeSeries s1 = new TimeSeries("Series", null, null);
         TimeSeries s2 = new TimeSeries("Series", null, null);
@@ -424,6 +418,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
      * Some tests to ensure that the createCopy(RegularTimePeriod,
      * RegularTimePeriod) method is functioning correctly.
      */
+    @Test
     public void testCreateCopy1() {
 
         TimeSeries series = new TimeSeries("Series");
@@ -518,6 +513,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
      * Some tests to ensure that the createCopy(int, int) method is
      * functioning correctly.
      */
+    @Test
     public void testCreateCopy2() {
 
         TimeSeries series = new TimeSeries("Series");
@@ -596,6 +592,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
      *
      * @throws java.lang.CloneNotSupportedException
      */
+    @Test
     public void testCreateCopy3() throws CloneNotSupportedException {
         TimeSeries s1 = new TimeSeries("S1");
         s1.add(new Year(2009), 100.0);
@@ -617,6 +614,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
      * Test the setMaximumItemCount() method to ensure that it removes items
      * from the series if necessary.
      */
+    @Test
     public void testSetMaximumItemCount() {
         TimeSeries s1 = new TimeSeries("S1");
         s1.add(new Year(2000), 13.75);
@@ -637,6 +635,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Some checks for the addOrUpdate() method.
      */
+    @Test
     public void testAddOrUpdate() {
         TimeSeries s1 = new TimeSeries("S1");
         s1.setMaximumItemCount(2);
@@ -653,6 +652,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Test the add branch of the addOrUpdate() method.
      */
+    @Test
     public void testAddOrUpdate2() {
         TimeSeries s1 = new TimeSeries("S1");
         s1.setMaximumItemCount(2);
@@ -668,6 +668,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
      * Test that the addOrUpdate() method won't allow multiple time period
      * classes.
      */
+    @Test
     public void testAddOrUpdate3() {
         TimeSeries s1 = new TimeSeries("S1");
         s1.addOrUpdate(new Year(2010), 1.1);
@@ -686,6 +687,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Some more checks for the addOrUpdate() method.
      */
+    @Test
     public void testAddOrUpdate4() {
         TimeSeries ts = new TimeSeries("S");
         TimeSeriesDataItem overwritten = ts.addOrUpdate(new Year(2009), 20.09);
@@ -710,6 +712,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * A test for the bug report 1075255.
      */
+    @Test
     public void testBug1075255() {
         TimeSeries ts = new TimeSeries("dummy");
         ts.add(new FixedMillisecond(0L), 0.0);
@@ -728,6 +731,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * A test for bug 1832432.
      */
+    @Test
     public void testBug1832432() {
         TimeSeries s1 = new TimeSeries("Series");
         TimeSeries s2 = null;
@@ -749,6 +753,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Some checks for the getIndex() method.
      */
+    @Test
     public void testGetIndex() {
         TimeSeries series = new TimeSeries("Series");
         assertEquals(-1, series.getIndex(new Month(1, 2003)));
@@ -769,6 +774,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Some checks for the getDataItem(int) method.
      */
+    @Test
     public void testGetDataItem1() {
         TimeSeries series = new TimeSeries("S");
 
@@ -807,6 +813,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Some checks for the getDataItem(RegularTimePeriod) method.
      */
+    @Test
     public void testGetDataItem2() {
         TimeSeries series = new TimeSeries("S");
         assertNull(series.getDataItem(new Year(2006)));
@@ -825,6 +832,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Some checks for the removeAgedItems() method.
      */
+    @Test
     public void testRemoveAgedItems() {
         TimeSeries series = new TimeSeries("Test Series");
         series.addChangeListener(this);
@@ -862,6 +870,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Some checks for the removeAgedItems(long, boolean) method.
      */
+    @Test
     public void testRemoveAgedItems2() {
         long y2006 = 1157087372534L;  // milliseconds somewhere in 2006
         TimeSeries series = new TimeSeries("Test Series");
@@ -906,6 +915,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
      * Calling removeAgedItems() on an empty series should not throw any
      * exception.
      */
+    @Test
     public void testRemoveAgedItems3() {
         TimeSeries s = new TimeSeries("Test");
         boolean pass = true;
@@ -922,6 +932,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
      * Check that the item bounds are determined correctly when there is a
      * maximum item count.
      */
+    @Test
     public void testRemoveAgedItems4() {
         TimeSeries s1 = new TimeSeries("S1");
         s1.setMaximumItemAge(2);
@@ -938,6 +949,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
      * Check that the item bounds are determined correctly after a call to
      * removeAgedItems().
      */
+    @Test
     public void testRemoveAgedItems5() {
         TimeSeries s1 = new TimeSeries("S1");
         s1.setMaximumItemAge(4);
@@ -954,6 +966,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Some simple checks for the hashCode() method.
      */
+    @Test
     public void testHashCode() {
         TimeSeries s1 = new TimeSeries("Test");
         TimeSeries s2 = new TimeSeries("Test");
@@ -984,6 +997,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Test for bug report 1864222.
      */
+    @Test
     public void testBug1864222() {
         TimeSeries s = new TimeSeries("S");
         s.add(new Day(19, 8, 2005), 1);
@@ -1001,6 +1015,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Test for bug report 3446965.
      */
+    @Test
     public void testBug3446965() {
         TimeSeries s = new TimeSeries("s");
         s.addOrUpdate(new Year(2011), 100.0);
@@ -1016,6 +1031,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Some checks for the getMinY() method.
      */
+    @Test
     public void testGetMinY() {
         TimeSeries s1 = new TimeSeries("S1");
         assertTrue(Double.isNaN(s1.getMinY()));
@@ -1042,6 +1058,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Some checks for the getMaxY() method.
      */
+    @Test
     public void testGetMaxY() {
         TimeSeries s1 = new TimeSeries("S1");
         assertTrue(Double.isNaN(s1.getMaxY()));
@@ -1068,6 +1085,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * A test for the clear method.
      */
+    @Test
     public void testClear() {
         TimeSeries s1 = new TimeSeries("S1");
         s1.add(new Year(2009), 1.1);
@@ -1085,6 +1103,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
      * Check that the item bounds are determined correctly when there is a
      * maximum item count and a new value is added.
      */
+    @Test
     public void testAdd() {
         TimeSeries s1 = new TimeSeries("S1");
         s1.setMaximumItemCount(2);
@@ -1099,6 +1118,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
     /**
      * Some checks for the update(RegularTimePeriod...method).
      */
+    @Test
     public void testUpdate_RegularTimePeriod() {
         TimeSeries s1 = new TimeSeries("S1");
         s1.add(new Year(2010), 1.1);
@@ -1118,6 +1138,7 @@ public class TimeSeriesTest extends TestCase implements SeriesChangeListener {
      * Create a TimeSeriesDataItem, add it to a TimeSeries.  Now, modifying
      * the original TimeSeriesDataItem should NOT affect the TimeSeries.
      */
+    @Test
     public void testAdd_TimeSeriesDataItem() {
         TimeSeriesDataItem item = new TimeSeriesDataItem(new Year(2009), 1.0);
         TimeSeries series = new TimeSeries("S1");

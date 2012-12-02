@@ -42,6 +42,9 @@
 
 package org.jfree.data.xy;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -49,38 +52,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.util.PublicCloneable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link YIntervalSeriesCollection} class.
  */
-public class YIntervalSeriesCollectionTest extends TestCase {
+public class YIntervalSeriesCollectionTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(YIntervalSeriesCollectionTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public YIntervalSeriesCollectionTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         YIntervalSeriesCollection c1 = new YIntervalSeriesCollection();
         YIntervalSeriesCollection c2 = new YIntervalSeriesCollection();
@@ -106,6 +94,7 @@ public class YIntervalSeriesCollectionTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         YIntervalSeriesCollection c1 = new YIntervalSeriesCollection();
         YIntervalSeries s1 = new YIntervalSeries("Series");
@@ -130,6 +119,7 @@ public class YIntervalSeriesCollectionTest extends TestCase {
     /**
      * Verify that this class implements {@link PublicCloneable}.
      */
+    @Test
     public void testPublicCloneable() {
         YIntervalSeriesCollection c1 = new YIntervalSeriesCollection();
         assertTrue(c1 instanceof PublicCloneable);
@@ -138,6 +128,7 @@ public class YIntervalSeriesCollectionTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         YIntervalSeriesCollection c1 = new YIntervalSeriesCollection();
         YIntervalSeries s1 = new YIntervalSeries("Series");
@@ -164,6 +155,7 @@ public class YIntervalSeriesCollectionTest extends TestCase {
     /**
      * Some basic checks for the removeSeries() method.
      */
+    @Test
     public void testRemoveSeries() {
         YIntervalSeriesCollection c = new YIntervalSeriesCollection();
         YIntervalSeries s1 = new YIntervalSeries("s1");
@@ -195,6 +187,7 @@ public class YIntervalSeriesCollectionTest extends TestCase {
      * A test for bug report 1170825 (originally affected XYSeriesCollection,
      * this test is just copied over).
      */
+    @Test
     public void test1170825() {
         YIntervalSeries s1 = new YIntervalSeries("Series1");
         YIntervalSeriesCollection dataset = new YIntervalSeriesCollection();

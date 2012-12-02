@@ -42,9 +42,10 @@
 
 package org.jfree.chart.annotations;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.GradientPaint;
+import org.jfree.chart.util.PublicCloneable;
+import org.junit.Test;
+
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -53,39 +54,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.annotations.XYShapeAnnotation;
-import org.jfree.chart.util.PublicCloneable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Some tests for the {@link XYShapeAnnotation} class.
  */
-public class XYShapeAnnotationTest extends TestCase {
+public class XYShapeAnnotationTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(XYShapeAnnotationTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public XYShapeAnnotationTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         XYShapeAnnotation a1 = new XYShapeAnnotation(
@@ -150,6 +135,7 @@ public class XYShapeAnnotationTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashCode() {
         XYShapeAnnotation a1 = new XYShapeAnnotation(
                 new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0),
@@ -166,6 +152,7 @@ public class XYShapeAnnotationTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         XYShapeAnnotation a1 = new XYShapeAnnotation(
                 new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0),
@@ -185,6 +172,7 @@ public class XYShapeAnnotationTest extends TestCase {
     /**
      * Checks that this class implements PublicCloneable.
      */
+    @Test
     public void testPublicCloneable() {
         XYShapeAnnotation a1 = new XYShapeAnnotation(
                 new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0),
@@ -195,6 +183,7 @@ public class XYShapeAnnotationTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         XYShapeAnnotation a1 = new XYShapeAnnotation(
                 new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0),

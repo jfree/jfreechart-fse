@@ -40,47 +40,32 @@
 
 package org.jfree.chart;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.MeterInterval;
 import org.jfree.chart.plot.MeterPlot;
 import org.jfree.data.Range;
 import org.jfree.data.general.DefaultValueDataset;
+import org.junit.Test;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Miscellaneous checks for meter charts.
  */
-public class MeterChartTest extends TestCase {
+public class MeterChartTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(MeterChartTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public MeterChartTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Draws the chart with a single range.  At one point, this caused a null
      * pointer exception (fixed now).
      */
+    @Test
     public void testDrawWithNullInfo() {
         boolean success = false;
         MeterPlot plot = new MeterPlot(new DefaultValueDataset(60.0));

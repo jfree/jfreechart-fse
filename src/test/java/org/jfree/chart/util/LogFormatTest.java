@@ -41,6 +41,8 @@
 
 package org.jfree.chart.util;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -49,36 +51,25 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+
 
 /**
  * Tests for the {@link LogFormat} class.
  */
-public class LogFormatTest extends TestCase {
+public class LogFormatTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(LogFormatTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public LogFormatTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Check that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
         LogFormat f1 = new LogFormat(10.0, "10", true);
         LogFormat f2 = new LogFormat(10.0, "10", true);
@@ -108,6 +99,7 @@ public class LogFormatTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashcode() {
         LogFormat f1 = new LogFormat(10.0, "10", true);
         LogFormat f2 = new LogFormat(10.0, "10", true);
@@ -120,6 +112,7 @@ public class LogFormatTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         LogFormat f1 = new LogFormat(10.0, "10", true);
         LogFormat f2 = null;
@@ -137,6 +130,7 @@ public class LogFormatTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         LogFormat f1 = new LogFormat(10.0, "10", true);
         LogFormat f2 = null;

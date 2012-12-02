@@ -46,11 +46,15 @@
 
 package org.jfree.chart.plot;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Stroke;
+import org.jfree.chart.event.MarkerChangeEvent;
+import org.jfree.chart.event.MarkerChangeListener;
+import org.jfree.chart.ui.LengthAdjustmentType;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.TextAnchor;
+import org.junit.Test;
+
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -58,50 +62,28 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.ui.LengthAdjustmentType;
-import org.jfree.chart.ui.RectangleAnchor;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.event.MarkerChangeEvent;
-import org.jfree.chart.event.MarkerChangeListener;
-import org.jfree.chart.plot.Marker;
-import org.jfree.chart.plot.ValueMarker;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link ValueMarker} class.
  */
 public class ValueMarkerTest
-    extends TestCase
+
     implements MarkerChangeListener {
 
 
     MarkerChangeEvent lastEvent;
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(ValueMarkerTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public ValueMarkerTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         Marker m1 = new ValueMarker(45.0);
@@ -187,6 +169,7 @@ public class ValueMarkerTest
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         ValueMarker m1 = new ValueMarker(25.0);
         ValueMarker m2 = null;
@@ -204,6 +187,7 @@ public class ValueMarkerTest
    /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         ValueMarker m1 = new ValueMarker(25.0);
@@ -233,6 +217,7 @@ public class ValueMarkerTest
     /**
      * Some checks for the getValue() and setValue() methods.
      */
+    @Test
     public void testGetSetValue() {
         ValueMarker m = new ValueMarker(1.1);
         m.addChangeListener(this);
@@ -256,6 +241,7 @@ public class ValueMarkerTest
     /**
      * A test for bug 1802195.
      */
+    @Test
     public void test1802195() {
 
         ValueMarker m1 = new ValueMarker(25.0);
@@ -292,6 +278,7 @@ public class ValueMarkerTest
     /**
      * A test for bug report 1808376.
      */
+    @Test
     public void test1808376() {
         Stroke stroke = new BasicStroke(1.0f);
         Stroke outlineStroke = new BasicStroke(2.0f);

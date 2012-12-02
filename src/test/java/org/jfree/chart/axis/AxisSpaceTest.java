@@ -41,38 +41,25 @@
 
 package org.jfree.chart.axis;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
 
-import org.jfree.chart.axis.AxisSpace;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link AxisSpace} class.
  */
-public class AxisSpaceTest extends TestCase {
+public class AxisSpaceTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(AxisSpaceTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public AxisSpaceTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Check that the equals() method can distinguish all fields.
      */
+    @Test
     public void testEquals() {
         AxisSpace a1 = new AxisSpace();
         AxisSpace a2 = new AxisSpace();
@@ -102,6 +89,7 @@ public class AxisSpaceTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashCode() {
         AxisSpace s1 = new AxisSpace();
         AxisSpace s2 = new AxisSpace();
@@ -114,6 +102,7 @@ public class AxisSpaceTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         AxisSpace s1 = new AxisSpace();
         AxisSpace s2 = null;

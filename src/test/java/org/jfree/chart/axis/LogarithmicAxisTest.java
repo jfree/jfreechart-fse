@@ -42,6 +42,10 @@
 
 package org.jfree.chart.axis;
 
+import org.jfree.chart.ui.RectangleEdge;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -50,17 +54,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.axis.LogarithmicAxis;
-import org.jfree.chart.ui.RectangleEdge;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Tests for the {@link LogarithmicAxis} class.
  */
-public class LogarithmicAxisTest extends TestCase {
+public class LogarithmicAxisTest  {
 
     static class MyLogarithmicAxis extends LogarithmicAxis {
 
@@ -72,6 +72,7 @@ public class LogarithmicAxisTest extends TestCase {
         public MyLogarithmicAxis(String label) {
             super(label);
         }
+
 
         /* (non-Javadoc)
          * @see org.jfree.chart.axis.LogarithmicAxis#switchedLog10(double)
@@ -88,31 +89,17 @@ public class LogarithmicAxisTest extends TestCase {
 
     MyLogarithmicAxis axis = null;
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(LogarithmicAxisTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public LogarithmicAxisTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Sets up a new axis.
      *
      * @throws Exception
      */
-    @Override
-	protected void setUp() throws Exception {
+    @Before
+	public void setUp() throws Exception {
         this.axis = new MyLogarithmicAxis("Value (log)");
         this.axis.setAllowNegativesFlag(false);
         this.axis.setLog10TickLabelsFlag(false);
@@ -126,6 +113,7 @@ public class LogarithmicAxisTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         LogarithmicAxis a1 = new LogarithmicAxis("Test Axis");
@@ -152,6 +140,7 @@ public class LogarithmicAxisTest extends TestCase {
     /**
      * Test if adjustedLog10 and adjustedPow10 are inverses of each other
      */
+     @Test
      public void testAdjustedLog10() {
          checkLogPowRoundTrip(20);
          checkLogPowRoundTrip(10);
@@ -173,6 +162,7 @@ public class LogarithmicAxisTest extends TestCase {
      /**
       * Test if switchedLog10 and switchedPow10 are inverses of each other
       */
+      @Test
       public void testSwitchedLog10() {
           assertFalse("Axis should not allow negative values",
                   this.axis.getAllowNegativesFlag());
@@ -200,6 +190,7 @@ public class LogarithmicAxisTest extends TestCase {
       /**
        * Test of java2DToValue method.
        */
+      @Test
       public void testJava2DToValue() {
           Rectangle2D plotArea = new Rectangle2D.Double(22, 33, 500, 500);
           RectangleEdge edge = RectangleEdge.BOTTOM;
@@ -224,6 +215,7 @@ public class LogarithmicAxisTest extends TestCase {
       /**
        * Test of valueToJava2D method.
        */
+      @Test
       public void testValueToJava2D() {
           Rectangle2D plotArea = new Rectangle2D.Double(22, 33, 500, 500);
           RectangleEdge edge = RectangleEdge.BOTTOM;
@@ -284,13 +276,5 @@ public class LogarithmicAxisTest extends TestCase {
                  EPSILON);
     }
 
-    /**
-     * Runs all tests in this class.
-     *
-     * @param args  ignored.
-     */
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(LogarithmicAxisTest.class);
-    }
 
 }

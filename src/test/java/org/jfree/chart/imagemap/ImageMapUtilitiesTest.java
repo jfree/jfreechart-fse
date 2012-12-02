@@ -40,36 +40,25 @@
 
 package org.jfree.chart.imagemap;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+
 
 /**
  * Tests for the {@link ImageMapUtilities} class.
  */
-public class ImageMapUtilitiesTest extends TestCase {
+public class ImageMapUtilitiesTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(ImageMapUtilitiesTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public ImageMapUtilitiesTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the htmlEscape() method.
      */
+    @Test
     public void testHTMLEscape() {
         assertEquals("", ImageMapUtilities.htmlEscape(""));
         assertEquals("abc", ImageMapUtilities.htmlEscape("abc"));
@@ -85,6 +74,7 @@ public class ImageMapUtilitiesTest extends TestCase {
     /**
      * Some checks for the javascriptEscape() method.
      */
+    @Test
     public void testJavascriptEscape() {
         assertEquals("", ImageMapUtilities.javascriptEscape(""));
         assertEquals("abc", ImageMapUtilities.javascriptEscape("abc"));

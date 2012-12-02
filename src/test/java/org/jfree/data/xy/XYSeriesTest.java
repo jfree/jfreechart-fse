@@ -46,6 +46,9 @@
 
 package org.jfree.data.xy;
 
+import org.jfree.data.general.SeriesException;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -53,38 +56,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.data.general.SeriesException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link XYSeries} class.
  */
-public class XYSeriesTest extends TestCase {
+public class XYSeriesTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(XYSeriesTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public XYSeriesTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         XYSeries s1 = new XYSeries("Series");
         s1.add(1.0, 1.1);
@@ -107,6 +95,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Some simple checks for the hashCode() method.
      */
+    @Test
     public void testHashCode() {
         XYSeries s1 = new XYSeries("Test");
         XYSeries s2 = new XYSeries("Test");
@@ -137,6 +126,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         XYSeries s1 = new XYSeries("Series");
         s1.add(1.0, 1.1);
@@ -155,6 +145,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Another test of the clone() method.
      */
+    @Test
     public void testCloning2() {
         XYSeries s1 = new XYSeries("S1");
         s1.add(1.0, 100.0);
@@ -179,6 +170,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Another test of the clone() method.
      */
+    @Test
     public void testCloning3() {
         XYSeries s1 = new XYSeries("S1");
         XYSeries s2 = null;
@@ -200,6 +192,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         XYSeries s1 = new XYSeries("Series");
         s1.add(1.0, 1.1);
@@ -224,6 +217,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Simple test for the indexOf() method.
      */
+    @Test
     public void testIndexOf() {
         XYSeries s1 = new XYSeries("Series 1");
         s1.add(1.0, 1.0);
@@ -238,6 +232,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * A check for the indexOf() method for an unsorted series.
      */
+    @Test
     public void testIndexOf2() {
         XYSeries s1 = new XYSeries("Series 1", false, true);
         s1.add(1.0, 1.0);
@@ -252,6 +247,7 @@ public class XYSeriesTest extends TestCase {
      * A check for the indexOf(Number) method when the series has duplicate
      * x-values.
      */
+    @Test
     public void testIndexOf3() {
         XYSeries s1 = new XYSeries("Series 1");
         s1.add(1.0, 1.0);
@@ -264,6 +260,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Simple test for the remove() method.
      */
+    @Test
     public void testRemove() {
         XYSeries s1 = new XYSeries("Series 1");
         s1.add(1.0, 1.0);
@@ -281,6 +278,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Some checks for the remove(int) method.
      */
+    @Test
     public void testRemove2() {
         XYSeries s1 = new XYSeries("S1");
         s1.add(1.0, 1.1);
@@ -309,6 +307,7 @@ public class XYSeriesTest extends TestCase {
      * When items are added with duplicate x-values, we expect them to remain
      * in the order they were added.
      */
+    @Test
     public void testAdditionOfDuplicateXValues() {
         XYSeries s1 = new XYSeries("Series 1");
         s1.add(1.0, 1.0);
@@ -326,6 +325,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Some checks for the update(Number, Number) method.
      */
+    @Test
     public void testUpdate() {
         XYSeries series = new XYSeries("S1");
         series.add(new Integer(1), new Integer(2));
@@ -344,6 +344,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Some checks for the update() method for an unsorted series.
      */
+    @Test
     public void testUpdate2() {
        XYSeries series = new XYSeries("Series", false, true);
        series.add(5.0, 55.0);
@@ -356,6 +357,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Some checks for the addOrUpdate() method.
      */
+    @Test
     public void testAddOrUpdate() {
         XYSeries series = new XYSeries("S1", true, false);
         XYDataItem old = series.addOrUpdate(new Long(1), new Long(2));
@@ -378,6 +380,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Some checks for the addOrUpdate() method for an UNSORTED series.
      */
+    @Test
     public void testAddOrUpdate2() {
         XYSeries series = new XYSeries("Series", false, false);
         series.add(5.0, 5.5);
@@ -395,6 +398,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Another test for the addOrUpdate() method.
      */
+    @Test
     public void testAddOrUpdate3() {
         XYSeries series = new XYSeries("Series", false, true);
         series.addOrUpdate(1.0, 1.0);
@@ -409,6 +413,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Some checks for the add() method for an UNSORTED series.
      */
+    @Test
     public void testAdd() {
         XYSeries series = new XYSeries("Series", false, true);
         series.add(5.0, 5.50);
@@ -430,6 +435,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * A simple check that the maximumItemCount attribute is working.
      */
+    @Test
     public void testSetMaximumItemCount() {
         XYSeries s1 = new XYSeries("S1");
         assertEquals(Integer.MAX_VALUE, s1.getMaximumItemCount());
@@ -445,6 +451,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Check that the maximum item count can be applied retrospectively.
      */
+    @Test
     public void testSetMaximumItemCount2() {
         XYSeries s1 = new XYSeries("S1");
         s1.add(1.0, 1.1);
@@ -459,6 +466,7 @@ public class XYSeriesTest extends TestCase {
      * Check that the item bounds are determined correctly when there is a
      * maximum item count.
      */
+    @Test
     public void testSetMaximumItemCount3() {
         XYSeries s1 = new XYSeries("S1");
         s1.add(1.0, 1.1);
@@ -480,6 +488,7 @@ public class XYSeriesTest extends TestCase {
      * Check that the item bounds are determined correctly when there is a
      * maximum item count.
      */
+    @Test
     public void testSetMaximumItemCount4() {
         XYSeries s1 = new XYSeries("S1");
         s1.setMaximumItemCount(2);
@@ -497,6 +506,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Some checks for the toArray() method.
      */
+    @Test
     public void testToArray() {
         XYSeries s = new XYSeries("S1");
         double[][] array = s.toArray();
@@ -524,6 +534,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Some checks for an example using the toArray() method.
      */
+    @Test
     public void testToArrayExample() {
         XYSeries s = new XYSeries("S");
         s.add(1.0, 11.0);
@@ -548,6 +559,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Another test for the addOrUpdate() method.
      */
+    @Test
     public void testBug1955483() {
         XYSeries series = new XYSeries("Series", true, true);
         series.addOrUpdate(1.0, 1.0);
@@ -560,6 +572,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Some checks for the delete(int, int) method.
      */
+    @Test
     public void testDelete() {
         XYSeries s1 = new XYSeries("S1");
         s1.add(1.0, 1.1);
@@ -581,6 +594,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Some checks for the getMinX() method.
      */
+    @Test
     public void testGetMinX() {
         XYSeries s1 = new XYSeries("S1");
         assertTrue(Double.isNaN(s1.getMinX()));
@@ -604,6 +618,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Some checks for the getMaxX() method.
      */
+    @Test
     public void testGetMaxX() {
         XYSeries s1 = new XYSeries("S1");
         assertTrue(Double.isNaN(s1.getMaxX()));
@@ -627,6 +642,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Some checks for the getMinY() method.
      */
+    @Test
     public void testGetMinY() {
         XYSeries s1 = new XYSeries("S1");
         assertTrue(Double.isNaN(s1.getMinY()));
@@ -650,6 +666,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Some checks for the getMaxY() method.
      */
+    @Test
     public void testGetMaxY() {
         XYSeries s1 = new XYSeries("S1");
         assertTrue(Double.isNaN(s1.getMaxY()));
@@ -673,6 +690,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * A test for the clear method.
      */
+    @Test
     public void testClear() {
         XYSeries s1 = new XYSeries("S1");
         s1.add(1.0, 1.1);
@@ -692,6 +710,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Some checks for the updateByIndex() method.
      */
+    @Test
     public void testUpdateByIndex() {
         XYSeries s1 = new XYSeries("S1");
         s1.add(1.0, 1.1);
@@ -721,6 +740,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Some checks for the updateByIndex() method.
      */
+    @Test
     public void testUpdateByIndex2() {
         XYSeries s1 = new XYSeries("S1");
         s1.add(1.0, Double.NaN);
@@ -745,6 +765,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Some checks for the updateByIndex() method.
      */
+    @Test
     public void testUpdateByIndex3() {
         XYSeries s1 = new XYSeries("S1");
         s1.add(1.0, 1.1);
@@ -759,6 +780,7 @@ public class XYSeriesTest extends TestCase {
     /**
      * Some checks for the update(Number, Number) method.
      */
+    @Test
     public void testUpdateXY() {
         XYSeries s1 = new XYSeries("S1");
         s1.add(1.0, Double.NaN);

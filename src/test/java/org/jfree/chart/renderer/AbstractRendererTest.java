@@ -47,13 +47,21 @@
 
 package org.jfree.chart.renderer;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.Stroke;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.event.RendererChangeEvent;
+import org.jfree.chart.event.RendererChangeListener;
+import org.jfree.chart.labels.ItemLabelAnchor;
+import org.jfree.chart.labels.ItemLabelPosition;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.DefaultDrawingSupplier;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.ui.TextAnchor;
+import org.junit.Test;
+
+import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -64,50 +72,26 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.event.RendererChangeEvent;
-import org.jfree.chart.event.RendererChangeListener;
-import org.jfree.chart.labels.ItemLabelAnchor;
-import org.jfree.chart.labels.ItemLabelPosition;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.DefaultDrawingSupplier;
-import org.jfree.chart.renderer.AbstractRenderer;
-import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.chart.renderer.category.LineAndShapeRenderer;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link AbstractRenderer} class.
  */
-public class AbstractRendererTest extends TestCase {
+public class AbstractRendererTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(AbstractRendererTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public AbstractRendererTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Test that the equals() method distinguishes all fields.
      */
+    @Test
     public void testEquals() {
         // have to use a concrete subclass...
         BarRenderer r1 = new BarRenderer();
@@ -365,6 +349,7 @@ public class AbstractRendererTest extends TestCase {
      * Check that the treatLegendShapeAsLine flag is included in the equals()
      * comparison.
      */
+    @Test
     public void testEquals2() {
         TestRenderer r1 = new TestRenderer();
         TestRenderer r2 = new TestRenderer();
@@ -378,6 +363,7 @@ public class AbstractRendererTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         LineAndShapeRenderer r1 = new LineAndShapeRenderer();
 
@@ -522,6 +508,7 @@ public class AbstractRendererTest extends TestCase {
     /**
      * A check for cloning.
      */
+    @Test
     public void testCloning2() {
         LineAndShapeRenderer r1 = new LineAndShapeRenderer();
         r1.setDefaultPaint(Color.BLUE);
@@ -548,6 +535,7 @@ public class AbstractRendererTest extends TestCase {
     /**
      * Tests each setter method to ensure that it sends an event notification.
      */
+    @Test
     public void testEventNotification() {
 
         RendererChangeDetector detector = new RendererChangeDetector();
@@ -656,6 +644,7 @@ public class AbstractRendererTest extends TestCase {
      * test for a bug that was reported where the listener list is 'null' after
      * deserialization.
      */
+    @Test
     public void testSerialization() {
 
         BarRenderer r1 = new BarRenderer();
@@ -692,6 +681,7 @@ public class AbstractRendererTest extends TestCase {
     /**
      * Some checks for the autoPopulate flag default values.
      */
+    @Test
     public void testAutoPopulateFlagDefaults() {
         BarRenderer r = new BarRenderer();
         assertEquals(true, r.getAutoPopulateSeriesPaint());
@@ -705,6 +695,7 @@ public class AbstractRendererTest extends TestCase {
     /**
      * Some checks for the paint lookup mechanism.
      */
+    @Test
     public void testPaintLookup() {
         BarRenderer r = new BarRenderer();
         assertEquals(Color.BLUE, r.getDefaultPaint());
@@ -726,6 +717,7 @@ public class AbstractRendererTest extends TestCase {
     /**
      * Some checks for the fill paint lookup mechanism.
      */
+    @Test
     public void testFillPaintLookup() {
         BarRenderer r = new BarRenderer();
         assertEquals(Color.WHITE, r.getDefaultFillPaint());
@@ -747,6 +739,7 @@ public class AbstractRendererTest extends TestCase {
     /**
      * Some checks for the outline paint lookup mechanism.
      */
+    @Test
     public void testOutlinePaintLookup() {
         BarRenderer r = new BarRenderer();
         assertEquals(Color.gray, r.getDefaultOutlinePaint());

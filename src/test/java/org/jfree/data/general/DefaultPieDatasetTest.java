@@ -42,6 +42,8 @@
 
 package org.jfree.data.general;
 
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -49,14 +51,17 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+
 
 /**
  * Tests for the {@link org.jfree.data.general.PieDataset} class.
  */
-public class DefaultPieDatasetTest extends TestCase
+public class DefaultPieDatasetTest
     implements DatasetChangeListener {
 
     private DatasetChangeEvent lastEvent;
@@ -71,27 +76,14 @@ public class DefaultPieDatasetTest extends TestCase
         this.lastEvent = event;
     }
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(DefaultPieDatasetTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public DefaultPieDatasetTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some tests for the clear() method.
      */
+    @Test
     public void testClear() {
         DefaultPieDataset d = new DefaultPieDataset();
         d.addChangeListener(this);
@@ -109,6 +101,7 @@ public class DefaultPieDatasetTest extends TestCase
     /**
      * Some checks for the getKey(int) method.
      */
+    @Test
     public void testGetKey() {
         DefaultPieDataset d = new DefaultPieDataset();
         d.setValue("A", 1.0);
@@ -138,6 +131,7 @@ public class DefaultPieDatasetTest extends TestCase
     /**
      * Some checks for the getIndex() method.
      */
+    @Test
     public void testGetIndex() {
         DefaultPieDataset d = new DefaultPieDataset();
         d.setValue("A", 1.0);
@@ -159,6 +153,7 @@ public class DefaultPieDatasetTest extends TestCase
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         DefaultPieDataset d1 = new DefaultPieDataset();
         d1.setValue("V1", new Integer(1));
@@ -179,6 +174,7 @@ public class DefaultPieDatasetTest extends TestCase
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         DefaultPieDataset d1 = new DefaultPieDataset();

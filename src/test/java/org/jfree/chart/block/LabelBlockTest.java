@@ -42,9 +42,11 @@
 
 package org.jfree.chart.block;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
+import org.jfree.chart.text.TextBlockAnchor;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.junit.Test;
+
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -52,39 +54,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.ui.RectangleAnchor;
-import org.jfree.chart.text.TextBlockAnchor;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Some tests for the {@link LabelBlock} class.
  */
-public class LabelBlockTest extends TestCase {
+public class LabelBlockTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(LabelBlockTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public LabelBlockTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals() method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         LabelBlock b1 = new LabelBlock("ABC", new Font("Dialog",
                 Font.PLAIN, 12), Color.RED);
@@ -138,6 +124,7 @@ public class LabelBlockTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         LabelBlock b1 = new LabelBlock("ABC", new Font("Dialog",
                 Font.PLAIN, 12), Color.RED);
@@ -157,6 +144,7 @@ public class LabelBlockTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         GradientPaint gp = new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.BLUE);

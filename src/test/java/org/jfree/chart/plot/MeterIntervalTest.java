@@ -40,8 +40,10 @@
 
 package org.jfree.chart.plot;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
+import org.jfree.data.Range;
+import org.junit.Test;
+
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -49,39 +51,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.plot.MeterInterval;
-import org.jfree.data.Range;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link MeterInterval} class.
  */
-public class MeterIntervalTest extends TestCase {
+public class MeterIntervalTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(MeterIntervalTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public MeterIntervalTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         MeterInterval m1 = new MeterInterval(
@@ -111,6 +96,7 @@ public class MeterIntervalTest extends TestCase {
     /**
      * This class is immutable so cloning isn't required.
      */
+    @Test
     public void testCloning() {
         MeterInterval m1 = new MeterInterval("X", new Range(1.0, 2.0));
         assertFalse(m1 instanceof Cloneable);
@@ -119,6 +105,7 @@ public class MeterIntervalTest extends TestCase {
    /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
 
         MeterInterval m1 = new MeterInterval("X", new Range(1.0, 2.0));

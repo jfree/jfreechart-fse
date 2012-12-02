@@ -42,10 +42,12 @@
 
 package org.jfree.chart.plot;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Stroke;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.junit.Test;
+
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -53,41 +55,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.plot.FastScatterPlot;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link FastScatterPlot} class.
  */
-public class FastScatterPlotTest extends TestCase {
+public class FastScatterPlotTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(FastScatterPlotTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public FastScatterPlotTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Some checks for the equals() method.
      */
+    @Test
     public void testEquals() {
 
         FastScatterPlot plot1 = new FastScatterPlot();
@@ -153,6 +137,7 @@ public class FastScatterPlotTest extends TestCase {
     /**
      * Some tests for the data array equality in the equals() method.
      */
+    @Test
     public void testEquals2() {
         FastScatterPlot plot1 = new FastScatterPlot();
         FastScatterPlot plot2 = new FastScatterPlot();
@@ -195,6 +180,7 @@ public class FastScatterPlotTest extends TestCase {
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         FastScatterPlot p1 = new FastScatterPlot();
         FastScatterPlot p2 = null;
@@ -212,6 +198,7 @@ public class FastScatterPlotTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         float[][] data = createData();
         ValueAxis domainAxis = new NumberAxis("X");
@@ -240,6 +227,7 @@ public class FastScatterPlotTest extends TestCase {
      * Draws the chart with a <code>null</code> info object to make sure that
      * no exceptions are thrown.
      */
+    @Test
     public void testDrawWithNullInfo() {
         boolean success = false;
         try {

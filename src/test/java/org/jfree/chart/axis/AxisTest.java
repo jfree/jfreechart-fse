@@ -44,45 +44,28 @@
 
 package org.jfree.chart.axis;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.axis.Axis;
-import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.ui.RectangleInsets;
+import org.junit.Test;
+
+import java.awt.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link Axis} class.
  */
-public class AxisTest extends TestCase {
+public class AxisTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(AxisTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public AxisTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that cloning works.
      */
+    @Test
     public void testCloning() {
         CategoryAxis a1 = new CategoryAxis("Test");
         a1.setAxisLinePaint(Color.RED);
@@ -101,6 +84,7 @@ public class AxisTest extends TestCase {
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
 
         Axis a1 = new CategoryAxis("Test");
@@ -250,6 +234,7 @@ public class AxisTest extends TestCase {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
+    @Test
     public void testHashCode() {
         Axis a1 = new CategoryAxis("Test");
         Axis a2 = new CategoryAxis("Test");

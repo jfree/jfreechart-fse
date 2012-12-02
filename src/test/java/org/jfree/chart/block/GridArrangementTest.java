@@ -42,6 +42,10 @@
 
 package org.jfree.chart.block;
 
+import org.jfree.chart.ui.Size2D;
+import org.jfree.data.Range;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInput;
@@ -49,39 +53,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.jfree.chart.ui.Size2D;
-import org.jfree.data.Range;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link GridArrangement} class.
  */
-public class GridArrangementTest extends TestCase {
+public class GridArrangementTest  {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(GridArrangementTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public GridArrangementTest(String name) {
-        super(name);
-    }
+
+
 
     /**
      * Confirm that the equals() method can distinguish all the required fields.
      */
+    @Test
     public void testEquals() {
         GridArrangement f1 = new GridArrangement(11, 22);
         GridArrangement f2 = new GridArrangement(11, 22);
@@ -102,6 +90,7 @@ public class GridArrangementTest extends TestCase {
     /**
      * Immutable - cloning is not necessary.
      */
+    @Test
     public void testCloning() {
         GridArrangement f1 = new GridArrangement(1, 2);
         assertFalse(f1 instanceof Cloneable);
@@ -110,6 +99,7 @@ public class GridArrangementTest extends TestCase {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
+    @Test
     public void testSerialization() {
         GridArrangement f1 = new GridArrangement(33, 44);
         GridArrangement f2 = null;
@@ -135,6 +125,7 @@ public class GridArrangementTest extends TestCase {
     /**
      * Test arrangement with no constraints.
      */
+    @Test
     public void testNN() {
         BlockContainer c = createTestContainer1();
         Size2D s = c.arrange(null, RectangleConstraint.NONE);
@@ -145,6 +136,7 @@ public class GridArrangementTest extends TestCase {
     /**
      * Test arrangement with a fixed width and no height constraint.
      */
+    @Test
     public void testFN() {
         BlockContainer c = createTestContainer1();
         RectangleConstraint constraint = new RectangleConstraint(100.0, null,
@@ -158,6 +150,7 @@ public class GridArrangementTest extends TestCase {
     /**
      * Test arrangement with a fixed height and no width constraint.
      */
+    @Test
     public void testNF() {
         BlockContainer c = createTestContainer1();
         RectangleConstraint constraint = RectangleConstraint.NONE.toFixedHeight(
@@ -170,6 +163,7 @@ public class GridArrangementTest extends TestCase {
     /**
      * Test arrangement with a range for the width and a fixed height.
      */
+    @Test
     public void testRF() {
         BlockContainer c = createTestContainer1();
         RectangleConstraint constraint = new RectangleConstraint(new Range(40.0,
@@ -182,6 +176,7 @@ public class GridArrangementTest extends TestCase {
     /**
      * Test arrangement with a range for the width and height.
      */
+    @Test
     public void testRR() {
         BlockContainer c = createTestContainer1();
         RectangleConstraint constraint = new RectangleConstraint(new Range(40.0,
@@ -194,6 +189,7 @@ public class GridArrangementTest extends TestCase {
     /**
      * Test arrangement with a range for the width and no height constraint.
      */
+    @Test
     public void testRN() {
         BlockContainer c = createTestContainer1();
         RectangleConstraint constraint = RectangleConstraint.NONE.toRangeWidth(
@@ -206,6 +202,7 @@ public class GridArrangementTest extends TestCase {
     /**
      * Test arrangement with a range for the height and no width constraint.
      */
+    @Test
     public void testNR() {
         BlockContainer c = createTestContainer1();
         RectangleConstraint constraint = RectangleConstraint.NONE.toRangeHeight(
@@ -229,6 +226,7 @@ public class GridArrangementTest extends TestCase {
     /**
      * The arrangement should be able to handle null blocks in the layout.
      */
+    @Test
     public void testNullBlock_FF() {
         BlockContainer c = new BlockContainer(new GridArrangement(1, 1));
         c.add(null);
@@ -240,6 +238,7 @@ public class GridArrangementTest extends TestCase {
     /**
      * The arrangement should be able to handle null blocks in the layout.
      */
+    @Test
     public void testNullBlock_FN() {
         BlockContainer c = new BlockContainer(new GridArrangement(1, 1));
         c.add(null);
@@ -251,6 +250,7 @@ public class GridArrangementTest extends TestCase {
     /**
      * The arrangement should be able to handle null blocks in the layout.
      */
+    @Test
     public void testNullBlock_FR() {
         BlockContainer c = new BlockContainer(new GridArrangement(1, 1));
         c.add(null);
@@ -263,6 +263,7 @@ public class GridArrangementTest extends TestCase {
     /**
      * The arrangement should be able to handle null blocks in the layout.
      */
+    @Test
     public void testNullBlock_NN() {
         BlockContainer c = new BlockContainer(new GridArrangement(1, 1));
         c.add(null);
@@ -274,6 +275,7 @@ public class GridArrangementTest extends TestCase {
     /**
      * The arrangement should be able to handle less blocks than grid spaces.
      */
+    @Test
     public void testGridNotFull_FF() {
         Block b1 = new EmptyBlock(5, 5);
         BlockContainer c = new BlockContainer(new GridArrangement(2, 3));
@@ -286,6 +288,7 @@ public class GridArrangementTest extends TestCase {
     /**
      * The arrangement should be able to handle less blocks than grid spaces.
      */
+    @Test
     public void testGridNotFull_FN() {
         Block b1 = new EmptyBlock(5, 5);
         BlockContainer c = new BlockContainer(new GridArrangement(2, 3));
@@ -298,6 +301,7 @@ public class GridArrangementTest extends TestCase {
     /**
      * The arrangement should be able to handle less blocks than grid spaces.
      */
+    @Test
     public void testGridNotFull_FR() {
         Block b1 = new EmptyBlock(5, 5);
         BlockContainer c = new BlockContainer(new GridArrangement(2, 3));
@@ -311,6 +315,7 @@ public class GridArrangementTest extends TestCase {
     /**
      * The arrangement should be able to handle less blocks than grid spaces.
      */
+    @Test
     public void testGridNotFull_NN() {
         Block b1 = new EmptyBlock(5, 5);
         BlockContainer c = new BlockContainer(new GridArrangement(2, 3));
