@@ -53,6 +53,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -79,8 +80,8 @@ public class MeterIntervalTest  {
             "Label 1", new Range(1.2, 3.4), Color.RED, new BasicStroke(1.0f),
             Color.BLUE
         );
-        assertTrue(m1.equals(m2));
-        assertTrue(m2.equals(m1));
+        assertEquals(m1, m2);
+        assertEquals(m2, m1);
 
         m1 = new MeterInterval(
             "Label 2", new Range(1.2, 3.4), Color.RED, new BasicStroke(1.0f),
@@ -91,7 +92,7 @@ public class MeterIntervalTest  {
             "Label 2", new Range(1.2, 3.4), Color.RED, new BasicStroke(1.0f),
             Color.BLUE
         );
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m2);
 
     }
 

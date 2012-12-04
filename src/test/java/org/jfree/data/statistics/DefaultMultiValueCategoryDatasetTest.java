@@ -55,7 +55,8 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
 /**
@@ -121,16 +122,16 @@ public class DefaultMultiValueCategoryDatasetTest  {
     public void testGetRowCount() {
         DefaultMultiValueCategoryDataset d
                 = new DefaultMultiValueCategoryDataset();
-        assertTrue(d.getRowCount() == 0);
+        assertSame(d.getRowCount(), 0);
         List values = new ArrayList();
         d.add(values, "R1", "C1");
-        assertTrue(d.getRowCount() == 1);
+        assertSame(d.getRowCount(), 1);
 
         d.add(values, "R2", "C1");
-        assertTrue(d.getRowCount() == 2);
+        assertSame(d.getRowCount(), 2);
 
         d.add(values, "R2", "C1");
-        assertTrue(d.getRowCount() == 2);
+        assertSame(d.getRowCount(), 2);
     }
 
     /**
@@ -140,17 +141,17 @@ public class DefaultMultiValueCategoryDatasetTest  {
     public void testGetColumnCount() {
         DefaultMultiValueCategoryDataset d
                 = new DefaultMultiValueCategoryDataset();
-        assertTrue(d.getColumnCount() == 0);
+        assertSame(d.getColumnCount(), 0);
 
         List values = new ArrayList();
         d.add(values, "R1", "C1");
-        assertTrue(d.getColumnCount() == 1);
+        assertSame(d.getColumnCount(), 1);
 
         d.add(values, "R1", "C2");
-        assertTrue(d.getColumnCount() == 2);
+        assertSame(d.getColumnCount(), 2);
 
         d.add(values, "R1", "C2");
-        assertTrue(d.getColumnCount() == 2);
+        assertSame(d.getColumnCount(), 2);
 
     }
 
@@ -163,26 +164,26 @@ public class DefaultMultiValueCategoryDatasetTest  {
                 = new DefaultMultiValueCategoryDataset();
         DefaultMultiValueCategoryDataset d2
                 = new DefaultMultiValueCategoryDataset();
-        assertTrue(d1.equals(d2));
-        assertTrue(d2.equals(d1));
+        assertEquals(d1, d2);
+        assertEquals(d2, d1);
 
         List<Integer> values = new ArrayList<Integer>();
         d1.add(values, "R1", "C1");
         assertFalse(d1.equals(d2));
         d2.add(values, "R1", "C1");
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         values.add(99);
         d1.add(values, "R1", "C1");
         assertFalse(d1.equals(d2));
         d2.add(values, "R1", "C1");
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         values.add(99);
         d1.add(values, "R1", "C2");
         assertFalse(d1.equals(d2));
         d2.add(values, "R1", "C2");
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
     }
 
     /**
@@ -248,9 +249,9 @@ public class DefaultMultiValueCategoryDatasetTest  {
         DefaultMultiValueCategoryDataset d1
                 = new DefaultMultiValueCategoryDataset();
         DefaultMultiValueCategoryDataset d2 = (DefaultMultiValueCategoryDataset) d1.clone();
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
 
         // try a dataset with some content...
         List<Integer> values = new ArrayList<Integer>();
@@ -258,9 +259,9 @@ public class DefaultMultiValueCategoryDatasetTest  {
         d1.add(values, "R1", "C1");
         d2 = (DefaultMultiValueCategoryDataset) d1.clone();
 
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
 
         // check that the clone doesn't share the same underlying arrays.
         List<Integer> values2 = new ArrayList<Integer>();
@@ -268,7 +269,7 @@ public class DefaultMultiValueCategoryDatasetTest  {
         d1.add(values2, "R2", "C2");
         assertFalse(d1.equals(d2));
         d2.add(values2, "R2", "C2");
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
     }
 
 }

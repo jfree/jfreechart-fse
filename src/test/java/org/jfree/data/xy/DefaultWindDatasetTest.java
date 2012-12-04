@@ -56,6 +56,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -75,13 +77,13 @@ public class DefaultWindDatasetTest  {
     public void testEquals() {
         DefaultWindDataset d1 = new DefaultWindDataset();
         DefaultWindDataset d2 = new DefaultWindDataset();
-        assertTrue(d1.equals(d2));
-        assertTrue(d2.equals(d1));
+        assertEquals(d1, d2);
+        assertEquals(d2, d1);
 
         d1 = createSampleDataset1();
         assertFalse(d1.equals(d2));
         d2 = createSampleDataset1();
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
     }
 
     /**
@@ -92,17 +94,17 @@ public class DefaultWindDatasetTest  {
         DefaultWindDataset d1 = new DefaultWindDataset();
         DefaultWindDataset d2 = (DefaultWindDataset) d1.clone();
 
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
 
         // try a dataset with some content...
         d1 = createSampleDataset1();
         d2 = (DefaultWindDataset) d1.clone();
 
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
     }
 
     /**

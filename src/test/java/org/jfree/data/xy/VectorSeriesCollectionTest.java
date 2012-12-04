@@ -56,6 +56,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -80,14 +82,14 @@ public class VectorSeriesCollectionTest  {
         s2.add(1.0, 1.1, 1.2, 1.3);
         VectorSeriesCollection c2 = new VectorSeriesCollection();
         c2.addSeries(s2);
-        assertTrue(c1.equals(c2));
-        assertTrue(c2.equals(c1));
+        assertEquals(c1, c2);
+        assertEquals(c2, c1);
 
         c1.addSeries(new VectorSeries("Empty Series"));
         assertFalse(c1.equals(c2));
 
         c2.addSeries(new VectorSeries("Empty Series"));
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
     }
 
     /**
@@ -100,9 +102,9 @@ public class VectorSeriesCollectionTest  {
         VectorSeriesCollection c1 = new VectorSeriesCollection();
         c1.addSeries(s1);
         VectorSeriesCollection c2 = (VectorSeriesCollection) c1.clone();
-        assertTrue(c1 != c2);
-        assertTrue(c1.getClass() == c2.getClass());
-        assertTrue(c1.equals(c2));
+        assertNotSame(c1, c2);
+        assertSame(c1.getClass(), c2.getClass());
+        assertEquals(c1, c2);
 
         // check independence
         s1.setDescription("XYZ");

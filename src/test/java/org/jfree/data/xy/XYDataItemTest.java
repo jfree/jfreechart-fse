@@ -52,7 +52,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 
 
@@ -73,14 +74,14 @@ public class XYDataItemTest  {
 
         XYDataItem i1 = new XYDataItem(1.0, 1.1);
         XYDataItem i2 = new XYDataItem(1.0, 1.1);
-        assertTrue(i1.equals(i2));
-        assertTrue(i2.equals(i1));
+        assertEquals(i1, i2);
+        assertEquals(i2, i1);
 
         i1.setY(new Double(9.9));
         assertFalse(i1.equals(i2));
 
         i2.setY(new Double(9.9));
-        assertTrue(i1.equals(i2));
+        assertEquals(i1, i2);
 
     }
 
@@ -91,9 +92,9 @@ public class XYDataItemTest  {
     public void testCloning() throws CloneNotSupportedException {
         XYDataItem i1 = new XYDataItem(1.0, 1.1);
         XYDataItem i2 = (XYDataItem) i1.clone();
-        assertTrue(i1 != i2);
-        assertTrue(i1.getClass() == i2.getClass());
-        assertTrue(i1.equals(i2));
+        assertNotSame(i1, i2);
+        assertSame(i1.getClass(), i2.getClass());
+        assertEquals(i1, i2);
     }
 
     /**

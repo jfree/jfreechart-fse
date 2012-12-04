@@ -59,7 +59,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link IntervalMarker} class.
@@ -92,25 +93,25 @@ public class IntervalMarkerTest
 
         IntervalMarker m1 = new IntervalMarker(45.0, 50.0);
         IntervalMarker m2 = new IntervalMarker(45.0, 50.0);
-        assertTrue(m1.equals(m2));
-        assertTrue(m2.equals(m1));
+        assertEquals(m1, m2);
+        assertEquals(m2, m1);
 
         m1 = new IntervalMarker(44.0, 50.0);
         assertFalse(m1.equals(m2));
         m2 = new IntervalMarker(44.0, 50.0);
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m2);
 
         m1 = new IntervalMarker(44.0, 55.0);
         assertFalse(m1.equals(m2));
         m2 = new IntervalMarker(44.0, 55.0);
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m2);
 
         GradientPaintTransformer t = new StandardGradientPaintTransformer(
                 GradientPaintTransformType.HORIZONTAL);
         m1.setGradientPaintTransformer(t);
         assertFalse(m1.equals(m2));
         m2.setGradientPaintTransformer(t);
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m2);
 
     }
 
@@ -121,9 +122,9 @@ public class IntervalMarkerTest
     public void testCloning() throws CloneNotSupportedException {
         IntervalMarker m1 = new IntervalMarker(45.0, 50.0);
         IntervalMarker m2 = (IntervalMarker) m1.clone();
-        assertTrue(m1 != m2);
-        assertTrue(m1.getClass() == m2.getClass());
-        assertTrue(m1.equals(m2));
+        assertNotSame(m1, m2);
+        assertSame(m1.getClass(), m2.getClass());
+        assertEquals(m1, m2);
     }
 
    /**

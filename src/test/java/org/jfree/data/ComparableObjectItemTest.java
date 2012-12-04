@@ -52,6 +52,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -89,18 +91,18 @@ public class ComparableObjectItemTest  {
                 "XYZ");
         ComparableObjectItem item2 = new ComparableObjectItem(1,
                 "XYZ");
-        assertTrue(item1.equals(item2));
-        assertTrue(item2.equals(item1));
+        assertEquals(item1, item2);
+        assertEquals(item2, item1);
 
         item1 = new ComparableObjectItem(2, "XYZ");
         assertFalse(item1.equals(item2));
         item2 = new ComparableObjectItem(2, "XYZ");
-        assertTrue(item1.equals(item2));
+        assertEquals(item1, item2);
 
         item1 = new ComparableObjectItem(2, null);
         assertFalse(item1.equals(item2));
         item2 = new ComparableObjectItem(2, null);
-        assertTrue(item1.equals(item2));
+        assertEquals(item1, item2);
     }
 
     /**
@@ -111,9 +113,9 @@ public class ComparableObjectItemTest  {
         ComparableObjectItem item1 = new ComparableObjectItem(1,
                 "XYZ");
         ComparableObjectItem item2 = (ComparableObjectItem) item1.clone();
-        assertTrue(item1 != item2);
-        assertTrue(item1.getClass() == item2.getClass());
-        assertTrue(item1.equals(item2));
+        assertNotSame(item1, item2);
+        assertSame(item1.getClass(), item2.getClass());
+        assertEquals(item1, item2);
     }
 
     /**
@@ -150,7 +152,7 @@ public class ComparableObjectItemTest  {
                 "XYZ");
         assertTrue(item2.compareTo(item1) > 0);
         assertTrue(item3.compareTo(item1) > 0);
-        assertTrue(item4.compareTo(item1) == 0);
+        assertSame(item4.compareTo(item1), 0);
         assertTrue(item1.compareTo(item2) < 0);
     }
 

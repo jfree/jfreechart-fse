@@ -53,7 +53,7 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link CategoryAnchor} class.
@@ -83,7 +83,7 @@ public class CategoryAnchorTest  {
     public void testHashCode() {
         CategoryAnchor a1 = CategoryAnchor.START;
         CategoryAnchor a2 = CategoryAnchor.START;
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
         assertEquals(h1, h2);
@@ -107,7 +107,7 @@ public class CategoryAnchorTest  {
         in.close();
 
         assertEquals(a1, a2);
-        assertTrue(a1 == a2);
+        assertSame(a1, a2);
     }
 
 }

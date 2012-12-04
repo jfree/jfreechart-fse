@@ -52,7 +52,6 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 
 
@@ -87,11 +86,11 @@ public class NormalDistributionFunction2DTest  {
                 2.0);
         NormalDistributionFunction2D f2 = new NormalDistributionFunction2D(1.0,
                 2.0);
-        assertTrue(f1.equals(f2));
+        assertEquals(f1, f2);
         f1 = new NormalDistributionFunction2D(2.0, 3.0);
         assertFalse(f1.equals(f2));
         f2 = new NormalDistributionFunction2D(2.0, 3.0);
-        assertTrue(f1.equals(f2));
+        assertEquals(f1, f2);
     }
 
     /**

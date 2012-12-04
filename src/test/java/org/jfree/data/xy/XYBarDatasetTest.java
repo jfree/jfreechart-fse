@@ -54,6 +54,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -83,8 +85,8 @@ public class XYBarDatasetTest  {
 
         XYBarDataset bd1 = new XYBarDataset(d1, 5.0);
         XYBarDataset bd2 = new XYBarDataset(d2, 5.0);
-        assertTrue(bd1.equals(bd2));
-        assertTrue(bd2.equals(bd1));
+        assertEquals(bd1, bd2);
+        assertEquals(bd2, bd1);
     }
 
     /**
@@ -99,9 +101,9 @@ public class XYBarDatasetTest  {
         d1.addSeries("S1", data1);
         XYBarDataset bd1 = new XYBarDataset(d1, 5.0);
         XYBarDataset bd2 = (XYBarDataset) bd1.clone();
-        assertTrue(bd1 != bd2);
-        assertTrue(bd1.getClass() == bd2.getClass());
-        assertTrue(bd1.equals(bd2));
+        assertNotSame(bd1, bd2);
+        assertSame(bd1.getClass(), bd2.getClass());
+        assertEquals(bd1, bd2);
 
         // check independence
         d1 = (DefaultXYDataset) bd1.getUnderlyingDataset();
@@ -109,7 +111,7 @@ public class XYBarDatasetTest  {
         assertFalse(bd1.equals(bd2));
         DefaultXYDataset d2 = (DefaultXYDataset) bd2.getUnderlyingDataset();
         d2.addSeries("S2", new double[][] {{1.0}, {2.0}});
-        assertTrue(bd1.equals(bd2));
+        assertEquals(bd1, bd2);
     }
 
     /**

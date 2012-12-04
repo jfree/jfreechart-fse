@@ -53,7 +53,8 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 
 
@@ -87,22 +88,22 @@ public class SlidingGanttCategoryDatasetTest  {
         u2.add(s2);
         SlidingGanttCategoryDataset d2 = new SlidingGanttCategoryDataset(
                 u2, 0, 5);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         d1.setFirstCategoryIndex(1);
         assertFalse(d1.equals(d2));
         d2.setFirstCategoryIndex(1);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         d1.setMaximumCategoryCount(99);
         assertFalse(d1.equals(d2));
         d2.setMaximumCategoryCount(99);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         s1.add(new Task("Task 2", new Date(10L), new Date(11L)));
         assertFalse(d1.equals(d2));
         s2.add(new Task("Task 2", new Date(10L), new Date(11L)));
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
     }
 
     /**
@@ -117,9 +118,9 @@ public class SlidingGanttCategoryDatasetTest  {
         SlidingGanttCategoryDataset d1 = new SlidingGanttCategoryDataset(
                 u1, 0, 5);
         SlidingGanttCategoryDataset d2 = (SlidingGanttCategoryDataset) d1.clone();
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
 
         // basic check for independence
         s1.add(new Task("Task 2", new Date(10L), new Date(11L)));
@@ -128,7 +129,7 @@ public class SlidingGanttCategoryDatasetTest  {
                 = (TaskSeriesCollection) d2.getUnderlyingDataset();
         TaskSeries s2 = u2.getSeries("Series");
         s2.add(new Task("Task 2", new Date(10L), new Date(11L)));
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
     }
 
     /**
@@ -162,7 +163,7 @@ public class SlidingGanttCategoryDatasetTest  {
                 = (TaskSeriesCollection) d2.getUnderlyingDataset();
         TaskSeries s2 = u2.getSeries("Series");
         s2.add(new Task("Task 2", new Date(10L), new Date(11L)));
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
     }
 
 }

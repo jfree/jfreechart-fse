@@ -54,7 +54,8 @@ import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 
 
@@ -139,52 +140,52 @@ public class RelativeDateFormatTest  {
         df1.setBaseMillis(123L);
         assertFalse(df1.equals(df2));
         df2.setBaseMillis(123L);
-        assertTrue(df1.equals(df2));
+        assertEquals(df1, df2);
 
         df1.setDayFormatter(new DecimalFormat("0%"));
         assertFalse(df1.equals(df2));
         df2.setDayFormatter(new DecimalFormat("0%"));
-        assertTrue(df1.equals(df2));
+        assertEquals(df1, df2);
 
         df1.setDaySuffix("D");
         assertFalse(df1.equals(df2));
         df2.setDaySuffix("D");
-        assertTrue(df1.equals(df2));
+        assertEquals(df1, df2);
 
         df1.setHourFormatter(new DecimalFormat("0%"));
         assertFalse(df1.equals(df2));
         df2.setHourFormatter(new DecimalFormat("0%"));
-        assertTrue(df1.equals(df2));
+        assertEquals(df1, df2);
 
         df1.setHourSuffix("H");
         assertFalse(df1.equals(df2));
         df2.setHourSuffix("H");
-        assertTrue(df1.equals(df2));
+        assertEquals(df1, df2);
 
         df1.setMinuteFormatter(new DecimalFormat("0%"));
         assertFalse(df1.equals(df2));
         df2.setMinuteFormatter(new DecimalFormat("0%"));
-        assertTrue(df1.equals(df2));
+        assertEquals(df1, df2);
 
         df1.setMinuteSuffix("M");
         assertFalse(df1.equals(df2));
         df2.setMinuteSuffix("M");
-        assertTrue(df1.equals(df2));
+        assertEquals(df1, df2);
 
         df1.setSecondSuffix("S");
         assertFalse(df1.equals(df2));
         df2.setSecondSuffix("S");
-        assertTrue(df1.equals(df2));
+        assertEquals(df1, df2);
 
         df1.setShowZeroDays(!df1.getShowZeroDays());
         assertFalse(df1.equals(df2));
         df2.setShowZeroDays(!df2.getShowZeroDays());
-        assertTrue(df1.equals(df2));
+        assertEquals(df1, df2);
 
         df1.setSecondFormatter(new DecimalFormat("0.0"));
         assertFalse(df1.equals(df2));
         df2.setSecondFormatter(new DecimalFormat("0.0"));
-        assertTrue(df1.equals(df2));
+        assertEquals(df1, df2);
     }
 
     /**
@@ -194,7 +195,7 @@ public class RelativeDateFormatTest  {
     public void testHashCode() {
         RelativeDateFormat df1 = new RelativeDateFormat(123L);
         RelativeDateFormat df2 = new RelativeDateFormat(123L);
-        assertTrue(df1.equals(df2));
+        assertEquals(df1, df2);
         int h1 = df1.hashCode();
         int h2 = df2.hashCode();
         assertEquals(h1, h2);
@@ -210,9 +211,9 @@ public class RelativeDateFormatTest  {
         df1.setSecondFormatter(nf);
         RelativeDateFormat df2 = null;
         df2 = (RelativeDateFormat) df1.clone();
-        assertTrue(df1 != df2);
-        assertTrue(df1.getClass() == df2.getClass());
-        assertTrue(df1.equals(df2));
+        assertNotSame(df1, df2);
+        assertSame(df1.getClass(), df2.getClass());
+        assertEquals(df1, df2);
 
         // is the clone independent
         nf.setMinimumFractionDigits(2);

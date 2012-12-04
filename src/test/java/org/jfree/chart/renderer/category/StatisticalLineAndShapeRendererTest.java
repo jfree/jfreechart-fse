@@ -63,7 +63,9 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -84,13 +86,13 @@ public class StatisticalLineAndShapeRendererTest  {
             = new StatisticalLineAndShapeRenderer();
         StatisticalLineAndShapeRenderer r2
             = new StatisticalLineAndShapeRenderer();
-        assertTrue(r1.equals(r2));
-        assertTrue(r2.equals(r1));
+        assertEquals(r1, r2);
+        assertEquals(r2, r1);
 
         r1.setErrorIndicatorPaint(Color.RED);
         assertFalse(r1.equals(r2));
         r2.setErrorIndicatorPaint(Color.RED);
-        assertTrue(r2.equals(r1));
+        assertEquals(r2, r1);
     }
 
     /**
@@ -102,7 +104,7 @@ public class StatisticalLineAndShapeRendererTest  {
             = new StatisticalLineAndShapeRenderer();
         StatisticalLineAndShapeRenderer r2
             = new StatisticalLineAndShapeRenderer();
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);
@@ -116,9 +118,9 @@ public class StatisticalLineAndShapeRendererTest  {
         StatisticalLineAndShapeRenderer r1
                 = new StatisticalLineAndShapeRenderer();
         StatisticalLineAndShapeRenderer r2 = (StatisticalLineAndShapeRenderer) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
     }
 
     /**

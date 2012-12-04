@@ -62,6 +62,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -85,7 +87,7 @@ public class CategoryStepRendererTest  {
         r1 = new CategoryStepRenderer(true);
         assertFalse(r1.equals(r2));
         r2 = new CategoryStepRenderer(true);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
     }
 
     /**
@@ -95,9 +97,9 @@ public class CategoryStepRendererTest  {
     public void testCloning() throws CloneNotSupportedException {
         CategoryStepRenderer r1 = new CategoryStepRenderer(false);
         CategoryStepRenderer r2 = (CategoryStepRenderer) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
     }
 
     /**

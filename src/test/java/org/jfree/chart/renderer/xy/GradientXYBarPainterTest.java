@@ -53,7 +53,6 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link GradientXYBarPainter} class.
@@ -76,17 +75,17 @@ public class GradientXYBarPainterTest  {
         p1 = new GradientXYBarPainter(0.11, 0.2, 0.3);
         assertFalse(p1.equals(p2));
         p2 = new GradientXYBarPainter(0.11, 0.2, 0.3);
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
 
         p1 = new GradientXYBarPainter(0.11, 0.22, 0.3);
         assertFalse(p1.equals(p2));
         p2 = new GradientXYBarPainter(0.11, 0.22, 0.3);
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
 
         p1 = new GradientXYBarPainter(0.11, 0.22, 0.33);
         assertFalse(p1.equals(p2));
         p2 = new GradientXYBarPainter(0.11, 0.22, 0.33);
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
     }
 
     /**
@@ -96,7 +95,7 @@ public class GradientXYBarPainterTest  {
     public void testHashcode() {
         GradientXYBarPainter p1 = new GradientXYBarPainter(0.1, 0.2, 0.3);
         GradientXYBarPainter p2 = new GradientXYBarPainter(0.1, 0.2, 0.3);
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
         int h1 = p1.hashCode();
         int h2 = p2.hashCode();
         assertEquals(h1, h2);

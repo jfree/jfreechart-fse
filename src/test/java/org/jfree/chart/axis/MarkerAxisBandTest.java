@@ -54,7 +54,6 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link MarkerAxisBand} class.
@@ -80,27 +79,27 @@ public class MarkerAxisBandTest  {
         a1 = new MarkerAxisBand(null, 2.0, 1.0, 1.0, 1.0, font1);
         assertFalse(a1.equals(a2));
         a2 = new MarkerAxisBand(null, 2.0, 1.0, 1.0, 1.0, font1);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1 = new MarkerAxisBand(null, 2.0, 3.0, 1.0, 1.0, font1);
         assertFalse(a1.equals(a2));
         a2 = new MarkerAxisBand(null, 2.0, 3.0, 1.0, 1.0, font1);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1 = new MarkerAxisBand(null, 2.0, 3.0, 4.0, 1.0, font1);
         assertFalse(a1.equals(a2));
         a2 = new MarkerAxisBand(null, 2.0, 3.0, 4.0, 1.0, font1);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1 = new MarkerAxisBand(null, 2.0, 3.0, 4.0, 5.0, font1);
         assertFalse(a1.equals(a2));
         a2 = new MarkerAxisBand(null, 2.0, 3.0, 4.0, 5.0, font1);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1 = new MarkerAxisBand(null, 2.0, 3.0, 4.0, 5.0, font2);
         assertFalse(a1.equals(a2));
         a2 = new MarkerAxisBand(null, 2.0, 3.0, 4.0, 5.0, font2);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
     }
 
     /**
@@ -112,7 +111,7 @@ public class MarkerAxisBandTest  {
 
         MarkerAxisBand a1 = new MarkerAxisBand(null, 1.0, 1.0, 1.0, 1.0, font1);
         MarkerAxisBand a2 = new MarkerAxisBand(null, 1.0, 1.0, 1.0, 1.0, font1);
-         assertTrue(a1.equals(a2));
+         assertEquals(a1, a2);
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
         assertEquals(h1, h2);

@@ -61,7 +61,9 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -94,7 +96,7 @@ public class IntervalBarRendererTest  {
     public void testHashcode() {
         IntervalBarRenderer r1 = new IntervalBarRenderer();
         IntervalBarRenderer r2 = new IntervalBarRenderer();
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);
@@ -107,9 +109,9 @@ public class IntervalBarRendererTest  {
     public void testCloning() throws CloneNotSupportedException {
         IntervalBarRenderer r1 = new IntervalBarRenderer();
         IntervalBarRenderer r2 = (IntervalBarRenderer) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
     }
 
     /**

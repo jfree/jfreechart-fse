@@ -50,8 +50,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 
 
@@ -70,13 +72,13 @@ public class ArrowNeedleTest  {
     public void testEquals() {
        ArrowNeedle n1 = new ArrowNeedle(false);
        ArrowNeedle n2 = new ArrowNeedle(false);
-       assertTrue(n1.equals(n2));
-       assertTrue(n2.equals(n1));
+       assertEquals(n1, n2);
+       assertEquals(n2, n1);
 
        n1 = new ArrowNeedle(true);
        assertFalse(n1.equals(n2));
        n2 = new ArrowNeedle(true);
-       assertTrue(n1.equals(n2));
+       assertEquals(n1, n2);
     }
 
     /**
@@ -86,9 +88,9 @@ public class ArrowNeedleTest  {
     public void testCloning() throws CloneNotSupportedException {
         ArrowNeedle n1 = new ArrowNeedle(false);
         ArrowNeedle n2 = (ArrowNeedle) n1.clone();
-        assertTrue(n1 != n2);
-        assertTrue(n1.getClass() == n2.getClass());
-        assertTrue(n1.equals(n2));
+        assertNotSame(n1, n2);
+        assertSame(n1.getClass(), n2.getClass());
+        assertEquals(n1, n2);
     }
 
     /**
@@ -108,7 +110,7 @@ public class ArrowNeedleTest  {
         ArrowNeedle n2 = (ArrowNeedle) in.readObject();
         in.close();
 
-        assertTrue(n1.equals(n2));
+        assertEquals(n1, n2);
     }
 
 }

@@ -63,6 +63,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -86,17 +88,17 @@ public class XYDotRendererTest  {
         r1.setDotWidth(11);
         assertFalse(r1.equals(r2));
         r2.setDotWidth(11);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setDotHeight(12);
         assertFalse(r1.equals(r2));
         r2.setDotHeight(12);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setLegendShape(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
         assertFalse(r1.equals(r2));
         r2.setLegendShape(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
     }
 
     /**
@@ -106,14 +108,14 @@ public class XYDotRendererTest  {
     public void testHashcode() {
         XYDotRenderer r1 = new XYDotRenderer();
         XYDotRenderer r2 = new XYDotRenderer();
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);
 
         r1.setDotHeight(12);
         r2.setDotHeight(12);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
         h1 = r1.hashCode();
         h2 = r2.hashCode();
         assertEquals(h1, h2);
@@ -126,9 +128,9 @@ public class XYDotRendererTest  {
     public void testCloning() throws CloneNotSupportedException {
         XYDotRenderer r1 = new XYDotRenderer();
         XYDotRenderer r2 = (XYDotRenderer) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
     }
 
     /**

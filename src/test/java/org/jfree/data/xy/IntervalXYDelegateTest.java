@@ -53,7 +53,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 
 
@@ -83,23 +84,23 @@ public class IntervalXYDelegateTest  {
        c2.addSeries(s2);
        IntervalXYDelegate d2 = new IntervalXYDelegate(c2);
 
-       assertTrue(d1.equals(d2));
-       assertTrue(d2.equals(d1));
+       assertEquals(d1, d2);
+       assertEquals(d2, d1);
 
        d1.setAutoWidth(false);
        assertFalse(d1.equals(d2));
        d2.setAutoWidth(false);
-       assertTrue(d1.equals(d2));
+       assertEquals(d1, d2);
 
        d1.setIntervalPositionFactor(0.123);
        assertFalse(d1.equals(d2));
        d2.setIntervalPositionFactor(0.123);
-       assertTrue(d1.equals(d2));
+       assertEquals(d1, d2);
 
        d1.setFixedIntervalWidth(1.23);
        assertFalse(d1.equals(d2));
        d2.setFixedIntervalWidth(1.23);
-       assertTrue(d1.equals(d2));
+       assertEquals(d1, d2);
     }
 
     /**
@@ -114,9 +115,9 @@ public class IntervalXYDelegateTest  {
         IntervalXYDelegate d1 = new IntervalXYDelegate(c1);
 
         IntervalXYDelegate d2 = (IntervalXYDelegate) d1.clone();
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
     }
 
     /**

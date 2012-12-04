@@ -51,7 +51,8 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link TickUnits} class.
@@ -91,9 +92,9 @@ public class TickUnitsTest  {
     public void testCloning() throws CloneNotSupportedException {
         TickUnits t1 = (TickUnits) NumberAxis.createIntegerTickUnits();
         TickUnits t2 = (TickUnits) t1.clone();
-        assertTrue(t1 != t2);
-        assertTrue(t1.getClass() == t2.getClass());
-        assertTrue(t1.equals(t2));
+        assertNotSame(t1, t2);
+        assertSame(t1.getClass(), t2.getClass());
+        assertEquals(t1, t2);
     }
 
     /**
@@ -103,8 +104,8 @@ public class TickUnitsTest  {
     public void testEquals() {
         TickUnits t1 = (TickUnits) NumberAxis.createIntegerTickUnits();
         TickUnits t2 = (TickUnits) NumberAxis.createIntegerTickUnits();
-        assertTrue(t1.equals(t2));
-        assertTrue(t2.equals(t1));
+        assertEquals(t1, t2);
+        assertEquals(t2, t1);
     }
 
 }

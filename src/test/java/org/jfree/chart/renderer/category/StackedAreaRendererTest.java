@@ -57,7 +57,9 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -109,7 +111,7 @@ public class StackedAreaRendererTest  {
         r1.setRenderAsPercentages(true);
         assertFalse(r1.equals(r2));
         r2.setRenderAsPercentages(true);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
     }
 
     /**
@@ -119,7 +121,7 @@ public class StackedAreaRendererTest  {
     public void testHashcode() {
         StackedAreaRenderer r1 = new StackedAreaRenderer();
         StackedAreaRenderer r2 = new StackedAreaRenderer();
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);
@@ -132,9 +134,9 @@ public class StackedAreaRendererTest  {
     public void testCloning() throws CloneNotSupportedException {
         StackedAreaRenderer r1 = new StackedAreaRenderer();
         StackedAreaRenderer r2 = (StackedAreaRenderer) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
 
     }
 

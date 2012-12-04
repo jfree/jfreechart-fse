@@ -57,8 +57,9 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link DialPlot} class.
@@ -90,18 +91,18 @@ public class DialPlotTest  implements PlotChangeListener {
     public void testEquals() {
         DialPlot p1 = new DialPlot();
         DialPlot p2 = new DialPlot();
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
 
         // background
         p1.setBackground(new DialBackground(Color.green));
         assertFalse(p1.equals(p2));
         p2.setBackground(new DialBackground(Color.green));
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
 
         p1.setBackground(null);
         assertFalse(p1.equals(p2));
         p2.setBackground(null);
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
 
         // dial cap
         DialCap cap1 = new DialCap();
@@ -111,12 +112,12 @@ public class DialPlotTest  implements PlotChangeListener {
         DialCap cap2 = new DialCap();
         cap2.setFillPaint(Color.RED);
         p2.setCap(cap2);
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
 
         p1.setCap(null);
         assertFalse(p1.equals(p2));
         p2.setCap(null);
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
 
         // frame
         StandardDialFrame f1 = new StandardDialFrame();
@@ -128,19 +129,19 @@ public class DialPlotTest  implements PlotChangeListener {
         f2.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
                 4.0f, Color.WHITE));
         p2.setDialFrame(f2);
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
 
         // view
         p1.setView(0.2, 0.0, 0.8, 1.0);
         assertFalse(p1.equals(p2));
         p2.setView(0.2, 0.0, 0.8, 1.0);
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
 
         // layer
         p1.addLayer(new StandardDialScale());
         assertFalse(p1.equals(p2));
         p2.addLayer(new StandardDialScale());
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
     }
 
     /**
@@ -150,7 +151,7 @@ public class DialPlotTest  implements PlotChangeListener {
     public void testHashCode() {
         DialPlot p1 = new DialPlot();
         DialPlot p2 = new DialPlot();
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
         int h1 = p1.hashCode();
         int h2 = p2.hashCode();
         assertEquals(h1, h2);
@@ -163,9 +164,9 @@ public class DialPlotTest  implements PlotChangeListener {
     public void testCloning() throws CloneNotSupportedException {
         DialPlot p1 = new DialPlot();
         DialPlot p2 = (DialPlot) p1.clone();
-        assertTrue(p1 != p2);
-        assertTrue(p1.getClass() == p2.getClass());
-        assertTrue(p1.equals(p2));
+        assertNotSame(p1, p2);
+        assertSame(p1.getClass(), p2.getClass());
+        assertEquals(p1, p2);
     }
 
 

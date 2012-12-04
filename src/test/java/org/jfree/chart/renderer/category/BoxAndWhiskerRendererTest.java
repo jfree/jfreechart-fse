@@ -80,7 +80,9 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -121,17 +123,17 @@ public class BoxAndWhiskerRendererTest  {
         r1.setMaximumBarWidth(0.99);
         assertFalse(r1.equals(r2));
         r2.setMaximumBarWidth(0.99);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setMeanVisible(false);
         assertFalse(r1.equals(r2));
         r2.setMeanVisible(false);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setMedianVisible(false);
         assertFalse(r1.equals(r2));
         r2.setMedianVisible(false);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
     }
 
     /**
@@ -141,7 +143,7 @@ public class BoxAndWhiskerRendererTest  {
     public void testHashcode() {
         BoxAndWhiskerRenderer r1 = new BoxAndWhiskerRenderer();
         BoxAndWhiskerRenderer r2 = new BoxAndWhiskerRenderer();
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);
@@ -155,9 +157,9 @@ public class BoxAndWhiskerRendererTest  {
         BoxAndWhiskerRenderer r1 = new BoxAndWhiskerRenderer();
         BoxAndWhiskerRenderer r2 = (BoxAndWhiskerRenderer) r1.clone();
         
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
     }
 
     /**

@@ -76,6 +76,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -99,52 +101,52 @@ public class StandardXYItemRendererTest  {
         r1.setBaseShapesVisible(true);
         assertFalse(r1.equals(r2));
         r2.setBaseShapesVisible(true);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setPlotLines(false);
         assertFalse(r1.equals(r2));
         r2.setPlotLines(false);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setPlotImages(true);
         assertFalse(r1.equals(r2));
         r2.setPlotImages(true);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setPlotDiscontinuous(true);
         assertFalse(r1.equals(r2));
         r2.setPlotDiscontinuous(true);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setGapThresholdType(UnitType.ABSOLUTE);
         assertFalse(r1.equals(r2));
         r2.setGapThresholdType(UnitType.ABSOLUTE);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setGapThreshold(1.23);
         assertFalse(r1.equals(r2));
         r2.setGapThreshold(1.23);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setLegendLine(new Line2D.Double(1.0, 2.0, 3.0, 4.0));
         assertFalse(r1.equals(r2));
         r2.setLegendLine(new Line2D.Double(1.0, 2.0, 3.0, 4.0));
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setSeriesShapesFilled(1, Boolean.TRUE);
         assertFalse(r1.equals(r2));
         r2.setSeriesShapesFilled(1, Boolean.TRUE);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setBaseShapesFilled(false);
         assertFalse(r1.equals(r2));
         r2.setBaseShapesFilled(false);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setDrawSeriesLineAsPath(true);
         assertFalse(r1.equals(r2));
         r2.setDrawSeriesLineAsPath(true);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
     }
 
     /**
@@ -154,7 +156,7 @@ public class StandardXYItemRendererTest  {
     public void testHashcode() {
         StandardXYItemRenderer r1 = new StandardXYItemRenderer();
         StandardXYItemRenderer r2 = new StandardXYItemRenderer();
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);
@@ -169,20 +171,20 @@ public class StandardXYItemRendererTest  {
         Rectangle2D rect1 = new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0);
         r1.setLegendLine(rect1);
         StandardXYItemRenderer r2 = (StandardXYItemRenderer) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
 
         // check independence
         rect1.setRect(4.0, 3.0, 2.0, 1.0);
         assertFalse(r1.equals(r2));
         r2.setLegendLine(new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0));
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setSeriesShapesFilled(1, Boolean.TRUE);
         assertFalse(r1.equals(r2));
         r2.setSeriesShapesFilled(1, Boolean.TRUE);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
     }
 
     /**

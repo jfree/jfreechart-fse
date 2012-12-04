@@ -50,7 +50,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 
 
@@ -69,8 +71,8 @@ public class LongNeedleTest  {
     public void testEquals() {
        LongNeedle n1 = new LongNeedle();
        LongNeedle n2 = new LongNeedle();
-       assertTrue(n1.equals(n2));
-       assertTrue(n2.equals(n1));
+       assertEquals(n1, n2);
+       assertEquals(n2, n1);
     }
 
     /**
@@ -80,9 +82,9 @@ public class LongNeedleTest  {
     public void testCloning() throws CloneNotSupportedException {
         LongNeedle n1 = new LongNeedle();
         LongNeedle n2 = (LongNeedle) n1.clone();
-        assertTrue(n1 != n2);
-        assertTrue(n1.getClass() == n2.getClass());
-        assertTrue(n1.equals(n2));
+        assertNotSame(n1, n2);
+        assertSame(n1.getClass(), n2.getClass());
+        assertEquals(n1, n2);
     }
 
     /**
@@ -102,7 +104,7 @@ public class LongNeedleTest  {
         LongNeedle n2 = (LongNeedle) in.readObject();
             in.close();
 
-        assertTrue(n1.equals(n2));
+        assertEquals(n1, n2);
     }
 
 }

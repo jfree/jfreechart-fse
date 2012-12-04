@@ -61,7 +61,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link FastScatterPlot} class.
@@ -80,61 +81,61 @@ public class FastScatterPlotTest  {
 
         FastScatterPlot plot1 = new FastScatterPlot();
         FastScatterPlot plot2 = new FastScatterPlot();
-        assertTrue(plot1.equals(plot2));
-        assertTrue(plot2.equals(plot1));
+        assertEquals(plot1, plot2);
+        assertEquals(plot2, plot1);
 
         plot1.setPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.yellow));
         assertFalse(plot1.equals(plot2));
         plot2.setPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.yellow));
-        assertTrue(plot1.equals(plot2));
+        assertEquals(plot1, plot2);
 
         plot1.setDomainGridlinesVisible(false);
         assertFalse(plot1.equals(plot2));
         plot2.setDomainGridlinesVisible(false);
-        assertTrue(plot1.equals(plot2));
+        assertEquals(plot1, plot2);
 
         plot1.setDomainGridlinePaint(new GradientPaint(1.0f, 2.0f, Color.BLUE,
                 3.0f, 4.0f, Color.yellow));
         assertFalse(plot1.equals(plot2));
         plot2.setDomainGridlinePaint(new GradientPaint(1.0f, 2.0f, Color.BLUE,
                 3.0f, 4.0f, Color.yellow));
-        assertTrue(plot1.equals(plot2));
+        assertEquals(plot1, plot2);
 
         Stroke s = new BasicStroke(1.5f);
         plot1.setDomainGridlineStroke(s);
         assertFalse(plot1.equals(plot2));
         plot2.setDomainGridlineStroke(s);
-        assertTrue(plot1.equals(plot2));
+        assertEquals(plot1, plot2);
 
         plot1.setRangeGridlinesVisible(false);
         assertFalse(plot1.equals(plot2));
         plot2.setRangeGridlinesVisible(false);
-        assertTrue(plot1.equals(plot2));
+        assertEquals(plot1, plot2);
 
         plot1.setRangeGridlinePaint(new GradientPaint(1.0f, 2.0f, Color.green,
                 3.0f, 4.0f, Color.yellow));
         assertFalse(plot1.equals(plot2));
         plot2.setRangeGridlinePaint(new GradientPaint(1.0f, 2.0f, Color.green,
                 3.0f, 4.0f, Color.yellow));
-        assertTrue(plot1.equals(plot2));
+        assertEquals(plot1, plot2);
 
         Stroke s2 = new BasicStroke(1.5f);
         plot1.setRangeGridlineStroke(s2);
         assertFalse(plot1.equals(plot2));
         plot2.setRangeGridlineStroke(s2);
-        assertTrue(plot1.equals(plot2));
+        assertEquals(plot1, plot2);
 
         plot1.setDomainPannable(true);
         assertFalse(plot1.equals(plot2));
         plot2.setDomainPannable(true);
-        assertTrue(plot1.equals(plot2));
+        assertEquals(plot1, plot2);
 
         plot1.setRangePannable(true);
         assertFalse(plot1.equals(plot2));
         plot2.setRangePannable(true);
-        assertTrue(plot1.equals(plot2));
+        assertEquals(plot1, plot2);
 
     }
 
@@ -145,40 +146,40 @@ public class FastScatterPlotTest  {
     public void testEquals2() {
         FastScatterPlot plot1 = new FastScatterPlot();
         FastScatterPlot plot2 = new FastScatterPlot();
-        assertTrue(plot1.equals(plot2));
-        assertTrue(plot2.equals(plot1));
+        assertEquals(plot1, plot2);
+        assertEquals(plot2, plot1);
 
         float[][] a = new float[2][];
         float[][] b = new float[2][];
         plot1.setData(a);
         assertFalse(plot1.equals(plot2));
         plot2.setData(b);
-        assertTrue(plot1.equals(plot2));
+        assertEquals(plot1, plot2);
 
         a[0] = new float[6];
         assertFalse(plot1.equals(plot2));
         b[0] = new float[6];
-        assertTrue(plot1.equals(plot2));
+        assertEquals(plot1, plot2);
 
         a[0][0] = 1.0f;
         assertFalse(plot1.equals(plot2));
         b[0][0] = 1.0f;
-        assertTrue(plot1.equals(plot2));
+        assertEquals(plot1, plot2);
 
         a[0][1] = Float.NaN;
         assertFalse(plot1.equals(plot2));
         b[0][1] = Float.NaN;
-        assertTrue(plot1.equals(plot2));
+        assertEquals(plot1, plot2);
 
         a[0][2] = Float.POSITIVE_INFINITY;
         assertFalse(plot1.equals(plot2));
         b[0][2] = Float.POSITIVE_INFINITY;
-        assertTrue(plot1.equals(plot2));
+        assertEquals(plot1, plot2);
 
         a[0][3] = Float.NEGATIVE_INFINITY;
         assertFalse(plot1.equals(plot2));
         b[0][3] = Float.NEGATIVE_INFINITY;
-        assertTrue(plot1.equals(plot2));
+        assertEquals(plot1, plot2);
     }
 
     /**
@@ -188,9 +189,9 @@ public class FastScatterPlotTest  {
     public void testCloning() throws CloneNotSupportedException {
         FastScatterPlot p1 = new FastScatterPlot();
         FastScatterPlot p2 = (FastScatterPlot) p1.clone();
-        assertTrue(p1 != p2);
-        assertTrue(p1.getClass() == p2.getClass());
-        assertTrue(p1.equals(p2));
+        assertNotSame(p1, p2);
+        assertSame(p1.getClass(), p2.getClass());
+        assertEquals(p1, p2);
     }
 
     /**

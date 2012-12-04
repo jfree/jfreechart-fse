@@ -55,6 +55,8 @@ import java.text.DecimalFormat;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -75,8 +77,8 @@ public class BoxAndWhiskerToolTipGeneratorTest  {
         // standard test
         BoxAndWhiskerToolTipGenerator g1 = new BoxAndWhiskerToolTipGenerator();
         BoxAndWhiskerToolTipGenerator g2 = new BoxAndWhiskerToolTipGenerator();
-        assertTrue(g1.equals(g2));
-        assertTrue(g2.equals(g1));
+        assertEquals(g1, g2);
+        assertEquals(g2, g1);
 
         // tooltip format
         g1 = new BoxAndWhiskerToolTipGenerator("{0} --> {1} {2}",
@@ -86,7 +88,7 @@ public class BoxAndWhiskerToolTipGeneratorTest  {
         assertFalse(g1.equals(g2));
         g2 = new BoxAndWhiskerToolTipGenerator("{0} --> {1} {2}",
                 new DecimalFormat("0.0"));
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
 
         // Y format
         g1 = new BoxAndWhiskerToolTipGenerator("{0} --> {1} {2}",
@@ -103,8 +105,8 @@ public class BoxAndWhiskerToolTipGeneratorTest  {
     public void testHashCode() {
         BoxAndWhiskerToolTipGenerator g1 = new BoxAndWhiskerToolTipGenerator();
         BoxAndWhiskerToolTipGenerator g2 = new BoxAndWhiskerToolTipGenerator();
-        assertTrue(g1.equals(g2));
-        assertTrue(g1.hashCode() == g2.hashCode());
+        assertEquals(g1, g2);
+        assertEquals(g1.hashCode(), g2.hashCode());
     }
 
     /**
@@ -115,9 +117,9 @@ public class BoxAndWhiskerToolTipGeneratorTest  {
         BoxAndWhiskerToolTipGenerator g1 = new BoxAndWhiskerToolTipGenerator();
         BoxAndWhiskerToolTipGenerator g2 = (BoxAndWhiskerToolTipGenerator) g1.clone();
 
-        assertTrue(g1 != g2);
-        assertTrue(g1.getClass() == g2.getClass());
-        assertTrue(g1.equals(g2));
+        assertNotSame(g1, g2);
+        assertSame(g1.getClass(), g2.getClass());
+        assertEquals(g1, g2);
     }
 
     /**

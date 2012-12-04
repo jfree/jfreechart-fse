@@ -52,6 +52,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 
@@ -72,13 +74,13 @@ public class AbstractDialLayerTest  {
     public void testEquals() {
         DialCap c1 = new DialCap();
         DialCap c2 = new DialCap();
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
         // visible
         c1.setVisible(false);
         assertFalse(c1.equals(c2));
         c2.setVisible(false);
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
     }
 
     /**
@@ -89,9 +91,9 @@ public class AbstractDialLayerTest  {
         // test a default instance
         DialCap c1 = new DialCap();
         DialCap c2 = (DialCap) c1.clone();
-        assertTrue(c1 != c2);
-        assertTrue(c1.getClass() == c2.getClass());
-        assertTrue(c1.equals(c2));
+        assertNotSame(c1, c2);
+        assertSame(c1.getClass(), c2.getClass());
+        assertEquals(c1, c2);
 
         // check that the listener lists are independent
         MyDialLayerChangeListener l1 = new MyDialLayerChangeListener();

@@ -64,7 +64,9 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -89,31 +91,31 @@ public class HighLowRendererTest  {
         r1.setDrawOpenTicks(false);
         assertFalse(r1.equals(r2));
         r2.setDrawOpenTicks(false);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         // drawCloseTicks
         r1.setDrawCloseTicks(false);
         assertFalse(r1.equals(r2));
         r2.setDrawCloseTicks(false);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         // openTickPaint
         r1.setOpenTickPaint(Color.RED);
         assertFalse(r1.equals(r2));
         r2.setOpenTickPaint(Color.RED);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         // closeTickPaint
         r1.setCloseTickPaint(Color.BLUE);
         assertFalse(r1.equals(r2));
         r2.setCloseTickPaint(Color.BLUE);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         // tickLength
         r1.setTickLength(99.9);
         assertFalse(r1.equals(r2));
         r2.setTickLength(99.9);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
     }
 
     /**
@@ -123,7 +125,7 @@ public class HighLowRendererTest  {
     public void testHashcode() {
         HighLowRenderer r1 = new HighLowRenderer();
         HighLowRenderer r2 = new HighLowRenderer();
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);
@@ -137,9 +139,9 @@ public class HighLowRendererTest  {
         HighLowRenderer r1 = new HighLowRenderer();
         r1.setCloseTickPaint(Color.green);
         HighLowRenderer r2 = (HighLowRenderer) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
     }
 
     /**

@@ -63,6 +63,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -86,19 +88,19 @@ public class MinMaxCategoryRendererTest  {
         r1.setDrawLines(true);
         assertFalse(r1.equals(r2));
         r2.setDrawLines(true);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setGroupPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.yellow));
         assertFalse(r1.equals(r2));
         r2.setGroupPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.yellow));
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setGroupStroke(new BasicStroke(1.2f));
         assertFalse(r1.equals(r2));
         r2.setGroupStroke(new BasicStroke(1.2f));
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
     }
 
     /**
@@ -108,7 +110,7 @@ public class MinMaxCategoryRendererTest  {
     public void testHashcode() {
         MinMaxCategoryRenderer r1 = new MinMaxCategoryRenderer();
         MinMaxCategoryRenderer r2 = new MinMaxCategoryRenderer();
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);
@@ -121,9 +123,9 @@ public class MinMaxCategoryRendererTest  {
     public void testCloning() throws CloneNotSupportedException {
         MinMaxCategoryRenderer r1 = new MinMaxCategoryRenderer();
         MinMaxCategoryRenderer r2 = (MinMaxCategoryRenderer) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
     }
 
     /**

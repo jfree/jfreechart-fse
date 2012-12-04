@@ -63,7 +63,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Some tests for the {@link LegendTitle} class.
@@ -91,32 +92,32 @@ public class LegendTitleTest  {
         t2.setBackgroundPaint(
             new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f, Color.yellow)
         );
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1.setLegendItemGraphicEdge(RectangleEdge.BOTTOM);
         assertFalse(t1.equals(t2));
         t2.setLegendItemGraphicEdge(RectangleEdge.BOTTOM);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1.setLegendItemGraphicAnchor(RectangleAnchor.BOTTOM_LEFT);
         assertFalse(t1.equals(t2));
         t2.setLegendItemGraphicAnchor(RectangleAnchor.BOTTOM_LEFT);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1.setLegendItemGraphicLocation(RectangleAnchor.TOP_LEFT);
         assertFalse(t1.equals(t2));
         t2.setLegendItemGraphicLocation(RectangleAnchor.TOP_LEFT);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1.setItemFont(new Font("Dialog", Font.PLAIN, 19));
         assertFalse(t1.equals(t2));
         t2.setItemFont(new Font("Dialog", Font.PLAIN, 19));
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1.setSortOrder(SortOrder.DESCENDING);
         assertFalse(t1.equals(t2));
         t2.setSortOrder(SortOrder.DESCENDING);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
     }
 
     /**
@@ -127,7 +128,7 @@ public class LegendTitleTest  {
         XYPlot plot1 = new XYPlot();
         LegendTitle t1 = new LegendTitle(plot1);
         LegendTitle t2 = new LegendTitle(plot1);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
         int h1 = t1.hashCode();
         int h2 = t2.hashCode();
         assertEquals(h1, h2);
@@ -145,15 +146,15 @@ public class LegendTitleTest  {
                 4.0f, Color.yellow));
         t1.setBounds(bounds1);
         LegendTitle t2 = (LegendTitle) t1.clone();
-        assertTrue(t1 != t2);
-        assertTrue(t1.getClass() == t2.getClass());
-        assertTrue(t1.equals(t2));
+        assertNotSame(t1, t2);
+        assertSame(t1.getClass(), t2.getClass());
+        assertEquals(t1, t2);
 
         // check independence
         bounds1.setFrame(40.0, 30.0, 20.0, 10.0);
         assertFalse(t1.equals(t2));
         t2.setBounds(new Rectangle2D.Double(40.0, 30.0, 20.0, 10.0));
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
     }
 
     /**
@@ -176,7 +177,7 @@ public class LegendTitleTest  {
         LegendTitle t2 = (LegendTitle) in.readObject();
             in.close();
 
-        assertTrue(t1.equals(t2));
-        assertTrue(t2.getSources()[0].equals(plot));
+        assertEquals(t1, t2);
+        assertEquals(t2.getSources()[0], plot);
     }
 }

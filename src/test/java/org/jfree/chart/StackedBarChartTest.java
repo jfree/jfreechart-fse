@@ -64,6 +64,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -143,7 +144,7 @@ public class StackedBarChartTest  {
                 = new StandardCategoryToolTipGenerator();
         renderer.setSeriesToolTipGenerator(0, tt);
         CategoryToolTipGenerator tt2 = renderer.getToolTipGenerator(0, 0);
-        assertTrue(tt2 == tt);
+        assertSame(tt2, tt);
     }
 
     /**
@@ -158,7 +159,7 @@ public class StackedBarChartTest  {
                 = new StandardCategoryURLGenerator();
         renderer.setSeriesItemURLGenerator(0, url1);
         CategoryURLGenerator url2 = renderer.getItemURLGenerator(0, 0);
-        assertTrue(url2 == url1);
+        assertSame(url2, url1);
     }
 
     /**

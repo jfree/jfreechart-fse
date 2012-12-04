@@ -55,8 +55,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link LineBorder} class.
@@ -76,29 +76,29 @@ public class LineBorderTest  {
                 new RectangleInsets(1.0, 1.0, 1.0, 1.0));
         LineBorder b2 = new LineBorder(Color.RED, new BasicStroke(1.0f),
                 new RectangleInsets(1.0, 1.0, 1.0, 1.0));
-        assertTrue(b1.equals(b2));
-        assertTrue(b2.equals(b2));
+        assertEquals(b1, b2);
+        assertEquals(b2, b2);
 
         b1 = new LineBorder(Color.BLUE, new BasicStroke(1.0f),
                 new RectangleInsets(1.0, 1.0, 1.0, 1.0));
         assertFalse(b1.equals(b2));
         b2 = new LineBorder(Color.BLUE, new BasicStroke(1.0f),
                 new RectangleInsets(1.0, 1.0, 1.0, 1.0));
-        assertTrue(b1.equals(b2));
+        assertEquals(b1, b2);
 
         b1 = new LineBorder(Color.BLUE, new BasicStroke(1.1f),
                 new RectangleInsets(1.0, 1.0, 1.0, 1.0));
         assertFalse(b1.equals(b2));
         b2 = new LineBorder(Color.BLUE, new BasicStroke(1.1f),
                 new RectangleInsets(1.0, 1.0, 1.0, 1.0));
-        assertTrue(b1.equals(b2));
+        assertEquals(b1, b2);
 
         b1 = new LineBorder(Color.BLUE, new BasicStroke(1.1f),
                 new RectangleInsets(1.0, 2.0, 3.0, 4.0));
         assertFalse(b1.equals(b2));
         b2 = new LineBorder(Color.BLUE, new BasicStroke(1.1f),
                 new RectangleInsets(1.0, 2.0, 3.0, 4.0));
-        assertTrue(b1.equals(b2));
+        assertEquals(b1, b2);
 
     }
 
@@ -129,7 +129,7 @@ public class LineBorderTest  {
                 buffer.toByteArray()));
         LineBorder b2 = (LineBorder) in.readObject();
         in.close();
-        assertTrue(b1.equals(b2));
+        assertEquals(b1, b2);
     }
 
 }

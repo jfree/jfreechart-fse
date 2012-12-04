@@ -54,6 +54,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -78,14 +80,14 @@ public class MatrixSeriesCollectionTest  {
         s2.update(0, 0, 1.1);
         MatrixSeriesCollection c2 = new MatrixSeriesCollection();
         c2.addSeries(s2);
-        assertTrue(c1.equals(c2));
-        assertTrue(c2.equals(c1));
+        assertEquals(c1, c2);
+        assertEquals(c2, c1);
 
         c1.addSeries(new MatrixSeries("Empty Series", 1, 1));
         assertFalse(c1.equals(c2));
 
         c2.addSeries(new MatrixSeries("Empty Series", 1, 1));
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
     }
 
     /**
@@ -98,9 +100,9 @@ public class MatrixSeriesCollectionTest  {
         MatrixSeriesCollection c1 = new MatrixSeriesCollection();
         c1.addSeries(s1);
         MatrixSeriesCollection c2 = (MatrixSeriesCollection) c1.clone();
-        assertTrue(c1 != c2);
-        assertTrue(c1.getClass() == c2.getClass());
-        assertTrue(c1.equals(c2));
+        assertNotSame(c1, c2);
+        assertSame(c1.getClass(), c2.getClass());
+        assertEquals(c1, c2);
 
         // check independence
         s1.setDescription("XYZ");

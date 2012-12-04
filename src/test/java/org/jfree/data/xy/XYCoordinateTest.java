@@ -52,7 +52,6 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 
 
@@ -73,18 +72,18 @@ public class XYCoordinateTest  {
         // default instances
         XYCoordinate v1 = new XYCoordinate(1.0, 2.0);
         XYCoordinate v2 = new XYCoordinate(1.0, 2.0);
-        assertTrue(v1.equals(v2));
-        assertTrue(v2.equals(v1));
+        assertEquals(v1, v2);
+        assertEquals(v2, v1);
 
         v1 = new XYCoordinate(1.1, 2.0);
         assertFalse(v1.equals(v2));
         v2 = new XYCoordinate(1.1, 2.0);
-        assertTrue(v1.equals(v2));
+        assertEquals(v1, v2);
 
         v1 = new XYCoordinate(1.1, 2.2);
         assertFalse(v1.equals(v2));
         v2 = new XYCoordinate(1.1, 2.2);
-        assertTrue(v1.equals(v2));
+        assertEquals(v1, v2);
     }
 
     /**
@@ -94,7 +93,7 @@ public class XYCoordinateTest  {
     public void testHashcode() {
         XYCoordinate v1 = new XYCoordinate(1.0, 2.0);
         XYCoordinate v2 = new XYCoordinate(1.0, 2.0);
-        assertTrue(v1.equals(v2));
+        assertEquals(v1, v2);
         int h1 = v1.hashCode();
         int h2 = v2.hashCode();
         assertEquals(h1, h2);

@@ -55,7 +55,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 
 
@@ -75,23 +76,23 @@ public class ColorBlockTest  {
     public void testEquals() {
         ColorBlock b1 = new ColorBlock(Color.RED, 1.0, 2.0);
         ColorBlock b2 = new ColorBlock(Color.RED, 1.0, 2.0);
-        assertTrue(b1.equals(b2));
-        assertTrue(b2.equals(b2));
+        assertEquals(b1, b2);
+        assertEquals(b2, b2);
 
         b1 = new ColorBlock(Color.BLUE, 1.0, 2.0);
         assertFalse(b1.equals(b2));
         b2 = new ColorBlock(Color.BLUE, 1.0, 2.0);
-        assertTrue(b1.equals(b2));
+        assertEquals(b1, b2);
 
         b1 = new ColorBlock(Color.BLUE, 1.1, 2.0);
         assertFalse(b1.equals(b2));
         b2 = new ColorBlock(Color.BLUE, 1.1, 2.0);
-        assertTrue(b1.equals(b2));
+        assertEquals(b1, b2);
 
         b1 = new ColorBlock(Color.BLUE, 1.1, 2.2);
         assertFalse(b1.equals(b2));
         b2 = new ColorBlock(Color.BLUE, 1.1, 2.2);
-        assertTrue(b1.equals(b2));
+        assertEquals(b1, b2);
     }
 
     /**
@@ -105,15 +106,15 @@ public class ColorBlockTest  {
         ColorBlock b1 = new ColorBlock(gp, 1.0, 2.0);
         b1.setBounds(bounds1);
         ColorBlock b2 = (ColorBlock) b1.clone();
-        assertTrue(b1 != b2);
-        assertTrue(b1.getClass() == b2.getClass());
-        assertTrue(b1.equals(b2));
+        assertNotSame(b1, b2);
+        assertSame(b1.getClass(), b2.getClass());
+        assertEquals(b1, b2);
 
         // check independence
         bounds1.setRect(1.0, 2.0, 3.0, 4.0);
         assertFalse(b1.equals(b2));
         b2.setBounds(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
-        assertTrue(b1.equals(b2));
+        assertEquals(b1, b2);
     }
 
     /**

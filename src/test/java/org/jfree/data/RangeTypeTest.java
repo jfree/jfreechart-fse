@@ -52,7 +52,6 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link RangeType} class.
@@ -89,7 +88,7 @@ public class RangeTypeTest  {
     public void testHashCode() {
         RangeType r1 = RangeType.FULL;
         RangeType r2 = RangeType.FULL;
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);

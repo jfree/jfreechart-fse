@@ -53,8 +53,9 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 
 
 
@@ -122,52 +123,52 @@ public class DefaultHeatMapDatasetTest
         d1 = new DefaultHeatMapDataset(6, 10, 1.0, 2.0, 3.0, 4.0);
         assertFalse(d1.equals(d2));
         d2 = new DefaultHeatMapDataset(6, 10, 1.0, 2.0, 3.0, 4.0);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         d1 = new DefaultHeatMapDataset(6, 11, 1.0, 2.0, 3.0, 4.0);
         assertFalse(d1.equals(d2));
         d2 = new DefaultHeatMapDataset(6, 11, 1.0, 2.0, 3.0, 4.0);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         d1 = new DefaultHeatMapDataset(6, 11, 2.0, 2.0, 3.0, 4.0);
         assertFalse(d1.equals(d2));
         d2 = new DefaultHeatMapDataset(6, 11, 2.0, 2.0, 3.0, 4.0);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         d1 = new DefaultHeatMapDataset(6, 11, 2.0, 3.0, 3.0, 4.0);
         assertFalse(d1.equals(d2));
         d2 = new DefaultHeatMapDataset(6, 11, 2.0, 3.0, 3.0, 4.0);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         d1 = new DefaultHeatMapDataset(6, 11, 2.0, 3.0, 4.0, 4.0);
         assertFalse(d1.equals(d2));
         d2 = new DefaultHeatMapDataset(6, 11, 2.0, 3.0, 4.0, 4.0);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         d1 = new DefaultHeatMapDataset(6, 11, 2.0, 3.0, 4.0, 5.0);
         assertFalse(d1.equals(d2));
         d2 = new DefaultHeatMapDataset(6, 11, 2.0, 3.0, 4.0, 5.0);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         d1.setZValue(1, 2, 3.0);
         assertFalse(d1.equals(d2));
         d2.setZValue(1, 2, 3.0);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         d1.setZValue(0, 0, Double.NEGATIVE_INFINITY);
         assertFalse(d1.equals(d2));
         d2.setZValue(0, 0, Double.NEGATIVE_INFINITY);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         d1.setZValue(0, 1, Double.POSITIVE_INFINITY);
         assertFalse(d1.equals(d2));
         d2.setZValue(0, 1, Double.POSITIVE_INFINITY);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         d1.setZValue(0, 2, Double.NaN);
         assertFalse(d1.equals(d2));
         d2.setZValue(0, 2, Double.NaN);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
     }
 
     /**
@@ -182,15 +183,15 @@ public class DefaultHeatMapDatasetTest
         d1.setZValue(0, 2, Double.POSITIVE_INFINITY);
         d1.setZValue(1, 0, Double.NaN);
         DefaultHeatMapDataset d2 = (DefaultHeatMapDataset) d1.clone();
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
 
         // simple check for independence
         d1.setZValue(0, 0, 11.0);
         assertFalse(d1.equals(d2));
         d2.setZValue(0, 0, 11.0);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
     }
 
     /**

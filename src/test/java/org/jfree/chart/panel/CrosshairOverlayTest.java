@@ -56,7 +56,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link CrosshairOverlay} class.
@@ -97,7 +98,7 @@ public class CrosshairOverlayTest  {
         CrosshairOverlay o2 = (CrosshairOverlay) in.readObject();
             in.close();
 
-        assertTrue(o1.equals(o2));
+        assertEquals(o1, o2);
     }
 
     /**
@@ -110,9 +111,9 @@ public class CrosshairOverlayTest  {
         o1.addRangeCrosshair(new Crosshair(1.23, new GradientPaint(1.0f, 2.0f,
                 Color.RED, 3.0f, 4.0f, Color.BLUE), new BasicStroke(1.1f)));
         CrosshairOverlay o2 = (CrosshairOverlay) o1.clone();
-        assertTrue(o1 != o2);
-        assertTrue(o1.getClass() == o2.getClass());
-        assertTrue(o1.equals(o2));
+        assertNotSame(o1, o2);
+        assertSame(o1.getClass(), o2.getClass());
+        assertEquals(o1, o2);
 
         o1.addDomainCrosshair(new Crosshair(3.21));
         o1.addRangeCrosshair(new Crosshair(4.32));

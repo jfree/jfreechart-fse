@@ -52,7 +52,6 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link TimePeriodValue} class.
@@ -77,7 +76,7 @@ public class TimePeriodValueTest  {
     @Test
     public void testEqualsSelf() {
         TimePeriodValue tpv = new TimePeriodValue(new Day(), 55.75);
-        assertTrue(tpv.equals(tpv));
+        assertEquals(tpv, tpv);
     }
 
     /**
@@ -87,8 +86,8 @@ public class TimePeriodValueTest  {
     public void testEquals() {
         TimePeriodValue tpv1 = new TimePeriodValue(new Day(30, 7, 2003), 55.75);
         TimePeriodValue tpv2 = new TimePeriodValue(new Day(30, 7, 2003), 55.75);
-        assertTrue(tpv1.equals(tpv2));
-        assertTrue(tpv2.equals(tpv1));
+        assertEquals(tpv1, tpv2);
+        assertEquals(tpv2, tpv1);
     }
 
     /**

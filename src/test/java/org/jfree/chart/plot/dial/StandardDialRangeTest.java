@@ -54,6 +54,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 
@@ -74,19 +76,19 @@ public class StandardDialRangeTest  {
     public void testEquals() {
         StandardDialRange r1 = new StandardDialRange();
         StandardDialRange r2 = new StandardDialRange();
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         // lowerBound
         r1.setLowerBound(1.1);
         assertFalse(r1.equals(r2));
         r2.setLowerBound(1.1);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         // upperBound
         r1.setUpperBound(11.1);
         assertFalse(r1.equals(r2));
         r2.setUpperBound(11.1);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         // paint
         r1.setPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
@@ -94,13 +96,13 @@ public class StandardDialRangeTest  {
         assertFalse(r1.equals(r2));
         r2.setPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.BLUE));
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         // check an inherited attribute
         r1.setVisible(false);
         assertFalse(r1.equals(r2));
         r2.setVisible(false);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
     }
 
     /**
@@ -110,7 +112,7 @@ public class StandardDialRangeTest  {
     public void testHashCode() {
         StandardDialRange r1 = new StandardDialRange();
         StandardDialRange r2 = new StandardDialRange();
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);
@@ -123,9 +125,9 @@ public class StandardDialRangeTest  {
     public void testCloning() throws CloneNotSupportedException {
         StandardDialRange r1 = new StandardDialRange();
         StandardDialRange r2 = (StandardDialRange) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
 
         // check that the listener lists are independent
         MyDialLayerChangeListener l1 = new MyDialLayerChangeListener();

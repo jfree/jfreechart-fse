@@ -51,7 +51,8 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link CategoryAxis3D} class.
@@ -69,9 +70,9 @@ public class CategoryAxis3DTest  {
     public void testCloning() throws CloneNotSupportedException {
         CategoryAxis3D a1 = new CategoryAxis3D("Test");
         CategoryAxis3D a2 = (CategoryAxis3D) a1.clone();
-        assertTrue(a1 != a2);
-        assertTrue(a1.getClass() == a2.getClass());
-        assertTrue(a1.equals(a2));
+        assertNotSame(a1, a2);
+        assertSame(a1.getClass(), a2.getClass());
+        assertEquals(a1, a2);
     }
 
     /**

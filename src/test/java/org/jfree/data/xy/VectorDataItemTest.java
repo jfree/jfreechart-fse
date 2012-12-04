@@ -52,7 +52,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 
 
@@ -73,28 +74,28 @@ public class VectorDataItemTest  {
         // default instances
         VectorDataItem v1 = new VectorDataItem(1.0, 2.0, 3.0, 4.0);
         VectorDataItem v2 = new VectorDataItem(1.0, 2.0, 3.0, 4.0);
-        assertTrue(v1.equals(v2));
-        assertTrue(v2.equals(v1));
+        assertEquals(v1, v2);
+        assertEquals(v2, v1);
 
         v1 = new VectorDataItem(1.1, 2.0, 3.0, 4.0);
         assertFalse(v1.equals(v2));
         v2 = new VectorDataItem(1.1, 2.0, 3.0, 4.0);
-        assertTrue(v1.equals(v2));
+        assertEquals(v1, v2);
 
         v1 = new VectorDataItem(1.1, 2.2, 3.0, 4.0);
         assertFalse(v1.equals(v2));
         v2 = new VectorDataItem(1.1, 2.2, 3.0, 4.0);
-        assertTrue(v1.equals(v2));
+        assertEquals(v1, v2);
 
         v1 = new VectorDataItem(1.1, 2.2, 3.3, 4.0);
         assertFalse(v1.equals(v2));
         v2 = new VectorDataItem(1.1, 2.2, 3.3, 4.0);
-        assertTrue(v1.equals(v2));
+        assertEquals(v1, v2);
 
         v1 = new VectorDataItem(1.1, 2.2, 3.3, 4.4);
         assertFalse(v1.equals(v2));
         v2 = new VectorDataItem(1.1, 2.2, 3.3, 4.4);
-        assertTrue(v1.equals(v2));
+        assertEquals(v1, v2);
     }
 
     /**
@@ -104,7 +105,7 @@ public class VectorDataItemTest  {
     public void testHashcode() {
         VectorDataItem v1 = new VectorDataItem(1.0, 2.0, 3.0, 4.0);
         VectorDataItem v2 = new VectorDataItem(1.0, 2.0, 3.0, 4.0);
-        assertTrue(v1.equals(v2));
+        assertEquals(v1, v2);
         int h1 = v1.hashCode();
         int h2 = v2.hashCode();
         assertEquals(h1, h2);
@@ -117,9 +118,9 @@ public class VectorDataItemTest  {
     public void testCloning() throws CloneNotSupportedException {
         VectorDataItem v1 = new VectorDataItem(1.0, 2.0, 3.0, 4.0);
         VectorDataItem v2 = (VectorDataItem) v1.clone();
-        assertTrue(v1 != v2);
-        assertTrue(v1.getClass() == v2.getClass());
-        assertTrue(v1.equals(v2));
+        assertNotSame(v1, v2);
+        assertSame(v1.getClass(), v2.getClass());
+        assertEquals(v1, v2);
     }
 
     /**

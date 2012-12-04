@@ -55,6 +55,8 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -80,22 +82,22 @@ public class SlidingCategoryDatasetTest  {
         u2.addValue(1.0, "R1", "C1");
         u2.addValue(2.0, "R1", "C2");
         SlidingCategoryDataset d2 = new SlidingCategoryDataset(u2, 0, 5);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         d1.setFirstCategoryIndex(1);
         assertFalse(d1.equals(d2));
         d2.setFirstCategoryIndex(1);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         d1.setMaximumCategoryCount(99);
         assertFalse(d1.equals(d2));
         d2.setMaximumCategoryCount(99);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         u1.addValue(3.0, "R1", "C3");
         assertFalse(d1.equals(d2));
         u2.addValue(3.0, "R1", "C3");
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
     }
 
     /**
@@ -108,9 +110,9 @@ public class SlidingCategoryDatasetTest  {
         u1.addValue(2.0, "R1", "C2");
         SlidingCategoryDataset d1 = new SlidingCategoryDataset(u1, 0, 5);
         SlidingCategoryDataset d2 = (SlidingCategoryDataset) d1.clone();
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
 
         // basic check for independence
         u1.addValue(3.0, "R1", "C3");
@@ -118,7 +120,7 @@ public class SlidingCategoryDatasetTest  {
         DefaultCategoryDataset u2
                 = (DefaultCategoryDataset) d2.getUnderlyingDataset();
         u2.addValue(3.0, "R1", "C3");
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
     }
 
     /**
@@ -149,7 +151,7 @@ public class SlidingCategoryDatasetTest  {
         DefaultCategoryDataset u2
                 = (DefaultCategoryDataset) d2.getUnderlyingDataset();
         u2.addValue(3.0, "R1", "C3");
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
     }
 
     /**

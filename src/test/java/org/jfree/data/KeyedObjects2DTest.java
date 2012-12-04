@@ -54,8 +54,9 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
 /**
@@ -74,13 +75,13 @@ public class KeyedObjects2DTest  {
     public void testEquals() {
         KeyedObjects2D k1 = new KeyedObjects2D();
         KeyedObjects2D k2 = new KeyedObjects2D();
-        assertTrue(k1.equals(k2));
-        assertTrue(k2.equals(k1));
+        assertEquals(k1, k2);
+        assertEquals(k2, k1);
 
         k1.addObject(99, "R1", "C1");
         assertFalse(k1.equals(k2));
         k2.addObject(99, "R1", "C1");
-        assertTrue(k1.equals(k2));
+        assertEquals(k1, k2);
     }
 
     /**
@@ -95,9 +96,9 @@ public class KeyedObjects2DTest  {
         KeyedObjects2D o2 = (KeyedObjects2D) o1.clone();
 
 
-        assertTrue(o1 != o2);
-        assertTrue(o1.getClass() == o2.getClass());
-        assertTrue(o1.equals(o2));
+        assertNotSame(o1, o2);
+        assertSame(o1.getClass(), o2.getClass());
+        assertEquals(o1, o2);
 
         // check independence
         o1.addObject("XX", "R1", "C1");

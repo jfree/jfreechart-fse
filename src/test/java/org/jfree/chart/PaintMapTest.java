@@ -55,7 +55,6 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -116,27 +115,27 @@ public class PaintMapTest  {
     public void testEquals() {
         PaintMap m1 = new PaintMap();
         PaintMap m2 = new PaintMap();
-        assertTrue(m1.equals(m1));
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m1);
+        assertEquals(m1, m2);
         assertFalse(m1.equals(null));
         assertFalse(m1.equals("ABC"));
 
         m1.put("K1", Color.RED);
         assertFalse(m1.equals(m2));
         m2.put("K1", Color.RED);
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m2);
 
         m1.put("K2", new GradientPaint(1.0f, 2.0f, Color.green, 3.0f, 4.0f,
                 Color.yellow));
         assertFalse(m1.equals(m2));
         m2.put("K2", new GradientPaint(1.0f, 2.0f, Color.green, 3.0f, 4.0f,
                 Color.yellow));
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m2);
 
         m1.put("K2", null);
         assertFalse(m1.equals(m2));
         m2.put("K2", null);
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m2);
     }
 
     /**
@@ -147,14 +146,14 @@ public class PaintMapTest  {
         PaintMap m1 = new PaintMap();
         PaintMap m2 = (PaintMap) m1.clone();
 
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m2);
 
         m1.put("K1", Color.RED);
         m1.put("K2", new GradientPaint(1.0f, 2.0f, Color.green, 3.0f, 4.0f,
                 Color.yellow));
         m2 = (PaintMap) m1.clone();
 
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m2);
     }
 
     /**

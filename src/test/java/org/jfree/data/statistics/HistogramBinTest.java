@@ -51,7 +51,8 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link HistogramBin} class.
@@ -73,8 +74,8 @@ public class HistogramBinTest  {
         HistogramBin b1 = new HistogramBin(start, end);
         HistogramBin b2 = new HistogramBin(start, end);
 
-        assertTrue(b1.equals(b2));
-        assertTrue(b2.equals(b1));
+        assertEquals(b1, b2);
+        assertEquals(b2, b1);
 
     }
 
@@ -87,9 +88,9 @@ public class HistogramBinTest  {
         double end = 20.0;
         HistogramBin b1 = new HistogramBin(start, end);
         HistogramBin b2 = (HistogramBin) b1.clone();
-        assertTrue(b1 != b2);
-        assertTrue(b1.getClass() == b2.getClass());
-        assertTrue(b1.equals(b2));
+        assertNotSame(b1, b2);
+        assertSame(b1.getClass(), b2.getClass());
+        assertEquals(b1, b2);
     }
 
     /**

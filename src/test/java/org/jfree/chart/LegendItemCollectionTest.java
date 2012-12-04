@@ -57,7 +57,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link LegendItemCollection} class.
@@ -76,8 +77,8 @@ public class LegendItemCollectionTest  {
 
         LegendItemCollection c1 = new LegendItemCollection();
         LegendItemCollection c2 = new LegendItemCollection();
-        assertTrue(c1.equals(c2));
-        assertTrue(c2.equals(c1));
+        assertEquals(c1, c2);
+        assertEquals(c2, c1);
 
         LegendItem item1 = new LegendItem("Label", "Description",
                 "ToolTip", "URL", true,
@@ -94,7 +95,7 @@ public class LegendItemCollectionTest  {
         c1.add(item1);
         assertFalse(c1.equals(c2));
         c2.add(item2);
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
     }
 
@@ -130,9 +131,9 @@ public class LegendItemCollectionTest  {
         c1.add(item1);
         LegendItemCollection c2 = (LegendItemCollection) c1.clone();
 
-        assertTrue(c1 != c2);
-        assertTrue(c1.getClass() == c2.getClass());
-        assertTrue(c1.equals(c2));
+        assertNotSame(c1, c2);
+        assertSame(c1.getClass(), c2.getClass());
+        assertEquals(c1, c2);
 
         Rectangle2D item1Shape = (Rectangle2D) item1.getShape();
         item1Shape.setRect(1.0, 2.0, 3.0, 4.0);

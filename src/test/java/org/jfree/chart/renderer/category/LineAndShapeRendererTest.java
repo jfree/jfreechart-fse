@@ -64,7 +64,9 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -89,47 +91,47 @@ public class LineAndShapeRendererTest  {
         r1.setBaseLinesVisible(!r1.getBaseLinesVisible());
         assertFalse(r1.equals(r2));
         r2.setBaseLinesVisible(r1.getBaseLinesVisible());
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setSeriesLinesVisible(1, true);
         assertFalse(r1.equals(r2));
         r2.setSeriesLinesVisible(1, true);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setBaseShapesVisible(!r1.getBaseShapesVisible());
         assertFalse(r1.equals(r2));
         r2.setBaseShapesVisible(r1.getBaseShapesVisible());
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setSeriesShapesVisible(1, true);
         assertFalse(r1.equals(r2));
         r2.setSeriesShapesVisible(1, true);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setSeriesShapesFilled(1, true);
         assertFalse(r1.equals(r2));
         r2.setSeriesShapesFilled(1, true);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setBaseShapesFilled(false);
         assertFalse(r1.equals(r2));
         r2.setBaseShapesFilled(false);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setUseOutlinePaint(true);
         assertFalse(r1.equals(r2));
         r2.setUseOutlinePaint(true);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setUseSeriesOffset(true);
         assertFalse(r1.equals(r2));
         r2.setUseSeriesOffset(true);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setItemMargin(0.14);
         assertFalse(r1.equals(r2));
         r2.setItemMargin(0.14);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
     }
 
@@ -140,7 +142,7 @@ public class LineAndShapeRendererTest  {
     public void testHashcode() {
         LineAndShapeRenderer r1 = new LineAndShapeRenderer();
         LineAndShapeRenderer r2 = new LineAndShapeRenderer();
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);
@@ -153,9 +155,9 @@ public class LineAndShapeRendererTest  {
     public void testCloning() throws CloneNotSupportedException {
         LineAndShapeRenderer r1 = new LineAndShapeRenderer();
         LineAndShapeRenderer r2 = (LineAndShapeRenderer) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
 
         assertTrue(checkIndependence(r1, r2));
 

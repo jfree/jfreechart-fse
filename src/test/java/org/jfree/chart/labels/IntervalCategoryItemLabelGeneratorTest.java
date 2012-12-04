@@ -58,6 +58,8 @@ import java.text.SimpleDateFormat;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -78,22 +80,22 @@ public class IntervalCategoryItemLabelGeneratorTest  {
                 = new IntervalCategoryItemLabelGenerator();
         IntervalCategoryItemLabelGenerator g2
                 = new IntervalCategoryItemLabelGenerator();
-        assertTrue(g1.equals(g2));
-        assertTrue(g2.equals(g1));
+        assertEquals(g1, g2);
+        assertEquals(g2, g1);
 
         g1 = new IntervalCategoryItemLabelGenerator("{3} - {4}",
                 new DecimalFormat("0.000"));
         assertFalse(g1.equals(g2));
         g2 = new IntervalCategoryItemLabelGenerator("{3} - {4}",
                 new DecimalFormat("0.000"));
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
 
         g1 = new IntervalCategoryItemLabelGenerator("{3} - {4}",
                 new SimpleDateFormat("d-MMM"));
         assertFalse(g1.equals(g2));
         g2 = new IntervalCategoryItemLabelGenerator("{3} - {4}",
                 new SimpleDateFormat("d-MMM"));
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
     }
 
     /**
@@ -105,8 +107,8 @@ public class IntervalCategoryItemLabelGeneratorTest  {
                 = new IntervalCategoryItemLabelGenerator();
         IntervalCategoryItemLabelGenerator g2
                 = new IntervalCategoryItemLabelGenerator();
-        assertTrue(g1.equals(g2));
-        assertTrue(g1.hashCode() == g2.hashCode());
+        assertEquals(g1, g2);
+        assertEquals(g1.hashCode(), g2.hashCode());
     }
 
     /**
@@ -117,9 +119,9 @@ public class IntervalCategoryItemLabelGeneratorTest  {
         IntervalCategoryItemLabelGenerator g1
                 = new IntervalCategoryItemLabelGenerator();
         IntervalCategoryItemLabelGenerator g2 = (IntervalCategoryItemLabelGenerator) g1.clone();
-        assertTrue(g1 != g2);
-        assertTrue(g1.getClass() == g2.getClass());
-        assertTrue(g1.equals(g2));
+        assertNotSame(g1, g2);
+        assertSame(g1.getClass(), g2.getClass());
+        assertEquals(g1, g2);
     }
 
     /**

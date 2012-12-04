@@ -54,6 +54,8 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -72,7 +74,7 @@ public class CustomCategoryURLGeneratorTest  {
     public void testEquals() {
         CustomCategoryURLGenerator g1 = new CustomCategoryURLGenerator();
         CustomCategoryURLGenerator g2 = new CustomCategoryURLGenerator();
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
         List<String> u1 = new java.util.ArrayList<String>();
         u1.add("URL A1");
         u1.add("URL A2");
@@ -84,7 +86,7 @@ public class CustomCategoryURLGeneratorTest  {
         u2.add("URL A2");
         u2.add("URL A3");
         g2.addURLSeries(u2);
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
     }
 
     /**
@@ -99,9 +101,9 @@ public class CustomCategoryURLGeneratorTest  {
         u1.add("URL A3");
         g1.addURLSeries(u1);
         CustomCategoryURLGenerator g2 = (CustomCategoryURLGenerator) g1.clone();
-        assertTrue(g1 != g2);
-        assertTrue(g1.getClass() == g2.getClass());
-        assertTrue(g1.equals(g2));
+        assertNotSame(g1, g2);
+        assertSame(g1.getClass(), g2.getClass());
+        assertEquals(g1, g2);
 
         // check independence
         List<String> u2 = new java.util.ArrayList<String>();
@@ -109,7 +111,7 @@ public class CustomCategoryURLGeneratorTest  {
         g1.addURLSeries(u2);
         assertFalse(g1.equals(g2));
         g2.addURLSeries(new java.util.ArrayList<String>(u2));
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
     }
 
     /**

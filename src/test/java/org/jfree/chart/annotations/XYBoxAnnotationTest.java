@@ -64,6 +64,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -85,8 +87,8 @@ public class XYBoxAnnotationTest  {
                 new BasicStroke(1.2f), Color.RED, Color.BLUE);
         XYBoxAnnotation a2 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
                 new BasicStroke(1.2f), Color.RED, Color.BLUE);
-        assertTrue(a1.equals(a2));
-        assertTrue(a2.equals(a1));
+        assertEquals(a1, a2);
+        assertEquals(a2, a1);
 
         // x0
         a1 = new XYBoxAnnotation(2.0, 2.0, 3.0, 4.0, new BasicStroke(1.2f),
@@ -94,7 +96,7 @@ public class XYBoxAnnotationTest  {
         assertFalse(a1.equals(a2));
         a2 = new XYBoxAnnotation(2.0, 2.0, 3.0, 4.0, new BasicStroke(1.2f),
                 Color.RED, Color.BLUE);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // stroke
         a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0, new BasicStroke(2.3f),
@@ -102,7 +104,7 @@ public class XYBoxAnnotationTest  {
         assertFalse(a1.equals(a2));
         a2 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0, new BasicStroke(2.3f),
                 Color.RED, Color.BLUE);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         GradientPaint gp1a = new GradientPaint(1.0f, 2.0f, Color.BLUE,
                 3.0f, 4.0f, Color.RED);
@@ -119,7 +121,7 @@ public class XYBoxAnnotationTest  {
         assertFalse(a1.equals(a2));
         a2 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0, new BasicStroke(2.3f),
                 gp1b, Color.BLUE);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // fillPaint
         a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0, new BasicStroke(2.3f),
@@ -127,7 +129,7 @@ public class XYBoxAnnotationTest  {
         assertFalse(a1.equals(a2));
         a2 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0, new BasicStroke(2.3f),
                 gp1b, gp2b);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
     }
 
     /**
@@ -139,7 +141,7 @@ public class XYBoxAnnotationTest  {
                 new BasicStroke(1.2f), Color.RED, Color.BLUE);
         XYBoxAnnotation a2 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
                 new BasicStroke(1.2f), Color.RED, Color.BLUE);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
         assertEquals(h1, h2);
@@ -153,9 +155,9 @@ public class XYBoxAnnotationTest  {
         XYBoxAnnotation a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
                 new BasicStroke(1.2f), Color.RED, Color.BLUE);
         XYBoxAnnotation a2 = (XYBoxAnnotation) a1.clone();
-        assertTrue(a1 != a2);
-        assertTrue(a1.getClass() == a2.getClass());
-        assertTrue(a1.equals(a2));
+        assertNotSame(a1, a2);
+        assertSame(a1.getClass(), a2.getClass());
+        assertEquals(a1, a2);
     }
 
     /**

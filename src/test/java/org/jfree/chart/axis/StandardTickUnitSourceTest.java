@@ -51,7 +51,6 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link StandardTickUnitSource} class.
@@ -69,7 +68,7 @@ public class StandardTickUnitSourceTest  {
     public void testEquals() {
         StandardTickUnitSource t1 = new StandardTickUnitSource();
         StandardTickUnitSource t2 = new StandardTickUnitSource();
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
     }
 
     /**

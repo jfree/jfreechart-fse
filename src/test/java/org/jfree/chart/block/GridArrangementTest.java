@@ -56,7 +56,6 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link GridArrangement} class.
@@ -74,18 +73,18 @@ public class GridArrangementTest  {
     public void testEquals() {
         GridArrangement f1 = new GridArrangement(11, 22);
         GridArrangement f2 = new GridArrangement(11, 22);
-        assertTrue(f1.equals(f2));
-        assertTrue(f2.equals(f1));
+        assertEquals(f1, f2);
+        assertEquals(f2, f1);
 
         f1 = new GridArrangement(33, 22);
         assertFalse(f1.equals(f2));
         f2 = new GridArrangement(33, 22);
-        assertTrue(f1.equals(f2));
+        assertEquals(f1, f2);
 
         f1 = new GridArrangement(33, 44);
         assertFalse(f1.equals(f2));
         f2 = new GridArrangement(33, 44);
-        assertTrue(f1.equals(f2));
+        assertEquals(f1, f2);
     }
 
     /**

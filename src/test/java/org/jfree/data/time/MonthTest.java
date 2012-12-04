@@ -69,7 +69,6 @@ import java.util.TimeZone;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -112,7 +111,7 @@ public class MonthTest  {
     @Test
     public void testEqualsSelf() {
         Month month = new Month();
-        assertTrue(month.equals(month));
+        assertEquals(month, month);
     }
 
     /**
@@ -122,7 +121,7 @@ public class MonthTest  {
     public void testEquals() {
         Month m1 = new Month(MonthConstants.MAY, 2002);
         Month m2 = new Month(MonthConstants.MAY, 2002);
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m2);
     }
 
     /**
@@ -259,7 +258,7 @@ public class MonthTest  {
     public void testHashcode() {
         Month m1 = new Month(2, 2003);
         Month m2 = new Month(2, 2003);
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m2);
         int h1 = m1.hashCode();
         int h2 = m2.hashCode();
         assertEquals(h1, h2);

@@ -56,8 +56,9 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
 /**
@@ -88,9 +89,9 @@ public class KeyedObjectsTest  {
         ko1.addObject("V3", 3);
         KeyedObjects ko2 = (KeyedObjects) ko1.clone();
 
-        assertTrue(ko1 != ko2);
-        assertTrue(ko1.getClass() == ko2.getClass());
-        assertTrue(ko1.equals(ko2));
+        assertNotSame(ko1, ko2);
+        assertSame(ko1.getClass(), ko2.getClass());
+        assertEquals(ko1, ko2);
     }
 
     /**
@@ -104,12 +105,12 @@ public class KeyedObjectsTest  {
         ko1.addObject("K1", obj1);
         KeyedObjects ko2 = (KeyedObjects) ko1.clone();
 
-        assertTrue(ko1 != ko2);
-        assertTrue(ko1.getClass() == ko2.getClass());
-        assertTrue(ko1.equals(ko2));
+        assertNotSame(ko1, ko2);
+        assertSame(ko1.getClass(), ko2.getClass());
+        assertEquals(ko1, ko2);
 
         // the clone contains a reference to the original object
-        assertTrue(ko2.getObject("K1") == obj1);
+        assertSame(ko2.getObject("K1"), obj1);
 
         // CASE 2 - object is mutable AND PublicCloneable
         obj1 = new DefaultPieDataset();
@@ -117,12 +118,12 @@ public class KeyedObjectsTest  {
         ko1.addObject("K1", obj1);
         ko2 = (KeyedObjects) ko1.clone();
 
-        assertTrue(ko1 != ko2);
-        assertTrue(ko1.getClass() == ko2.getClass());
-        assertTrue(ko1.equals(ko2));
+        assertNotSame(ko1, ko2);
+        assertSame(ko1.getClass(), ko2.getClass());
+        assertEquals(ko1, ko2);
 
         // the clone contains a reference to a CLONE of the original object
-        assertTrue(ko2.getObject("K1") != obj1);
+        assertNotSame(ko2.getObject("K1"), obj1);
     }
 
     /**

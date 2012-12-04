@@ -59,8 +59,9 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
 /**
@@ -90,18 +91,18 @@ public class OHLCSeriesCollectionTest
         OHLCSeries s2 = new OHLCSeries("Series");
         s2.add(new Year(2006), 1.0, 1.1, 1.2, 1.3);
         c2.addSeries(s2);
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
         // add an empty series
         c1.addSeries(new OHLCSeries("Empty Series"));
         assertFalse(c1.equals(c2));
         c2.addSeries(new OHLCSeries("Empty Series"));
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
         c1.setXPosition(TimePeriodAnchor.END);
         assertFalse(c1.equals(c2));
         c2.setXPosition(TimePeriodAnchor.END);
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
     }
 
@@ -115,9 +116,9 @@ public class OHLCSeriesCollectionTest
         s1.add(new Year(2006), 1.0, 1.1, 1.2, 1.3);
         c1.addSeries(s1);
         OHLCSeriesCollection c2 = (OHLCSeriesCollection) c1.clone();
-        assertTrue(c1 != c2);
-        assertTrue(c1.getClass() == c2.getClass());
-        assertTrue(c1.equals(c2));
+        assertNotSame(c1, c2);
+        assertSame(c1.getClass(), c2.getClass());
+        assertEquals(c1, c2);
 
         // check independence
         s1.setDescription("XYZ");
@@ -178,7 +179,7 @@ public class OHLCSeriesCollectionTest
         OHLCSeries s2 = new OHLCSeries("S");
         s2.add(new Year(2009), 1.0, 4.0, 0.5, 2.0);
         c2.addSeries(s2);
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
         int h1 = c1.hashCode();
         int h2 = c2.hashCode();
         assertEquals(h1, h2);
@@ -200,9 +201,9 @@ public class OHLCSeriesCollectionTest
         c1.addSeries(s3);
         c1.addSeries(s4);
         c1.removeSeries(2);
-        assertTrue(c1.getSeries(2).equals(s4));
+        assertEquals(c1.getSeries(2), s4);
         c1.removeSeries(0);
-        assertTrue(c1.getSeries(0).equals(s2));
+        assertEquals(c1.getSeries(0), s2);
         assertEquals(2, c1.getSeriesCount());
     }
 
@@ -222,9 +223,9 @@ public class OHLCSeriesCollectionTest
         c1.addSeries(s3);
         c1.addSeries(s4);
         c1.removeSeries(s3);
-        assertTrue(c1.getSeries(2).equals(s4));
+        assertEquals(c1.getSeries(2), s4);
         c1.removeSeries(s1);
-        assertTrue(c1.getSeries(0).equals(s2));
+        assertEquals(c1.getSeries(0), s2);
         assertEquals(2, c1.getSeriesCount());
     }
 

@@ -68,6 +68,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -96,7 +98,7 @@ public class XYDifferenceRendererTest  {
         assertFalse(r1.equals(r2));
         r2.setPositivePaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.BLUE));
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         // negative paint
         r1.setNegativePaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
@@ -104,25 +106,25 @@ public class XYDifferenceRendererTest  {
         assertFalse(r1.equals(r2));
         r2.setNegativePaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
                 3.0f, 4.0f, Color.BLUE));
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         // shapesVisible
         r1 = new XYDifferenceRenderer(Color.green, Color.yellow, true);
         assertFalse(r1.equals(r2));
         r2 = new XYDifferenceRenderer(Color.green, Color.yellow, true);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         // legendLine
         r1.setLegendLine(new Line2D.Double(1.0, 2.0, 3.0, 4.0));
         assertFalse(r1.equals(r2));
         r2.setLegendLine(new Line2D.Double(1.0, 2.0, 3.0, 4.0));
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         // roundXCoordinates
         r1.setRoundXCoordinates(true);
         assertFalse(r1.equals(r2));
         r2.setRoundXCoordinates(true);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         assertFalse(r1.equals(null));
     }
@@ -136,7 +138,7 @@ public class XYDifferenceRendererTest  {
             = new XYDifferenceRenderer(Color.RED, Color.BLUE, false);
         XYDifferenceRenderer r2
             = new XYDifferenceRenderer(Color.RED, Color.BLUE, false);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);
@@ -150,9 +152,9 @@ public class XYDifferenceRendererTest  {
         XYDifferenceRenderer r1 = new XYDifferenceRenderer(Color.RED,
                 Color.BLUE, false);
         XYDifferenceRenderer r2 = (XYDifferenceRenderer) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
 
         // check independence
         Shape s = r1.getLegendLine();

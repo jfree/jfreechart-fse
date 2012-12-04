@@ -61,7 +61,9 @@ import java.util.TimeZone;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -152,9 +154,9 @@ public class TimeSeriesCollectionTest  {
         c1.addSeries(s3);
         c1.addSeries(s4);
         c1.removeSeries(2);
-        assertTrue(c1.getSeries(2).equals(s4));
+        assertEquals(c1.getSeries(2), s4);
         c1.removeSeries(0);
-        assertTrue(c1.getSeries(0).equals(s2));
+        assertEquals(c1.getSeries(0), s2);
         assertEquals(2, c1.getSeriesCount());
     }
 
@@ -170,8 +172,8 @@ public class TimeSeriesCollectionTest  {
 
         // for a series with no data, we expect {-1, -1}...
         int[] result = collection.getSurroundingItems(0, 1000L);
-        assertTrue(result[0] == -1);
-        assertTrue(result[1] == -1);
+        assertSame(result[0], -1);
+        assertSame(result[1], -1);
 
         // now test with a single value in the series...
         Day today = new Day();
@@ -181,16 +183,16 @@ public class TimeSeriesCollectionTest  {
 
         series.add(today, 99.9);
         result = collection.getSurroundingItems(0, start1);
-        assertTrue(result[0] == -1);
-        assertTrue(result[1] == 0);
+        assertSame(result[0], -1);
+        assertSame(result[1], 0);
 
         result = collection.getSurroundingItems(0, middle1);
-        assertTrue(result[0] == 0);
-        assertTrue(result[1] == 0);
+        assertSame(result[0], 0);
+        assertSame(result[1], 0);
 
         result = collection.getSurroundingItems(0, end1);
-        assertTrue(result[0] == 0);
-        assertTrue(result[1] == -1);
+        assertSame(result[0], 0);
+        assertSame(result[1], -1);
 
         // now add a second value to the series...
         Day tomorrow = (Day) today.next();
@@ -200,16 +202,16 @@ public class TimeSeriesCollectionTest  {
 
         series.add(tomorrow, 199.9);
         result = collection.getSurroundingItems(0, start2);
-        assertTrue(result[0] == 0);
-        assertTrue(result[1] == 1);
+        assertSame(result[0], 0);
+        assertSame(result[1], 1);
 
         result = collection.getSurroundingItems(0, middle2);
-        assertTrue(result[0] == 1);
-        assertTrue(result[1] == 1);
+        assertSame(result[0], 1);
+        assertSame(result[1], 1);
 
         result = collection.getSurroundingItems(0, end2);
-        assertTrue(result[0] == 1);
-        assertTrue(result[1] == -1);
+        assertSame(result[0], 1);
+        assertSame(result[1], -1);
 
         // now add a third value to the series...
         Day yesterday = (Day) today.previous();
@@ -219,16 +221,16 @@ public class TimeSeriesCollectionTest  {
 
         series.add(yesterday, 1.23);
         result = collection.getSurroundingItems(0, start3);
-        assertTrue(result[0] == -1);
-        assertTrue(result[1] == 0);
+        assertSame(result[0], -1);
+        assertSame(result[1], 0);
 
         result = collection.getSurroundingItems(0, middle3);
-        assertTrue(result[0] == 0);
-        assertTrue(result[1] == 0);
+        assertSame(result[0], 0);
+        assertSame(result[1], 0);
 
         result = collection.getSurroundingItems(0, end3);
-        assertTrue(result[0] == 0);
-        assertTrue(result[1] == 1);
+        assertSame(result[0], 0);
+        assertSame(result[1], 1);
     }
 
     /**
@@ -371,15 +373,15 @@ public class TimeSeriesCollectionTest  {
         TimeSeriesCollection c1 = new TimeSeriesCollection();
         c1.addSeries(s1);
         TimeSeriesCollection c2 = (TimeSeriesCollection) c1.clone();
-        assertTrue(c1 != c2);
-        assertTrue(c1.getClass() == c2.getClass());
-        assertTrue(c1.equals(c2));
+        assertNotSame(c1, c2);
+        assertSame(c1.getClass(), c2.getClass());
+        assertEquals(c1, c2);
 
         // check independence
         s1.setDescription("XYZ");
         assertFalse(c1.equals(c2));
         c2.getSeries(0).setDescription("XYZ");
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
     }
 
     /**

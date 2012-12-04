@@ -49,8 +49,9 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link AbstractXYItemRenderer} class.
@@ -116,13 +117,12 @@ public class AbstractXYItemRendererTest  {
         r1.setLegendItemLabelGenerator(generator);
         XYBarRenderer r2 = (XYBarRenderer) r1.clone();
 
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
 
         // check that the generator has been cloned
-        assertTrue(r1.getLegendItemLabelGenerator()
-                != r2.getLegendItemLabelGenerator());
+        assertNotSame(r1.getLegendItemLabelGenerator(), r2.getLegendItemLabelGenerator());
     }
 
     /**
@@ -135,13 +135,12 @@ public class AbstractXYItemRendererTest  {
         XYBarRenderer r1 = new XYBarRenderer();
         r1.setLegendItemToolTipGenerator(generator);
         XYBarRenderer r2 = (XYBarRenderer) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
 
         // check that the generator has been cloned
-        assertTrue(r1.getLegendItemToolTipGenerator()
-                != r2.getLegendItemToolTipGenerator());
+        assertNotSame(r1.getLegendItemToolTipGenerator(), r2.getLegendItemToolTipGenerator());
     }
 
     /**
@@ -154,13 +153,12 @@ public class AbstractXYItemRendererTest  {
         XYBarRenderer r1 = new XYBarRenderer();
         r1.setLegendItemURLGenerator(generator);
         XYBarRenderer r2 = (XYBarRenderer) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
 
         // check that the generator has been cloned
-        assertTrue(r1.getLegendItemURLGenerator()
-                != r2.getLegendItemURLGenerator());
+        assertNotSame(r1.getLegendItemURLGenerator(), r2.getLegendItemURLGenerator());
     }
 
 

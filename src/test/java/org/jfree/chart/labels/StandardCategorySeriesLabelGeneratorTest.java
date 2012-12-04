@@ -55,6 +55,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -91,13 +93,13 @@ public class StandardCategorySeriesLabelGeneratorTest  {
                 = new StandardCategorySeriesLabelGenerator();
         StandardCategorySeriesLabelGenerator g2
                 = new StandardCategorySeriesLabelGenerator();
-        assertTrue(g1.equals(g2));
-        assertTrue(g2.equals(g1));
+        assertEquals(g1, g2);
+        assertEquals(g2, g1);
 
         g1 = new StandardCategorySeriesLabelGenerator("{1}");
         assertFalse(g1.equals(g2));
         g2 = new StandardCategorySeriesLabelGenerator("{1}");
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
     }
 
     /**
@@ -109,8 +111,8 @@ public class StandardCategorySeriesLabelGeneratorTest  {
                 = new StandardCategorySeriesLabelGenerator();
         StandardCategorySeriesLabelGenerator g2
                 = new StandardCategorySeriesLabelGenerator();
-        assertTrue(g1.equals(g2));
-        assertTrue(g1.hashCode() == g2.hashCode());
+        assertEquals(g1, g2);
+        assertEquals(g1.hashCode(), g2.hashCode());
     }
 
     /**
@@ -123,9 +125,9 @@ public class StandardCategorySeriesLabelGeneratorTest  {
         StandardCategorySeriesLabelGenerator g2 = (StandardCategorySeriesLabelGenerator) g1.clone();
 
 
-        assertTrue(g1 != g2);
-        assertTrue(g1.getClass() == g2.getClass());
-        assertTrue(g1.equals(g2));
+        assertNotSame(g1, g2);
+        assertSame(g1.getClass(), g2.getClass());
+        assertEquals(g1, g2);
     }
 
     /**

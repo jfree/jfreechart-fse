@@ -60,6 +60,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -79,12 +81,12 @@ public class XYImageAnnotationTest  {
         Image image = JFreeChart.INFO.getLogo();
         XYImageAnnotation a1 = new XYImageAnnotation(10.0, 20.0, image);
         XYImageAnnotation a2 = new XYImageAnnotation(10.0, 20.0, image);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1 = new XYImageAnnotation(10.0, 20.0, image, RectangleAnchor.LEFT);
         assertFalse(a1.equals(a2));
         a2 = new XYImageAnnotation(10.0, 20.0, image, RectangleAnchor.LEFT);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
     }
 
     /**
@@ -95,7 +97,7 @@ public class XYImageAnnotationTest  {
         Image image = JFreeChart.INFO.getLogo();
         XYImageAnnotation a1 = new XYImageAnnotation(10.0, 20.0, image);
         XYImageAnnotation a2 = new XYImageAnnotation(10.0, 20.0, image);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
         assertEquals(h1, h2);
@@ -110,9 +112,9 @@ public class XYImageAnnotationTest  {
                 JFreeChart.INFO.getLogo());
         XYImageAnnotation a2 = (XYImageAnnotation) a1.clone();
 
-        assertTrue(a1 != a2);
-        assertTrue(a1.getClass() == a2.getClass());
-        assertTrue(a1.equals(a2));
+        assertNotSame(a1, a2);
+        assertSame(a1.getClass(), a2.getClass());
+        assertEquals(a1, a2);
     }
 
     /**

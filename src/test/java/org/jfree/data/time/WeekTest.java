@@ -69,7 +69,6 @@ import java.util.TimeZone;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -111,18 +110,18 @@ public class WeekTest  {
     public void testEquals() {
         Week w1 = new Week(1, 2002);
         Week w2 = new Week(1, 2002);
-        assertTrue(w1.equals(w2));
-        assertTrue(w2.equals(w1));
+        assertEquals(w1, w2);
+        assertEquals(w2, w1);
 
         w1 = new Week(2, 2002);
         assertFalse(w1.equals(w2));
         w2 = new Week(2, 2002);
-        assertTrue(w1.equals(w2));
+        assertEquals(w1, w2);
 
         w1 = new Week(2, 2003);
         assertFalse(w1.equals(w2));
         w2 = new Week(2, 2003);
-        assertTrue(w1.equals(w2));
+        assertEquals(w1, w2);
     }
 
     /**
@@ -190,7 +189,7 @@ public class WeekTest  {
     public void testHashcode() {
         Week w1 = new Week(2, 2003);
         Week w2 = new Week(2, 2003);
-        assertTrue(w1.equals(w2));
+        assertEquals(w1, w2);
         int h1 = w1.hashCode();
         int h2 = w2.hashCode();
         assertEquals(h1, h2);

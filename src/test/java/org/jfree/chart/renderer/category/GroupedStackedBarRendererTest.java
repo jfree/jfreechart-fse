@@ -61,7 +61,9 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -80,8 +82,8 @@ public class GroupedStackedBarRendererTest  {
     public void testEquals() {
         GroupedStackedBarRenderer r1 = new GroupedStackedBarRenderer();
         GroupedStackedBarRenderer r2 = new GroupedStackedBarRenderer();
-        assertTrue(r1.equals(r2));
-        assertTrue(r2.equals(r1));
+        assertEquals(r1, r2);
+        assertEquals(r2, r1);
 
         // map
         KeyToGroupMap m1 = new KeyToGroupMap("G1");
@@ -91,7 +93,7 @@ public class GroupedStackedBarRendererTest  {
         KeyToGroupMap m2 = new KeyToGroupMap("G1");
         m2.mapKeyToGroup("S1", "G2");
         r2.setSeriesToGroupMap(m2);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
     }
 
     /**
@@ -101,9 +103,9 @@ public class GroupedStackedBarRendererTest  {
     public void testCloning() throws CloneNotSupportedException {
         GroupedStackedBarRenderer r1 = new GroupedStackedBarRenderer();
         GroupedStackedBarRenderer r2 = (GroupedStackedBarRenderer) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
     }
 
     /**

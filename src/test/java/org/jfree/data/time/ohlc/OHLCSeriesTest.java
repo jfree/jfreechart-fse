@@ -60,7 +60,9 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -93,31 +95,31 @@ public class OHLCSeriesTest
     public void testEquals() {
         OHLCSeries s1 = new OHLCSeries("s1");
         OHLCSeries s2 = new OHLCSeries("s1");
-        assertTrue(s1.equals(s2));
+        assertEquals(s1, s2);
 
         // seriesKey
         s1 = new OHLCSeries("s2");
         assertFalse(s1.equals(s2));
         s2 = new OHLCSeries("s2");
-        assertTrue(s1.equals(s2));
+        assertEquals(s1, s2);
 
         // add a value
         s1.add(new Year(2006), 2.0, 4.0, 1.0, 3.0);
         assertFalse(s1.equals(s2));
         s2.add(new Year(2006), 2.0, 4.0, 1.0, 3.0);
-        assertTrue(s2.equals(s1));
+        assertEquals(s2, s1);
 
         // add another value
         s1.add(new Year(2008), 2.0, 4.0, 1.0, 3.0);
         assertFalse(s1.equals(s2));
         s2.add(new Year(2008), 2.0, 4.0, 1.0, 3.0);
-        assertTrue(s2.equals(s1));
+        assertEquals(s2, s1);
 
         // remove a value
         s1.remove(new Year(2008));
         assertFalse(s1.equals(s2));
         s2.remove(new Year(2008));
-        assertTrue(s2.equals(s1));
+        assertEquals(s2, s1);
     }
 
     /**
@@ -129,7 +131,7 @@ public class OHLCSeriesTest
         s1.add(new Year(2009), 1.0, 3.0, 2.0, 1.4);
         OHLCSeries s2 = new OHLCSeries("Test");
         s2.add(new Year(2009), 1.0, 3.0, 2.0, 1.4);
-        assertTrue(s1.equals(s2));
+        assertEquals(s1, s2);
         int h1 = s1.hashCode();
         int h2 = s2.hashCode();
         assertEquals(h1, h2);
@@ -143,9 +145,9 @@ public class OHLCSeriesTest
         OHLCSeries s1 = new OHLCSeries("s1");
         s1.add(new Year(2006), 2.0, 4.0, 1.0, 3.0);
         OHLCSeries s2 = (OHLCSeries) s1.clone();
-        assertTrue(s1 != s2);
-        assertTrue(s1.getClass() == s2.getClass());
-        assertTrue(s1.equals(s2));
+        assertNotSame(s1, s2);
+        assertSame(s1.getClass(), s2.getClass());
+        assertEquals(s1, s2);
     }
 
     /**

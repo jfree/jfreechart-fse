@@ -53,7 +53,6 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 
 
@@ -78,22 +77,22 @@ public class OHLCTest  {
         i1 = new OHLC(2.2, 4.0, 1.0, 3.0);
         assertFalse(i1.equals(i2));
         i2 = new OHLC(2.2, 4.0, 1.0, 3.0);
-        assertTrue(i1.equals(i2));
+        assertEquals(i1, i2);
 
         i1 = new OHLC(2.2, 4.4, 1.0, 3.0);
         assertFalse(i1.equals(i2));
         i2 = new OHLC(2.2, 4.4, 1.0, 3.0);
-        assertTrue(i1.equals(i2));
+        assertEquals(i1, i2);
 
         i1 = new OHLC(2.2, 4.4, 1.1, 3.0);
         assertFalse(i1.equals(i2));
         i2 = new OHLC(2.2, 4.4, 1.1, 3.0);
-        assertTrue(i1.equals(i2));
+        assertEquals(i1, i2);
 
         i1 = new OHLC(2.2, 4.4, 1.1, 3.3);
         assertFalse(i1.equals(i2));
         i2 = new OHLC(2.2, 4.4, 1.1, 3.3);
-        assertTrue(i1.equals(i2));
+        assertEquals(i1, i2);
     }
 
     /**
@@ -132,7 +131,7 @@ public class OHLCTest  {
     public void testHashcode() {
         OHLC i1 = new OHLC(2.0, 4.0, 1.0, 3.0);
         OHLC i2 = new OHLC(2.0, 4.0, 1.0, 3.0);
-        assertTrue(i1.equals(i2));
+        assertEquals(i1, i2);
         int h1 = i1.hashCode();
         int h2 = i2.hashCode();
         assertEquals(h1, h2);

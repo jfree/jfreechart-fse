@@ -53,7 +53,6 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link StandardBarPainter} class.
@@ -81,7 +80,7 @@ public class StandardBarPainterTest  {
     public void testHashcode() {
         StandardBarPainter p1 = new StandardBarPainter();
         StandardBarPainter p2 = new StandardBarPainter();
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
         int h1 = p1.hashCode();
         int h2 = p2.hashCode();
         assertEquals(h1, h2);

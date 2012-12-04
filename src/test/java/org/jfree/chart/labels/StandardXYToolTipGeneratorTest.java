@@ -58,6 +58,8 @@ import java.text.SimpleDateFormat;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -88,23 +90,23 @@ public class StandardXYToolTipGeneratorTest  {
 
         g1 = new StandardXYToolTipGenerator(f1, xnf1, ynf1);
         g2 = new StandardXYToolTipGenerator(f1, xnf1, ynf1);
-        assertTrue(g1.equals(g2));
-        assertTrue(g2.equals(g1));
+        assertEquals(g1, g2);
+        assertEquals(g2, g1);
 
         g1 = new StandardXYToolTipGenerator(f2, xnf1, ynf1);
         assertFalse(g1.equals(g2));
         g2 = new StandardXYToolTipGenerator(f2, xnf1, ynf1);
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
 
         g1 = new StandardXYToolTipGenerator(f2, xnf2, ynf1);
         assertFalse(g1.equals(g2));
         g2 = new StandardXYToolTipGenerator(f2, xnf2, ynf1);
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
 
         g1 = new StandardXYToolTipGenerator(f2, xnf2, ynf2);
         assertFalse(g1.equals(g2));
         g2 = new StandardXYToolTipGenerator(f2, xnf2, ynf2);
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
 
         DateFormat xdf1 = new SimpleDateFormat("d-MMM");
         DateFormat xdf2 = new SimpleDateFormat("d-MMM-yyyy");
@@ -113,18 +115,18 @@ public class StandardXYToolTipGeneratorTest  {
 
         g1 = new StandardXYToolTipGenerator(f1, xdf1, ydf1);
         g2 = new StandardXYToolTipGenerator(f1, xdf1, ydf1);
-        assertTrue(g1.equals(g2));
-        assertTrue(g2.equals(g1));
+        assertEquals(g1, g2);
+        assertEquals(g2, g1);
 
         g1 = new StandardXYToolTipGenerator(f1, xdf2, ydf1);
         assertFalse(g1.equals(g2));
         g2 = new StandardXYToolTipGenerator(f1, xdf2, ydf1);
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
 
         g1 = new StandardXYToolTipGenerator(f1, xdf2, ydf2);
         assertFalse(g1.equals(g2));
         g2 = new StandardXYToolTipGenerator(f1, xdf2, ydf2);
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
 
     }
 
@@ -137,8 +139,8 @@ public class StandardXYToolTipGeneratorTest  {
                 = new StandardXYToolTipGenerator();
         StandardXYToolTipGenerator g2
                 = new StandardXYToolTipGenerator();
-        assertTrue(g1.equals(g2));
-        assertTrue(g1.hashCode() == g2.hashCode());
+        assertEquals(g1, g2);
+        assertEquals(g1.hashCode(), g2.hashCode());
     }
 
     /**
@@ -149,9 +151,9 @@ public class StandardXYToolTipGeneratorTest  {
         StandardXYToolTipGenerator g1 = new StandardXYToolTipGenerator();
         StandardXYToolTipGenerator g2 = (StandardXYToolTipGenerator) g1.clone();
 
-        assertTrue(g1 != g2);
-        assertTrue(g1.getClass() == g2.getClass());
-        assertTrue(g1.equals(g2));
+        assertNotSame(g1, g2);
+        assertSame(g1.getClass(), g2.getClass());
+        assertEquals(g1, g2);
     }
 
     /**

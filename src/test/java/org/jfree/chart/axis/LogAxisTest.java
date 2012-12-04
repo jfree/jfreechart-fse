@@ -66,6 +66,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -85,9 +87,9 @@ public class LogAxisTest  {
         LogAxis a1 = new LogAxis("Test");
         LogAxis a2 = (LogAxis) a1.clone();
 
-        assertTrue(a1 != a2);
-        assertTrue(a1.getClass() == a2.getClass());
-        assertTrue(a1.equals(a2));
+        assertNotSame(a1, a2);
+        assertSame(a1.getClass(), a2.getClass());
+        assertEquals(a1, a2);
     }
 
     /**
@@ -97,22 +99,22 @@ public class LogAxisTest  {
     public void testEquals() {
         LogAxis a1 = new LogAxis("Test");
         LogAxis a2 = new LogAxis("Test");
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setBase(2.0);
         assertFalse(a1.equals(a2));
         a2.setBase(2.0);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setSmallestValue(0.1);
         assertFalse(a1.equals(a2));
         a2.setSmallestValue(0.1);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setMinorTickCount(8);
         assertFalse(a1.equals(a2));
         a2.setMinorTickCount(8);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
     }
 
     /**
@@ -122,7 +124,7 @@ public class LogAxisTest  {
     public void testHashCode() {
         LogAxis a1 = new LogAxis("Test");
         LogAxis a2 = new LogAxis("Test");
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
         assertEquals(h1, h2);

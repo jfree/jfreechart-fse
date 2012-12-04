@@ -61,6 +61,8 @@ import java.io.Serializable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -124,42 +126,42 @@ public class XYDrawableAnnotationTest  {
                 200.0, new TestDrawable());
         XYDrawableAnnotation a2 = new XYDrawableAnnotation(10.0, 20.0, 100.0,
                 200.0, new TestDrawable());
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1 = new XYDrawableAnnotation(11.0, 20.0, 100.0, 200.0,
                 new TestDrawable());
         assertFalse(a1.equals(a2));
         a2 = new XYDrawableAnnotation(11.0, 20.0, 100.0, 200.0,
                 new TestDrawable());
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1 = new XYDrawableAnnotation(11.0, 22.0, 100.0, 200.0,
                 new TestDrawable());
         assertFalse(a1.equals(a2));
         a2 = new XYDrawableAnnotation(11.0, 22.0, 100.0, 200.0,
                 new TestDrawable());
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1 = new XYDrawableAnnotation(11.0, 22.0, 101.0, 200.0,
                 new TestDrawable());
         assertFalse(a1.equals(a2));
         a2 = new XYDrawableAnnotation(11.0, 22.0, 101.0, 200.0,
                 new TestDrawable());
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1 = new XYDrawableAnnotation(11.0, 22.0, 101.0, 202.0,
                 new TestDrawable());
         assertFalse(a1.equals(a2));
         a2 = new XYDrawableAnnotation(11.0, 22.0, 101.0, 202.0,
                 new TestDrawable());
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1 = new XYDrawableAnnotation(11.0, 22.0, 101.0, 202.0, 2.0,
                 new TestDrawable());
         assertFalse(a1.equals(a2));
         a2 = new XYDrawableAnnotation(11.0, 22.0, 101.0, 202.0, 2.0,
                 new TestDrawable());
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
     }
 
     /**
@@ -171,7 +173,7 @@ public class XYDrawableAnnotationTest  {
                 200.0, new TestDrawable());
         XYDrawableAnnotation a2 = new XYDrawableAnnotation(10.0, 20.0, 100.0,
                 200.0, new TestDrawable());
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
         assertEquals(h1, h2);
@@ -185,9 +187,9 @@ public class XYDrawableAnnotationTest  {
         XYDrawableAnnotation a1 = new XYDrawableAnnotation(10.0, 20.0, 100.0,
                 200.0, new TestDrawable());
         XYDrawableAnnotation a2 = (XYDrawableAnnotation) a1.clone();
-        assertTrue(a1 != a2);
-        assertTrue(a1.getClass() == a2.getClass());
-        assertTrue(a1.equals(a2));
+        assertNotSame(a1, a2);
+        assertSame(a1.getClass(), a2.getClass());
+        assertEquals(a1, a2);
     }
 
     /**

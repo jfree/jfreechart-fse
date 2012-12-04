@@ -55,6 +55,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 
@@ -75,19 +77,19 @@ public class DialPointerTest  {
     public void testEquals() {
         DialPointer i1 = new DialPointer.Pin(1);
         DialPointer i2 = new DialPointer.Pin(1);
-        assertTrue(i1.equals(i2));
+        assertEquals(i1, i2);
 
         // dataset index
         i1 = new DialPointer.Pin(2);
         assertFalse(i1.equals(i2));
         i2 = new DialPointer.Pin(2);
-        assertTrue(i1.equals(i2));
+        assertEquals(i1, i2);
 
         // check an inherited attribute
         i1.setVisible(false);
         assertFalse(i1.equals(i2));
         i2.setVisible(false);
-        assertTrue(i1.equals(i2));
+        assertEquals(i1, i2);
     }
 
     /**
@@ -102,13 +104,13 @@ public class DialPointerTest  {
         p1.setPaint(Color.green);
         assertFalse(p1.equals(p2));
         p2.setPaint(Color.green);
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
 
         BasicStroke s = new BasicStroke(4.4f);
         p1.setStroke(s);
         assertFalse(p1.equals(p2));
         p2.setStroke(s);
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
     }
 
     /**
@@ -123,12 +125,12 @@ public class DialPointerTest  {
         p1.setFillPaint(Color.green);
         assertFalse(p1.equals(p2));
         p2.setFillPaint(Color.green);
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
 
         p1.setOutlinePaint(Color.green);
         assertFalse(p1.equals(p2));
         p2.setOutlinePaint(Color.green);
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
     }
 
     /**
@@ -138,7 +140,7 @@ public class DialPointerTest  {
     public void testHashCode() {
         DialPointer i1 = new DialPointer.Pin(1);
         DialPointer i2 = new DialPointer.Pin(1);
-        assertTrue(i1.equals(i2));
+        assertEquals(i1, i2);
         int h1 = i1.hashCode();
         int h2 = i2.hashCode();
         assertEquals(h1, h2);
@@ -151,9 +153,9 @@ public class DialPointerTest  {
     public void testCloning() throws CloneNotSupportedException {
         DialPointer i1 = new DialPointer.Pin(1);
         DialPointer i2 = (DialPointer) i1.clone();
-        assertTrue(i1 != i2);
-        assertTrue(i1.getClass() == i2.getClass());
-        assertTrue(i1.equals(i2));
+        assertNotSame(i1, i2);
+        assertSame(i1.getClass(), i2.getClass());
+        assertEquals(i1, i2);
 
         // check that the listener lists are independent
         MyDialLayerChangeListener l1 = new MyDialLayerChangeListener();

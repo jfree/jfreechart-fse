@@ -52,7 +52,6 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 
 
@@ -77,17 +76,17 @@ public class YIntervalTest  {
         i1 = new YInterval(1.1, 0.5, 1.5);
         assertFalse(i1.equals(i2));
         i2 = new YInterval(1.1, 0.5, 1.5);
-        assertTrue(i1.equals(i2));
+        assertEquals(i1, i2);
 
         i1 = new YInterval(1.1, 0.55, 1.5);
         assertFalse(i1.equals(i2));
         i2 = new YInterval(1.1, 0.55, 1.5);
-        assertTrue(i1.equals(i2));
+        assertEquals(i1, i2);
 
         i1 = new YInterval(1.1, 0.55, 1.55);
         assertFalse(i1.equals(i2));
         i2 = new YInterval(1.1, 0.55, 1.55);
-        assertTrue(i1.equals(i2));
+        assertEquals(i1, i2);
     }
 
     /**

@@ -56,7 +56,8 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link DateTick} class.
@@ -82,38 +83,38 @@ public class DateTickTest  {
 
         DateTick t1 = new DateTick(d1, l1, ta1, ta1, Math.PI / 2.0);
         DateTick t2 = new DateTick(d1, l1, ta1, ta1, Math.PI / 2.0);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1 = new DateTick(d2, l1, ta1, ta1, Math.PI / 2.0);
         assertFalse(t1.equals(t2));
         t2 = new DateTick(d2, l1, ta1, ta1, Math.PI / 2.0);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1 = new DateTick(d1, l2, ta1, ta1, Math.PI / 2.0);
         assertFalse(t1.equals(t2));
         t2 = new DateTick(d1, l2, ta1, ta1, Math.PI / 2.0);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1 = new DateTick(d1, l1, ta2, ta1, Math.PI / 2.0);
         assertFalse(t1.equals(t2));
         t2 = new DateTick(d1, l1, ta2, ta1, Math.PI / 2.0);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1 = new DateTick(d1, l1, ta1, ta2, Math.PI / 2.0);
         assertFalse(t1.equals(t2));
         t2 = new DateTick(d1, l1, ta1, ta2, Math.PI / 2.0);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1 = new DateTick(d1, l1, ta1, ta1, Math.PI / 3.0);
         assertFalse(t1.equals(t2));
         t2 = new DateTick(d1, l1, ta1, ta1, Math.PI / 3.0);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1 = new DateTick(TickType.MINOR, d1, l1, ta1, ta1, Math.PI);
         t2 = new DateTick(TickType.MAJOR, d1, l1, ta1, ta1, Math.PI);
         assertFalse(t1.equals(t2));
         t2 = new DateTick(TickType.MINOR, d1, l1, ta1, ta1, Math.PI);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
     }
 
@@ -128,7 +129,7 @@ public class DateTickTest  {
 
         DateTick t1 = new DateTick(d1, l1, ta1, ta1, Math.PI / 2.0);
         DateTick t2 = new DateTick(d1, l1, ta1, ta1, Math.PI / 2.0);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
         int h1 = t1.hashCode();
         int h2 = t2.hashCode();
         assertEquals(h1, h2);
@@ -143,9 +144,9 @@ public class DateTickTest  {
                 TextAnchor.CENTER, 10.0);
         DateTick t2 = (DateTick) t1.clone();
 
-        assertTrue(t1 != t2);
-        assertTrue(t1.getClass() == t2.getClass());
-        assertTrue(t1.equals(t2));
+        assertNotSame(t1, t2);
+        assertSame(t1.getClass(), t2.getClass());
+        assertEquals(t1, t2);
     }
 
     /**

@@ -58,8 +58,9 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
 /**
@@ -107,9 +108,9 @@ public class DefaultKeyedValues2DTest  {
         v1.setValue(3, "V3", "C2");
         DefaultKeyedValues2D v2 = (DefaultKeyedValues2D) v1.clone();
 
-        assertTrue(v1 != v2);
-        assertTrue(v1.getClass() == v2.getClass());
-        assertTrue(v1.equals(v2));
+        assertNotSame(v1, v2);
+        assertSame(v1.getClass(), v2.getClass());
+        assertEquals(v1, v2);
 
         // check that clone is independent of the original
         v2.setValue(2, "V2", "C1");
@@ -148,13 +149,13 @@ public class DefaultKeyedValues2DTest  {
     public void testEquals() {
         DefaultKeyedValues2D d1 = new DefaultKeyedValues2D();
         DefaultKeyedValues2D d2 = new DefaultKeyedValues2D();
-        assertTrue(d1.equals(d2));
-        assertTrue(d2.equals(d1));
+        assertEquals(d1, d2);
+        assertEquals(d2, d1);
 
         d1.addValue(1.0, 2.0, "S1");
         assertFalse(d1.equals(d2));
         d2.addValue(1.0, 2.0, "S1");
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
     }
 
     /**

@@ -66,6 +66,8 @@ import java.io.ObjectOutputStream;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -104,7 +106,7 @@ public class CombinedDomainCategoryPlotTest
         // remove plot2, but plot1 is removed instead
         plot.remove(plot2);
         List plots = plot.getSubplots();
-        assertTrue(plots.get(0) == plot1);
+        assertSame(plots.get(0), plot1);
         assertEquals(1, plots.size());
     }
 
@@ -115,7 +117,7 @@ public class CombinedDomainCategoryPlotTest
     public void testEquals() {
         CombinedDomainCategoryPlot plot1 = createPlot();
         CombinedDomainCategoryPlot plot2 = createPlot();
-        assertTrue(plot1.equals(plot2));
+        assertEquals(plot1, plot2);
     }
 
     /**
@@ -125,9 +127,9 @@ public class CombinedDomainCategoryPlotTest
     public void testCloning() throws CloneNotSupportedException {
         CombinedDomainCategoryPlot plot1 = createPlot();
         CombinedDomainCategoryPlot plot2 = (CombinedDomainCategoryPlot) plot1.clone();
-        assertTrue(plot1 != plot2);
-        assertTrue(plot1.getClass() == plot2.getClass());
-        assertTrue(plot1.equals(plot2));
+        assertNotSame(plot1, plot2);
+        assertSame(plot1.getClass(), plot2.getClass());
+        assertEquals(plot1, plot2);
     }
 
     /**

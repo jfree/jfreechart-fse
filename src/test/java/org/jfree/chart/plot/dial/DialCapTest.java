@@ -55,6 +55,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 
@@ -75,13 +77,13 @@ public class DialCapTest  {
     public void testEquals() {
         DialCap c1 = new DialCap();
         DialCap c2 = new DialCap();
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
         // radius
         c1.setRadius(0.5);
         assertFalse(c1.equals(c2));
         c2.setRadius(0.5);
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
         // fill paint
         c1.setFillPaint(new GradientPaint(1.0f, 2.0f, Color.BLUE,
@@ -97,19 +99,19 @@ public class DialCapTest  {
         c2.setOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.WHITE,
                 3.0f, 4.0f, Color.gray));
 
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
         // outline stroke
         c1.setOutlineStroke(new BasicStroke(1.1f));
         assertFalse(c1.equals(c2));
         c2.setOutlineStroke(new BasicStroke(1.1f));
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
         // check an inherited attribute
         c1.setVisible(false);
         assertFalse(c1.equals(c2));
         c2.setVisible(false);
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
     }
 
     /**
@@ -119,7 +121,7 @@ public class DialCapTest  {
     public void testHashCode() {
         DialCap c1 = new DialCap();
         DialCap c2 = new DialCap();
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
         int h1 = c1.hashCode();
         int h2 = c2.hashCode();
         assertEquals(h1, h2);
@@ -133,9 +135,9 @@ public class DialCapTest  {
         // test a default instance
         DialCap c1 = new DialCap();
         DialCap c2 = (DialCap) c1.clone();
-        assertTrue(c1 != c2);
-        assertTrue(c1.getClass() == c2.getClass());
-        assertTrue(c1.equals(c2));
+        assertNotSame(c1, c2);
+        assertSame(c1.getClass(), c2.getClass());
+        assertEquals(c1, c2);
 
         // test a customised instance
         c1 = new DialCap();
@@ -145,9 +147,9 @@ public class DialCapTest  {
                 3.0f, 4.0f, Color.gray));
         c1.setOutlineStroke(new BasicStroke(2.0f));
         c2 = (DialCap) c1.clone();
-        assertTrue(c1 != c2);
-        assertTrue(c1.getClass() == c2.getClass());
-        assertTrue(c1.equals(c2));
+        assertNotSame(c1, c2);
+        assertSame(c1.getClass(), c2.getClass());
+        assertEquals(c1, c2);
 
         // check that the listener lists are independent
         MyDialLayerChangeListener l1 = new MyDialLayerChangeListener();

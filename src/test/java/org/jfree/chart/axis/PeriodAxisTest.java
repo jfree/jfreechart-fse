@@ -74,7 +74,8 @@ import java.util.TimeZone;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link PeriodAxis} class.
@@ -106,28 +107,28 @@ public class PeriodAxisTest  implements AxisChangeListener {
 
         PeriodAxis a1 = new PeriodAxis("Test");
         PeriodAxis a2 = new PeriodAxis("Test");
-        assertTrue(a1.equals(a2));
-        assertTrue(a2.equals(a1));
+        assertEquals(a1, a2);
+        assertEquals(a2, a1);
 
         a1.setFirst(new Year(2000));
         assertFalse(a1.equals(a2));
         a2.setFirst(new Year(2000));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setLast(new Year(2004));
         assertFalse(a1.equals(a2));
         a2.setLast(new Year(2004));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setTimeZone(TimeZone.getTimeZone("Pacific/Auckland"));
         assertFalse(a1.equals(a2));
         a2.setTimeZone(TimeZone.getTimeZone("Pacific/Auckland"));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setAutoRangeTimePeriodClass(Quarter.class);
         assertFalse(a1.equals(a2));
         a2.setAutoRangeTimePeriodClass(Quarter.class);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         PeriodAxisLabelInfo info[] = new PeriodAxisLabelInfo[1];
         info[0] = new PeriodAxisLabelInfo(Month.class,
@@ -136,33 +137,33 @@ public class PeriodAxisTest  implements AxisChangeListener {
         a1.setLabelInfo(info);
         assertFalse(a1.equals(a2));
         a2.setLabelInfo(info);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setMajorTickTimePeriodClass(Minute.class);
         assertFalse(a1.equals(a2));
         a2.setMajorTickTimePeriodClass(Minute.class);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setMinorTickMarksVisible(!a1.isMinorTickMarksVisible());
         assertFalse(a1.equals(a2));
         a2.setMinorTickMarksVisible(a1.isMinorTickMarksVisible());
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setMinorTickTimePeriodClass(Minute.class);
         assertFalse(a1.equals(a2));
         a2.setMinorTickTimePeriodClass(Minute.class);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         Stroke s = new BasicStroke(1.23f);
         a1.setMinorTickMarkStroke(s);
         assertFalse(a1.equals(a2));
         a2.setMinorTickMarkStroke(s);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setMinorTickMarkPaint(Color.BLUE);
         assertFalse(a1.equals(a2));
         a2.setMinorTickMarkPaint(Color.BLUE);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
     }
 
@@ -176,15 +177,15 @@ public class PeriodAxisTest  implements AxisChangeListener {
                 TimeZone.getDefault(), Locale.JAPAN);
         PeriodAxis a2 = new PeriodAxis("Test", new Year(2000), new Year(2009),
                 TimeZone.getDefault(), Locale.JAPAN);
-        assertTrue(a1.equals(a2));
-        assertTrue(a2.equals(a1));
+        assertEquals(a1, a2);
+        assertEquals(a2, a1);
 
         a1 = new PeriodAxis("Test", new Year(2000), new Year(2009),
                 TimeZone.getDefault(), Locale.UK);
         assertFalse(a1.equals(a2));
         a2 = new PeriodAxis("Test", new Year(2000), new Year(2009),
                 TimeZone.getDefault(), Locale.UK);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
     }
 
         /**
@@ -194,7 +195,7 @@ public class PeriodAxisTest  implements AxisChangeListener {
     public void testHashCode() {
         PeriodAxis a1 = new PeriodAxis("Test");
         PeriodAxis a2 = new PeriodAxis("Test");
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
         assertEquals(h1, h2);
@@ -209,25 +210,25 @@ public class PeriodAxisTest  implements AxisChangeListener {
         PeriodAxis a2 = (PeriodAxis) a1.clone();
 
 
-        assertTrue(a1 != a2);
-        assertTrue(a1.getClass() == a2.getClass());
-        assertTrue(a1.equals(a2));
+        assertNotSame(a1, a2);
+        assertSame(a1.getClass(), a2.getClass());
+        assertEquals(a1, a2);
 
         // some checks that the clone is independent of the original
         a1.setLabel("New Label");
         assertFalse(a1.equals(a2));
         a2.setLabel("New Label");
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setFirst(new Year(1920));
         assertFalse(a1.equals(a2));
         a2.setFirst(new Year(1920));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setLast(new Year(2020));
         assertFalse(a1.equals(a2));
         a2.setLast(new Year(2020));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         PeriodAxisLabelInfo[] info = new PeriodAxisLabelInfo[2];
         info[0] = new PeriodAxisLabelInfo(Day.class, new SimpleDateFormat("d"));
@@ -236,17 +237,17 @@ public class PeriodAxisTest  implements AxisChangeListener {
         a1.setLabelInfo(info);
         assertFalse(a1.equals(a2));
         a2.setLabelInfo(info);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setAutoRangeTimePeriodClass(Second.class);
         assertFalse(a1.equals(a2));
         a2.setAutoRangeTimePeriodClass(Second.class);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setTimeZone(new SimpleTimeZone(123, "Bogus"));
         assertFalse(a1.equals(a2));
         a2.setTimeZone(new SimpleTimeZone(123, "Bogus"));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
     }
 
@@ -279,7 +280,7 @@ public class PeriodAxisTest  implements AxisChangeListener {
         axis.addChangeListener(this);
         this.lastEvent = null;
         axis.setRange(new DateRange(0L, 1000L));
-        assertTrue(this.lastEvent != null);
+        assertNotSame(this.lastEvent, null);
     }
 
     private static final double EPSILON = 0.0000000001;

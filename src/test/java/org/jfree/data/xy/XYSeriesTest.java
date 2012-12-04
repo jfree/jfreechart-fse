@@ -59,7 +59,9 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -81,18 +83,18 @@ public class XYSeriesTest  {
         s1.add(1.0, 1.1);
         XYSeries s2 = new XYSeries("Series");
         s2.add(1.0, 1.1);
-        assertTrue(s1.equals(s2));
-        assertTrue(s2.equals(s1));
+        assertEquals(s1, s2);
+        assertEquals(s2, s1);
 
         s1.setKey("Series X");
         assertFalse(s1.equals(s2));
         s2.setKey("Series X");
-        assertTrue(s1.equals(s2));
+        assertEquals(s1, s2);
 
         s1.add(2.0, 2.2);
         assertFalse(s1.equals(s2));
         s2.add(2.0, 2.2);
-        assertTrue(s1.equals(s2));
+        assertEquals(s1, s2);
     }
 
     /**
@@ -134,9 +136,9 @@ public class XYSeriesTest  {
         XYSeries s1 = new XYSeries("Series");
         s1.add(1.0, 1.1);
         XYSeries s2 = (XYSeries) s1.clone();
-        assertTrue(s1 != s2);
-        assertTrue(s1.getClass() == s2.getClass());
-        assertTrue(s1.equals(s2));
+        assertNotSame(s1, s2);
+        assertSame(s1.getClass(), s2.getClass());
+        assertEquals(s1, s2);
     }
 
     /**
@@ -150,13 +152,13 @@ public class XYSeriesTest  {
         s1.add(3.0, 200.0);
         XYSeries s2 = (XYSeries) s1.clone();
 
-        assertTrue(s1.equals(s2));
+        assertEquals(s1, s2);
 
         // check independence
         s2.add(4.0, 300.0);
         assertFalse(s1.equals(s2));
         s1.add(4.0, 300.0);
-        assertTrue(s1.equals(s2));
+        assertEquals(s1, s2);
     }
 
     /**
@@ -167,13 +169,13 @@ public class XYSeriesTest  {
         XYSeries s1 = new XYSeries("S1");
         XYSeries s2 = (XYSeries) s1.clone();
 
-        assertTrue(s1.equals(s2));
+        assertEquals(s1, s2);
 
         // check independence
         s2.add(4.0, 300.0);
         assertFalse(s1.equals(s2));
         s1.add(4.0, 300.0);
-        assertTrue(s1.equals(s2));
+        assertEquals(s1, s2);
     }
 
     /**

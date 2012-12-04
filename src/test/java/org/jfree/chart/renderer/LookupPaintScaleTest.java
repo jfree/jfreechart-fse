@@ -57,7 +57,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link LookupPaintScale} class.
@@ -75,20 +76,20 @@ public class LookupPaintScaleTest  {
     public void testEquals() {
         LookupPaintScale g1 = new LookupPaintScale();
         LookupPaintScale g2 = new LookupPaintScale();
-        assertTrue(g1.equals(g2));
-        assertTrue(g2.equals(g1));
+        assertEquals(g1, g2);
+        assertEquals(g2, g1);
 
         g1 = new LookupPaintScale(1.0, 2.0, Color.RED);
         assertFalse(g1.equals(g2));
         g2 = new LookupPaintScale(1.0, 2.0, Color.RED);
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
 
         g1.add(1.5, new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.BLUE));
         assertFalse(g1.equals(g2));
         g2.add(1.5, new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.BLUE));
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
     }
 
     /**
@@ -98,15 +99,15 @@ public class LookupPaintScaleTest  {
     public void testCloning() throws CloneNotSupportedException {
         LookupPaintScale g1 = new LookupPaintScale();
         LookupPaintScale g2 = (LookupPaintScale) g1.clone();
-        assertTrue(g1 != g2);
-        assertTrue(g1.getClass() == g2.getClass());
-        assertTrue(g1.equals(g2));
+        assertNotSame(g1, g2);
+        assertSame(g1.getClass(), g2.getClass());
+        assertEquals(g1, g2);
 
         // check independence
         g1.add(0.5, Color.RED);
         assertFalse(g1.equals(g2));
         g2.add(0.5, Color.RED);
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
 
         // try with gradient paint
         g1 = new LookupPaintScale(1.0, 2.0, new GradientPaint(1.0f, 2.0f,
@@ -115,9 +116,9 @@ public class LookupPaintScaleTest  {
                 Color.BLUE));
         g2 = (LookupPaintScale) g1.clone();
 
-        assertTrue(g1 != g2);
-        assertTrue(g1.getClass() == g2.getClass());
-        assertTrue(g1.equals(g2));
+        assertNotSame(g1, g2);
+        assertSame(g1.getClass(), g2.getClass());
+        assertEquals(g1, g2);
     }
 
     /**

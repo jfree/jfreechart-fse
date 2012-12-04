@@ -56,6 +56,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -79,19 +81,19 @@ public class XYLine3DRendererTest  {
         r1.setXOffset(11.1);
         assertFalse(r1.equals(r2));
         r2.setXOffset(11.1);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setYOffset(11.1);
         assertFalse(r1.equals(r2));
         r2.setYOffset(11.1);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
                 4.0f, Color.BLUE));
         assertFalse(r1.equals(r2));
         r2.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
                 4.0f, Color.BLUE));
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
     }
 
     /**
@@ -101,7 +103,7 @@ public class XYLine3DRendererTest  {
     public void testHashcode() {
         XYLine3DRenderer r1 = new XYLine3DRenderer();
         XYLine3DRenderer r2 = new XYLine3DRenderer();
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);
@@ -116,9 +118,9 @@ public class XYLine3DRendererTest  {
         r1.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.BLUE));
         XYLine3DRenderer r2 = (XYLine3DRenderer) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
     }
 
     /**

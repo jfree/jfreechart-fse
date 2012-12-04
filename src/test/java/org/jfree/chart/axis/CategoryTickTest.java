@@ -58,7 +58,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link CategoryTick} class.
@@ -88,32 +89,32 @@ public class CategoryTickTest  {
 
         CategoryTick t1 = new CategoryTick(c1, tb1, tba1, ta1, 1.0f);
         CategoryTick t2 = new CategoryTick(c1, tb1, tba1, ta1, 1.0f);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1 = new CategoryTick(c2, tb1, tba1, ta1, 1.0f);
         assertFalse(t1.equals(t2));
         t2 = new CategoryTick(c2, tb1, tba1, ta1, 1.0f);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1 = new CategoryTick(c2, tb2, tba1, ta1, 1.0f);
         assertFalse(t1.equals(t2));
         t2 = new CategoryTick(c2, tb2, tba1, ta1, 1.0f);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1 = new CategoryTick(c2, tb2, tba2, ta1, 1.0f);
         assertFalse(t1.equals(t2));
         t2 = new CategoryTick(c2, tb2, tba2, ta1, 1.0f);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1 = new CategoryTick(c2, tb2, tba2, ta2, 1.0f);
         assertFalse(t1.equals(t2));
         t2 = new CategoryTick(c2, tb2, tba2, ta2, 1.0f);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1 = new CategoryTick(c2, tb2, tba2, ta2, 2.0f);
         assertFalse(t1.equals(t2));
         t2 = new CategoryTick(c2, tb2, tba2, ta2, 2.0f);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
     }
 
@@ -131,7 +132,7 @@ public class CategoryTickTest  {
 
         CategoryTick t1 = new CategoryTick(c1, tb1, tba1, ta1, 1.0f);
         CategoryTick t2 = new CategoryTick(c1, tb1, tba1, ta1, 1.0f);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
         int h1 = t1.hashCode();
         int h2 = t2.hashCode();
         assertEquals(h1, h2);
@@ -147,9 +148,9 @@ public class CategoryTickTest  {
             TextAnchor.CENTER, 1.5f
         );
         CategoryTick t2 = (CategoryTick) t1.clone();
-        assertTrue(t1 != t2);
-        assertTrue(t1.getClass() == t2.getClass());
-        assertTrue(t1.equals(t2));
+        assertNotSame(t1, t2);
+        assertSame(t1.getClass(), t2.getClass());
+        assertEquals(t1, t2);
     }
 
     /**

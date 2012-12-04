@@ -60,7 +60,9 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -85,32 +87,32 @@ public class ScatterRendererTest  {
         r1.setSeriesShapesFilled(1, true);
         assertFalse(r1.equals(r2));
         r2.setSeriesShapesFilled(1, true);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setBaseShapesFilled(false);
         assertFalse(r1.equals(r2));
         r2.setBaseShapesFilled(false);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setUseFillPaint(true);
         assertFalse(r1.equals(r2));
         r2.setUseFillPaint(true);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setDrawOutlines(true);
         assertFalse(r1.equals(r2));
         r2.setDrawOutlines(true);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setUseOutlinePaint(true);
         assertFalse(r1.equals(r2));
         r2.setUseOutlinePaint(true);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setUseSeriesOffset(false);
         assertFalse(r1.equals(r2));
         r2.setUseSeriesOffset(false);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
     }
 
@@ -121,7 +123,7 @@ public class ScatterRendererTest  {
     public void testHashcode() {
         ScatterRenderer r1 = new ScatterRenderer();
         ScatterRenderer r2 = new ScatterRenderer();
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);
@@ -135,9 +137,9 @@ public class ScatterRendererTest  {
         ScatterRenderer r1 = new ScatterRenderer();
         ScatterRenderer r2 = (ScatterRenderer) r1.clone();
 
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
 
         assertTrue(checkIndependence(r1, r2));
     }

@@ -80,6 +80,8 @@ import java.util.TimeZone;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -117,7 +119,7 @@ public class DateAxisTest  {
 
         DateAxis a1 = new DateAxis("Test");
         DateAxis a2 = new DateAxis("Test");
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
         assertFalse(a1.equals(null));
         assertFalse(a1.equals("Some non-DateAxis object"));
 
@@ -125,19 +127,19 @@ public class DateAxisTest  {
         a1.setTickUnit(new DateTickUnit(DateTickUnitType.DAY, 7));
         assertFalse(a1.equals(a2));
         a2.setTickUnit(new DateTickUnit(DateTickUnitType.DAY, 7));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // dateFormatOverride
         a1.setDateFormatOverride(new SimpleDateFormat("yyyy"));
         assertFalse(a1.equals(a2));
         a2.setDateFormatOverride(new SimpleDateFormat("yyyy"));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // tickMarkPosition
         a1.setTickMarkPosition(DateTickMarkPosition.END);
         assertFalse(a1.equals(a2));
         a2.setTickMarkPosition(DateTickMarkPosition.END);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
     }
 
@@ -149,13 +151,13 @@ public class DateAxisTest  {
     public void test1472942() {
         DateAxis a1 = new DateAxis("Test");
         DateAxis a2 = new DateAxis("Test");
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // range
         a1.setRange(new Date(1L), new Date(2L));
         assertFalse(a1.equals(a2));
         a2.setRange(new Date(1L), new Date(2L));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
     }
 
     /**
@@ -165,7 +167,7 @@ public class DateAxisTest  {
     public void testHashCode() {
         DateAxis a1 = new DateAxis("Test");
         DateAxis a2 = new DateAxis("Test");
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
         assertEquals(h1, h2);
@@ -178,9 +180,9 @@ public class DateAxisTest  {
     public void testCloning() throws CloneNotSupportedException {
         DateAxis a1 = new DateAxis("Test");
         DateAxis a2 = (DateAxis) a1.clone();
-        assertTrue(a1 != a2);
-        assertTrue(a1.getClass() == a2.getClass());
-        assertTrue(a1.equals(a2));
+        assertNotSame(a1, a2);
+        assertSame(a1.getClass(), a2.getClass());
+        assertEquals(a1, a2);
     }
 
     /**

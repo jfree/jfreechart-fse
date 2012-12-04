@@ -55,6 +55,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -74,14 +76,14 @@ public class VectorRendererTest  {
         // default instances
         VectorRenderer r1 = new VectorRenderer();
         VectorRenderer r2 = new VectorRenderer();
-        assertTrue(r1.equals(r2));
-        assertTrue(r2.equals(r1));
+        assertEquals(r1, r2);
+        assertEquals(r2, r1);
 
         // check that super class fields are being looked at...
         r1.setSeriesFillPaint(0, Color.green);
         assertFalse(r1.equals(r2));
         r2.setSeriesFillPaint(0, Color.green);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
     }
 
     /**
@@ -91,7 +93,7 @@ public class VectorRendererTest  {
     public void testHashcode() {
         VectorRenderer r1 = new VectorRenderer();
         VectorRenderer r2 = new VectorRenderer();
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);
@@ -104,9 +106,9 @@ public class VectorRendererTest  {
     public void testCloning() throws CloneNotSupportedException {
         VectorRenderer r1 = new VectorRenderer();
         VectorRenderer r2 = (VectorRenderer) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
     }
 
     /**

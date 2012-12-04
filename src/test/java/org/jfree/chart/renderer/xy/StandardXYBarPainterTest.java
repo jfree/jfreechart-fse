@@ -53,7 +53,6 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link StandardXYBarPainter} class.
@@ -81,7 +80,7 @@ public class StandardXYBarPainterTest  {
     public void testHashcode() {
         StandardXYBarPainter p1 = new StandardXYBarPainter();
         StandardXYBarPainter p2 = new StandardXYBarPainter();
-        assertTrue(p1.equals(p2));
+        assertEquals(p1, p2);
         int h1 = p1.hashCode();
         int h2 = p2.hashCode();
         assertEquals(h1, h2);

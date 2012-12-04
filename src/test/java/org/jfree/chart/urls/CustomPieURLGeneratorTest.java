@@ -56,6 +56,8 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -74,14 +76,14 @@ public class CustomPieURLGeneratorTest  {
     public void testEquals() {
         CustomPieURLGenerator g1 = new CustomPieURLGenerator();
         CustomPieURLGenerator g2 = new CustomPieURLGenerator();
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
 
         Map<String, String> m1 = new HashMap<String, String>();
         m1.put("A", "http://www.jfree.org/");
         g1.addURLs(m1);
         assertFalse(g1.equals(g2));
         g2.addURLs(m1);
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
     }
 
     /**
@@ -94,9 +96,9 @@ public class CustomPieURLGeneratorTest  {
         m1.put("A", "http://www.jfree.org/");
         g1.addURLs(m1);
         CustomPieURLGenerator g2 = (CustomPieURLGenerator) g1.clone();
-        assertTrue(g1 != g2);
-        assertTrue(g1.getClass() == g2.getClass());
-        assertTrue(g1.equals(g2));
+        assertNotSame(g1, g2);
+        assertSame(g1.getClass(), g2.getClass());
+        assertEquals(g1, g2);
 
         // check independence
         Map<String, String> m2 = new HashMap<String, String>();

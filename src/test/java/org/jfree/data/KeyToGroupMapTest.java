@@ -52,7 +52,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
 /**
@@ -220,13 +221,13 @@ public class KeyToGroupMapTest  {
     public void testEquals() {
         KeyToGroupMap m1 = new KeyToGroupMap("Default Group");
         KeyToGroupMap m2 = new KeyToGroupMap("Default Group");
-        assertTrue(m1.equals(m2));
-        assertTrue(m2.equals(m1));
+        assertEquals(m1, m2);
+        assertEquals(m2, m1);
 
         m1.mapKeyToGroup("K1", "G1");
         assertFalse(m1.equals(m2));
         m2.mapKeyToGroup("K1", "G1");
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m2);
     }
 
     /**
@@ -237,15 +238,15 @@ public class KeyToGroupMapTest  {
         KeyToGroupMap m1 = new KeyToGroupMap("Test");
         m1.mapKeyToGroup("K1", "G1");
         KeyToGroupMap m2 = (KeyToGroupMap) m1.clone();
-        assertTrue(m1 != m2);
-        assertTrue(m1.getClass() == m2.getClass());
-        assertTrue(m1.equals(m2));
+        assertNotSame(m1, m2);
+        assertSame(m1.getClass(), m2.getClass());
+        assertEquals(m1, m2);
 
         // a small check for independence
         m1.mapKeyToGroup("K1", "G2");
         assertFalse(m1.equals(m2));
         m2.mapKeyToGroup("K1", "G2");
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m2);
     }
 
     /**

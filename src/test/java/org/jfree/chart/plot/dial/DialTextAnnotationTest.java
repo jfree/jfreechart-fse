@@ -55,6 +55,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 
@@ -75,44 +77,44 @@ public class DialTextAnnotationTest  {
     public void testEquals() {
         DialTextAnnotation a1 = new DialTextAnnotation("A1");
         DialTextAnnotation a2 = new DialTextAnnotation("A1");
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // angle
         a1.setAngle(1.1);
         assertFalse(a1.equals(a2));
         a2.setAngle(1.1);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // radius
         a1.setRadius(9.9);
         assertFalse(a1.equals(a2));
         a2.setRadius(9.9);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // font
         Font f = new Font("SansSerif", Font.PLAIN, 14);
         a1.setFont(f);
         assertFalse(a1.equals(a2));
         a2.setFont(f);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // paint
         a1.setPaint(Color.RED);
         assertFalse(a1.equals(a2));
         a2.setPaint(Color.RED);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // label
         a1.setLabel("ABC");
         assertFalse(a1.equals(a2));
         a2.setLabel("ABC");
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // check an inherited attribute
         a1.setVisible(false);
         assertFalse(a1.equals(a2));
         a2.setVisible(false);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
     }
 
     /**
@@ -122,7 +124,7 @@ public class DialTextAnnotationTest  {
     public void testHashCode() {
         DialTextAnnotation a1 = new DialTextAnnotation("A1");
         DialTextAnnotation a2 = new DialTextAnnotation("A1");
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
         assertEquals(h1, h2);
@@ -136,9 +138,9 @@ public class DialTextAnnotationTest  {
         // test a default instance
         DialTextAnnotation a1 = new DialTextAnnotation("A1");
         DialTextAnnotation a2 = (DialTextAnnotation) a1.clone();
-        assertTrue(a1 != a2);
-        assertTrue(a1.getClass() == a2.getClass());
-        assertTrue(a1.equals(a2));
+        assertNotSame(a1, a2);
+        assertSame(a1.getClass(), a2.getClass());
+        assertEquals(a1, a2);
 
         // check that the listener lists are independent
         MyDialLayerChangeListener l1 = new MyDialLayerChangeListener();

@@ -58,8 +58,9 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
 /**
@@ -121,8 +122,8 @@ public class DefaultStatisticalCategoryDatasetTest  {
                 = new DefaultStatisticalCategoryDataset();
         DefaultStatisticalCategoryDataset d2
                 = new DefaultStatisticalCategoryDataset();
-        assertTrue(d1.equals(d2));
-        assertTrue(d2.equals(d1));
+        assertEquals(d1, d2);
+        assertEquals(d2, d1);
 
     }
 
@@ -138,9 +139,9 @@ public class DefaultStatisticalCategoryDatasetTest  {
         d1.add(null, 5.5, "R1", "C3");
         d1.add(6.6, null, "R2", "C3");
         DefaultStatisticalCategoryDataset d2 = (DefaultStatisticalCategoryDataset) d1.clone();
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
 
         // check independence
         d1.add(1.1, 2.2, "R3", "C1");

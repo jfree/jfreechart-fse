@@ -54,7 +54,8 @@ import java.awt.GradientPaint;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link Axis} class.
@@ -73,9 +74,9 @@ public class AxisTest  {
         CategoryAxis a1 = new CategoryAxis("Test");
         a1.setAxisLinePaint(Color.RED);
         CategoryAxis a2 = (CategoryAxis) a1.clone();
-        assertTrue(a1 != a2);
-        assertTrue(a1.getClass() == a2.getClass());
-        assertTrue(a1.equals(a2));
+        assertNotSame(a1, a2);
+        assertSame(a1.getClass(), a2.getClass());
+        assertEquals(a1, a2);
     }
 
     /**
@@ -86,25 +87,25 @@ public class AxisTest  {
 
         Axis a1 = new CategoryAxis("Test");
         Axis a2 = new CategoryAxis("Test");
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // visible flag...
         a1.setVisible(false);
         assertFalse(a1.equals(a2));
         a2.setVisible(false);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // label...
         a1.setLabel("New Label");
         assertFalse(a1.equals(a2));
         a2.setLabel("New Label");
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // label font...
         a1.setLabelFont(new Font("Dialog", Font.PLAIN, 8));
         assertFalse(a1.equals(a2));
         a2.setLabelFont(new Font("Dialog", Font.PLAIN, 8));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // label paint...
         a1.setLabelPaint(new GradientPaint(1.0f, 2.0f, Color.WHITE,
@@ -112,32 +113,32 @@ public class AxisTest  {
         assertFalse(a1.equals(a2));
         a2.setLabelPaint(new GradientPaint(1.0f, 2.0f, Color.WHITE,
                 3.0f, 4.0f, Color.BLACK));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // label insets...
         a1.setLabelInsets(new RectangleInsets(10.0, 10.0, 10.0, 10.0));
         assertFalse(a1.equals(a2));
         a2.setLabelInsets(new RectangleInsets(10.0, 10.0, 10.0, 10.0));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // label angle...
         a1.setLabelAngle(1.23);
         assertFalse(a1.equals(a2));
         a2.setLabelAngle(1.23);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // axis line visible...
         a1.setAxisLineVisible(false);
         assertFalse(a1.equals(a2));
         a2.setAxisLineVisible(false);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // axis line stroke...
         BasicStroke s = new BasicStroke(1.1f);
         a1.setAxisLineStroke(s);
         assertFalse(a1.equals(a2));
         a2.setAxisLineStroke(s);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // axis line paint...
         a1.setAxisLinePaint(new GradientPaint(1.0f, 2.0f, Color.RED,
@@ -145,19 +146,19 @@ public class AxisTest  {
         assertFalse(a1.equals(a2));
         a2.setAxisLinePaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.BLACK));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // tick labels visible flag...
         a1.setTickLabelsVisible(false);
         assertFalse(a1.equals(a2));
         a2.setTickLabelsVisible(false);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // tick label font...
         a1.setTickLabelFont(new Font("Dialog", Font.PLAIN, 12));
         assertFalse(a1.equals(a2));
         a2.setTickLabelFont(new Font("Dialog", Font.PLAIN, 12));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // tick label paint...
         a1.setTickLabelPaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
@@ -165,37 +166,37 @@ public class AxisTest  {
         assertFalse(a1.equals(a2));
         a2.setTickLabelPaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
                 3.0f, 4.0f, Color.BLACK));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // tick label insets...
         a1.setTickLabelInsets(new RectangleInsets(10.0, 10.0, 10.0, 10.0));
         assertFalse(a1.equals(a2));
         a2.setTickLabelInsets(new RectangleInsets(10.0, 10.0, 10.0, 10.0));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // tick marks visible flag...
         a1.setTickMarksVisible(false);
         assertFalse(a1.equals(a2));
         a2.setTickMarksVisible(false);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // tick mark inside length...
         a1.setTickMarkInsideLength(1.23f);
         assertFalse(a1.equals(a2));
         a2.setTickMarkInsideLength(1.23f);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // tick mark outside length...
         a1.setTickMarkOutsideLength(1.23f);
         assertFalse(a1.equals(a2));
         a2.setTickMarkOutsideLength(1.23f);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // tick mark stroke...
         a1.setTickMarkStroke(new BasicStroke(2.0f));
         assertFalse(a1.equals(a2));
         a2.setTickMarkStroke(new BasicStroke(2.0f));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // tick mark paint...
         a1.setTickMarkPaint(new GradientPaint(1.0f, 2.0f, Color.cyan,
@@ -203,28 +204,28 @@ public class AxisTest  {
         assertFalse(a1.equals(a2));
         a2.setTickMarkPaint(new GradientPaint(1.0f, 2.0f, Color.cyan,
                 3.0f, 4.0f, Color.BLACK));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // tick mark outside length...
         a1.setFixedDimension(3.21f);
         assertFalse(a1.equals(a2));
         a2.setFixedDimension(3.21f);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setMinorTickMarksVisible(true);
         assertFalse(a1.equals(a2));
         a2.setMinorTickMarksVisible(true);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setMinorTickMarkInsideLength(1.23f);
         assertFalse(a1.equals(a2));
         a2.setMinorTickMarkInsideLength(1.23f);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setMinorTickMarkOutsideLength(3.21f);
         assertFalse(a1.equals(a2));
         a2.setMinorTickMarkOutsideLength(3.21f);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
     }
 
@@ -235,7 +236,7 @@ public class AxisTest  {
     public void testHashCode() {
         Axis a1 = new CategoryAxis("Test");
         Axis a2 = new CategoryAxis("Test");
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
         assertEquals(h1, h2);

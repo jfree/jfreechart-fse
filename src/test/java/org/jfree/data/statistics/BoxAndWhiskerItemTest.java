@@ -52,7 +52,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link BoxAndWhiskerItem} class.
@@ -79,8 +78,8 @@ public class BoxAndWhiskerItemTest  {
                 5.0, 6.0, 7.0, 8.0,
             new ArrayList()
         );
-        assertTrue(i1.equals(i2));
-        assertTrue(i2.equals(i1));
+        assertEquals(i1, i2);
+        assertEquals(i2, i1);
 
     }
 

@@ -54,6 +54,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -74,18 +76,18 @@ public class MultipleXYSeriesLabelGeneratorTest  {
                 = new MultipleXYSeriesLabelGenerator();
         MultipleXYSeriesLabelGenerator g2
                 = new MultipleXYSeriesLabelGenerator();
-        assertTrue(g1.equals(g2));
-        assertTrue(g2.equals(g1));
+        assertEquals(g1, g2);
+        assertEquals(g2, g1);
 
         g1 = new MultipleXYSeriesLabelGenerator("Series {0}");
         assertFalse(g1.equals(g2));
         g2 = new MultipleXYSeriesLabelGenerator("Series {0}");
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
 
         g1.addSeriesLabel(1, "Additional 1");
         assertFalse(g1.equals(g2));
         g2.addSeriesLabel(1, "Additional 1");
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
     }
 
     /**
@@ -97,8 +99,8 @@ public class MultipleXYSeriesLabelGeneratorTest  {
                 = new MultipleXYSeriesLabelGenerator();
         MultipleXYSeriesLabelGenerator g2
                 = new MultipleXYSeriesLabelGenerator();
-        assertTrue(g1.equals(g2));
-        assertTrue(g1.hashCode() == g2.hashCode());
+        assertEquals(g1, g2);
+        assertEquals(g1.hashCode(), g2.hashCode());
     }
 
     /**
@@ -110,15 +112,15 @@ public class MultipleXYSeriesLabelGeneratorTest  {
                 = new MultipleXYSeriesLabelGenerator();
         MultipleXYSeriesLabelGenerator g2 = (MultipleXYSeriesLabelGenerator) g1.clone();
 
-        assertTrue(g1 != g2);
-        assertTrue(g1.getClass() == g2.getClass());
-        assertTrue(g1.equals(g2));
+        assertNotSame(g1, g2);
+        assertSame(g1.getClass(), g2.getClass());
+        assertEquals(g1, g2);
 
         // check independence
         g1.addSeriesLabel(3, "Add3");
         assertFalse(g1.equals(g2));
         g2.addSeriesLabel(3, "Add3");
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
     }
 
     /**

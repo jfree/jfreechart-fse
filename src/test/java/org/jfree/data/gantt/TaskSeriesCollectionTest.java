@@ -56,8 +56,9 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
 /**
@@ -459,8 +460,8 @@ public class TaskSeriesCollectionTest  {
         c2.add(s1b);
         c2.add(s2b);
 
-        assertTrue(c1.equals(c2));
-        assertTrue(c2.equals(c1));
+        assertEquals(c1, c2);
+        assertEquals(c2, c1);
 
     }
 
@@ -481,16 +482,16 @@ public class TaskSeriesCollectionTest  {
 
         TaskSeriesCollection c2 = (TaskSeriesCollection) c1.clone();
 
-        assertTrue(c1 != c2);
-        assertTrue(c1.getClass() == c2.getClass());
-        assertTrue(c1.equals(c2));
+        assertNotSame(c1, c2);
+        assertSame(c1.getClass(), c2.getClass());
+        assertEquals(c1, c2);
 
         // basic check for independence
         s1.add(new Task("T3", new Date(21), new Date(33)));
         assertFalse(c1.equals(c2));
         TaskSeries series = c2.getSeries("S1");
         series.add(new Task("T3", new Date(21), new Date(33)));
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
     }
 

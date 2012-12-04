@@ -55,7 +55,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 
 /**
@@ -87,16 +88,16 @@ public class GrayPaintScaleTest  {
     public void testGetPaint() {
         GrayPaintScale gps = new GrayPaintScale();
         Color c = (Color) gps.getPaint(0.0);
-        assertTrue(c.equals(Color.BLACK));
+        assertEquals(c, Color.BLACK);
         c = (Color) gps.getPaint(1.0);
-        assertTrue(c.equals(Color.WHITE));
+        assertEquals(c, Color.WHITE);
 
         // check lookup values that are outside the bounds - see bug report
         // 1767315
         c = (Color) gps.getPaint(-0.5);
-        assertTrue(c.equals(Color.BLACK));
+        assertEquals(c, Color.BLACK);
         c = (Color) gps.getPaint(1.5);
-        assertTrue(c.equals(Color.WHITE));
+        assertEquals(c, Color.WHITE);
     }
 
     /**
@@ -106,26 +107,26 @@ public class GrayPaintScaleTest  {
     public void testEquals() {
         GrayPaintScale g1 = new GrayPaintScale();
         GrayPaintScale g2 = new GrayPaintScale();
-        assertTrue(g1.equals(g2));
-        assertTrue(g2.equals(g1));
+        assertEquals(g1, g2);
+        assertEquals(g2, g1);
 
         g1 = new GrayPaintScale(0.0, 1.0);
         g2 = new GrayPaintScale(0.0, 1.0);
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
         g1 = new GrayPaintScale(0.1, 1.0);
         assertFalse(g1.equals(g2));
         g2 = new GrayPaintScale(0.1, 1.0);
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
 
         g1 = new GrayPaintScale(0.1, 0.9);
         assertFalse(g1.equals(g2));
         g2 = new GrayPaintScale(0.1, 0.9);
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
 
         g1 = new GrayPaintScale(0.1, 0.9, 128);
         assertFalse(g1.equals(g2));
         g2 = new GrayPaintScale(0.1, 0.9, 128);
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
     }
 
     /**
@@ -135,9 +136,9 @@ public class GrayPaintScaleTest  {
     public void testCloning() throws CloneNotSupportedException {
         GrayPaintScale g1 = new GrayPaintScale();
         GrayPaintScale g2 = (GrayPaintScale) g1.clone();
-        assertTrue(g1 != g2);
-        assertTrue(g1.getClass() == g2.getClass());
-        assertTrue(g1.equals(g2));
+        assertNotSame(g1, g2);
+        assertSame(g1.getClass(), g2.getClass());
+        assertEquals(g1, g2);
     }
 
     /**

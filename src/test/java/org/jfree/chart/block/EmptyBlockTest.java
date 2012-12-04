@@ -52,7 +52,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 
 
@@ -72,18 +73,18 @@ public class EmptyBlockTest  {
     public void testEquals() {
         EmptyBlock b1 = new EmptyBlock(1.0, 2.0);
         EmptyBlock b2 = new EmptyBlock(1.0, 2.0);
-        assertTrue(b1.equals(b2));
-        assertTrue(b2.equals(b2));
+        assertEquals(b1, b2);
+        assertEquals(b2, b2);
 
         b1 = new EmptyBlock(1.1, 2.0);
         assertFalse(b1.equals(b2));
         b2 = new EmptyBlock(1.1, 2.0);
-        assertTrue(b1.equals(b2));
+        assertEquals(b1, b2);
 
         b1 = new EmptyBlock(1.1, 2.2);
         assertFalse(b1.equals(b2));
         b2 = new EmptyBlock(1.1, 2.2);
-        assertTrue(b1.equals(b2));
+        assertEquals(b1, b2);
     }
 
     /**
@@ -94,9 +95,9 @@ public class EmptyBlockTest  {
         EmptyBlock b1 = new EmptyBlock(1.0, 2.0);
         EmptyBlock b2 = (EmptyBlock) b1.clone();
 
-        assertTrue(b1 != b2);
-        assertTrue(b1.getClass() == b2.getClass());
-        assertTrue(b1.equals(b2));
+        assertNotSame(b1, b2);
+        assertSame(b1.getClass(), b2.getClass());
+        assertEquals(b1, b2);
     }
 
     /**

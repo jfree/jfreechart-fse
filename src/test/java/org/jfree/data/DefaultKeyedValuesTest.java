@@ -62,7 +62,9 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -302,9 +304,9 @@ public class DefaultKeyedValuesTest  {
         v1.addValue("V3", new Integer(3));
         DefaultKeyedValues v2 = (DefaultKeyedValues) v1.clone();
 
-        assertTrue(v1 != v2);
-        assertTrue(v1.getClass() == v2.getClass());
-        assertTrue(v1.equals(v2));
+        assertNotSame(v1, v2);
+        assertSame(v1.getClass(), v2.getClass());
+        assertEquals(v1, v2);
 
         // confirm that the clone is independent of the original
         v2.setValue("V1", new Integer(44));

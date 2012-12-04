@@ -53,7 +53,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link ModuloAxis} class.
@@ -71,9 +72,9 @@ public class ModuloAxisTest  {
     public void testCloning() throws CloneNotSupportedException {
         ModuloAxis a1 = new ModuloAxis("Test", new Range(0.0, 1.0));
         ModuloAxis a2 = (ModuloAxis) a1.clone();
-        assertTrue(a1 != a2);
-        assertTrue(a1.getClass() == a2.getClass());
-        assertTrue(a1.equals(a2));
+        assertNotSame(a1, a2);
+        assertSame(a1.getClass(), a2.getClass());
+        assertEquals(a1, a2);
     }
 
     /**
@@ -83,12 +84,12 @@ public class ModuloAxisTest  {
     public void testEquals() {
         ModuloAxis a1 = new ModuloAxis("Test", new Range(0.0, 1.0));
         ModuloAxis a2 = new ModuloAxis("Test", new Range(0.0, 1.0));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setDisplayRange(0.1, 1.1);
         assertFalse(a1.equals(a2));
         a2.setDisplayRange(0.1, 1.1);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
     }
 
     /**
@@ -98,7 +99,7 @@ public class ModuloAxisTest  {
     public void testHashCode() {
         ModuloAxis a1 = new ModuloAxis("Test", new Range(0.0, 1.0));
         ModuloAxis a2 = new ModuloAxis("Test", new Range(0.0, 1.0));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
         assertEquals(h1, h2);

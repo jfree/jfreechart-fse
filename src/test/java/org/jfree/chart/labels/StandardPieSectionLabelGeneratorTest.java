@@ -60,6 +60,8 @@ import java.text.NumberFormat;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -80,8 +82,8 @@ public class StandardPieSectionLabelGeneratorTest  {
                 = new StandardPieSectionLabelGenerator();
         StandardPieSectionLabelGenerator g2
                 = new StandardPieSectionLabelGenerator();
-        assertTrue(g1.equals(g2));
-        assertTrue(g2.equals(g1));
+        assertEquals(g1, g2);
+        assertEquals(g2, g1);
 
         g1 = new StandardPieSectionLabelGenerator("{0}",
                 new DecimalFormat("#,##0.00"),
@@ -90,7 +92,7 @@ public class StandardPieSectionLabelGeneratorTest  {
         g2 = new StandardPieSectionLabelGenerator("{0}",
                 new DecimalFormat("#,##0.00"),
                 NumberFormat.getPercentInstance());
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
 
         g1 = new StandardPieSectionLabelGenerator("{0} {1}",
                 new DecimalFormat("#,##0.00"),
@@ -99,27 +101,27 @@ public class StandardPieSectionLabelGeneratorTest  {
         g2 = new StandardPieSectionLabelGenerator("{0} {1}",
                 new DecimalFormat("#,##0.00"),
                 NumberFormat.getPercentInstance());
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
 
         g1 = new StandardPieSectionLabelGenerator("{0} {1}",
                 new DecimalFormat("#,##0"), NumberFormat.getPercentInstance());
         assertFalse(g1.equals(g2));
         g2 = new StandardPieSectionLabelGenerator("{0} {1}",
                 new DecimalFormat("#,##0"), NumberFormat.getPercentInstance());
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
 
         g1 = new StandardPieSectionLabelGenerator("{0} {1}",
                 new DecimalFormat("#,##0"), new DecimalFormat("0.000%"));
         assertFalse(g1.equals(g2));
         g2 = new StandardPieSectionLabelGenerator("{0} {1}",
                 new DecimalFormat("#,##0"), new DecimalFormat("0.000%"));
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
 
         AttributedString as = new AttributedString("XYZ");
         g1.setAttributedLabel(0, as);
         assertFalse(g1.equals(g2));
         g2.setAttributedLabel(0, as);
-        assertTrue(g1.equals(g2));
+        assertEquals(g1, g2);
     }
 
     /**
@@ -131,8 +133,8 @@ public class StandardPieSectionLabelGeneratorTest  {
                 = new StandardPieSectionLabelGenerator();
         StandardPieSectionLabelGenerator g2
                 = new StandardPieSectionLabelGenerator();
-        assertTrue(g1.equals(g2));
-        assertTrue(g1.hashCode() == g2.hashCode());
+        assertEquals(g1, g2);
+        assertEquals(g1.hashCode(), g2.hashCode());
     }
 
     /**
@@ -144,9 +146,9 @@ public class StandardPieSectionLabelGeneratorTest  {
                 = new StandardPieSectionLabelGenerator();
         StandardPieSectionLabelGenerator g2 = (StandardPieSectionLabelGenerator) g1.clone();
 
-        assertTrue(g1 != g2);
-        assertTrue(g1.getClass() == g2.getClass());
-        assertTrue(g1.equals(g2));
+        assertNotSame(g1, g2);
+        assertSame(g1.getClass(), g2.getClass());
+        assertEquals(g1, g2);
     }
 
     /**

@@ -55,6 +55,8 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -75,14 +77,14 @@ public class DefaultBoxAndWhiskerXYDatasetTest  {
                 "Series");
         DefaultBoxAndWhiskerXYDataset d2 = new DefaultBoxAndWhiskerXYDataset(
                 "Series");
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         d1.add(new Date(1L), new BoxAndWhiskerItem(1.0, 2.0, 3.0, 4.0, 5.0,
                 6.0, 7.0, 8.0, new ArrayList()));
         assertFalse(d1.equals(d2));
         d2.add(new Date(1L), new BoxAndWhiskerItem(1.0, 2.0, 3.0, 4.0, 5.0,
                 6.0, 7.0, 8.0, new ArrayList()));
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
     }
 
     /**
@@ -124,9 +126,9 @@ public class DefaultBoxAndWhiskerXYDatasetTest  {
         d1.add(new Date(1L), new BoxAndWhiskerItem(1.0, 2.0, 3.0, 4.0, 5.0,
                 6.0, 7.0, 8.0, new ArrayList()));
         DefaultBoxAndWhiskerXYDataset d2 = (DefaultBoxAndWhiskerXYDataset) d1.clone();
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
 
         // test independence
         d1.add(new Date(2L), new BoxAndWhiskerItem(1.0, 2.0, 3.0, 4.0, 5.0,

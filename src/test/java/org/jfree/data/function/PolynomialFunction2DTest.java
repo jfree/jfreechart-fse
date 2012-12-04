@@ -49,11 +49,10 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.util.Arrays;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 
@@ -73,7 +72,7 @@ public class PolynomialFunction2DTest  {
     public void testConstructor() {
         PolynomialFunction2D f = new PolynomialFunction2D(new double[] {1.0,
                 2.0});
-        assertTrue(Arrays.equals(new double[] {1.0, 2.0}, f.getCoefficients()));
+        assertArrayEquals(new double[]{1.0, 2.0}, f.getCoefficients(), 0);
 
         try {
             new PolynomialFunction2D(null);
@@ -92,12 +91,12 @@ public class PolynomialFunction2DTest  {
         PolynomialFunction2D f = new PolynomialFunction2D(new double[] {1.0,
                 2.0});
         double[] c = f.getCoefficients();
-        assertTrue(Arrays.equals(new double[] {1.0, 2.0}, c));
+        assertArrayEquals(new double[]{1.0, 2.0}, c, 0);
 
         // make sure that modifying the returned array doesn't change the
         // function
         c[0] = 99.9;
-        assertTrue(Arrays.equals(new double[] {1.0, 2.0}, f.getCoefficients()));
+        assertArrayEquals(new double[]{1.0, 2.0}, f.getCoefficients(), 0);
     }
 
     /**
@@ -119,11 +118,11 @@ public class PolynomialFunction2DTest  {
                 2.0});
         PolynomialFunction2D f2 = new PolynomialFunction2D(new double[] {1.0,
                 2.0});
-        assertTrue(f1.equals(f2));
+        assertEquals(f1, f2);
         f1 = new PolynomialFunction2D(new double[] {2.0, 3.0});
         assertFalse(f1.equals(f2));
         f2 = new PolynomialFunction2D(new double[] {2.0, 3.0});
-        assertTrue(f1.equals(f2));
+        assertEquals(f1, f2);
     }
 
     /**

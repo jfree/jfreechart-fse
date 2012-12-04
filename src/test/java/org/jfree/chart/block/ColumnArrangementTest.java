@@ -55,7 +55,6 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link ColumnArrangement} class.
@@ -75,36 +74,36 @@ public class ColumnArrangementTest  {
                 VerticalAlignment.TOP, 1.0, 2.0);
         ColumnArrangement c2 = new ColumnArrangement(HorizontalAlignment.LEFT,
                 VerticalAlignment.TOP, 1.0, 2.0);
-        assertTrue(c1.equals(c2));
-        assertTrue(c2.equals(c1));
+        assertEquals(c1, c2);
+        assertEquals(c2, c1);
 
         c1 = new ColumnArrangement(HorizontalAlignment.RIGHT,
                 VerticalAlignment.TOP, 1.0, 2.0);
         assertFalse(c1.equals(c2));
         c2 = new ColumnArrangement(HorizontalAlignment.RIGHT,
                 VerticalAlignment.TOP, 1.0, 2.0);
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
         c1 = new ColumnArrangement(HorizontalAlignment.RIGHT,
                 VerticalAlignment.BOTTOM, 1.0, 2.0);
         assertFalse(c1.equals(c2));
         c2 = new ColumnArrangement(HorizontalAlignment.RIGHT,
                 VerticalAlignment.BOTTOM, 1.0, 2.0);
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
         c1 = new ColumnArrangement(HorizontalAlignment.RIGHT,
                 VerticalAlignment.BOTTOM, 1.1, 2.0);
         assertFalse(c1.equals(c2));
         c2 = new ColumnArrangement(HorizontalAlignment.RIGHT,
                 VerticalAlignment.BOTTOM, 1.1, 2.0);
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
         c1 = new ColumnArrangement(HorizontalAlignment.RIGHT,
                 VerticalAlignment.BOTTOM, 1.1, 2.2);
         assertFalse(c1.equals(c2));
         c2 = new ColumnArrangement(HorizontalAlignment.RIGHT,
                 VerticalAlignment.BOTTOM, 1.1, 2.2);
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
     }
 
     /**

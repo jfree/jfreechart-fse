@@ -55,6 +55,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -220,13 +222,13 @@ public class DefaultIntervalXYDatasetTest  {
     public void testEquals() {
         DefaultIntervalXYDataset d1 = new DefaultIntervalXYDataset();
         DefaultIntervalXYDataset d2 = new DefaultIntervalXYDataset();
-        assertTrue(d1.equals(d2));
-        assertTrue(d2.equals(d1));
+        assertEquals(d1, d2);
+        assertEquals(d2, d1);
 
         d1 = createSampleDataset1();
         assertFalse(d1.equals(d2));
         d2 = createSampleDataset1();
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
     }
 
     /**
@@ -236,17 +238,17 @@ public class DefaultIntervalXYDatasetTest  {
     public void testCloning() throws CloneNotSupportedException {
         DefaultIntervalXYDataset d1 = new DefaultIntervalXYDataset();
         DefaultIntervalXYDataset d2 = (DefaultIntervalXYDataset) d1.clone();
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
 
         // try a dataset with some content...
         d1 = createSampleDataset1();
         d2 = (DefaultIntervalXYDataset) d1.clone();
 
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
     }
 
     /**
@@ -265,9 +267,9 @@ public class DefaultIntervalXYDatasetTest  {
                 y1End};
         d1.addSeries("S1", data1);
         DefaultIntervalXYDataset d2 = (DefaultIntervalXYDataset) d1.clone();
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
 
         // check independence
         x1[0] = 111.1;

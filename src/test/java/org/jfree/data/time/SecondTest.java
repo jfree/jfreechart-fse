@@ -65,7 +65,6 @@ import java.util.TimeZone;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -93,7 +92,7 @@ public class SecondTest  {
     @Test
     public void testEqualsSelf() {
         Second second = new Second();
-        assertTrue(second.equals(second));
+        assertEquals(second, second);
     }
 
     /**
@@ -109,7 +108,7 @@ public class SecondTest  {
         Hour hour2 = new Hour(15, day2);
         Minute minute2 = new Minute(15, hour2);
         Second second2 = new Second(34, minute2);
-        assertTrue(second1.equals(second2));
+        assertEquals(second1, second2);
     }
 
     /**
@@ -179,7 +178,7 @@ public class SecondTest  {
     public void testHashcode() {
         Second s1 = new Second(13, 45, 5, 1, 2, 2003);
         Second s2 = new Second(13, 45, 5, 1, 2, 2003);
-        assertTrue(s1.equals(s2));
+        assertEquals(s1, s2);
         int h1 = s1.hashCode();
         int h2 = s2.hashCode();
         assertEquals(h1, h2);

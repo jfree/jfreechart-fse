@@ -56,6 +56,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -85,13 +87,13 @@ public class XYIntervalSeriesCollectionTest  {
         XYIntervalSeries s2 = new XYIntervalSeries("Series");
         s2.add(1.0, 1.1, 1.2, 1.3, 1.4, 1.5);
         c2.addSeries(s2);
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
         // add an empty series
         c1.addSeries(new XYIntervalSeries("Empty Series"));
         assertFalse(c1.equals(c2));
         c2.addSeries(new XYIntervalSeries("Empty Series"));
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
     }
 
     /**
@@ -103,15 +105,15 @@ public class XYIntervalSeriesCollectionTest  {
         XYIntervalSeries s1 = new XYIntervalSeries("Series");
         s1.add(1.0, 1.1, 1.2, 1.3, 1.4, 1.5);
         XYIntervalSeriesCollection c2 = (XYIntervalSeriesCollection) c1.clone();
-        assertTrue(c1 != c2);
-        assertTrue(c1.getClass() == c2.getClass());
-        assertTrue(c1.equals(c2));
+        assertNotSame(c1, c2);
+        assertSame(c1.getClass(), c2.getClass());
+        assertEquals(c1, c2);
 
         // check independence
         c1.addSeries(new XYIntervalSeries("Empty"));
         assertFalse(c1.equals(c2));
         c2.addSeries(new XYIntervalSeries("Empty"));
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
     }
 
     /**
@@ -148,7 +150,7 @@ public class XYIntervalSeriesCollectionTest  {
         c1.addSeries(new XYIntervalSeries("Empty"));
         assertFalse(c1.equals(c2));
         c2.addSeries(new XYIntervalSeries("Empty"));
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
     }
 
     /**

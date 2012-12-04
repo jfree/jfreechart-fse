@@ -58,6 +58,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -80,22 +82,22 @@ public class XYPolygonAnnotationTest  {
                 2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.RED, Color.BLUE);
         XYPolygonAnnotation a2 = new XYPolygonAnnotation(new double[] {1.0,
                 2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.RED, Color.BLUE);
-        assertTrue(a1.equals(a2));
-        assertTrue(a2.equals(a1));
+        assertEquals(a1, a2);
+        assertEquals(a2, a1);
 
         a1 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
                 6.0}, stroke1, Color.RED, Color.BLUE);
         assertFalse(a1.equals(a2));
         a2 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
                 6.0}, stroke1, Color.RED, Color.BLUE);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
                 6.0}, stroke2, Color.RED, Color.BLUE);
         assertFalse(a1.equals(a2));
         a2 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
                 6.0}, stroke2, Color.RED, Color.BLUE);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         GradientPaint gp1 = new GradientPaint(1.0f, 2.0f, Color.yellow, 3.0f,
                 4.0f, Color.WHITE);
@@ -106,7 +108,7 @@ public class XYPolygonAnnotationTest  {
         assertFalse(a1.equals(a2));
         a2 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
                 6.0}, stroke2, gp2, Color.BLUE);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         GradientPaint gp3 = new GradientPaint(1.0f, 2.0f, Color.green, 3.0f,
                 4.0f, Color.WHITE);
@@ -117,7 +119,7 @@ public class XYPolygonAnnotationTest  {
         assertFalse(a1.equals(a2));
         a2 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
                 6.0}, stroke2, gp2, gp4);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
     }
 
     /**
@@ -130,7 +132,7 @@ public class XYPolygonAnnotationTest  {
                 2.0, 3.0, 4.0, 5.0, 6.0}, stroke, Color.RED, Color.BLUE);
         XYPolygonAnnotation a2 = new XYPolygonAnnotation(new double[] {1.0,
                 2.0, 3.0, 4.0, 5.0, 6.0}, stroke, Color.RED, Color.BLUE);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
         assertEquals(h1, h2);
@@ -147,9 +149,9 @@ public class XYPolygonAnnotationTest  {
         XYPolygonAnnotation a2 = (XYPolygonAnnotation) a1.clone();
 
 
-        assertTrue(a1 != a2);
-        assertTrue(a1.getClass() == a2.getClass());
-        assertTrue(a1.equals(a2));
+        assertNotSame(a1, a2);
+        assertSame(a1.getClass(), a2.getClass());
+        assertEquals(a1, a2);
     }
 
     /**

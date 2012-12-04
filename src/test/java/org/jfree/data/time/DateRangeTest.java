@@ -54,7 +54,6 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Some tests for the {@link DateRange} class.
@@ -72,18 +71,18 @@ public class DateRangeTest  {
     public void testEquals() {
         DateRange r1 = new DateRange(new Date(1000L), new Date(2000L));
         DateRange r2 = new DateRange(new Date(1000L), new Date(2000L));
-        assertTrue(r1.equals(r2));
-        assertTrue(r2.equals(r1));
+        assertEquals(r1, r2);
+        assertEquals(r2, r1);
 
         r1 = new DateRange(new Date(1111L), new Date(2000L));
         assertFalse(r1.equals(r2));
         r2 = new DateRange(new Date(1111L), new Date(2000L));
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1 = new DateRange(new Date(1111L), new Date(2222L));
         assertFalse(r1.equals(r2));
         r2 = new DateRange(new Date(1111L), new Date(2222L));
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
     }
 
     /**

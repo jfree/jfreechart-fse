@@ -57,7 +57,8 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
 /**
@@ -171,8 +172,8 @@ public class DefaultIntervalCategoryDatasetTest  {
         DefaultIntervalCategoryDataset dB
                 = new DefaultIntervalCategoryDataset(startsB, endsB);
 
-        assertTrue(dA.equals(dB));
-        assertTrue(dB.equals(dA));
+        assertEquals(dA, dB);
+        assertEquals(dB, dA);
 
         // check that two empty datasets are equal
         DefaultIntervalCategoryDataset empty1
@@ -181,7 +182,7 @@ public class DefaultIntervalCategoryDatasetTest  {
         DefaultIntervalCategoryDataset empty2
                 = new DefaultIntervalCategoryDataset(new double[0][0],
                         new double[0][0]);
-        assertTrue(empty1.equals(empty2));
+        assertEquals(empty1, empty2);
     }
 
     /**
@@ -231,15 +232,15 @@ public class DefaultIntervalCategoryDatasetTest  {
                 DataUtilities.createNumberArray2D(ends));
         DefaultIntervalCategoryDataset d2 = (DefaultIntervalCategoryDataset) d1.clone();
 
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
 
         // check that the clone doesn't share the same underlying arrays.
         d1.setStartValue(0, "Category 1", 0.99);
         assertFalse(d1.equals(d2));
         d2.setStartValue(0, "Category 1", 0.99);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
     }
 
     /**
@@ -252,9 +253,9 @@ public class DefaultIntervalCategoryDatasetTest  {
                     new double[0][0]);
         DefaultIntervalCategoryDataset d2 = (DefaultIntervalCategoryDataset) d1.clone();
 
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
     }
 
     /**

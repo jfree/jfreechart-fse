@@ -50,10 +50,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import static junit.framework.Assert.assertSame;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link DomainOrder} class.
@@ -90,7 +89,7 @@ public class DomainOrderTest  {
     public void testHashCode() {
         DomainOrder d1 = DomainOrder.ASCENDING;
         DomainOrder d2 = DomainOrder.ASCENDING;
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
         int h1 = d1.hashCode();
         int h2 = d2.hashCode();
         assertEquals(h1, h2);

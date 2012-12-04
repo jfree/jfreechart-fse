@@ -52,7 +52,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 
 
@@ -77,28 +78,28 @@ public class MatrixSeriesTest  {
         MatrixSeries m2 = new MatrixSeries("Test", 8, 3);
         m2.update(0, 0, 11.0);
         m2.update(7, 2, 22.0);
-        assertTrue(m1.equals(m2));
-        assertTrue(m2.equals(m1));
+        assertEquals(m1, m2);
+        assertEquals(m2, m1);
 
         m1 = new MatrixSeries("Test 2", 8, 3);
         assertFalse(m1.equals(m2));
         m2 = new MatrixSeries("Test 2", 8, 3);
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m2);
 
         m1 = new MatrixSeries("Test 2", 10, 3);
         assertFalse(m1.equals(m2));
         m2 = new MatrixSeries("Test 2", 10, 3);
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m2);
 
         m1 = new MatrixSeries("Test 2", 10, 5);
         assertFalse(m1.equals(m2));
         m2 = new MatrixSeries("Test 2", 10, 5);
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m2);
 
         m1.update(0, 0, 99);
         assertFalse(m1.equals(m2));
         m2.update(0, 0, 99);
-        assertTrue(m1.equals(m2));
+        assertEquals(m1, m2);
     }
 
     /**
@@ -110,9 +111,9 @@ public class MatrixSeriesTest  {
         m1.update(0, 0, 11.0);
         m1.update(7, 2, 22.0);
         MatrixSeries m2 = (MatrixSeries) m1.clone();
-        assertTrue(m1 != m2);
-        assertTrue(m1.getClass() == m2.getClass());
-        assertTrue(m1.equals(m2));
+        assertNotSame(m1, m2);
+        assertSame(m1.getClass(), m2.getClass());
+        assertEquals(m1, m2);
     }
 
     /**

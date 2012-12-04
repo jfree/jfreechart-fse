@@ -53,7 +53,6 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link DateTickMarkPosition} class.
@@ -86,7 +85,7 @@ public class DateTickMarkPositionTest  {
     public void testHashCode() {
         DateTickMarkPosition a1 = DateTickMarkPosition.END;
         DateTickMarkPosition a2 = DateTickMarkPosition.END;
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
         assertEquals(h1, h2);

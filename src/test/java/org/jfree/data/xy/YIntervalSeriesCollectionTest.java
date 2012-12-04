@@ -55,6 +55,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -84,13 +86,13 @@ public class YIntervalSeriesCollectionTest  {
         YIntervalSeries s2 = new YIntervalSeries("Series");
         s2.add(1.0, 1.1, 1.2, 1.3);
         c2.addSeries(s2);
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
         // add an empty series
         c1.addSeries(new YIntervalSeries("Empty Series"));
         assertFalse(c1.equals(c2));
         c2.addSeries(new YIntervalSeries("Empty Series"));
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
     }
 
     /**
@@ -103,9 +105,9 @@ public class YIntervalSeriesCollectionTest  {
         s1.add(1.0, 1.1, 1.2, 1.3);
         c1.addSeries(s1);
         YIntervalSeriesCollection c2 = (YIntervalSeriesCollection) c1.clone();
-        assertTrue(c1 != c2);
-        assertTrue(c1.getClass() == c2.getClass());
-        assertTrue(c1.equals(c2));
+        assertNotSame(c1, c2);
+        assertSame(c1.getClass(), c2.getClass());
+        assertEquals(c1, c2);
 
         // check independence
         s1.setDescription("XYZ");

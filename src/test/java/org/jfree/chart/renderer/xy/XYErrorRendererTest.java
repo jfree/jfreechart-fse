@@ -58,7 +58,9 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -83,19 +85,19 @@ public class XYErrorRendererTest  {
         r1.setDrawXError(false);
         assertFalse(r1.equals(r2));
         r2.setDrawXError(false);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         // drawYError
         r1.setDrawYError(false);
         assertFalse(r1.equals(r2));
         r2.setDrawYError(false);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         // capLength
         r1.setCapLength(9.0);
         assertFalse(r1.equals(r2));
         r2.setCapLength(9.0);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         // errorPaint
         r1.setErrorPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
@@ -103,13 +105,13 @@ public class XYErrorRendererTest  {
         assertFalse(r1.equals(r2));
         r2.setErrorPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.green));
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         // errorStroke
         r1.setErrorStroke(new BasicStroke(1.5f));
         assertFalse(r1.equals(r2));
         r2.setErrorStroke(new BasicStroke(1.5f));
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
     }
 
@@ -120,7 +122,7 @@ public class XYErrorRendererTest  {
     public void testHashcode() {
         XYErrorRenderer r1 = new XYErrorRenderer();
         XYErrorRenderer r2 = new XYErrorRenderer();
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);
@@ -135,9 +137,9 @@ public class XYErrorRendererTest  {
         r1.setErrorPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.WHITE));
         XYErrorRenderer r2 = (XYErrorRenderer) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
     }
 
     /**
@@ -148,9 +150,9 @@ public class XYErrorRendererTest  {
         XYErrorRenderer r1 = new XYErrorRenderer();
         r1.setErrorStroke(new BasicStroke(1.5f));
         XYErrorRenderer r2 = (XYErrorRenderer) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
     }
 
     /**

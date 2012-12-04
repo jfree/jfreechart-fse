@@ -52,7 +52,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 
 
@@ -86,32 +87,32 @@ public class XIntervalDataItemTest  {
     public void testEquals() {
         XIntervalDataItem item1 = new XIntervalDataItem(1.0, 2.0, 3.0, 4.0);
         XIntervalDataItem item2 = new XIntervalDataItem(1.0, 2.0, 3.0, 4.0);
-        assertTrue(item1.equals(item2));
-        assertTrue(item2.equals(item1));
+        assertEquals(item1, item2);
+        assertEquals(item2, item1);
 
         // x
         item1 = new XIntervalDataItem(1.1, 2.0, 3.0, 4.0);
         assertFalse(item1.equals(item2));
         item2 = new XIntervalDataItem(1.1, 2.0, 3.0, 4.0);
-        assertTrue(item1.equals(item2));
+        assertEquals(item1, item2);
 
         // xLow
         item1 = new XIntervalDataItem(1.1, 2.2, 3.0, 4.0);
         assertFalse(item1.equals(item2));
         item2 = new XIntervalDataItem(1.1, 2.2, 3.0, 4.0);
-        assertTrue(item1.equals(item2));
+        assertEquals(item1, item2);
 
         // xHigh
         item1 = new XIntervalDataItem(1.1, 2.2, 3.3, 4.0);
         assertFalse(item1.equals(item2));
         item2 = new XIntervalDataItem(1.1, 2.2, 3.3, 4.0);
-        assertTrue(item1.equals(item2));
+        assertEquals(item1, item2);
 
         // y
         item1 = new XIntervalDataItem(1.1, 2.2, 3.3, 4.4);
         assertFalse(item1.equals(item2));
         item2 = new XIntervalDataItem(1.1, 2.2, 3.3, 4.4);
-        assertTrue(item1.equals(item2));
+        assertEquals(item1, item2);
 
     }
 
@@ -123,9 +124,9 @@ public class XIntervalDataItemTest  {
         XIntervalDataItem item1 = new XIntervalDataItem(1.0, 2.0, 3.0, 4.0);
         XIntervalDataItem item2 = (XIntervalDataItem) item1.clone();
 
-        assertTrue(item1 != item2);
-        assertTrue(item1.getClass() == item2.getClass());
-        assertTrue(item1.equals(item2));
+        assertNotSame(item1, item2);
+        assertSame(item1.getClass(), item2.getClass());
+        assertEquals(item1, item2);
     }
 
     /**

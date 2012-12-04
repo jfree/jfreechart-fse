@@ -53,7 +53,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link SimpleHistogramDataset} class.
@@ -71,12 +72,12 @@ public class SimpleHistogramDatasetTest  {
     public void testEquals() {
         SimpleHistogramDataset d1 = new SimpleHistogramDataset("Dataset 1");
         SimpleHistogramDataset d2 = new SimpleHistogramDataset("Dataset 1");
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
         d1.addBin(new SimpleHistogramBin(1.0, 2.0));
         assertFalse(d1.equals(d2));
         d2.addBin(new SimpleHistogramBin(1.0, 2.0));
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
     }
 
     /**
@@ -86,9 +87,9 @@ public class SimpleHistogramDatasetTest  {
     public void testCloning() throws CloneNotSupportedException {
         SimpleHistogramDataset d1 = new SimpleHistogramDataset("Dataset 1");
         SimpleHistogramDataset d2 = (SimpleHistogramDataset) d1.clone();
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
 
         // check that clone is independent of the original
         d2.addBin(new SimpleHistogramBin(2.0, 3.0));

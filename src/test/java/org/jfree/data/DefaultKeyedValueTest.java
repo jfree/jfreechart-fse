@@ -52,8 +52,9 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
 /**
@@ -97,8 +98,8 @@ public class DefaultKeyedValueTest  {
 
         DefaultKeyedValue v1 = new DefaultKeyedValue("Test", 45.5);
         DefaultKeyedValue v2 = new DefaultKeyedValue("Test", 45.5);
-        assertTrue(v1.equals(v2));
-        assertTrue(v2.equals(v1));
+        assertEquals(v1, v2);
+        assertEquals(v2, v1);
 
         v1 = new DefaultKeyedValue("Test 1", 45.5);
         v2 = new DefaultKeyedValue("Test 2", 45.5);
@@ -117,9 +118,9 @@ public class DefaultKeyedValueTest  {
     public void testCloning() throws CloneNotSupportedException {
         DefaultKeyedValue v1 = new DefaultKeyedValue("Test", 45.5);
         DefaultKeyedValue v2 = (DefaultKeyedValue) v1.clone();
-        assertTrue(v1 != v2);
-        assertTrue(v1.getClass() == v2.getClass());
-        assertTrue(v1.equals(v2));
+        assertNotSame(v1, v2);
+        assertSame(v1.getClass(), v2.getClass());
+        assertEquals(v1, v2);
 
         // confirm that the clone is independent of the original
         v2.setValue(12.3);

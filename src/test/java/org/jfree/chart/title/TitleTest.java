@@ -49,7 +49,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the abstract {@link Title} class.
@@ -74,22 +73,22 @@ public class TitleTest  {
         t1.setPosition(RectangleEdge.LEFT);
         assertFalse(t1.equals(t2));
         t2.setPosition(RectangleEdge.LEFT);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1.setHorizontalAlignment(HorizontalAlignment.RIGHT);
         assertFalse(t1.equals(t2));
         t2.setHorizontalAlignment(HorizontalAlignment.RIGHT);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1.setVerticalAlignment(VerticalAlignment.BOTTOM);
         assertFalse(t1.equals(t2));
         t2.setVerticalAlignment(VerticalAlignment.BOTTOM);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
         t1.setVisible(false);
         assertFalse(t1.equals(t2));
         t2.setVisible(false);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
 
     }
 
@@ -100,7 +99,7 @@ public class TitleTest  {
     public void testHashcode() {
         TextTitle t1 = new TextTitle();
         TextTitle t2 = new TextTitle();
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
         int h1 = t1.hashCode();
         int h2 = t2.hashCode();
         assertEquals(h1, h2);

@@ -63,7 +63,9 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -102,28 +104,28 @@ public class XYSeriesCollectionTest  {
         s2.add(1.0, 1.1);
         XYSeriesCollection c2 = new XYSeriesCollection();
         c2.addSeries(s2);
-        assertTrue(c1.equals(c2));
-        assertTrue(c2.equals(c1));
+        assertEquals(c1, c2);
+        assertEquals(c2, c1);
 
         c1.addSeries(new XYSeries("Empty Series"));
         assertFalse(c1.equals(c2));
         c2.addSeries(new XYSeries("Empty Series"));
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
         c1.setIntervalWidth(5.0);
         assertFalse(c1.equals(c2));
         c2.setIntervalWidth(5.0);
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
         c1.setIntervalPositionFactor(0.75);
         assertFalse(c1.equals(c2));
         c2.setIntervalPositionFactor(0.75);
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
         c1.setAutoWidth(true);
         assertFalse(c1.equals(c2));
         c2.setAutoWidth(true);
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
 
     }
 
@@ -137,9 +139,9 @@ public class XYSeriesCollectionTest  {
         XYSeriesCollection c1 = new XYSeriesCollection();
         c1.addSeries(s1);
         XYSeriesCollection c2 = (XYSeriesCollection) c1.clone();
-        assertTrue(c1 != c2);
-        assertTrue(c1.getClass() == c2.getClass());
-        assertTrue(c1.equals(c2));
+        assertNotSame(c1, c2);
+        assertSame(c1.getClass(), c2.getClass());
+        assertEquals(c1, c2);
 
         // check independence
         s1.setDescription("XYZ");

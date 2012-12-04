@@ -56,6 +56,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -79,44 +81,44 @@ public class CategoryLineAnnotationTest  {
                 1.0, "Category 2", 2.0, Color.RED, s1);
         CategoryLineAnnotation a2 = new CategoryLineAnnotation("Category 1",
                 1.0, "Category 2", 2.0, Color.RED, s1);
-        assertTrue(a1.equals(a2));
-        assertTrue(a2.equals(a1));
+        assertEquals(a1, a2);
+        assertEquals(a2, a1);
 
         // category 1
         a1.setCategory1("Category A");
         assertFalse(a1.equals(a2));
         a2.setCategory1("Category A");
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // value 1
         a1.setValue1(0.15);
         assertFalse(a1.equals(a2));
         a2.setValue1(0.15);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // category 2
         a1.setCategory2("Category B");
         assertFalse(a1.equals(a2));
         a2.setCategory2("Category B");
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // value 2
         a1.setValue2(0.25);
         assertFalse(a1.equals(a2));
         a2.setValue2(0.25);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // paint
         a1.setPaint(Color.yellow);
         assertFalse(a1.equals(a2));
         a2.setPaint(Color.yellow);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // stroke
         a1.setStroke(s2);
         assertFalse(a1.equals(a2));
         a2.setStroke(s2);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
     }
 
     /**
@@ -128,7 +130,7 @@ public class CategoryLineAnnotationTest  {
                 1.0, "Category 2", 2.0, Color.RED, new BasicStroke(1.0f));
         CategoryLineAnnotation a2 = new CategoryLineAnnotation("Category 1", 
                 1.0, "Category 2", 2.0, Color.RED, new BasicStroke(1.0f));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
         assertEquals(h1, h2);
@@ -143,9 +145,9 @@ public class CategoryLineAnnotationTest  {
                 1.0, "Category 2", 2.0, Color.RED, new BasicStroke(1.0f));
         CategoryLineAnnotation a2 = (CategoryLineAnnotation) a1.clone();
 
-        assertTrue(a1 != a2);
-        assertTrue(a1.getClass() == a2.getClass());
-        assertTrue(a1.equals(a2));
+        assertNotSame(a1, a2);
+        assertSame(a1.getClass(), a2.getClass());
+        assertEquals(a1, a2);
     }
 
     /**

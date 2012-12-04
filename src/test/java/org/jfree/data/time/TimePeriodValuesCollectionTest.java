@@ -60,7 +60,6 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -110,12 +109,12 @@ public class TimePeriodValuesCollectionTest  {
         
         TimePeriodValuesCollection c1 = new TimePeriodValuesCollection();
         TimePeriodValuesCollection c2 = new TimePeriodValuesCollection();
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
         
         c1.setXPosition(TimePeriodAnchor.END);
         assertFalse(c1.equals(c2));
         c2.setXPosition(TimePeriodAnchor.END);
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
         
         TimePeriodValues v1 = new TimePeriodValues("Test");
         TimePeriodValues v2 = new TimePeriodValues("Test");
@@ -123,7 +122,7 @@ public class TimePeriodValuesCollectionTest  {
         c1.addSeries(v1);
         assertFalse(c1.equals(c2));
         c2.addSeries(v2);
-        assertTrue(c1.equals(c2));
+        assertEquals(c1, c2);
     }
 
     /**

@@ -71,7 +71,6 @@ import java.util.TimeZone;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -99,7 +98,7 @@ public class DayTest  {
     @Test
     public void testEqualsSelf() {
         Day day = new Day();
-        assertTrue(day.equals(day));
+        assertEquals(day, day);
     }
 
     /**
@@ -109,7 +108,7 @@ public class DayTest  {
     public void testEquals() {
         Day day1 = new Day(29, MonthConstants.MARCH, 2002);
         Day day2 = new Day(29, MonthConstants.MARCH, 2002);
-        assertTrue(day1.equals(day2));
+        assertEquals(day1, day2);
     }
 
     /**
@@ -247,7 +246,7 @@ public class DayTest  {
     public void testHashcode() {
         Day d1 = new Day(1, 2, 2003);
         Day d2 = new Day(1, 2, 2003);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
         int h1 = d1.hashCode();
         int h2 = d2.hashCode();
         assertEquals(h1, h2);

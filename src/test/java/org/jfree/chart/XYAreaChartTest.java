@@ -59,6 +59,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -136,7 +137,7 @@ public class XYAreaChartTest  {
         StandardXYToolTipGenerator tt = new StandardXYToolTipGenerator();
         renderer.setSeriesToolTipGenerator(0, tt);
         XYToolTipGenerator tt2 = renderer.getToolTipGenerator(0, 0);
-        assertTrue(tt2 == tt);
+        assertSame(tt2, tt);
     }
 
     /**

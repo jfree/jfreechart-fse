@@ -86,6 +86,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -646,8 +647,8 @@ public class DatasetUtilitiesTest  {
         data[2] = new double[] {3.1, 3.2};
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset(
                 rowKeys, columnKeys, data);
-        assertTrue(dataset.getRowCount() == 3);
-        assertTrue(dataset.getColumnCount() == 2);
+        assertSame(dataset.getRowCount(), 3);
+        assertSame(dataset.getColumnCount(), 2);
     }
 
     /**
@@ -694,7 +695,7 @@ public class DatasetUtilitiesTest  {
         d.addValue(v5, "Row 1", "Column 1");
         d.addValue(v6, "Row 2", "Column 1");
         Number max = DatasetUtilities.findMaximumStackedRangeValue(d);
-        assertTrue(max.equals(answer));
+        assertEquals(max, answer);
     }
 
     /**

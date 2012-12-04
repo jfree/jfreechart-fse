@@ -53,7 +53,6 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link TimeSeriesDataItem} class.
@@ -82,7 +81,7 @@ public class TimeSeriesDataItemTest  {
         TimeSeriesDataItem item = new TimeSeriesDataItem(
             new Day(23, 9, 2001), 99.7
         );
-        assertTrue(item.equals(item));
+        assertEquals(item, item);
     }
 
     /**
@@ -96,13 +95,13 @@ public class TimeSeriesDataItemTest  {
         TimeSeriesDataItem item2 = new TimeSeriesDataItem(
             new Day(23, 9, 2001), 99.7
         );
-        assertTrue(item1.equals(item2));
-        assertTrue(item2.equals(item1));
+        assertEquals(item1, item2);
+        assertEquals(item2, item1);
 
         item1.setValue(5);
         assertFalse(item1.equals(item2));
         item2.setValue(5);
-        assertTrue(item1.equals(item2));
+        assertEquals(item1, item2);
     }
 
     /**

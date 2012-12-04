@@ -50,9 +50,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import static junit.framework.Assert.assertSame;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link ItemLabelAnchor} class.
@@ -68,7 +68,7 @@ public class ItemLabelAnchorTest  {
      */
     @Test
     public void testEquals() {
-        assertTrue(ItemLabelAnchor.INSIDE1.equals(ItemLabelAnchor.INSIDE1));
+        assertEquals(ItemLabelAnchor.INSIDE1, ItemLabelAnchor.INSIDE1);
         assertFalse(ItemLabelAnchor.INSIDE1.equals(ItemLabelAnchor.INSIDE2));
     }
 

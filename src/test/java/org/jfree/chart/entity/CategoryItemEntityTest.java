@@ -54,7 +54,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link CategoryItemEntity} class.
@@ -79,32 +80,32 @@ public class CategoryItemEntityTest  {
                 1.0, 2.0, 3.0, 4.0), "ToolTip", "URL", d, "R1", "C2");
         CategoryItemEntity e2 = new CategoryItemEntity(new Rectangle2D.Double(
                 1.0, 2.0, 3.0, 4.0), "ToolTip", "URL", d, "R1", "C2");
-        assertTrue(e1.equals(e2));
+        assertEquals(e1, e2);
 
         e1.setArea(new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0));
         assertFalse(e1.equals(e2));
         e2.setArea(new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0));
-        assertTrue(e1.equals(e2));
+        assertEquals(e1, e2);
 
         e1.setToolTipText("New ToolTip");
         assertFalse(e1.equals(e2));
         e2.setToolTipText("New ToolTip");
-        assertTrue(e1.equals(e2));
+        assertEquals(e1, e2);
 
         e1.setURLText("New URL");
         assertFalse(e1.equals(e2));
         e2.setURLText("New URL");
-        assertTrue(e1.equals(e2));
+        assertEquals(e1, e2);
 
         e1.setColumnKey("C1");
         assertFalse(e1.equals(e2));
         e2.setColumnKey("C1");
-        assertTrue(e1.equals(e2));
+        assertEquals(e1, e2);
 
         e1.setRowKey("R2");
         assertFalse(e1.equals(e2));
         e2.setRowKey("R2");
-        assertTrue(e1.equals(e2));
+        assertEquals(e1, e2);
 
     }
 
@@ -121,9 +122,9 @@ public class CategoryItemEntityTest  {
         CategoryItemEntity e1 = new CategoryItemEntity(new Rectangle2D.Double(
                 1.0, 2.0, 3.0, 4.0), "ToolTip", "URL", d, "R1", "C2");
         CategoryItemEntity e2 = (CategoryItemEntity) e1.clone();
-        assertTrue(e1 != e2);
-        assertTrue(e1.getClass() == e2.getClass());
-        assertTrue(e1.equals(e2));
+        assertNotSame(e1, e2);
+        assertSame(e1.getClass(), e2.getClass());
+        assertEquals(e1, e2);
     }
 
     /**

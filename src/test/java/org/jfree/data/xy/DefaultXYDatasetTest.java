@@ -55,6 +55,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -75,8 +77,8 @@ public class DefaultXYDatasetTest  {
 
         DefaultXYDataset d1 = new DefaultXYDataset();
         DefaultXYDataset d2 = new DefaultXYDataset();
-        assertTrue(d1.equals(d2));
-        assertTrue(d2.equals(d1));
+        assertEquals(d1, d2);
+        assertEquals(d2, d1);
 
         double[] x1 = new double[] {1.0, 2.0, 3.0};
         double[] y1 = new double[] {4.0, 5.0, 6.0};
@@ -87,7 +89,7 @@ public class DefaultXYDatasetTest  {
         d1.addSeries("S1", data1);
         assertFalse(d1.equals(d2));
         d2.addSeries("S1", data2);
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
     }
 
     /**
@@ -97,9 +99,9 @@ public class DefaultXYDatasetTest  {
     public void testCloning() throws CloneNotSupportedException {
         DefaultXYDataset d1 = new DefaultXYDataset();
         DefaultXYDataset d2 = (DefaultXYDataset) d1.clone();
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
 
         // try a dataset with some content...
         double[] x1 = new double[] {1.0, 2.0, 3.0};
@@ -108,15 +110,15 @@ public class DefaultXYDatasetTest  {
         d1.addSeries("S1", data1);
         d2 = (DefaultXYDataset) d1.clone();
 
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
 
         // check that the clone doesn't share the same underlying arrays.
         x1[1] = 2.2;
         assertFalse(d1.equals(d2));
         x1[1] = 2.0;
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
     }
 
     /**

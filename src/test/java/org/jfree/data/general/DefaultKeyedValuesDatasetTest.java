@@ -51,7 +51,8 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 
 
@@ -74,9 +75,9 @@ public class DefaultKeyedValuesDatasetTest  {
         d1.setValue("V2", null);
         d1.setValue("V3", new Integer(3));
         DefaultKeyedValuesDataset d2 = (DefaultKeyedValuesDataset) d1.clone();
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
     }
 
     /**

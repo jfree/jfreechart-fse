@@ -55,6 +55,8 @@ import java.io.ObjectOutputStream;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -74,9 +76,9 @@ public class CustomXYItemLabelGeneratorTest  {
         CustomXYToolTipGenerator g1 = new CustomXYToolTipGenerator();
         CustomXYToolTipGenerator g2 = (CustomXYToolTipGenerator) g1.clone();
 
-        assertTrue(g1 != g2);
-        assertTrue(g1.getClass() == g2.getClass());
-        assertTrue(g1.equals(g2));
+        assertNotSame(g1, g2);
+        assertSame(g1.getClass(), g2.getClass());
+        assertEquals(g1, g2);
     }
 
     /**

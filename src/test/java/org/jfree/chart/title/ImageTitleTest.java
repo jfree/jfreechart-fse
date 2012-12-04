@@ -51,7 +51,8 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link ImageTitle} class.
@@ -86,7 +87,7 @@ public class ImageTitleTest  {
     public void testHashcode() {
         ImageTitle t1 = new ImageTitle(JFreeChart.INFO.getLogo());
         ImageTitle t2 = new ImageTitle(JFreeChart.INFO.getLogo());
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
         int h1 = t1.hashCode();
         int h2 = t2.hashCode();
         assertEquals(h1, h2);
@@ -99,9 +100,9 @@ public class ImageTitleTest  {
     public void testCloning() throws CloneNotSupportedException {
         ImageTitle t1 = new ImageTitle(JFreeChart.INFO.getLogo());
         ImageTitle t2 = (ImageTitle) t1.clone();
-        assertTrue(t1 != t2);
-        assertTrue(t1.getClass() == t2.getClass());
-        assertTrue(t1.equals(t2));
+        assertNotSame(t1, t2);
+        assertSame(t1.getClass(), t2.getClass());
+        assertEquals(t1, t2);
     }
 
     /**

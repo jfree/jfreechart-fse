@@ -50,8 +50,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-import static junit.framework.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link TimePeriodAnchor} class.
@@ -67,9 +67,9 @@ public class TimePeriodAnchorTest  {
      */
     @Test
     public void testEquals() {
-        assertTrue(TimePeriodAnchor.START.equals(TimePeriodAnchor.START));
-        assertTrue(TimePeriodAnchor.MIDDLE.equals(TimePeriodAnchor.MIDDLE));
-        assertTrue(TimePeriodAnchor.END.equals(TimePeriodAnchor.END));
+        assertEquals(TimePeriodAnchor.START, TimePeriodAnchor.START);
+        assertEquals(TimePeriodAnchor.MIDDLE, TimePeriodAnchor.MIDDLE);
+        assertEquals(TimePeriodAnchor.END, TimePeriodAnchor.END);
     }
 
     /**

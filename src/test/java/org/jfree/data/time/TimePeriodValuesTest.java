@@ -169,7 +169,7 @@ public class TimePeriodValuesTest  {
         TimePeriodValues s2 = (TimePeriodValues) in.readObject();
         in.close();
 
-        assertTrue(s1.equals(s2));
+        assertEquals(s1, s2);
 
     }
 
@@ -191,25 +191,25 @@ public class TimePeriodValuesTest  {
         s1.setDomainDescription("XYZ");
         assertFalse(s1.equals(s2));
         s2.setDomainDescription("XYZ");
-        assertTrue(s1.equals(s2));
+        assertEquals(s1, s2);
         
         // domain description - null
         s1.setDomainDescription(null);
         assertFalse(s1.equals(s2));
         s2.setDomainDescription(null);
-        assertTrue(s1.equals(s2));
+        assertEquals(s1, s2);
         
         // range description
         s1.setRangeDescription("XYZ");
         assertFalse(s1.equals(s2));
         s2.setRangeDescription("XYZ");
-        assertTrue(s1.equals(s2));
+        assertEquals(s1, s2);
         
         // range description - null
         s1.setRangeDescription(null);
         assertFalse(s1.equals(s2));
         s2.setRangeDescription(null);
-        assertTrue(s1.equals(s2));
+        assertEquals(s1, s2);
 
         RegularTimePeriod p1 = new Day();
         RegularTimePeriod p2 = p1.next();

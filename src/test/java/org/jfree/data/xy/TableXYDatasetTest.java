@@ -62,6 +62,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -81,14 +83,14 @@ public class TableXYDatasetTest  {
 
         DefaultTableXYDataset d1 = new DefaultTableXYDataset();
         DefaultTableXYDataset d2 = new DefaultTableXYDataset();
-        assertTrue(d1.equals(d2));
-        assertTrue(d2.equals(d1));
+        assertEquals(d1, d2);
+        assertEquals(d2, d1);
 
         d1.addSeries(createSeries1());
         assertFalse(d1.equals(d2));
 
         d2.addSeries(createSeries1());
-        assertTrue(d1.equals(d2));
+        assertEquals(d1, d2);
 
     }
 
@@ -100,9 +102,9 @@ public class TableXYDatasetTest  {
         DefaultTableXYDataset d1 = new DefaultTableXYDataset();
         d1.addSeries(createSeries1());
         DefaultTableXYDataset d2 = (DefaultTableXYDataset) d1.clone();
-        assertTrue(d1 != d2);
-        assertTrue(d1.getClass() == d2.getClass());
-        assertTrue(d1.equals(d2));
+        assertNotSame(d1, d2);
+        assertSame(d1.getClass(), d2.getClass());
+        assertEquals(d1, d2);
     }
 
     /**

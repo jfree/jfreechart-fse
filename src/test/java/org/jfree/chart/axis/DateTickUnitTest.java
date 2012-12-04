@@ -52,7 +52,6 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link DateTickUnit} class.
@@ -70,7 +69,7 @@ public class DateTickUnitTest  {
     public void testEquals() {
         DateTickUnit t1 = new DateTickUnit(DateTickUnitType.DAY, 1);
         DateTickUnit t2 = new DateTickUnit(DateTickUnitType.DAY, 1);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
     }
 
     /**
@@ -80,7 +79,7 @@ public class DateTickUnitTest  {
     public void testHashCode() {
         DateTickUnit t1 = new DateTickUnit(DateTickUnitType.DAY, 1);
         DateTickUnit t2 = new DateTickUnit(DateTickUnitType.DAY, 1);
-        assertTrue(t1.equals(t2));
+        assertEquals(t1, t2);
         int h1 = t1.hashCode();
         int h2 = t2.hashCode();
         assertEquals(h1, h2);

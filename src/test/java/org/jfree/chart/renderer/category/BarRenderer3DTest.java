@@ -59,6 +59,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -82,19 +84,19 @@ public class BarRenderer3DTest  {
         r1 = new BarRenderer3D(1.1, 2.0);
         assertFalse(r1.equals(r2));
         r2 = new BarRenderer3D(1.1, 2.0);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1 = new BarRenderer3D(1.1, 2.2);
         assertFalse(r1.equals(r2));
         r2 = new BarRenderer3D(1.1, 2.2);
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
 
         r1.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 4.0f, 3.0f,
                 Color.BLUE));
         assertFalse(r1.equals(r2));
         r2.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 4.0f, 3.0f,
                 Color.BLUE));
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
     }
 
     /**
@@ -104,7 +106,7 @@ public class BarRenderer3DTest  {
     public void testHashcode() {
         BarRenderer3D r1 = new BarRenderer3D();
         BarRenderer3D r2 = new BarRenderer3D();
-        assertTrue(r1.equals(r2));
+        assertEquals(r1, r2);
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);
@@ -117,9 +119,9 @@ public class BarRenderer3DTest  {
     public void testCloning() throws CloneNotSupportedException {
         BarRenderer3D r1 = new BarRenderer3D();
         BarRenderer3D r2 = (BarRenderer3D) r1.clone();
-        assertTrue(r1 != r2);
-        assertTrue(r1.getClass() == r2.getClass());
-        assertTrue(r1.equals(r2));
+        assertNotSame(r1, r2);
+        assertSame(r1.getClass(), r2.getClass());
+        assertEquals(r1, r2);
     }
 
     /**

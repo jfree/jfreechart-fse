@@ -62,6 +62,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -80,31 +82,31 @@ public class XYTextAnnotationTest  {
     public void testEquals() {
         XYTextAnnotation a1 = new XYTextAnnotation("Text", 10.0, 20.0);
         XYTextAnnotation a2 = new XYTextAnnotation("Text", 10.0, 20.0);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // text
         a1 = new XYTextAnnotation("ABC", 10.0, 20.0);
         assertFalse(a1.equals(a2));
         a2 = new XYTextAnnotation("ABC", 10.0, 20.0);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // x
         a1 = new XYTextAnnotation("ABC", 11.0, 20.0);
         assertFalse(a1.equals(a2));
         a2 = new XYTextAnnotation("ABC", 11.0, 20.0);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // y
         a1 = new XYTextAnnotation("ABC", 11.0, 22.0);
         assertFalse(a1.equals(a2));
         a2 = new XYTextAnnotation("ABC", 11.0, 22.0);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // font
         a1.setFont(new Font("Serif", Font.PLAIN, 23));
         assertFalse(a1.equals(a2));
         a2.setFont(new Font("Serif", Font.PLAIN, 23));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // paint
         GradientPaint gp1 = new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
@@ -114,45 +116,45 @@ public class XYTextAnnotationTest  {
         a1.setPaint(gp1);
         assertFalse(a1.equals(a2));
         a2.setPaint(gp2);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // rotation anchor
         a1.setRotationAnchor(TextAnchor.BASELINE_RIGHT);
         assertFalse(a1.equals(a2));
         a2.setRotationAnchor(TextAnchor.BASELINE_RIGHT);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // rotation angle
         a1.setRotationAngle(12.3);
         assertFalse(a1.equals(a2));
         a2.setRotationAngle(12.3);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // text anchor
         a1.setTextAnchor(TextAnchor.BASELINE_RIGHT);
         assertFalse(a1.equals(a2));
         a2.setTextAnchor(TextAnchor.BASELINE_RIGHT);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setBackgroundPaint(gp1);
         assertFalse(a1.equals(a2));
         a2.setBackgroundPaint(gp1);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setOutlinePaint(gp1);
         assertFalse(a1.equals(a2));
         a2.setOutlinePaint(gp1);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setOutlineStroke(new BasicStroke(1.2f));
         assertFalse(a1.equals(a2));
         a2.setOutlineStroke(new BasicStroke(1.2f));
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         a1.setOutlineVisible(!a1.isOutlineVisible());
         assertFalse(a1.equals(a2));
         a2.setOutlineVisible(a1.isOutlineVisible());
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
     }
 
@@ -163,7 +165,7 @@ public class XYTextAnnotationTest  {
     public void testHashCode() {
         XYTextAnnotation a1 = new XYTextAnnotation("Text", 10.0, 20.0);
         XYTextAnnotation a2 = new XYTextAnnotation("Text", 10.0, 20.0);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
         assertEquals(h1, h2);
@@ -176,9 +178,9 @@ public class XYTextAnnotationTest  {
     public void testCloning() throws CloneNotSupportedException {
         XYTextAnnotation a1 = new XYTextAnnotation("Text", 10.0, 20.0);
         XYTextAnnotation a2 = (XYTextAnnotation) a1.clone();
-        assertTrue(a1 != a2);
-        assertTrue(a1.getClass() == a2.getClass());
-        assertTrue(a1.equals(a2));
+        assertNotSame(a1, a2);
+        assertSame(a1.getClass(), a2.getClass());
+        assertEquals(a1, a2);
     }
 
     /**

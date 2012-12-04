@@ -56,6 +56,8 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -77,25 +79,25 @@ public class CategoryTextAnnotationTest  {
                 "Category", 1.0);
         CategoryTextAnnotation a2 = new CategoryTextAnnotation("Test", 
                 "Category", 1.0);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // category
         a1.setCategory("Category 2");
         assertFalse(a1.equals(a2));
         a2.setCategory("Category 2");
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // categoryAnchor
         a1.setCategoryAnchor(CategoryAnchor.START);
         assertFalse(a1.equals(a2));
         a2.setCategoryAnchor(CategoryAnchor.START);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
         // value
         a1.setValue(0.15);
         assertFalse(a1.equals(a2));
         a2.setValue(0.15);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
 
     }
 
@@ -108,7 +110,7 @@ public class CategoryTextAnnotationTest  {
                 "Category", 1.0);
         CategoryTextAnnotation a2 = new CategoryTextAnnotation("Test", 
                 "Category", 1.0);
-        assertTrue(a1.equals(a2));
+        assertEquals(a1, a2);
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
         assertEquals(h1, h2);
@@ -123,9 +125,9 @@ public class CategoryTextAnnotationTest  {
                 "Test", "Category", 1.0);
         CategoryTextAnnotation a2 = (CategoryTextAnnotation) a1.clone();
 
-        assertTrue(a1 != a2);
-        assertTrue(a1.getClass() == a2.getClass());
-        assertTrue(a1.equals(a2));
+        assertNotSame(a1, a2);
+        assertSame(a1.getClass(), a2.getClass());
+        assertEquals(a1, a2);
     }
 
     /**
