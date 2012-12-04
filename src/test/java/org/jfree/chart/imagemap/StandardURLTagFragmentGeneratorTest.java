@@ -47,7 +47,7 @@ import static org.junit.Assert.assertEquals;
 
 
 /**
- * Tests for the {@link StandardURLTagFragmentGeneratorTests} class.
+ * Tests for the {@link StandardURLTagFragmentGenerator} class.
  */
 public class StandardURLTagFragmentGeneratorTest  {
 

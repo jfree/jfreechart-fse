@@ -40,7 +40,6 @@
 
 package org.jfree.data.time;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -59,17 +58,6 @@ import static org.junit.Assert.assertFalse;
  */
 public class TimeSeriesDataItemTest  {
 
-
-
-
-
-    /**
-     * Common test setup.
-     */
-    @Before
-	public void setUp() {
-        // no setup
-    }
 
     /**
      * Test that an instance is equal to itself.

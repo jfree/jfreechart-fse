@@ -48,7 +48,6 @@
 package org.jfree.data;
 
 import org.jfree.chart.util.SortOrder;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -73,17 +72,6 @@ import static org.junit.Assert.fail;
  */
 public class DefaultKeyedValuesTest  {
 
-
-
-
-
-    /**
-     * Common test setup.
-     */
-    @Before
-	public void setUp() {
-        // no setup required
-    }
 
     /**
      * Checks that a new instance is empty.

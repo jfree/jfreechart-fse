@@ -43,7 +43,6 @@
 package org.jfree.data;
 
 import org.jfree.data.general.DefaultPieDataset;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -65,18 +64,6 @@ import static org.junit.Assert.fail;
  * Tests for the {@link KeyedObjects} class.
  */
 public class KeyedObjectsTest  {
-
-
-
-
-
-    /**
-     * Common test setup.
-     */
-    @Before
-	public void setUp() {
-        // no setup required
-    }
 
     /**
      * Confirm that cloning works.

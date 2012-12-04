@@ -42,7 +42,6 @@
 
 package org.jfree.data.time;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -61,18 +60,6 @@ import static org.junit.Assert.assertFalse;
  * Tests for the {@link SimpleTimePeriod} class.
  */
 public class SimpleTimePeriodTest  {
-
-
-
-
-
-    /**
-     * Common test setup.
-     */
-    @Before
-	public void setUp() {
-        // no setup
-    }
 
     /**
      * Check that an instance is equal to itself.

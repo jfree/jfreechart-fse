@@ -47,7 +47,6 @@
 package org.jfree.data.time;
 
 import org.jfree.chart.date.MonthConstants;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -73,17 +72,6 @@ import static org.junit.Assert.fail;
  */
 public class HourTest  {
 
-
-
-
-
-    /**
-     * Common test setup.
-     */
-    @Before
-    public void setUp() {
-        // no setup
-    }
 
     /**
      * Check that an Hour instance is equal to itself.

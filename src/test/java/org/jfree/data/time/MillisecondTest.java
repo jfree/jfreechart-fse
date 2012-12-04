@@ -47,7 +47,6 @@
 package org.jfree.data.time;
 
 import org.jfree.chart.date.MonthConstants;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -72,18 +71,6 @@ import static org.junit.Assert.fail;
  * Tests for the {@link Millisecond} class.
  */
 public class MillisecondTest  {
-
-
-
-
-
-    /**
-     * Common test setup.
-     */
-    @Before
-    public void setUp() {
-        // no setup
-    }
 
     /**
      * Check that a {@link Millisecond} instance is equal to itself.

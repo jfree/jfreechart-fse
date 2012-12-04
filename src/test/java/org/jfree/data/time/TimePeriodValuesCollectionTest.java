@@ -46,7 +46,6 @@
 package org.jfree.data.time;
 
 import org.jfree.data.Range;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -67,17 +66,6 @@ import static org.junit.Assert.fail;
  */
 public class TimePeriodValuesCollectionTest  {
 
-
-
-
-
-    /**
-     * Common test setup.
-     */
-    @Before
-	public void setUp() {
-        // no setup
-    }
 
     /**
      * A test for bug report 1161340.  I wasn't able to reproduce the problem

@@ -99,8 +99,6 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      *
      * @return The value (possibly <code>null</code>).
      *
-     * @see #addValue(Number, Comparable, Comparable)
-     * @see #removeValue(Comparable, Comparable)
      */
     @Override
 	public Number getValue(int row, int column) {
@@ -206,7 +204,6 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      *
      * @throws UnknownKeyException if either key is not defined in the dataset.
      *
-     * @see #addValue(Number, Comparable, Comparable)
      */
     @Override
 	public Number getValue(Comparable rowKey, Comparable columnKey) {
@@ -226,7 +223,6 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      * @param columnKey  the column key.
      *
      * @see #getValue(Comparable, Comparable)
-     * @see #removeValue(Comparable, Comparable)
      */
     public void addItem(Number value, Number lower, Number upper,
             Comparable rowKey, Comparable columnKey) {
@@ -290,7 +286,6 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      * @param rowKey  the row key.
      * @param columnKey  the column key.
      *
-     * @see #addValue(Number, Comparable, Comparable)
      */
     public void removeItem(Comparable rowKey, Comparable columnKey) {
         this.data.removeObject(rowKey, columnKey);

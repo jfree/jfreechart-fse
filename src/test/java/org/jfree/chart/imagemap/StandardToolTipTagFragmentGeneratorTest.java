@@ -47,7 +47,7 @@ import static org.junit.Assert.assertEquals;
 
 
 /**
- * Tests for the {@link StandardToolTipTagFragmentGeneratorTests} class.
+ * Tests for the {@link StandardToolTipTagFragmentGenerator} class.
  */
 public class StandardToolTipTagFragmentGeneratorTest  {
 

@@ -46,7 +46,6 @@
 package org.jfree.data.time;
 
 import org.jfree.chart.date.MonthConstants;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -72,17 +71,6 @@ import static org.junit.Assert.fail;
  */
 public class SecondTest  {
 
-
-
-
-
-    /**
-     * Common test setup.
-     */
-    @Before
-	public void setUp() {
-        // no setup
-    }
 
     /**
      * Test that a Second instance is equal to itself.
