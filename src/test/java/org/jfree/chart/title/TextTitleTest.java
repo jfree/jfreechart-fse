@@ -47,9 +47,12 @@ package org.jfree.chart.title;
 import org.jfree.chart.ui.HorizontalAlignment;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -152,15 +155,9 @@ public class TextTitleTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         TextTitle t1 = new TextTitle();
-        TextTitle t2 = null;
-        try {
-            t2 = (TextTitle) t1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        TextTitle t2 = (TextTitle) t1.clone();
         assertTrue(t1 != t2);
         assertTrue(t1.getClass() == t2.getClass());
         assertTrue(t1.equals(t2));
@@ -170,12 +167,10 @@ public class TextTitleTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         TextTitle t1 = new TextTitle("Test");
-        TextTitle t2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(t1);
@@ -183,12 +178,9 @@ public class TextTitleTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            t2 = (TextTitle) in.readObject();
+        TextTitle t2 = (TextTitle) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(t1, t2);
 
     }

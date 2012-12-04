@@ -47,6 +47,7 @@ import org.junit.Test;
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -60,7 +61,6 @@ import static org.junit.Assert.assertTrue;
  * Tests for the {@link XYSplineRenderer} class.
  */
 public class XYSplineRendererTest  {
-
 
 
 
@@ -99,17 +99,11 @@ public class XYSplineRendererTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         Rectangle2D legendShape = new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0);
         XYSplineRenderer r1 = new XYSplineRenderer();
         r1.setLegendLine(legendShape);
-        XYSplineRenderer r2 = null;
-        try {
-            r2 = (XYSplineRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        XYSplineRenderer r2 = (XYSplineRenderer) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -128,11 +122,10 @@ public class XYSplineRendererTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         XYSplineRenderer r1 = new XYSplineRenderer();
-        XYSplineRenderer r2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(r1);
@@ -140,12 +133,9 @@ public class XYSplineRendererTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (XYSplineRenderer) in.readObject();
+        XYSplineRenderer r2 = (XYSplineRenderer) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(r1, r2);
 
     }

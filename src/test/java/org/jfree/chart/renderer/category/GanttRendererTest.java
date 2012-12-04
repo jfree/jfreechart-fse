@@ -45,9 +45,11 @@ package org.jfree.chart.renderer.category;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -113,15 +115,9 @@ public class GanttRendererTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         GanttRenderer r1 = new GanttRenderer();
-        GanttRenderer r2 = null;
-        try {
-            r2 = (GanttRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        GanttRenderer r2 = (GanttRenderer) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -140,16 +136,14 @@ public class GanttRendererTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         GanttRenderer r1 = new GanttRenderer();
         r1.setCompletePaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
                 4.0f, Color.BLUE));
         r1.setIncompletePaint(new GradientPaint(4.0f, 3.0f, Color.RED, 2.0f,
                 1.0f, Color.BLUE));
-        GanttRenderer r2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(r1);
@@ -157,12 +151,9 @@ public class GanttRendererTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (GanttRenderer) in.readObject();
+        GanttRenderer r2 = (GanttRenderer) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(r1, r2);
 
     }

@@ -50,6 +50,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -60,9 +61,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
- * Tests for the {@link OHLCSeriesCollectionTests} class.
+ * Tests for the {@link OHLCSeriesCollection} class.
  */
 public class OHLCSeriesCollectionTest
         implements DatasetChangeListener {
@@ -107,18 +109,12 @@ public class OHLCSeriesCollectionTest
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         OHLCSeriesCollection c1 = new OHLCSeriesCollection();
         OHLCSeries s1 = new OHLCSeries("Series");
         s1.add(new Year(2006), 1.0, 1.1, 1.2, 1.3);
         c1.addSeries(s1);
-        OHLCSeriesCollection c2 = null;
-        try {
-            c2 = (OHLCSeriesCollection) c1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        OHLCSeriesCollection c2 = (OHLCSeriesCollection) c1.clone();
         assertTrue(c1 != c2);
         assertTrue(c1.getClass() == c2.getClass());
         assertTrue(c1.equals(c2));
@@ -132,14 +128,12 @@ public class OHLCSeriesCollectionTest
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         OHLCSeriesCollection c1 = new OHLCSeriesCollection();
         OHLCSeries s1 = new OHLCSeries("Series");
         s1.add(new Year(2006), 1.0, 1.1, 1.2, 1.3);
         c1.addSeries(s1);
-        OHLCSeriesCollection c2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(c1);
@@ -147,12 +141,9 @@ public class OHLCSeriesCollectionTest
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            c2 = (OHLCSeriesCollection) in.readObject();
+        OHLCSeriesCollection c2 = (OHLCSeriesCollection) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(c1, c2);
     }
 
@@ -167,12 +158,10 @@ public class OHLCSeriesCollectionTest
         dataset.addSeries(s1);
         try {
             /* XYSeries s = */ dataset.getSeries(1);
+            fail("Should have thrown on IllegalArgumentException on index out of bounds");
         }
         catch (IllegalArgumentException e) {
-            // correct outcome
-        }
-        catch (IndexOutOfBoundsException e) {
-            assertTrue(false);  // wrong outcome
+            assertEquals("Series index out of bounds", e.getMessage());
         }
     }
 

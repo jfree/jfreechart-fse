@@ -55,6 +55,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -69,6 +70,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link Week} class.
@@ -163,12 +165,10 @@ public class WeekTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         Week w1 = new Week(24, 1999);
-        Week w2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(w1);
@@ -176,12 +176,9 @@ public class WeekTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            w2 = (Week) in.readObject();
+        Week w2 = (Week) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(w1, w2);
 
     }
@@ -355,14 +352,13 @@ public class WeekTest  {
         }
 
         // try null calendar
-        boolean pass = false;
         try {
-            w.getFirstMillisecond((Calendar) null);
+            w.getFirstMillisecond(null);
+            fail("NullPointerException should have been thrown");
         }
         catch (NullPointerException e) {
-            pass = true;
+            //should go in here
         }
-        assertTrue(pass);
     }
 
     /**
@@ -376,14 +372,13 @@ public class WeekTest  {
         assertEquals(978307200000L, w.getFirstMillisecond(calendar));
 
         // try null calendar
-        boolean pass = false;
         try {
-            w.getFirstMillisecond((Calendar) null);
+            w.getFirstMillisecond(null);
+            fail("NullPointerException should have been thrown");
         }
         catch (NullPointerException e) {
-            pass = true;
+            //we should go in here
         }
-        assertTrue(pass);
     }
 
     /**
@@ -419,14 +414,13 @@ public class WeekTest  {
         }
 
         // try null zone
-        boolean pass = false;
         try {
-            w.getLastMillisecond((Calendar) null);
+            w.getLastMillisecond(null);
+            fail("NullPointerException should have been thrown");
         }
         catch (NullPointerException e) {
-            pass = true;
+            //we should go in here
         }
-        assertTrue(pass);
     }
 
     /**
@@ -440,14 +434,13 @@ public class WeekTest  {
         assertEquals(1009756799999L, w.getLastMillisecond(calendar));
 
         // try null calendar
-        boolean pass = false;
         try {
-            w.getLastMillisecond((Calendar) null);
+            w.getLastMillisecond(null);
+            fail("NullPointerException should have been thrown");
         }
         catch (NullPointerException e) {
-            pass = true;
+            //we should go in here
         }
-        assertTrue(pass);
     }
 
     /**

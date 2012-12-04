@@ -44,6 +44,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -84,7 +85,7 @@ public class OHLCDataItemTest  {
      * Instances of this class are immutable - cloning not required.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         OHLCDataItem i1 = new OHLCDataItem(
             new Date(1L), 1.0, 2.0, 3.0, 4.0, 5.0
         );
@@ -95,13 +96,11 @@ public class OHLCDataItemTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         OHLCDataItem i1 = new OHLCDataItem(
             new Date(1L), 1.0, 2.0, 3.0, 4.0, 5.0
         );
-        OHLCDataItem i2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(i1);
@@ -110,12 +109,9 @@ public class OHLCDataItemTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            i2 = (OHLCDataItem) in.readObject();
+        OHLCDataItem i2 = (OHLCDataItem) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(i1, i2);
     }
 

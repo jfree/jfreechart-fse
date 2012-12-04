@@ -44,9 +44,11 @@ import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.event.PlotChangeListener;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -158,15 +160,9 @@ public class DialPlotTest  implements PlotChangeListener {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         DialPlot p1 = new DialPlot();
-        DialPlot p2 = null;
-        try {
-            p2 = (DialPlot) p1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        DialPlot p2 = (DialPlot) p1.clone();
         assertTrue(p1 != p2);
         assertTrue(p1.getClass() == p2.getClass());
         assertTrue(p1.equals(p2));
@@ -177,11 +173,9 @@ public class DialPlotTest  implements PlotChangeListener {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         DialPlot p1 = new DialPlot();
-        DialPlot p2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(p1);
@@ -189,12 +183,9 @@ public class DialPlotTest  implements PlotChangeListener {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            p2 = (DialPlot) in.readObject();
+        DialPlot p2 = (DialPlot) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(p1, p2);
     }
 

@@ -44,6 +44,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -87,7 +88,7 @@ public class MeanAndStandardDeviationTest  {
      * Immutable class - should not be cloneable.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         MeanAndStandardDeviation m1 = new MeanAndStandardDeviation(1.2, 3.4);
         assertFalse(m1 instanceof Cloneable);
     }
@@ -96,11 +97,9 @@ public class MeanAndStandardDeviationTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         MeanAndStandardDeviation m1 = new MeanAndStandardDeviation(1.2, 3.4);
-        MeanAndStandardDeviation m2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(m1);
@@ -109,12 +108,9 @@ public class MeanAndStandardDeviationTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            m2 = (MeanAndStandardDeviation) in.readObject();
+        MeanAndStandardDeviation m2 = (MeanAndStandardDeviation) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
+
         assertEquals(m1, m2);
 
     }

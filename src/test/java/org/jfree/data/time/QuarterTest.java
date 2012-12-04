@@ -50,6 +50,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -64,6 +65,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {link Quarter} class.
@@ -204,35 +206,21 @@ public class QuarterTest  {
     @Test
     public void testParseQuarter() {
 
-        Quarter quarter = null;
+        Quarter quarter = Quarter.parseQuarter("Q1-2000");
 
-        // test 1...
-        try {
-            quarter = Quarter.parseQuarter("Q1-2000");
-        }
-        catch (TimePeriodFormatException e) {
-            quarter = new Quarter(1, 1900);
-        }
         assertEquals(1, quarter.getQuarter());
         assertEquals(2000, quarter.getYear().getYear());
 
-        // test 2...
-        try {
-            quarter = Quarter.parseQuarter("2001-Q2");
-        }
-        catch (TimePeriodFormatException e) {
-            quarter = new Quarter(1, 1900);
-        }
+
+        quarter = Quarter.parseQuarter("2001-Q2");
+
         assertEquals(2, quarter.getQuarter());
         assertEquals(2001, quarter.getYear().getYear());
 
         // test 3...
-        try {
-            quarter = Quarter.parseQuarter("Q3, 2002");
-        }
-        catch (TimePeriodFormatException e) {
-            quarter = new Quarter(1, 1900);
-        }
+
+        quarter = Quarter.parseQuarter("Q3, 2002");
+
         assertEquals(3, quarter.getQuarter());
         assertEquals(2002, quarter.getYear().getYear());
 
@@ -242,12 +230,11 @@ public class QuarterTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         Quarter q1 = new Quarter(4, 1999);
-        Quarter q2 = null;
 
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(q1);
@@ -256,12 +243,9 @@ public class QuarterTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            q2 = (Quarter) in.readObject();
+            Quarter q2 = (Quarter) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
+
         assertEquals(q1, q2);
 
     }
@@ -295,23 +279,21 @@ public class QuarterTest  {
      */
     @Test
     public void testConstructor() {
-        boolean pass = false;
         try {
             /*Quarter q =*/ new Quarter(0, 2005);
+            fail("IllegalArgumentException should have been thrown from 0 querter");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Quarter outside valid range.", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             /*Quarter q =*/ new Quarter(5, 2005);
+            fail("IllegalArgumentException should have been thrown from 5 quarter");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Quarter outside valid range.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -340,14 +322,13 @@ public class QuarterTest  {
         assertEquals(-623347200000L, q.getFirstMillisecond(c));
 
         // try null calendar
-        boolean pass = false;
         try {
-            q.getFirstMillisecond((Calendar) null);
+            q.getFirstMillisecond(null);
+            fail("NullPointerException should have been thrown on null parameter");
         }
         catch (NullPointerException e) {
-            pass = true;
+            //we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**
@@ -361,14 +342,13 @@ public class QuarterTest  {
         assertEquals(978307200000L, q.getFirstMillisecond(calendar));
 
         // try null calendar
-        boolean pass = false;
         try {
-            q.getFirstMillisecond((Calendar) null);
+            q.getFirstMillisecond(null);
+            fail("NullPointerException should have been thrown on null parameter");
         }
         catch (NullPointerException e) {
-            pass = true;
+            //we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**
@@ -397,14 +377,13 @@ public class QuarterTest  {
         assertEquals(-615488400001L, q.getLastMillisecond(c));
 
         // try null calendar
-        boolean pass = false;
         try {
-            q.getLastMillisecond((Calendar) null);
+            q.getLastMillisecond(null);
+            fail("NullPointerException should have been thrown with null parameter");
         }
         catch (NullPointerException e) {
-            pass = true;
+            // we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**
@@ -418,14 +397,13 @@ public class QuarterTest  {
         assertEquals(1001894399999L, q.getLastMillisecond(calendar));
 
         // try null calendar
-        boolean pass = false;
         try {
-            q.getLastMillisecond((Calendar) null);
+            q.getLastMillisecond(null);
+            fail("NullPointerException should have been thrown by null parameter");
         }
         catch (NullPointerException e) {
-            pass = true;
+            //we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**

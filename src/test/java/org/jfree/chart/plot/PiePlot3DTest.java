@@ -47,11 +47,12 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -95,12 +96,10 @@ public class PiePlot3DTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         PiePlot3D p1 = new PiePlot3D(null);
-        PiePlot3D p2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(p1);
@@ -108,12 +107,9 @@ public class PiePlot3DTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            p2 = (PiePlot3D) in.readObject();
+        PiePlot3D p2 = (PiePlot3D) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(p1, p2);
 
     }
@@ -124,19 +120,12 @@ public class PiePlot3DTest  {
     @Test
     public void testDrawWithNullDataset() {
         JFreeChart chart = ChartFactory.createPieChart3D("Test", null);
-        boolean success = false;
-        try {
             BufferedImage image = new BufferedImage(200 , 100,
                     BufferedImage.TYPE_INT_RGB);
             Graphics2D g2 = image.createGraphics();
             chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
             g2.dispose();
-            success = true;
-        }
-        catch (Exception e) {
-            success = false;
-        }
-        assertTrue(success);
+
     }
 
 }

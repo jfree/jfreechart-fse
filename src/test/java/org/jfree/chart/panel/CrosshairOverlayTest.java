@@ -43,9 +43,12 @@ package org.jfree.chart.panel;
 import org.jfree.chart.plot.Crosshair;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -78,13 +81,12 @@ public class CrosshairOverlayTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         CrosshairOverlay o1 = new CrosshairOverlay();
         o1.addDomainCrosshair(new Crosshair(99.9));
         o1.addRangeCrosshair(new Crosshair(1.23, new GradientPaint(1.0f, 2.0f,
                 Color.RED, 3.0f, 4.0f, Color.BLUE), new BasicStroke(1.1f)));
-        CrosshairOverlay o2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(o1);
@@ -92,12 +94,9 @@ public class CrosshairOverlayTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            o2 = (CrosshairOverlay) in.readObject();
+        CrosshairOverlay o2 = (CrosshairOverlay) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertTrue(o1.equals(o2));
     }
 
@@ -105,18 +104,12 @@ public class CrosshairOverlayTest  {
      * Basic checks for cloning.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         CrosshairOverlay o1 = new CrosshairOverlay();
         o1.addDomainCrosshair(new Crosshair(99.9));
         o1.addRangeCrosshair(new Crosshair(1.23, new GradientPaint(1.0f, 2.0f,
                 Color.RED, 3.0f, 4.0f, Color.BLUE), new BasicStroke(1.1f)));
-        CrosshairOverlay o2 = null;
-        try {
-            o2 = (CrosshairOverlay) o1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        CrosshairOverlay o2 = (CrosshairOverlay) o1.clone();
         assertTrue(o1 != o2);
         assertTrue(o1.getClass() == o2.getClass());
         assertTrue(o1.equals(o2));

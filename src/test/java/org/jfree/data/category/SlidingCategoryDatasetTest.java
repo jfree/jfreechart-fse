@@ -46,6 +46,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -55,6 +56,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link SlidingCategoryDataset} class.
@@ -100,18 +102,12 @@ public class SlidingCategoryDatasetTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         DefaultCategoryDataset u1 = new DefaultCategoryDataset();
         u1.addValue(1.0, "R1", "C1");
         u1.addValue(2.0, "R1", "C2");
         SlidingCategoryDataset d1 = new SlidingCategoryDataset(u1, 0, 5);
-        SlidingCategoryDataset d2 = null;
-        try {
-            d2 = (SlidingCategoryDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        SlidingCategoryDataset d2 = (SlidingCategoryDataset) d1.clone();
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
@@ -129,13 +125,12 @@ public class SlidingCategoryDatasetTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         DefaultCategoryDataset u1 = new DefaultCategoryDataset();
         u1.addValue(1.0, "R1", "C1");
         u1.addValue(2.0, "R1", "C2");
         SlidingCategoryDataset d1 = new SlidingCategoryDataset(u1, 0, 5);
-        SlidingCategoryDataset d2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(d1);
@@ -143,12 +138,9 @@ public class SlidingCategoryDatasetTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            d2 = (SlidingCategoryDataset) in.readObject();
+        SlidingCategoryDataset d2 = (SlidingCategoryDataset) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(d1, d2);
 
         // basic check for independence
@@ -247,25 +239,24 @@ public class SlidingCategoryDatasetTest  {
         underlying.addValue(4.0, "R1", "C4");
         SlidingCategoryDataset dataset = new SlidingCategoryDataset(underlying,
                 1, 2);
-        assertEquals(new Double(2.0), dataset.getValue("R1", "C2"));
-        assertEquals(new Double(3.0), dataset.getValue("R1", "C3"));
-        boolean pass = false;
+        assertEquals(2.0, dataset.getValue("R1", "C2"));
+        assertEquals(3.0, dataset.getValue("R1", "C3"));
+
         try {
             dataset.getValue("R1", "C1");
+            fail("UnknownKeyException should have been thrown with provided key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Unknown columnKey: C1", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             dataset.getValue("R1", "C4");
+            fail("UnknownKeyException should have been thrown with provided key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Unknown columnKey: C4", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**

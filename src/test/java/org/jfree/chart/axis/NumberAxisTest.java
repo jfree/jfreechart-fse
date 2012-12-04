@@ -53,15 +53,18 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.data.Range;
 import org.jfree.data.RangeType;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -71,6 +74,7 @@ import java.text.DecimalFormat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link NumberAxis} class.
@@ -85,15 +89,9 @@ public class NumberAxisTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         NumberAxis a1 = new NumberAxis("Test");
-        NumberAxis a2 = null;
-        try {
-            a2 = (NumberAxis) a1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        NumberAxis a2 = (NumberAxis) a1.clone();
         assertTrue(a1 != a2);
         assertTrue(a1.getClass() == a2.getClass());
         assertTrue(a1.equals(a2));
@@ -186,25 +184,20 @@ public class NumberAxisTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         NumberAxis a1 = new NumberAxis("Test Axis");
-        NumberAxis a2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(a1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(a1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            a2 = (NumberAxis) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        NumberAxis a2 = (NumberAxis) in.readObject();
+        in.close();
+
         assertEquals(a1, a2);
 
     }
@@ -363,49 +356,50 @@ public class NumberAxisTest  {
         assertEquals(3.1, axis.getUpperBound(), EPSILON);
     }
 
-//    /**
-//     * Some checks for the setRangeType() method.
-//     */
-//    public void testSetRangeType() {
-//
-//        NumberAxis axis = new NumberAxis("X");
-//        axis.setRangeType(RangeType.POSITIVE);
-//        assertEquals(RangeType.POSITIVE, axis.getRangeType());
-//
-//        // test a change to RangeType.POSITIVE
-//        axis.setRangeType(RangeType.FULL);
-//        axis.setRange(-5.0, 5.0);
-//        axis.setRangeType(RangeType.POSITIVE);
-//        assertEquals(new Range(0.0, 5.0), axis.getRange());
-//
-//        axis.setRangeType(RangeType.FULL);
-//        axis.setRange(-10.0, -5.0);
-//        axis.setRangeType(RangeType.POSITIVE);
-//        assertEquals(new Range(0.0, axis.getAutoRangeMinimumSize()),
-//                axis.getRange());
-//
-//        // test a change to RangeType.NEGATIVE
-//        axis.setRangeType(RangeType.FULL);
-//        axis.setRange(-5.0, 5.0);
-//        axis.setRangeType(RangeType.NEGATIVE);
-//        assertEquals(new Range(-5.0, 0.0), axis.getRange());
-//
-//        axis.setRangeType(RangeType.FULL);
-//        axis.setRange(5.0, 10.0);
-//        axis.setRangeType(RangeType.NEGATIVE);
-//        assertEquals(new Range(-axis.getAutoRangeMinimumSize(), 0.0),
-//                axis.getRange());
-//
-//        // try null
-//        boolean pass = false;
-//        try {
-//            axis.setRangeType(null);
-//        }
-//        catch (IllegalArgumentException e) {
-//            pass = true;
-//        }
-//        assertTrue(pass);
-//    }
+    /**
+     * Some checks for the setRangeType() method.
+     */
+    @Ignore("This was previously commented out")
+    @Test
+    public void testSetRangeType() {
+
+        NumberAxis axis = new NumberAxis("X");
+        axis.setRangeType(RangeType.POSITIVE);
+        assertEquals(RangeType.POSITIVE, axis.getRangeType());
+
+        // test a change to RangeType.POSITIVE
+        axis.setRangeType(RangeType.FULL);
+        axis.setRange(-5.0, 5.0);
+        axis.setRangeType(RangeType.POSITIVE);
+        assertEquals(new Range(0.0, 5.0), axis.getRange());
+
+        axis.setRangeType(RangeType.FULL);
+        axis.setRange(-10.0, -5.0);
+        axis.setRangeType(RangeType.POSITIVE);
+        assertEquals(new Range(0.0, axis.getAutoRangeMinimumSize()),
+                axis.getRange());
+
+        // test a change to RangeType.NEGATIVE
+        axis.setRangeType(RangeType.FULL);
+        axis.setRange(-5.0, 5.0);
+        axis.setRangeType(RangeType.NEGATIVE);
+        assertEquals(new Range(-5.0, 0.0), axis.getRange());
+
+        axis.setRangeType(RangeType.FULL);
+        axis.setRange(5.0, 10.0);
+        axis.setRangeType(RangeType.NEGATIVE);
+        assertEquals(new Range(-axis.getAutoRangeMinimumSize(), 0.0),
+                axis.getRange());
+
+        // try null
+        try {
+            axis.setRangeType(null);
+            fail("IllegalArgumentException should have been thrown on null parameter");
+        }
+        catch (IllegalArgumentException e) {
+            assertEquals("Null 'rangeType' argument.", e.getMessage());
+        }
+    }
 
     /**
      * Some checks for the setLowerBound() method.

@@ -46,6 +46,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -302,12 +303,10 @@ public class RangeTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         Range r1 = new Range(25.0, 133.42);
-        Range r2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(r1);
@@ -315,12 +314,9 @@ public class RangeTest  {
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            r2 = (Range) in.readObject();
+        Range r2 = (Range) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            fail("Serialization is not supported");
-        }
+
         assertEquals(r1, r2);
 
     }

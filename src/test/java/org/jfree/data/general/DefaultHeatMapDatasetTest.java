@@ -44,6 +44,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -173,20 +174,14 @@ public class DefaultHeatMapDatasetTest
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         DefaultHeatMapDataset d1 = new DefaultHeatMapDataset(2, 3, -1.0, 4.0,
                 -2.0, 5.0);
         d1.setZValue(0, 0, 10.0);
         d1.setZValue(0, 1, Double.NEGATIVE_INFINITY);
         d1.setZValue(0, 2, Double.POSITIVE_INFINITY);
         d1.setZValue(1, 0, Double.NaN);
-        DefaultHeatMapDataset d2 = null;
-        try {
-            d2 = (DefaultHeatMapDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        DefaultHeatMapDataset d2 = (DefaultHeatMapDataset) d1.clone();
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
@@ -202,7 +197,7 @@ public class DefaultHeatMapDatasetTest
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         DefaultHeatMapDataset d1 = new DefaultHeatMapDataset(2, 3, -1.0, 4.0,
                 -2.0, 5.0);
         d1.setZValue(0, 0, 10.0);
@@ -210,9 +205,7 @@ public class DefaultHeatMapDatasetTest
         d1.setZValue(0, 2, Double.POSITIVE_INFINITY);
         d1.setZValue(1, 0, Double.NaN);
 
-        DefaultHeatMapDataset d2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(d1);
@@ -220,12 +213,9 @@ public class DefaultHeatMapDatasetTest
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            d2 = (DefaultHeatMapDataset) in.readObject();
+        DefaultHeatMapDataset d2 = (DefaultHeatMapDataset) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(d1, d2);
     }
 

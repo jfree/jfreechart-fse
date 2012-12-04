@@ -109,7 +109,7 @@ public class PieChartTest  {
     static class LocalListener implements ChartChangeListener {
 
         /** A flag. */
-        private boolean flag = false;
+        private boolean flag;
 
         /**
          * Event handler.

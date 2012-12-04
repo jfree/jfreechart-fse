@@ -47,9 +47,13 @@ package org.jfree.chart.plot;
 import org.jfree.chart.ui.RectangleInsets;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -177,15 +181,9 @@ public class ThermometerPlotTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         ThermometerPlot p1 = new ThermometerPlot();
-        ThermometerPlot p2 = null;
-        try {
-            p2 = (ThermometerPlot) p1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        ThermometerPlot p2 = (ThermometerPlot) p1.clone();
         assertTrue(p1 != p2);
         assertTrue(p1.getClass() == p2.getClass());
         assertTrue(p1.equals(p2));
@@ -195,12 +193,10 @@ public class ThermometerPlotTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         ThermometerPlot p1 = new ThermometerPlot();
-        ThermometerPlot p2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(p1);
@@ -208,12 +204,9 @@ public class ThermometerPlotTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            p2 = (ThermometerPlot) in.readObject();
+        ThermometerPlot p2 = (ThermometerPlot) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertTrue(p1.equals(p2));
 
     }
@@ -222,13 +215,11 @@ public class ThermometerPlotTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization2() {
+    public void testSerialization2() throws IOException, ClassNotFoundException {
         ThermometerPlot p1 = new ThermometerPlot();
         p1.setSubrangePaint(1, new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
                 4.0f, Color.BLUE));
-        ThermometerPlot p2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(p1);
@@ -236,12 +227,9 @@ public class ThermometerPlotTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            p2 = (ThermometerPlot) in.readObject();
+        ThermometerPlot p2 = (ThermometerPlot) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertTrue(p1.equals(p2));
     }
 

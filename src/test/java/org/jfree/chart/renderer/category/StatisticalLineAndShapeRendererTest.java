@@ -52,9 +52,10 @@ import org.jfree.data.Range;
 import org.jfree.data.statistics.DefaultStatisticalCategoryDataset;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -111,16 +112,10 @@ public class StatisticalLineAndShapeRendererTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         StatisticalLineAndShapeRenderer r1
                 = new StatisticalLineAndShapeRenderer();
-        StatisticalLineAndShapeRenderer r2 = null;
-        try {
-            r2 = (StatisticalLineAndShapeRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
-        }
+        StatisticalLineAndShapeRenderer r2 = (StatisticalLineAndShapeRenderer) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -140,13 +135,11 @@ public class StatisticalLineAndShapeRendererTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         StatisticalLineAndShapeRenderer r1
             = new StatisticalLineAndShapeRenderer();
-        StatisticalLineAndShapeRenderer r2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(r1);
@@ -154,12 +147,9 @@ public class StatisticalLineAndShapeRendererTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (StatisticalLineAndShapeRenderer) in.readObject();
+        StatisticalLineAndShapeRenderer r2 = (StatisticalLineAndShapeRenderer) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
+
         assertEquals(r1, r2);
 
     }
@@ -170,8 +160,6 @@ public class StatisticalLineAndShapeRendererTest  {
      */
     @Test
     public void testDrawWithNullInfo() {
-        boolean success = false;
-        try {
             DefaultStatisticalCategoryDataset dataset
                 = new DefaultStatisticalCategoryDataset();
             dataset.add(1.0, 2.0, "S1", "C1");
@@ -182,13 +170,6 @@ public class StatisticalLineAndShapeRendererTest  {
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
-            success = true;
-        }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-            success = false;
-        }
-        assertTrue(success);
     }
 
     /**

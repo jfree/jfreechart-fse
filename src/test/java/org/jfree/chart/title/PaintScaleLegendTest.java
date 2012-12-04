@@ -47,9 +47,12 @@ import org.jfree.chart.renderer.GrayPaintScale;
 import org.jfree.chart.renderer.LookupPaintScale;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -166,16 +169,10 @@ public class PaintScaleLegendTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         PaintScaleLegend l1 = new PaintScaleLegend(new GrayPaintScale(),
                 new NumberAxis("X"));
-        PaintScaleLegend l2 = null;
-        try {
-            l2 = (PaintScaleLegend) l1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        PaintScaleLegend l2 = (PaintScaleLegend) l1.clone();
         assertTrue(l1 != l2);
         assertTrue(l1.getClass() == l2.getClass());
         assertTrue(l1.equals(l2));
@@ -185,11 +182,10 @@ public class PaintScaleLegendTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         PaintScaleLegend l1 = new PaintScaleLegend(new GrayPaintScale(),
                 new NumberAxis("X"));
-        PaintScaleLegend l2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(l1);
@@ -197,12 +193,9 @@ public class PaintScaleLegendTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            l2 = (PaintScaleLegend) in.readObject();
+        PaintScaleLegend l2 = (PaintScaleLegend) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(l1, l2);
     }
 

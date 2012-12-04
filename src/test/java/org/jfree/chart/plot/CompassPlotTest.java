@@ -44,9 +44,12 @@ package org.jfree.chart.plot;
 import org.jfree.data.general.DefaultValueDataset;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -121,7 +124,7 @@ public class CompassPlotTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         CompassPlot p1 = new CompassPlot(null);
         p1.setRosePaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
@@ -130,22 +133,17 @@ public class CompassPlotTest  {
                 1.0f, Color.green));
         p1.setRoseHighlightPaint(new GradientPaint(4.0f, 3.0f, Color.RED, 2.0f,
                 1.0f, Color.green));
-        CompassPlot p2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(p1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(p1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            p2 = (CompassPlot) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        CompassPlot p2 = (CompassPlot) in.readObject();
+        in.close();
+
         assertEquals(p1, p2);
 
     }
@@ -154,15 +152,9 @@ public class CompassPlotTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         CompassPlot p1 = new CompassPlot(new DefaultValueDataset(15.0));
-        CompassPlot p2 = null;
-        try {
-            p2 = (CompassPlot) p1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        CompassPlot p2 = (CompassPlot) p1.clone();
         assertTrue(p1 != p2);
         assertTrue(p1.getClass() == p2.getClass());
         assertTrue(p1.equals(p2));

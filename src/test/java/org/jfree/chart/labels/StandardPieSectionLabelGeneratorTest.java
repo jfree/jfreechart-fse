@@ -49,6 +49,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -138,16 +139,11 @@ public class StandardPieSectionLabelGeneratorTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         StandardPieSectionLabelGenerator g1
                 = new StandardPieSectionLabelGenerator();
-        StandardPieSectionLabelGenerator g2 = null;
-        try {
-            g2 = (StandardPieSectionLabelGenerator) g1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        StandardPieSectionLabelGenerator g2 = (StandardPieSectionLabelGenerator) g1.clone();
+
         assertTrue(g1 != g2);
         assertTrue(g1.getClass() == g2.getClass());
         assertTrue(g1.equals(g2));
@@ -167,13 +163,11 @@ public class StandardPieSectionLabelGeneratorTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         StandardPieSectionLabelGenerator g1
                 = new StandardPieSectionLabelGenerator();
-        StandardPieSectionLabelGenerator g2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(g1);
@@ -181,12 +175,8 @@ public class StandardPieSectionLabelGeneratorTest  {
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            g2 = (StandardPieSectionLabelGenerator) in.readObject();
+            StandardPieSectionLabelGenerator g2 = (StandardPieSectionLabelGenerator) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
         assertEquals(g1, g2);
 
     }

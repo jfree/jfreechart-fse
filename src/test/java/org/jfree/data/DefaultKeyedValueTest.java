@@ -44,6 +44,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -53,6 +54,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link DefaultKeyedValue} class.
@@ -68,19 +70,19 @@ public class DefaultKeyedValueTest  {
      */
     @Test
     public void testConstructor() {
-        DefaultKeyedValue v = new DefaultKeyedValue("A", new Integer(1));
+        DefaultKeyedValue v = new DefaultKeyedValue("A", 1);
         assertEquals("A", v.getKey());
-        assertEquals(new Integer(1), v.getValue());
+        assertEquals(1, v.getValue());
 
         // try null key
-        boolean pass = false;
-        try {
-            /*v =*/ new DefaultKeyedValue(null, new Integer(1));
+       try {
+            /*v =*/ new DefaultKeyedValue(null, 1);
+           fail("IllegalArgumentException should have been thrown on null parameter");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'key' argument.", e.getMessage());
         }
-        assertTrue(pass);
+
 
         // try a null value
         v = new DefaultKeyedValue("A", null);
@@ -93,17 +95,17 @@ public class DefaultKeyedValueTest  {
     @Test
     public void testEquals() {
 
-        DefaultKeyedValue v1 = new DefaultKeyedValue("Test", new Double(45.5));
-        DefaultKeyedValue v2 = new DefaultKeyedValue("Test", new Double(45.5));
+        DefaultKeyedValue v1 = new DefaultKeyedValue("Test", 45.5);
+        DefaultKeyedValue v2 = new DefaultKeyedValue("Test", 45.5);
         assertTrue(v1.equals(v2));
         assertTrue(v2.equals(v1));
 
-        v1 = new DefaultKeyedValue("Test 1", new Double(45.5));
-        v2 = new DefaultKeyedValue("Test 2", new Double(45.5));
+        v1 = new DefaultKeyedValue("Test 1", 45.5);
+        v2 = new DefaultKeyedValue("Test 2", 45.5);
         assertFalse(v1.equals(v2));
 
-        v1 = new DefaultKeyedValue("Test", new Double(45.5));
-        v2 = new DefaultKeyedValue("Test", new Double(45.6));
+        v1 = new DefaultKeyedValue("Test", 45.5);
+        v2 = new DefaultKeyedValue("Test", 45.6);
         assertFalse(v1.equals(v2));
 
     }
@@ -112,21 +114,15 @@ public class DefaultKeyedValueTest  {
      * Some checks for the clone() method.
      */
     @Test
-    public void testCloning() {
-        DefaultKeyedValue v1 = new DefaultKeyedValue("Test", new Double(45.5));
-        DefaultKeyedValue v2 = null;
-        try {
-            v2 = (DefaultKeyedValue) v1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
-        }
+    public void testCloning() throws CloneNotSupportedException {
+        DefaultKeyedValue v1 = new DefaultKeyedValue("Test", 45.5);
+        DefaultKeyedValue v2 = (DefaultKeyedValue) v1.clone();
         assertTrue(v1 != v2);
         assertTrue(v1.getClass() == v2.getClass());
         assertTrue(v1.equals(v2));
 
         // confirm that the clone is independent of the original
-        v2.setValue(new Double(12.3));
+        v2.setValue(12.3);
         assertFalse(v1.equals(v2));
     }
 
@@ -134,25 +130,19 @@ public class DefaultKeyedValueTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
-        DefaultKeyedValue v1 = new DefaultKeyedValue("Test", new Double(25.3));
-        DefaultKeyedValue v2 = null;
+        DefaultKeyedValue v1 = new DefaultKeyedValue("Test", 25.3);
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(v1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(v1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            v2 = (DefaultKeyedValue) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        DefaultKeyedValue v2 = (DefaultKeyedValue) in.readObject();
+        in.close();
         assertEquals(v1, v2);
 
     }

@@ -46,6 +46,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -67,12 +68,10 @@ public class StandardXYURLGeneratorTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         StandardXYURLGenerator g1 = new StandardXYURLGenerator("index.html?");
-        StandardXYURLGenerator g2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(g1);
@@ -80,12 +79,9 @@ public class StandardXYURLGeneratorTest  {
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            g2 = (StandardXYURLGenerator) in.readObject();
+        StandardXYURLGenerator g2 = (StandardXYURLGenerator) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(g1, g2);
 
     }

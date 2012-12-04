@@ -45,6 +45,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -99,7 +100,7 @@ public class OHLCTest  {
      * This class is immutable.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         OHLC i1 = new OHLC(2.0, 4.0, 1.0, 3.0);
         assertFalse(i1 instanceof Cloneable);
     }
@@ -108,11 +109,9 @@ public class OHLCTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         OHLC i1 = new OHLC(2.0, 4.0, 1.0, 3.0);
-        OHLC i2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(i1);
@@ -120,12 +119,9 @@ public class OHLCTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            i2 = (OHLC) in.readObject();
+        OHLC i2 = (OHLC) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(i1, i2);
     }
 

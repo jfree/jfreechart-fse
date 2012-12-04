@@ -48,6 +48,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -57,6 +58,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link KeyedObjects} class.
@@ -79,18 +81,13 @@ public class KeyedObjectsTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         KeyedObjects ko1 = new KeyedObjects();
-        ko1.addObject("V1", new Integer(1));
+        ko1.addObject("V1", 1);
         ko1.addObject("V2", null);
-        ko1.addObject("V3", new Integer(3));
-        KeyedObjects ko2 = null;
-        try {
-            ko2 = (KeyedObjects) ko1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
-        }
+        ko1.addObject("V3", 3);
+        KeyedObjects ko2 = (KeyedObjects) ko1.clone();
+
         assertTrue(ko1 != ko2);
         assertTrue(ko1.getClass() == ko2.getClass());
         assertTrue(ko1.equals(ko2));
@@ -100,18 +97,13 @@ public class KeyedObjectsTest  {
      * Confirm special features of cloning.
      */
     @Test
-    public void testCloning2() {
+    public void testCloning2() throws CloneNotSupportedException {
         // case 1 - object is mutable but not PublicCloneable
         Object obj1 = new ArrayList();
         KeyedObjects ko1 = new KeyedObjects();
         ko1.addObject("K1", obj1);
-        KeyedObjects ko2 = null;
-        try {
-            ko2 = (KeyedObjects) ko1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        KeyedObjects ko2 = (KeyedObjects) ko1.clone();
+
         assertTrue(ko1 != ko2);
         assertTrue(ko1.getClass() == ko2.getClass());
         assertTrue(ko1.equals(ko2));
@@ -123,13 +115,8 @@ public class KeyedObjectsTest  {
         obj1 = new DefaultPieDataset();
         ko1 = new KeyedObjects();
         ko1.addObject("K1", obj1);
-        ko2 = null;
-        try {
-            ko2 = (KeyedObjects) ko1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        ko2 = (KeyedObjects) ko1.clone();
+
         assertTrue(ko1 != ko2);
         assertTrue(ko1.getClass() == ko2.getClass());
         assertTrue(ko1.equals(ko2));
@@ -145,9 +132,9 @@ public class KeyedObjectsTest  {
     public void testInsertAndRetrieve() {
 
         KeyedObjects data = new KeyedObjects();
-        data.addObject("A", new Double(1.0));
-        data.addObject("B", new Double(2.0));
-        data.addObject("C", new Double(3.0));
+        data.addObject("A", 1.0);
+        data.addObject("B", 2.0);
+        data.addObject("C", 3.0);
         data.addObject("D", null);
 
         // check key order
@@ -157,24 +144,23 @@ public class KeyedObjectsTest  {
         assertEquals(data.getKey(3), "D");
 
         // check retrieve value by key
-        assertEquals(data.getObject("A"), new Double(1.0));
-        assertEquals(data.getObject("B"), new Double(2.0));
-        assertEquals(data.getObject("C"), new Double(3.0));
+        assertEquals(data.getObject("A"), 1.0);
+        assertEquals(data.getObject("B"), 2.0);
+        assertEquals(data.getObject("C"), 3.0);
         assertEquals(data.getObject("D"), null);
 
-        boolean pass = false;
         try {
             data.getObject("Not a key");
+            fail("Should have thrown UnknownKeyException on unknown key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("The key (Not a key) is not recognised.", e.getMessage());
         }
-        assertTrue(pass);
 
         // check retrieve value by index
-        assertEquals(data.getObject(0), new Double(1.0));
-        assertEquals(data.getObject(1), new Double(2.0));
-        assertEquals(data.getObject(2), new Double(3.0));
+        assertEquals(data.getObject(0), 1.0);
+        assertEquals(data.getObject(1), 2.0);
+        assertEquals(data.getObject(2), 3.0);
         assertEquals(data.getObject(3), null);
 
     }
@@ -183,29 +169,24 @@ public class KeyedObjectsTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         KeyedObjects ko1 = new KeyedObjects();
         ko1.addObject("Key 1", "Object 1");
         ko1.addObject("Key 2", null);
         ko1.addObject("Key 3", "Object 2");
 
-        KeyedObjects ko2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(ko1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(ko1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            ko2 = (KeyedObjects) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        KeyedObjects ko2 = (KeyedObjects) in.readObject();
+        in.close();
+
         assertEquals(ko1, ko2);
 
     }
@@ -225,24 +206,22 @@ public class KeyedObjectsTest  {
         assertEquals("Object 2", ko1.getObject(2));
 
         // request with a negative index
-        boolean pass = false;
         try {
             ko1.getObject(-1);
+            fail("Should have thrown IndexOutOfBoundsException on negative key");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("-1", e.getMessage());
         }
-        assertTrue(pass);
 
         // request width index == itemCount
-        pass = false;
         try {
             ko1.getObject(3);
+            fail("Should have thrown IndexOutOfBoundsException on key out of range");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("Index: 3, Size: 3", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -260,24 +239,22 @@ public class KeyedObjectsTest  {
         assertEquals("Key 3", ko1.getKey(2));
 
         // request with a negative index
-        boolean pass = false;
         try {
             ko1.getKey(-1);
+            fail("Should have thrown IndexOutOfBoundsException on negative key");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("-1", e.getMessage());
         }
-        assertTrue(pass);
 
         // request width index == itemCount
-        pass = false;
         try {
             ko1.getKey(3);
+            fail("Should have thrown IndexOutOfBoundsException on key out of range");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("Index: 3, Size: 3", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -294,14 +271,13 @@ public class KeyedObjectsTest  {
         assertEquals(2, ko1.getIndex("Key 3"));
 
         // check null argument
-        boolean pass = false;
         try {
             ko1.getIndex(null);
+            fail("Should have thrown IllegalArgumentException on null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'key' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -325,14 +301,13 @@ public class KeyedObjectsTest  {
         assertEquals("BBB", ko1.getObject("Key 3"));
 
         // try a null key - should throw an exception
-        boolean pass = false;
         try {
             ko1.setObject(null, "XX");
+            fail("Should have thrown IllegalArgumentException on null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'key' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -354,24 +329,22 @@ public class KeyedObjectsTest  {
         assertEquals(0, ko1.getIndex("Key 3"));
 
         // try unknown key
-        boolean pass = false;
         try {
             ko1.removeValue("UNKNOWN");
+            fail("Should have thrown UnknownKeyException on unknown key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("The key (UNKNOWN) is not recognised.", e.getMessage());
         }
-        assertTrue(pass);
 
         // try null argument
-        pass = false;
         try {
             ko1.removeValue(null);
+            fail("Should have thrown IllegalArgumentException on null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'key' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -390,24 +363,22 @@ public class KeyedObjectsTest  {
 
 
         // try negative key index
-        boolean pass = false;
         try {
             ko1.removeValue(-1);
+            fail("Should have thrown IndexOutOfBoundsException on negative key");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("-1", e.getMessage());
         }
-        assertTrue(pass);
 
         // try key index == itemCount
-        pass = false;
         try {
             ko1.removeValue(2);
+            fail("Should have thrown IndexOutOfBoundsException on negative key");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("Index: 2, Size: 2", e.getMessage());
         }
-        assertTrue(pass);
     }
 
 }

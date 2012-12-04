@@ -47,6 +47,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -128,12 +129,10 @@ public class TimeSeriesURLGeneratorTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         TimeSeriesURLGenerator g1 = new TimeSeriesURLGenerator();
-        TimeSeriesURLGenerator g2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(g1);
@@ -141,12 +140,9 @@ public class TimeSeriesURLGeneratorTest  {
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            g2 = (TimeSeriesURLGenerator) in.readObject();
+        TimeSeriesURLGenerator g2 = (TimeSeriesURLGenerator) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(g1, g2);
 
     }

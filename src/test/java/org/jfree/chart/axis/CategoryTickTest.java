@@ -50,6 +50,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -140,18 +141,12 @@ public class CategoryTickTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         CategoryTick t1 = new CategoryTick(
             "C1", new TextBlock(), TextBlockAnchor.CENTER,
             TextAnchor.CENTER, 1.5f
         );
-        CategoryTick t2 = null;
-        try {
-            t2 = (CategoryTick) t1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
-        }
+        CategoryTick t2 = (CategoryTick) t1.clone();
         assertTrue(t1 != t2);
         assertTrue(t1.getClass() == t2.getClass());
         assertTrue(t1.equals(t2));
@@ -161,26 +156,20 @@ public class CategoryTickTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         CategoryTick t1 = new CategoryTick("C1", new TextBlock(),
                 TextBlockAnchor.CENTER, TextAnchor.CENTER, 1.5f);
-        CategoryTick t2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(t1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(t1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            t2 = (CategoryTick) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        CategoryTick t2 = (CategoryTick) in.readObject();
+        in.close();
         assertEquals(t1, t2);
 
     }

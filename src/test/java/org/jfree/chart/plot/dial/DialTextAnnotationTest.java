@@ -42,9 +42,12 @@ package org.jfree.chart.plot.dial;
 
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -129,16 +132,10 @@ public class DialTextAnnotationTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         // test a default instance
         DialTextAnnotation a1 = new DialTextAnnotation("A1");
-        DialTextAnnotation a2 = null;
-        try {
-            a2 = (DialTextAnnotation) a1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        DialTextAnnotation a2 = (DialTextAnnotation) a1.clone();
         assertTrue(a1 != a2);
         assertTrue(a1.getClass() == a2.getClass());
         assertTrue(a1.equals(a2));
@@ -156,12 +153,10 @@ public class DialTextAnnotationTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         // test a default instance
         DialTextAnnotation a1 = new DialTextAnnotation("A1");
-        DialTextAnnotation a2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(a1);
@@ -169,34 +164,26 @@ public class DialTextAnnotationTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            a2 = (DialTextAnnotation) in.readObject();
+        DialTextAnnotation a2 = (DialTextAnnotation) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(a1, a2);
 
         // test a custom instance
         a1 = new DialTextAnnotation("A1");
         a1.setPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.BLUE));
-        a2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
+
+        buffer = new ByteArrayOutputStream();
+        out = new ObjectOutputStream(buffer);
             out.writeObject(a1);
             out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
             a2 = (DialTextAnnotation) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
         assertEquals(a1, a2);
 
 

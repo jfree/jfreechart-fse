@@ -56,7 +56,7 @@ import org.jfree.data.time.SimpleTimePeriod;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Calendar;
@@ -91,21 +91,14 @@ public class GanttChartTest  {
      */
     @Test
     public void testDrawWithNullInfo() {
-        boolean success = false;
-        try {
-            BufferedImage image = new BufferedImage(200 , 100,
-                    BufferedImage.TYPE_INT_RGB);
-            Graphics2D g2 = image.createGraphics();
-            this.chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null,
-                    null);
-            g2.dispose();
-            success = true;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            success = false;
-        }
-        assertTrue(success);
+        BufferedImage image = new BufferedImage(200 , 100,
+                BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = image.createGraphics();
+        this.chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null,
+                null);
+        g2.dispose();
+        //FIXME we should really assert a value
+
     }
 
     /**
@@ -114,18 +107,11 @@ public class GanttChartTest  {
      */
     @Test
     public void testDrawWithNullInfo2() {
-        boolean success = false;
-        try {
-            JFreeChart chart = createGanttChart();
-            CategoryPlot plot = (CategoryPlot) chart.getPlot();
-            plot.setDataset(createDataset());
-            /* BufferedImage img =*/ chart.createBufferedImage(300, 200, null);
-            success = true;
-        }
-        catch (NullPointerException e) {
-            success = false;
-        }
-        assertTrue(success);
+        JFreeChart chart = createGanttChart();
+        CategoryPlot plot = (CategoryPlot) chart.getPlot();
+        plot.setDataset(createDataset());
+        /* BufferedImage img =*/ chart.createBufferedImage(300, 200, null);
+        //FIXME we should really assert a value
     }
 
     /**
@@ -293,7 +279,7 @@ public class GanttChartTest  {
     static class LocalListener implements ChartChangeListener {
 
         /** A flag. */
-        private boolean flag = false;
+        private boolean flag;
 
         /**
          * Event handler.

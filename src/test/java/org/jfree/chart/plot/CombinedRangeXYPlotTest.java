@@ -54,11 +54,13 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -75,7 +77,7 @@ public class CombinedRangeXYPlotTest
         implements ChartChangeListener {
 
     /** A list of the events received. */
-    private List events = new java.util.ArrayList();
+    private List<ChartChangeEvent> events = new java.util.ArrayList<ChartChangeEvent>();
 
     /**
      * Receives a chart change event.
@@ -122,15 +124,9 @@ public class CombinedRangeXYPlotTest
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         CombinedRangeXYPlot plot1 = createPlot();
-        CombinedRangeXYPlot plot2 = null;
-        try {
-            plot2 = (CombinedRangeXYPlot) plot1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        CombinedRangeXYPlot plot2 = (CombinedRangeXYPlot) plot1.clone();
         assertTrue(plot1 != plot2);
         assertTrue(plot1.getClass() == plot2.getClass());
         assertTrue(plot1.equals(plot2));
@@ -140,23 +136,19 @@ public class CombinedRangeXYPlotTest
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         CombinedRangeXYPlot plot1 = createPlot();
-        CombinedRangeXYPlot plot2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(plot1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            plot2 = (CombinedRangeXYPlot) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(plot1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
+        CombinedRangeXYPlot plot2 = (CombinedRangeXYPlot) in.readObject();
+        in.close();
+
         assertEquals(plot1, plot2);
     }
 

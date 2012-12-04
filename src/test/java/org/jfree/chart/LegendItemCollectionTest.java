@@ -43,11 +43,13 @@ package org.jfree.chart;
 
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -101,25 +103,20 @@ public class LegendItemCollectionTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         LegendItemCollection c1 = new LegendItemCollection();
         c1.add(new LegendItem("Item", "Description", "ToolTip", "URL",
                 new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), Color.RED));
-        LegendItemCollection c2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(c1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(c1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            c2 = (LegendItemCollection) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
+        LegendItemCollection c2 = (LegendItemCollection) in.readObject();
+        in.close();
+
         assertEquals(c1, c2);
     }
 
@@ -127,17 +124,12 @@ public class LegendItemCollectionTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         LegendItemCollection c1 = new LegendItemCollection();
         LegendItem item1 = new LegendItem("Item 1");
         c1.add(item1);
-        LegendItemCollection c2 = null;
-        try {
-            c2 = (LegendItemCollection) c1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        LegendItemCollection c2 = (LegendItemCollection) c1.clone();
+
         assertTrue(c1 != c2);
         assertTrue(c1.getClass() == c2.getClass());
         assertTrue(c1.equals(c2));

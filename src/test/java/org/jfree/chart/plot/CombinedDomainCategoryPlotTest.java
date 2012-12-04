@@ -53,11 +53,12 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -74,7 +75,7 @@ public class CombinedDomainCategoryPlotTest
         implements ChartChangeListener {
 
     /** A list of the events received. */
-    private List events = new java.util.ArrayList();
+    private List<ChartChangeEvent> events = new java.util.ArrayList<ChartChangeEvent>();
 
     /**
      * Receives a chart change event.
@@ -121,15 +122,9 @@ public class CombinedDomainCategoryPlotTest
      * Some checks for cloning.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         CombinedDomainCategoryPlot plot1 = createPlot();
-        CombinedDomainCategoryPlot plot2 = null;
-        try {
-            plot2 = (CombinedDomainCategoryPlot) plot1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
-        }
+        CombinedDomainCategoryPlot plot2 = (CombinedDomainCategoryPlot) plot1.clone();
         assertTrue(plot1 != plot2);
         assertTrue(plot1.getClass() == plot2.getClass());
         assertTrue(plot1.equals(plot2));
@@ -139,22 +134,19 @@ public class CombinedDomainCategoryPlotTest
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         CombinedDomainCategoryPlot plot1 = createPlot();
-        CombinedDomainCategoryPlot plot2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(plot1);
             out.close();
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            plot2 = (CombinedDomainCategoryPlot) in.readObject();
+            CombinedDomainCategoryPlot plot2 = (CombinedDomainCategoryPlot) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
+
         assertEquals(plot1, plot2);
     }
 
@@ -167,7 +159,7 @@ public class CombinedDomainCategoryPlotTest
         CombinedDomainCategoryPlot plot = createPlot();
         JFreeChart chart = new JFreeChart(plot);
         chart.addChangeListener(this);
-        CategoryPlot subplot1 = (CategoryPlot) plot.getSubplots().get(0);
+        CategoryPlot subplot1 = plot.getSubplots().get(0);
         NumberAxis yAxis = (NumberAxis) subplot1.getRangeAxis();
         yAxis.setAutoRangeIncludesZero(!yAxis.getAutoRangeIncludesZero());
         assertEquals(1, this.events.size());

@@ -43,9 +43,11 @@ package org.jfree.chart;
 
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -54,6 +56,7 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Some tests for the {@link PaintMap} class.
@@ -77,14 +80,13 @@ public class PaintMapTest  {
         assertEquals(null, m1.getPaint("A"));
 
         // a null key should throw an IllegalArgumentException
-        boolean pass = false;
         try {
             m1.getPaint(null);
+            fail("IllegalArgumentException should have been thrown on passing null value");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'key' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -97,14 +99,14 @@ public class PaintMapTest  {
         assertEquals(Color.RED, m1.getPaint("A"));
 
         // a null key should throw an IllegalArgumentException
-        boolean pass = false;
+
         try {
             m1.put(null, Color.BLUE);
+            fail("IllegalArgumentException should have been thrown on null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'key' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -141,26 +143,17 @@ public class PaintMapTest  {
      * Some checks for cloning.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         PaintMap m1 = new PaintMap();
-        PaintMap m2 = null;
-        try {
-            m2 = (PaintMap) m1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        PaintMap m2 = (PaintMap) m1.clone();
+
         assertTrue(m1.equals(m2));
 
         m1.put("K1", Color.RED);
         m1.put("K2", new GradientPaint(1.0f, 2.0f, Color.green, 3.0f, 4.0f,
                 Color.yellow));
-        try {
-            m2 = (PaintMap) m1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        m2 = (PaintMap) m1.clone();
+
         assertTrue(m1.equals(m2));
     }
 
@@ -168,23 +161,19 @@ public class PaintMapTest  {
      * A check for serialization.
      */
     @Test
-    public void testSerialization1() {
+    public void testSerialization1() throws IOException, ClassNotFoundException {
         PaintMap m1 = new PaintMap();
-        PaintMap m2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(m1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            m2 = (PaintMap) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(m1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
+        PaintMap m2 = (PaintMap) in.readObject();
+        in.close();
+
         assertEquals(m1, m2);
     }
 
@@ -192,26 +181,22 @@ public class PaintMapTest  {
      * A check for serialization.
      */
     @Test
-    public void testSerialization2() {
+    public void testSerialization2() throws IOException, ClassNotFoundException {
         PaintMap m1 = new PaintMap();
         m1.put("K1", Color.RED);
         m1.put("K2", new GradientPaint(1.0f, 2.0f, Color.green, 3.0f, 4.0f,
                 Color.yellow));
-        PaintMap m2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(m1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            m2 = (PaintMap) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(m1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
+        PaintMap m2 = (PaintMap) in.readObject();
+        in.close();
+
         assertEquals(m1, m2);
     }
 
@@ -224,8 +209,8 @@ public class PaintMapTest  {
     public void testKeysOfDifferentClasses() {
         PaintMap m = new PaintMap();
         m.put("ABC", Color.RED);
-        m.put(new Integer(99), Color.BLUE);
-        assertEquals(Color.BLUE, m.getPaint(new Integer(99)));
+        m.put(99, Color.BLUE);
+        assertEquals(Color.BLUE, m.getPaint(99));
     }
 
 }

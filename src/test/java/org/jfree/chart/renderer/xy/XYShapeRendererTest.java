@@ -49,9 +49,10 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -118,42 +119,32 @@ public class XYShapeRendererTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         XYShapeRenderer r1 = new XYShapeRenderer();
-        XYShapeRenderer r2 = null;
-        try {
-            r2 = (XYShapeRenderer) r1.clone();
-            assertTrue(r1 != r2);
-            assertTrue(r1.getClass() == r2.getClass());
-            assertTrue(r1.equals(r2));
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-            assertTrue(false);
-        }
+        XYShapeRenderer r2 = (XYShapeRenderer) r1.clone();
+        assertTrue(r1 != r2);
+        assertTrue(r1.getClass() == r2.getClass());
+        assertTrue(r1.equals(r2));
+
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         XYShapeRenderer r1 = new XYShapeRenderer();
-        XYShapeRenderer r2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(r1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (XYShapeRenderer) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(r1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        XYShapeRenderer r2 = (XYShapeRenderer) in.readObject();
+        in.close();
+
         assertEquals(r1, r2);
     }
 

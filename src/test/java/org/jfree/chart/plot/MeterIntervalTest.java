@@ -43,9 +43,11 @@ package org.jfree.chart.plot;
 import org.jfree.data.Range;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -97,7 +99,7 @@ public class MeterIntervalTest  {
      * This class is immutable so cloning isn't required.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         MeterInterval m1 = new MeterInterval("X", new Range(1.0, 2.0));
         assertFalse(m1 instanceof Cloneable);
     }
@@ -106,11 +108,10 @@ public class MeterIntervalTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         MeterInterval m1 = new MeterInterval("X", new Range(1.0, 2.0));
-        MeterInterval m2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(m1);
@@ -119,12 +120,9 @@ public class MeterIntervalTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            m2 = (MeterInterval) in.readObject();
+        MeterInterval m2 = (MeterInterval) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
+
         boolean b = m1.equals(m2);
         assertTrue(b);
 

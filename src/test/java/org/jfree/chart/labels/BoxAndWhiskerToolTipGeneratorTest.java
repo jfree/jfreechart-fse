@@ -46,6 +46,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -110,15 +111,10 @@ public class BoxAndWhiskerToolTipGeneratorTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         BoxAndWhiskerToolTipGenerator g1 = new BoxAndWhiskerToolTipGenerator();
-        BoxAndWhiskerToolTipGenerator g2 = null;
-        try {
-            g2 = (BoxAndWhiskerToolTipGenerator) g1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        BoxAndWhiskerToolTipGenerator g2 = (BoxAndWhiskerToolTipGenerator) g1.clone();
+
         assertTrue(g1 != g2);
         assertTrue(g1.getClass() == g2.getClass());
         assertTrue(g1.equals(g2));
@@ -137,25 +133,20 @@ public class BoxAndWhiskerToolTipGeneratorTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         BoxAndWhiskerToolTipGenerator g1 = new BoxAndWhiskerToolTipGenerator();
-        BoxAndWhiskerToolTipGenerator g2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(g1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(g1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            g2 = (BoxAndWhiskerToolTipGenerator) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        BoxAndWhiskerToolTipGenerator g2 = (BoxAndWhiskerToolTipGenerator) in.readObject();
+        in.close();
+
         assertEquals(g1, g2);
 
     }

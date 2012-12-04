@@ -47,6 +47,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -55,6 +56,7 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Some tests for the {@link DefaultIntervalXYDataset} class.
@@ -86,23 +88,22 @@ public class DefaultIntervalXYDatasetTest  {
         assertEquals("S2", d.getSeriesKey(1));
 
         // check for series key out of bounds
-        boolean pass = false;
+
         try {
             /*Comparable k =*/ d.getSeriesKey(-1);
+            fail("IllegalArgumentException should have been thrown on negative key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Series index out of bounds", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             /*Comparable k =*/ d.getSeriesKey(2);
+            fail("IllegalArgumentException should have been thrown on key out of range");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Series index out of bounds", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -115,14 +116,15 @@ public class DefaultIntervalXYDatasetTest  {
         assertEquals(3, d.getItemCount(1));
 
         // try an index out of bounds
-        boolean pass = false;
+
         try {
             d.getItemCount(2);
+
+            fail("IllegalArgumentException should have been thrown on key out of range");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Series index out of bounds", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     private static final double EPSILON = 0.0000000001;
@@ -231,27 +233,17 @@ public class DefaultIntervalXYDatasetTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         DefaultIntervalXYDataset d1 = new DefaultIntervalXYDataset();
-        DefaultIntervalXYDataset d2 = null;
-        try {
-            d2 = (DefaultIntervalXYDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        DefaultIntervalXYDataset d2 = (DefaultIntervalXYDataset) d1.clone();
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
 
         // try a dataset with some content...
         d1 = createSampleDataset1();
-        try {
-            d2 = (DefaultIntervalXYDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        d2 = (DefaultIntervalXYDataset) d1.clone();
+
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
@@ -261,7 +253,7 @@ public class DefaultIntervalXYDatasetTest  {
      * Another test for cloning.
      */
     @Test
-    public void testCloning2() {
+    public void testCloning2() throws CloneNotSupportedException {
         DefaultIntervalXYDataset d1 = new DefaultIntervalXYDataset();
         double[] x1 = new double[] {1.0, 2.0, 3.0};
         double[] x1Start = new double[] {0.9, 1.9, 2.9};
@@ -272,13 +264,7 @@ public class DefaultIntervalXYDatasetTest  {
         double[][] data1 = new double[][] {x1, x1Start, x1End, y1, y1Start,
                 y1End};
         d1.addSeries("S1", data1);
-        DefaultIntervalXYDataset d2 = null;
-        try {
-            d2 = (DefaultIntervalXYDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        DefaultIntervalXYDataset d2 = (DefaultIntervalXYDataset) d1.clone();
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
@@ -301,12 +287,10 @@ public class DefaultIntervalXYDatasetTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         DefaultIntervalXYDataset d1 = new DefaultIntervalXYDataset();
-        DefaultIntervalXYDataset d2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(d1);
@@ -314,30 +298,24 @@ public class DefaultIntervalXYDatasetTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            d2 = (DefaultIntervalXYDataset) in.readObject();
+        DefaultIntervalXYDataset d2 = (DefaultIntervalXYDataset) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(d1, d2);
 
         // try a dataset with some content...
         d1 = createSampleDataset1();
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
+        buffer = new ByteArrayOutputStream();
+        out = new ObjectOutputStream(buffer);
             out.writeObject(d1);
             out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
             d2 = (DefaultIntervalXYDataset) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
+
         assertEquals(d1, d2);
 
     }
@@ -372,17 +350,17 @@ public class DefaultIntervalXYDatasetTest  {
         assertEquals(2.1, d.getYValue(0, 0), EPSILON);
 
         // check null key
-        boolean pass = false;
+
         try
         {
           d.addSeries(null, new double[][] {{1.1}, {0.6}, {1.6}, {2.1}, {2.6},
                   {1.6}});
+            fail("IllegalArgumentException should have been thrown on data not containing 6 items");
         }
         catch (IllegalArgumentException e)
         {
-          pass = true;
+            assertEquals("The 'seriesKey' cannot be null.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**

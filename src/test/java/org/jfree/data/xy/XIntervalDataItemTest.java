@@ -44,6 +44,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -72,7 +73,7 @@ public class XIntervalDataItemTest  {
     @Test
     public void testConstructor1() {
         XIntervalDataItem item1 = new XIntervalDataItem(1.0, 2.0, 3.0, 4.0);
-        assertEquals(new Double(1.0), item1.getX());
+        assertEquals(1.0, item1.getX());
         assertEquals(2.0, item1.getXLowValue(), EPSILON);
         assertEquals(3.0, item1.getXHighValue(), EPSILON);
         assertEquals(4.0, item1.getYValue(), EPSILON);
@@ -118,15 +119,10 @@ public class XIntervalDataItemTest  {
      * Some checks for the clone() method.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         XIntervalDataItem item1 = new XIntervalDataItem(1.0, 2.0, 3.0, 4.0);
-        XIntervalDataItem item2 = null;
-        try {
-            item2 = (XIntervalDataItem) item1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        XIntervalDataItem item2 = (XIntervalDataItem) item1.clone();
+
         assertTrue(item1 != item2);
         assertTrue(item1.getClass() == item2.getClass());
         assertTrue(item1.equals(item2));
@@ -136,23 +132,19 @@ public class XIntervalDataItemTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         XIntervalDataItem item1 = new XIntervalDataItem(1.0, 2.0, 3.0, 4.0);
-        XIntervalDataItem item2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(item1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            item2 = (XIntervalDataItem) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(item1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        XIntervalDataItem item2 = (XIntervalDataItem) in.readObject();
+        in.close();
+
         assertEquals(item1, item2);
     }
 

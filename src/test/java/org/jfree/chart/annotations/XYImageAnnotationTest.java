@@ -46,9 +46,17 @@ package org.jfree.chart.annotations;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.util.PublicCloneable;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Image;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -97,16 +105,11 @@ public class XYImageAnnotationTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         XYImageAnnotation a1 = new XYImageAnnotation(10.0, 20.0,
                 JFreeChart.INFO.getLogo());
-        XYImageAnnotation a2 = null;
-        try {
-            a2 = (XYImageAnnotation) a1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        XYImageAnnotation a2 = (XYImageAnnotation) a1.clone();
+
         assertTrue(a1 != a2);
         assertTrue(a1.getClass() == a2.getClass());
         assertTrue(a1.equals(a2));
@@ -122,29 +125,25 @@ public class XYImageAnnotationTest  {
         assertTrue(a1 instanceof PublicCloneable);
     }
 
-// FIXME: Make this test pass
-//    /**
-//     * Serialize an instance, restore it, and check for equality.
-//     */
-//    public void testSerialization() {
-//        XYImageAnnotation a1 = new XYImageAnnotation(10.0, 20.0,
-//                JFreeChart.INFO.getLogo());
-//        XYImageAnnotation a2 = null;
-//        try {
-//            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-//            ObjectOutput out = new ObjectOutputStream(buffer);
-//            out.writeObject(a1);
-//            out.close();
-//
-//            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-//                    buffer.toByteArray()));
-//            a2 = (XYImageAnnotation) in.readObject();
-//            in.close();
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        assertEquals(a1, a2);
-//    }
+    /**
+     * Serialize an instance, restore it, and check for equality.
+     */
+    @Ignore("Previously commented out, marking as ignore so it's picked up")
+    @Test
+    public void testSerialization() throws IOException, ClassNotFoundException {
+        XYImageAnnotation a1 = new XYImageAnnotation(10.0, 20.0,
+                JFreeChart.INFO.getLogo());
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(a1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
+        XYImageAnnotation a2 = (XYImageAnnotation) in.readObject();
+        in.close();
+
+        assertEquals(a1, a2);
+    }
 
 }

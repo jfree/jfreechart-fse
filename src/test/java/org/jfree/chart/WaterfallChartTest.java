@@ -51,7 +51,7 @@ import org.jfree.data.general.DatasetUtilities;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
@@ -84,22 +84,15 @@ public class WaterfallChartTest  {
     @Test
     public void testDrawWithNullInfo() {
 
-        boolean success = false;
 
-        try {
-            BufferedImage image = new BufferedImage(200 , 100,
-                    BufferedImage.TYPE_INT_RGB);
-            Graphics2D g2 = image.createGraphics();
-            this.chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null,
-                    null);
-            g2.dispose();
-            success = true;
-        }
-        catch (Exception e) {
-            success = false;
-        }
+        BufferedImage image = new BufferedImage(200 , 100,
+                BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = image.createGraphics();
+        this.chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null,
+                null);
+        g2.dispose();
 
-        assertTrue(success);
+        //FIXME we should really assert a value here
 
     }
 
@@ -140,9 +133,9 @@ public class WaterfallChartTest  {
      */
     private static JFreeChart createWaterfallChart() {
         Number[][] data = new Integer[][]
-            {{new Integer(-3), new Integer(-2)},
-             {new Integer(-1), new Integer(1)},
-             {new Integer(2), new Integer(3)}};
+            {{-3, -2},
+             {-1, 1},
+             {2, 3}};
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
         return ChartFactory.createWaterfallChart("Waterfall Chart", "Domain", 

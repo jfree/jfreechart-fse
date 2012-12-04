@@ -44,9 +44,11 @@ package org.jfree.chart.renderer.xy;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -109,17 +111,11 @@ public class XYLine3DRendererTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         XYLine3DRenderer r1 = new XYLine3DRenderer();
         r1.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.BLUE));
-        XYLine3DRenderer r2 = null;
-        try {
-            r2 = (XYLine3DRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        XYLine3DRenderer r2 = (XYLine3DRenderer) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -138,14 +134,12 @@ public class XYLine3DRendererTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         XYLine3DRenderer r1 = new XYLine3DRenderer();
         r1.setWallPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f,
                 Color.BLUE));
-        XYLine3DRenderer r2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(r1);
@@ -153,12 +147,9 @@ public class XYLine3DRendererTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (XYLine3DRenderer) in.readObject();
+        XYLine3DRenderer r2 = (XYLine3DRenderer) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(r1, r2);
 
     }

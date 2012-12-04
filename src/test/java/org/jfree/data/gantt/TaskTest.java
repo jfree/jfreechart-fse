@@ -45,6 +45,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -102,15 +103,9 @@ public class TaskTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         Task t1 = new Task("T", new Date(1), new Date(2));
-        Task t2 = null;
-        try {
-            t2 = (Task) t1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
-        }
+        Task t2 = (Task) t1.clone();
         assertTrue(t1 != t2);
         assertTrue(t1.getClass() == t2.getClass());
         assertTrue(t1.equals(t2));
@@ -120,12 +115,10 @@ public class TaskTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         Task t1 = new Task("T", new Date(1), new Date(2));
-        Task t2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(t1);
@@ -134,12 +127,9 @@ public class TaskTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            t2 = (Task) in.readObject();
+        Task t2 = (Task) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
+
         assertEquals(t1, t2);
 
     }

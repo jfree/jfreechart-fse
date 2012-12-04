@@ -45,8 +45,9 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ui.Size2D;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -95,15 +96,9 @@ public class ImageTitleTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         ImageTitle t1 = new ImageTitle(JFreeChart.INFO.getLogo());
-        ImageTitle t2 = null;
-        try {
-            t2 = (ImageTitle) t1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        ImageTitle t2 = (ImageTitle) t1.clone();
         assertTrue(t1 != t2);
         assertTrue(t1.getClass() == t2.getClass());
         assertTrue(t1.equals(t2));
@@ -113,7 +108,7 @@ public class ImageTitleTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         // TODO: add serialization support for images
     }
 

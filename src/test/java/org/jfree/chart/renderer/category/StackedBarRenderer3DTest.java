@@ -51,6 +51,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -138,15 +139,10 @@ public class StackedBarRenderer3DTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         StackedBarRenderer3D r1 = new StackedBarRenderer3D();
-        StackedBarRenderer3D r2 = null;
-        try {
-            r2 = (StackedBarRenderer3D) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        StackedBarRenderer3D r2 = (StackedBarRenderer3D) r1.clone();
+
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -165,25 +161,20 @@ public class StackedBarRenderer3DTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         StackedBarRenderer3D r1 = new StackedBarRenderer3D();
-        StackedBarRenderer3D r2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(r1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(r1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (StackedBarRenderer3D) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        StackedBarRenderer3D r2 = (StackedBarRenderer3D) in.readObject();
+        in.close();
+
         assertEquals(r1, r2);
 
     }
@@ -198,8 +189,8 @@ public class StackedBarRenderer3DTest  {
         MyRenderer r = new MyRenderer();
         List l = r.createStackedValueList(d, "c0", new int[] { 0 }, 0.0, false);
         assertEquals(2, l.size());
-        assertEquals(new Double(0.0), ((Object[]) l.get(0))[1]);
-        assertEquals(new Double(1.0), ((Object[]) l.get(1))[1]);
+        assertEquals(0.0, ((Object[]) l.get(0))[1]);
+        assertEquals(1.0, ((Object[]) l.get(1))[1]);
     }
 
     /**
@@ -212,8 +203,8 @@ public class StackedBarRenderer3DTest  {
         MyRenderer r = new MyRenderer();
         List l = r.createStackedValueList(d, "c0", new int[] { 0 }, 0.0, false);
         assertEquals(2, l.size());
-        assertEquals(new Double(-1.0), ((Object[]) l.get(0))[1]);
-        assertEquals(new Double(0.0), ((Object[]) l.get(1))[1]);
+        assertEquals(-1.0, ((Object[]) l.get(0))[1]);
+        assertEquals(0.0, ((Object[]) l.get(1))[1]);
     }
 
     /**
@@ -226,8 +217,8 @@ public class StackedBarRenderer3DTest  {
         MyRenderer r = new MyRenderer();
         List l = r.createStackedValueList(d, "c0", new int[] { 0 }, 0.0, false);
         assertEquals(2, l.size());
-        assertEquals(new Double(0.0), ((Object[]) l.get(0))[1]);
-        assertEquals(new Double(0.0), ((Object[]) l.get(1))[1]);
+        assertEquals(0.0, ((Object[]) l.get(0))[1]);
+        assertEquals(0.0, ((Object[]) l.get(1))[1]);
     }
 
     /**
@@ -254,9 +245,9 @@ public class StackedBarRenderer3DTest  {
         List l = r.createStackedValueList(d, "c0", new int[] { 0, 1 }, 0.0,
                 false);
         assertEquals(3, l.size());
-        assertEquals(new Double(0.0), ((Object[]) l.get(0))[1]);
-        assertEquals(new Double(1.0), ((Object[]) l.get(1))[1]);
-        assertEquals(new Double(2.1), ((Object[]) l.get(2))[1]);
+        assertEquals(0.0, ((Object[]) l.get(0))[1]);
+        assertEquals(1.0, ((Object[]) l.get(1))[1]);
+        assertEquals(2.1, ((Object[]) l.get(2))[1]);
     }
 
     /**
@@ -271,9 +262,9 @@ public class StackedBarRenderer3DTest  {
         List l = r.createStackedValueList(d, "c0", new int[] { 0, 1 }, 0.0,
                 false);
         assertEquals(3, l.size());
-        assertEquals(new Double(-1.1), ((Object[]) l.get(0))[1]);
-        assertEquals(new Double(0.0), ((Object[]) l.get(1))[1]);
-        assertEquals(new Double(1.0), ((Object[]) l.get(2))[1]);
+        assertEquals(-1.1, ((Object[]) l.get(0))[1]);
+        assertEquals(0.0, ((Object[]) l.get(1))[1]);
+        assertEquals(1.0, ((Object[]) l.get(2))[1]);
     }
 
     /**
@@ -288,9 +279,9 @@ public class StackedBarRenderer3DTest  {
         List l = r.createStackedValueList(d, "c0", new int[] { 0, 1 }, 0.0,
                 false);
         assertEquals(3, l.size());
-        assertEquals(new Double(0.0), ((Object[]) l.get(0))[1]);
-        assertEquals(new Double(1.0), ((Object[]) l.get(1))[1]);
-        assertEquals(new Double(1.0), ((Object[]) l.get(2))[1]);
+        assertEquals(0.0, ((Object[]) l.get(0))[1]);
+        assertEquals(1.0, ((Object[]) l.get(1))[1]);
+        assertEquals(1.0, ((Object[]) l.get(2))[1]);
     }
 
     /**
@@ -305,8 +296,8 @@ public class StackedBarRenderer3DTest  {
         List l = r.createStackedValueList(d, "c0", new int[] { 0, 1 }, 0.0,
                 false);
         assertEquals(2, l.size());
-        assertEquals(new Double(0.0), ((Object[]) l.get(0))[1]);
-        assertEquals(new Double(1.0), ((Object[]) l.get(1))[1]);
+        assertEquals(0.0, ((Object[]) l.get(0))[1]);
+        assertEquals(1.0, ((Object[]) l.get(1))[1]);
     }
 
     /**
@@ -321,9 +312,9 @@ public class StackedBarRenderer3DTest  {
         List l = r.createStackedValueList(d, "c0", new int[] { 0, 1 }, 0.0,
                 false);
         assertEquals(3, l.size());
-        assertEquals(new Double(-1.0), ((Object[]) l.get(0))[1]);
-        assertEquals(new Double(0.0), ((Object[]) l.get(1))[1]);
-        assertEquals(new Double(1.1), ((Object[]) l.get(2))[1]);
+        assertEquals(-1.0, ((Object[]) l.get(0))[1]);
+        assertEquals(0.0, ((Object[]) l.get(1))[1]);
+        assertEquals(1.1, ((Object[]) l.get(2))[1]);
     }
 
     /**
@@ -338,9 +329,9 @@ public class StackedBarRenderer3DTest  {
         List l = r.createStackedValueList(d, "c0", new int[] { 0, 1 }, 0.0,
                 false);
         assertEquals(3, l.size());
-        assertEquals(new Double(-2.1), ((Object[]) l.get(0))[1]);
-        assertEquals(new Double(-1.0), ((Object[]) l.get(1))[1]);
-        assertEquals(new Double(0.0), ((Object[]) l.get(2))[1]);
+        assertEquals(-2.1, ((Object[]) l.get(0))[1]);
+        assertEquals(-1.0, ((Object[]) l.get(1))[1]);
+        assertEquals(0.0, ((Object[]) l.get(2))[1]);
     }
 
     /**
@@ -355,9 +346,9 @@ public class StackedBarRenderer3DTest  {
         List l = r.createStackedValueList(d, "c0", new int[] { 0, 1 }, 0.0,
                 false);
         assertEquals(3, l.size());
-        assertEquals(new Double(-1.0), ((Object[]) l.get(0))[1]);
-        assertEquals(new Double(0.0), ((Object[]) l.get(1))[1]);
-        assertEquals(new Double(0.0), ((Object[]) l.get(2))[1]);
+        assertEquals(-1.0, ((Object[]) l.get(0))[1]);
+        assertEquals(0.0, ((Object[]) l.get(1))[1]);
+        assertEquals(0.0, ((Object[]) l.get(2))[1]);
     }
 
     /**
@@ -372,8 +363,8 @@ public class StackedBarRenderer3DTest  {
         List l = r.createStackedValueList(d, "c0", new int[] { 0, 1 }, 0.0,
                 false);
         assertEquals(2, l.size());
-        assertEquals(new Double(-1.0), ((Object[]) l.get(0))[1]);
-        assertEquals(new Double(0.0), ((Object[]) l.get(1))[1]);
+        assertEquals(-1.0, ((Object[]) l.get(0))[1]);
+        assertEquals(0.0, ((Object[]) l.get(1))[1]);
     }
 
     /**
@@ -388,9 +379,9 @@ public class StackedBarRenderer3DTest  {
         List l = r.createStackedValueList(d, "c0", new int[] { 0, 1 }, 0.0,
                 false);
         assertEquals(3, l.size());
-        assertEquals(new Double(0.0), ((Object[]) l.get(0))[1]);
-        assertEquals(new Double(0.0), ((Object[]) l.get(1))[1]);
-        assertEquals(new Double(1.1), ((Object[]) l.get(2))[1]);
+        assertEquals(0.0, ((Object[]) l.get(0))[1]);
+        assertEquals(0.0, ((Object[]) l.get(1))[1]);
+        assertEquals(1.1, ((Object[]) l.get(2))[1]);
     }
 
     /**
@@ -405,9 +396,9 @@ public class StackedBarRenderer3DTest  {
         List l = r.createStackedValueList(d, "c0", new int[] { 0, 1 }, 0.0,
                 false);
         assertEquals(3, l.size());
-        assertEquals(new Double(-1.1), ((Object[]) l.get(0))[1]);
-        assertEquals(new Double(0.0), ((Object[]) l.get(1))[1]);
-        assertEquals(new Double(0.0), ((Object[]) l.get(2))[1]);
+        assertEquals(-1.1, ((Object[]) l.get(0))[1]);
+        assertEquals(0.0, ((Object[]) l.get(1))[1]);
+        assertEquals(0.0, ((Object[]) l.get(2))[1]);
     }
 
     /**
@@ -422,9 +413,9 @@ public class StackedBarRenderer3DTest  {
         List l = r.createStackedValueList(d, "c0", new int[] { 0, 1 }, 0.0,
                 false);
         assertEquals(3, l.size());
-        assertEquals(new Double(0.0), ((Object[]) l.get(0))[1]);
-        assertEquals(new Double(0.0), ((Object[]) l.get(1))[1]);
-        assertEquals(new Double(0.0), ((Object[]) l.get(2))[1]);
+        assertEquals(0.0, ((Object[]) l.get(0))[1]);
+        assertEquals(0.0, ((Object[]) l.get(1))[1]);
+        assertEquals(0.0, ((Object[]) l.get(2))[1]);
     }
 
     /**
@@ -439,8 +430,8 @@ public class StackedBarRenderer3DTest  {
         List l = r.createStackedValueList(d, "c0", new int[] { 0, 1 }, 0.0,
                 false);
         assertEquals(2, l.size());
-        assertEquals(new Double(0.0), ((Object[]) l.get(0))[1]);
-        assertEquals(new Double(0.0), ((Object[]) l.get(1))[1]);
+        assertEquals(0.0, ((Object[]) l.get(0))[1]);
+        assertEquals(0.0, ((Object[]) l.get(1))[1]);
     }
 
     /**
@@ -456,8 +447,8 @@ public class StackedBarRenderer3DTest  {
         List l = r.createStackedValueList(d, "c0", new int[] { 0, 1, 2 }, 0.0,
                 false);
         assertEquals(3, l.size());
-        assertEquals(new Double(0.0), ((Object[]) l.get(0))[1]);
-        assertEquals(new Double(1.0), ((Object[]) l.get(1))[1]);
-        assertEquals(new Double(3.0), ((Object[]) l.get(2))[1]);
+        assertEquals(0.0, ((Object[]) l.get(0))[1]);
+        assertEquals(1.0, ((Object[]) l.get(1))[1]);
+        assertEquals(3.0, ((Object[]) l.get(2))[1]);
     }
 }

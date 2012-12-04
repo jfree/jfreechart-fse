@@ -45,6 +45,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -54,6 +55,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link ComparableObjectSeries} class.
@@ -110,14 +112,13 @@ public class ComparableObjectSeriesTest  {
         assertEquals(Integer.MAX_VALUE, s1.getMaximumItemCount());
 
         // try null key
-        boolean pass = false;
         try {
             /*s1 = */new ComparableObjectSeries(null);
+            fail("Should have thrown an IllegalArgumentException on null parameter");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'key' argument", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -171,16 +172,10 @@ public class ComparableObjectSeriesTest  {
      * Some checks for the clone() method.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         MyComparableObjectSeries s1 = new MyComparableObjectSeries("A");
         s1.add(new Integer(1), "ABC");
-        MyComparableObjectSeries s2 = null;
-        try {
-            s2 = (MyComparableObjectSeries) s1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        MyComparableObjectSeries s2 = (MyComparableObjectSeries) s1.clone();
         assertTrue(s1 != s2);
         assertTrue(s1.getClass() == s2.getClass());
         assertTrue(s1.equals(s2));
@@ -190,11 +185,10 @@ public class ComparableObjectSeriesTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         MyComparableObjectSeries s1 = new MyComparableObjectSeries("A");
         s1.add(new Integer(1), "ABC");
-        MyComparableObjectSeries s2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(s1);
@@ -202,12 +196,9 @@ public class ComparableObjectSeriesTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            s2 = (MyComparableObjectSeries) in.readObject();
+        MyComparableObjectSeries s2 = (MyComparableObjectSeries) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(s1, s2);
     }
 

@@ -47,6 +47,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -55,6 +56,7 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for {@link DefaultXYDataset}.
@@ -92,15 +94,9 @@ public class DefaultXYDatasetTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         DefaultXYDataset d1 = new DefaultXYDataset();
-        DefaultXYDataset d2 = null;
-        try {
-            d2 = (DefaultXYDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        DefaultXYDataset d2 = (DefaultXYDataset) d1.clone();
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
@@ -110,12 +106,8 @@ public class DefaultXYDatasetTest  {
         double[] y1 = new double[] {4.0, 5.0, 6.0};
         double[][] data1 = new double[][] {x1, y1};
         d1.addSeries("S1", data1);
-        try {
-            d2 = (DefaultXYDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        d2 = (DefaultXYDataset) d1.clone();
+
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
@@ -140,12 +132,10 @@ public class DefaultXYDatasetTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         DefaultXYDataset d1 = new DefaultXYDataset();
-        DefaultXYDataset d2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(d1);
@@ -154,12 +144,9 @@ public class DefaultXYDatasetTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            d2 = (DefaultXYDataset) in.readObject();
+        DefaultXYDataset d2 = (DefaultXYDataset) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(d1, d2);
 
         // try a dataset with some content...
@@ -167,21 +154,18 @@ public class DefaultXYDatasetTest  {
         double[] y1 = new double[] {4.0, 5.0, 6.0};
         double[][] data1 = new double[][] {x1, y1};
         d1.addSeries("S1", data1);
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(d1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-            );
-            d2 = (DefaultXYDataset) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        buffer = new ByteArrayOutputStream();
+        out = new ObjectOutputStream(buffer);
+        out.writeObject(d1);
+        out.close();
+
+        in = new ObjectInputStream(
+            new ByteArrayInputStream(buffer.toByteArray())
+        );
+        d2 = (DefaultXYDataset) in.readObject();
+        in.close();
+
         assertEquals(d1, d2);
 
     }
@@ -196,23 +180,21 @@ public class DefaultXYDatasetTest  {
         assertEquals("S2", d.getSeriesKey(1));
 
         // check for series key out of bounds
-        boolean pass = false;
         try {
             /*Comparable k =*/ d.getSeriesKey(-1);
+            fail("IllegalArgumentException should have been thrown on negative key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Series index out of bounds", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             /*Comparable k =*/ d.getSeriesKey(2);
+            fail("IllegalArgumentException should have been thrown on key out or range");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Series index out of bounds", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -245,16 +227,15 @@ public class DefaultXYDatasetTest  {
         assertEquals(12.0, d.getYValue(0, 0), EPSILON);
 
         // check null key
-        boolean pass = false;
         try
         {
           d.addSeries(null, new double[][] {{1.0}, {2.0}});
+            fail("IllegalArgumentException should have been thrown on null key");
         }
         catch (IllegalArgumentException e)
         {
-          pass = true;
+            assertEquals("The 'seriesKey' cannot be null.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**

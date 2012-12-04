@@ -50,6 +50,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -130,15 +131,10 @@ public class ScatterRendererTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         ScatterRenderer r1 = new ScatterRenderer();
-        ScatterRenderer r2 = null;
-        try {
-            r2 = (ScatterRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        ScatterRenderer r2 = (ScatterRenderer) r1.clone();
+
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -198,23 +194,18 @@ public class ScatterRendererTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         ScatterRenderer r1 = new ScatterRenderer();
-        ScatterRenderer r2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(r1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(r1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (ScatterRenderer) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        ScatterRenderer r2 = (ScatterRenderer) in.readObject();
+        in.close();
+
         assertEquals(r1, r2);
     }
 
@@ -231,20 +222,19 @@ public class ScatterRendererTest  {
                 = new DefaultMultiValueCategoryDataset();
         assertNull(r.findRangeBounds(dataset));
 
-        List values = Arrays.asList(new Double[] {new Double(1.0)});
+        List values = Arrays.asList(1.0);
         dataset.add(values, "R1", "C1");
         assertEquals(new Range(1.0, 1.0), r.findRangeBounds(dataset));
 
-        values = Arrays.asList(new Double[] {new Double(2.0), new Double(2.2)});
+        values = Arrays.asList(2.0, 2.2);
         dataset.add(values, "R1", "C2");
         assertEquals(new Range(1.0, 2.2), r.findRangeBounds(dataset));
 
-        values = Arrays.asList(new Double[] {new Double(-3.0),
-                new Double(-3.2)});
+        values = Arrays.asList(-3.0, -3.2);
         dataset.add(values, "R1", "C3");
         assertEquals(new Range(-3.2, 2.2), r.findRangeBounds(dataset));
 
-        values = Arrays.asList(new Double[] {new Double(6.0)});
+        values = Arrays.asList(6.0);
         dataset.add(values, "R2", "C1");
         assertEquals(new Range(-3.2, 6.0), r.findRangeBounds(dataset));
 

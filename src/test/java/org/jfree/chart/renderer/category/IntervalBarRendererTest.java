@@ -53,6 +53,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -103,15 +104,9 @@ public class IntervalBarRendererTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         IntervalBarRenderer r1 = new IntervalBarRenderer();
-        IntervalBarRenderer r2 = null;
-        try {
-            r2 = (IntervalBarRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
-        }
+        IntervalBarRenderer r2 = (IntervalBarRenderer) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -130,22 +125,18 @@ public class IntervalBarRendererTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         IntervalBarRenderer r1 = new IntervalBarRenderer();
-        IntervalBarRenderer r2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(r1);
             out.close();
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            r2 = (IntervalBarRenderer) in.readObject();
+        IntervalBarRenderer r2 = (IntervalBarRenderer) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(r1, r2);
     }
 
@@ -155,8 +146,6 @@ public class IntervalBarRendererTest  {
      */
     @Test
     public void testDrawWithNullInfo() {
-        boolean success = false;
-        try {
             double[][] starts = new double[][] {{0.1, 0.2, 0.3},
                     {0.3, 0.4, 0.5}};
             double[][] ends = new double[][] {{0.5, 0.6, 0.7}, {0.7, 0.8, 0.9}};
@@ -169,13 +158,7 @@ public class IntervalBarRendererTest  {
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
-            success = true;
-        }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-            success = false;
-        }
-        assertTrue(success);
+
     }
 
     /**

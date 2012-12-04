@@ -46,6 +46,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -91,18 +92,12 @@ public class MatrixSeriesCollectionTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         MatrixSeries s1 = new MatrixSeries("Series", 2, 3);
         s1.update(0, 0, 1.1);
         MatrixSeriesCollection c1 = new MatrixSeriesCollection();
         c1.addSeries(s1);
-        MatrixSeriesCollection c2 = null;
-        try {
-            c2 = (MatrixSeriesCollection) c1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        MatrixSeriesCollection c2 = (MatrixSeriesCollection) c1.clone();
         assertTrue(c1 != c2);
         assertTrue(c1.getClass() == c2.getClass());
         assertTrue(c1.equals(c2));
@@ -125,14 +120,12 @@ public class MatrixSeriesCollectionTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         MatrixSeries s1 = new MatrixSeries("Series", 2, 3);
         s1.update(0, 0, 1.1);
         MatrixSeriesCollection c1 = new MatrixSeriesCollection();
         c1.addSeries(s1);
-        MatrixSeriesCollection c2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(c1);
@@ -140,12 +133,9 @@ public class MatrixSeriesCollectionTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            c2 = (MatrixSeriesCollection) in.readObject();
+        MatrixSeriesCollection c2 = (MatrixSeriesCollection) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(c1, c2);
     }
 

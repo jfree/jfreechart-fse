@@ -43,9 +43,11 @@ package org.jfree.chart.plot.dial;
 
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -146,15 +148,9 @@ public class DialPointerTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         DialPointer i1 = new DialPointer.Pin(1);
-        DialPointer i2 = null;
-        try {
-            i2 = (DialPointer) i1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        DialPointer i2 = (DialPointer) i1.clone();
         assertTrue(i1 != i2);
         assertTrue(i1.getClass() == i2.getClass());
         assertTrue(i1.equals(i2));
@@ -170,12 +166,10 @@ public class DialPointerTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         // test a default instance
         DialPointer i1 = new DialPointer.Pin(1);
-        DialPointer i2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(i1);
@@ -183,12 +177,9 @@ public class DialPointerTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            i2 = (DialPointer) in.readObject();
+        DialPointer i2 = (DialPointer) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(i1, i2);
 
         // test a custom instance
@@ -198,12 +189,10 @@ public class DialPointerTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization2() {
+    public void testSerialization2() throws IOException, ClassNotFoundException {
         // test a default instance
         DialPointer i1 = new DialPointer.Pointer(1);
-        DialPointer i2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(i1);
@@ -211,12 +200,9 @@ public class DialPointerTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            i2 = (DialPointer) in.readObject();
+        DialPointer i2 = (DialPointer) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(i1, i2);
 
         // test a custom instance

@@ -53,6 +53,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -97,15 +98,9 @@ public class GroupedStackedBarRendererTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         GroupedStackedBarRenderer r1 = new GroupedStackedBarRenderer();
-        GroupedStackedBarRenderer r2 = null;
-        try {
-            r2 = (GroupedStackedBarRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        GroupedStackedBarRenderer r2 = (GroupedStackedBarRenderer) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -124,11 +119,10 @@ public class GroupedStackedBarRendererTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         GroupedStackedBarRenderer r1 = new GroupedStackedBarRenderer();
-        GroupedStackedBarRenderer r2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(r1);
@@ -136,12 +130,9 @@ public class GroupedStackedBarRendererTest  {
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            r2 = (GroupedStackedBarRenderer) in.readObject();
+        GroupedStackedBarRenderer r2 = (GroupedStackedBarRenderer) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(r1, r2);
 
     }
@@ -152,8 +143,6 @@ public class GroupedStackedBarRendererTest  {
      */
     @Test
     public void testDrawWithNullInfo() {
-        boolean success = false;
-        try {
             DefaultCategoryDataset dataset = new DefaultCategoryDataset();
             dataset.addValue(1.0, "S1", "C1");
             dataset.addValue(2.0, "S1", "C2");
@@ -167,13 +156,7 @@ public class GroupedStackedBarRendererTest  {
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
-            success = true;
-        }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-            success = false;
-        }
-        assertTrue(success);
+
     }
 
     /**

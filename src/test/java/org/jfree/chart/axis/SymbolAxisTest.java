@@ -43,9 +43,10 @@ package org.jfree.chart.axis;
 
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -68,26 +69,21 @@ public class SymbolAxisTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         String[] tickLabels = new String[] {"One", "Two", "Three"};
         SymbolAxis a1 = new SymbolAxis("Test Axis", tickLabels);
-        SymbolAxis a2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(a1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(a1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            a2 = (SymbolAxis) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
+        SymbolAxis a2 = (SymbolAxis) in.readObject();
+        in.close();
+
         assertEquals(a1, a2);
 
     }
@@ -96,15 +92,9 @@ public class SymbolAxisTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         SymbolAxis a1 = new SymbolAxis("Axis", new String[] {"A", "B"});
-        SymbolAxis a2 = null;
-        try {
-            a2 = (SymbolAxis) a1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        SymbolAxis a2 = (SymbolAxis) a1.clone();
         assertTrue(a1 != a2);
         assertTrue(a1.getClass() == a2.getClass());
         assertTrue(a1.equals(a2));

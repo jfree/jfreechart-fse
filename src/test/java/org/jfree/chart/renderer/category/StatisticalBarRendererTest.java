@@ -54,9 +54,11 @@ import org.jfree.data.Range;
 import org.jfree.data.statistics.DefaultStatisticalCategoryDataset;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -71,9 +73,6 @@ import static org.junit.Assert.assertTrue;
  * Tests for the {@link StatisticalBarRenderer} class.
  */
 public class StatisticalBarRendererTest  {
-
-
-
 
 
     /**
@@ -113,15 +112,9 @@ public class StatisticalBarRendererTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         StatisticalBarRenderer r1 = new StatisticalBarRenderer();
-        StatisticalBarRenderer r2 = null;
-        try {
-            r2 = (StatisticalBarRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        StatisticalBarRenderer r2 = (StatisticalBarRenderer) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -140,12 +133,10 @@ public class StatisticalBarRendererTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         StatisticalBarRenderer r1 = new StatisticalBarRenderer();
-        StatisticalBarRenderer r2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(r1);
@@ -153,12 +144,9 @@ public class StatisticalBarRendererTest  {
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            r2 = (StatisticalBarRenderer) in.readObject();
+        StatisticalBarRenderer r2 = (StatisticalBarRenderer) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(r1, r2);
 
     }
@@ -169,8 +157,7 @@ public class StatisticalBarRendererTest  {
      */
     @Test
     public void testDrawWithNullInfo() {
-        boolean success = false;
-        try {
+
             DefaultStatisticalCategoryDataset dataset
                     = new DefaultStatisticalCategoryDataset();
             dataset.add(1.0, 2.0, "S1", "C1");
@@ -181,13 +168,6 @@ public class StatisticalBarRendererTest  {
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
-            success = true;
-        }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-            success = false;
-        }
-        assertTrue(success);
     }
 
     /**
@@ -197,25 +177,17 @@ public class StatisticalBarRendererTest  {
      */
     @Test
     public void testDrawWithNullMeanVertical() {
-        boolean success = false;
-        try {
             DefaultStatisticalCategoryDataset dataset
                     = new DefaultStatisticalCategoryDataset();
             dataset.add(1.0, 2.0, "S1", "C1");
-            dataset.add(null, new Double(4.0), "S1", "C2");
+            dataset.add(null, 4.0, "S1", "C2");
             CategoryPlot plot = new CategoryPlot(dataset,
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new StatisticalBarRenderer());
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
-            success = true;
-        }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-            success = false;
-        }
-        assertTrue(success);
+
     }
 
     /**
@@ -225,12 +197,10 @@ public class StatisticalBarRendererTest  {
      */
     @Test
     public void testDrawWithNullMeanHorizontal() {
-        boolean success = false;
-        try {
             DefaultStatisticalCategoryDataset dataset
                     = new DefaultStatisticalCategoryDataset();
             dataset.add(1.0, 2.0, "S1", "C1");
-            dataset.add(null, new Double(4.0), "S1", "C2");
+            dataset.add(null, 4.0, "S1", "C2");
             CategoryPlot plot = new CategoryPlot(dataset,
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new StatisticalBarRenderer());
@@ -238,13 +208,7 @@ public class StatisticalBarRendererTest  {
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
-            success = true;
-        }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-            success = false;
-        }
-        assertTrue(success);
+
     }
 
     /**
@@ -254,25 +218,17 @@ public class StatisticalBarRendererTest  {
      */
     @Test
     public void testDrawWithNullDeviationVertical() {
-        boolean success = false;
-        try {
             DefaultStatisticalCategoryDataset dataset
                     = new DefaultStatisticalCategoryDataset();
             dataset.add(1.0, 2.0, "S1", "C1");
-            dataset.add(new Double(4.0), null, "S1", "C2");
+            dataset.add(4.0, null, "S1", "C2");
             CategoryPlot plot = new CategoryPlot(dataset,
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new StatisticalBarRenderer());
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
-            success = true;
-        }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-            success = false;
-        }
-        assertTrue(success);
+
     }
 
     /**
@@ -282,12 +238,10 @@ public class StatisticalBarRendererTest  {
      */
     @Test
     public void testDrawWithNullDeviationHorizontal() {
-        boolean success = false;
-        try {
             DefaultStatisticalCategoryDataset dataset
                     = new DefaultStatisticalCategoryDataset();
             dataset.add(1.0, 2.0, "S1", "C1");
-            dataset.add(new Double(4.0), null, "S1", "C2");
+            dataset.add(4.0, null, "S1", "C2");
             CategoryPlot plot = new CategoryPlot(dataset,
                     new CategoryAxis("Category"), new NumberAxis("Value"),
                     new StatisticalBarRenderer());
@@ -295,13 +249,7 @@ public class StatisticalBarRendererTest  {
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
-            success = true;
-        }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-            success = false;
-        }
-        assertTrue(success);
+
     }
 
     /**

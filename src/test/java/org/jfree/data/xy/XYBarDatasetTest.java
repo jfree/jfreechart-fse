@@ -46,6 +46,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -90,20 +91,14 @@ public class XYBarDatasetTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         DefaultXYDataset d1 = new DefaultXYDataset();
         double[] x1 = new double[] {1.0, 2.0, 3.0};
         double[] y1 = new double[] {4.0, 5.0, 6.0};
         double[][] data1 = new double[][] {x1, y1};
         d1.addSeries("S1", data1);
         XYBarDataset bd1 = new XYBarDataset(d1, 5.0);
-        XYBarDataset bd2 = null;
-        try {
-            bd2 = (XYBarDataset) bd1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        XYBarDataset bd2 = (XYBarDataset) bd1.clone();
         assertTrue(bd1 != bd2);
         assertTrue(bd1.getClass() == bd2.getClass());
         assertTrue(bd1.equals(bd2));
@@ -135,15 +130,14 @@ public class XYBarDatasetTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         DefaultXYDataset d1 = new DefaultXYDataset();
         double[] x1 = new double[] {1.0, 2.0, 3.0};
         double[] y1 = new double[] {4.0, 5.0, 6.0};
         double[][] data1 = new double[][] {x1, y1};
         d1.addSeries("S1", data1);
         XYBarDataset bd1 = new XYBarDataset(d1, 5.0);
-        XYBarDataset bd2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(bd1);
@@ -151,12 +145,9 @@ public class XYBarDatasetTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            bd2 = (XYBarDataset) in.readObject();
+        XYBarDataset bd2 = (XYBarDataset) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(bd1, bd2);
     }
 

@@ -44,6 +44,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -67,18 +68,12 @@ public class DefaultKeyedValuesDatasetTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         DefaultKeyedValuesDataset d1 = new DefaultKeyedValuesDataset();
         d1.setValue("V1", new Integer(1));
         d1.setValue("V2", null);
         d1.setValue("V3", new Integer(3));
-        DefaultKeyedValuesDataset d2 = null;
-        try {
-            d2 = (DefaultKeyedValuesDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
-        }
+        DefaultKeyedValuesDataset d2 = (DefaultKeyedValuesDataset) d1.clone();
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
@@ -88,7 +83,7 @@ public class DefaultKeyedValuesDatasetTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         DefaultKeyedValuesDataset d1 = new DefaultKeyedValuesDataset();
         d1.setValue("C1", new Double(234.2));
@@ -96,9 +91,7 @@ public class DefaultKeyedValuesDatasetTest  {
         d1.setValue("C3", new Double(345.9));
         d1.setValue("C4", new Double(452.7));
 
-        KeyedValuesDataset d2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(d1);
@@ -107,12 +100,9 @@ public class DefaultKeyedValuesDatasetTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            d2 = (KeyedValuesDataset) in.readObject();
+        KeyedValuesDataset d2 = (KeyedValuesDataset) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
+
         assertEquals(d1, d2);
 
     }

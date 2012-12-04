@@ -48,6 +48,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -57,6 +58,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link DefaultIntervalCategoryDataset} class.
@@ -84,49 +86,47 @@ public class DefaultIntervalCategoryDatasetTest  {
                 DataUtilities.createNumberArray2D(starts),
                 DataUtilities.createNumberArray2D(ends));
 
-        assertEquals(new Double(0.1), d.getStartValue("Series 1",
+        assertEquals(0.1, d.getStartValue("Series 1",
                 "Category 1"));
-        assertEquals(new Double(0.2), d.getStartValue("Series 1",
+        assertEquals(0.2, d.getStartValue("Series 1",
                 "Category 2"));
-        assertEquals(new Double(0.3), d.getStartValue("Series 1",
+        assertEquals(0.3, d.getStartValue("Series 1",
                 "Category 3"));
-        assertEquals(new Double(0.3), d.getStartValue("Series 2",
+        assertEquals(0.3, d.getStartValue("Series 2",
                 "Category 1"));
-        assertEquals(new Double(0.4), d.getStartValue("Series 2",
+        assertEquals(0.4, d.getStartValue("Series 2",
                 "Category 2"));
-        assertEquals(new Double(0.5), d.getStartValue("Series 2",
-                "Category 3"));
-
-        assertEquals(new Double(0.5), d.getEndValue("Series 1",
-                "Category 1"));
-        assertEquals(new Double(0.6), d.getEndValue("Series 1",
-                "Category 2"));
-        assertEquals(new Double(0.7), d.getEndValue("Series 1",
-                "Category 3"));
-        assertEquals(new Double(0.7), d.getEndValue("Series 2",
-                "Category 1"));
-        assertEquals(new Double(0.8), d.getEndValue("Series 2",
-                "Category 2"));
-        assertEquals(new Double(0.9), d.getEndValue("Series 2",
+        assertEquals(0.5, d.getStartValue("Series 2",
                 "Category 3"));
 
-        boolean pass = false;
+        assertEquals(0.5, d.getEndValue("Series 1",
+                "Category 1"));
+        assertEquals(0.6, d.getEndValue("Series 1",
+                "Category 2"));
+        assertEquals(0.7, d.getEndValue("Series 1",
+                "Category 3"));
+        assertEquals(0.7, d.getEndValue("Series 2",
+                "Category 1"));
+        assertEquals(0.8, d.getEndValue("Series 2",
+                "Category 2"));
+        assertEquals(0.9, d.getEndValue("Series 2",
+                "Category 3"));
+
         try {
             d.getValue("XX", "Category 1");
+            fail("UnknownKeyException should have been thrown with provided key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Unknown 'series' key.", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             d.getValue("Series 1", "XX");
+            fail("UnknownKeyException should have been thrown with provided key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Unknown 'category' key.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
 
@@ -188,7 +188,7 @@ public class DefaultIntervalCategoryDatasetTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         double[] starts_S1 = new double[] {0.1, 0.2, 0.3};
         double[] starts_S2 = new double[] {0.3, 0.4, 0.5};
@@ -198,22 +198,17 @@ public class DefaultIntervalCategoryDatasetTest  {
         double[][] ends = new double[][] {ends_S1, ends_S2};
         DefaultIntervalCategoryDataset d1
                 = new DefaultIntervalCategoryDataset(starts, ends);
-        DefaultIntervalCategoryDataset d2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(d1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(d1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            d2 = (DefaultIntervalCategoryDataset) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        DefaultIntervalCategoryDataset d2 = (DefaultIntervalCategoryDataset) in.readObject();
+        in.close();
+
         assertEquals(d1, d2);
 
     }
@@ -222,7 +217,7 @@ public class DefaultIntervalCategoryDatasetTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         double[] starts_S1 = new double[] {0.1, 0.2, 0.3};
         double[] starts_S2 = new double[] {0.3, 0.4, 0.5};
         double[] ends_S1 = new double[] {0.5, 0.6, 0.7};
@@ -234,21 +229,16 @@ public class DefaultIntervalCategoryDatasetTest  {
                 new Comparable[] {"Category 1", "Category 2", "Category 3"},
                 DataUtilities.createNumberArray2D(starts),
                 DataUtilities.createNumberArray2D(ends));
-        DefaultIntervalCategoryDataset d2 = null;
-        try {
-            d2 = (DefaultIntervalCategoryDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        DefaultIntervalCategoryDataset d2 = (DefaultIntervalCategoryDataset) d1.clone();
+
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
 
         // check that the clone doesn't share the same underlying arrays.
-        d1.setStartValue(0, "Category 1", new Double(0.99));
+        d1.setStartValue(0, "Category 1", 0.99);
         assertFalse(d1.equals(d2));
-        d2.setStartValue(0, "Category 1", new Double(0.99));
+        d2.setStartValue(0, "Category 1", 0.99);
         assertTrue(d1.equals(d2));
     }
 
@@ -256,17 +246,12 @@ public class DefaultIntervalCategoryDatasetTest  {
      * A check to ensure that an empty dataset can be cloned.
      */
     @Test
-    public void testCloning2() {
+    public void testCloning2() throws CloneNotSupportedException {
         DefaultIntervalCategoryDataset d1
                 = new DefaultIntervalCategoryDataset(new double[0][0],
                     new double[0][0]);
-        DefaultIntervalCategoryDataset d2 = null;
-        try {
-            d2 = (DefaultIntervalCategoryDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        DefaultIntervalCategoryDataset d2 = (DefaultIntervalCategoryDataset) d1.clone();
+
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
@@ -288,27 +273,25 @@ public class DefaultIntervalCategoryDatasetTest  {
                 new Comparable[] {"Category 1", "Category 2", "Category 3"},
                 DataUtilities.createNumberArray2D(starts),
                 DataUtilities.createNumberArray2D(ends));
-        d1.setStartValue(0, "Category 2", new Double(99.9));
-        assertEquals(new Double(99.9), d1.getStartValue("Series 1",
+        d1.setStartValue(0, "Category 2", 99.9);
+        assertEquals(99.9, d1.getStartValue("Series 1",
                 "Category 2"));
 
-        boolean pass = false;
         try {
-            d1.setStartValue(-1, "Category 2", new Double(99.9));
+            d1.setStartValue(-1, "Category 2", 99.9);
+            fail("IllegalArgumentException should have been thrown on negative key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("DefaultIntervalCategoryDataset.setValue: series outside valid range.", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
-            d1.setStartValue(2, "Category 2", new Double(99.9));
+            d1.setStartValue(2, "Category 2", 99.9);
+            fail("IllegalArgumentException should have been thrown on key out of range");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("DefaultIntervalCategoryDataset.setValue: series outside valid range.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -327,27 +310,25 @@ public class DefaultIntervalCategoryDatasetTest  {
                 new Comparable[] {"Category 1", "Category 2", "Category 3"},
                 DataUtilities.createNumberArray2D(starts),
                 DataUtilities.createNumberArray2D(ends));
-        d1.setEndValue(0, "Category 2", new Double(99.9));
-        assertEquals(new Double(99.9), d1.getEndValue("Series 1",
+        d1.setEndValue(0, "Category 2", 99.9);
+        assertEquals(99.9, d1.getEndValue("Series 1",
                 "Category 2"));
 
-        boolean pass = false;
         try {
-            d1.setEndValue(-1, "Category 2", new Double(99.9));
+            d1.setEndValue(-1, "Category 2", 99.9);
+            fail("IllegalArgumentException should have been thrown on negative key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("DefaultIntervalCategoryDataset.setValue: series outside valid range.", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
-            d1.setEndValue(2, "Category 2", new Double(99.9));
+            d1.setEndValue(2, "Category 2", 99.9);
+            fail("IllegalArgumentException should have been thrown on index out of range");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("DefaultIntervalCategoryDataset.setValue: series outside valid range.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -407,14 +388,9 @@ public class DefaultIntervalCategoryDatasetTest  {
         DefaultIntervalCategoryDataset empty
                 = new DefaultIntervalCategoryDataset(new double[0][0],
                         new double[0][0]);
-        boolean pass = true;
-        try {
+
             empty.setSeriesKeys(new String[0]);
-        }
-        catch (RuntimeException e) {
-            pass = false;
-        }
-        assertTrue(pass);
+
     }
 
     /**
@@ -450,14 +426,9 @@ public class DefaultIntervalCategoryDatasetTest  {
         DefaultIntervalCategoryDataset empty
                 = new DefaultIntervalCategoryDataset(new double[0][0],
                         new double[0][0]);
-        boolean pass = true;
-        try {
+
             empty.setCategoryKeys(new String[0]);
-        }
-        catch (RuntimeException e) {
-            pass = false;
-        }
-        assertTrue(pass);
+
     }
 
     /**

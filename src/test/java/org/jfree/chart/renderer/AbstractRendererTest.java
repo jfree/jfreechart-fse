@@ -61,12 +61,18 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.ui.TextAnchor;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Rectangle;
+import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -77,7 +83,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link AbstractRenderer} class.
@@ -364,7 +369,7 @@ public class AbstractRendererTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         LineAndShapeRenderer r1 = new LineAndShapeRenderer();
 
         Rectangle2D baseShape = new Rectangle2D.Double(11.0, 12.0, 13.0, 14.0);
@@ -373,13 +378,7 @@ public class AbstractRendererTest  {
         r1.setDefaultLegendTextFont(new Font("Dialog", Font.PLAIN, 3));
         r1.setDefaultLegendTextPaint(new Color(1, 2, 3));
 
-        LineAndShapeRenderer r2 = null;
-        try {
-            r2 = (LineAndShapeRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            fail(e.getMessage());
-        }
+        LineAndShapeRenderer r2 = (LineAndShapeRenderer) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -509,18 +508,12 @@ public class AbstractRendererTest  {
      * A check for cloning.
      */
     @Test
-    public void testCloning2() {
+    public void testCloning2() throws CloneNotSupportedException {
         LineAndShapeRenderer r1 = new LineAndShapeRenderer();
         r1.setDefaultPaint(Color.BLUE);
         r1.setDefaultLegendTextPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.BLUE));
-        LineAndShapeRenderer r2 = null;
-        try {
-            r2 = (LineAndShapeRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            fail(e.getMessage());
-        }
+        LineAndShapeRenderer r2 = (LineAndShapeRenderer) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -645,16 +638,14 @@ public class AbstractRendererTest  {
      * deserialization.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         BarRenderer r1 = new BarRenderer();
         r1.setDefaultLegendTextFont(new Font("Dialog", Font.PLAIN, 4));
         r1.setDefaultLegendTextPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.green));
         r1.setDefaultLegendShape(new Line2D.Double(1.0, 2.0, 3.0, 4.0));
-        BarRenderer r2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(r1);
@@ -662,19 +653,12 @@ public class AbstractRendererTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (BarRenderer) in.readObject();
+        BarRenderer r2 = (BarRenderer) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(r1, r2);
-        try {
-            r2.notifyListeners(new RendererChangeEvent(r2));
-        }
-        catch (NullPointerException e) {
-            assertTrue(false);  // failed
-        }
+        r2.notifyListeners(new RendererChangeEvent(r2));
+
 
     }
 

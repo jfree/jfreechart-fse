@@ -47,6 +47,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link BoxAndWhiskerCalculator} class.
@@ -64,18 +65,17 @@ public class BoxAndWhiskerCalculatorTest  {
     public void testCalculateBoxAndWhiskerStatistics() {
 
         // try null list
-        boolean pass = false;
         try {
             BoxAndWhiskerCalculator.calculateBoxAndWhiskerStatistics(null);
+            fail("IllegalArgumentException should have been thrown on a null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'values' argument.", e.getMessage());
         }
-        assertTrue(pass);
 
         // try a list containing a single value
-        List values = new ArrayList();
-        values.add(new Double(1.1));
+        List<Double> values = new ArrayList<Double>();
+        values.add(1.1);
         BoxAndWhiskerItem item
             = BoxAndWhiskerCalculator.calculateBoxAndWhiskerStatistics(values);
         assertEquals(1.1, item.getMean().doubleValue(), EPSILON);
@@ -93,28 +93,27 @@ public class BoxAndWhiskerCalculatorTest  {
     public void testCalculateQ1() {
 
         // try null argument
-        boolean pass = false;
         try {
             BoxAndWhiskerCalculator.calculateQ1(null);
+            fail("IllegalArgumentException should have been thrown on a null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'values' argument.", e.getMessage());
         }
-        assertTrue(pass);
 
-        List values = new ArrayList();
+        List<Double> values = new ArrayList<Double>();
         double q1 = BoxAndWhiskerCalculator.calculateQ1(values);
         assertTrue(Double.isNaN(q1));
-        values.add(new Double(1.0));
+        values.add(1.0);
         q1 = BoxAndWhiskerCalculator.calculateQ1(values);
         assertEquals(q1, 1.0, EPSILON);
-        values.add(new Double(2.0));
+        values.add(2.0);
         q1 = BoxAndWhiskerCalculator.calculateQ1(values);
         assertEquals(q1, 1.0, EPSILON);
-        values.add(new Double(3.0));
+        values.add(3.0);
         q1 = BoxAndWhiskerCalculator.calculateQ1(values);
         assertEquals(q1, 1.5, EPSILON);
-        values.add(new Double(4.0));
+        values.add(4.0);
         q1 = BoxAndWhiskerCalculator.calculateQ1(values);
         assertEquals(q1, 1.5, EPSILON);
     }
@@ -125,28 +124,28 @@ public class BoxAndWhiskerCalculatorTest  {
     @Test
     public void testCalculateQ3() {
         // try null argument
-        boolean pass = false;
+
         try {
             BoxAndWhiskerCalculator.calculateQ3(null);
+            fail("IllegalArgumentException should have been thrown on a null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'values' argument.", e.getMessage());
         }
-        assertTrue(pass);
 
-        List values = new ArrayList();
+        List<Double> values = new ArrayList<Double>();
         double q3 = BoxAndWhiskerCalculator.calculateQ3(values);
         assertTrue(Double.isNaN(q3));
-        values.add(new Double(1.0));
+        values.add(1.0);
         q3 = BoxAndWhiskerCalculator.calculateQ3(values);
         assertEquals(q3, 1.0, EPSILON);
-        values.add(new Double(2.0));
+        values.add(2.0);
         q3 = BoxAndWhiskerCalculator.calculateQ3(values);
         assertEquals(q3, 2.0, EPSILON);
-        values.add(new Double(3.0));
+        values.add(3.0);
         q3 = BoxAndWhiskerCalculator.calculateQ3(values);
         assertEquals(q3, 2.5, EPSILON);
-        values.add(new Double(4.0));
+        values.add(4.0);
         q3 = BoxAndWhiskerCalculator.calculateQ3(values);
         assertEquals(q3, 3.5, EPSILON);
     }
@@ -156,12 +155,12 @@ public class BoxAndWhiskerCalculatorTest  {
      */
     @Test
     public void test1593149() {
-        ArrayList theList = new ArrayList(5);
-        theList.add(0, new Double(1.0));
-        theList.add(1, new Double(2.0));
-        theList.add(2, new Double(Double.NaN));
-        theList.add(3, new Double(3.0));
-        theList.add(4, new Double(4.0));
+        ArrayList<Double> theList = new ArrayList<Double>(5);
+        theList.add(0, 1.0);
+        theList.add(1, 2.0);
+        theList.add(2, Double.NaN);
+        theList.add(3, 3.0);
+        theList.add(4, 4.0);
         BoxAndWhiskerItem theItem =
             BoxAndWhiskerCalculator.calculateBoxAndWhiskerStatistics(theList);
         assertEquals(1.0, theItem.getMinRegularValue().doubleValue(), EPSILON);

@@ -44,6 +44,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -103,7 +104,7 @@ public class VectorTest  {
      * Immutable class is not cloneable.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         Vector v1 = new Vector(1.0, 2.0);
         assertFalse(v1 instanceof Cloneable);
     }
@@ -112,10 +113,9 @@ public class VectorTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         Vector v1 = new Vector(1.0, 2.0);
-        Vector v2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(v1);
@@ -123,12 +123,9 @@ public class VectorTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            v2 = (Vector) in.readObject();
+        Vector v2 = (Vector) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(v1, v2);
     }
 

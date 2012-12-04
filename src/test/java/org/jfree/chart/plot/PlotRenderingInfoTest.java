@@ -43,10 +43,11 @@ package org.jfree.chart.plot;
 import org.jfree.chart.ChartRenderingInfo;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -100,16 +101,10 @@ public class PlotRenderingInfoTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         PlotRenderingInfo p1 = new PlotRenderingInfo(new ChartRenderingInfo());
         p1.setPlotArea(new Rectangle2D.Double());
-        PlotRenderingInfo p2 = null;
-        try {
-            p2 = (PlotRenderingInfo) p1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        PlotRenderingInfo p2 = (PlotRenderingInfo) p1.clone();
         assertTrue(p1 != p2);
         assertTrue(p1.getClass() == p2.getClass());
         assertTrue(p1.equals(p2));
@@ -130,12 +125,10 @@ public class PlotRenderingInfoTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         PlotRenderingInfo p1 = new PlotRenderingInfo(new ChartRenderingInfo());
-        PlotRenderingInfo p2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(p1);
@@ -144,12 +137,9 @@ public class PlotRenderingInfoTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            p2 = (PlotRenderingInfo) in.readObject();
+        PlotRenderingInfo p2 = (PlotRenderingInfo) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
+
         assertEquals(p1, p2);
 
     }

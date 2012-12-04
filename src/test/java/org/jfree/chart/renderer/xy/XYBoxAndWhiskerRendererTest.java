@@ -51,11 +51,14 @@ import org.jfree.data.statistics.BoxAndWhiskerItem;
 import org.jfree.data.statistics.DefaultBoxAndWhiskerXYDataset;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -130,15 +133,11 @@ public class XYBoxAndWhiskerRendererTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         XYBoxAndWhiskerRenderer r1 = new XYBoxAndWhiskerRenderer();
-        XYBoxAndWhiskerRenderer r2 = null;
-        try {
-            r2 = (XYBoxAndWhiskerRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
-        }
+        XYBoxAndWhiskerRenderer r2 = (XYBoxAndWhiskerRenderer) r1.clone();
+
+
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -157,22 +156,17 @@ public class XYBoxAndWhiskerRendererTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         XYBoxAndWhiskerRenderer r1 = new XYBoxAndWhiskerRenderer();
-        XYBoxAndWhiskerRenderer r2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(r1);
-            out.close();
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            r2 = (XYBoxAndWhiskerRenderer) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(r1);
+        out.close();
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
+        XYBoxAndWhiskerRenderer r2 = (XYBoxAndWhiskerRenderer) in.readObject();
+        in.close();
+
         assertEquals(r1, r2);
     }
 
@@ -183,23 +177,18 @@ public class XYBoxAndWhiskerRendererTest  {
     public void test2909215() {
         DefaultBoxAndWhiskerXYDataset d1 = new DefaultBoxAndWhiskerXYDataset(
                 "Series");
-        d1.add(new Date(1L), new BoxAndWhiskerItem(new Double(1.0),
-                new Double(2.0), new Double(3.0), new Double(4.0),
-                new Double(5.0), new Double(6.0), null, null, null));
+        d1.add(new Date(1L), new BoxAndWhiskerItem(1.0,
+                2.0, 3.0, 4.0,
+                5.0, 6.0, null, null, null));
         JFreeChart chart = ChartFactory.createBoxAndWhiskerChart("Title", "X",
                 "Y", d1);
-        try {
+
             BufferedImage image = new BufferedImage(400, 200,
                     BufferedImage.TYPE_INT_RGB);
             Graphics2D g2 = image.createGraphics();
             chart.draw(g2, new Rectangle2D.Double(0, 0, 400, 200), null, null);
             g2.dispose();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            assertTrue(false);
-        }
-        assertTrue(true);
+        //FIXME we should assert a value here
     }
 
 }

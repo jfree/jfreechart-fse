@@ -44,9 +44,13 @@ package org.jfree.chart.annotations;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Stroke;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -136,17 +140,13 @@ public class XYPolygonAnnotationTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         Stroke stroke1 = new BasicStroke(2.0f);
         XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[] {1.0,
                 2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.RED, Color.BLUE);
-        XYPolygonAnnotation a2 = null;
-        try {
-            a2 = (XYPolygonAnnotation) a1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        XYPolygonAnnotation a2 = (XYPolygonAnnotation) a1.clone();
+
+
         assertTrue(a1 != a2);
         assertTrue(a1.getClass() == a2.getClass());
         assertTrue(a1.equals(a2));
@@ -167,14 +167,12 @@ public class XYPolygonAnnotationTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         Stroke stroke1 = new BasicStroke(2.0f);
         XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[] {1.0,
                 2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.RED, Color.BLUE);
-        XYPolygonAnnotation a2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(a1);
@@ -183,12 +181,9 @@ public class XYPolygonAnnotationTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            a2 = (XYPolygonAnnotation) in.readObject();
+            XYPolygonAnnotation a2 = (XYPolygonAnnotation) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(a1, a2);
 
     }

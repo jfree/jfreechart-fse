@@ -51,6 +51,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -58,6 +59,7 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -107,15 +109,9 @@ public class ClusteredXYBarRendererTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         ClusteredXYBarRenderer r1 = new ClusteredXYBarRenderer();
-        ClusteredXYBarRenderer r2 = null;
-        try {
-            r2 = (ClusteredXYBarRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        ClusteredXYBarRenderer r2 = (ClusteredXYBarRenderer) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -134,25 +130,20 @@ public class ClusteredXYBarRendererTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         ClusteredXYBarRenderer r1 = new ClusteredXYBarRenderer();
-        ClusteredXYBarRenderer r2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(r1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(r1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (ClusteredXYBarRenderer) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        ClusteredXYBarRenderer r2 = (ClusteredXYBarRenderer) in.readObject();
+        in.close();
+
         assertEquals(r1, r2);
 
     }
@@ -177,7 +168,7 @@ public class ClusteredXYBarRendererTest  {
         assertEquals(13.0, r.getUpperBound(), EPSILON);
 
         // check that a null dataset returns null bounds
-        assertTrue(renderer.findDomainBounds(null) == null);
+        assertNull(renderer.findDomainBounds(null));
     }
 
     /**

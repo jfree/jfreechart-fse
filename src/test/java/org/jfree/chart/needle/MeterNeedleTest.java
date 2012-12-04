@@ -42,7 +42,10 @@ package org.jfree.chart.needle;
 
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Stroke;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

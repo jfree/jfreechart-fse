@@ -55,6 +55,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -69,6 +70,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link Month} class.
@@ -210,35 +212,18 @@ public class MonthTest  {
     @Test
     public void testParseMonth() {
 
-        Month month;
+        Month month = Month.parseMonth("1990-01");
 
-        // test 1...
-        try {
-            month = Month.parseMonth("1990-01");
-        }
-        catch (TimePeriodFormatException e) {
-            month = new Month(1, 1900);
-        }
         assertEquals(1, month.getMonth());
         assertEquals(1990, month.getYear().getYear());
 
-        // test 2...
-        try {
-            month = Month.parseMonth("02-1991");
-        }
-        catch (TimePeriodFormatException e) {
-            month = new Month(1, 1900);
-        }
+        month = Month.parseMonth("02-1991");
+
         assertEquals(2, month.getMonth());
         assertEquals(1991, month.getYear().getYear());
 
-        // test 3...
-        try {
-            month = Month.parseMonth("March 1993");
-        }
-        catch (TimePeriodFormatException e) {
-            month = new Month(1, 1900);
-        }
+        month = Month.parseMonth("March 1993");
+
         assertEquals(3, month.getMonth());
         assertEquals(1993, month.getYear().getYear());
 
@@ -248,12 +233,10 @@ public class MonthTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         Month m1 = new Month(12, 1999);
-        Month m2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(m1);
@@ -262,12 +245,9 @@ public class MonthTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            m2 = (Month) in.readObject();
+        Month m2 = (Month) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
+
         assertEquals(m1, m2);
 
     }
@@ -320,14 +300,13 @@ public class MonthTest  {
         assertEquals(-628444800000L, m.getFirstMillisecond(c));
 
         // try null calendar
-        boolean pass = false;
         try {
-            m.getFirstMillisecond((Calendar) null);
+            m.getFirstMillisecond(null);
+            fail("NullPointerException should have been thrown on null parameter");
         }
         catch (NullPointerException e) {
-            pass = true;
+            //we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**
@@ -341,14 +320,13 @@ public class MonthTest  {
         assertEquals(978307200000L, m.getFirstMillisecond(calendar));
 
         // try null calendar
-        boolean pass = false;
         try {
-            m.getFirstMillisecond((Calendar) null);
+            m.getFirstMillisecond(null);
+            fail("NullPointerException should have been thrown on null parameter");
         }
         catch (NullPointerException e) {
-            pass = true;
+            // we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**
@@ -377,14 +355,13 @@ public class MonthTest  {
         assertEquals(-626025600001L, m.getLastMillisecond(c));
 
         // try null calendar
-        boolean pass = false;
         try {
-            m.getLastMillisecond((Calendar) null);
+            m.getLastMillisecond(null);
+            fail("NullPointerException should have been thrown on null parameter");
         }
         catch (NullPointerException e) {
-            pass = true;
+            // we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**
@@ -398,14 +375,13 @@ public class MonthTest  {
         assertEquals(986083199999L, m.getLastMillisecond(calendar));
 
         // try null calendar
-        boolean pass = false;
         try {
-            m.getLastMillisecond((Calendar) null);
+            m.getLastMillisecond(null);
+            fail("NullPointerException should have been thrown on null parameter");
         }
         catch (NullPointerException e) {
-            pass = true;
+            //we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**

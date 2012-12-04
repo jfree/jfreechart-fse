@@ -45,12 +45,14 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -91,10 +93,8 @@ public class AxisLocationTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         AxisLocation location1 = AxisLocation.BOTTOM_OR_RIGHT;
-        AxisLocation location2 = null;
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(location1);
@@ -102,15 +102,10 @@ public class AxisLocationTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            location2 = (AxisLocation) in.readObject();
+            AxisLocation location2 = (AxisLocation) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        assertEquals(location1, location2);
-        boolean same = location1 == location2;
-        assertEquals(true, same);
+
+        assertSame(location1, location2);
     }
 
 }

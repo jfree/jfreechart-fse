@@ -47,7 +47,10 @@ package org.jfree.chart.axis;
 import org.jfree.chart.ui.RectangleInsets;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -66,16 +69,10 @@ public class AxisTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         CategoryAxis a1 = new CategoryAxis("Test");
         a1.setAxisLinePaint(Color.RED);
-        CategoryAxis a2 = null;
-        try {
-            a2 = (CategoryAxis) a1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        CategoryAxis a2 = (CategoryAxis) a1.clone();
         assertTrue(a1 != a2);
         assertTrue(a1.getClass() == a2.getClass());
         assertTrue(a1.equals(a2));

@@ -51,6 +51,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -60,6 +61,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Some tests for the {@link TimePeriodValuesCollection} class.
@@ -128,23 +130,19 @@ public class TimePeriodValuesCollectionTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         TimePeriodValuesCollection c1 = new TimePeriodValuesCollection();
-        TimePeriodValuesCollection c2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(c1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            c2 = (TimePeriodValuesCollection) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(c1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        TimePeriodValuesCollection c2 = (TimePeriodValuesCollection) in.readObject();
+        in.close();
+
         assertEquals(c1, c2);
     }
 
@@ -158,23 +156,21 @@ public class TimePeriodValuesCollectionTest  {
         c1.addSeries(s1);
         assertEquals("Series 1", c1.getSeries(0).getKey());
         
-        boolean pass = false;
         try {
             c1.getSeries(-1);
+            fail("IllegalArgumentException should have been thrown on negative series");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Index 'series' out of range.", e.getMessage());
         }
-        assertTrue(pass);
-        
-        pass = false;
+
         try {
             c1.getSeries(1);
+            fail("IllegalArgumentException should have been thrown on index greater than series length");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Index 'series' out of range.", e.getMessage());
         }
-        assertTrue(pass);
     }
     
     private static final double EPSILON = 0.0000000001;

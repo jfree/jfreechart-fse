@@ -55,6 +55,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -71,6 +72,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link Day} class.
@@ -222,11 +224,9 @@ public class DayTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         Day d1 = new Day(15, 4, 2000);
-        Day d2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(d1);
@@ -234,12 +234,9 @@ public class DayTest  {
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            d2 = (Day) in.readObject();
+        Day d2 = (Day) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(d1, d2);
     }
 
@@ -302,14 +299,13 @@ public class DayTest  {
         assertEquals(-621187200000L, d.getFirstMillisecond(c));
 
         // try null calendar
-        boolean pass = false;
         try {
-            d.getFirstMillisecond((Calendar) null);
+            d.getFirstMillisecond(null);
+            fail("NullPointerException should have been thrown");
         }
         catch (NullPointerException e) {
-            pass = true;
+            // we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**
@@ -323,14 +319,13 @@ public class DayTest  {
         assertEquals(1007164800000L, d.getFirstMillisecond(calendar));
 
         // try null calendar
-        boolean pass = false;
         try {
-            d.getFirstMillisecond((Calendar) null);
+            d.getFirstMillisecond(null);
+            fail("NullPointerException should have been thrown");
         }
         catch (NullPointerException e) {
-            pass = true;
+            //we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**
@@ -359,14 +354,13 @@ public class DayTest  {
         assertEquals(-628358400001L, d.getLastMillisecond(c));
 
         // try null calendar
-        boolean pass = false;
         try {
-            d.getLastMillisecond((Calendar) null);
+            d.getLastMillisecond(null);
+            fail("NullPointerExcption should have been thrown");
         }
         catch (NullPointerException e) {
-            pass = true;
+            //we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**
@@ -381,14 +375,13 @@ public class DayTest  {
         assertEquals(989017199999L, d.getLastMillisecond(calendar));
 
         // try null calendar
-        boolean pass = false;
         try {
-            d.getLastMillisecond((Calendar) null);
+            d.getLastMillisecond(null);
+            fail("NullPointerException should have been thrown");
         }
         catch (NullPointerException e) {
-            pass = true;
+            //we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**

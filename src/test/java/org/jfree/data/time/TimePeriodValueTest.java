@@ -45,6 +45,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -94,12 +95,10 @@ public class TimePeriodValueTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         TimePeriodValue tpv1 = new TimePeriodValue(new Day(30, 7, 2003), 55.75);
-        TimePeriodValue tpv2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(tpv1);
@@ -108,12 +107,9 @@ public class TimePeriodValueTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            tpv2 = (TimePeriodValue) in.readObject();
+        TimePeriodValue tpv2 = (TimePeriodValue) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
+
         assertEquals(tpv1, tpv2);
 
     }

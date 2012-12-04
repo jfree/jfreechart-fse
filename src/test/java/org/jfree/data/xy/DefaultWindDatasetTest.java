@@ -48,6 +48,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -56,6 +57,7 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for {@link DefaultWindDataset}.
@@ -86,28 +88,18 @@ public class DefaultWindDatasetTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         DefaultWindDataset d1 = new DefaultWindDataset();
-        DefaultWindDataset d2 = null;
-        try {
-            d2 = (DefaultWindDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        DefaultWindDataset d2 = (DefaultWindDataset) d1.clone();
+
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
 
         // try a dataset with some content...
         d1 = createSampleDataset1();
-        d2 = null;
-        try {
-            d2 = (DefaultWindDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        d2 = (DefaultWindDataset) d1.clone();
+
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
@@ -126,41 +118,32 @@ public class DefaultWindDatasetTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         DefaultWindDataset d1 = new DefaultWindDataset();
-        DefaultWindDataset d2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(d1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(d1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            d2 = (DefaultWindDataset) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
+        DefaultWindDataset d2 = (DefaultWindDataset) in.readObject();
+        in.close();
+
         assertEquals(d1, d2);
 
         // try a dataset with some content...
         d1 = createSampleDataset1();
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(d1);
-            out.close();
+        buffer = new ByteArrayOutputStream();
+        out = new ObjectOutputStream(buffer);
+        out.writeObject(d1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            d2 = (DefaultWindDataset) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
+        d2 = (DefaultWindDataset) in.readObject();
+        in.close();
+
         assertEquals(d1, d2);
 
     }
@@ -175,23 +158,22 @@ public class DefaultWindDatasetTest  {
         assertEquals("Series 2", d.getSeriesKey(1));
 
         // check for series key out of bounds
-        boolean pass = false;
         try {
             /*Comparable k =*/ d.getSeriesKey(-1);
+            fail("IllegalArgumentException should have been thrown on negative key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Invalid series index: -1", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
+
         try {
             /*Comparable k =*/ d.getSeriesKey(2);
+            fail("IllegalArgumentException should have been thrown on key out of range");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Invalid series index: 2", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -235,7 +217,7 @@ public class DefaultWindDatasetTest  {
      * @return An array containing the specified items.
      */
     private Object[] createItem(RegularTimePeriod t, int dir, int force) {
-        return new Object[] {new Long(t.getMiddleMillisecond()),
-                new Integer(dir), new Integer(force)};
+        return new Object[] {t.getMiddleMillisecond(),
+                dir, force};
     }
 }

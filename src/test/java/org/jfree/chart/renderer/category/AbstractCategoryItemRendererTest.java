@@ -155,31 +155,21 @@ public class AbstractCategoryItemRendererTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning1() {
+    public void testCloning1() throws CloneNotSupportedException {
         AbstractCategoryItemRenderer r1 = new BarRenderer();
-        AbstractCategoryItemRenderer r2 = null;
         r1.setSeriesItemLabelGenerator(0,
                 new StandardCategoryItemLabelGenerator());
-        r2 = null;
-        try {
-            r2 = (BarRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        AbstractCategoryItemRenderer r2 = (BarRenderer) r1.clone();
+
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
 
         r1 = new BarRenderer();
         r1.setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator());
-        r2 = null;
-        try {
-            r2 = (BarRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        r2 = (BarRenderer) r1.clone();
+
+
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -189,31 +179,20 @@ public class AbstractCategoryItemRendererTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning2() {
+    public void testCloning2() throws CloneNotSupportedException {
         BarRenderer r1 = new BarRenderer();
-        BarRenderer r2 = null;
         r1.setSeriesItemLabelGenerator(0,
                 new IntervalCategoryItemLabelGenerator());
-        r2 = null;
-        try {
-            r2 = (BarRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        BarRenderer r2 = (BarRenderer) r1.clone();
+
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
 
         r1 = new BarRenderer();
         r1.setDefaultItemLabelGenerator(new IntervalCategoryItemLabelGenerator());
-        r2 = null;
-        try {
-            r2 = (BarRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        r2 = (BarRenderer) r1.clone();
+
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -223,18 +202,12 @@ public class AbstractCategoryItemRendererTest  {
      * Check that the legendItemLabelGenerator is cloned.
      */
     @Test
-    public void testCloning_LegendItemLabelGenerator() {
+    public void testCloning_LegendItemLabelGenerator() throws CloneNotSupportedException {
         StandardCategorySeriesLabelGenerator generator
                 = new StandardCategorySeriesLabelGenerator("Series {0}");
         BarRenderer r1 = new BarRenderer();
         r1.setLegendItemLabelGenerator(generator);
-        BarRenderer r2 = null;
-        try {
-            r2 = (BarRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        BarRenderer r2 = (BarRenderer) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -248,18 +221,12 @@ public class AbstractCategoryItemRendererTest  {
      * Check that the legendItemToolTipGenerator is cloned.
      */
     @Test
-    public void testCloning_LegendItemToolTipGenerator() {
+    public void testCloning_LegendItemToolTipGenerator() throws CloneNotSupportedException {
         StandardCategorySeriesLabelGenerator generator
                 = new StandardCategorySeriesLabelGenerator("Series {0}");
         BarRenderer r1 = new BarRenderer();
         r1.setLegendItemToolTipGenerator(generator);
-        BarRenderer r2 = null;
-        try {
-            r2 = (BarRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        BarRenderer r2 = (BarRenderer) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -273,18 +240,12 @@ public class AbstractCategoryItemRendererTest  {
      * Check that the legendItemURLGenerator is cloned.
      */
     @Test
-    public void testCloning_LegendItemURLGenerator() {
+    public void testCloning_LegendItemURLGenerator() throws CloneNotSupportedException {
         StandardCategorySeriesLabelGenerator generator
                 = new StandardCategorySeriesLabelGenerator("Series {0}");
         BarRenderer r1 = new BarRenderer();
         r1.setLegendItemURLGenerator(generator);
-        BarRenderer r2 = null;
-        try {
-            r2 = (BarRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        BarRenderer r2 = (BarRenderer) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));

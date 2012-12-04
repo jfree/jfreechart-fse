@@ -53,11 +53,12 @@ import org.jfree.data.xy.DefaultTableXYDataset;
 import org.jfree.data.xy.TableXYDataset;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -83,23 +84,17 @@ public class StackedXYAreaRenderer2Test  {
      */
     @Test
     public void testDrawWithEmptyDataset() {
-        boolean success = false;
         JFreeChart chart = ChartFactory.createStackedXYAreaChart("title", "x",
                 "y", new DefaultTableXYDataset());
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setRenderer(new StackedXYAreaRenderer2());
-        try {
+
             BufferedImage image = new BufferedImage(200 , 100,
                     BufferedImage.TYPE_INT_RGB);
             Graphics2D g2 = image.createGraphics();
             chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
             g2.dispose();
-            success = true;
-        }
-        catch (Exception e) {
-            success = false;
-        }
-        assertTrue(success);
+
     }
 
     /**
@@ -135,15 +130,9 @@ public class StackedXYAreaRenderer2Test  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         StackedXYAreaRenderer2 r1 = new StackedXYAreaRenderer2();
-        StackedXYAreaRenderer2 r2 = null;
-        try {
-            r2 = (StackedXYAreaRenderer2) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        StackedXYAreaRenderer2 r2 = (StackedXYAreaRenderer2) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -162,10 +151,9 @@ public class StackedXYAreaRenderer2Test  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         StackedXYAreaRenderer2 r1 = new StackedXYAreaRenderer2();
-        StackedXYAreaRenderer2 r2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(r1);
@@ -173,12 +161,9 @@ public class StackedXYAreaRenderer2Test  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (StackedXYAreaRenderer2) in.readObject();
+        StackedXYAreaRenderer2 r2 = (StackedXYAreaRenderer2) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(r1, r2);
     }
 

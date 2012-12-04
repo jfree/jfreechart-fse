@@ -53,9 +53,10 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Rectangle;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -64,7 +65,6 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link XYAreaRenderer2} class.
@@ -112,17 +112,11 @@ public class XYAreaRenderer2Test  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         XYAreaRenderer2 r1 = new XYAreaRenderer2();
         Rectangle rect = new Rectangle(1, 2, 3, 4);
         r1.setLegendArea(rect);
-        XYAreaRenderer2 r2 = null;
-        try {
-            r2 = (XYAreaRenderer2) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        XYAreaRenderer2 r2 = (XYAreaRenderer2) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -145,12 +139,10 @@ public class XYAreaRenderer2Test  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         XYAreaRenderer2 r1 = new XYAreaRenderer2();
-        XYAreaRenderer2 r2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(r1);
@@ -158,12 +150,9 @@ public class XYAreaRenderer2Test  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (XYAreaRenderer2) in.readObject();
+        XYAreaRenderer2 r2 = (XYAreaRenderer2) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            fail(e.toString());
-        }
+
         assertEquals(r1, r2);
 
     }
@@ -174,8 +163,6 @@ public class XYAreaRenderer2Test  {
      */
     @Test
     public void testDrawWithNullInfo() {
-        boolean success = false;
-        try {
             DefaultTableXYDataset dataset = new DefaultTableXYDataset();
 
             XYSeries s1 = new XYSeries("Series 1", true, false);
@@ -197,13 +184,7 @@ public class XYAreaRenderer2Test  {
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
-            success = true;
-        }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-            success = false;
-        }
-        assertTrue(success);
+
     }
 
     /**

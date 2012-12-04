@@ -48,6 +48,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -86,8 +87,8 @@ public class BubbleXYItemLabelGeneratorTest  {
         NumberFormat znf1 = new DecimalFormat("0.00");
         NumberFormat znf2 = new DecimalFormat("0.000");
 
-        BubbleXYItemLabelGenerator g1 = null;
-        BubbleXYItemLabelGenerator g2 = null;
+        BubbleXYItemLabelGenerator g1;
+        BubbleXYItemLabelGenerator g2;
 
         g1 = new BubbleXYItemLabelGenerator(f1, xnf1, ynf1, znf1);
         g2 = new BubbleXYItemLabelGenerator(f1, xnf1, ynf1, znf1);
@@ -159,15 +160,9 @@ public class BubbleXYItemLabelGeneratorTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         BubbleXYItemLabelGenerator g1 = new BubbleXYItemLabelGenerator();
-        BubbleXYItemLabelGenerator g2 = null;
-        try {
-            g2 = (BubbleXYItemLabelGenerator) g1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        BubbleXYItemLabelGenerator g2 = (BubbleXYItemLabelGenerator) g1.clone();
         assertTrue(g1 != g2);
         assertTrue(g1.getClass() == g2.getClass());
         assertTrue(g1.equals(g2));
@@ -186,25 +181,21 @@ public class BubbleXYItemLabelGeneratorTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         BubbleXYItemLabelGenerator g1 = new BubbleXYItemLabelGenerator();
-        BubbleXYItemLabelGenerator g2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(g1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            g2 = (BubbleXYItemLabelGenerator) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(g1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        BubbleXYItemLabelGenerator g2 = (BubbleXYItemLabelGenerator) in.readObject();
+        in.close();
+
         assertEquals(g1, g2);
 
     }

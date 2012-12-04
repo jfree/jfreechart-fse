@@ -44,6 +44,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -148,16 +149,10 @@ public class SimpleHistogramBinTest  {
      * Some checks for the clone() method.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         SimpleHistogramBin b1 = new SimpleHistogramBin(1.1, 2.2, false, true);
         b1.setItemCount(99);
-        SimpleHistogramBin b2 = null;
-        try {
-            b2 = (SimpleHistogramBin) b1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
-        }
+        SimpleHistogramBin b2 = (SimpleHistogramBin) b1.clone();
         assertTrue(b1 != b2);
         assertTrue(b1.getClass() == b2.getClass());
         assertTrue(b1.equals(b2));
@@ -171,12 +166,11 @@ public class SimpleHistogramBinTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         SimpleHistogramBin b1 = new SimpleHistogramBin(1.0, 2.0, false, true);
         b1.setItemCount(123);
-        SimpleHistogramBin b2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(b1);
@@ -184,12 +178,9 @@ public class SimpleHistogramBinTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            b2 = (SimpleHistogramBin) in.readObject();
+        SimpleHistogramBin b2 = (SimpleHistogramBin) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
+
         assertEquals(b1, b2);
     }
 

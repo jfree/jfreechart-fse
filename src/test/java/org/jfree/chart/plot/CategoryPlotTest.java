@@ -78,12 +78,17 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -492,7 +497,7 @@ public class CategoryPlotTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         CategoryPlot p1 = new CategoryPlot();
         p1.setRangeCrosshairPaint(new GradientPaint(1.0f, 2.0f, Color.WHITE,
                 3.0f, 4.0f, Color.yellow));
@@ -500,14 +505,8 @@ public class CategoryPlotTest  {
                 4.0f, 5.0f, Color.RED));
         p1.setRangeZeroBaselinePaint(new GradientPaint(3.0f, 4.0f, Color.RED,
                 5.0f, 6.0f, Color.WHITE));
-        CategoryPlot p2 = null;
-        try {
-            p2 = (CategoryPlot) p1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            fail("Cloning failed.");
-            return;
-        }
+        CategoryPlot p2 = (CategoryPlot) p1.clone();
+
         assertTrue(p1 != p2);
         assertTrue(p1.getClass() == p2.getClass());
         assertTrue(p1.equals(p2));
@@ -545,20 +544,14 @@ public class CategoryPlotTest  {
      * Some more cloning checks.
      */
     @Test
-    public void testCloning2() {
+    public void testCloning2() throws CloneNotSupportedException {
         AxisSpace da1 = new AxisSpace();
         AxisSpace ra1 = new AxisSpace();
         CategoryPlot p1 = new CategoryPlot();
         p1.setFixedDomainAxisSpace(da1);
         p1.setFixedRangeAxisSpace(ra1);
-        CategoryPlot p2 = null;
-        try {
-            p2 = (CategoryPlot) p1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            fail("Cloning failed.");
-            return;
-        }
+        CategoryPlot p2 = (CategoryPlot) p1.clone();
+
         assertTrue(p1 != p2);
         assertTrue(p1.getClass() == p2.getClass());
         assertTrue(p1.equals(p2));
@@ -578,18 +571,12 @@ public class CategoryPlotTest  {
      * Some more cloning checks.
      */
     @Test
-    public void testCloning3() {
+    public void testCloning3() throws CloneNotSupportedException {
         LegendItemCollection c1 = new LegendItemCollection();
         CategoryPlot p1 = new CategoryPlot();
         p1.setFixedLegendItems(c1);
-        CategoryPlot p2 = null;
-        try {
-            p2 = (CategoryPlot) p1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            fail("Cloning failed.");
-            return;
-        }
+        CategoryPlot p2 = (CategoryPlot) p1.clone();
+
         assertTrue(p1 != p2);
         assertTrue(p1.getClass() == p2.getClass());
         assertTrue(p1.equals(p2));
@@ -613,18 +600,12 @@ public class CategoryPlotTest  {
      * retaining a reference to the original plot.
      */
     @Test
-    public void testBug2817504() {
+    public void testBug2817504() throws CloneNotSupportedException {
         CategoryPlot p1 = new CategoryPlot();
         LineAndShapeRenderer r1 = new LineAndShapeRenderer();
         p1.setRenderer(r1);
-        CategoryPlot p2 = null;
-        try {
-            p2 = (CategoryPlot) p1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            fail("Cloning failed.");
-            return;
-        }
+        CategoryPlot p2 = (CategoryPlot) p1.clone();
+
         assertTrue(p1 != p2);
         assertTrue(p1.getClass() == p2.getClass());
         assertTrue(p1.equals(p2));
@@ -638,7 +619,7 @@ public class CategoryPlotTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         CategoryAxis domainAxis = new CategoryAxis("Domain");
         NumberAxis rangeAxis = new NumberAxis("Range");
@@ -646,8 +627,7 @@ public class CategoryPlotTest  {
         CategoryPlot p1 = new CategoryPlot(dataset, domainAxis, rangeAxis,
                 renderer);
         p1.setOrientation(PlotOrientation.HORIZONTAL);
-        CategoryPlot p2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(p1);
@@ -655,12 +635,8 @@ public class CategoryPlotTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            p2 = (CategoryPlot) in.readObject();
+            CategoryPlot p2 = (CategoryPlot) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
         assertTrue(p1.equals(p2));
     }
 
@@ -668,7 +644,7 @@ public class CategoryPlotTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization2() {
+    public void testSerialization2() throws IOException, ClassNotFoundException {
         DefaultCategoryDataset data = new DefaultCategoryDataset();
         CategoryAxis domainAxis = new CategoryAxis("Domain");
         NumberAxis rangeAxis = new NumberAxis("Range");
@@ -676,22 +652,17 @@ public class CategoryPlotTest  {
         CategoryPlot p1 = new CategoryPlot(data, domainAxis, rangeAxis,
                 renderer);
         p1.setOrientation(PlotOrientation.VERTICAL);
-        CategoryPlot p2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(p1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(p1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            p2 = (CategoryPlot) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            fail(e.toString());
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        CategoryPlot p2 = (CategoryPlot) in.readObject();
+        in.close();
+
         assertEquals(p1, p2);
     }
 
@@ -699,82 +670,54 @@ public class CategoryPlotTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization3() {
+    public void testSerialization3() throws IOException, ClassNotFoundException {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         JFreeChart chart = ChartFactory.createBarChart("Test Chart", 
                 "Category Axis", "Value Axis", dataset);
-        JFreeChart chart2 = null;
 
         // serialize and deserialize the chart....
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(chart);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(chart);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            chart2 = (JFreeChart) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            fail(e.toString());
-            return;
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        JFreeChart chart2 = (JFreeChart) in.readObject();
+        in.close();
+
 
         // now check that the chart is usable...
-        boolean passed = true;
-        try {
-            chart2.createBufferedImage(300, 200);
-        }
-        catch (Exception e) {
-            passed = false;
-            e.printStackTrace();
-        }
-        assertTrue(passed);
+        chart2.createBufferedImage(300, 200);
+        //FIXME we should really assert a value here
     }
 
     /**
      * This test ensures that a plot with markers is serialized correctly.
      */
     @Test
-    public void testSerialization4() {
+    public void testSerialization4() throws IOException, ClassNotFoundException {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         JFreeChart chart = ChartFactory.createBarChart("Test Chart", 
                 "Category Axis", "Value Axis", dataset);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         plot.addRangeMarker(new ValueMarker(1.1), Layer.FOREGROUND);
         plot.addRangeMarker(new IntervalMarker(2.2, 3.3), Layer.BACKGROUND);
-        JFreeChart chart2 = null;
 
-        // serialize and deserialize the chart....
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(chart);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(chart);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            chart2 = (JFreeChart) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            fail(e.toString());
-            return;
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        JFreeChart chart2 = (JFreeChart) in.readObject();
+        in.close();
+
         assertEquals(chart, chart2);
 
         // now check that the chart is usable...
-        boolean passed = true;
-        try {
-            chart2.createBufferedImage(300, 200);
-        }
-        catch (Exception e) {
-            passed = false;
-            e.printStackTrace();
-        }
-        assertTrue(passed);
+        chart2.createBufferedImage(300, 200);
     }
 
     /**
@@ -783,7 +726,7 @@ public class CategoryPlotTest  {
      * at SourceForge.
      */
     @Test
-    public void testSerialization5() {
+    public void testSerialization5() throws IOException, ClassNotFoundException {
         DefaultCategoryDataset dataset1 = new DefaultCategoryDataset();
         CategoryAxis domainAxis1 = new CategoryAxis("Domain 1");
         NumberAxis rangeAxis1 = new NumberAxis("Range 1");
@@ -798,21 +741,15 @@ public class CategoryPlotTest  {
         p1.setDomainAxis(1, domainAxis2);
         p1.setRangeAxis(1, rangeAxis2);
         p1.setRenderer(1, renderer2);
-        CategoryPlot p2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(p1);
-            out.close();
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            p2 = (CategoryPlot) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            fail(e.toString());
-            return;
-        }
+
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(p1);
+        out.close();
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        CategoryPlot p2 = (CategoryPlot) in.readObject();
+        in.close();
         assertEquals(p1, p2);
 
         // now check that all datasets, renderers and axes are being listened
@@ -910,20 +847,11 @@ public class CategoryPlotTest  {
                 dataset);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         plot.setRenderer(1, new LineAndShapeRenderer());
-        boolean success = false;
-        try {
-            BufferedImage image = new BufferedImage(200 , 100,
-                    BufferedImage.TYPE_INT_RGB);
-            Graphics2D g2 = image.createGraphics();
-            chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
-            g2.dispose();
-            success = true;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            success = false;
-        }
-        assertTrue(success);
+        BufferedImage image = new BufferedImage(200 , 100,
+                BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = image.createGraphics();
+        chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
+        g2.dispose();
     }
 
     /**
@@ -941,14 +869,14 @@ public class CategoryPlotTest  {
         plot.setDomainAxis(1, domainAxis2);
         assertEquals(1, plot.getDomainAxisIndex(domainAxis2));
         assertEquals(-1, plot.getDomainAxisIndex(new CategoryAxis("X2")));
-        boolean pass = false;
+
         try {
             plot.getDomainAxisIndex(null);
+            fail("IllegalArgumentException should have been thrown on null parameter");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'axis' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -966,14 +894,14 @@ public class CategoryPlotTest  {
         plot.setRangeAxis(1, rangeAxis2);
         assertEquals(1, plot.getRangeAxisIndex(rangeAxis2));
         assertEquals(-1, plot.getRangeAxisIndex(new NumberAxis("Y2")));
-        boolean pass = false;
+
         try {
             plot.getRangeAxisIndex(null);
+            fail("IllegalArgumentException should have been thrown on null parameter");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'axis' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -1009,14 +937,13 @@ public class CategoryPlotTest  {
         assertEquals(xAxis, plot.getDomainAxisForDataset(0));
 
         // should get IllegalArgumentException for negative index
-        boolean pass = false;
         try {
             plot.getDomainAxisForDataset(-1);
+            fail("IllegalArgumentException should have been thrown on null parameter");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Negative 'index'.", e.getMessage());
         }
-        assertTrue(pass);
 
         // if multiple axes are mapped, the first in the list should be
         // returned...
@@ -1027,13 +954,11 @@ public class CategoryPlotTest  {
         plot.mapDatasetToDomainAxis(0, 1);
         assertEquals(xAxis2, plot.getDomainAxisForDataset(0));
 
-        List axisIndices = Arrays.asList(new Integer[] {new Integer(0),
-                new Integer(1)});
+        List axisIndices = Arrays.asList(0, 1);
         plot.mapDatasetToDomainAxes(0, axisIndices);
         assertEquals(xAxis, plot.getDomainAxisForDataset(0));
 
-        axisIndices = Arrays.asList(new Integer[] {new Integer(1),
-                new Integer(2)});
+        axisIndices = Arrays.asList(1, 2);
         plot.mapDatasetToDomainAxes(0, axisIndices);
         assertEquals(xAxis2, plot.getDomainAxisForDataset(0));
     }
@@ -1051,14 +976,13 @@ public class CategoryPlotTest  {
         assertEquals(yAxis, plot.getRangeAxisForDataset(0));
 
         // should get IllegalArgumentException for negative index
-        boolean pass = false;
         try {
             plot.getRangeAxisForDataset(-1);
+            fail("IllegalArgumentException should have been thrown on negative parameter");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Negative 'index'.", e.getMessage());
         }
-        assertTrue(pass);
 
         // if multiple axes are mapped, the first in the list should be
         // returned...
@@ -1069,13 +993,11 @@ public class CategoryPlotTest  {
         plot.mapDatasetToRangeAxis(0, 1);
         assertEquals(yAxis2, plot.getRangeAxisForDataset(0));
 
-        List axisIndices = Arrays.asList(new Integer[] {new Integer(0),
-                new Integer(1)});
+        List axisIndices = Arrays.asList(0, 1);
         plot.mapDatasetToRangeAxes(0, axisIndices);
         assertEquals(yAxis, plot.getRangeAxisForDataset(0));
 
-        axisIndices = Arrays.asList(new Integer[] {new Integer(1),
-                new Integer(2)});
+        axisIndices = Arrays.asList(1, 2);
         plot.mapDatasetToRangeAxes(0, axisIndices);
         assertEquals(yAxis2, plot.getRangeAxisForDataset(0));
     }

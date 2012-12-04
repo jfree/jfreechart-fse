@@ -42,9 +42,12 @@ package org.jfree.chart.axis;
 
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -106,15 +109,9 @@ public class ExtendedCategoryAxisTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         ExtendedCategoryAxis a1 = new ExtendedCategoryAxis("Test");
-        ExtendedCategoryAxis a2 = null;
-        try {
-            a2 = (ExtendedCategoryAxis) a1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        ExtendedCategoryAxis a2 = (ExtendedCategoryAxis) a1.clone();
         assertTrue(a1 != a2);
         assertTrue(a1.getClass() == a2.getClass());
         assertTrue(a1.equals(a2));
@@ -132,18 +129,13 @@ public class ExtendedCategoryAxisTest  {
      * per category label.
      */
     @Test
-    public void testCloning2() {
+    public void testCloning2() throws CloneNotSupportedException {
         ExtendedCategoryAxis a1 = new ExtendedCategoryAxis("Test");
         a1.setTickLabelFont("C1", new Font("Dialog", Font.PLAIN, 15));
         a1.setTickLabelPaint("C1", new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.WHITE));
-        ExtendedCategoryAxis a2 = null;
-        try {
-            a2 = (ExtendedCategoryAxis) a1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        ExtendedCategoryAxis a2 = (ExtendedCategoryAxis) a1.clone();
+
         assertTrue(a1 != a2);
         assertTrue(a1.getClass() == a2.getClass());
         assertTrue(a1.equals(a2));
@@ -171,26 +163,20 @@ public class ExtendedCategoryAxisTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         ExtendedCategoryAxis a1 = new ExtendedCategoryAxis("Test");
         a1.setSubLabelPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
                 4.0f, Color.BLUE));
-        ExtendedCategoryAxis a2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(a1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(a1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            a2 = (ExtendedCategoryAxis) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        ExtendedCategoryAxis a2 = (ExtendedCategoryAxis) in.readObject();
+        in.close();
         assertEquals(a1, a2);
     }
 

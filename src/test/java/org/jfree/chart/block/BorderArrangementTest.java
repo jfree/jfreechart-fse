@@ -46,10 +46,11 @@ import org.jfree.chart.ui.Size2D;
 import org.jfree.data.Range;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -58,7 +59,6 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link BorderArrangement} class.
@@ -111,7 +111,7 @@ public class BorderArrangementTest  {
      * Immutable - cloning is not necessary.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         BorderArrangement b1 = new BorderArrangement();
         assertFalse(b1 instanceof Cloneable);
     }
@@ -120,23 +120,18 @@ public class BorderArrangementTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         BorderArrangement b1 = new BorderArrangement();
-        BorderArrangement b2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(b1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            b2 = (BorderArrangement) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            fail(e.toString());
-        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(b1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        BorderArrangement b2 = (BorderArrangement) in.readObject();
+        in.close();
         assertEquals(b1, b2);
     }
 

@@ -43,9 +43,12 @@ package org.jfree.chart.plot.dial;
 
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -127,15 +130,9 @@ public class StandardDialFrameTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         StandardDialFrame f1 = new StandardDialFrame();
-        StandardDialFrame f2 = null;
-        try {
-            f2 = (StandardDialFrame) f1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        StandardDialFrame f2 = (StandardDialFrame) f1.clone();
         assertTrue(f1 != f2);
         assertTrue(f1.getClass() == f2.getClass());
         assertTrue(f1.equals(f2));
@@ -151,11 +148,9 @@ public class StandardDialFrameTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         StandardDialFrame f1 = new StandardDialFrame();
-        StandardDialFrame f2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(f1);
@@ -163,12 +158,9 @@ public class StandardDialFrameTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            f2 = (StandardDialFrame) in.readObject();
+        StandardDialFrame f2 = (StandardDialFrame) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(f1, f2);
     }
 

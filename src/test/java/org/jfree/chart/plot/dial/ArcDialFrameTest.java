@@ -43,9 +43,12 @@ package org.jfree.chart.plot.dial;
 
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -145,15 +148,9 @@ public class ArcDialFrameTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         ArcDialFrame f1 = new ArcDialFrame();
-        ArcDialFrame f2 = null;
-        try {
-            f2 = (ArcDialFrame) f1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        ArcDialFrame f2 = (ArcDialFrame) f1.clone();
         assertTrue(f1 != f2);
         assertTrue(f1.getClass() == f2.getClass());
         assertTrue(f1.equals(f2));
@@ -169,11 +166,9 @@ public class ArcDialFrameTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         ArcDialFrame f1 = new ArcDialFrame();
-        ArcDialFrame f2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(f1);
@@ -181,12 +176,9 @@ public class ArcDialFrameTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            f2 = (ArcDialFrame) in.readObject();
+        ArcDialFrame f2 = (ArcDialFrame) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(f1, f2);
     }
 

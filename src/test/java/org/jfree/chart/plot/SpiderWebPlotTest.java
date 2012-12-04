@@ -55,11 +55,17 @@ import org.jfree.chart.util.TableOrder;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -261,17 +267,11 @@ public class SpiderWebPlotTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         SpiderWebPlot p1 = new SpiderWebPlot(new DefaultCategoryDataset());
         Rectangle2D legendShape = new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0);
         p1.setLegendItemShape(legendShape);
-        SpiderWebPlot p2 = null;
-        try {
-            p2 = (SpiderWebPlot) p1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        SpiderWebPlot p2 = (SpiderWebPlot) p1.clone();
         assertTrue(p1 != p2);
         assertTrue(p1.getClass() == p2.getClass());
         assertTrue(p1.equals(p2));
@@ -306,12 +306,10 @@ public class SpiderWebPlotTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         SpiderWebPlot p1 = new SpiderWebPlot(new DefaultCategoryDataset());
-        SpiderWebPlot p2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(p1);
@@ -319,12 +317,9 @@ public class SpiderWebPlotTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            p2 = (SpiderWebPlot) in.readObject();
+        SpiderWebPlot p2 = (SpiderWebPlot) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(p1, p2);
 
     }
@@ -343,19 +338,13 @@ public class SpiderWebPlotTest  {
         dataset.addValue(25.0, "S1", "C5");
         SpiderWebPlot plot = new SpiderWebPlot(dataset);
         JFreeChart chart = new JFreeChart(plot);
-        boolean success = false;
-        try {
-            BufferedImage image = new BufferedImage(200 , 100,
+
+        BufferedImage image = new BufferedImage(200 , 100,
                     BufferedImage.TYPE_INT_RGB);
             Graphics2D g2 = image.createGraphics();
             chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
             g2.dispose();
-            success = true;
-        }
-        catch (Exception e) {
-            success = false;
-        }
-        assertTrue(success);
+
     }
 
     /**
@@ -369,7 +358,6 @@ public class SpiderWebPlotTest  {
         dataset.addValue(55.0, "S2", "C1");
         dataset.addValue(15.0, "S2", "C2");
         SpiderWebPlot plot = new SpiderWebPlot(dataset);
-        JFreeChart chart = new JFreeChart(plot);
         LegendItemCollection legendItems = plot.getLegendItems();
         assertEquals(2, legendItems.getItemCount());
         LegendItem item1 = legendItems.get(0);

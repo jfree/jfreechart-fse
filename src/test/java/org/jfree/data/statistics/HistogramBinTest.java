@@ -44,6 +44,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -81,17 +82,11 @@ public class HistogramBinTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         double start = 10.0;
         double end = 20.0;
         HistogramBin b1 = new HistogramBin(start, end);
-        HistogramBin b2 = null;
-        try {
-            b2 = (HistogramBin) b1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
-        }
+        HistogramBin b2 = (HistogramBin) b1.clone();
         assertTrue(b1 != b2);
         assertTrue(b1.getClass() == b2.getClass());
         assertTrue(b1.equals(b2));
@@ -101,14 +96,12 @@ public class HistogramBinTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         double start = 10.0;
         double end = 20.0;
         HistogramBin b1 = new HistogramBin(start, end);
-        HistogramBin b2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(b1);
@@ -117,12 +110,9 @@ public class HistogramBinTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            b2 = (HistogramBin) in.readObject();
+        HistogramBin b2 = (HistogramBin) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
+
         assertEquals(b1, b2);
 
     }

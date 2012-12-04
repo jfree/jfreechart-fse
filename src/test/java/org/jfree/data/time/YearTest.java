@@ -52,6 +52,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -66,6 +67,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link Year} class.
@@ -200,33 +202,19 @@ public class YearTest  {
     @Test
     public void testParseYear() {
 
-        Year year = null;
 
         // test 1...
-        try {
-            year = Year.parseYear("2000");
-        }
-        catch (TimePeriodFormatException e) {
-            year = new Year(1900);
-        }
+        Year year = Year.parseYear("2000");
+
         assertEquals(2000, year.getYear());
 
         // test 2...
-        try {
-            year = Year.parseYear(" 2001 ");
-        }
-        catch (TimePeriodFormatException e) {
-            year = new Year(1900);
-        }
+        year = Year.parseYear(" 2001 ");
+
         assertEquals(2001, year.getYear());
 
         // test 3...
-        try {
-            year = Year.parseYear("99");
-        }
-        catch (TimePeriodFormatException e) {
-            year = new Year(1900);
-        }
+        year = Year.parseYear("99");
         assertEquals(99, year.getYear());
 
     }
@@ -235,12 +223,10 @@ public class YearTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         Year y1 = new Year(1999);
-        Year y2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(y1);
@@ -249,12 +235,9 @@ public class YearTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            y2 = (Year) in.readObject();
+        Year y2 = (Year) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
+
         assertEquals(y1, y2);
 
     }
@@ -308,14 +291,13 @@ public class YearTest  {
         assertEquals(-631123200000L, y.getFirstMillisecond(c));
 
         // try null calendar
-        boolean pass = false;
         try {
-            y.getFirstMillisecond((Calendar) null);
+            y.getFirstMillisecond(null);
+            fail("NullPointerException should have been thrown");
         }
         catch (NullPointerException e) {
-            pass = true;
+            //we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**
@@ -329,14 +311,13 @@ public class YearTest  {
         assertEquals(978307200000L, y.getFirstMillisecond(calendar));
 
         // try null calendar
-        boolean pass = false;
         try {
-            y.getFirstMillisecond((Calendar) null);
+            y.getFirstMillisecond(null);
+            fail("NullPointerException should have been thrown");
         }
         catch (NullPointerException e) {
-            pass = true;
+            // we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**
@@ -367,14 +348,13 @@ public class YearTest  {
         assertEquals(-599587200001L, y.getLastMillisecond(c));
 
         // try null calendar
-        boolean pass = false;
         try {
-            y.getLastMillisecond((Calendar) null);
+            y.getLastMillisecond(null);
+            fail("NullPointerException should have been thrown");
         }
         catch (NullPointerException e) {
-            pass = true;
+            //we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**
@@ -388,14 +368,13 @@ public class YearTest  {
         assertEquals(1009843199999L, y.getLastMillisecond(calendar));
 
         // try null calendar
-        boolean pass = false;
         try {
-            y.getLastMillisecond((Calendar) null);
+            y.getLastMillisecond(null);
+            fail("NullPointerException should have been thrown");
         }
         catch (NullPointerException e) {
-            pass = true;
+            //we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**

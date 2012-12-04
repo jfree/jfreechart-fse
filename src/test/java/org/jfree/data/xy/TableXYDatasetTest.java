@@ -54,6 +54,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -95,16 +96,10 @@ public class TableXYDatasetTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         DefaultTableXYDataset d1 = new DefaultTableXYDataset();
         d1.addSeries(createSeries1());
-        DefaultTableXYDataset d2 = null;
-        try {
-            d2 = (DefaultTableXYDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
-        }
+        DefaultTableXYDataset d2 = (DefaultTableXYDataset) d1.clone();
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
@@ -123,27 +118,22 @@ public class TableXYDatasetTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         DefaultTableXYDataset d1 = new DefaultTableXYDataset();
         d1.addSeries(createSeries2());
-        DefaultTableXYDataset d2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(d1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(d1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-            );
-            d2 = (DefaultTableXYDataset) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
+        ObjectInput in = new ObjectInputStream(
+            new ByteArrayInputStream(buffer.toByteArray())
+        );
+        DefaultTableXYDataset d2 = (DefaultTableXYDataset) in.readObject();
+        in.close();
+
         assertEquals(d1, d2);
 
     }
@@ -210,13 +200,13 @@ public class TableXYDatasetTest  {
         DefaultTableXYDataset dataset = new DefaultTableXYDataset();
         dataset.addSeries(createSeries1());
         dataset.addSeries(createSeries2());
-        dataset.removeAllValuesForX(new Double(2.0));
+        dataset.removeAllValuesForX(2.0);
         assertEquals(5, dataset.getItemCount());
-        assertEquals(new Double(1.0), dataset.getX(0, 0));
-        assertEquals(new Double(3.0), dataset.getX(0, 1));
-        assertEquals(new Double(4.0), dataset.getX(0, 2));
-        assertEquals(new Double(5.0), dataset.getX(0, 3));
-        assertEquals(new Double(6.0), dataset.getX(0, 4));
+        assertEquals(1.0, dataset.getX(0, 0));
+        assertEquals(3.0, dataset.getX(0, 1));
+        assertEquals(4.0, dataset.getX(0, 2));
+        assertEquals(5.0, dataset.getX(0, 3));
+        assertEquals(6.0, dataset.getX(0, 4));
     }
 
     /**

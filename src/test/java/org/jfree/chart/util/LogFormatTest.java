@@ -45,6 +45,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -113,15 +114,11 @@ public class LogFormatTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         LogFormat f1 = new LogFormat(10.0, "10", true);
-        LogFormat f2 = null;
-        try {
-            f2 = (LogFormat) f1.clone();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        LogFormat f2 = (LogFormat) f1.clone();
+
         assertTrue(f1 != f2);
         assertTrue(f1.getClass() == f2.getClass());
         assertTrue(f1.equals(f2));
@@ -131,10 +128,9 @@ public class LogFormatTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         LogFormat f1 = new LogFormat(10.0, "10", true);
-        LogFormat f2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(f1);
@@ -142,12 +138,9 @@ public class LogFormatTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            f2 = (LogFormat) in.readObject();
+        LogFormat f2 = (LogFormat) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(f1, f2);
     }
 

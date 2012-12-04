@@ -44,6 +44,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -52,6 +53,7 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link KeyToGroupMap} class.
@@ -83,14 +85,13 @@ public class KeyToGroupMapTest  {
                                                 // default group
 
         // check handling of null key
-        boolean pass = false;
         try {
             m1.mapKeyToGroup(null, "G1");
+            fail("Should have thrown IllegalArgumentException on null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'key' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -203,15 +204,13 @@ public class KeyToGroupMapTest  {
         assertEquals("Default Group", m1.getGroup("K1"));
 
         // a null argument should throw an exception
-        boolean pass = false;
         try {
-            Comparable g = m1.getGroup(null);
-            System.out.println(g);
+            m1.getGroup(null);
+            fail("Should have thrown IllegalArgumentException on null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'key' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -234,16 +233,10 @@ public class KeyToGroupMapTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         KeyToGroupMap m1 = new KeyToGroupMap("Test");
         m1.mapKeyToGroup("K1", "G1");
-        KeyToGroupMap m2 = null;
-        try {
-            m2 = (KeyToGroupMap) m1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
-        }
+        KeyToGroupMap m2 = (KeyToGroupMap) m1.clone();
         assertTrue(m1 != m2);
         assertTrue(m1.getClass() == m2.getClass());
         assertTrue(m1.equals(m2));
@@ -259,12 +252,10 @@ public class KeyToGroupMapTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         KeyToGroupMap m1 = new KeyToGroupMap("Test");
-        KeyToGroupMap m2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(m1);
@@ -273,12 +264,9 @@ public class KeyToGroupMapTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            m2 = (KeyToGroupMap) in.readObject();
+        KeyToGroupMap m2 = (KeyToGroupMap) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
+
         assertEquals(m1, m2);
 
     }

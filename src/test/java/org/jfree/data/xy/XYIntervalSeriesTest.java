@@ -48,6 +48,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -122,9 +123,9 @@ public class XYIntervalSeriesTest
         assertTrue(s2.equals(s1));
 
         // remove a value
-        s1.remove(new Double(1.0));
+        s1.remove(1.0);
         assertFalse(s1.equals(s2));
-        s2.remove(new Double(1.0));
+        s2.remove(1.0);
         assertTrue(s2.equals(s1));
 
     }
@@ -133,16 +134,11 @@ public class XYIntervalSeriesTest
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         XYIntervalSeries s1 = new XYIntervalSeries("s1");
         s1.add(1.0, 0.5, 1.5, 2.0, 1.9, 2.01);
-        XYIntervalSeries s2 = null;
-        try {
-            s2 = (XYIntervalSeries) s1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        XYIntervalSeries s2 = (XYIntervalSeries) s1.clone();
+
         assertTrue(s1 != s2);
         assertTrue(s1.getClass() == s2.getClass());
         assertTrue(s1.equals(s2));
@@ -152,26 +148,20 @@ public class XYIntervalSeriesTest
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         XYIntervalSeries s1 = new XYIntervalSeries("s1");
         s1.add(1.0, 0.5, 1.5, 2.0, 1.9, 2.1);
-        XYIntervalSeries s2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(s1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(s1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            s2 = (XYIntervalSeries) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        XYIntervalSeries s2 = (XYIntervalSeries) in.readObject();
+        in.close();
         assertEquals(s1, s2);
 
     }
@@ -185,7 +175,7 @@ public class XYIntervalSeriesTest
         s1.add(1.0, 1.0, 1.0, 2.0, 1.9, 2.1);
         s1.add(2.0, 2.0, 2.0, 3.0, 2.9, 3.1);
         s1.add(3.0, 3.0, 3.0, 4.0, 3.9, 4.1);
-        assertEquals(0, s1.indexOf(new Double(1.0)));
+        assertEquals(0, s1.indexOf(1.0));
     }
 
     /**
@@ -197,9 +187,9 @@ public class XYIntervalSeriesTest
         s1.add(1.0, 1.0, 1.0, 2.0, 1.9, 2.1);
         s1.add(3.0, 3.0, 3.0, 3.0, 2.9, 3.1);
         s1.add(2.0, 2.0, 2.0, 2.0, 1.9, 2.1);
-        assertEquals(0, s1.indexOf(new Double(1.0)));
-        assertEquals(1, s1.indexOf(new Double(3.0)));
-        assertEquals(2, s1.indexOf(new Double(2.0)));
+        assertEquals(0, s1.indexOf(1.0));
+        assertEquals(1, s1.indexOf(3.0));
+        assertEquals(2, s1.indexOf(2.0));
     }
 
     /**
@@ -213,11 +203,11 @@ public class XYIntervalSeriesTest
         s1.add(3.0, 3.0, 3.0, 3.0, 2.9, 3.1);
         assertEquals(3, s1.getItemCount());
 
-        s1.remove(new Double(2.0));
-        assertEquals(new Double(3.0), s1.getX(1));
+        s1.remove(2.0);
+        assertEquals(3.0, s1.getX(1));
 
-        s1.remove(new Double(1.0));
-        assertEquals(new Double(3.0), s1.getX(0));
+        s1.remove(1.0);
+        assertEquals(3.0, s1.getX(0));
     }
 
     private static final double EPSILON = 0.0000000001;

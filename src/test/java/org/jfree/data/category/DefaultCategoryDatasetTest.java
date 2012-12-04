@@ -49,6 +49,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -58,6 +59,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link DefaultCategoryDataset} class.
@@ -75,24 +77,23 @@ public class DefaultCategoryDatasetTest  {
     public void testGetValue() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(1.0, "R1", "C1");
-        assertEquals(new Double(1.0), d.getValue("R1", "C1"));
-        boolean pass = false;
+        assertEquals(1.0, d.getValue("R1", "C1"));
+
         try {
             d.getValue("XX", "C1");
+            fail("UnknownKeyException should have been thrown on unknown key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Unrecognised rowKey: XX", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             d.getValue("R1", "XX");
+            fail("UnknownKeyException should have been thrown on unknown key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Unrecognised columnKey: XX", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -101,14 +102,14 @@ public class DefaultCategoryDatasetTest  {
     @Test
     public void testGetValue2() {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
-        boolean pass = false;
+
         try {
             /* Number n =*/ d.getValue(0, 0);
+            fail("IndexOutOfBoundsException should have been thrown on getting key from empty set");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("Index: 0, Size: 0", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -119,32 +120,30 @@ public class DefaultCategoryDatasetTest  {
         DefaultCategoryDataset d = new DefaultCategoryDataset();
         d.addValue(1.0, "R1", "C1");
         d.incrementValue(2.0, "R1", "C1");
-        assertEquals(new Double(3.0), d.getValue("R1", "C1"));
+        assertEquals(3.0, d.getValue("R1", "C1"));
 
         // increment a null value
         d.addValue(null, "R2", "C1");
         d.incrementValue(2.0, "R2", "C1");
-        assertEquals(new Double(2.0), d.getValue("R2", "C1"));
+        assertEquals(2.0, d.getValue("R2", "C1"));
 
         // increment an unknown row
-        boolean pass = false;
         try {
             d.incrementValue(1.0, "XX", "C1");
+            fail("UnknownKeyException should have been thrown on unknown row");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Unrecognised rowKey: XX", e.getMessage());
         }
-        assertTrue(pass);
 
         // increment an unknown column
-        pass = false;
         try {
             d.incrementValue(1.0, "R1", "XX");
+            fail("UnknownKeyException should have been thrown on unknown row");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Unrecognised columnKey: XX", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -218,13 +217,11 @@ public class DefaultCategoryDatasetTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         DefaultCategoryDataset d1 = new DefaultCategoryDataset();
         d1.setValue(23.4, "R1", "C1");
-        DefaultCategoryDataset d2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(d1);
@@ -232,12 +229,9 @@ public class DefaultCategoryDatasetTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            d2 = (DefaultCategoryDataset) in.readObject();
+        DefaultCategoryDataset d2 = (DefaultCategoryDataset) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(d1, d2);
 
     }
@@ -251,16 +245,16 @@ public class DefaultCategoryDatasetTest  {
         d1.addValue(null, "R1", "C1");
         assertNull(d1.getValue("R1", "C1"));
         d1.addValue(new Double(1.0), "R2", "C1");
-        assertEquals(new Double(1.0), d1.getValue("R2", "C1"));
+        assertEquals(1.0, d1.getValue("R2", "C1"));
 
-        boolean pass = false;
+
         try {
             d1.addValue(new Double(1.1), null, "C2");
+            fail("UnknownKeyException should have been thrown on unknown row");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'key' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -278,40 +272,33 @@ public class DefaultCategoryDatasetTest  {
         d.addValue(new Double(1.0), "R1", "C1");
         d.addValue(new Double(2.0), "R2", "C1");
         d.removeValue("R1", "C1");
-        assertEquals(new Double(2.0), d.getValue(0, 0));
+        assertEquals(2.0, d.getValue(0, 0));
 
-        boolean pass = false;
+
         try {
             d.removeValue(null, "C1");
+            fail("IllegalArgumentException should have been thrown on null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'key' argument.", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             d.removeValue("R1", null);
+            fail("IllegalArgumentException should have been thrown on null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'key' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         DefaultCategoryDataset d1 = new DefaultCategoryDataset();
-        DefaultCategoryDataset d2 = null;
-        try {
-            d2 = (DefaultCategoryDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        DefaultCategoryDataset d2 = (DefaultCategoryDataset) d1.clone();
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
@@ -319,12 +306,9 @@ public class DefaultCategoryDatasetTest  {
         // try a dataset with some content...
         d1.addValue(1.0, "R1", "C1");
         d1.addValue(2.0, "R1", "C2");
-        try {
-            d2 = (DefaultCategoryDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+
+        d2 = (DefaultCategoryDataset) d1.clone();
+
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
@@ -372,23 +356,21 @@ public class DefaultCategoryDatasetTest  {
         d.removeColumn("C2");
         assertEquals(1, d.getColumnCount());
 
-        boolean pass = false;
         try {
             d.removeColumn("XXX");
+            fail("UnknownKeyException should have been thrown on unknown key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Unknown key: XXX", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             d.removeColumn(null);
+            fail("IllegalArgumentException should have been thrown on null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'columnKey' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -403,23 +385,21 @@ public class DefaultCategoryDatasetTest  {
         d.removeRow("R2");
         assertEquals(1, d.getRowCount());
 
-        boolean pass = false;
         try {
             d.removeRow("XXX");
+            fail("UnknownKeyException should have been thrown on unknown key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Unknown key: XXX", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             d.removeRow(null);
+            fail("IllegalArgumentException should have been thrown on null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'rowKey' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
 }

@@ -56,9 +56,12 @@ import org.jfree.data.time.Second;
 import org.jfree.data.time.Year;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Stroke;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -201,15 +204,11 @@ public class PeriodAxisTest  implements AxisChangeListener {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         PeriodAxis a1 = new PeriodAxis("Test");
-        PeriodAxis a2 = null;
-        try {
-            a2 = (PeriodAxis) a1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        PeriodAxis a2 = (PeriodAxis) a1.clone();
+
+
         assertTrue(a1 != a2);
         assertTrue(a1.getClass() == a2.getClass());
         assertTrue(a1.equals(a2));
@@ -255,25 +254,20 @@ public class PeriodAxisTest  implements AxisChangeListener {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         PeriodAxis a1 = new PeriodAxis("Test Axis");
-        PeriodAxis a2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(a1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            a2 = (PeriodAxis) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        boolean b = a1.equals(a2);
-        assertTrue(b);
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(a1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        PeriodAxis a2 = (PeriodAxis) in.readObject();
+        in.close();
+
+       assertEquals(a1, a2);
     }
 
     /**

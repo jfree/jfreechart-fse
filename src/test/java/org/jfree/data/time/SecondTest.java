@@ -51,6 +51,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -65,6 +66,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link Second} class.
@@ -153,23 +155,20 @@ public class SecondTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         Second s1 = new Second();
-        Second s2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(s1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            s2 = (Second) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(s1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
+        Second s2 = (Second) in.readObject();
+        in.close();
+
+
         assertEquals(s1, s2);
     }
 
@@ -222,14 +221,13 @@ public class SecondTest  {
         assertEquals(-623289610000L, s.getFirstMillisecond(c));
 
         // try null calendar
-        boolean pass = false;
         try {
-            s.getFirstMillisecond((Calendar) null);
+            s.getFirstMillisecond(null);
+            fail("NullPointerException should have been thrown on null parameter");
         }
         catch (NullPointerException e) {
-            pass = true;
+            //we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**
@@ -243,14 +241,13 @@ public class SecondTest  {
         assertEquals(955766455000L, s.getFirstMillisecond(calendar));
 
         // try null calendar
-        boolean pass = false;
         try {
-            s.getFirstMillisecond((Calendar) null);
+            s.getFirstMillisecond(null);
+            fail("NullPointerException should have been thrown on null paramter");
         }
         catch (NullPointerException e) {
-            pass = true;
+            //we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**
@@ -279,14 +276,13 @@ public class SecondTest  {
         assertEquals(-614962684001L, s.getLastMillisecond(c));
 
         // try null calendar
-        boolean pass = false;
         try {
-            s.getLastMillisecond((Calendar) null);
+            s.getLastMillisecond(null);
+            fail("NullPointerException should have been thrown on Null Parameter");
         }
         catch (NullPointerException e) {
-            pass = true;
+            // we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**
@@ -300,14 +296,13 @@ public class SecondTest  {
         assertEquals(987889550999L, s.getLastMillisecond(calendar));
 
         // try null calendar
-        boolean pass = false;
         try {
-            s.getLastMillisecond((Calendar) null);
+            s.getLastMillisecond(null);
+            fail("NullPointerException should have been thrown on null parameter");
         }
         catch (NullPointerException e) {
-            pass = true;
+            // we expect to go in here
         }
-        assertTrue(pass);
     }
 
     /**

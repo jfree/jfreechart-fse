@@ -45,6 +45,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -72,13 +73,13 @@ public class CustomCategoryURLGeneratorTest  {
         CustomCategoryURLGenerator g1 = new CustomCategoryURLGenerator();
         CustomCategoryURLGenerator g2 = new CustomCategoryURLGenerator();
         assertTrue(g1.equals(g2));
-        List u1 = new java.util.ArrayList();
+        List<String> u1 = new java.util.ArrayList<String>();
         u1.add("URL A1");
         u1.add("URL A2");
         u1.add("URL A3");
         g1.addURLSeries(u1);
         assertFalse(g1.equals(g2));
-        List u2 = new java.util.ArrayList();
+        List<String> u2 = new java.util.ArrayList<String>();
         u2.add("URL A1");
         u2.add("URL A2");
         u2.add("URL A3");
@@ -90,30 +91,24 @@ public class CustomCategoryURLGeneratorTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         CustomCategoryURLGenerator g1 = new CustomCategoryURLGenerator();
-        List u1 = new java.util.ArrayList();
+        List<String> u1 = new java.util.ArrayList<String>();
         u1.add("URL A1");
         u1.add("URL A2");
         u1.add("URL A3");
         g1.addURLSeries(u1);
-        CustomCategoryURLGenerator g2 = null;
-        try {
-            g2 = (CustomCategoryURLGenerator) g1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        CustomCategoryURLGenerator g2 = (CustomCategoryURLGenerator) g1.clone();
         assertTrue(g1 != g2);
         assertTrue(g1.getClass() == g2.getClass());
         assertTrue(g1.equals(g2));
 
         // check independence
-        List u2 = new java.util.ArrayList();
+        List<String> u2 = new java.util.ArrayList<String>();
         u2.add("URL XXX");
         g1.addURLSeries(u2);
         assertFalse(g1.equals(g2));
-        g2.addURLSeries(new java.util.ArrayList(u2));
+        g2.addURLSeries(new java.util.ArrayList<String>(u2));
         assertTrue(g1.equals(g2));
     }
 
@@ -130,25 +125,23 @@ public class CustomCategoryURLGeneratorTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
-        List u1 = new java.util.ArrayList();
+        List<String> u1 = new java.util.ArrayList<String>();
         u1.add("URL A1");
         u1.add("URL A2");
         u1.add("URL A3");
 
-        List u2 = new java.util.ArrayList();
+        List<String> u2 = new java.util.ArrayList<String>();
         u2.add("URL B1");
         u2.add("URL B2");
         u2.add("URL B3");
 
         CustomCategoryURLGenerator g1 = new CustomCategoryURLGenerator();
-        CustomCategoryURLGenerator g2 = null;
 
         g1.addURLSeries(u1);
         g1.addURLSeries(u2);
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(g1);
@@ -156,12 +149,9 @@ public class CustomCategoryURLGeneratorTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            g2 = (CustomCategoryURLGenerator) in.readObject();
+            CustomCategoryURLGenerator g2 = (CustomCategoryURLGenerator) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(g1, g2);
 
     }
@@ -178,7 +168,7 @@ public class CustomCategoryURLGeneratorTest  {
         assertEquals(1, g1.getListCount());
         assertEquals(0, g1.getURLCount(0));
 
-        List list1 = new java.util.ArrayList();
+        List<String> list1 = new java.util.ArrayList<String>();
         list1.add("URL1");
         g1.addURLSeries(list1);
         assertEquals(2, g1.getListCount());

@@ -48,6 +48,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -56,6 +57,7 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link DefaultTableXYDataset} class.
@@ -99,20 +101,14 @@ public class DefaultTableXYDatasetTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         DefaultTableXYDataset d1 = new DefaultTableXYDataset();
         XYSeries s1 = new XYSeries("Series 1", true, false);
         s1.add(1.0, 1.1);
         s1.add(2.0, 2.2);
         d1.addSeries(s1);
 
-        DefaultTableXYDataset d2 = null;
-        try {
-            d2 = (DefaultTableXYDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        DefaultTableXYDataset d2 = (DefaultTableXYDataset) d1.clone();
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
@@ -134,7 +130,7 @@ public class DefaultTableXYDatasetTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         DefaultTableXYDataset d1 = new DefaultTableXYDataset();
         XYSeries s1 = new XYSeries("Series 1", true, false);
@@ -142,9 +138,7 @@ public class DefaultTableXYDatasetTest  {
         s1.add(2.0, 2.2);
         d1.addSeries(s1);
 
-        DefaultTableXYDataset d2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(d1);
@@ -152,12 +146,9 @@ public class DefaultTableXYDatasetTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            d2 = (DefaultTableXYDataset) in.readObject();
+        DefaultTableXYDataset d2 = (DefaultTableXYDataset) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(d1, d2);
 
     }
@@ -217,23 +208,23 @@ public class DefaultTableXYDatasetTest  {
         d1.addSeries(s1);
         assertEquals("Series 1", d1.getSeries(0).getKey());
 
-        boolean pass = false;
+
         try {
             d1.getSeries(-1);
+            fail("IllegalArgumentException should have been thrown on negative key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Index outside valid range.", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
+
         try {
             d1.getSeries(1);
+            fail("IllegalArgumentException should have been thrown on key out of range");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Index outside valid range.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
 }

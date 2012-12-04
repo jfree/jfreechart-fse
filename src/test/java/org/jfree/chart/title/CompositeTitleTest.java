@@ -47,9 +47,11 @@ import org.jfree.chart.block.BlockContainer;
 import org.jfree.chart.ui.RectangleInsets;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -59,7 +61,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link CompositeTitle} class.
@@ -141,18 +142,12 @@ public class CompositeTitleTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         CompositeTitle t1 = new CompositeTitle(new BlockContainer());
         t1.getContainer().add(new TextTitle("T1"));
         t1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.yellow));
-        CompositeTitle t2 = null;
-        try {
-            t2 = (CompositeTitle) t1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            fail(e.toString());
-        }
+        CompositeTitle t2 = (CompositeTitle) t1.clone();
         assertTrue(t1 != t2);
         assertTrue(t1.getClass() == t2.getClass());
         assertTrue(t1.equals(t2));
@@ -162,13 +157,12 @@ public class CompositeTitleTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         CompositeTitle t1 = new CompositeTitle(new BlockContainer());
         t1.getContainer().add(new TextTitle("T1"));
         t1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.BLUE));
-        CompositeTitle t2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(t1);
@@ -176,12 +170,9 @@ public class CompositeTitleTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            t2 = (CompositeTitle) in.readObject();
+        CompositeTitle t2 = (CompositeTitle) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(t1, t2);
     }
 

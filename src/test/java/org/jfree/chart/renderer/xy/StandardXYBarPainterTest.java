@@ -45,6 +45,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -91,7 +92,7 @@ public class StandardXYBarPainterTest  {
      * instances of the class are immutable).
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         StandardXYBarPainter p1 = new StandardXYBarPainter();
         assertFalse(p1 instanceof Cloneable);
         assertFalse(p1 instanceof PublicCloneable);
@@ -101,22 +102,18 @@ public class StandardXYBarPainterTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         StandardXYBarPainter p1 = new StandardXYBarPainter();
-        StandardXYBarPainter p2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(p1);
             out.close();
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            p2 = (StandardXYBarPainter) in.readObject();
+        StandardXYBarPainter p2 = (StandardXYBarPainter) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(p1, p2);
     }
 

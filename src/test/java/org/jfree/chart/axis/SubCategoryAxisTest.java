@@ -47,11 +47,14 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -118,16 +121,11 @@ public class SubCategoryAxisTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         SubCategoryAxis a1 = new SubCategoryAxis("Test");
         a1.addSubCategory("SubCategoryA");
-        SubCategoryAxis a2 = null;
-        try {
-            a2 = (SubCategoryAxis) a1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        SubCategoryAxis a2 = (SubCategoryAxis) a1.clone();
+
         assertTrue(a1 != a2);
         assertTrue(a1.getClass() == a2.getClass());
         assertTrue(a1.equals(a2));
@@ -137,24 +135,20 @@ public class SubCategoryAxisTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         SubCategoryAxis a1 = new SubCategoryAxis("Test Axis");
         a1.addSubCategory("SubCategoryA");
-        SubCategoryAxis a2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(a1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            a2 = (SubCategoryAxis) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(a1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        SubCategoryAxis a2 = (SubCategoryAxis) in.readObject();
+        in.close();
+
         assertEquals(a1, a2);
     }
 
@@ -167,20 +161,15 @@ public class SubCategoryAxisTest  {
                 "Category", "Value", null);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         plot.setDomainAxis(new SubCategoryAxis("SubCategoryAxis"));
-        boolean success = false;
-        try {
+
+
             BufferedImage image = new BufferedImage(200 , 100,
                     BufferedImage.TYPE_INT_RGB);
             Graphics2D g2 = image.createGraphics();
             chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
             g2.dispose();
-            success = true;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            success = false;
-        }
-        assertTrue(success);
+
+        //FIXME we should be asserting a value here
     }
 
 }

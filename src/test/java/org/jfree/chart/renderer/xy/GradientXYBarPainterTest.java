@@ -45,6 +45,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -106,7 +107,7 @@ public class GradientXYBarPainterTest  {
      * instances of the class are immutable).
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         GradientXYBarPainter p1 = new GradientXYBarPainter(0.1, 0.2, 0.3);
         assertFalse(p1 instanceof Cloneable);
         assertFalse(p1 instanceof PublicCloneable);
@@ -116,22 +117,18 @@ public class GradientXYBarPainterTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         GradientXYBarPainter p1 = new GradientXYBarPainter(0.1, 0.2, 0.3);
-        GradientXYBarPainter p2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(p1);
             out.close();
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            p2 = (GradientXYBarPainter) in.readObject();
+        GradientXYBarPainter p2 = (GradientXYBarPainter) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(p1, p2);
     }
 

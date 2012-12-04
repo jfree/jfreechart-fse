@@ -51,6 +51,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -58,7 +59,9 @@ import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link XYSeries} class.
@@ -127,16 +130,10 @@ public class XYSeriesTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         XYSeries s1 = new XYSeries("Series");
         s1.add(1.0, 1.1);
-        XYSeries s2 = null;
-        try {
-            s2 = (XYSeries) s1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        XYSeries s2 = (XYSeries) s1.clone();
         assertTrue(s1 != s2);
         assertTrue(s1.getClass() == s2.getClass());
         assertTrue(s1.equals(s2));
@@ -146,18 +143,13 @@ public class XYSeriesTest  {
      * Another test of the clone() method.
      */
     @Test
-    public void testCloning2() {
+    public void testCloning2() throws CloneNotSupportedException {
         XYSeries s1 = new XYSeries("S1");
         s1.add(1.0, 100.0);
         s1.add(2.0, null);
         s1.add(3.0, 200.0);
-        XYSeries s2 = null;
-        try {
-            s2 = (XYSeries) s1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        XYSeries s2 = (XYSeries) s1.clone();
+
         assertTrue(s1.equals(s2));
 
         // check independence
@@ -171,15 +163,10 @@ public class XYSeriesTest  {
      * Another test of the clone() method.
      */
     @Test
-    public void testCloning3() {
+    public void testCloning3() throws CloneNotSupportedException {
         XYSeries s1 = new XYSeries("S1");
-        XYSeries s2 = null;
-        try {
-            s2 = (XYSeries) s1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        XYSeries s2 = (XYSeries) s1.clone();
+
         assertTrue(s1.equals(s2));
 
         // check independence
@@ -193,24 +180,19 @@ public class XYSeriesTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         XYSeries s1 = new XYSeries("Series");
         s1.add(1.0, 1.1);
-        XYSeries s2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(s1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(s1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            s2 = (XYSeries) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        XYSeries s2 = (XYSeries) in.readObject();
+        in.close();
+
         assertEquals(s1, s2);
     }
 
@@ -223,10 +205,10 @@ public class XYSeriesTest  {
         s1.add(1.0, 1.0);
         s1.add(2.0, 2.0);
         s1.add(3.0, 3.0);
-        assertEquals(0, s1.indexOf(new Double(1.0)));
-        assertEquals(1, s1.indexOf(new Double(2.0)));
-        assertEquals(2, s1.indexOf(new Double(3.0)));
-        assertEquals(-4, s1.indexOf(new Double(99.9)));
+        assertEquals(0, s1.indexOf(1.0));
+        assertEquals(1, s1.indexOf(2.0));
+        assertEquals(2, s1.indexOf(3.0));
+        assertEquals(-4, s1.indexOf(99.9));
     }
 
     /**
@@ -238,9 +220,9 @@ public class XYSeriesTest  {
         s1.add(1.0, 1.0);
         s1.add(3.0, 3.0);
         s1.add(2.0, 2.0);
-        assertEquals(0, s1.indexOf(new Double(1.0)));
-        assertEquals(1, s1.indexOf(new Double(3.0)));
-        assertEquals(2, s1.indexOf(new Double(2.0)));
+        assertEquals(0, s1.indexOf(1.0));
+        assertEquals(1, s1.indexOf(3.0));
+        assertEquals(2, s1.indexOf(2.0));
     }
 
     /**
@@ -253,8 +235,8 @@ public class XYSeriesTest  {
         s1.add(1.0, 1.0);
         s1.add(2.0, 2.0);
         s1.add(2.0, 3.0);
-        assertEquals(0, s1.indexOf(new Double(1.0)));
-        assertEquals(1, s1.indexOf(new Double(2.0)));
+        assertEquals(0, s1.indexOf(1.0));
+        assertEquals(1, s1.indexOf(2.0));
     }
 
     /**
@@ -268,11 +250,11 @@ public class XYSeriesTest  {
         s1.add(3.0, 3.0);
         assertEquals(3, s1.getItemCount());
 
-        s1.remove(new Double(2.0));
-        assertEquals(new Double(3.0), s1.getX(1));
+        s1.remove(2.0);
+        assertEquals(3.0, s1.getX(1));
 
         s1.remove(0);
-        assertEquals(new Double(3.0), s1.getX(0));
+        assertEquals(3.0, s1.getX(0));
     }
 
     /**
@@ -329,15 +311,15 @@ public class XYSeriesTest  {
     public void testUpdate() {
         XYSeries series = new XYSeries("S1");
         series.add(new Integer(1), new Integer(2));
-        assertEquals(new Integer(2), series.getY(0));
-        series.update(new Integer(1), new Integer(3));
-        assertEquals(new Integer(3), series.getY(0));
+        assertEquals(2, series.getY(0));
+        series.update(1, 3);
+        assertEquals(3, series.getY(0));
         try {
-            series.update(new Integer(2), new Integer(99));
-            assertTrue(false);
+            series.update(2, 99);
+            fail("SeriesException should have been thrown for unknown key");
         }
         catch (SeriesException e) {
-            // got the required exception
+            assertEquals("No observation for x = 2", e.getMessage());
         }
     }
 
@@ -350,8 +332,8 @@ public class XYSeriesTest  {
        series.add(5.0, 55.0);
        series.add(4.0, 44.0);
        series.add(6.0, 66.0);
-       series.update(new Double(4.0), new Double(99.0));
-       assertEquals(new Double(99.0), series.getY(1));
+       series.update(4.0, 99.0);
+       assertEquals(99.0, series.getY(1));
     }
 
     /**
@@ -361,20 +343,20 @@ public class XYSeriesTest  {
     public void testAddOrUpdate() {
         XYSeries series = new XYSeries("S1", true, false);
         XYDataItem old = series.addOrUpdate(new Long(1), new Long(2));
-        assertTrue(old == null);
+        assertNull(old);
         assertEquals(1, series.getItemCount());
-        assertEquals(new Long(2), series.getY(0));
+        assertEquals((long) 2, series.getY(0));
 
         old = series.addOrUpdate(new Long(2), new Long(3));
-        assertTrue(old == null);
+        assertNull(old);
         assertEquals(2, series.getItemCount());
-        assertEquals(new Long(3), series.getY(1));
+        assertEquals((long) 3, series.getY(1));
 
         old = series.addOrUpdate(new Long(1), new Long(99));
         assertEquals(new XYDataItem(new Long(1), new Long(2)), old);
         assertEquals(2, series.getItemCount());
-        assertEquals(new Long(99), series.getY(0));
-        assertEquals(new Long(3), series.getY(1));
+        assertEquals((long) 99, series.getY(0));
+        assertEquals((long) 3, series.getY(1));
     }
 
     /**
@@ -404,9 +386,9 @@ public class XYSeriesTest  {
         series.addOrUpdate(1.0, 1.0);
         series.addOrUpdate(1.0, 2.0);
         series.addOrUpdate(1.0, 3.0);
-        assertEquals(new Double(1.0), series.getY(0));
-        assertEquals(new Double(2.0), series.getY(1));
-        assertEquals(new Double(3.0), series.getY(2));
+        assertEquals(1.0, series.getY(0));
+        assertEquals(2.0, series.getY(1));
+        assertEquals(3.0, series.getY(2));
         assertEquals(3, series.getItemCount());
     }
 
@@ -564,8 +546,8 @@ public class XYSeriesTest  {
         XYSeries series = new XYSeries("Series", true, true);
         series.addOrUpdate(1.0, 1.0);
         series.addOrUpdate(1.0, 2.0);
-        assertEquals(new Double(1.0), series.getY(0));
-        assertEquals(new Double(2.0), series.getY(1));
+        assertEquals(1.0, series.getY(0));
+        assertEquals(2.0, series.getY(1));
         assertEquals(2, series.getItemCount());
     }
 
@@ -720,7 +702,7 @@ public class XYSeriesTest  {
         assertEquals(1.1, s1.getMinY(), EPSILON);
         assertEquals(3.3, s1.getMaxY(), EPSILON);
 
-        s1.updateByIndex(0, new Double(-5.0));
+        s1.updateByIndex(0, -5.0);
         assertEquals(-5.0, s1.getMinY(), EPSILON);
         assertEquals(3.3, s1.getMaxY(), EPSILON);
 
@@ -748,16 +730,16 @@ public class XYSeriesTest  {
         assertTrue(Double.isNaN(s1.getMinY()));
         assertTrue(Double.isNaN(s1.getMaxY()));
 
-        s1.updateByIndex(0, new Double(1.0));
+        s1.updateByIndex(0, 1.0);
         assertEquals(1.0, s1.getMinY(), EPSILON);
         assertEquals(1.0, s1.getMaxY(), EPSILON);
 
-        s1.updateByIndex(0, new Double(2.0));
+        s1.updateByIndex(0, 2.0);
         assertEquals(2.0, s1.getMinY(), EPSILON);
         assertEquals(2.0, s1.getMaxY(), EPSILON);
 
         s1.add(-1.0, -1.0);
-        s1.updateByIndex(0, new Double(0.0));
+        s1.updateByIndex(0, 0.0);
         assertEquals(0.0, s1.getMinY(), EPSILON);
         assertEquals(2.0, s1.getMaxY(), EPSILON);
     }
@@ -772,7 +754,7 @@ public class XYSeriesTest  {
         s1.add(2.0, 2.2);
         s1.add(3.0, 3.3);
 
-        s1.updateByIndex(1, new Double(2.05));
+        s1.updateByIndex(1, 2.05);
         assertEquals(1.1, s1.getMinY(), EPSILON);
         assertEquals(3.3, s1.getMaxY(), EPSILON);
     }
@@ -788,11 +770,11 @@ public class XYSeriesTest  {
         assertTrue(Double.isNaN(s1.getMinY()));
         assertTrue(Double.isNaN(s1.getMaxY()));
 
-        s1.update(new Double(1.0), new Double(1.0));
+        s1.update(1.0, 1.0);
         assertEquals(1.0, s1.getMinY(), EPSILON);
         assertEquals(1.0, s1.getMaxY(), EPSILON);
 
-        s1.update(new Double(1.0), new Double(2.0));
+        s1.update(1.0, 2.0);
         assertEquals(2.0, s1.getMinY(), EPSILON);
         assertEquals(2.0, s1.getMaxY(), EPSILON);
     }

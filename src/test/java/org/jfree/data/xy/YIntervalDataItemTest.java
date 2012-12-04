@@ -44,6 +44,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -117,15 +118,9 @@ public class YIntervalDataItemTest  {
      * Some checks for the clone() method.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         YIntervalDataItem item1 = new YIntervalDataItem(1.0, 2.0, 1.5, 2.5);
-        YIntervalDataItem item2 = null;
-        try {
-            item2 = (YIntervalDataItem) item1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        YIntervalDataItem item2 = (YIntervalDataItem) item1.clone();
         assertTrue(item1 != item2);
         assertTrue(item1.getClass() == item2.getClass());
         assertTrue(item1.equals(item2));
@@ -135,10 +130,9 @@ public class YIntervalDataItemTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         YIntervalDataItem item1 = new YIntervalDataItem(1.0, 2.0, 1.5, 2.5);
-        YIntervalDataItem item2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(item1);
@@ -146,12 +140,9 @@ public class YIntervalDataItemTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            item2 = (YIntervalDataItem) in.readObject();
+        YIntervalDataItem item2 = (YIntervalDataItem) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(item1, item2);
     }
 

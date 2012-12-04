@@ -45,12 +45,12 @@ package org.jfree.data.time;
 import org.jfree.chart.date.MonthConstants;
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesChangeListener;
-import org.jfree.data.general.SeriesException;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -60,6 +60,7 @@ import java.util.Date;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * A collection of test cases for the {@link TimePeriodValues} class.
@@ -86,37 +87,23 @@ public class TimePeriodValuesTest  {
 	public void setUp() {
 
         this.seriesA = new TimePeriodValues("Series A");
-        try {
-            this.seriesA.add(new Year(2000), new Integer(102000));
-            this.seriesA.add(new Year(2001), new Integer(102001));
-            this.seriesA.add(new Year(2002), new Integer(102002));
-            this.seriesA.add(new Year(2003), new Integer(102003));
-            this.seriesA.add(new Year(2004), new Integer(102004));
-            this.seriesA.add(new Year(2005), new Integer(102005));
-        }
-        catch (SeriesException e) {
-            System.err.println("Problem creating series.");
-        }
+        this.seriesA.add(new Year(2000), new Integer(102000));
+        this.seriesA.add(new Year(2001), new Integer(102001));
+        this.seriesA.add(new Year(2002), new Integer(102002));
+        this.seriesA.add(new Year(2003), new Integer(102003));
+        this.seriesA.add(new Year(2004), new Integer(102004));
+        this.seriesA.add(new Year(2005), new Integer(102005));
+
 
         this.seriesB = new TimePeriodValues("Series B");
-        try {
-            this.seriesB.add(new Year(2006), new Integer(202006));
-            this.seriesB.add(new Year(2007), new Integer(202007));
-            this.seriesB.add(new Year(2008), new Integer(202008));
-        }
-        catch (SeriesException e) {
-            System.err.println("Problem creating series.");
-        }
+        this.seriesB.add(new Year(2006), new Integer(202006));
+        this.seriesB.add(new Year(2007), new Integer(202007));
+        this.seriesB.add(new Year(2008), new Integer(202008));
 
         this.seriesC = new TimePeriodValues("Series C");
-        try {
-            this.seriesC.add(new Year(1999), new Integer(301999));
-            this.seriesC.add(new Year(2000), new Integer(302000));
-            this.seriesC.add(new Year(2002), new Integer(302002));
-        }
-        catch (SeriesException e) {
-            System.err.println("Problem creating series.");
-        }
+        this.seriesC.add(new Year(1999), new Integer(301999));
+        this.seriesC.add(new Year(2000), new Integer(302000));
+        this.seriesC.add(new Year(2002), new Integer(302002));
 
     }
 
@@ -125,32 +112,16 @@ public class TimePeriodValuesTest  {
      * should be null.
      */
     @Test
-    public void testClone() {
+    public void testClone() throws CloneNotSupportedException {
 
         TimePeriodValues series = new TimePeriodValues("Test Series");
 
         RegularTimePeriod jan1st2002 = new Day(1, MonthConstants.JANUARY, 2002);
-        try {
-            series.add(jan1st2002, new Integer(42));
-        }
-        catch (SeriesException e) {
-            System.err.println("Problem adding to collection.");
-        }
+        series.add(jan1st2002, new Integer(42));
 
-        TimePeriodValues clone = null;
-        try {
-            clone = (TimePeriodValues) series.clone();
-            clone.setKey("Clone Series");
-            try {
-                clone.update(0, new Integer(10));
-            }
-            catch (SeriesException e) {
-                System.err.println("Problem updating series.");
-            }
-        }
-        catch (CloneNotSupportedException e) {
-            assertTrue(false);
-        }
+        TimePeriodValues clone = (TimePeriodValues) series.clone();
+        clone.setKey("Clone Series");
+        clone.update(0, 10);
 
         int seriesValue = series.getValue(0).intValue();
         int cloneValue = clone.getValue(0).intValue();
@@ -169,12 +140,7 @@ public class TimePeriodValuesTest  {
     public void testAddValue() {
 
         TimePeriodValues tpvs = new TimePeriodValues("Test");
-        try {
-            tpvs.add(new Year(1999), new Integer(1));
-        }
-        catch (SeriesException e) {
-            System.err.println("Problem adding to series.");
-        }
+        tpvs.add(new Year(1999), new Integer(1));
 
         int value = tpvs.getValue(0).intValue();
         assertEquals(1, value);
@@ -185,7 +151,7 @@ public class TimePeriodValuesTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         TimePeriodValues s1 = new TimePeriodValues("A test");
         s1.add(new Year(2000), 13.75);
@@ -193,22 +159,16 @@ public class TimePeriodValuesTest  {
         s1.add(new Year(2002), null);
         s1.add(new Year(2005), 19.32);
         s1.add(new Year(2007), 16.89);
-        TimePeriodValues s2 = null;
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(s1);
+        out.close();
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(s1);
-            out.close();
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        TimePeriodValues s2 = (TimePeriodValues) in.readObject();
+        in.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            s2 = (TimePeriodValues) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
         assertTrue(s1.equals(s2));
 
     }
@@ -297,14 +257,13 @@ public class TimePeriodValuesTest  {
         assertEquals(tpv, listener.getLastEvent().getSource());
         
         // a null item should throw an IllegalArgumentException
-        boolean pass = false;
         try {
-            tpv.add((TimePeriodValue) null);
+            tpv.add(null);
+            fail("IllegalArgumentException should have been thrown on null parameter");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null item not allowed.", e.getMessage());
         }
-        assertTrue(pass);
     }
     
     /**
@@ -372,6 +331,7 @@ public class TimePeriodValuesTest  {
     /**
      * Some tests for the getMinEndIndex() method.
      */
+    @Test
     public void getMinEndIndex() {
         TimePeriodValues s = new TimePeriodValues("Test");
         assertEquals(-1, s.getMinEndIndex());
@@ -386,6 +346,7 @@ public class TimePeriodValuesTest  {
     /**
      * Some tests for the getMaxEndIndex() method.
      */
+    @Test
     public void getMaxEndIndex() {
         TimePeriodValues s = new TimePeriodValues("Test");
         assertEquals(-1, s.getMaxEndIndex());
@@ -419,14 +380,7 @@ public class TimePeriodValuesTest  {
         public SeriesChangeEvent getLastEvent() {
             return this.lastEvent;
         }
-        
-        /**
-         * Clears the last event (sets it to <code>null</code>).
-         */
-        public void clearLastEvent() {
-            this.lastEvent = null;
-        }
-        
+
         /**
          * Callback method for series change events.
          * 

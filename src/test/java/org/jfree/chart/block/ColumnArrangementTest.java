@@ -47,6 +47,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -110,7 +111,7 @@ public class ColumnArrangementTest  {
      * Immutable - cloning is not necessary.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         FlowArrangement f1 = new FlowArrangement();
         assertFalse(f1 instanceof Cloneable);
     }
@@ -119,11 +120,10 @@ public class ColumnArrangementTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         FlowArrangement f1 = new FlowArrangement(HorizontalAlignment.LEFT,
                 VerticalAlignment.TOP, 1.0, 2.0);
-        FlowArrangement f2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(f1);
@@ -131,12 +131,8 @@ public class ColumnArrangementTest  {
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            f2 = (FlowArrangement) in.readObject();
+            FlowArrangement f2 = (FlowArrangement) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
         assertEquals(f1, f2);
     }
 

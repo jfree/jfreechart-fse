@@ -54,6 +54,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -124,15 +125,9 @@ public class XYStepAreaRendererTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         XYStepAreaRenderer r1 = new XYStepAreaRenderer();
-        XYStepAreaRenderer r2 = null;
-        try {
-            r2 = (XYStepAreaRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        XYStepAreaRenderer r2 = (XYStepAreaRenderer) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -151,12 +146,10 @@ public class XYStepAreaRendererTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         XYStepAreaRenderer r1 = new XYStepAreaRenderer();
-        XYStepAreaRenderer r2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(r1);
@@ -164,12 +157,9 @@ public class XYStepAreaRendererTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (XYStepAreaRenderer) in.readObject();
+        XYStepAreaRenderer r2 = (XYStepAreaRenderer) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(r1, r2);
     }
 
@@ -179,8 +169,6 @@ public class XYStepAreaRendererTest  {
      */
     @Test
     public void testDrawWithNullInfo() {
-        boolean success = false;
-        try {
             DefaultTableXYDataset dataset = new DefaultTableXYDataset();
 
             XYSeries s1 = new XYSeries("Series 1", true, false);
@@ -202,13 +190,7 @@ public class XYStepAreaRendererTest  {
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
-            success = true;
-        }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-            success = false;
-        }
-        assertTrue(success);
+
     }
 
 }

@@ -47,6 +47,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -111,7 +112,7 @@ public class FlowArrangementTest  {
      * Immutable - cloning is not necessary.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         FlowArrangement f1 = new FlowArrangement();
         assertFalse(f1 instanceof Cloneable);
     }
@@ -120,24 +121,19 @@ public class FlowArrangementTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         FlowArrangement f1 = new FlowArrangement(HorizontalAlignment.LEFT,
                 VerticalAlignment.TOP, 1.0, 2.0);
-        FlowArrangement f2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(f1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            f2 = (FlowArrangement) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(f1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
+        FlowArrangement f2 = (FlowArrangement) in.readObject();
+        in.close();
         assertEquals(f1, f2);
     }
 

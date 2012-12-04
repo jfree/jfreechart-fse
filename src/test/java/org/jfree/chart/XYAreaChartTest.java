@@ -54,7 +54,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
@@ -88,21 +88,13 @@ public class XYAreaChartTest  {
     @Test
     public void testDrawWithNullInfo() {
 
-        boolean success = false;
-        try {
-            BufferedImage image = new BufferedImage(200 , 100,
-                    BufferedImage.TYPE_INT_RGB);
-            Graphics2D g2 = image.createGraphics();
-            this.chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null,
-                    null);
-            g2.dispose();
-            success = true;
-        }
-        catch (Exception e) {
-          success = false;
-          e.printStackTrace();
-        }
-        assertTrue(success);
+        BufferedImage image = new BufferedImage(200 , 100,
+                BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = image.createGraphics();
+        this.chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null,
+                null);
+        g2.dispose();
+        //FIXME we should really assert a value here
 
     }
 
@@ -169,7 +161,7 @@ public class XYAreaChartTest  {
     static class LocalListener implements ChartChangeListener {
 
         /** A flag. */
-        private boolean flag = false;
+        private boolean flag;
 
         /**
          * Event handler.

@@ -49,6 +49,7 @@ import org.junit.Test;
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -87,7 +88,7 @@ public class LogarithmicAxisTest  {
     /** Tolerance for floating point comparisons */
     public static double EPSILON = 0.000001;
 
-    MyLogarithmicAxis axis = null;
+    MyLogarithmicAxis axis;
 
 
 
@@ -114,25 +115,20 @@ public class LogarithmicAxisTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         LogarithmicAxis a1 = new LogarithmicAxis("Test Axis");
-        LogarithmicAxis a2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(a1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(a1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            a2 = (LogarithmicAxis) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
+        LogarithmicAxis a2 = (LogarithmicAxis) in.readObject();
+        in.close();
+
         assertEquals(a1, a2);
 
     }

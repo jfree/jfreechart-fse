@@ -53,10 +53,14 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
+import static junit.framework.Assert.assertNotSame;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -76,16 +80,11 @@ public class ValueAxisTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         ValueAxis a1 = new NumberAxis("Test");
-        ValueAxis a2 = null;
-        try {
-            a2 = (NumberAxis) a1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        assertTrue(a1 != a2);
+        ValueAxis a2 = (NumberAxis) a1.clone();
+
+        assertNotSame(a1, a2);
         assertTrue(a1.getClass() == a2.getClass());
         assertTrue(a1.equals(a2));
     }

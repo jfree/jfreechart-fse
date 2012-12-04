@@ -44,6 +44,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -55,7 +56,6 @@ import java.util.TimeZone;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Some tests for the {@link MonthDateFormat} class.
@@ -140,10 +140,9 @@ public class MonthDateFormatTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         MonthDateFormat mf1 = new MonthDateFormat();
-        MonthDateFormat mf2 = null;
-        mf2 = (MonthDateFormat) mf1.clone();
+        MonthDateFormat mf2 = (MonthDateFormat) mf1.clone();
         assertTrue(mf1 != mf2);
         assertTrue(mf1.getClass() == mf2.getClass());
         assertTrue(mf1.equals(mf2));
@@ -153,23 +152,18 @@ public class MonthDateFormatTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         MonthDateFormat mf1 = new MonthDateFormat();
-        MonthDateFormat mf2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(mf1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            mf2 = (MonthDateFormat) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            fail(e.toString());
-        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(mf1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        MonthDateFormat mf2 = (MonthDateFormat) in.readObject();
+        in.close();
         assertTrue(mf1.equals(mf2));
     }
 

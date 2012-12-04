@@ -47,6 +47,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -55,6 +56,7 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link XIntervalSeriesCollection} class.
@@ -95,18 +97,12 @@ public class XIntervalSeriesCollectionTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         XIntervalSeriesCollection c1 = new XIntervalSeriesCollection();
         XIntervalSeries s1 = new XIntervalSeries("Series");
         s1.add(1.0, 1.1, 1.2, 1.3);
         c1.addSeries(s1);
-        XIntervalSeriesCollection c2 = null;
-        try {
-            c2 = (XIntervalSeriesCollection) c1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        XIntervalSeriesCollection c2 = (XIntervalSeriesCollection) c1.clone();
         assertTrue(c1 != c2);
         assertTrue(c1.getClass() == c2.getClass());
         assertTrue(c1.equals(c2));
@@ -129,13 +125,11 @@ public class XIntervalSeriesCollectionTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         XIntervalSeriesCollection c1 = new XIntervalSeriesCollection();
         XIntervalSeries s1 = new XIntervalSeries("Series");
         s1.add(1.0, 1.1, 1.2, 1.3);
-        XIntervalSeriesCollection c2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(c1);
@@ -143,12 +137,9 @@ public class XIntervalSeriesCollectionTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            c2 = (XIntervalSeriesCollection) in.readObject();
+        XIntervalSeriesCollection c2 = (XIntervalSeriesCollection) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(c1, c2);
     }
 
@@ -164,23 +155,21 @@ public class XIntervalSeriesCollectionTest  {
         assertEquals(0, c.getSeriesCount());
         c.addSeries(s1);
 
-        boolean pass = false;
         try {
             c.removeSeries(-1);
+            fail("IllegalArgumentException should have been thrown on negative key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Series index out of bounds.", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             c.removeSeries(1);
+            fail("IllegalArgumentException should have been thrown on key out of range key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Series index out of bounds.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -194,12 +183,10 @@ public class XIntervalSeriesCollectionTest  {
         dataset.addSeries(s1);
         try {
             /* XYSeries s = */ dataset.getSeries(1);
+            fail("Should have thrown an IllegalArgumentException on index out of bounds");
         }
         catch (IllegalArgumentException e) {
-            // correct outcome
-        }
-        catch (IndexOutOfBoundsException e) {
-            assertTrue(false);  // wrong outcome
+            assertEquals("Series index out of bounds", e.getMessage());
         }
     }
 

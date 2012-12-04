@@ -56,9 +56,13 @@ import org.jfree.data.xy.TableXYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Stroke;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -118,15 +122,9 @@ public class StackedXYAreaRendererTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         StackedXYAreaRenderer r1 = new StackedXYAreaRenderer();
-        StackedXYAreaRenderer r2 = null;
-        try {
-            r2 = (StackedXYAreaRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        StackedXYAreaRenderer r2 = (StackedXYAreaRenderer) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -145,12 +143,11 @@ public class StackedXYAreaRendererTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         StackedXYAreaRenderer r1 = new StackedXYAreaRenderer();
         r1.setShapePaint(Color.RED);
         r1.setShapeStroke(new BasicStroke(1.23f));
-        StackedXYAreaRenderer r2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(r1);
@@ -158,12 +155,9 @@ public class StackedXYAreaRendererTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (StackedXYAreaRenderer) in.readObject();
+        StackedXYAreaRenderer r2 = (StackedXYAreaRenderer) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(r1, r2);
     }
 
@@ -189,8 +183,7 @@ public class StackedXYAreaRendererTest  {
      */
     @Test
     public void testDrawWithNullInfo() {
-        boolean success = false;
-        try {
+
             DefaultTableXYDataset dataset = new DefaultTableXYDataset();
 
             XYSeries s1 = new XYSeries("Series 1", true, false);
@@ -212,13 +205,7 @@ public class StackedXYAreaRendererTest  {
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
-            success = true;
-        }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-            success = false;
-        }
-        assertTrue(success);
+
     }
 
     /**
@@ -226,8 +213,6 @@ public class StackedXYAreaRendererTest  {
      */
     @Test
     public void testBug1593156() {
-        boolean success = false;
-        try {
             DefaultTableXYDataset dataset = new DefaultTableXYDataset();
 
             XYSeries s1 = new XYSeries("Series 1", true, false);
@@ -251,13 +236,7 @@ public class StackedXYAreaRendererTest  {
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     null);
-            success = true;
-        }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-            success = false;
-        }
-        assertTrue(success);
+
     }
 
 }

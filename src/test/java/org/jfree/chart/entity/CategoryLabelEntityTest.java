@@ -45,6 +45,7 @@ import org.junit.Test;
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -103,16 +104,11 @@ public class CategoryLabelEntityTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         CategoryLabelEntity e1 = new CategoryLabelEntity("A",
                 new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), "ToolTip", "URL");
-        CategoryLabelEntity e2 = null;
-        try {
-            e2 = (CategoryLabelEntity) e1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        CategoryLabelEntity e2 = (CategoryLabelEntity) e1.clone();
+
         assertTrue(e1 != e2);
         assertTrue(e1.getClass() == e2.getClass());
         assertTrue(e1.equals(e2));
@@ -122,24 +118,19 @@ public class CategoryLabelEntityTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         CategoryLabelEntity e1 = new CategoryLabelEntity("A",
                 new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), "ToolTip", "URL");
-        CategoryLabelEntity e2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(e1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            e2 = (CategoryLabelEntity) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(e1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
+        CategoryLabelEntity e2 = (CategoryLabelEntity) in.readObject();
+        in.close();
         assertEquals(e1, e2);
     }
 

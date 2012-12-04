@@ -47,6 +47,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -116,16 +117,12 @@ public class StandardCategorySeriesLabelGeneratorTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         StandardCategorySeriesLabelGenerator g1
                 = new StandardCategorySeriesLabelGenerator("{1}");
-        StandardCategorySeriesLabelGenerator g2 = null;
-        try {
-            g2 = (StandardCategorySeriesLabelGenerator) g1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        StandardCategorySeriesLabelGenerator g2 = (StandardCategorySeriesLabelGenerator) g1.clone();
+
+
         assertTrue(g1 != g2);
         assertTrue(g1.getClass() == g2.getClass());
         assertTrue(g1.equals(g2));
@@ -145,25 +142,21 @@ public class StandardCategorySeriesLabelGeneratorTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         StandardCategorySeriesLabelGenerator g1
                 = new StandardCategorySeriesLabelGenerator("{2}");
-        StandardCategorySeriesLabelGenerator g2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(g1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            g2 = (StandardCategorySeriesLabelGenerator) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(g1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        StandardCategorySeriesLabelGenerator g2 = (StandardCategorySeriesLabelGenerator) in.readObject();
+        in.close();
+
         assertEquals(g1, g2);
     }
 

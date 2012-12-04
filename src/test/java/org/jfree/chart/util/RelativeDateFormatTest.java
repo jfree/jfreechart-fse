@@ -204,7 +204,7 @@ public class RelativeDateFormatTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         NumberFormat nf = new DecimalFormat("0");
         RelativeDateFormat df1 = new RelativeDateFormat();
         df1.setSecondFormatter(nf);

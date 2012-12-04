@@ -44,6 +44,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -52,6 +53,7 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link ComparableObjectItem} class.
@@ -68,15 +70,14 @@ public class ComparableObjectItemTest  {
     @Test
     public void testConstructor() {
         // check null argument 1
-        boolean pass = false;
         try {
             /* ComparableObjectItem item1 = */ new ComparableObjectItem(null,
                     "XYZ");
+            fail("Should have thrown an IllegalArgumentException on null parameter");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'x' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -84,21 +85,21 @@ public class ComparableObjectItemTest  {
      */
     @Test
     public void testEquals() {
-        ComparableObjectItem item1 = new ComparableObjectItem(new Integer(1),
+        ComparableObjectItem item1 = new ComparableObjectItem(1,
                 "XYZ");
-        ComparableObjectItem item2 = new ComparableObjectItem(new Integer(1),
+        ComparableObjectItem item2 = new ComparableObjectItem(1,
                 "XYZ");
         assertTrue(item1.equals(item2));
         assertTrue(item2.equals(item1));
 
-        item1 = new ComparableObjectItem(new Integer(2), "XYZ");
+        item1 = new ComparableObjectItem(2, "XYZ");
         assertFalse(item1.equals(item2));
-        item2 = new ComparableObjectItem(new Integer(2), "XYZ");
+        item2 = new ComparableObjectItem(2, "XYZ");
         assertTrue(item1.equals(item2));
 
-        item1 = new ComparableObjectItem(new Integer(2), null);
+        item1 = new ComparableObjectItem(2, null);
         assertFalse(item1.equals(item2));
-        item2 = new ComparableObjectItem(new Integer(2), null);
+        item2 = new ComparableObjectItem(2, null);
         assertTrue(item1.equals(item2));
     }
 
@@ -106,16 +107,10 @@ public class ComparableObjectItemTest  {
      * Some checks for the clone() method.
      */
     @Test
-    public void testCloning() {
-        ComparableObjectItem item1 = new ComparableObjectItem(new Integer(1),
+    public void testCloning() throws CloneNotSupportedException {
+        ComparableObjectItem item1 = new ComparableObjectItem(1,
                 "XYZ");
-        ComparableObjectItem item2 = null;
-        try {
-            item2 = (ComparableObjectItem) item1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        ComparableObjectItem item2 = (ComparableObjectItem) item1.clone();
         assertTrue(item1 != item2);
         assertTrue(item1.getClass() == item2.getClass());
         assertTrue(item1.equals(item2));
@@ -125,24 +120,18 @@ public class ComparableObjectItemTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
-        ComparableObjectItem item1 = new ComparableObjectItem(new Integer(1),
+    public void testSerialization() throws IOException, ClassNotFoundException {
+        ComparableObjectItem item1 = new ComparableObjectItem(1,
                 "XYZ");
-        ComparableObjectItem item2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(item1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(item1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            item2 = (ComparableObjectItem) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        ComparableObjectItem item2 = (ComparableObjectItem) in.readObject();
+        in.close();
         assertEquals(item1, item2);
     }
 
@@ -151,13 +140,13 @@ public class ComparableObjectItemTest  {
      */
     @Test
     public void testCompareTo() {
-        ComparableObjectItem item1 = new ComparableObjectItem(new Integer(1),
+        ComparableObjectItem item1 = new ComparableObjectItem(1,
                 "XYZ");
-        ComparableObjectItem item2 = new ComparableObjectItem(new Integer(2),
+        ComparableObjectItem item2 = new ComparableObjectItem(2,
                 "XYZ");
-        ComparableObjectItem item3 = new ComparableObjectItem(new Integer(3),
+        ComparableObjectItem item3 = new ComparableObjectItem(3,
                 "XYZ");
-        ComparableObjectItem item4 = new ComparableObjectItem(new Integer(1),
+        ComparableObjectItem item4 = new ComparableObjectItem(1,
                 "XYZ");
         assertTrue(item2.compareTo(item1) > 0);
         assertTrue(item3.compareTo(item1) > 0);

@@ -45,6 +45,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -55,6 +56,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link DefaultMultiValueCategoryDataset} class.
@@ -72,28 +74,27 @@ public class DefaultMultiValueCategoryDatasetTest  {
     public void testGetValue() {
         DefaultMultiValueCategoryDataset d
                 = new DefaultMultiValueCategoryDataset();
-        List values = new ArrayList();
-        values.add(new Integer(1));
-        values.add(new Integer(2));
+        List<Integer> values = new ArrayList<Integer>();
+        values.add(1);
+        values.add(2);
         d.add(values, "R1", "C1");
-        assertEquals(new Double(1.5), d.getValue("R1", "C1"));
-        boolean pass = false;
+        assertEquals(1.5, d.getValue("R1", "C1"));
+
         try {
             d.getValue("XX", "C1");
+            fail("UnknownKeyException should have been thrown on an unknown key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Row key (XX) not recognised.", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             d.getValue("R1", "XX");
+            fail("UnknownKeyException should have been thrown on an unknown key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Column key (XX) not recognised.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -103,14 +104,14 @@ public class DefaultMultiValueCategoryDatasetTest  {
     public void testGetValue2() {
         DefaultMultiValueCategoryDataset d
                 = new DefaultMultiValueCategoryDataset();
-        boolean pass = false;
+
         try {
             /* Number n =*/ d.getValue(0, 0);
+            fail("IndexOutOfBoundsException should have been thrown on key out of range");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("Index: 0, Size: 0", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -165,19 +166,19 @@ public class DefaultMultiValueCategoryDatasetTest  {
         assertTrue(d1.equals(d2));
         assertTrue(d2.equals(d1));
 
-        List values = new ArrayList();
+        List<Integer> values = new ArrayList<Integer>();
         d1.add(values, "R1", "C1");
         assertFalse(d1.equals(d2));
         d2.add(values, "R1", "C1");
         assertTrue(d1.equals(d2));
 
-        values.add(new Integer(99));
+        values.add(99);
         d1.add(values, "R1", "C1");
         assertFalse(d1.equals(d2));
         d2.add(values, "R1", "C1");
         assertTrue(d1.equals(d2));
 
-        values.add(new Integer(99));
+        values.add(99);
         d1.add(values, "R1", "C2");
         assertFalse(d1.equals(d2));
         d2.add(values, "R1", "C2");
@@ -188,27 +189,23 @@ public class DefaultMultiValueCategoryDatasetTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         DefaultMultiValueCategoryDataset d1
                 = new DefaultMultiValueCategoryDataset();
-        DefaultMultiValueCategoryDataset d2
-                = new DefaultMultiValueCategoryDataset();
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(d1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            d2 = (DefaultMultiValueCategoryDataset) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(d1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        DefaultMultiValueCategoryDataset d2 = (DefaultMultiValueCategoryDataset) in.readObject();
+        in.close();
+
         assertEquals(d1, d2);
 
     }
@@ -221,64 +218,53 @@ public class DefaultMultiValueCategoryDatasetTest  {
         DefaultMultiValueCategoryDataset d1
                 = new DefaultMultiValueCategoryDataset();
 
-        boolean pass = false;
+
         try {
             d1.add(null, "R1", "C1");
+            fail("IllegalArgumentException should have been thrown on a null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'values' argument.", e.getMessage());
         }
-        assertTrue(pass);
 
         List values = new ArrayList();
         d1.add(values, "R2", "C1");
         assertEquals(values, d1.getValues("R2", "C1"));
 
-        pass = false;
         try {
             d1.add(values, null, "C2");
+            fail("IllegalArgumentException should have been thrown on a null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'rowKey' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         DefaultMultiValueCategoryDataset d1
                 = new DefaultMultiValueCategoryDataset();
-        DefaultMultiValueCategoryDataset d2 = null;
-        try {
-            d2 = (DefaultMultiValueCategoryDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        DefaultMultiValueCategoryDataset d2 = (DefaultMultiValueCategoryDataset) d1.clone();
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
 
         // try a dataset with some content...
-        List values = new ArrayList();
-        values.add(new Integer(99));
+        List<Integer> values = new ArrayList<Integer>();
+        values.add(99);
         d1.add(values, "R1", "C1");
-        try {
-            d2 = (DefaultMultiValueCategoryDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        d2 = (DefaultMultiValueCategoryDataset) d1.clone();
+
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
 
         // check that the clone doesn't share the same underlying arrays.
-        List values2 = new ArrayList();
-        values2.add(new Integer(111));
+        List<Integer> values2 = new ArrayList<Integer>();
+        values2.add(111);
         d1.add(values2, "R2", "C2");
         assertFalse(d1.equals(d2));
         d2.add(values2, "R2", "C2");

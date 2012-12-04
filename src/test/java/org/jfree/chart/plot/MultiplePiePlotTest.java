@@ -46,7 +46,6 @@
 package org.jfree.chart.plot;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.event.PlotChangeEvent;
@@ -55,10 +54,12 @@ import org.jfree.chart.util.TableOrder;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -155,17 +156,11 @@ public class MultiplePiePlotTest
      * Some basic checks for the clone() method.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         MultiplePiePlot p1 = new MultiplePiePlot();
         Rectangle2D rect = new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0);
         p1.setLegendItemShape(rect);
-        MultiplePiePlot p2 = null;
-        try {
-            p2 = (MultiplePiePlot) p1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        MultiplePiePlot p2 = (MultiplePiePlot) p1.clone();
         assertTrue(p1 != p2);
         assertTrue(p1.getClass() == p2.getClass());
         assertTrue(p1.equals(p2));
@@ -179,12 +174,11 @@ public class MultiplePiePlotTest
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         MultiplePiePlot p1 = new MultiplePiePlot(null);
         p1.setAggregatedItemsPaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
                 3.0f, 4.0f, Color.RED));
-        MultiplePiePlot p2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(p1);
@@ -192,12 +186,9 @@ public class MultiplePiePlotTest
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            p2 = (MultiplePiePlot) in.readObject();
+        MultiplePiePlot p2 = (MultiplePiePlot) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(p1, p2);
     }
 
@@ -212,7 +203,6 @@ public class MultiplePiePlotTest
         dataset.addValue(55.0, "S2", "C1");
         dataset.addValue(15.0, "S2", "C2");
         MultiplePiePlot plot = new MultiplePiePlot(dataset);
-        JFreeChart chart = new JFreeChart(plot);
         LegendItemCollection legendItems = plot.getLegendItems();
         assertEquals(2, legendItems.getItemCount());
         LegendItem item1 = legendItems.get(0);

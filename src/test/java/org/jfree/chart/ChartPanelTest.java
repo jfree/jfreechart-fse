@@ -56,6 +56,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link ChartPanel} class.
@@ -63,7 +64,7 @@ import static org.junit.Assert.assertTrue;
 public class ChartPanelTest
         implements ChartChangeListener, ChartMouseListener {
 
-    private List chartChangeEvents = new java.util.ArrayList();
+    private List<ChartChangeEvent> chartChangeEvents = new java.util.ArrayList<ChartChangeEvent>();
 
     /**
      * Receives a chart change event and stores it in a list for later
@@ -118,24 +119,22 @@ public class ChartPanelTest
         assertEquals(0, listeners.length);
 
         // try a null argument
-        boolean pass = false;
         try {
-            listeners = p.getListeners((Class) null);
+            p.getListeners(null);
+            fail("A null pointer exception should have been thrown");
         }
         catch (NullPointerException e) {
-            pass = true;
+            // we expect to go in here
         }
-        assertTrue(pass);
 
-        // try a class that isn't a listener
-        pass = false;
+
         try {
-            listeners = p.getListeners(Integer.class);
+            p.getListeners(Integer.class);
+            fail("Should have thrown a ClassCastException");
         }
         catch (ClassCastException e) {
-            pass = true;
+           //We expext to go in here
         }
-        assertTrue(pass);
     }
 
     /**

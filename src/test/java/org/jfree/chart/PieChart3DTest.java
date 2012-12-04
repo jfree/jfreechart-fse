@@ -48,13 +48,12 @@ import org.jfree.data.general.PieDataset;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for a pie chart with a 3D effect.
@@ -107,19 +106,12 @@ public class PieChart3DTest  {
         dataset.setValue("Section 2", 11.0);
         dataset.setValue("Section 3", null);
         JFreeChart chart = createPieChart3D(dataset);
-        boolean success = false;
-        try {
-            BufferedImage image = new BufferedImage(200 , 100,
-                    BufferedImage.TYPE_INT_RGB);
-            Graphics2D g2 = image.createGraphics();
-            chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
-            g2.dispose();
-            success = true;
-        }
-        catch (Throwable t) {
-            success = false;
-        }
-        assertTrue(success);
+        BufferedImage image = new BufferedImage(200 , 100,
+                BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = image.createGraphics();
+        chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
+        g2.dispose();
+        //FIXME we should really assert a value here
     }
 
     /**
@@ -139,7 +131,7 @@ public class PieChart3DTest  {
     static class LocalListener implements ChartChangeListener {
 
         /** A flag. */
-        private boolean flag = false;
+        private boolean flag;
 
         /**
          * Event handler.

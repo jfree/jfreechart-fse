@@ -55,6 +55,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -64,6 +65,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link XYSeriesCollection} class.
@@ -129,20 +131,12 @@ public class XYSeriesCollectionTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         XYSeries s1 = new XYSeries("Series");
         s1.add(1.0, 1.1);
         XYSeriesCollection c1 = new XYSeriesCollection();
         c1.addSeries(s1);
-        XYSeriesCollection c2 = null;
-        try {
-            c2 = (XYSeriesCollection) c1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-            assertTrue(false);
-            return;
-        }
+        XYSeriesCollection c2 = (XYSeriesCollection) c1.clone();
         assertTrue(c1 != c2);
         assertTrue(c1.getClass() == c2.getClass());
         assertTrue(c1.equals(c2));
@@ -165,14 +159,12 @@ public class XYSeriesCollectionTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         XYSeries s1 = new XYSeries("Series");
         s1.add(1.0, 1.1);
         XYSeriesCollection c1 = new XYSeriesCollection();
         c1.addSeries(s1);
-        XYSeriesCollection c2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(c1);
@@ -180,12 +172,9 @@ public class XYSeriesCollectionTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            c2 = (XYSeriesCollection) in.readObject();
+        XYSeriesCollection c2 = (XYSeriesCollection) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(c1, c2);
     }
 
@@ -218,23 +207,21 @@ public class XYSeriesCollectionTest  {
         c.addSeries(s1);
         assertEquals("s1", c.getSeries(0).getKey());
 
-        boolean pass = false;
         try {
             c.getSeries(-1);
+            fail("Should have thrown IndexOutOfBoundsException on negative key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Series index out of bounds", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             c.getSeries(1);
+            fail("Should have thrown IndexOutOfBoundsException on key out of range");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Series index out of bounds", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -247,23 +234,21 @@ public class XYSeriesCollectionTest  {
         c.addSeries(s1);
         assertEquals("s1", c.getSeries("s1").getKey());
 
-        boolean pass = false;
         try {
             c.getSeries("s2");
+            fail("Should have thrown UnknownKeyException on unknown key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Key not found: s2", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             c.getSeries(null);
+            fail("Should have thrown IndexOutOfBoundsException on null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'key' argument", e.getMessage());
         }
-        assertTrue(pass);
     }
     
     /**
@@ -278,13 +263,12 @@ public class XYSeriesCollectionTest  {
         // the dataset should prevent the addition of a series with the
         // same name as an existing series in the dataset
         XYSeries s2 = new XYSeries("s1");
-        boolean pass = false;
         try {
             c.addSeries(s2);
-        } catch (RuntimeException e) {
-            pass = true;
+            fail("Should have thrown IllegalArgumentException on duplicate key");
+        } catch (IllegalArgumentException e) {
+            assertEquals("This dataset already contains a series with the key s1", e.getMessage());
         }
-        assertTrue(pass);
         assertEquals(1, c.getSeriesCount());
     }
 
@@ -300,23 +284,21 @@ public class XYSeriesCollectionTest  {
         assertEquals(0, c.getSeriesCount());
         c.addSeries(s1);
 
-        boolean pass = false;
         try {
             c.removeSeries(-1);
+            fail("Should have thrown IndexOutOfBoundsException on negative key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Series index out of bounds.", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             c.removeSeries(1);
+            fail("Should have thrown IndexOutOfBoundsException on key out of range");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Series index out of bounds.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -419,14 +401,14 @@ public class XYSeriesCollectionTest  {
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(s1);
         dataset.addSeries(s2);
-        boolean pass = false;
+
         try {
             s2.setKey("S1");
+            fail("Should have thrown IndexOutOfBoundsException on negative key");
         }
-        catch (RuntimeException e) {
-           pass = true;
+        catch (IllegalArgumentException e) {
+           assertEquals("java.beans.PropertyVetoException: Duplicate key", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**

@@ -55,7 +55,7 @@ import org.jfree.data.general.DatasetUtilities;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
@@ -89,20 +89,13 @@ public class StackedBarChart3DTest  {
     @Test
     public void testDrawWithNullInfo() {
 
-        boolean success = false;
-        try {
-            BufferedImage image = new BufferedImage(200 , 100,
-                    BufferedImage.TYPE_INT_RGB);
-            Graphics2D g2 = image.createGraphics();
-            this.chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null,
-                    null);
-            g2.dispose();
-            success = true;
-        }
-        catch (Exception e) {
-          success = false;
-        }
-        assertTrue(success);
+        BufferedImage image = new BufferedImage(200 , 100,
+                BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = image.createGraphics();
+        this.chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null,
+                null);
+        g2.dispose();
+        //FIXME we should really assert a value here
 
     }
 
@@ -114,9 +107,9 @@ public class StackedBarChart3DTest  {
 
         // create a dataset...
         Number[][] data = new Integer[][]
-            {{new Integer(-30), new Integer(-20)},
-             {new Integer(-10), new Integer(10)},
-             {new Integer(20), new Integer(30)}};
+            {{-30, -20},
+             {-10, 10},
+             {20, 30}};
 
         CategoryDataset newData = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
@@ -172,9 +165,9 @@ public class StackedBarChart3DTest  {
      */
     private static JFreeChart createChart() {
         Number[][] data = new Integer[][]
-            {{new Integer(-3), new Integer(-2)},
-             {new Integer(-1), new Integer(1)},
-             {new Integer(2), new Integer(3)}};
+            {{-3, -2},
+             {-1, 1},
+             {2, 3}};
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
         return ChartFactory.createStackedBarChart3D("Stacked Bar Chart 3D",
@@ -187,7 +180,7 @@ public class StackedBarChart3DTest  {
     static class LocalListener implements ChartChangeListener {
 
         /** A flag. */
-        private boolean flag = false;
+        private boolean flag;
 
         /**
          * Event handler.

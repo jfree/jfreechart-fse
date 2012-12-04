@@ -47,6 +47,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -55,7 +56,9 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link TaskSeriesCollection} class.
@@ -217,16 +220,16 @@ public class TaskSeriesCollectionTest  {
     @Test
     public void testGetValue() {
         TaskSeriesCollection c = createCollection1();
-        assertEquals(new Long(1L), c.getValue("S1", "Task 1"));
-        assertEquals(new Long(3L), c.getValue("S1", "Task 2"));
-        assertEquals(new Long(5L), c.getValue("S2", "Task 3"));
+        assertEquals(1L, c.getValue("S1", "Task 1"));
+        assertEquals(3L, c.getValue("S1", "Task 2"));
+        assertEquals(5L, c.getValue("S2", "Task 3"));
 
-        assertEquals(new Long(1L), c.getValue(0, 0));
-        assertEquals(new Long(3L), c.getValue(0, 1));
+        assertEquals(1L, c.getValue(0, 0));
+        assertEquals(3L, c.getValue(0, 1));
         assertEquals(null, c.getValue(0, 2));
         assertEquals(null, c.getValue(1, 0));
         assertEquals(null, c.getValue(1, 1));
-        assertEquals(new Long(5L), c.getValue(1, 2));
+        assertEquals(5L, c.getValue(1, 2));
     }
 
     /**
@@ -235,23 +238,23 @@ public class TaskSeriesCollectionTest  {
     @Test
     public void testGetStartValue() {
         TaskSeriesCollection c = createCollection1();
-        assertEquals(new Long(1L), c.getStartValue("S1", "Task 1"));
-        assertEquals(new Long(3L), c.getStartValue("S1", "Task 2"));
-        assertEquals(new Long(5L), c.getStartValue("S2", "Task 3"));
+        assertEquals(1L, c.getStartValue("S1", "Task 1"));
+        assertEquals(3L, c.getStartValue("S1", "Task 2"));
+        assertEquals(5L, c.getStartValue("S2", "Task 3"));
 
-        assertEquals(new Long(1L), c.getStartValue(0, 0));
-        assertEquals(new Long(3L), c.getStartValue(0, 1));
+        assertEquals(1L, c.getStartValue(0, 0));
+        assertEquals(3L, c.getStartValue(0, 1));
         assertEquals(null, c.getStartValue(0, 2));
         assertEquals(null, c.getStartValue(1, 0));
         assertEquals(null, c.getStartValue(1, 1));
-        assertEquals(new Long(5L), c.getStartValue(1, 2));
+        assertEquals(5L, c.getStartValue(1, 2));
 
         // test collection 3, which doesn't define all tasks in all series
         TaskSeriesCollection c3 = createCollection3();
-        assertEquals(new Long(100), c3.getStartValue(0, 0));
-        assertEquals(new Long(220), c3.getStartValue(0, 1));
-        assertTrue(c3.getStartValue(1, 0) == null);
-        assertEquals(new Long(2220), c3.getStartValue(1, 1));
+        assertEquals((long) 100, c3.getStartValue(0, 0));
+        assertEquals((long) 220, c3.getStartValue(0, 1));
+        assertNull(c3.getStartValue(1, 0));
+        assertEquals((long) 2220, c3.getStartValue(1, 1));
     }
 
     /**
@@ -260,28 +263,28 @@ public class TaskSeriesCollectionTest  {
     @Test
     public void testGetStartValue2() {
         TaskSeriesCollection c = createCollection2();
-        assertEquals(new Long(10L), c.getStartValue("S1", "Task 1", 0));
-        assertEquals(new Long(16L), c.getStartValue("S1", "Task 1", 1));
-        assertEquals(new Long(30L), c.getStartValue("S1", "Task 2", 0));
-        assertEquals(new Long(36L), c.getStartValue("S1", "Task 2", 1));
-        assertEquals(new Long(50L), c.getStartValue("S2", "Task 3", 0));
-        assertEquals(new Long(56L), c.getStartValue("S2", "Task 3", 1));
+        assertEquals(10L, c.getStartValue("S1", "Task 1", 0));
+        assertEquals(16L, c.getStartValue("S1", "Task 1", 1));
+        assertEquals(30L, c.getStartValue("S1", "Task 2", 0));
+        assertEquals(36L, c.getStartValue("S1", "Task 2", 1));
+        assertEquals(50L, c.getStartValue("S2", "Task 3", 0));
+        assertEquals(56L, c.getStartValue("S2", "Task 3", 1));
 
-        assertEquals(new Long(10L), c.getStartValue(0, 0, 0));
-        assertEquals(new Long(16L), c.getStartValue(0, 0, 1));
-        assertEquals(new Long(30L), c.getStartValue(0, 1, 0));
-        assertEquals(new Long(36L), c.getStartValue(0, 1, 1));
-        assertEquals(new Long(50L), c.getStartValue(1, 2, 0));
-        assertEquals(new Long(56L), c.getStartValue(1, 2, 1));
+        assertEquals(10L, c.getStartValue(0, 0, 0));
+        assertEquals(16L, c.getStartValue(0, 0, 1));
+        assertEquals(30L, c.getStartValue(0, 1, 0));
+        assertEquals(36L, c.getStartValue(0, 1, 1));
+        assertEquals(50L, c.getStartValue(1, 2, 0));
+        assertEquals(56L, c.getStartValue(1, 2, 1));
 
         TaskSeriesCollection c3 = createCollection3();
-        assertEquals(new Long(11), c3.getStartValue(0, 0, 0));
-        assertEquals(new Long(22), c3.getStartValue(0, 1, 0));
-        assertEquals(new Long(33), c3.getStartValue(0, 1, 1));
-        assertTrue(c3.getStartValue(1, 0, 0) == null);
-        assertEquals(new Long(44), c3.getStartValue(1, 1, 0));
-        assertEquals(new Long(55), c3.getStartValue(1, 1, 1));
-        assertEquals(new Long(66), c3.getStartValue(1, 1, 2));
+        assertEquals((long) 11, c3.getStartValue(0, 0, 0));
+        assertEquals((long) 22, c3.getStartValue(0, 1, 0));
+        assertEquals((long) 33, c3.getStartValue(0, 1, 1));
+        assertNull(c3.getStartValue(1, 0, 0));
+        assertEquals((long) 44, c3.getStartValue(1, 1, 0));
+        assertEquals((long) 55, c3.getStartValue(1, 1, 1));
+        assertEquals((long) 66, c3.getStartValue(1, 1, 2));
     }
 
     /**
@@ -294,7 +297,7 @@ public class TaskSeriesCollectionTest  {
         s.add(new Task("Task with null duration", null));
         c.add(s);
         Number millis = c.getStartValue("Series 1", "Task with null duration");
-        assertTrue(millis == null);
+        assertNull(millis);
     }
 
     /**
@@ -303,23 +306,23 @@ public class TaskSeriesCollectionTest  {
     @Test
     public void testGetEndValue() {
         TaskSeriesCollection c = createCollection1();
-        assertEquals(new Long(2L), c.getEndValue("S1", "Task 1"));
-        assertEquals(new Long(4L), c.getEndValue("S1", "Task 2"));
-        assertEquals(new Long(6L), c.getEndValue("S2", "Task 3"));
+        assertEquals(2L, c.getEndValue("S1", "Task 1"));
+        assertEquals(4L, c.getEndValue("S1", "Task 2"));
+        assertEquals(6L, c.getEndValue("S2", "Task 3"));
 
-        assertEquals(new Long(2L), c.getEndValue(0, 0));
-        assertEquals(new Long(4L), c.getEndValue(0, 1));
+        assertEquals(2L, c.getEndValue(0, 0));
+        assertEquals(4L, c.getEndValue(0, 1));
         assertEquals(null, c.getEndValue(0, 2));
         assertEquals(null, c.getEndValue(1, 0));
         assertEquals(null, c.getEndValue(1, 1));
-        assertEquals(new Long(6L), c.getEndValue(1, 2));
+        assertEquals(6L, c.getEndValue(1, 2));
 
         // test collection 3, which doesn't define all tasks in all series
         TaskSeriesCollection c3 = createCollection3();
-        assertEquals(new Long(200), c3.getEndValue(0, 0));
-        assertEquals(new Long(350), c3.getEndValue(0, 1));
-        assertTrue(c3.getEndValue(1, 0) == null);
-        assertEquals(new Long(3350), c3.getEndValue(1, 1));
+        assertEquals((long) 200, c3.getEndValue(0, 0));
+        assertEquals((long) 350, c3.getEndValue(0, 1));
+        assertNull(c3.getEndValue(1, 0));
+        assertEquals((long) 3350, c3.getEndValue(1, 1));
     }
 
     /**
@@ -328,28 +331,28 @@ public class TaskSeriesCollectionTest  {
     @Test
     public void testGetEndValue2() {
         TaskSeriesCollection c = createCollection2();
-        assertEquals(new Long(15L), c.getEndValue("S1", "Task 1", 0));
-        assertEquals(new Long(20L), c.getEndValue("S1", "Task 1", 1));
-        assertEquals(new Long(35L), c.getEndValue("S1", "Task 2", 0));
-        assertEquals(new Long(40L), c.getEndValue("S1", "Task 2", 1));
-        assertEquals(new Long(55L), c.getEndValue("S2", "Task 3", 0));
-        assertEquals(new Long(60L), c.getEndValue("S2", "Task 3", 1));
+        assertEquals(15L, c.getEndValue("S1", "Task 1", 0));
+        assertEquals(20L, c.getEndValue("S1", "Task 1", 1));
+        assertEquals(35L, c.getEndValue("S1", "Task 2", 0));
+        assertEquals(40L, c.getEndValue("S1", "Task 2", 1));
+        assertEquals(55L, c.getEndValue("S2", "Task 3", 0));
+        assertEquals(60L, c.getEndValue("S2", "Task 3", 1));
 
-        assertEquals(new Long(15L), c.getEndValue(0, 0, 0));
-        assertEquals(new Long(20L), c.getEndValue(0, 0, 1));
-        assertEquals(new Long(35L), c.getEndValue(0, 1, 0));
-        assertEquals(new Long(40L), c.getEndValue(0, 1, 1));
-        assertEquals(new Long(55L), c.getEndValue(1, 2, 0));
-        assertEquals(new Long(60L), c.getEndValue(1, 2, 1));
+        assertEquals(15L, c.getEndValue(0, 0, 0));
+        assertEquals(20L, c.getEndValue(0, 0, 1));
+        assertEquals(35L, c.getEndValue(0, 1, 0));
+        assertEquals(40L, c.getEndValue(0, 1, 1));
+        assertEquals(55L, c.getEndValue(1, 2, 0));
+        assertEquals(60L, c.getEndValue(1, 2, 1));
 
         TaskSeriesCollection c3 = createCollection3();
-        assertEquals(new Long(111), c3.getEndValue(0, 0, 0));
-        assertEquals(new Long(222), c3.getEndValue(0, 1, 0));
-        assertEquals(new Long(333), c3.getEndValue(0, 1, 1));
-        assertTrue(c3.getEndValue(1, 0, 0) == null);
-        assertEquals(new Long(444), c3.getEndValue(1, 1, 0));
-        assertEquals(new Long(555), c3.getEndValue(1, 1, 1));
-        assertEquals(new Long(666), c3.getEndValue(1, 1, 2));
+        assertEquals((long) 111, c3.getEndValue(0, 0, 0));
+        assertEquals((long) 222, c3.getEndValue(0, 1, 0));
+        assertEquals((long) 333, c3.getEndValue(0, 1, 1));
+        assertNull(c3.getEndValue(1, 0, 0));
+        assertEquals((long) 444, c3.getEndValue(1, 1, 0));
+        assertEquals((long) 555, c3.getEndValue(1, 1, 1));
+        assertEquals((long) 666, c3.getEndValue(1, 1, 2));
     }
 
     /**
@@ -362,7 +365,7 @@ public class TaskSeriesCollectionTest  {
         s.add(new Task("Task with null duration", null));
         c.add(s);
         Number millis = c.getEndValue("Series 1", "Task with null duration");
-        assertTrue(millis == null);
+        assertNull(millis);
     }
 
     /**
@@ -371,32 +374,32 @@ public class TaskSeriesCollectionTest  {
     @Test
     public void testGetPercentComplete() {
         TaskSeriesCollection c = createCollection2();
-        assertEquals(new Double(0.10), c.getPercentComplete("S1", "Task 1"));
-        assertEquals(new Double(0.20), c.getPercentComplete("S1", "Task 2"));
-        assertEquals(new Double(0.30), c.getPercentComplete("S2", "Task 3"));
+        assertEquals(0.10, c.getPercentComplete("S1", "Task 1"));
+        assertEquals(0.20, c.getPercentComplete("S1", "Task 2"));
+        assertEquals(0.30, c.getPercentComplete("S2", "Task 3"));
 
-        assertEquals(new Double(0.10), c.getPercentComplete(0, 0));
-        assertEquals(new Double(0.20), c.getPercentComplete(0, 1));
+        assertEquals(0.10, c.getPercentComplete(0, 0));
+        assertEquals(0.20, c.getPercentComplete(0, 1));
         assertEquals(null, c.getPercentComplete(0, 2));
         assertEquals(null, c.getPercentComplete(1, 0));
         assertEquals(null, c.getPercentComplete(1, 1));
-        assertEquals(new Double(0.30), c.getPercentComplete(1, 2));
+        assertEquals(0.30, c.getPercentComplete(1, 2));
 
         // test collection 3, which doesn't define all tasks in all series
         TaskSeriesCollection c3 = createCollection3();
-        assertEquals(new Double(0.1), c3.getPercentComplete(0, 0));
-        assertEquals(new Double(0.2), c3.getPercentComplete(0, 1));
-        assertTrue(c3.getPercentComplete(1, 0) == null);
-        assertEquals(new Double(0.3), c3.getPercentComplete(1, 1));
+        assertEquals(0.1, c3.getPercentComplete(0, 0));
+        assertEquals(0.2, c3.getPercentComplete(0, 1));
+        assertNull(c3.getPercentComplete(1, 0));
+        assertEquals(0.3, c3.getPercentComplete(1, 1));
 
-        assertEquals(new Double(0.111), c3.getPercentComplete(0, 0, 0));
+        assertEquals(0.111, c3.getPercentComplete(0, 0, 0));
 
-        assertEquals(new Double(0.222), c3.getPercentComplete(0, 1, 0));
-        assertEquals(new Double(0.333), c3.getPercentComplete(0, 1, 1));
+        assertEquals(0.222, c3.getPercentComplete(0, 1, 0));
+        assertEquals(0.333, c3.getPercentComplete(0, 1, 1));
 
-        assertEquals(new Double(0.444), c3.getPercentComplete(1, 1, 0));
-        assertEquals(new Double(0.555), c3.getPercentComplete(1, 1, 1));
-        assertEquals(new Double(0.666), c3.getPercentComplete(1, 1, 2));
+        assertEquals(0.444, c3.getPercentComplete(1, 1, 0));
+        assertEquals(0.555, c3.getPercentComplete(1, 1, 1));
+        assertEquals(0.666, c3.getPercentComplete(1, 1, 2));
     }
 
     /**
@@ -465,7 +468,7 @@ public class TaskSeriesCollectionTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         TaskSeries s1 = new TaskSeries("S1");
         s1.add(new Task("T1", new Date(1), new Date(2)));
         s1.add(new Task("T2", new Date(11), new Date(22)));
@@ -476,13 +479,8 @@ public class TaskSeriesCollectionTest  {
         c1.add(s1);
         c1.add(s2);
 
-        TaskSeriesCollection c2 = null;
-        try {
-            c2 = (TaskSeriesCollection) c1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        TaskSeriesCollection c2 = (TaskSeriesCollection) c1.clone();
+
         assertTrue(c1 != c2);
         assertTrue(c1.getClass() == c2.getClass());
         assertTrue(c1.equals(c2));
@@ -500,7 +498,7 @@ public class TaskSeriesCollectionTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         TaskSeries s1 = new TaskSeries("S");
         s1.add(new Task("T1", new Date(1), new Date(2)));
@@ -511,22 +509,16 @@ public class TaskSeriesCollectionTest  {
         TaskSeriesCollection c1 = new TaskSeriesCollection();
         c1.add(s1);
         c1.add(s2);
-        TaskSeriesCollection c2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(c1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(c1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            c2 = (TaskSeriesCollection) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
+        TaskSeriesCollection c2 = (TaskSeriesCollection) in.readObject();
+        in.close();
         assertEquals(c1, c2);
 
     }
@@ -585,21 +577,21 @@ public class TaskSeriesCollectionTest  {
         // column is too high...
         try {
             /* Number start = */ tsc.getStartValue(0, 3);
-            assertTrue(false);
+            fail("Should have thrown an IndexOutOfBoundsException");
         }
         catch (IndexOutOfBoundsException e) {
             // expected
         }
         try {
             /* Number end = */ tsc.getEndValue(0, 3);
-            assertTrue(false);
+            fail("Should have thrown an IndexOutOfBoundsException");
         }
         catch (IndexOutOfBoundsException e) {
             // expected
         }
         try {
             /* int count = */ tsc.getSubIntervalCount(0, 3);
-            assertTrue(false);
+            fail("Should have thrown an IndexOutOfBoundsException");
         }
         catch (IndexOutOfBoundsException e) {
             // expected
@@ -640,14 +632,13 @@ public class TaskSeriesCollectionTest  {
         assertEquals(c.getSeries(1), s2);
         assertEquals(c.getSeries("S2"), s2);
 
-        boolean pass = false;
         try {
             c.getSeries(null);
+            fail("NullPointerException should have been thrown by passing null parameter");
         }
         catch (NullPointerException e) {
-            pass = true;
+            //expected
         }
-        assertTrue(pass);
     }
 
     /**
@@ -663,23 +654,21 @@ public class TaskSeriesCollectionTest  {
         assertEquals(0, c.getSeriesCount());
         c.add(s1);
 
-        boolean pass = false;
         try {
             c.remove(-1);
+            fail("Should have thrown an IllegalArgumentException on index out of bounds");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("TaskSeriesCollection.remove(): index outside valid range.", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             c.remove(1);
+            fail("Should have thrown an IllegalArgumentException on index out of bounds");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("TaskSeriesCollection.remove(): index outside valid range.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
 }

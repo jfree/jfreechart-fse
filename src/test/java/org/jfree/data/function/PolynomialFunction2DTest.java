@@ -44,6 +44,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -53,7 +54,7 @@ import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
+import static org.junit.Assert.fail;
 
 
 /**
@@ -74,14 +75,13 @@ public class PolynomialFunction2DTest  {
                 2.0});
         assertTrue(Arrays.equals(new double[] {1.0, 2.0}, f.getCoefficients()));
 
-        boolean pass = false;
         try {
-            f = new PolynomialFunction2D(null);
+            new PolynomialFunction2D(null);
+            fail("Should have thrown an IllegalArgumnetException on null parameter");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'coefficients' argument", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -130,12 +130,10 @@ public class PolynomialFunction2DTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         PolynomialFunction2D f1 = new PolynomialFunction2D(new double[] {1.0,
                 2.0});
-        PolynomialFunction2D f2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(f1);
@@ -143,12 +141,9 @@ public class PolynomialFunction2DTest  {
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            f2 = (PolynomialFunction2D) in.readObject();
+        PolynomialFunction2D f2 = (PolynomialFunction2D) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(f1, f2);
     }
 

@@ -53,6 +53,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -63,6 +64,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link DefaultKeyedValues} class.
@@ -148,14 +150,14 @@ public class DefaultKeyedValuesTest  {
         DefaultKeyedValues v1 = new DefaultKeyedValues();
         try {
             /* Number n = */ v1.getValue(-1);
-            assertTrue(false);
+            fail("Should have thrown an IndexOutOfBoundsException");
         }
         catch (IndexOutOfBoundsException e) {
             // expected
         }
         try {
             /* Number n = */ v1.getValue(0);
-            assertTrue(false);
+            fail("Should have thrown an IndexOutOfBoundsException");
         }
         catch (IndexOutOfBoundsException e) {
             // expected
@@ -164,16 +166,15 @@ public class DefaultKeyedValuesTest  {
         v2.addValue("K1", new Integer(1));
         v2.addValue("K2", new Integer(2));
         v2.addValue("K3", new Integer(3));
-        assertEquals(new Integer(3), v2.getValue(2));
+        assertEquals(3, v2.getValue(2));
 
-        boolean pass = false;
         try {
             /* Number n = */ v2.getValue("KK");
+            fail("Should have thrown an UnknownKeyException");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Key not found: KK", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -184,14 +185,14 @@ public class DefaultKeyedValuesTest  {
         DefaultKeyedValues v1 = new DefaultKeyedValues();
         try {
             /* Comparable k = */ v1.getKey(-1);
-            assertTrue(false);
+            fail("Should have thrown an IndexOutOfBoundsException");
         }
         catch (IndexOutOfBoundsException e) {
             // expected
         }
         try {
             /* Comparable k = */ v1.getKey(0);
-            assertTrue(false);
+            fail("Should have thrown an IndexOutOfBoundsException");
         }
         catch (IndexOutOfBoundsException e) {
             // expected
@@ -218,14 +219,13 @@ public class DefaultKeyedValuesTest  {
         assertEquals(2, v2.getIndex("K3"));
 
         // try null
-        boolean pass = false;
-        try {
+       try {
             v2.getIndex(null);
+           fail("Should have thrown an IllegalArgumentException on null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'key' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -247,24 +247,23 @@ public class DefaultKeyedValuesTest  {
     public void testAddValue() {
         DefaultKeyedValues v1 = new DefaultKeyedValues();
         v1.addValue("A", 1.0);
-        assertEquals(new Double(1.0), v1.getValue("A"));
+        assertEquals(1.0, v1.getValue("A"));
         v1.addValue("B", 2.0);
-        assertEquals(new Double(2.0), v1.getValue("B"));
+        assertEquals(2.0, v1.getValue("B"));
         v1.addValue("B", 3.0);
-        assertEquals(new Double(3.0), v1.getValue("B"));
+        assertEquals(3.0, v1.getValue("B"));
         assertEquals(2, v1.getItemCount());
         v1.addValue("A", null);
         assertNull(v1.getValue("A"));
         assertEquals(2, v1.getItemCount());
 
-        boolean pass = false;
         try {
             v1.addValue(null, 99.9);
+            fail("Should have thrown IllegalArgumentException on null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'key' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -274,40 +273,35 @@ public class DefaultKeyedValuesTest  {
     public void testInsertValue() {
         DefaultKeyedValues v1 = new DefaultKeyedValues();
         v1.insertValue(0, "A", 1.0);
-        assertEquals(new Double(1.0), v1.getValue(0));
+        assertEquals(1.0, v1.getValue(0));
         v1.insertValue(0, "B", 2.0);
-        assertEquals(new Double(2.0), v1.getValue(0));
-        assertEquals(new Double(1.0), v1.getValue(1));
+        assertEquals(2.0, v1.getValue(0));
+        assertEquals(1.0, v1.getValue(1));
 
         // it's OK to use an index equal to the size of the list
         v1.insertValue(2, "C", 3.0);
-        assertEquals(new Double(2.0), v1.getValue(0));
-        assertEquals(new Double(1.0), v1.getValue(1));
-        assertEquals(new Double(3.0), v1.getValue(2));
+        assertEquals(2.0, v1.getValue(0));
+        assertEquals(1.0, v1.getValue(1));
+        assertEquals(3.0, v1.getValue(2));
 
         // try replacing an existing value
         v1.insertValue(2, "B", 4.0);
-        assertEquals(new Double(1.0), v1.getValue(0));
-        assertEquals(new Double(3.0), v1.getValue(1));
-        assertEquals(new Double(4.0), v1.getValue(2));
+        assertEquals(1.0, v1.getValue(0));
+        assertEquals(3.0, v1.getValue(1));
+        assertEquals(4.0, v1.getValue(2));
     }
 
     /**
      * Some checks for the clone() method.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         DefaultKeyedValues v1 = new DefaultKeyedValues();
         v1.addValue("V1", new Integer(1));
         v1.addValue("V2", null);
         v1.addValue("V3", new Integer(3));
-        DefaultKeyedValues v2 = null;
-        try {
-            v2 = (DefaultKeyedValues) v1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
-        }
+        DefaultKeyedValues v2 = (DefaultKeyedValues) v1.clone();
+
         assertTrue(v1 != v2);
         assertTrue(v1.getClass() == v2.getClass());
         assertTrue(v1.equals(v2));
@@ -336,15 +330,15 @@ public class DefaultKeyedValuesTest  {
         assertEquals(data.getKey(3), "D");
 
         // check retrieve value by key
-        assertEquals(data.getValue("A"), new Double(1.0));
-        assertEquals(data.getValue("B"), new Double(2.0));
-        assertEquals(data.getValue("C"), new Double(3.0));
+        assertEquals(data.getValue("A"), 1.0);
+        assertEquals(data.getValue("B"), 2.0);
+        assertEquals(data.getValue("C"), 3.0);
         assertEquals(data.getValue("D"), null);
 
         // check retrieve value by index
-        assertEquals(data.getValue(0), new Double(1.0));
-        assertEquals(data.getValue(1), new Double(2.0));
-        assertEquals(data.getValue(2), new Double(3.0));
+        assertEquals(data.getValue(0), 1.0);
+        assertEquals(data.getValue(1), 2.0);
+        assertEquals(data.getValue(2), 3.0);
         assertEquals(data.getValue(3), null);
 
     }
@@ -363,14 +357,13 @@ public class DefaultKeyedValuesTest  {
         data.removeValue("B");
         assertEquals(-1, data.getIndex("B"));
 
-        boolean pass = false;
         try {
             data.removeValue("XXX");
+            fail("Should have thrown an UnknownKeyException");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("The key (XXX) is not recognised.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -394,16 +387,16 @@ public class DefaultKeyedValuesTest  {
         assertEquals(data.getKey(3), "D");
 
         // check retrieve value by key
-        assertEquals(data.getValue("A"), new Double(2.0));
+        assertEquals(data.getValue("A"), 2.0);
         assertEquals(data.getValue("B"), null);
-        assertEquals(data.getValue("C"), new Double(1.0));
-        assertEquals(data.getValue("D"), new Double(3.0));
+        assertEquals(data.getValue("C"), 1.0);
+        assertEquals(data.getValue("D"), 3.0);
 
         // check retrieve value by index
-        assertEquals(data.getValue(0), new Double(2.0));
+        assertEquals(data.getValue(0), 2.0);
         assertEquals(data.getValue(1), null);
-        assertEquals(data.getValue(2), new Double(1.0));
-        assertEquals(data.getValue(3), new Double(3.0));
+        assertEquals(data.getValue(2), 1.0);
+        assertEquals(data.getValue(3), 3.0);
 
     }
 
@@ -428,16 +421,16 @@ public class DefaultKeyedValuesTest  {
         assertEquals(data.getKey(3), "A");
 
         // check retrieve value by key
-        assertEquals(data.getValue("A"), new Double(2.0));
+        assertEquals(data.getValue("A"), 2.0);
         assertEquals(data.getValue("B"), null);
-        assertEquals(data.getValue("C"), new Double(1.0));
-        assertEquals(data.getValue("D"), new Double(3.0));
+        assertEquals(data.getValue("C"), 1.0);
+        assertEquals(data.getValue("D"), 3.0);
 
         // check retrieve value by index
-        assertEquals(data.getValue(0), new Double(3.0));
-        assertEquals(data.getValue(1), new Double(1.0));
+        assertEquals(data.getValue(0), 3.0);
+        assertEquals(data.getValue(1), 1.0);
         assertEquals(data.getValue(2), null);
-        assertEquals(data.getValue(3), new Double(2.0));
+        assertEquals(data.getValue(3), 2.0);
 
     }
 
@@ -462,15 +455,15 @@ public class DefaultKeyedValuesTest  {
         assertEquals(data.getKey(3), "B");
 
         // check retrieve value by key
-        assertEquals(data.getValue("A"), new Double(2.0));
+        assertEquals(data.getValue("A"), 2.0);
         assertEquals(data.getValue("B"), null);
-        assertEquals(data.getValue("C"), new Double(1.0));
-        assertEquals(data.getValue("D"), new Double(3.0));
+        assertEquals(data.getValue("C"), 1.0);
+        assertEquals(data.getValue("D"), 3.0);
 
         // check retrieve value by index
-        assertEquals(data.getValue(0), new Double(1.0));
-        assertEquals(data.getValue(1), new Double(2.0));
-        assertEquals(data.getValue(2), new Double(3.0));
+        assertEquals(data.getValue(0), 1.0);
+        assertEquals(data.getValue(1), 2.0);
+        assertEquals(data.getValue(2), 3.0);
         assertEquals(data.getValue(3), null);
 
     }
@@ -496,15 +489,15 @@ public class DefaultKeyedValuesTest  {
         assertEquals(data.getKey(3), "B");
 
         // check retrieve value by key
-        assertEquals(data.getValue("A"), new Double(2.0));
+        assertEquals(data.getValue("A"), 2.0);
         assertEquals(data.getValue("B"), null);
-        assertEquals(data.getValue("C"), new Double(1.0));
-        assertEquals(data.getValue("D"), new Double(3.0));
+        assertEquals(data.getValue("C"), 1.0);
+        assertEquals(data.getValue("D"), 3.0);
 
         // check retrieve value by index
-        assertEquals(data.getValue(0), new Double(3.0));
-        assertEquals(data.getValue(1), new Double(2.0));
-        assertEquals(data.getValue(2), new Double(1.0));
+        assertEquals(data.getValue(0), 3.0);
+        assertEquals(data.getValue(1), 2.0);
+        assertEquals(data.getValue(2), 1.0);
         assertEquals(data.getValue(3), null);
 
     }
@@ -513,30 +506,24 @@ public class DefaultKeyedValuesTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         DefaultKeyedValues v1 = new DefaultKeyedValues();
         v1.addValue("Key 1", new Double(23));
         v1.addValue("Key 2", null);
         v1.addValue("Key 3", new Double(42));
 
-        DefaultKeyedValues v2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(v1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(v1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-            );
-            v2 = (DefaultKeyedValues) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
+        ObjectInput in = new ObjectInputStream(
+            new ByteArrayInputStream(buffer.toByteArray())
+        );
+        DefaultKeyedValues v2 = (DefaultKeyedValues) in.readObject();
+        in.close();
         assertEquals(v1, v2);
 
     }

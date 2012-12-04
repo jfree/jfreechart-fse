@@ -46,6 +46,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -90,15 +91,9 @@ public class KeyedObjectTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         KeyedObject ko1 = new KeyedObject("Test", "Object");
-        KeyedObject ko2 = null;
-        try {
-            ko2 = (KeyedObject) ko1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        KeyedObject ko2 = (KeyedObject) ko1.clone();
         assertTrue(ko1 != ko2);
         assertTrue(ko1.getClass() == ko2.getClass());
         assertTrue(ko1.equals(ko2));
@@ -108,17 +103,11 @@ public class KeyedObjectTest  {
      * Confirm special features of cloning.
      */
     @Test
-    public void testCloning2() {
+    public void testCloning2() throws CloneNotSupportedException {
         // case 1 - object is mutable but not PublicCloneable
         Object obj1 = new ArrayList();
         KeyedObject ko1 = new KeyedObject("Test", obj1);
-        KeyedObject ko2 = null;
-        try {
-            ko2 = (KeyedObject) ko1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        KeyedObject ko2 = (KeyedObject) ko1.clone();
         assertTrue(ko1 != ko2);
         assertTrue(ko1.getClass() == ko2.getClass());
         assertTrue(ko1.equals(ko2));
@@ -129,13 +118,8 @@ public class KeyedObjectTest  {
         // CASE 2 - object is mutable AND PublicCloneable
         obj1 = new DefaultPieDataset();
         ko1 = new KeyedObject("Test", obj1);
-        ko2 = null;
-        try {
-            ko2 = (KeyedObject) ko1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        ko2 = (KeyedObject) ko1.clone();
+
         assertTrue(ko1 != ko2);
         assertTrue(ko1.getClass() == ko2.getClass());
         assertTrue(ko1.equals(ko2));
@@ -148,12 +132,10 @@ public class KeyedObjectTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         KeyedObject ko1 = new KeyedObject("Test", "Object");
-        KeyedObject ko2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(ko1);
@@ -162,12 +144,9 @@ public class KeyedObjectTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            ko2 = (KeyedObject) in.readObject();
+        KeyedObject ko2 = (KeyedObject) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(ko1, ko2);
 
     }

@@ -103,15 +103,10 @@ public class AxisSpaceTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         AxisSpace s1 = new AxisSpace();
-        AxisSpace s2 = null;
-        try {
-            s2 = (AxisSpace) s1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
-        }
+        AxisSpace s2 = (AxisSpace) s1.clone();
+
         assertTrue(s1 != s2);
         assertTrue(s1.getClass() == s2.getClass());
         assertTrue(s1.equals(s2));

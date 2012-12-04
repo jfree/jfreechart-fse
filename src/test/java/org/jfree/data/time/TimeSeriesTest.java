@@ -64,6 +64,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -90,7 +91,7 @@ public class TimeSeriesTest  implements SeriesChangeListener {
     private TimeSeries seriesC;
 
     /** A flag that indicates whether or not a change event was fired. */
-    private boolean gotSeriesChangeEvent = false;
+    private boolean gotSeriesChangeEvent;
 
 
 
@@ -103,37 +104,22 @@ public class TimeSeriesTest  implements SeriesChangeListener {
 	public void setUp() {
 
         this.seriesA = new TimeSeries("Series A");
-        try {
-            this.seriesA.add(new Year(2000), new Integer(102000));
-            this.seriesA.add(new Year(2001), new Integer(102001));
-            this.seriesA.add(new Year(2002), new Integer(102002));
-            this.seriesA.add(new Year(2003), new Integer(102003));
-            this.seriesA.add(new Year(2004), new Integer(102004));
-            this.seriesA.add(new Year(2005), new Integer(102005));
-        }
-        catch (SeriesException e) {
-            System.err.println("Problem creating series.");
-        }
+        this.seriesA.add(new Year(2000), new Integer(102000));
+        this.seriesA.add(new Year(2001), new Integer(102001));
+        this.seriesA.add(new Year(2002), new Integer(102002));
+        this.seriesA.add(new Year(2003), new Integer(102003));
+        this.seriesA.add(new Year(2004), new Integer(102004));
+        this.seriesA.add(new Year(2005), new Integer(102005));
 
         this.seriesB = new TimeSeries("Series B");
-        try {
-            this.seriesB.add(new Year(2006), new Integer(202006));
-            this.seriesB.add(new Year(2007), new Integer(202007));
-            this.seriesB.add(new Year(2008), new Integer(202008));
-        }
-        catch (SeriesException e) {
-            System.err.println("Problem creating series.");
-        }
+        this.seriesB.add(new Year(2006), new Integer(202006));
+        this.seriesB.add(new Year(2007), new Integer(202007));
+        this.seriesB.add(new Year(2008), new Integer(202008));
 
         this.seriesC = new TimeSeries("Series C");
-        try {
-            this.seriesC.add(new Year(1999), new Integer(301999));
-            this.seriesC.add(new Year(2000), new Integer(302000));
-            this.seriesC.add(new Year(2002), new Integer(302002));
-        }
-        catch (SeriesException e) {
-            System.err.println("Problem creating series.");
-        }
+        this.seriesC.add(new Year(1999), new Integer(301999));
+        this.seriesC.add(new Year(2000), new Integer(302000));
+        this.seriesC.add(new Year(2002), new Integer(302002));
 
     }
 
@@ -152,48 +138,25 @@ public class TimeSeriesTest  implements SeriesChangeListener {
      * Check that cloning works.
      */
     @Test
-    public void testClone() {
+    public void testClone() throws CloneNotSupportedException {
 
         TimeSeries series = new TimeSeries("Test Series");
 
         RegularTimePeriod jan1st2002 = new Day(1, MonthConstants.JANUARY, 2002);
-        try {
-            series.add(jan1st2002, new Integer(42));
-        }
-        catch (SeriesException e) {
-            System.err.println("Problem adding to series.");
-        }
+        series.add(jan1st2002, new Integer(42));
 
-        TimeSeries clone = null;
-        try {
-            clone = (TimeSeries) series.clone();
-            clone.setKey("Clone Series");
-            try {
-                clone.update(jan1st2002, new Integer(10));
-            }
-            catch (SeriesException e) {
-                e.printStackTrace();
-            }
-        }
-        catch (CloneNotSupportedException e) {
-            assertTrue(false);
-        }
+        TimeSeries clone = (TimeSeries) series.clone();
+        clone.setKey("Clone Series");
+        clone.update(jan1st2002, new Integer(10));
+
 
         int seriesValue = series.getValue(jan1st2002).intValue();
-        int cloneValue = Integer.MAX_VALUE;
-        if (clone != null) {
-            cloneValue = clone.getValue(jan1st2002).intValue();
-        }
+        int cloneValue = clone.getValue(jan1st2002).intValue();
 
         assertEquals(42, seriesValue);
         assertEquals(10, cloneValue);
         assertEquals("Test Series", series.getKey());
-        if (clone != null) {
-            assertEquals("Clone Series", clone.getKey());
-        }
-        else {
-            assertTrue(false);
-        }
+        assertEquals("Clone Series", clone.getKey());
 
     }
 
@@ -201,18 +164,12 @@ public class TimeSeriesTest  implements SeriesChangeListener {
      * Another test of the clone() method.
      */
     @Test
-    public void testClone2() {
+    public void testClone2() throws CloneNotSupportedException {
         TimeSeries s1 = new TimeSeries("S1");
         s1.add(new Year(2007), 100.0);
         s1.add(new Year(2008), null);
         s1.add(new Year(2009), 200.0);
-        TimeSeries s2 = null;
-        try {
-            s2 = (TimeSeries) s1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        TimeSeries s2 = (TimeSeries) s1.clone();
         assertTrue(s1.equals(s2));
 
         // check independence
@@ -227,13 +184,7 @@ public class TimeSeriesTest  implements SeriesChangeListener {
      */
     @Test
     public void testAddValue() {
-
-        try {
-            this.seriesA.add(new Year(1999), new Integer(1));
-        }
-        catch (SeriesException e) {
-            System.err.println("Problem adding to series.");
-        }
+        this.seriesA.add(new Year(1999), new Integer(1));
 
         int value = this.seriesA.getValue(0).intValue();
         assertEquals(1, value);
@@ -336,27 +287,22 @@ public class TimeSeriesTest  implements SeriesChangeListener {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         TimeSeries s1 = new TimeSeries("A test");
         s1.add(new Year(2000), 13.75);
         s1.add(new Year(2001), 11.90);
         s1.add(new Year(2002), null);
         s1.add(new Year(2005), 19.32);
         s1.add(new Year(2007), 16.89);
-        TimeSeries s2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(s1);
-            out.close();
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            s2 = (TimeSeries) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(s1);
+        out.close();
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
+        TimeSeries s2 = (TimeSeries) in.readObject();
+        in.close();
+
         assertTrue(s1.equals(s2));
     }
 
@@ -419,7 +365,7 @@ public class TimeSeriesTest  implements SeriesChangeListener {
      * RegularTimePeriod) method is functioning correctly.
      */
     @Test
-    public void testCreateCopy1() {
+    public void testCreateCopy1() throws CloneNotSupportedException {
 
         TimeSeries series = new TimeSeries("Series");
         series.add(new Month(MonthConstants.JANUARY, 2003), 45.0);
@@ -428,7 +374,6 @@ public class TimeSeriesTest  implements SeriesChangeListener {
         series.add(new Month(MonthConstants.NOVEMBER, 2003), 85.0);
         series.add(new Month(MonthConstants.DECEMBER, 2003), 75.0);
 
-        try {
             // copy a range before the start of the series data...
             TimeSeries result1 = series.createCopy(
                     new Month(MonthConstants.NOVEMBER, 2002),
@@ -502,10 +447,7 @@ public class TimeSeriesTest  implements SeriesChangeListener {
                     new Month(MonthConstants.JANUARY, 2004),
                     new Month(MonthConstants.MARCH, 2004));
             assertEquals(0, result14.getItemCount());
-        }
-        catch (CloneNotSupportedException e) {
-            assertTrue(false);
-        }
+
 
     }
 
@@ -514,7 +456,7 @@ public class TimeSeriesTest  implements SeriesChangeListener {
      * functioning correctly.
      */
     @Test
-    public void testCreateCopy2() {
+    public void testCreateCopy2() throws CloneNotSupportedException {
 
         TimeSeries series = new TimeSeries("Series");
         series.add(new Month(MonthConstants.JANUARY, 2003), 45.0);
@@ -523,7 +465,7 @@ public class TimeSeriesTest  implements SeriesChangeListener {
         series.add(new Month(MonthConstants.NOVEMBER, 2003), 85.0);
         series.add(new Month(MonthConstants.DECEMBER, 2003), 75.0);
 
-        try {
+
             // copy just the first item...
             TimeSeries result1 = series.createCopy(0, 0);
             assertEquals(new Month(1, 2003), result1.getTimePeriod(0));
@@ -545,45 +487,30 @@ public class TimeSeriesTest  implements SeriesChangeListener {
             // copy the last item...
             result1 = series.createCopy(4, 4);
             assertEquals(new Month(12, 2003), result1.getTimePeriod(0));
-        }
-        catch (CloneNotSupportedException e) {
-            assertTrue(false);
-        }
 
         // check negative first argument
-        boolean pass = false;
+
         try {
             /* TimeSeries result = */ series.createCopy(-1, 1);
+            fail("IllegalArgumentException should have been thrown on negative key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Requires start >= 0.", e.getMessage());
         }
-        catch (CloneNotSupportedException e) {
-            pass = false;
-        }
-        assertTrue(pass);
 
         // check second argument less than first argument
-        pass = false;
         try {
             /* TimeSeries result = */ series.createCopy(1, 0);
+            fail("IllegalArgumentException should have been thrown on index out of range");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Requires start <= end.", e.getMessage());
         }
-        catch (CloneNotSupportedException e) {
-            pass = false;
-        }
-        assertTrue(pass);
 
         TimeSeries series2 = new TimeSeries("Series 2");
-        try {
-            TimeSeries series3 = series2.createCopy(99, 999);
-            assertEquals(0, series3.getItemCount());
-        }
-        catch (CloneNotSupportedException e) {
-            assertTrue(false);
-        }
+        TimeSeries series3 = series2.createCopy(99, 999);
+        assertEquals(0, series3.getItemCount());
+
     }
 
     /**
@@ -674,14 +601,13 @@ public class TimeSeriesTest  implements SeriesChangeListener {
         s1.addOrUpdate(new Year(2010), 1.1);
         assertEquals(Year.class, s1.getTimePeriodClass());
 
-        boolean pass = false;
         try {
             s1.addOrUpdate(new Month(1, 2009), 0.0);
+            fail("IllegalArgumentException should have been thrown on key (month) not matching type (year)");
         }
         catch (SeriesException e) {
-            pass = true;
+            assertEquals("You are trying to add data where the time period class is org.jfree.data.time.Month, but the TimeSeries is expecting an instance of org.jfree.data.time.Year.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -693,20 +619,20 @@ public class TimeSeriesTest  implements SeriesChangeListener {
         TimeSeriesDataItem overwritten = ts.addOrUpdate(new Year(2009), 20.09);
         assertNull(overwritten);
         overwritten = ts.addOrUpdate(new Year(2009), 1.0);
-        assertEquals(new Double(20.09), overwritten.getValue());
-        assertEquals(new Double(1.0), ts.getValue(new Year(2009)));
+        assertEquals(20.09, overwritten.getValue());
+        assertEquals(1.0, ts.getValue(new Year(2009)));
 
         // changing the overwritten record shouldn't affect the series
         overwritten.setValue(null);
-        assertEquals(new Double(1.0), ts.getValue(new Year(2009)));
+        assertEquals(1.0, ts.getValue(new Year(2009)));
 
         TimeSeriesDataItem item = new TimeSeriesDataItem(new Year(2010), 20.10);
         overwritten = ts.addOrUpdate(item);
         assertNull(overwritten);
-        assertEquals(new Double(20.10), ts.getValue(new Year(2010)));
+        assertEquals(20.10, ts.getValue(new Year(2010)));
         // changing the item that was added should not change the series
         item.setValue(null);
-        assertEquals(new Double(20.10), ts.getValue(new Year(2010)));
+        assertEquals(20.10, ts.getValue(new Year(2010)));
     }
 
     /**
@@ -718,13 +644,7 @@ public class TimeSeriesTest  implements SeriesChangeListener {
         ts.add(new FixedMillisecond(0L), 0.0);
         TimeSeries ts2 = new TimeSeries("dummy2");
         ts2.add(new FixedMillisecond(0L), 1.0);
-        try {
-            ts.addAndOrUpdate(ts2);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            assertTrue(false);
-        }
+        ts.addAndOrUpdate(ts2);
         assertEquals(1, ts.getItemCount());
     }
 
@@ -732,15 +652,11 @@ public class TimeSeriesTest  implements SeriesChangeListener {
      * A test for bug 1832432.
      */
     @Test
-    public void testBug1832432() {
+    public void testBug1832432() throws CloneNotSupportedException {
         TimeSeries s1 = new TimeSeries("Series");
-        TimeSeries s2 = null;
-        try {
-            s2 = (TimeSeries) s1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        TimeSeries s2 = (TimeSeries) s1.clone();
+
+
         assertTrue(s1 != s2);
         assertTrue(s1.getClass() == s2.getClass());
         assertTrue(s1.equals(s2));
@@ -779,35 +695,32 @@ public class TimeSeriesTest  implements SeriesChangeListener {
         TimeSeries series = new TimeSeries("S");
 
         // can't get anything yet...just an exception
-        boolean pass = false;
         try {
             /*TimeSeriesDataItem item =*/ series.getDataItem(0);
+            fail("IllegalArgumentException should have been thrown on key not existing");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("Index: 0, Size: 0", e.getMessage());
         }
-        assertTrue(pass);
 
         series.add(new Year(2006), 100.0);
         TimeSeriesDataItem item = series.getDataItem(0);
         assertEquals(new Year(2006), item.getPeriod());
-        pass = false;
         try {
             /*item = */series.getDataItem(-1);
+            fail("IllegalArgumentException should have been thrown on negative key");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("-1", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             /*item = */series.getDataItem(1);
+            fail("IllegalArgumentException should have been thrown on key out of range");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("Index: 1, Size: 1", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -819,14 +732,14 @@ public class TimeSeriesTest  implements SeriesChangeListener {
         assertNull(series.getDataItem(new Year(2006)));
 
         // try a null argument
-        boolean pass = false;
+
         try {
             /* TimeSeriesDataItem item = */ series.getDataItem(null);
+            fail("IllegalArgumentException should have been thrown on null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'period' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -918,14 +831,8 @@ public class TimeSeriesTest  implements SeriesChangeListener {
     @Test
     public void testRemoveAgedItems3() {
         TimeSeries s = new TimeSeries("Test");
-        boolean pass = true;
-        try {
-            s.removeAgedItems(0L, true);
-        }
-        catch (Exception e) {
-            pass = false;
-        }
-        assertTrue(pass);
+        s.removeAgedItems(0L, true);
+
     }
 
     /**
@@ -998,18 +905,13 @@ public class TimeSeriesTest  implements SeriesChangeListener {
      * Test for bug report 1864222.
      */
     @Test
-    public void testBug1864222() {
+    public void testBug1864222() throws CloneNotSupportedException {
         TimeSeries s = new TimeSeries("S");
         s.add(new Day(19, 8, 2005), 1);
         s.add(new Day(31, 1, 2006), 1);
-        boolean pass = true;
-        try {
-            s.createCopy(new Day(1, 12, 2005), new Day(18, 1, 2006));
-        }
-        catch (CloneNotSupportedException e) {
-            pass = false;
-        }
-        assertTrue(pass);
+
+        s.createCopy(new Day(1, 12, 2005), new Day(18, 1, 2006));
+
     }
 
     /**
@@ -1144,7 +1046,7 @@ public class TimeSeriesTest  implements SeriesChangeListener {
         TimeSeries series = new TimeSeries("S1");
         series.add(item);
         assertTrue(item.equals(series.getDataItem(0)));
-        item.setValue(new Double(99.9));
+        item.setValue(99.9);
         assertFalse(item.equals(series.getDataItem(0)));
     }
 

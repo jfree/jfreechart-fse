@@ -51,6 +51,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -61,6 +62,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link OHLCSeries} class.
@@ -137,16 +139,10 @@ public class OHLCSeriesTest
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         OHLCSeries s1 = new OHLCSeries("s1");
         s1.add(new Year(2006), 2.0, 4.0, 1.0, 3.0);
-        OHLCSeries s2 = null;
-        try {
-            s2 = (OHLCSeries) s1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        OHLCSeries s2 = (OHLCSeries) s1.clone();
         assertTrue(s1 != s2);
         assertTrue(s1.getClass() == s2.getClass());
         assertTrue(s1.equals(s2));
@@ -156,13 +152,11 @@ public class OHLCSeriesTest
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         OHLCSeries s1 = new OHLCSeries("s1");
         s1.add(new Year(2006), 2.0, 4.0, 1.0, 3.0);
-        OHLCSeries s2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(s1);
@@ -170,12 +164,9 @@ public class OHLCSeriesTest
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            s2 = (OHLCSeries) in.readObject();
+        OHLCSeries s2 = (OHLCSeries) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(s1, s2);
 
     }
@@ -235,14 +226,14 @@ public class OHLCSeriesTest
     public void testAdditionOfDuplicatePeriod() {
         OHLCSeries s1 = new OHLCSeries("s1");
         s1.add(new Year(2006), 1.0, 1.0, 1.0, 1.0);
-        boolean pass = false;
+
         try {
             s1.add(new Year(2006), 1.0, 1.0, 1.0, 1.0);
+            fail("Should have thrown a SeriesException on duplicate value");
         }
         catch (SeriesException e) {
-            pass = true;
+            assertEquals("X-value already exists.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**

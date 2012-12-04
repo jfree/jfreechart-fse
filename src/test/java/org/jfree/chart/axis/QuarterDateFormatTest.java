@@ -45,6 +45,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -54,7 +55,6 @@ import java.util.TimeZone;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link QuarterDateFormat} class.
@@ -118,11 +118,10 @@ public class QuarterDateFormatTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         QuarterDateFormat qf1 = new QuarterDateFormat(TimeZone.getTimeZone(
                 "GMT"), new String[] {"1", "2", "3", "4"});
-        QuarterDateFormat qf2 = null;
-        qf2 = (QuarterDateFormat) qf1.clone();
+        QuarterDateFormat qf2 = (QuarterDateFormat) qf1.clone();
         assertTrue(qf1 != qf2);
         assertTrue(qf1.getClass() == qf2.getClass());
         assertTrue(qf1.equals(qf2));
@@ -132,11 +131,10 @@ public class QuarterDateFormatTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         QuarterDateFormat qf1 = new QuarterDateFormat(TimeZone.getTimeZone(
                 "GMT"), new String[] {"1", "2", "3", "4"});
-        QuarterDateFormat qf2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(qf1);
@@ -144,12 +142,9 @@ public class QuarterDateFormatTest  {
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            qf2 = (QuarterDateFormat) in.readObject();
+            QuarterDateFormat qf2 = (QuarterDateFormat) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            fail(e.toString());
-        }
+
         assertTrue(qf1.equals(qf2));
     }
 

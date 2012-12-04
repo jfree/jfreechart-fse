@@ -46,6 +46,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -55,6 +56,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link KeyedObjects2D} class.
@@ -75,9 +77,9 @@ public class KeyedObjects2DTest  {
         assertTrue(k1.equals(k2));
         assertTrue(k2.equals(k1));
 
-        k1.addObject(new Integer(99), "R1", "C1");
+        k1.addObject(99, "R1", "C1");
         assertFalse(k1.equals(k2));
-        k2.addObject(new Integer(99), "R1", "C1");
+        k2.addObject(99, "R1", "C1");
         assertTrue(k1.equals(k2));
     }
 
@@ -85,18 +87,14 @@ public class KeyedObjects2DTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         KeyedObjects2D o1 = new KeyedObjects2D();
-        o1.setObject(new Integer(1), "V1", "C1");
+        o1.setObject(1, "V1", "C1");
         o1.setObject(null, "V2", "C1");
-        o1.setObject(new Integer(3), "V3", "C2");
-        KeyedObjects2D o2 = null;
-        try {
-            o2 = (KeyedObjects2D) o1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        o1.setObject(3, "V3", "C2");
+        KeyedObjects2D o2 = (KeyedObjects2D) o1.clone();
+
+
         assertTrue(o1 != o2);
         assertTrue(o1.getClass() == o2.getClass());
         assertTrue(o1.equals(o2));
@@ -110,30 +108,25 @@ public class KeyedObjects2DTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         KeyedObjects2D ko2D1 = new KeyedObjects2D();
-        ko2D1.addObject(new Double(234.2), "Row1", "Col1");
+        ko2D1.addObject(234.2, "Row1", "Col1");
         ko2D1.addObject(null, "Row1", "Col2");
-        ko2D1.addObject(new Double(345.9), "Row2", "Col1");
-        ko2D1.addObject(new Double(452.7), "Row2", "Col2");
+        ko2D1.addObject(345.9, "Row2", "Col1");
+        ko2D1.addObject(452.7, "Row2", "Col2");
 
-        KeyedObjects2D ko2D2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(ko2D1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(ko2D1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            ko2D2 = (KeyedObjects2D) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        KeyedObjects2D ko2D2 = (KeyedObjects2D) in.readObject();
+        in.close();
+
         assertEquals(ko2D1, ko2D2);
 
     }
@@ -152,41 +145,37 @@ public class KeyedObjects2DTest  {
         assertNull(data.getObject(1, 0));
 
         // check invalid indices
-        boolean pass = false;
         try {
             data.getObject(-1, 0);
+            fail("Should have thrown IndexOutOfBoundsException on negative key");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("-1", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             data.getObject(0, -1);
+            fail("Should have thrown IndexOutOfBoundsException on key out of bounds");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("-1", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             data.getObject(2, 0);
+            fail("Should have thrown IndexOutOfBoundsException on key out of bounds");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("Index: 2, Size: 2", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             data.getObject(0, 2);
+            fail("Should have thrown IndexOutOfBoundsException on key out of bounds");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("Index: 2, Size: 2", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -203,41 +192,37 @@ public class KeyedObjects2DTest  {
         assertNull(data.getObject("R2", "C1"));
 
         // check invalid indices
-        boolean pass = false;
         try {
             data.getObject("XX", "C1");
+            fail("Should have thrown UnknownKeyException unknown key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Row key (XX) not recognised.", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             data.getObject("R1", "XX");
+            fail("Should have thrown UnknownKeyException unknown key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Column key (XX) not recognised.", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             data.getObject("XX", "C1");
+            fail("Should have thrown UnknownKeyException unknown key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Row key (XX) not recognised.", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             data.getObject("R1", "XX");
+            fail("Should have thrown UnknownKeyException unknown key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Column key (XX) not recognised.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -258,23 +243,21 @@ public class KeyedObjects2DTest  {
         assertEquals("ABC", data.getObject("R2", "C2"));
 
         // try null keys
-        boolean pass = false;
         try {
             data.setObject("X", null, "C1");
+            fail("Should have thrown IllegalArgumentException on null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'rowKey' argument.", e.getMessage());
         }
-        assertTrue(pass);
 
-        pass = false;
         try {
             data.setObject("X", "R1", null);
+            fail("Should have thrown IllegalArgumentException on duplicate key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'columnKey' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -290,24 +273,22 @@ public class KeyedObjects2DTest  {
         assertEquals("Obj2", data.getObject(0, 1));
 
         // try negative row index
-        boolean pass = false;
         try {
             data.removeRow(-1);
+            fail("Should have thrown IndexOutOfBoundsException on negative index");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("-1", e.getMessage());
         }
-        assertTrue(pass);
 
         // try row index too high
-        pass = false;
         try {
             data.removeRow(data.getRowCount());
+            fail("Should have thrown IndexOutOfBoundsException on index out of range");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("Index: 1, Size: 1", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -323,24 +304,22 @@ public class KeyedObjects2DTest  {
         assertEquals("Obj2", data.getObject(1, 0));
 
         // try negative column index
-        boolean pass = false;
         try {
             data.removeColumn(-1);
+            fail("Should have thrown IndexOutOfBoundsException on negative index");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("-1", e.getMessage());
         }
-        assertTrue(pass);
 
         // try column index too high
-        pass = false;
         try {
             data.removeColumn(data.getColumnCount());
+            fail("Should have thrown IndexOutOfBoundsException on index out of range");
         }
         catch (IndexOutOfBoundsException e) {
-            pass = true;
+            assertEquals("Index: 1, Size: 1", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -356,24 +335,22 @@ public class KeyedObjects2DTest  {
         assertEquals("Obj1", data.getObject(0, 0));
 
         // try unknown row key
-        boolean pass = false;
         try {
             data.removeRow("XXX");
+            fail("Should have thrown UnknownKeyException on key that doesn't exist");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Row key (XXX) not recognised.", e.getMessage());
         }
-        assertTrue(pass);
 
         // try null row key
-        pass = false;
         try {
             data.removeRow(null);
+            fail("Should have thrown IndexOutOfBoundsException on null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'key' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**
@@ -389,24 +366,23 @@ public class KeyedObjects2DTest  {
         assertEquals("Obj1", data.getObject(0, 0));
 
         // try unknown column key
-        boolean pass = false;
         try {
             data.removeColumn("XXX");
+            fail("Should have thrown UnknownKeyException on unknown key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Column key (XXX) not recognised.", e.getMessage());
         }
-        assertTrue(pass);
+
 
         // try null column key
-        pass = false;
         try {
             data.removeColumn(null);
+            fail("Should have thrown IllegalArgumentException on null key");
         }
         catch (IllegalArgumentException e) {
-            pass = true;
+            assertEquals("Null 'key' argument.", e.getMessage());
         }
-        assertTrue(pass);
     }
 
     /**

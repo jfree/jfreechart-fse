@@ -45,6 +45,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -128,18 +129,12 @@ public class TimeTableXYDatasetTest  {
      * Some checks for cloning.
      */
     @Test
-    public void testClone() {
+    public void testClone() throws CloneNotSupportedException {
 
         TimeTableXYDataset d = new TimeTableXYDataset();
         d.add(new Year(1999), 25.0, "Series");
 
-        TimeTableXYDataset clone = null;
-        try {
-            clone = (TimeTableXYDataset) d.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            assertTrue(false);
-        }
+        TimeTableXYDataset clone = (TimeTableXYDataset) d.clone();
         assertTrue(clone.equals(d));
 
         // now test that the clone is independent of the original
@@ -151,13 +146,11 @@ public class TimeTableXYDatasetTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         TimeTableXYDataset d1 = new TimeTableXYDataset();
         d1.add(new Year(1999), 123.4, "S1");
-        TimeTableXYDataset d2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(d1);
@@ -165,12 +158,9 @@ public class TimeTableXYDatasetTest  {
 
             ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
                     buffer.toByteArray()));
-            d2 = (TimeTableXYDataset) in.readObject();
+        TimeTableXYDataset d2 = (TimeTableXYDataset) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertTrue(d1.equals(d2));
 
     }

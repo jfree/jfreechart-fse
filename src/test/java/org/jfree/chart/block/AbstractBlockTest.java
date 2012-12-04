@@ -44,10 +44,11 @@ package org.jfree.chart.block;
 import org.jfree.chart.ui.RectangleInsets;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -56,7 +57,6 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link AbstractBlock} class.
@@ -127,18 +127,11 @@ public class AbstractBlockTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         EmptyBlock b1 = new EmptyBlock(1.0, 2.0);
         Rectangle2D bounds1 = new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0);
         b1.setBounds(bounds1);
-        EmptyBlock b2 = null;
-
-        try {
-            b2 = (EmptyBlock) b1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            fail(e.toString());
-        }
+        EmptyBlock b2 = (EmptyBlock) b1.clone();
         assertTrue(b1 != b2);
         assertTrue(b1.getClass() == b2.getClass());
         assertTrue(b1.equals(b2));
@@ -153,23 +146,18 @@ public class AbstractBlockTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         EmptyBlock b1 = new EmptyBlock(1.0, 2.0);
-        EmptyBlock b2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(b1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            b2 = (EmptyBlock) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            fail(e.toString());
-        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(b1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        EmptyBlock b2 = (EmptyBlock) in.readObject();
+        in.close();
         assertEquals(b1, b2);
     }
 

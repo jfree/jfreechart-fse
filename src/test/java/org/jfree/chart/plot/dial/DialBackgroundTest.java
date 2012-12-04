@@ -45,9 +45,11 @@ import org.jfree.chart.ui.GradientPaintTransformType;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -116,16 +118,10 @@ public class DialBackgroundTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         // test default instance
         DialBackground b1 = new DialBackground();
-        DialBackground b2 = null;
-        try {
-            b2 = (DialBackground) b1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        DialBackground b2 = (DialBackground) b1.clone();
         assertTrue(b1 != b2);
         assertTrue(b1.getClass() == b2.getClass());
         assertTrue(b1.equals(b2));
@@ -136,13 +132,7 @@ public class DialBackgroundTest  {
                 Color.green));
         b1.setGradientPaintTransformer(new StandardGradientPaintTransformer(
                 GradientPaintTransformType.CENTER_VERTICAL));
-        b2 = null;
-        try {
-            b2 = (DialBackground) b1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        b2 = (DialBackground) b1.clone();
         assertTrue(b1 != b2);
         assertTrue(b1.getClass() == b2.getClass());
         assertTrue(b1.equals(b2));
@@ -159,12 +149,10 @@ public class DialBackgroundTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         // test a default instance
         DialBackground b1 = new DialBackground();
-        DialBackground b2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(b1);
@@ -172,12 +160,9 @@ public class DialBackgroundTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            b2 = (DialBackground) in.readObject();
+        DialBackground b2 = (DialBackground) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(b1, b2);
 
         // test a customised instance
@@ -186,22 +171,18 @@ public class DialBackgroundTest  {
                 Color.green));
         b1.setGradientPaintTransformer(new StandardGradientPaintTransformer(
                 GradientPaintTransformType.CENTER_VERTICAL));
-        b2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
+
+            buffer = new ByteArrayOutputStream();
+            out = new ObjectOutputStream(buffer);
             out.writeObject(b1);
             out.close();
 
-            ObjectInput in = new ObjectInputStream(
+            in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
             b2 = (DialBackground) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(b1, b2);
     }
 

@@ -46,6 +46,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -93,18 +94,12 @@ public class CategoryTableXYDatasetTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         CategoryTableXYDataset d1 = new CategoryTableXYDataset();
         d1.add(1.0, 1.1, "Series 1");
         d1.add(2.0, 2.2, "Series 1");
 
-        CategoryTableXYDataset d2 = null;
-        try {
-            d2 = (CategoryTableXYDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        CategoryTableXYDataset d2 = (CategoryTableXYDataset) d1.clone();
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
@@ -125,19 +120,13 @@ public class CategoryTableXYDatasetTest  {
      * interval delegate.
      */
     @Test
-    public void testCloning2() {
+    public void testCloning2() throws CloneNotSupportedException {
         CategoryTableXYDataset d1 = new CategoryTableXYDataset();
         d1.add(1.0, 1.1, "Series 1");
         d1.add(2.0, 2.2, "Series 1");
         d1.setIntervalWidth(1.23);
 
-        CategoryTableXYDataset d2 = null;
-        try {
-            d2 = (CategoryTableXYDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        CategoryTableXYDataset d2 = (CategoryTableXYDataset) d1.clone();
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
@@ -166,15 +155,13 @@ public class CategoryTableXYDatasetTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         CategoryTableXYDataset d1 = new CategoryTableXYDataset();
         d1.add(1.0, 1.1, "Series 1");
         d1.add(2.0, 2.2, "Series 1");
 
-        CategoryTableXYDataset d2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(d1);
@@ -183,12 +170,9 @@ public class CategoryTableXYDatasetTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            d2 = (CategoryTableXYDataset) in.readObject();
+        CategoryTableXYDataset d2 = (CategoryTableXYDataset) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(d1, d2);
 
     }

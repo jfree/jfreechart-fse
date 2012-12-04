@@ -46,11 +46,15 @@ import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Rectangle;
+import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -188,16 +192,10 @@ public class LegendGraphicTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         Rectangle r = new Rectangle(1, 2, 3, 4);
         LegendGraphic g1 = new LegendGraphic(r, Color.BLACK);
-        LegendGraphic g2 = null;
-        try {
-            g2 = (LegendGraphic) g1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        LegendGraphic g2 = (LegendGraphic) g1.clone();
         assertTrue(g1 != g2);
         assertTrue(g1.getClass() == g2.getClass());
         assertTrue(g1.equals(g2));
@@ -211,18 +209,12 @@ public class LegendGraphicTest  {
      * A test for cloning - checks that the line shape is cloned correctly.
      */
     @Test
-    public void testCloning2() {
+    public void testCloning2() throws CloneNotSupportedException {
         Rectangle r = new Rectangle(1, 2, 3, 4);
         LegendGraphic g1 = new LegendGraphic(r, Color.BLACK);
         Line2D l = new Line2D.Double(1.0, 2.0, 3.0, 4.0);
         g1.setLine(l);
-        LegendGraphic g2 = null;
-        try {
-            g2 = (LegendGraphic) g1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        LegendGraphic g2 = (LegendGraphic) g1.clone();
         assertTrue(g1 != g2);
         assertTrue(g1.getClass() == g2.getClass());
         assertTrue(g1.equals(g2));
@@ -237,14 +229,12 @@ public class LegendGraphicTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         Stroke s = new BasicStroke(1.23f);
         LegendGraphic g1 = new LegendGraphic(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), Color.BLACK);
         g1.setOutlineStroke(s);
-        LegendGraphic g2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(g1);
@@ -252,12 +242,9 @@ public class LegendGraphicTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            g2 = (LegendGraphic) in.readObject();
+        LegendGraphic g2 = (LegendGraphic) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
+
         assertTrue(g1.equals(g2));
 
     }

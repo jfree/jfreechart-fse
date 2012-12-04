@@ -44,6 +44,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -103,7 +104,7 @@ public class XYIntervalTest  {
      * This class is immutable.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         XYInterval i1 = new XYInterval(1.0, 2.0, 3.0, 2.5, 3.5);
         assertFalse(i1 instanceof Cloneable);
     }
@@ -112,11 +113,9 @@ public class XYIntervalTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         XYInterval i1 = new XYInterval(1.0, 2.0, 3.0, 2.5, 3.5);
-        XYInterval i2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(i1);
@@ -124,12 +123,9 @@ public class XYIntervalTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            i2 = (XYInterval) in.readObject();
+        XYInterval i2 = (XYInterval) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(i1, i2);
     }
 

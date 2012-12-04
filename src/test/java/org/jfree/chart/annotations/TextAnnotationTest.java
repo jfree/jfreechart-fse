@@ -46,7 +46,9 @@ package org.jfree.chart.annotations;
 import org.jfree.chart.ui.TextAnchor;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -135,7 +137,7 @@ public class TextAnnotationTest  {
             a.setRotationAnchor(null);
             fail("Should have thrown Exception.");
         } catch (IllegalArgumentException e) {
-            // ok, exception is expected
+            assertEquals("Null 'anchor' argument.", e.getMessage());
         }
     }
 }

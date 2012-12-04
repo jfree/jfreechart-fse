@@ -50,6 +50,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -129,20 +130,14 @@ public class DefaultStatisticalCategoryDatasetTest  {
      * Some checks for cloning.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         DefaultStatisticalCategoryDataset d1
                 = new DefaultStatisticalCategoryDataset();
         d1.add(1.1, 2.2, "R1", "C1");
         d1.add(3.3, 4.4, "R1", "C2");
-        d1.add(null, new Double(5.5), "R1", "C3");
-        d1.add(new Double(6.6), null, "R2", "C3");
-        DefaultStatisticalCategoryDataset d2 = null;
-        try {
-            d2 = (DefaultStatisticalCategoryDataset) d1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            fail(e.toString());
-        }
+        d1.add(null, 5.5, "R1", "C3");
+        d1.add(6.6, null, "R2", "C3");
+        DefaultStatisticalCategoryDataset d2 = (DefaultStatisticalCategoryDataset) d1.clone();
         assertTrue(d1 != d2);
         assertTrue(d1.getClass() == d2.getClass());
         assertTrue(d1.equals(d2));
@@ -156,15 +151,14 @@ public class DefaultStatisticalCategoryDatasetTest  {
      * Check serialization of a default instance.
      */
     @Test
-    public void testSerialization1() {
+    public void testSerialization1() throws IOException, ClassNotFoundException {
         DefaultStatisticalCategoryDataset d1
             = new DefaultStatisticalCategoryDataset();
         d1.add(1.1, 2.2, "R1", "C1");
         d1.add(3.3, 4.4, "R1", "C2");
-        d1.add(null, new Double(5.5), "R1", "C3");
-        d1.add(new Double(6.6), null, "R2", "C3");
-        DefaultStatisticalCategoryDataset d2 = null;
-        try {
+        d1.add(null, 5.5, "R1", "C3");
+        d1.add(6.6, null, "R2", "C3");
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(d1);
@@ -172,12 +166,9 @@ public class DefaultStatisticalCategoryDatasetTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            d2 = (DefaultStatisticalCategoryDataset) in.readObject();
+        DefaultStatisticalCategoryDataset d2 = (DefaultStatisticalCategoryDataset) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            fail(e.toString());
-        }
+
         assertEquals(d1, d2);
     }
 
@@ -185,12 +176,11 @@ public class DefaultStatisticalCategoryDatasetTest  {
      * Check serialization of a more complex instance.
      */
     @Test
-    public void testSerialization2() {
+    public void testSerialization2() throws IOException, ClassNotFoundException {
         DefaultStatisticalCategoryDataset d1
             = new DefaultStatisticalCategoryDataset();
         d1.add(1.2, 3.4, "Row 1", "Column 1");
-        DefaultStatisticalCategoryDataset d2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(d1);
@@ -198,12 +188,9 @@ public class DefaultStatisticalCategoryDatasetTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            d2 = (DefaultStatisticalCategoryDataset) in.readObject();
+        DefaultStatisticalCategoryDataset d2 = (DefaultStatisticalCategoryDataset) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            fail(e.toString());
-        }
+
         assertEquals(d1, d2);
     }
 
@@ -274,14 +261,15 @@ public class DefaultStatisticalCategoryDatasetTest  {
         DefaultStatisticalCategoryDataset data
                 = new DefaultStatisticalCategoryDataset();
 
-        boolean pass = false;
+
         try {
             data.remove("R1", "R2");
+            fail("UnknownKeyException should have been thrown on the unknown key");
         }
         catch (UnknownKeyException e) {
-            pass = true;
+            assertEquals("Row key (R1) not recognised.", e.getMessage());
         }
-        assertTrue(pass);
+
         data.add(1.0, 0.5, "R1", "C1");
         assertEquals(new Range(1.0, 1.0), data.getRangeBounds(false));
         assertEquals(new Range(0.5, 1.5), data.getRangeBounds(true));

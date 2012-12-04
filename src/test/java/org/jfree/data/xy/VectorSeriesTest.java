@@ -48,6 +48,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -133,16 +134,10 @@ public class VectorSeriesTest
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         VectorSeries s1 = new VectorSeries("s1");
         s1.add(1.0, 0.5, 1.5, 2.0);
-        VectorSeries s2 = null;
-        try {
-            s2 = (VectorSeries) s1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        VectorSeries s2 = (VectorSeries) s1.clone();
         assertTrue(s1 != s2);
         assertTrue(s1.getClass() == s2.getClass());
         assertTrue(s1.equals(s2));
@@ -152,11 +147,10 @@ public class VectorSeriesTest
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         VectorSeries s1 = new VectorSeries("s1");
         s1.add(1.0, 0.5, 1.5, 2.0);
-        VectorSeries s2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(s1);
@@ -164,12 +158,9 @@ public class VectorSeriesTest
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            s2 = (VectorSeries) in.readObject();
+        VectorSeries s2 = (VectorSeries) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(s1, s2);
 
     }

@@ -44,6 +44,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -52,7 +53,6 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 
 
@@ -90,18 +90,11 @@ public class BlockContainerTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         BlockContainer c1 = new BlockContainer(new FlowArrangement());
         c1.add(new EmptyBlock(1.2, 3.4));
 
-        BlockContainer c2 = null;
-
-        try {
-            c2 = (BlockContainer) c1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
-        }
+        BlockContainer c2 = (BlockContainer) c1.clone();
         assertTrue(c1 != c2);
         assertTrue(c1.getClass() == c2.getClass());
         assertTrue(c1.equals(c2));
@@ -111,25 +104,20 @@ public class BlockContainerTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         BlockContainer c1 = new BlockContainer();
         c1.add(new EmptyBlock(1.2, 3.4));
-        BlockContainer c2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(c1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-            );
-            c2 = (BlockContainer) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            fail(e.toString());
-        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(c1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(
+            new ByteArrayInputStream(buffer.toByteArray())
+        );
+        BlockContainer c2 = (BlockContainer) in.readObject();
+        in.close();
         assertEquals(c1, c2);
     }
 

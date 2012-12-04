@@ -45,9 +45,10 @@ package org.jfree.chart.renderer.category;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -128,15 +129,9 @@ public class WaterfallBarRendererTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         WaterfallBarRenderer r1 = new WaterfallBarRenderer();
-        WaterfallBarRenderer r2 = null;
-        try {
-            r2 = (WaterfallBarRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            System.err.println("Failed to clone.");
-        }
+        WaterfallBarRenderer r2 = (WaterfallBarRenderer) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -162,12 +157,10 @@ public class WaterfallBarRendererTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         WaterfallBarRenderer r1 = new WaterfallBarRenderer();
-        WaterfallBarRenderer r2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(r1);
@@ -176,12 +169,9 @@ public class WaterfallBarRendererTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            r2 = (WaterfallBarRenderer) in.readObject();
+        WaterfallBarRenderer r2 = (WaterfallBarRenderer) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
+
         assertEquals(r1, r2);
 
     }

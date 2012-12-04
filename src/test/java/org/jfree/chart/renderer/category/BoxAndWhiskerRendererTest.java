@@ -62,11 +62,14 @@ import org.jfree.data.statistics.BoxAndWhiskerItem;
 import org.jfree.data.statistics.DefaultBoxAndWhiskerCategoryDataset;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -148,15 +151,10 @@ public class BoxAndWhiskerRendererTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         BoxAndWhiskerRenderer r1 = new BoxAndWhiskerRenderer();
-        BoxAndWhiskerRenderer r2 = null;
-        try {
-            r2 = (BoxAndWhiskerRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        BoxAndWhiskerRenderer r2 = (BoxAndWhiskerRenderer) r1.clone();
+        
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -175,25 +173,19 @@ public class BoxAndWhiskerRendererTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         BoxAndWhiskerRenderer r1 = new BoxAndWhiskerRenderer();
-        BoxAndWhiskerRenderer r2 = null;
 
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(r1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(r1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            r2 = (BoxAndWhiskerRenderer) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        BoxAndWhiskerRenderer r2 = (BoxAndWhiskerRenderer) in.readObject();
+        in.close();
         assertEquals(r1, r2);
 
     }
@@ -204,26 +196,21 @@ public class BoxAndWhiskerRendererTest  {
      */
     @Test
     public void testDrawWithNullInfo() {
-        boolean success = false;
-        try {
-            DefaultBoxAndWhiskerCategoryDataset dataset
-                = new DefaultBoxAndWhiskerCategoryDataset();
-            dataset.add(new BoxAndWhiskerItem(new Double(1.0), new Double(2.0),
-                    new Double(0.0), new Double(4.0), new Double(0.5),
-                    new Double(4.5), new Double(-0.5), new Double(5.5),
-                    null), "S1", "C1");
-            CategoryPlot plot = new CategoryPlot(dataset,
-                    new CategoryAxis("Category"), new NumberAxis("Value"),
-                    new BoxAndWhiskerRenderer());
-            JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
-            success = true;
-        }
-        catch (NullPointerException e) {
-            success = false;
-        }
-        assertTrue(success);
+
+        DefaultBoxAndWhiskerCategoryDataset dataset
+            = new DefaultBoxAndWhiskerCategoryDataset();
+        dataset.add(new BoxAndWhiskerItem(1.0, 2.0,
+                0.0, 4.0, 0.5,
+                4.5, -0.5, 5.5,
+                null), "S1", "C1");
+        CategoryPlot plot = new CategoryPlot(dataset,
+                new CategoryAxis("Category"), new NumberAxis("Value"),
+                new BoxAndWhiskerRenderer());
+        JFreeChart chart = new JFreeChart(plot);
+        /* BufferedImage image = */ chart.createBufferedImage(300, 200,
+                null);
+
+        //FIXME we should assert a value here
     }
 
     /**
@@ -244,31 +231,23 @@ public class BoxAndWhiskerRendererTest  {
                 return null;
             }
         };
-        List values = new ArrayList();
-        values.add(new Double(1.0));
-        values.add(new Double(10.0));
-        values.add(new Double(100.0));
+        List<Double> values = new ArrayList<Double>();
+        values.add(1.0);
+        values.add(10.0);
+        values.add(100.0);
         dataset.add(values, "row", "column");
         CategoryPlot plot = new CategoryPlot(dataset, new CategoryAxis("x"),
                 new NumberAxis("y"), new BoxAndWhiskerRenderer());
         JFreeChart chart = new JFreeChart(plot);
-        boolean success = false;
 
-        try {
-            BufferedImage image = new BufferedImage(200 , 100,
-                    BufferedImage.TYPE_INT_RGB);
-            Graphics2D g2 = image.createGraphics();
-            chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null,
-                    new ChartRenderingInfo());
-            g2.dispose();
-            success = true;
-        }
-        catch (Exception e) {
-            success = false;
-        }
+        BufferedImage image = new BufferedImage(200 , 100,
+                BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = image.createGraphics();
+        chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null,
+                new ChartRenderingInfo());
+        g2.dispose();
 
-        assertTrue(success);
-
+        //FIXME we should really assert a value here
     }
 
     /**
@@ -289,31 +268,24 @@ public class BoxAndWhiskerRendererTest  {
                 return null;
             }
         };
-        List values = new ArrayList();
-        values.add(new Double(1.0));
-        values.add(new Double(10.0));
-        values.add(new Double(100.0));
+        List<Double> values = new ArrayList<Double>();
+        values.add(1.0);
+        values.add(10.0);
+        values.add(100.0);
         dataset.add(values, "row", "column");
         CategoryPlot plot = new CategoryPlot(dataset, new CategoryAxis("x"),
                 new NumberAxis("y"), new BoxAndWhiskerRenderer());
         plot.setOrientation(PlotOrientation.HORIZONTAL);
         JFreeChart chart = new JFreeChart(plot);
-        boolean success = false;
 
-        try {
-            BufferedImage image = new BufferedImage(200 , 100,
-                    BufferedImage.TYPE_INT_RGB);
-            Graphics2D g2 = image.createGraphics();
-            chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null,
-                    new ChartRenderingInfo());
-            g2.dispose();
-            success = true;
-        }
-        catch (Exception e) {
-            success = false;
-        }
+        BufferedImage image = new BufferedImage(200 , 100,
+                BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = image.createGraphics();
+        chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null,
+                new ChartRenderingInfo());
+        g2.dispose();
 
-        assertTrue(success);
+        //FIXME we should assert a value here
 
     }
 
@@ -324,11 +296,11 @@ public class BoxAndWhiskerRendererTest  {
     public void testGetLegendItem() {
         DefaultBoxAndWhiskerCategoryDataset dataset
                 = new DefaultBoxAndWhiskerCategoryDataset();
-        List values = new ArrayList();
-        values.add(new Double(1.10));
-        values.add(new Double(1.45));
-        values.add(new Double(1.33));
-        values.add(new Double(1.23));
+        List<Double> values = new ArrayList<Double>();
+        values.add(1.10);
+        values.add(1.45);
+        values.add(1.33);
+        values.add(1.23);
         dataset.add(values, "R1", "C1");
         BoxAndWhiskerRenderer r = new BoxAndWhiskerRenderer();
         CategoryPlot plot = new CategoryPlot(dataset, new CategoryAxis("x"),
@@ -370,27 +342,20 @@ public class BoxAndWhiskerRendererTest  {
      */
     @Test
     public void testDrawWithNullMean() {
-        boolean success = false;
-        try {
-            DefaultBoxAndWhiskerCategoryDataset dataset
-                    = new DefaultBoxAndWhiskerCategoryDataset();
-            dataset.add(new BoxAndWhiskerItem(null, new Double(2.0),
-                    new Double(0.0), new Double(4.0), new Double(0.5),
-                    new Double(4.5), new Double(-0.5), new Double(5.5),
-                    null), "S1", "C1");
-            CategoryPlot plot = new CategoryPlot(dataset,
-                    new CategoryAxis("Category"), new NumberAxis("Value"),
-                    new BoxAndWhiskerRenderer());
-            ChartRenderingInfo info = new ChartRenderingInfo();
-            JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    info);
-            success = true;
-        }
-        catch (Exception e) {
-            success = false;
-        }
-        assertTrue(success);
+        DefaultBoxAndWhiskerCategoryDataset dataset
+                = new DefaultBoxAndWhiskerCategoryDataset();
+        dataset.add(new BoxAndWhiskerItem(null, 2.0,
+                0.0, 4.0, 0.5,
+                4.5, -0.5, 5.5,
+                null), "S1", "C1");
+        CategoryPlot plot = new CategoryPlot(dataset,
+                new CategoryAxis("Category"), new NumberAxis("Value"),
+                new BoxAndWhiskerRenderer());
+        ChartRenderingInfo info = new ChartRenderingInfo();
+        JFreeChart chart = new JFreeChart(plot);
+        /* BufferedImage image = */ chart.createBufferedImage(300, 200,
+                info);
+        //FIXME we should really assert a value here
     }
 
     /**
@@ -398,13 +363,11 @@ public class BoxAndWhiskerRendererTest  {
      */
     @Test
     public void testDrawWithNullMedian() {
-        boolean success = false;
-        try {
             DefaultBoxAndWhiskerCategoryDataset dataset
                     = new DefaultBoxAndWhiskerCategoryDataset();
-            dataset.add(new BoxAndWhiskerItem(new Double(1.0), null,
-                    new Double(0.0), new Double(4.0), new Double(0.5),
-                    new Double(4.5), new Double(-0.5), new Double(5.5),
+            dataset.add(new BoxAndWhiskerItem(1.0, null,
+                    0.0, 4.0, 0.5,
+                    4.5, -0.5, 5.5,
                     null), "S1", "C1");
             CategoryPlot plot = new CategoryPlot(dataset,
                     new CategoryAxis("Category"), new NumberAxis("Value"),
@@ -413,12 +376,7 @@ public class BoxAndWhiskerRendererTest  {
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     info);
-            success = true;
-        }
-        catch (Exception e) {
-            success = false;
-        }
-        assertTrue(success);
+        //FIXME we should really assert a value here
     }
 
     /**
@@ -426,13 +384,12 @@ public class BoxAndWhiskerRendererTest  {
      */
     @Test
     public void testDrawWithNullQ1() {
-        boolean success = false;
-        try {
+
             DefaultBoxAndWhiskerCategoryDataset dataset
                     = new DefaultBoxAndWhiskerCategoryDataset();
-            dataset.add(new BoxAndWhiskerItem(new Double(1.0), new Double(2.0),
-                    null, new Double(4.0), new Double(0.5),
-                    new Double(4.5), new Double(-0.5), new Double(5.5),
+            dataset.add(new BoxAndWhiskerItem(1.0, 2.0,
+                    null, 4.0, 0.5,
+                    4.5, -0.5, 5.5,
                     null), "S1", "C1");
             CategoryPlot plot = new CategoryPlot(dataset,
                     new CategoryAxis("Category"), new NumberAxis("Value"),
@@ -441,12 +398,8 @@ public class BoxAndWhiskerRendererTest  {
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     info);
-            success = true;
-        }
-        catch (Exception e) {
-            success = false;
-        }
-        assertTrue(success);
+
+        //FIXME we should really assert a value here
     }
 
     /**
@@ -454,13 +407,11 @@ public class BoxAndWhiskerRendererTest  {
      */
     @Test
     public void testDrawWithNullQ3() {
-        boolean success = false;
-        try {
             DefaultBoxAndWhiskerCategoryDataset dataset
                     = new DefaultBoxAndWhiskerCategoryDataset();
-            dataset.add(new BoxAndWhiskerItem(new Double(1.0), new Double(2.0),
-                    new Double(3.0), null, new Double(0.5),
-                    new Double(4.5), new Double(-0.5), new Double(5.5),
+            dataset.add(new BoxAndWhiskerItem(1.0, 2.0,
+                    3.0, null, 0.5,
+                    4.5, -0.5, 5.5,
                     null), "S1", "C1");
             CategoryPlot plot = new CategoryPlot(dataset,
                     new CategoryAxis("Category"), new NumberAxis("Value"),
@@ -469,12 +420,7 @@ public class BoxAndWhiskerRendererTest  {
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     info);
-            success = true;
-        }
-        catch (Exception e) {
-            success = false;
-        }
-        assertTrue(success);
+        //FIXME we should really assert a value here
     }
 
     /**
@@ -482,27 +428,22 @@ public class BoxAndWhiskerRendererTest  {
      */
     @Test
     public void testDrawWithNullMinRegular() {
-        boolean success = false;
-        try {
-            DefaultBoxAndWhiskerCategoryDataset dataset
-                    = new DefaultBoxAndWhiskerCategoryDataset();
-            dataset.add(new BoxAndWhiskerItem(new Double(1.0), new Double(2.0),
-                    new Double(3.0), new Double(4.0), null,
-                    new Double(4.5), new Double(-0.5), new Double(5.5),
-                    null), "S1", "C1");
-            CategoryPlot plot = new CategoryPlot(dataset,
-                    new CategoryAxis("Category"), new NumberAxis("Value"),
-                    new BoxAndWhiskerRenderer());
-            ChartRenderingInfo info = new ChartRenderingInfo();
-            JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    info);
-            success = true;
-        }
-        catch (Exception e) {
-            success = false;
-        }
-        assertTrue(success);
+
+        DefaultBoxAndWhiskerCategoryDataset dataset
+                = new DefaultBoxAndWhiskerCategoryDataset();
+        dataset.add(new BoxAndWhiskerItem(1.0, 2.0,
+                3.0, 4.0, null,
+                4.5, -0.5, 5.5,
+                null), "S1", "C1");
+        CategoryPlot plot = new CategoryPlot(dataset,
+                new CategoryAxis("Category"), new NumberAxis("Value"),
+                new BoxAndWhiskerRenderer());
+        ChartRenderingInfo info = new ChartRenderingInfo();
+        JFreeChart chart = new JFreeChart(plot);
+        /* BufferedImage image = */ chart.createBufferedImage(300, 200,
+                info);
+
+        //FIXME we should assert a value here
     }
 
     /**
@@ -510,13 +451,11 @@ public class BoxAndWhiskerRendererTest  {
      */
     @Test
     public void testDrawWithNullMaxRegular() {
-        boolean success = false;
-        try {
             DefaultBoxAndWhiskerCategoryDataset dataset
                     = new DefaultBoxAndWhiskerCategoryDataset();
-            dataset.add(new BoxAndWhiskerItem(new Double(1.0), new Double(2.0),
-                    new Double(3.0), new Double(4.0), new Double(0.5),
-                    null, new Double(-0.5), new Double(5.5),
+            dataset.add(new BoxAndWhiskerItem(1.0, 2.0,
+                    3.0, 4.0, 0.5,
+                    null, -0.5, 5.5,
                     null), "S1", "C1");
             CategoryPlot plot = new CategoryPlot(dataset,
                     new CategoryAxis("Category"), new NumberAxis("Value"),
@@ -525,13 +464,7 @@ public class BoxAndWhiskerRendererTest  {
             JFreeChart chart = new JFreeChart(plot);
             /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                     info);
-            success = true;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            success = false;
-        }
-        assertTrue(success);
+        //FIXME we should assert a value here
     }
 
     /**
@@ -539,27 +472,20 @@ public class BoxAndWhiskerRendererTest  {
      */
     @Test
     public void testDrawWithNullMinOutlier() {
-        boolean success = false;
-        try {
-            DefaultBoxAndWhiskerCategoryDataset dataset
-                    = new DefaultBoxAndWhiskerCategoryDataset();
-            dataset.add(new BoxAndWhiskerItem(new Double(1.0), new Double(2.0),
-                    new Double(3.0), new Double(4.0), new Double(0.5),
-                    new Double(4.5), null, new Double(5.5),
-                    null), "S1", "C1");
-            CategoryPlot plot = new CategoryPlot(dataset,
-                    new CategoryAxis("Category"), new NumberAxis("Value"),
-                    new BoxAndWhiskerRenderer());
-            ChartRenderingInfo info = new ChartRenderingInfo();
-            JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    info);
-            success = true;
-        }
-        catch (Exception e) {
-            success = false;
-        }
-        assertTrue(success);
+        DefaultBoxAndWhiskerCategoryDataset dataset
+                = new DefaultBoxAndWhiskerCategoryDataset();
+        dataset.add(new BoxAndWhiskerItem(1.0, 2.0,
+                3.0, 4.0, 0.5,
+                4.5, null, 5.5,
+                null), "S1", "C1");
+        CategoryPlot plot = new CategoryPlot(dataset,
+                new CategoryAxis("Category"), new NumberAxis("Value"),
+                new BoxAndWhiskerRenderer());
+        ChartRenderingInfo info = new ChartRenderingInfo();
+        JFreeChart chart = new JFreeChart(plot);
+        /* BufferedImage image = */ chart.createBufferedImage(300, 200,
+                info);
+        //FIXME we should assert a value here
     }
 
     /**
@@ -567,27 +493,21 @@ public class BoxAndWhiskerRendererTest  {
      */
     @Test
     public void testDrawWithNullMaxOutlier() {
-        boolean success = false;
-        try {
-            DefaultBoxAndWhiskerCategoryDataset dataset
-                    = new DefaultBoxAndWhiskerCategoryDataset();
-            dataset.add(new BoxAndWhiskerItem(new Double(1.0), new Double(2.0),
-                    new Double(3.0), new Double(4.0), new Double(0.5),
-                    new Double(4.5), new Double(-0.5), null,
-                    new java.util.ArrayList()), "S1", "C1");
-            CategoryPlot plot = new CategoryPlot(dataset,
-                    new CategoryAxis("Category"), new NumberAxis("Value"),
-                    new BoxAndWhiskerRenderer());
-            ChartRenderingInfo info = new ChartRenderingInfo();
-            JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    info);
-            success = true;
-        }
-        catch (Exception e) {
-            success = false;
-        }
-        assertTrue(success);
+
+        DefaultBoxAndWhiskerCategoryDataset dataset
+                = new DefaultBoxAndWhiskerCategoryDataset();
+        dataset.add(new BoxAndWhiskerItem(1.0, 2.0,
+                3.0, 4.0, 0.5,
+                4.5, -0.5, null,
+                new java.util.ArrayList()), "S1", "C1");
+        CategoryPlot plot = new CategoryPlot(dataset,
+                new CategoryAxis("Category"), new NumberAxis("Value"),
+                new BoxAndWhiskerRenderer());
+        ChartRenderingInfo info = new ChartRenderingInfo();
+        JFreeChart chart = new JFreeChart(plot);
+        /* BufferedImage image = */ chart.createBufferedImage(300, 200,
+                info);
+        //FIXME we should assert a value here
     }
 
 }

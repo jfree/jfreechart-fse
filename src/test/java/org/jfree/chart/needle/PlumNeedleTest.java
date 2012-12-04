@@ -44,6 +44,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -77,16 +78,9 @@ public class PlumNeedleTest  {
      * Check that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         PlumNeedle n1 = new PlumNeedle();
-        PlumNeedle n2 = null;
-        try {
-            n2 = (PlumNeedle) n1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-            System.err.println("Failed to clone.");
-        }
+        PlumNeedle n2 = (PlumNeedle) n1.clone();
         assertTrue(n1 != n2);
         assertTrue(n1.getClass() == n2.getClass());
         assertTrue(n1.equals(n2));
@@ -96,10 +90,9 @@ public class PlumNeedleTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         PlumNeedle n1 = new PlumNeedle();
-        PlumNeedle n2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(n1);
@@ -107,12 +100,9 @@ public class PlumNeedleTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            n2 = (PlumNeedle) in.readObject();
+        PlumNeedle n2 = (PlumNeedle) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertTrue(n1.equals(n2));
     }
 

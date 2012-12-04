@@ -50,6 +50,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -62,6 +63,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * A collection of test cases for the {@link TimeSeriesCollection} class.
@@ -233,10 +235,9 @@ public class TimeSeriesCollectionTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         TimeSeriesCollection c1 = new TimeSeriesCollection(createSeries());
-        TimeSeriesCollection c2 = null;
-        try {
+
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(c1);
@@ -244,12 +245,9 @@ public class TimeSeriesCollectionTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            c2 = (TimeSeriesCollection) in.readObject();
+        TimeSeriesCollection c2 = (TimeSeriesCollection) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
         assertEquals(c1, c2);
     }
 
@@ -281,13 +279,12 @@ public class TimeSeriesCollectionTest  {
         dataset.addSeries(s1);
         try {
             /* TimeSeries s = */ dataset.getSeries(1);
+            fail("Should have thrown an IllegalArgumentException on index out of bounds");
         }
         catch (IllegalArgumentException e) {
-            // correct outcome
+            assertEquals("The 'series' argument is out of bounds (1).", e.getMessage());
         }
-        catch (IndexOutOfBoundsException e) {
-            assertTrue(false);  // wrong outcome
-        }
+
     }
 
     /**
@@ -327,7 +324,7 @@ public class TimeSeriesCollectionTest  {
     @Test
     public void testFindDomainBounds() {
         TimeSeriesCollection dataset = new TimeSeriesCollection();
-        List visibleSeriesKeys = new java.util.ArrayList();
+        List<String> visibleSeriesKeys = new java.util.ArrayList<String>();
         Range r = DatasetUtilities.findDomainBounds(dataset, visibleSeriesKeys,
                 true);
         assertNull(r);
@@ -368,18 +365,12 @@ public class TimeSeriesCollectionTest  {
      * Basic checks for cloning.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         TimeSeries s1 = new TimeSeries("Series");
         s1.add(new Year(2009), 1.1);
         TimeSeriesCollection c1 = new TimeSeriesCollection();
         c1.addSeries(s1);
-        TimeSeriesCollection c2 = null;
-        try {
-            c2 = (TimeSeriesCollection) c1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        TimeSeriesCollection c2 = (TimeSeriesCollection) c1.clone();
         assertTrue(c1 != c2);
         assertTrue(c1.getClass() == c2.getClass());
         assertTrue(c1.equals(c2));
@@ -408,7 +399,7 @@ public class TimeSeriesCollectionTest  {
         dataset.addSeries(s1);
         dataset.addSeries(s2);
 
-        List keys = new ArrayList();
+        List<String> keys = new ArrayList<String>();
         keys.add("S1");
         keys.add("S2");
         Range r = dataset.getRangeBounds(keys, new Range(

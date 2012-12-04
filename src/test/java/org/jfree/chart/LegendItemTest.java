@@ -50,12 +50,16 @@ import org.jfree.chart.ui.GradientPaintTransformType;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
 import java.awt.font.TextAttribute;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -317,7 +321,7 @@ public class LegendItemTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         LegendItem item1 = new LegendItem("Item", "Description",
                 "ToolTip", "URL",
                 new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), new GradientPaint(
@@ -328,21 +332,16 @@ public class LegendItemTest  {
                 1.0f, Color.RED));
         item1.setLinePaint(new GradientPaint(1.0f, 2.0f, Color.WHITE, 3.0f,
                 4.0f, Color.RED));
-        LegendItem item2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(item1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(item1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            item2 = (LegendItem) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        LegendItem item2 = (LegendItem) in.readObject();
+        in.close();
+
         assertTrue(item1.equals(item2));
     }
 
@@ -350,42 +349,32 @@ public class LegendItemTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization2() {
+    public void testSerialization2() throws IOException, ClassNotFoundException {
         AttributedString as = new AttributedString("Test String");
         as.addAttribute(TextAttribute.FONT, new Font("Dialog", Font.PLAIN, 12));
         LegendItem item1 = new LegendItem(as, "Description", "ToolTip", "URL",
                 new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), Color.RED);
-        LegendItem item2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(item1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(item1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            item2 = (LegendItem) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        assertEquals(item1, item2);
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        LegendItem item2 = (LegendItem) in.readObject();
+        in.close();
+
+            assertEquals(item1, item2);
     }
 
     /**
      * Basic checks for cloning.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         LegendItem item1 = new LegendItem("Item");
-        LegendItem item2 = null;
-        try {
-            item2 = (LegendItem) item1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        LegendItem item2 = (LegendItem) item1.clone();
+
         assertTrue(item1 != item2);
         assertTrue(item1.getClass() == item2.getClass());
         assertTrue(item1.equals(item2));

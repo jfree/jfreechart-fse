@@ -49,10 +49,13 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.util.SortOrder;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
 import java.awt.geom.Rectangle2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -61,7 +64,6 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Some tests for the {@link LegendTitle} class.
@@ -135,20 +137,14 @@ public class LegendTitleTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         XYPlot plot = new XYPlot();
         Rectangle2D bounds1 = new Rectangle2D.Double(10.0, 20.0, 30.0, 40.0);
         LegendTitle t1 = new LegendTitle(plot);
         t1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
                 4.0f, Color.yellow));
         t1.setBounds(bounds1);
-        LegendTitle t2 = null;
-        try {
-            t2 = (LegendTitle) t1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        LegendTitle t2 = (LegendTitle) t1.clone();
         assertTrue(t1 != t2);
         assertTrue(t1.getClass() == t2.getClass());
         assertTrue(t1.equals(t2));
@@ -164,13 +160,11 @@ public class LegendTitleTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
 
         XYPlot plot = new XYPlot();
         LegendTitle t1 = new LegendTitle(plot);
-        LegendTitle t2 = null;
 
-        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(t1);
@@ -179,12 +173,9 @@ public class LegendTitleTest  {
             ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
             );
-            t2 = (LegendTitle) in.readObject();
+        LegendTitle t2 = (LegendTitle) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
-            fail(e.toString());
-        }
+
         assertTrue(t1.equals(t2));
         assertTrue(t2.getSources()[0].equals(plot));
     }

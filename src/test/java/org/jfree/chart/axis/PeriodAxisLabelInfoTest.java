@@ -46,9 +46,14 @@ import org.jfree.data.time.Day;
 import org.jfree.data.time.Month;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Paint;
+import java.awt.Stroke;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -163,16 +168,11 @@ public class PeriodAxisLabelInfoTest  {
      * Confirm that cloning works.
      */
     @Test
-    public void testCloning() {
+    public void testCloning() throws CloneNotSupportedException {
         PeriodAxisLabelInfo info1 = new PeriodAxisLabelInfo(Day.class,
                 new SimpleDateFormat("d"));
-        PeriodAxisLabelInfo info2 = null;
-        try {
-            info2 = (PeriodAxisLabelInfo) info1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        PeriodAxisLabelInfo info2 = (PeriodAxisLabelInfo) info1.clone();
+
         assertTrue(info1 != info2);
         assertTrue(info1.getClass() == info2.getClass());
         assertTrue(info1.equals(info2));
@@ -182,26 +182,21 @@ public class PeriodAxisLabelInfoTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws IOException, ClassNotFoundException {
         PeriodAxisLabelInfo info1 = new PeriodAxisLabelInfo(Day.class,
                 new SimpleDateFormat("d"));
-        PeriodAxisLabelInfo info2 = null;
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(info1);
-            out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            info2 = (PeriodAxisLabelInfo) in.readObject();
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        boolean b = info1.equals(info2);
-        assertTrue(b);
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(info1);
+        out.close();
+
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        PeriodAxisLabelInfo info2 = (PeriodAxisLabelInfo) in.readObject();
+        in.close();
+
+        assertEquals(info1, info2);
     }
 
     /**

@@ -49,6 +49,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -91,7 +92,7 @@ public class AbstractXYItemRendererTest  {
         assertEquals(3.0, r.getUpperBound(), EPSILON);
 
         // check that a null dataset returns null bounds
-        assertTrue(renderer.findDomainBounds(null) == null);
+        assertNull(renderer.findDomainBounds(null));
     }
 
     /**
@@ -101,25 +102,20 @@ public class AbstractXYItemRendererTest  {
     public void testFindRangeBounds() {
         AbstractXYItemRenderer renderer = new StandardXYItemRenderer();
         // check that a null dataset returns null bounds
-        assertTrue(renderer.findRangeBounds(null) == null);
+        assertNull(renderer.findRangeBounds(null));
     }
 
     /**
      * Check that the legendItemLabelGenerator is cloned.
      */
     @Test
-    public void testCloning_LegendItemLabelGenerator() {
+    public void testCloning_LegendItemLabelGenerator() throws CloneNotSupportedException {
         StandardXYSeriesLabelGenerator generator
                 = new StandardXYSeriesLabelGenerator("Series {0}");
         XYBarRenderer r1 = new XYBarRenderer();
         r1.setLegendItemLabelGenerator(generator);
-        XYBarRenderer r2 = null;
-        try {
-            r2 = (XYBarRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        XYBarRenderer r2 = (XYBarRenderer) r1.clone();
+
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -133,18 +129,12 @@ public class AbstractXYItemRendererTest  {
      * Check that the legendItemToolTipGenerator is cloned.
      */
     @Test
-    public void testCloning_LegendItemToolTipGenerator() {
+    public void testCloning_LegendItemToolTipGenerator() throws CloneNotSupportedException {
         StandardXYSeriesLabelGenerator generator
                 = new StandardXYSeriesLabelGenerator("Series {0}");
         XYBarRenderer r1 = new XYBarRenderer();
         r1.setLegendItemToolTipGenerator(generator);
-        XYBarRenderer r2 = null;
-        try {
-            r2 = (XYBarRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        XYBarRenderer r2 = (XYBarRenderer) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));
@@ -158,18 +148,12 @@ public class AbstractXYItemRendererTest  {
      * Check that the legendItemURLGenerator is cloned.
      */
     @Test
-    public void testCloning_LegendItemURLGenerator() {
+    public void testCloning_LegendItemURLGenerator() throws CloneNotSupportedException {
         StandardXYSeriesLabelGenerator generator
                 = new StandardXYSeriesLabelGenerator("Series {0}");
         XYBarRenderer r1 = new XYBarRenderer();
         r1.setLegendItemURLGenerator(generator);
-        XYBarRenderer r2 = null;
-        try {
-            r2 = (XYBarRenderer) r1.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        XYBarRenderer r2 = (XYBarRenderer) r1.clone();
         assertTrue(r1 != r2);
         assertTrue(r1.getClass() == r2.getClass());
         assertTrue(r1.equals(r2));

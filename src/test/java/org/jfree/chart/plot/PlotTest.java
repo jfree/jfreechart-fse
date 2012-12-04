@@ -48,7 +48,14 @@ import org.jfree.chart.ui.Align;
 import org.jfree.chart.ui.RectangleInsets;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Paint;
+import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.Stroke;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
