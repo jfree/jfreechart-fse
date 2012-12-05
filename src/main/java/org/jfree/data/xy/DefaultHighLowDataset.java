@@ -147,7 +147,7 @@ public class DefaultHighLowDataset extends AbstractXYDataset
      */
     @Override
 	public Number getX(int series, int item) {
-        return new Long(this.date[item].getTime());
+        return this.date[item].getTime();
     }
 
     /**
@@ -439,7 +439,7 @@ public class DefaultHighLowDataset extends AbstractXYDataset
     public static Number[] createNumberArray(double[] data) {
         Number[] result = new Number[data.length];
         for (int i = 0; i < data.length; i++) {
-            result[i] = new Double(data[i]);
+            result[i] = data[i];
         }
         return result;
     }

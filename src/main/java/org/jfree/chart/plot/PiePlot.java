@@ -952,7 +952,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             }
         }
         if (key == null) {
-            key = new Integer(section);
+            key = section;
         }
         return key;
     }
@@ -1581,7 +1581,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         if (this.explodePercentages == null) {
             this.explodePercentages = new TreeMap<Comparable, Number>();
         }
-        this.explodePercentages.put(key, new Double(percent));
+        this.explodePercentages.put(key, percent);
         fireChangeEvent();
     }
 
@@ -3236,10 +3236,10 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
                  m = c.getMethod("getColors", new Class[] {});
                  Object clrs = m.invoke(paint, new Object[] {});
                  Point2D center = getArcCenter(state, key);
-                 float radius = (new Float(state.getPieHRadius())).floatValue();
+                 float radius = new Float(state.getPieHRadius());
 
                  Paint radialPaint = (Paint) cc.newInstance(new Object[] {
-                         center, new Float(radius),
+                         center, radius,
                          fractions, clrs});
                  // return the new RadialGradientPaint
                  return radialPaint;

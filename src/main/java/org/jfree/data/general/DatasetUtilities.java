@@ -1659,7 +1659,7 @@ public final class DatasetUtilities {
         // if the dataset implements DomainInfo, life is easy
         if (dataset instanceof DomainInfo) {
             DomainInfo info = (DomainInfo) dataset;
-            return new Double(info.getDomainLowerBound(true));
+            return info.getDomainLowerBound(true);
         }
         else {
             double minimum = Double.POSITIVE_INFINITY;
@@ -1687,7 +1687,7 @@ public final class DatasetUtilities {
                 result = null;
             }
             else {
-                result = new Double(minimum);
+                result = minimum;
             }
         }
 
@@ -1714,7 +1714,7 @@ public final class DatasetUtilities {
         // if the dataset implements DomainInfo, life is easy
         if (dataset instanceof DomainInfo) {
             DomainInfo info = (DomainInfo) dataset;
-            return new Double(info.getDomainUpperBound(true));
+            return info.getDomainUpperBound(true);
         }
 
         // hasn't implemented DomainInfo, so iterate...
@@ -1743,7 +1743,7 @@ public final class DatasetUtilities {
                 result = null;
             }
             else {
-                result = new Double(maximum);
+                result = maximum;
             }
 
         }
@@ -1771,7 +1771,7 @@ public final class DatasetUtilities {
 
         if (dataset instanceof RangeInfo) {
             RangeInfo info = (RangeInfo) dataset;
-            return new Double(info.getRangeLowerBound(true));
+            return info.getRangeLowerBound(true);
         }
 
         // hasn't implemented RangeInfo, so we'll have to iterate...
@@ -1799,7 +1799,7 @@ public final class DatasetUtilities {
                 return null;
             }
             else {
-                return new Double(minimum);
+                return minimum;
             }
 
         }
@@ -1827,7 +1827,7 @@ public final class DatasetUtilities {
         // work out the minimum value...
         if (dataset instanceof RangeInfo) {
             RangeInfo info = (RangeInfo) dataset;
-            return new Double(info.getRangeLowerBound(true));
+            return info.getRangeLowerBound(true);
         }
 
         // hasn't implemented RangeInfo, so we'll have to iterate...
@@ -1861,7 +1861,7 @@ public final class DatasetUtilities {
                 return null;
             }
             else {
-                return new Double(minimum);
+                return minimum;
             }
 
         }
@@ -1888,7 +1888,7 @@ public final class DatasetUtilities {
         // work out the minimum value...
         if (dataset instanceof RangeInfo) {
             RangeInfo info = (RangeInfo) dataset;
-            return new Double(info.getRangeUpperBound(true));
+            return info.getRangeUpperBound(true);
         }
 
         // hasn't implemented RangeInfo, so we'll have to iterate...
@@ -1917,7 +1917,7 @@ public final class DatasetUtilities {
                 return null;
             }
             else {
-                return new Double(maximum);
+                return maximum;
             }
 
         }
@@ -1944,7 +1944,7 @@ public final class DatasetUtilities {
         // work out the minimum value...
         if (dataset instanceof RangeInfo) {
             RangeInfo info = (RangeInfo) dataset;
-            return new Double(info.getRangeUpperBound(true));
+            return info.getRangeUpperBound(true);
         }
 
         // hasn't implemented RangeInfo, so we'll have to iterate...
@@ -1977,7 +1977,7 @@ public final class DatasetUtilities {
                 return null;
             }
             else {
-                return new Double(maximum);
+                return maximum;
             }
 
         }
@@ -2141,7 +2141,7 @@ public final class DatasetUtilities {
             minimum = Math.min(minimum, total);
         }
         if (hasValidData) {
-            result = new Double(minimum);
+            result = minimum;
         }
         return result;
     }
@@ -2180,7 +2180,7 @@ public final class DatasetUtilities {
             maximum = Math.max(maximum, total);
         }
         if (hasValidData) {
-            result = new Double(maximum);
+            result = maximum;
         }
         return result;
     }

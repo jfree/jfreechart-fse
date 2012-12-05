@@ -189,6 +189,6 @@ public class LibraryTableModel extends AbstractTableModel {
      * @return An array of libraries.
      */
     public Library[] getLibraries() {
-      return (Library[]) this.libraries.clone();
+      return this.libraries.clone();
     }
 }

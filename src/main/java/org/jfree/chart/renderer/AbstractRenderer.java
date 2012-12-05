@@ -143,7 +143,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     private static final long serialVersionUID = -828267569428206075L;
 
     /** Zero represented as a <code>Double</code>. */
-    public static final Double ZERO = new Double(0.0);
+    public static final Double ZERO = 0.0;
 
     /** The default paint. */
     public static final Paint DEFAULT_PAINT = Color.BLUE;
@@ -489,7 +489,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         boolean result = this.defaultSeriesVisible;
         Boolean b = this.seriesVisibleList.getBoolean(series);
         if (b != null) {
-            result = b.booleanValue();
+            result = b;
         }
         return result;
     }
@@ -602,7 +602,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         boolean result = this.defaultSeriesVisibleInLegend;
         Boolean b = this.seriesVisibleInLegendList.getBoolean(series);
         if (b != null) {
-            result = b.booleanValue();
+            result = b;
         }
         return result;
     }
@@ -1705,7 +1705,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         if (b == null) {
             b = Boolean.FALSE;
         }
-        return b.booleanValue();
+        return b;
 
     }
 
@@ -2266,7 +2266,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     public boolean getItemCreateEntity(int series, int item) {
         Boolean b = getSeriesCreateEntities(series);
         if (b != null) {
-            return b.booleanValue();
+            return b;
         }
         // otherwise...
         return this.defaultCreateEntities;

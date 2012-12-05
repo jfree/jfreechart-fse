@@ -107,7 +107,7 @@ public class MultipleXYSeriesLabelGenerator implements XYSeriesLabelGenerator,
      * @param label  the label.
      */
     public void addSeriesLabel(int series, String label) {
-        Integer key = new Integer(series);
+        Integer key = series;
         List labelList = (List) this.seriesLabelLists.get(key);
         if (labelList == null) {
             labelList = new java.util.ArrayList();
@@ -122,7 +122,7 @@ public class MultipleXYSeriesLabelGenerator implements XYSeriesLabelGenerator,
      * @param series  the series index.
      */
     public void clearSeriesLabels(int series) {
-        Integer key = new Integer(series);
+        Integer key = series;
         this.seriesLabelLists.put(key, null);
     }
 
@@ -143,7 +143,7 @@ public class MultipleXYSeriesLabelGenerator implements XYSeriesLabelGenerator,
         StringBuilder label = new StringBuilder();
         label.append(MessageFormat.format(this.formatPattern,
                 createItemArray(dataset, series)));
-        Integer key = new Integer(series);
+        Integer key = series;
         List extraLabels = (List) this.seriesLabelLists.get(key);
         if (extraLabels != null) {
             Object[] temp = new Object[1];

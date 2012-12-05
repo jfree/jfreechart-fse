@@ -1470,7 +1470,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      */
     public void mapDatasetToDomainAxis(int index, int axisIndex) {
         List<Integer> axisIndices = new java.util.ArrayList<Integer>(1);
-        axisIndices.add(new Integer(axisIndex));
+        axisIndices.add(axisIndex);
         mapDatasetToDomainAxes(index, axisIndices);
     }
 
@@ -1489,7 +1489,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
             throw new IllegalArgumentException("Requires 'index' >= 0.");
         }
         checkAxisIndices(axisIndices);
-        Integer key = new Integer(index);
+        Integer key = index;
         this.datasetToDomainAxesMap.put(key, 
                 new ArrayList<Integer>(axisIndices));
         // fake a dataset change event to update axes...
@@ -1507,7 +1507,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      */
     public void mapDatasetToRangeAxis(int index, int axisIndex) {
         List<Integer> axisIndices = new java.util.ArrayList<Integer>(1);
-        axisIndices.add(new Integer(axisIndex));
+        axisIndices.add(axisIndex);
         mapDatasetToRangeAxes(index, axisIndices);
     }
 
@@ -1526,7 +1526,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
             throw new IllegalArgumentException("Requires 'index' >= 0.");
         }
         checkAxisIndices(axisIndices);
-        Integer key = new Integer(index);
+        Integer key = index;
         this.datasetToRangeAxesMap.put(key, 
                 new ArrayList<Integer>(axisIndices));
         // fake a dataset change event to update axes...
@@ -2497,7 +2497,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
             Iterator iterator = keys.iterator();
             while (iterator.hasNext()) {
                 Integer key = (Integer) iterator.next();
-                clearDomainMarkers(key.intValue());
+                clearDomainMarkers(key);
             }
             this.backgroundDomainMarkers.clear();
         }
@@ -2506,7 +2506,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
             Iterator iterator = keys.iterator();
             while (iterator.hasNext()) {
                 Integer key = (Integer) iterator.next();
-                clearDomainMarkers(key.intValue());
+                clearDomainMarkers(key);
             }
             this.foregroundDomainMarkers.clear();
         }
@@ -2522,7 +2522,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * @see #clearRangeMarkers(int)
      */
     public void clearDomainMarkers(int index) {
-        Integer key = new Integer(index);
+        Integer key = index;
         if (this.backgroundDomainMarkers != null) {
             Collection markers
                 = (Collection) this.backgroundDomainMarkers.get(key);
@@ -2595,19 +2595,19 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         Collection markers;
         if (layer == Layer.FOREGROUND) {
             markers = (Collection) this.foregroundDomainMarkers.get(
-                    new Integer(index));
+                    index);
             if (markers == null) {
                 markers = new java.util.ArrayList();
-                this.foregroundDomainMarkers.put(new Integer(index), markers);
+                this.foregroundDomainMarkers.put(index, markers);
             }
             markers.add(marker);
         }
         else if (layer == Layer.BACKGROUND) {
             markers = (Collection) this.backgroundDomainMarkers.get(
-                    new Integer(index));
+                    index);
             if (markers == null) {
                 markers = new java.util.ArrayList();
-                this.backgroundDomainMarkers.put(new Integer(index), markers);
+                this.backgroundDomainMarkers.put(index, markers);
             }
             markers.add(marker);
         }
@@ -2684,11 +2684,11 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         ArrayList markers;
         if (layer == Layer.FOREGROUND) {
             markers = (ArrayList) this.foregroundDomainMarkers.get(
-                    new Integer(index));
+                    index);
         }
         else {
             markers = (ArrayList) this.backgroundDomainMarkers.get(
-                    new Integer(index));
+                    index);
         }
         if (markers == null) {
             return false;
@@ -2743,7 +2743,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
             Iterator iterator = keys.iterator();
             while (iterator.hasNext()) {
                 Integer key = (Integer) iterator.next();
-                clearRangeMarkers(key.intValue());
+                clearRangeMarkers(key);
             }
             this.backgroundRangeMarkers.clear();
         }
@@ -2752,7 +2752,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
             Iterator iterator = keys.iterator();
             while (iterator.hasNext()) {
                 Integer key = (Integer) iterator.next();
-                clearRangeMarkers(key.intValue());
+                clearRangeMarkers(key);
             }
             this.foregroundRangeMarkers.clear();
         }
@@ -2796,19 +2796,19 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         Collection markers;
         if (layer == Layer.FOREGROUND) {
             markers = (Collection) this.foregroundRangeMarkers.get(
-                    new Integer(index));
+                    index);
             if (markers == null) {
                 markers = new java.util.ArrayList();
-                this.foregroundRangeMarkers.put(new Integer(index), markers);
+                this.foregroundRangeMarkers.put(index, markers);
             }
             markers.add(marker);
         }
         else if (layer == Layer.BACKGROUND) {
             markers = (Collection) this.backgroundRangeMarkers.get(
-                    new Integer(index));
+                    index);
             if (markers == null) {
                 markers = new java.util.ArrayList();
-                this.backgroundRangeMarkers.put(new Integer(index), markers);
+                this.backgroundRangeMarkers.put(index, markers);
             }
             markers.add(marker);
         }
@@ -2825,7 +2825,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * @param index  the renderer index.
      */
     public void clearRangeMarkers(int index) {
-        Integer key = new Integer(index);
+        Integer key = index;
         if (this.backgroundRangeMarkers != null) {
             Collection markers
                 = (Collection) this.backgroundRangeMarkers.get(key);
@@ -2923,11 +2923,11 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         ArrayList markers;
         if (layer == Layer.FOREGROUND) {
             markers = (ArrayList) this.foregroundRangeMarkers.get(
-                    new Integer(index));
+                    index);
         }
         else {
             markers = (ArrayList) this.backgroundRangeMarkers.get(
-                    new Integer(index));
+                    index);
         }
         if (markers == null) {
             return false;
@@ -3031,7 +3031,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      */
     public void clearAnnotations() {
         for(int i = 0; i < this.annotations.size(); i++){
-            XYAnnotation annotation = (XYAnnotation) this.annotations.get(i);
+            XYAnnotation annotation = this.annotations.get(i);
             annotation.removeChangeListener(this);
         }
         this.annotations.clear();
@@ -3881,11 +3881,11 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         }
         ValueAxis valueAxis = null;
         List axisIndices = (List) this.datasetToDomainAxesMap.get(
-                new Integer(index));
+                index);
         if (axisIndices != null) {
             // the first axis in the list is used for data <--> Java2D
             Integer axisIndex = (Integer) axisIndices.get(0);
-            valueAxis = getDomainAxis(axisIndex.intValue());
+            valueAxis = getDomainAxis(axisIndex);
         }
         else {
             valueAxis = getDomainAxis(0);
@@ -3908,11 +3908,11 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         }
         ValueAxis valueAxis = null;
         List<Integer> axisIndices = this.datasetToRangeAxesMap.get(
-                new Integer(index));
+                index);
         if (axisIndices != null) {
             // the first axis in the list is used for data <--> Java2D
             Integer axisIndex = axisIndices.get(0);
-            valueAxis = getRangeAxis(axisIndex.intValue());
+            valueAxis = getRangeAxis(axisIndex);
         }
         else {
             valueAxis = getRangeAxis(0);
@@ -4184,7 +4184,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      */
     public Collection getDomainMarkers(int index, Layer layer) {
         Collection result = null;
-        Integer key = new Integer(index);
+        Integer key = index;
         if (layer == Layer.FOREGROUND) {
             result = (Collection) this.foregroundDomainMarkers.get(key);
         }
@@ -4210,7 +4210,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      */
     public Collection getRangeMarkers(int index, Layer layer) {
         Collection result = null;
-        Integer key = new Integer(index);
+        Integer key = index;
         if (layer == Layer.FOREGROUND) {
             result = (Collection) this.foregroundRangeMarkers.get(key);
         }
@@ -4401,7 +4401,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         List result = new ArrayList();
         for (int i = 0; i < this.datasets.size(); i++) {
             List mappedAxes = (List) this.datasetToDomainAxesMap.get(
-                    new Integer(i));
+                    i);
             if (mappedAxes == null) {
                 if (axisIndex.equals(ZERO)) {
                     result.add(this.datasets.get(i));
@@ -4431,7 +4431,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         List<XYDataset> result = new ArrayList<XYDataset>();
         for (int i = 0; i < this.datasets.size(); i++) {
             List<Integer> mappedAxes = this.datasetToRangeAxesMap.get(
-                    new Integer(i));
+                    i);
             if (mappedAxes == null) {
                 if (axisIndex.equals(ZERO)) {
                     result.add((XYDataset) this.datasets.get(i));
@@ -4510,7 +4510,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         if (domainIndex >= 0) {
             isDomainAxis = true;
             mappedDatasets.addAll(getDatasetsMappedToDomainAxis(
-                    new Integer(domainIndex)));
+                    domainIndex));
             if (domainIndex == 0) {
                 // grab the plot's annotations
                 Iterator iterator = this.annotations.iterator();
@@ -4528,7 +4528,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         if (rangeIndex >= 0) {
             isDomainAxis = false;
             mappedDatasets.addAll(getDatasetsMappedToRangeAxis(
-                    new Integer(rangeIndex)));
+                    rangeIndex));
             if (rangeIndex == 0) {
                 Iterator iterator = this.annotations.iterator();
                 while (iterator.hasNext()) {
@@ -5714,7 +5714,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         }
         clone.quadrantOrigin = (Point2D) ObjectUtilities.clone(
                 this.quadrantOrigin);
-        clone.quadrantPaint = (Paint[]) this.quadrantPaint.clone();
+        clone.quadrantPaint = this.quadrantPaint.clone();
         return clone;
 
     }

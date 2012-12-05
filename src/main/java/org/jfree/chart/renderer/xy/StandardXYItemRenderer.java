@@ -328,7 +328,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
     public boolean getItemShapeFilled(int series, int item) {
         Boolean flag = this.seriesShapesFilled.getBoolean(series);
         if (flag != null) {
-            return flag.booleanValue();
+            return flag;
         }
         else {
             return this.baseShapesFilled;

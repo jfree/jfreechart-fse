@@ -381,7 +381,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
         if (task != null) {
             TimePeriod duration = task.getDuration();
             if (duration != null) {
-                result = new Long(duration.getStart().getTime());
+                result = duration.getStart().getTime();
             }
         }
         return result;
@@ -420,7 +420,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
         if (task != null) {
             TimePeriod duration = task.getDuration();
             if (duration != null) {
-                result = new Long(duration.getEnd().getTime());
+                result = duration.getEnd().getTime();
             }
         }
         return result;
@@ -547,7 +547,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
             Task sub = task.getSubtask(subinterval);
             if (sub != null) {
                 TimePeriod duration = sub.getDuration();
-                result = new Long(duration.getStart().getTime());
+                result = duration.getStart().getTime();
             }
         }
         return result;
@@ -589,7 +589,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
             Task sub = task.getSubtask(subinterval);
             if (sub != null) {
                 TimePeriod duration = sub.getDuration();
-                result = new Long(duration.getEnd().getTime());
+                result = duration.getEnd().getTime();
             }
         }
         return result;

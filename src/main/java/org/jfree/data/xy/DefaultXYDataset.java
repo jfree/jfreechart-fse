@@ -199,7 +199,7 @@ public class DefaultXYDataset extends AbstractXYDataset
      */
     @Override
 	public Number getX(int series, int item) {
-        return new Double(getXValue(series, item));
+        return getXValue(series, item);
     }
 
     /**
@@ -244,7 +244,7 @@ public class DefaultXYDataset extends AbstractXYDataset
      */
     @Override
 	public Number getY(int series, int item) {
-        return new Double(getYValue(series, item));
+        return getYValue(series, item);
     }
 
     /**

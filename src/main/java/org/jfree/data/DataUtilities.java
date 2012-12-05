@@ -235,7 +235,7 @@ public abstract class DataUtilities {
         }
         Number[] result = new Number[data.length];
         for (int i = 0; i < data.length; i++) {
-            result[i] = new Double(data[i]);
+            result[i] = data[i];
         }
         return result;
     }

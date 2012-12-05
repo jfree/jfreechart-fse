@@ -67,7 +67,7 @@ public class PolynomialFunction2D implements Function2D, Serializable {
         if (coefficients == null) {
             throw new IllegalArgumentException("Null 'coefficients' argument");
         }
-        this.coefficients = (double[]) coefficients.clone();
+        this.coefficients = coefficients.clone();
     }
 
     /**
@@ -77,7 +77,7 @@ public class PolynomialFunction2D implements Function2D, Serializable {
      * @return The coefficients array.
      */
     public double[] getCoefficients() {
-        return (double[]) this.coefficients.clone();
+        return this.coefficients.clone();
     }
 
     /**

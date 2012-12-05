@@ -355,20 +355,20 @@ public class StackedBarRenderer3D extends BarRenderer3D
             }
             if ((v > 0.0) || (!this.ignoreZeroValues && v >= 0.0)) {
                 if (baseIndex < 0) {
-                    result.add(new Object[] {null, new Double(base)});
+                    result.add(new Object[] {null, base});
                     baseIndex = 0;
                 }
                 posBase = posBase + v;
-                result.add(new Object[] {new Integer(r), new Double(posBase)});
+                result.add(new Object[] {r, posBase});
             }
             else if (v < 0.0) {
                 if (baseIndex < 0) {
-                    result.add(new Object[] {null, new Double(base)});
+                    result.add(new Object[] {null, base});
                     baseIndex = 0;
                 }
                 negBase = negBase + v; // '+' because v is negative
-                result.add(0, new Object[] {new Integer(-r - 1),
-                        new Double(negBase)});
+                result.add(0, new Object[] {-r - 1,
+                        negBase});
                 baseIndex++;
             }
         }
@@ -469,19 +469,19 @@ public class StackedBarRenderer3D extends BarRenderer3D
             Object[] curr = (Object[]) values.get(index + 1);
             int series = 0;
             if (curr[0] == null) {
-                series = -((Integer) prev[0]).intValue() - 1;
+                series = -(Integer) prev[0] - 1;
             }
             else {
-                series = ((Integer) curr[0]).intValue();
+                series = (Integer) curr[0];
                 if (series < 0) {
-                    series = -((Integer) prev[0]).intValue() - 1;
+                    series = -(Integer) prev[0] - 1;
                 }
             }
-            double v0 = ((Double) prev[1]).doubleValue();
+            double v0 = (Double) prev[1];
             double vv0 = rangeAxis.valueToJava2D(v0, dataArea,
                     plot.getRangeAxisEdge());
 
-            double v1 = ((Double) curr[1]).doubleValue();
+            double v1 = (Double) curr[1];
             double vv1 = rangeAxis.valueToJava2D(v1, dataArea,
                     plot.getRangeAxisEdge());
 
@@ -512,8 +512,8 @@ public class StackedBarRenderer3D extends BarRenderer3D
                 }
             }
 
-            itemLabelList.add(new Object[] {new Integer(series),
-                    faces[5].getBounds2D(), Boolean.valueOf(v0 < getBase())});
+            itemLabelList.add(new Object[] {series,
+                    faces[5].getBounds2D(), v0 < getBase()});
 
             // add an item entity, if this information is being collected
             EntityCollection entities = state.getEntityCollection();
@@ -525,9 +525,9 @@ public class StackedBarRenderer3D extends BarRenderer3D
 
         for (int i = 0; i < itemLabelList.size(); i++) {
             Object[] record = (Object[]) itemLabelList.get(i);
-            int series = ((Integer) record[0]).intValue();
+            int series = (Integer) record[0];
             Rectangle2D bar = (Rectangle2D) record[1];
-            boolean neg = ((Boolean) record[2]).booleanValue();
+            boolean neg = (Boolean) record[2];
             CategoryItemLabelGenerator generator
                     = getItemLabelGenerator(series, column);
             if (generator != null && isItemLabelVisible(series, column)) {
@@ -664,19 +664,19 @@ public class StackedBarRenderer3D extends BarRenderer3D
             Object[] curr = (Object[]) values.get(index + 1);
             int series = 0;
             if (curr[0] == null) {
-                series = -((Integer) prev[0]).intValue() - 1;
+                series = -(Integer) prev[0] - 1;
             }
             else {
-                series = ((Integer) curr[0]).intValue();
+                series = (Integer) curr[0];
                 if (series < 0) {
-                    series = -((Integer) prev[0]).intValue() - 1;
+                    series = -(Integer) prev[0] - 1;
                 }
             }
-            double v0 = ((Double) prev[1]).doubleValue();
+            double v0 = (Double) prev[1];
             double vv0 = rangeAxis.valueToJava2D(v0, dataArea,
                     plot.getRangeAxisEdge());
 
-            double v1 = ((Double) curr[1]).doubleValue();
+            double v1 = (Double) curr[1];
             double vv1 = rangeAxis.valueToJava2D(v1, dataArea,
                     plot.getRangeAxisEdge());
 
@@ -708,8 +708,8 @@ public class StackedBarRenderer3D extends BarRenderer3D
                 }
             }
 
-            itemLabelList.add(new Object[] {new Integer(series),
-                    faces[5].getBounds2D(), Boolean.valueOf(v0 < getBase())});
+            itemLabelList.add(new Object[] {series,
+                    faces[5].getBounds2D(), v0 < getBase()});
 
             // add an item entity, if this information is being collected
             EntityCollection entities = state.getEntityCollection();
@@ -721,9 +721,9 @@ public class StackedBarRenderer3D extends BarRenderer3D
 
         for (int i = 0; i < itemLabelList.size(); i++) {
             Object[] record = (Object[]) itemLabelList.get(i);
-            int series = ((Integer) record[0]).intValue();
+            int series = (Integer) record[0];
             Rectangle2D bar = (Rectangle2D) record[1];
-            boolean neg = ((Boolean) record[2]).booleanValue();
+            boolean neg = (Boolean) record[2];
             CategoryItemLabelGenerator generator
                     = getItemLabelGenerator(series, column);
             if (generator != null && isItemLabelVisible(series, column)) {

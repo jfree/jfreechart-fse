@@ -145,7 +145,7 @@ public class VectorSeriesCollection extends AbstractXYDataset
         if ((series < 0) || (series >= getSeriesCount())) {
             throw new IllegalArgumentException("Series index out of bounds");
         }
-        return (VectorSeries) this.data.get(series);
+        return this.data.get(series);
     }
 
     /**
@@ -221,7 +221,7 @@ public class VectorSeriesCollection extends AbstractXYDataset
      */
     @Override
     public Number getX(int series, int item) {
-        return new Double(getXValue(series, item));
+        return getXValue(series, item);
     }
 
     /**
@@ -234,7 +234,7 @@ public class VectorSeriesCollection extends AbstractXYDataset
      */
     @Override
     public double getYValue(int series, int item) {
-        VectorSeries s = (VectorSeries) this.data.get(series);
+        VectorSeries s = this.data.get(series);
         VectorDataItem di = (VectorDataItem) s.getDataItem(item);
         return di.getYValue();
     }
@@ -251,7 +251,7 @@ public class VectorSeriesCollection extends AbstractXYDataset
      */
     @Override
     public Number getY(int series, int item) {
-        return new Double(getYValue(series, item));
+        return getYValue(series, item);
     }
 
     /**

@@ -703,7 +703,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
         DialScale result = (DialScale) this.scales.get(0);
         Integer scaleIndex = (Integer) this.datasetToScaleMap.get(datasetIndex);
         if (scaleIndex != null) {
-            result = getScale(scaleIndex.intValue());
+            result = getScale(scaleIndex);
         }
         return result;
     }

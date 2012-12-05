@@ -766,8 +766,8 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
 	public Object clone() throws CloneNotSupportedException {
         DefaultIntervalCategoryDataset clone
                 = (DefaultIntervalCategoryDataset) super.clone();
-        clone.categoryKeys = (Comparable[]) this.categoryKeys.clone();
-        clone.seriesKeys = (Comparable[]) this.seriesKeys.clone();
+        clone.categoryKeys = this.categoryKeys.clone();
+        clone.seriesKeys = this.seriesKeys.clone();
         clone.startData = clone(this.startData);
         clone.endData = clone(this.endData);
         return clone;

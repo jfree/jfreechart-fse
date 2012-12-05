@@ -379,7 +379,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
         int n = this.subplots.size();
         int totalWeight = 0;
         for (int i = 0; i < n; i++) {
-            CategoryPlot sub = (CategoryPlot) this.subplots.get(i);
+            CategoryPlot sub = this.subplots.get(i);
             totalWeight += sub.getWeight();
         }
         this.subplotAreas = new Rectangle2D[n];
@@ -608,7 +608,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
         Rectangle2D dataArea = info.getDataArea();
         if (dataArea.contains(x, y)) {
             for (int i = 0; i < this.subplots.size(); i++) {
-                CategoryPlot subplot = (CategoryPlot) this.subplots.get(i);
+                CategoryPlot subplot = this.subplots.get(i);
                 PlotRenderingInfo subplotInfo = info.getSubplotInfo(i);
                 subplot.handleClick(x, y, subplotInfo);
             }

@@ -1545,7 +1545,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
             clone.rangeAxis.addChangeListener(clone);
         }
         clone.valueFormat = (NumberFormat) this.valueFormat.clone();
-        clone.subrangePaint = (Paint[]) this.subrangePaint.clone();
+        clone.subrangePaint = this.subrangePaint.clone();
 
         return clone;
 

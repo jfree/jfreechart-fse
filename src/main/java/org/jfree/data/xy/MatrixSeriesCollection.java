@@ -163,7 +163,7 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
         MatrixSeries series = (MatrixSeries) this.seriesList.get(seriesIndex);
         int x = series.getItemColumn(itemIndex);
 
-        return new Integer(x); // I know it's bad to create object. better idea?
+        return x; // I know it's bad to create object. better idea?
     }
 
 
@@ -183,7 +183,7 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
         MatrixSeries series = (MatrixSeries) this.seriesList.get(seriesIndex);
         int y = series.getItemRow(itemIndex);
 
-        return new Integer(y); // I know it's bad to create object. better idea?
+        return y; // I know it's bad to create object. better idea?
     }
 
 

@@ -614,12 +614,12 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     public void removeAnnotations() {
         for(int i = 0; i < this.foregroundAnnotations.size(); i++){
             XYAnnotation annotation 
-                    = (XYAnnotation) this.foregroundAnnotations.get(i);
+                    = this.foregroundAnnotations.get(i);
             annotation.removeChangeListener(this);
         }
          for(int i = 0; i < this.backgroundAnnotations.size(); i++){
             XYAnnotation annotation 
-                    = (XYAnnotation) this.backgroundAnnotations.get(i);
+                    = this.backgroundAnnotations.get(i);
             annotation.removeChangeListener(this);
         }
         this.foregroundAnnotations.clear();

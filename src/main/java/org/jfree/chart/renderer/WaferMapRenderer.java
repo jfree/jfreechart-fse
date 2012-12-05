@@ -119,13 +119,13 @@ public class WaferMapRenderer extends AbstractRenderer {
             this.paintLimit = DEFAULT_PAINT_LIMIT;
         }
         else {
-            this.paintLimit = paintLimit.intValue();
+            this.paintLimit = paintLimit;
         }
 
         this.paintIndexMethod = VALUE_INDEX;
         if (paintIndexMethod != null) {
-            if (isMethodValid(paintIndexMethod.intValue())) {
-                this.paintIndexMethod = paintIndexMethod.intValue();
+            if (isMethodValid(paintIndexMethod)) {
+                this.paintIndexMethod = paintIndexMethod;
             }
         }
     }
@@ -198,7 +198,7 @@ public class WaferMapRenderer extends AbstractRenderer {
      * @return The paint index.
      */
     private int getPaintIndex(Number value) {
-        return ((Integer) this.paintIndex.get(value)).intValue();
+        return (Integer) this.paintIndex.get(value);
     }
 
     /**
@@ -216,7 +216,7 @@ public class WaferMapRenderer extends AbstractRenderer {
         if (uniqueValues.size() <= this.paintLimit) {
             int count = 0; // assign a color for each unique value
             for (Iterator i = uniqueValues.iterator(); i.hasNext();) {
-                this.paintIndex.put(i.next(), new Integer(count++));
+                this.paintIndex.put(i.next(), count++);
             }
         }
         else {
@@ -248,7 +248,7 @@ public class WaferMapRenderer extends AbstractRenderer {
         int count = 0; // assign a color for each unique value
         int paint = 0;
         for (Iterator i = uniqueValues.iterator(); i.hasNext();) {
-            this.paintIndex.put(i.next(), new Integer(paint));
+            this.paintIndex.put(i.next(), paint);
             if (++count % valuesPerColor == 0) {
                 paint++;
             }
@@ -280,7 +280,7 @@ public class WaferMapRenderer extends AbstractRenderer {
                     paint = this.paintLimit;
                 }
             }
-            this.paintIndex.put(value, new Integer(paint));
+            this.paintIndex.put(value, paint);
         }
     }
 
@@ -302,7 +302,7 @@ public class WaferMapRenderer extends AbstractRenderer {
                     String description = label;
                     Shape shape = new Rectangle2D.Double(1d, 1d, 1d, 1d);
                     Paint paint = lookupSeriesPaint(
-                            ((Integer) entry.getValue()).intValue());
+                            (Integer) entry.getValue());
                     Paint outlinePaint = Color.BLACK;
                     Stroke outlineStroke = DEFAULT_STROKE;
 
@@ -325,7 +325,7 @@ public class WaferMapRenderer extends AbstractRenderer {
                         String description = label;
                         Shape shape = new Rectangle2D.Double(1d, 1d, 1d, 1d);
                         Paint paint = getSeriesPaint(
-                            ((Integer) entry.getValue()).intValue()
+                                (Integer) entry.getValue()
                         );
                         Paint outlinePaint = Color.BLACK;
                         Stroke outlineStroke = DEFAULT_STROKE;
@@ -352,13 +352,13 @@ public class WaferMapRenderer extends AbstractRenderer {
         double minValue = Double.POSITIVE_INFINITY;
         for (Iterator i = this.paintIndex.entrySet().iterator(); i.hasNext();) {
             Map.Entry entry = (Map.Entry) i.next();
-            if (((Integer) entry.getValue()).equals(index)) {
+            if (entry.getValue().equals(index)) {
                 if (((Number) entry.getKey()).doubleValue() < minValue) {
                     minValue = ((Number) entry.getKey()).doubleValue();
                 }
             }
         }
-        return new Double(minValue);
+        return minValue;
     }
 
     /**
@@ -373,13 +373,13 @@ public class WaferMapRenderer extends AbstractRenderer {
         double maxValue = Double.NEGATIVE_INFINITY;
         for (Iterator i = this.paintIndex.entrySet().iterator(); i.hasNext();) {
             Map.Entry entry = (Map.Entry) i.next();
-            if (((Integer) entry.getValue()).equals(index)) {
+            if (entry.getValue().equals(index)) {
                 if (((Number) entry.getKey()).doubleValue() > maxValue) {
                     maxValue = ((Number) entry.getKey()).doubleValue();
                 }
             }
         }
-        return new Double(maxValue);
+        return maxValue;
     }
 
 
