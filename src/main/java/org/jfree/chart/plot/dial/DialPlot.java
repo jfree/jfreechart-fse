@@ -63,6 +63,7 @@ import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.PlotState;
+import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.ValueDataset;
 
@@ -96,15 +97,15 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
     /**
      * The dataset(s) for the dial plot.
      */
-    private ObjectList datasets;
+    private ObjectList<Dataset> datasets;
 
     /**
      * The scale(s) for the dial plot.
      */
-    private ObjectList scales;
+    private ObjectList<DialScale> scales;
 
     /** Storage for keys that map datasets to scales. */
-    private ObjectList datasetToScaleMap;
+    private ObjectList<Integer> datasetToScaleMap;
 
     /**
      * The drawing layers for the dial plot.
@@ -152,12 +153,12 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
         this.background = null;
         this.cap = null;
         this.dialFrame = new ArcDialFrame();
-        this.datasets = new ObjectList();
+        this.datasets = new ObjectList<Dataset>();
         if (dataset != null) {
             setDataset(dataset);
         }
-        this.scales = new ObjectList();
-        this.datasetToScaleMap = new ObjectList();
+        this.scales = new ObjectList<DialScale>();
+        this.datasetToScaleMap = new ObjectList<Integer>();
         this.layers = new java.util.ArrayList();
         this.pointers = new java.util.ArrayList();
         this.viewX = 0.0;
@@ -656,7 +657,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
         if (scale == null) {
             throw new IllegalArgumentException("Null 'scale' argument.");
         }
-        DialScale existing = (DialScale) this.scales.get(index);
+        DialScale existing = this.scales.get(index);
         if (existing != null) {
             removeLayer(existing);
         }
@@ -676,7 +677,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
     public DialScale getScale(int index) {
         DialScale result = null;
         if (this.scales.size() > index) {
-            result = (DialScale) this.scales.get(index);
+            result = this.scales.get(index);
         }
         return result;
     }
@@ -700,8 +701,8 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      * @return The dial scale.
      */
     public DialScale getScaleForDataset(int datasetIndex) {
-        DialScale result = (DialScale) this.scales.get(0);
-        Integer scaleIndex = (Integer) this.datasetToScaleMap.get(datasetIndex);
+        DialScale result = this.scales.get(0);
+        Integer scaleIndex = this.datasetToScaleMap.get(datasetIndex);
         if (scaleIndex != null) {
             result = getScale(scaleIndex);
         }

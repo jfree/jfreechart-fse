@@ -167,7 +167,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      *
      * @since 1.0.14
      */
-    private ObjectList toolTipGeneratorList;
+    private ObjectList<XYToolTipGenerator> toolTipGeneratorList;
 
     /**
      * The base tool tip generator.
@@ -211,7 +211,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         this.shapesVisible = true;
         this.connectFirstAndLastPoint = true;
 
-        this.toolTipGeneratorList = new ObjectList();
+        this.toolTipGeneratorList = new ObjectList<XYToolTipGenerator>();
         this.urlGenerator = null;
         this.legendItemToolTipGenerator = null;
         this.legendItemURLGenerator = null;
@@ -730,7 +730,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     @Override
     public XYToolTipGenerator getToolTipGenerator(int series, int item) {
         XYToolTipGenerator generator
-            = (XYToolTipGenerator) this.toolTipGeneratorList.get(series);
+            = this.toolTipGeneratorList.get(series);
         if (generator == null) {
             generator = this.baseToolTipGenerator;
         }
@@ -742,7 +742,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      */
     @Override
     public XYToolTipGenerator getSeriesToolTipGenerator(int series) {
-        return (XYToolTipGenerator) this.toolTipGeneratorList.get(series);
+        return this.toolTipGeneratorList.get(series);
     }
 
     /**
@@ -917,7 +917,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         }
         clone.seriesFilled = (BooleanList) this.seriesFilled.clone();
         clone.toolTipGeneratorList
-                = (ObjectList) this.toolTipGeneratorList.clone();
+                = (ObjectList<XYToolTipGenerator>) this.toolTipGeneratorList.clone();
         if (clone.baseToolTipGenerator instanceof PublicCloneable) {
             clone.baseToolTipGenerator = (XYToolTipGenerator)
                     ObjectUtilities.clone(this.baseToolTipGenerator);

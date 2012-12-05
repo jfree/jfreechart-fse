@@ -49,7 +49,7 @@ package org.jfree.chart.util;
 /**
  * A list of <code>Boolean</code> objects.
  */
-public class BooleanList extends AbstractObjectList {
+public class BooleanList extends AbstractObjectList<Boolean> {
 
     /** For serialization. */
     private static final long serialVersionUID = -8543170333219422042L;
@@ -69,7 +69,7 @@ public class BooleanList extends AbstractObjectList {
      * @return a {@link Boolean} from the list.
      */
     public Boolean getBoolean(final int index) {
-        return (Boolean) get(index);
+        return get(index);
     }
 
     /**

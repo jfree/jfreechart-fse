@@ -46,12 +46,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import org.jfree.chart.util.SerialUtilities;
-
 /**
  * A table of {@link Stroke} objects.
  */
-public class StrokeList extends AbstractObjectList {
+public class StrokeList extends AbstractObjectList<Stroke> {
 
     /**
      * Creates a new list.
@@ -68,7 +66,7 @@ public class StrokeList extends AbstractObjectList {
      * @return The object.
      */
     public Stroke getStroke(final int index) {
-        return (Stroke) get(index);
+        return get(index);
     }
 
     /**

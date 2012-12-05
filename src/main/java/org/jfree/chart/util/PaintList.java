@@ -46,12 +46,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import org.jfree.chart.util.SerialUtilities;
-
 /**
  * A table of {@link Paint} objects.
  */
-public class PaintList extends AbstractObjectList {
+public class PaintList extends AbstractObjectList<Paint> {
 
     /**
      * Creates a new list.
@@ -68,7 +66,7 @@ public class PaintList extends AbstractObjectList {
      * @return The object.
      */
     public Paint getPaint(final int index) {
-        return (Paint) get(index);
+        return get(index);
     }
 
     /**
