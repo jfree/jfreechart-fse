@@ -485,7 +485,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
     @Override
 	public Object clone() throws CloneNotSupportedException {
         SimpleHistogramDataset clone = (SimpleHistogramDataset) super.clone();
-        clone.bins = (List) ObjectUtilities.deepClone(this.bins);
+        clone.bins = ObjectUtilities.deepClone(this.bins);
         return clone;
     }
 

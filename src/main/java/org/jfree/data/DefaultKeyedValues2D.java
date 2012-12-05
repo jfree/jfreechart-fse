@@ -588,7 +588,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
         clone.rowKeys = new java.util.ArrayList(this.rowKeys);
 
         // but the row data requires a deep copy
-        clone.rows = (List) ObjectUtilities.deepClone(this.rows);
+        clone.rows = ObjectUtilities.deepClone(this.rows);
         return clone;
     }
 

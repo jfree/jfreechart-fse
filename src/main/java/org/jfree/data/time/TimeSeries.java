@@ -1023,7 +1023,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     @Override
     public Object clone() throws CloneNotSupportedException {
         TimeSeries clone = (TimeSeries) super.clone();
-        clone.data = (List) ObjectUtilities.deepClone(this.data);
+        clone.data = ObjectUtilities.deepClone(this.data);
         return clone;
     }
 

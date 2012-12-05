@@ -498,7 +498,7 @@ public class OHLCSeriesCollection extends AbstractXYDataset
 	public Object clone() throws CloneNotSupportedException {
         OHLCSeriesCollection clone
                 = (OHLCSeriesCollection) super.clone();
-        clone.data = (List) ObjectUtilities.deepClone(this.data);
+        clone.data = ObjectUtilities.deepClone(this.data);
         return clone;
     }
 

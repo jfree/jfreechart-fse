@@ -702,7 +702,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
     @Override
 	public Object clone() throws CloneNotSupportedException {
         TaskSeriesCollection clone = (TaskSeriesCollection) super.clone();
-        clone.data = (List) ObjectUtilities.deepClone(this.data);
+        clone.data = ObjectUtilities.deepClone(this.data);
         clone.keys = new java.util.ArrayList(this.keys);
         return clone;
     }

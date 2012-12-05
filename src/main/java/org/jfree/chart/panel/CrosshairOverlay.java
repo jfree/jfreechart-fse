@@ -593,8 +593,8 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
     @Override
 	public Object clone() throws CloneNotSupportedException {
         CrosshairOverlay clone = (CrosshairOverlay) super.clone();
-        clone.xCrosshairs = (List) ObjectUtilities.deepClone(this.xCrosshairs);
-        clone.yCrosshairs = (List) ObjectUtilities.deepClone(this.yCrosshairs);
+        clone.xCrosshairs = ObjectUtilities.deepClone(this.xCrosshairs);
+        clone.yCrosshairs = ObjectUtilities.deepClone(this.yCrosshairs);
         return clone;
     }
 

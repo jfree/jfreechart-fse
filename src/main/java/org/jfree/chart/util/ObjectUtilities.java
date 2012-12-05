@@ -158,21 +158,20 @@ public final class ObjectUtilities {
      * @return A clone of the specified object.
      * @throws CloneNotSupportedException if the object cannot be cloned.
      */
-    public static Object clone(final Object object)
+    public static <T> T clone(final T object)
         throws CloneNotSupportedException {
         if (object == null) {
             throw new IllegalArgumentException("Null 'object' argument.");
         }
         if (object instanceof PublicCloneable) {
             final PublicCloneable pc = (PublicCloneable) object;
-            return pc.clone();
+            return (T) pc.clone();
         }
         else {
             try {
-                final Method method = object.getClass().getMethod("clone",
-                        (Class[]) null);
+                final Method method = object.getClass().getMethod("clone");
                 if (Modifier.isPublic(method.getModifiers())) {
-                    return method.invoke(object, (Object[]) null);
+                    return (T) method.invoke(object);
                 }
             }
             catch (NoSuchMethodException e) {
@@ -198,7 +197,7 @@ public final class ObjectUtilities {
      * @throws CloneNotSupportedException if any of the items in the collection
      *                                    cannot be cloned.
      */
-    public static Collection deepClone(final Collection collection)
+    public static <T, C extends Collection<T>> C deepClone(final C collection)
         throws CloneNotSupportedException {
 
         if (collection == null) {
@@ -207,17 +206,13 @@ public final class ObjectUtilities {
         // all JDK-Collections are cloneable ...
         // and if the collection is not clonable, then we should throw
         // a CloneNotSupportedException anyway ...
-        final Collection result
-            = (Collection) ObjectUtilities.clone(collection);
+        final C result = ObjectUtilities.clone(collection);
         result.clear();
-        final Iterator iterator = collection.iterator();
-        while (iterator.hasNext()) {
-            final Object item = iterator.next();
-            if (item != null) {
-                result.add(clone(item));
-            }
-            else {
+        for (T item : collection) {
+            if (item == null) {
                 result.add(null);
+            } else {
+                result.add(clone(item));
             }
         }
         return result;
@@ -419,14 +414,14 @@ public final class ObjectUtilities {
      * @param type  the type.
      * @return the instantiated object or null, if an error occurred.
      */
-    public static Object loadAndInstantiate(final String className,
-                                            final Class source,
-                                            final Class type) {
+    public static <T> T loadAndInstantiate(final String className,
+                                            final Class<?> source,
+                                            final Class<T> type) {
         try {
             final ClassLoader loader = getClassLoader(source);
-            final Class c = loader.loadClass(className);
+            final Class<?> c = loader.loadClass(className);
             if (type.isAssignableFrom(c)) {
-                return c.newInstance();
+                return (T) c.newInstance();
             }
         }
         catch (Exception e) {

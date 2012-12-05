@@ -897,7 +897,7 @@ public class XYSeries extends Series implements Cloneable, Serializable {
     @Override
     public Object clone() throws CloneNotSupportedException {
         XYSeries clone = (XYSeries) super.clone();
-        clone.data = (List) ObjectUtilities.deepClone(this.data);
+        clone.data = ObjectUtilities.deepClone(this.data);
         return clone;
     }
 

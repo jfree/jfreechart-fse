@@ -919,20 +919,16 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         clone.toolTipGeneratorList
                 = (ObjectList<XYToolTipGenerator>) this.toolTipGeneratorList.clone();
         if (clone.baseToolTipGenerator instanceof PublicCloneable) {
-            clone.baseToolTipGenerator = (XYToolTipGenerator)
-                    ObjectUtilities.clone(this.baseToolTipGenerator);
+            clone.baseToolTipGenerator = ObjectUtilities.clone(this.baseToolTipGenerator);
         }
         if (clone.urlGenerator instanceof PublicCloneable) {
-            clone.urlGenerator = (XYURLGenerator)
-                    ObjectUtilities.clone(this.urlGenerator);
+            clone.urlGenerator = ObjectUtilities.clone(this.urlGenerator);
         }
         if (clone.legendItemToolTipGenerator instanceof PublicCloneable) {
-            clone.legendItemToolTipGenerator = (XYSeriesLabelGenerator)
-                    ObjectUtilities.clone(this.legendItemToolTipGenerator);
+            clone.legendItemToolTipGenerator = ObjectUtilities.clone(this.legendItemToolTipGenerator);
         }
         if (clone.legendItemURLGenerator instanceof PublicCloneable) {
-            clone.legendItemURLGenerator = (XYSeriesLabelGenerator)
-                    ObjectUtilities.clone(this.legendItemURLGenerator);
+            clone.legendItemURLGenerator = ObjectUtilities.clone(this.legendItemURLGenerator);
         }
         return clone;
     }

@@ -3447,21 +3447,18 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             clone.dataset.addChangeListener(clone);
         }
         if (this.urlGenerator instanceof PublicCloneable) {
-            clone.urlGenerator = (PieURLGenerator) ObjectUtilities.clone(
+            clone.urlGenerator = ObjectUtilities.clone(
                     this.urlGenerator);
         }
         clone.legendItemShape = ShapeUtilities.clone(this.legendItemShape);
         if (this.legendLabelGenerator != null) {
-            clone.legendLabelGenerator = (PieSectionLabelGenerator)
-                    ObjectUtilities.clone(this.legendLabelGenerator);
+            clone.legendLabelGenerator = ObjectUtilities.clone(this.legendLabelGenerator);
         }
         if (this.legendLabelToolTipGenerator != null) {
-            clone.legendLabelToolTipGenerator = (PieSectionLabelGenerator)
-                    ObjectUtilities.clone(this.legendLabelToolTipGenerator);
+            clone.legendLabelToolTipGenerator = ObjectUtilities.clone(this.legendLabelToolTipGenerator);
         }
         if (this.legendLabelURLGenerator instanceof PublicCloneable) {
-            clone.legendLabelURLGenerator = (PieURLGenerator)
-                    ObjectUtilities.clone(this.legendLabelURLGenerator);
+            clone.legendLabelURLGenerator = ObjectUtilities.clone(this.legendLabelURLGenerator);
         }
         return clone;
     }

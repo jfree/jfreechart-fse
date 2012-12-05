@@ -735,7 +735,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
     @Override
 	public Object clone() throws CloneNotSupportedException {
         TimeSeriesCollection clone = (TimeSeriesCollection) super.clone();
-        clone.data = (List) ObjectUtilities.deepClone(this.data);
+        clone.data = ObjectUtilities.deepClone(this.data);
         clone.workingCalendar = (Calendar) this.workingCalendar.clone();
         return clone;
     }

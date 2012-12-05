@@ -1214,8 +1214,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
 	public Object clone() throws CloneNotSupportedException {
         XYBarRenderer result = (XYBarRenderer) super.clone();
         if (this.gradientPaintTransformer != null) {
-            result.gradientPaintTransformer = (GradientPaintTransformer)
-                ObjectUtilities.clone(this.gradientPaintTransformer);
+            result.gradientPaintTransformer = ObjectUtilities.clone(this.gradientPaintTransformer);
         }
         result.legendBar = ShapeUtilities.clone(this.legendBar);
         return result;

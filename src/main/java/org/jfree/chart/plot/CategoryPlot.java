@@ -5085,15 +5085,15 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
             }
         }
         if (this.fixedDomainAxisSpace != null) {
-            clone.fixedDomainAxisSpace = (AxisSpace) ObjectUtilities.clone(
+            clone.fixedDomainAxisSpace = ObjectUtilities.clone(
                     this.fixedDomainAxisSpace);
         }
         if (this.fixedRangeAxisSpace != null) {
-            clone.fixedRangeAxisSpace = (AxisSpace) ObjectUtilities.clone(
+            clone.fixedRangeAxisSpace = ObjectUtilities.clone(
                     this.fixedRangeAxisSpace);
         }
 
-        clone.annotations = (List) ObjectUtilities.deepClone(this.annotations);
+        clone.annotations = ObjectUtilities.deepClone(this.annotations);
         clone.foregroundDomainMarkers = cloneMarkerMap(
                 this.foregroundDomainMarkers);
         clone.backgroundDomainMarkers = cloneMarkerMap(

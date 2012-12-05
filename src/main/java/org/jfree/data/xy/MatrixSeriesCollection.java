@@ -276,7 +276,7 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
     @Override
 	public Object clone() throws CloneNotSupportedException {
         MatrixSeriesCollection clone = (MatrixSeriesCollection) super.clone();
-        clone.seriesList = (List) ObjectUtilities.deepClone(this.seriesList);
+        clone.seriesList = ObjectUtilities.deepClone(this.seriesList);
         return clone;
     }
 

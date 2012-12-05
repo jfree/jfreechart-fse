@@ -196,7 +196,7 @@ public class TaskSeries extends Series {
     @Override
 	public Object clone() throws CloneNotSupportedException {
         TaskSeries clone = (TaskSeries) super.clone();
-        clone.tasks = (List) ObjectUtilities.deepClone(this.tasks);
+        clone.tasks = ObjectUtilities.deepClone(this.tasks);
         return clone;
     }
 

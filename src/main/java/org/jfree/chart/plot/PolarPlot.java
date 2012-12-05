@@ -1881,7 +1881,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
 	public Object clone() throws CloneNotSupportedException {
 
         PolarPlot clone = (PolarPlot) super.clone();
-        clone.axes = (ObjectList<ValueAxis>) ObjectUtilities.clone(this.axes);
+        clone.axes = ObjectUtilities.clone(this.axes);
         for (int i = 0; i < this.axes.size(); i++) {
             ValueAxis axis = this.axes.get(i);
             if (axis != null) {
@@ -1893,7 +1893,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
         }
 
         // the datasets are not cloned, but listeners need to be added...
-        clone.datasets = (ObjectList<Dataset>) ObjectUtilities.clone(this.datasets);
+        clone.datasets = ObjectUtilities.clone(this.datasets);
         for (int i = 0; i < clone.datasets.size(); ++i) {
             XYDataset d = getDataset(i);
             if (d != null) {
@@ -1901,7 +1901,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
             }
         }
 
-        clone.renderers = (ObjectList<PolarItemRenderer>) ObjectUtilities.clone(this.renderers);
+        clone.renderers = ObjectUtilities.clone(this.renderers);
         for (int i = 0; i < this.renderers.size(); i++) {
             PolarItemRenderer renderer2 = this.renderers.get(i);
             if (renderer2 instanceof PublicCloneable) {

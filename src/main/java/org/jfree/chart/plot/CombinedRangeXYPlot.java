@@ -719,7 +719,7 @@ public class CombinedRangeXYPlot extends XYPlot
 	public Object clone() throws CloneNotSupportedException {
 
         CombinedRangeXYPlot result = (CombinedRangeXYPlot) super.clone();
-        result.subplots = (List) ObjectUtilities.deepClone(this.subplots);
+        result.subplots = ObjectUtilities.deepClone(this.subplots);
         for (Iterator it = result.subplots.iterator(); it.hasNext();) {
             Plot child = (Plot) it.next();
             child.setParent(result);

@@ -1386,10 +1386,10 @@ public abstract class Plot implements AxisChangeListener,
         // childs in combined plots instead
         if (this.datasetGroup != null) {
             clone.datasetGroup
-                = (DatasetGroup) ObjectUtilities.clone(this.datasetGroup);
+                = ObjectUtilities.clone(this.datasetGroup);
         }
         clone.drawingSupplier
-            = (DrawingSupplier) ObjectUtilities.clone(this.drawingSupplier);
+            = ObjectUtilities.clone(this.drawingSupplier);
         clone.listenerList = new EventListenerList();
         return clone;
 

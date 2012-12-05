@@ -151,7 +151,7 @@ public class LegendItemCollection implements Cloneable, Serializable {
     @Override
 	public Object clone() throws CloneNotSupportedException {
         LegendItemCollection clone = (LegendItemCollection) super.clone();
-        clone.items = (List) ObjectUtilities.deepClone(this.items);
+        clone.items = ObjectUtilities.deepClone(this.items);
         return clone;
     }
 

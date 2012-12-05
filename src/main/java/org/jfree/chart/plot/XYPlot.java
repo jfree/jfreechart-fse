@@ -5640,7 +5640,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
     public Object clone() throws CloneNotSupportedException {
 
         XYPlot clone = (XYPlot) super.clone();
-        clone.domainAxes = (ObjectList<ValueAxis>) ObjectUtilities.clone(this.domainAxes);
+        clone.domainAxes = ObjectUtilities.clone(this.domainAxes);
         for (int i = 0; i < this.domainAxes.size(); i++) {
             ValueAxis axis = this.domainAxes.get(i);
             if (axis != null) {
@@ -5653,7 +5653,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         clone.domainAxisLocations = (ObjectList<AxisLocation>)
                 this.domainAxisLocations.clone();
 
-        clone.rangeAxes = (ObjectList<ValueAxis>) ObjectUtilities.clone(this.rangeAxes);
+        clone.rangeAxes = ObjectUtilities.clone(this.rangeAxes);
         for (int i = 0; i < this.rangeAxes.size(); i++) {
             ValueAxis axis = this.rangeAxes.get(i);
             if (axis != null) {
@@ -5663,11 +5663,11 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
                 clonedAxis.addChangeListener(clone);
             }
         }
-        clone.rangeAxisLocations = (ObjectList<AxisLocation>) ObjectUtilities.clone(
+        clone.rangeAxisLocations = ObjectUtilities.clone(
                 this.rangeAxisLocations);
 
         // the datasets are not cloned, but listeners need to be added...
-        clone.datasets = (ObjectList<XYDataset>) ObjectUtilities.clone(this.datasets);
+        clone.datasets = ObjectUtilities.clone(this.datasets);
         for (int i = 0; i < clone.datasets.size(); ++i) {
             XYDataset d = getDataset(i);
             if (d != null) {
@@ -5680,7 +5680,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         clone.datasetToRangeAxesMap = new TreeMap<Integer, List<Integer>>();
         clone.datasetToRangeAxesMap.putAll(this.datasetToRangeAxesMap);
 
-        clone.renderers = (ObjectList<XYItemRenderer>) ObjectUtilities.clone(this.renderers);
+        clone.renderers = ObjectUtilities.clone(this.renderers);
         for (int i = 0; i < this.renderers.size(); i++) {
             XYItemRenderer renderer2 = this.renderers.get(i);
             if (renderer2 instanceof PublicCloneable) {
@@ -5691,28 +5691,28 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
                 rc.addChangeListener(clone);
             }
         }
-        clone.foregroundDomainMarkers = (Map) ObjectUtilities.clone(
+        clone.foregroundDomainMarkers = ObjectUtilities.clone(
                 this.foregroundDomainMarkers);
-        clone.backgroundDomainMarkers = (Map) ObjectUtilities.clone(
+        clone.backgroundDomainMarkers = ObjectUtilities.clone(
                 this.backgroundDomainMarkers);
-        clone.foregroundRangeMarkers = (Map) ObjectUtilities.clone(
+        clone.foregroundRangeMarkers = ObjectUtilities.clone(
                 this.foregroundRangeMarkers);
-        clone.backgroundRangeMarkers = (Map) ObjectUtilities.clone(
+        clone.backgroundRangeMarkers = ObjectUtilities.clone(
                 this.backgroundRangeMarkers);
         clone.annotations = (List) ObjectUtilities.deepClone(this.annotations);
         if (this.fixedDomainAxisSpace != null) {
-            clone.fixedDomainAxisSpace = (AxisSpace) ObjectUtilities.clone(
+            clone.fixedDomainAxisSpace = ObjectUtilities.clone(
                     this.fixedDomainAxisSpace);
         }
         if (this.fixedRangeAxisSpace != null) {
-            clone.fixedRangeAxisSpace = (AxisSpace) ObjectUtilities.clone(
+            clone.fixedRangeAxisSpace = ObjectUtilities.clone(
                     this.fixedRangeAxisSpace);
         }
         if (this.fixedLegendItems != null) {
             clone.fixedLegendItems
                     = (LegendItemCollection) this.fixedLegendItems.clone();
         }
-        clone.quadrantOrigin = (Point2D) ObjectUtilities.clone(
+        clone.quadrantOrigin = ObjectUtilities.clone(
                 this.quadrantOrigin);
         clone.quadrantPaint = this.quadrantPaint.clone();
         return clone;

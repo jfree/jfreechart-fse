@@ -1576,21 +1576,18 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         }
 
         if (this.legendItemLabelGenerator instanceof PublicCloneable) {
-            clone.legendItemLabelGenerator = (XYSeriesLabelGenerator)
-                    ObjectUtilities.clone(this.legendItemLabelGenerator);
+            clone.legendItemLabelGenerator = ObjectUtilities.clone(this.legendItemLabelGenerator);
         }
         if (this.legendItemToolTipGenerator instanceof PublicCloneable) {
-            clone.legendItemToolTipGenerator = (XYSeriesLabelGenerator)
-                    ObjectUtilities.clone(this.legendItemToolTipGenerator);
+            clone.legendItemToolTipGenerator = ObjectUtilities.clone(this.legendItemToolTipGenerator);
         }
         if (this.legendItemURLGenerator instanceof PublicCloneable) {
-            clone.legendItemURLGenerator = (XYSeriesLabelGenerator)
-                    ObjectUtilities.clone(this.legendItemURLGenerator);
+            clone.legendItemURLGenerator = ObjectUtilities.clone(this.legendItemURLGenerator);
         }
 
-        clone.foregroundAnnotations = (List<XYAnnotation>) ObjectUtilities.deepClone(
+        clone.foregroundAnnotations = ObjectUtilities.deepClone(
                 this.foregroundAnnotations);
-        clone.backgroundAnnotations = (List<XYAnnotation>) ObjectUtilities.deepClone(
+        clone.backgroundAnnotations = ObjectUtilities.deepClone(
                 this.backgroundAnnotations);
 
         return clone;
