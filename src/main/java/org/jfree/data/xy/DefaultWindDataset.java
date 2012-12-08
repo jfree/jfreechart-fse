@@ -62,10 +62,10 @@ public class DefaultWindDataset extends AbstractXYDataset
         implements WindDataset, PublicCloneable {
 
     /** The keys for the series. */
-    private List seriesKeys;
+    private List<String> seriesKeys;
 
     /** Storage for the series data. */
-    private List allSeriesData;
+    private List<List<WindDataItem>> allSeriesData;
 
     /**
      * Constructs a new, empty, dataset.  Since there are currently no methods
@@ -73,8 +73,8 @@ public class DefaultWindDataset extends AbstractXYDataset
      * constructor.
      */
     public DefaultWindDataset() {
-        this.seriesKeys = new java.util.ArrayList();
-        this.allSeriesData = new java.util.ArrayList();
+        this.seriesKeys = new java.util.ArrayList<String>();
+        this.allSeriesData = new java.util.ArrayList<List<WindDataItem>>();
     }
 
     /**
@@ -120,13 +120,12 @@ public class DefaultWindDataset extends AbstractXYDataset
      *     permitted).
      * @param data  the wind dataset (<code>null</code> not permitted).
      *
-     * @throws IllegalArgumentException if <code>seriesKeys</code> is
-     *     <code>null</code>.
-     * @throws IllegalArgumentException if the number of series keys does not
+     * @throws IllegalArgumentException if <code>seriesKeys</code>  is
+     *     <code>null</code> or the number of series keys does not
      *     match the number of series in the array.
      * @throws NullPointerException if <code>data</code> is <code>null</code>.
      */
-    public DefaultWindDataset(List seriesKeys, Object[][][] data) {
+    public DefaultWindDataset(List<String> seriesKeys, Object[][][] data) {
         if (seriesKeys == null) {
             throw new IllegalArgumentException("Null 'seriesKeys' argument.");
         }
@@ -136,10 +135,10 @@ public class DefaultWindDataset extends AbstractXYDataset
         }
         this.seriesKeys = seriesKeys;
         int seriesCount = data.length;
-        this.allSeriesData = new java.util.ArrayList(seriesCount);
+        this.allSeriesData = new java.util.ArrayList<List<WindDataItem>>(seriesCount);
 
         for (int seriesIndex = 0; seriesIndex < seriesCount; seriesIndex++) {
-            List oneSeriesData = new java.util.ArrayList();
+            List<WindDataItem> oneSeriesData = new java.util.ArrayList<WindDataItem>();
             int maxItemCount = data[seriesIndex].length;
             for (int itemIndex = 0; itemIndex < maxItemCount; itemIndex++) {
                 Object xObject = data[seriesIndex][itemIndex][0];
@@ -192,7 +191,7 @@ public class DefaultWindDataset extends AbstractXYDataset
             throw new IllegalArgumentException("Invalid series index: "
                     + series);
         }
-        List oneSeriesData = (List) this.allSeriesData.get(series);
+        List<WindDataItem> oneSeriesData = this.allSeriesData.get(series);
         return oneSeriesData.size();
     }
 
@@ -209,7 +208,7 @@ public class DefaultWindDataset extends AbstractXYDataset
             throw new IllegalArgumentException("Invalid series index: "
                     + series);
         }
-        return (Comparable) this.seriesKeys.get(series);
+        return this.seriesKeys.get(series);
     }
 
     /**
@@ -224,8 +223,8 @@ public class DefaultWindDataset extends AbstractXYDataset
      */
     @Override
 	public Number getX(int series, int item) {
-        List oneSeriesData = (List) this.allSeriesData.get(series);
-        WindDataItem windItem = (WindDataItem) oneSeriesData.get(item);
+        List<WindDataItem> oneSeriesData = this.allSeriesData.get(series);
+        WindDataItem windItem = oneSeriesData.get(item);
         return windItem.getX();
     }
 
@@ -255,8 +254,8 @@ public class DefaultWindDataset extends AbstractXYDataset
      */
     @Override
 	public Number getWindDirection(int series, int item) {
-        List oneSeriesData = (List) this.allSeriesData.get(series);
-        WindDataItem windItem = (WindDataItem) oneSeriesData.get(item);
+        List<WindDataItem> oneSeriesData = this.allSeriesData.get(series);
+        WindDataItem windItem = oneSeriesData.get(item);
         return windItem.getWindDirection();
     }
 
@@ -271,8 +270,8 @@ public class DefaultWindDataset extends AbstractXYDataset
      */
     @Override
 	public Number getWindForce(int series, int item) {
-        List oneSeriesData = (List) this.allSeriesData.get(series);
-        WindDataItem windItem = (WindDataItem) oneSeriesData.get(item);
+        List<WindDataItem> oneSeriesData = this.allSeriesData.get(series);
+        WindDataItem windItem = oneSeriesData.get(item);
         return windItem.getWindForce();
     }
 
@@ -285,10 +284,10 @@ public class DefaultWindDataset extends AbstractXYDataset
      *
      * @throws NullPointerException if <code>data</code> is <code>null</code>.
      */
-    public static List seriesNameListFromDataArray(Object[][] data) {
+    public static List<String> seriesNameListFromDataArray(Object[][] data) {
 
         int seriesCount = data.length;
-        List seriesNameList = new java.util.ArrayList(seriesCount);
+        List<String> seriesNameList = new java.util.ArrayList<String>(seriesCount);
         for (int i = 0; i < seriesCount; i++) {
             seriesNameList.add("Series " + (i + 1));
         }
@@ -334,7 +333,7 @@ public class DefaultWindDataset extends AbstractXYDataset
 /**
  * A wind data item.
  */
-class WindDataItem implements Comparable, Serializable {
+class WindDataItem implements Comparable<WindDataItem>, Serializable {
 
     /** The x-value. */
     private Number x;
@@ -388,27 +387,22 @@ class WindDataItem implements Comparable, Serializable {
     /**
      * Compares this item to another object.
      *
-     * @param object  the other object.
+     * @param item the other object.
      *
      * @return An int that indicates the relative comparison.
      */
     @Override
-	public int compareTo(Object object) {
-        if (object instanceof WindDataItem) {
-            WindDataItem item = (WindDataItem) object;
-            if (this.x.doubleValue() > item.x.doubleValue()) {
-                return 1;
-            }
-            else if (this.x.equals(item.x)) {
-                return 0;
-            }
-            else {
-                return -1;
-            }
+	public int compareTo(WindDataItem item) {
+        if (this.x.doubleValue() > item.x.doubleValue()) {
+            return 1;
+        }
+        else if (this.x.equals(item.x)) {
+            return 0;
         }
         else {
-            throw new ClassCastException("WindDataItem.compareTo(error)");
+            return -1;
         }
+
     }
 
     /**

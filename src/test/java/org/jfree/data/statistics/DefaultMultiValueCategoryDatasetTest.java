@@ -1,4 +1,5 @@
 /* ===========================================================
+/* ===========================================================
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
@@ -75,7 +76,7 @@ public class DefaultMultiValueCategoryDatasetTest  {
     public void testGetValue() {
         DefaultMultiValueCategoryDataset d
                 = new DefaultMultiValueCategoryDataset();
-        List<Integer> values = new ArrayList<Integer>();
+        List<Number> values = new ArrayList<Number>();
         values.add(1);
         values.add(2);
         d.add(values, "R1", "C1");
@@ -167,7 +168,7 @@ public class DefaultMultiValueCategoryDatasetTest  {
         assertEquals(d1, d2);
         assertEquals(d2, d1);
 
-        List<Integer> values = new ArrayList<Integer>();
+        List<Number> values = new ArrayList<Number>();
         d1.add(values, "R1", "C1");
         assertFalse(d1.equals(d2));
         d2.add(values, "R1", "C1");
@@ -254,7 +255,7 @@ public class DefaultMultiValueCategoryDatasetTest  {
         assertEquals(d1, d2);
 
         // try a dataset with some content...
-        List<Integer> values = new ArrayList<Integer>();
+        List<Number> values = new ArrayList<Number>();
         values.add(99);
         d1.add(values, "R1", "C1");
         d2 = (DefaultMultiValueCategoryDataset) d1.clone();
@@ -264,7 +265,7 @@ public class DefaultMultiValueCategoryDatasetTest  {
         assertEquals(d1, d2);
 
         // check that the clone doesn't share the same underlying arrays.
-        List<Integer> values2 = new ArrayList<Integer>();
+        List<Number> values2 = new ArrayList<Number>();
         values2.add(111);
         d1.add(values2, "R2", "C2");
         assertFalse(d1.equals(d2));

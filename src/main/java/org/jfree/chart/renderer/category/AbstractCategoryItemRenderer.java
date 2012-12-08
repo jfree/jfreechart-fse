@@ -723,7 +723,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             return null;
         }
         if (getDataBoundsIncludesVisibleSeriesOnly()) {
-            List visibleSeriesKeys = new ArrayList();
+            List<Comparable> visibleSeriesKeys = new ArrayList<Comparable>();
             int seriesCount = dataset.getRowCount();
             for (int s = 0; s < seriesCount; s++) {
                 if (isSeriesVisible(s)) {
@@ -1460,7 +1460,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             g2.setFont(labelFont);
             g2.setPaint(paint);
             String label = generator.generateLabel(dataset, row, column);
-            ItemLabelPosition position = null;
+            ItemLabelPosition position;
             if (!negative) {
                 position = getPositiveItemLabelPosition(row, column);
             }

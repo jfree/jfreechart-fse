@@ -53,7 +53,7 @@ import org.jfree.chart.util.SortOrder;
  * A utility class that can compare and order two {@link KeyedValue} instances
  * and sort them into ascending or descending order by key or by value.
  */
-public class KeyedValueComparator implements Comparator, Serializable {
+public class KeyedValueComparator implements Comparator<KeyedValue>, Serializable {
 
     /** The comparator type. */
     private KeyedValueComparatorType type;
@@ -98,25 +98,25 @@ public class KeyedValueComparator implements Comparator, Serializable {
      * Compares two {@link KeyedValue} instances and returns an
      * <code>int</code> that indicates the relative order of the two objects.
      *
-     * @param o1  object 1.
-     * @param o2  object 2.
+     * @param kv1  object 1.
+     * @param kv2  object 2.
      *
      * @return An int indicating the relative order of the objects.
      */
     @Override
-	public int compare(Object o1, Object o2) {
+	public int compare(KeyedValue kv1, KeyedValue kv2) {
 
-        if (o2 == null) {
+        if (kv2 == null) {
+            if (kv1 ==null) {
+                return 0;
+            }
             return -1;
         }
-        if (o1 == null) {
+        if (kv1 == null) {
             return 1;
         }
 
         int result;
-
-        KeyedValue kv1 = (KeyedValue) o1;
-        KeyedValue kv2 = (KeyedValue) o2;
 
         if (this.type == KeyedValueComparatorType.BY_KEY) {
             if (this.order.equals(SortOrder.ASCENDING)) {

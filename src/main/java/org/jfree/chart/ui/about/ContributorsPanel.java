@@ -72,7 +72,7 @@ public class ContributorsPanel extends JPanel {
      *
      * @param contributors  a list of contributors (represented by Contributor objects).
      */
-    public ContributorsPanel(final List contributors) {
+    public ContributorsPanel(final List<Contributor> contributors) {
 
         setLayout(new BorderLayout());
         this.model = new ContributorsTableModel(contributors);

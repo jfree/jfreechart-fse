@@ -154,7 +154,7 @@ public interface BoxAndWhiskerXYDataset extends XYDataset {
      * @return The list of outliers for the specified series and item
      *         (possibly <code>null</code>).
      */
-    public List getOutliers(int series, int item);
+    public List<Number> getOutliers(int series, int item);
 
     /**
      * Returns the value used as the outlier coefficient. The outlier

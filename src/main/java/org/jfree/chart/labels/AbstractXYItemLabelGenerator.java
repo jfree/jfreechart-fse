@@ -245,10 +245,8 @@ public class AbstractXYItemLabelGenerator implements Cloneable, Serializable {
      * @return The label (possibly <code>null</code>).
      */
     public String generateLabelString(XYDataset dataset, int series, int item) {
-        String result = null;
         Object[] items = createItemArray(dataset, series, item);
-        result = MessageFormat.format(this.formatString, items);
-        return result;
+        return MessageFormat.format(this.formatString, items);
     }
 
     /**

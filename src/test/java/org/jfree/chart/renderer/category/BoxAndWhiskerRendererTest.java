@@ -233,7 +233,7 @@ public class BoxAndWhiskerRendererTest  {
                 return null;
             }
         };
-        List<Double> values = new ArrayList<Double>();
+        List<Number> values = new ArrayList<Number>();
         values.add(1.0);
         values.add(10.0);
         values.add(100.0);
@@ -270,7 +270,7 @@ public class BoxAndWhiskerRendererTest  {
                 return null;
             }
         };
-        List<Double> values = new ArrayList<Double>();
+        List<Number> values = new ArrayList<Number>();
         values.add(1.0);
         values.add(10.0);
         values.add(100.0);
@@ -298,7 +298,7 @@ public class BoxAndWhiskerRendererTest  {
     public void testGetLegendItem() {
         DefaultBoxAndWhiskerCategoryDataset dataset
                 = new DefaultBoxAndWhiskerCategoryDataset();
-        List<Double> values = new ArrayList<Double>();
+        List<Number> values = new ArrayList<Number>();
         values.add(1.10);
         values.add(1.45);
         values.add(1.33);

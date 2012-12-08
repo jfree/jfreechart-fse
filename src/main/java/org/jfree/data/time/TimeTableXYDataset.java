@@ -550,7 +550,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      */
     @Override
 	public Range getDomainBounds(boolean includeInterval) {
-        List keys = this.values.getRowKeys();
+        List<Comparable> keys = this.values.getRowKeys();
         if (keys.isEmpty()) {
             return null;
         }

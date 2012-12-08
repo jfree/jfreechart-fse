@@ -403,24 +403,21 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
         PlotOrientation orientation = plot.getOrientation();
 
         MultiValueCategoryDataset d = (MultiValueCategoryDataset) dataset;
-        List values = d.getValues(row, column);
+        List<Number> values = d.getValues(row, column);
         if (values == null) {
             return;
         }
-        int valueCount = values.size();
-        for (int i = 0; i < valueCount; i++) {
+        for (Number n : values) {
             // current data point...
             double x1;
             if (this.useSeriesOffset) {
-                x1 = domainAxis.getCategorySeriesMiddle(column, 
+                x1 = domainAxis.getCategorySeriesMiddle(column,
                         dataset.getColumnCount(), visibleRow, visibleRowCount,
                         this.itemMargin, dataArea, plot.getDomainAxisEdge());
-            }
-            else {
+            } else {
                 x1 = domainAxis.getCategoryMiddle(column, getColumnCount(),
                         dataArea, plot.getDomainAxisEdge());
             }
-            Number n = (Number) values.get(i);
             double value = n.doubleValue();
             double y1 = rangeAxis.valueToJava2D(value, dataArea,
                     plot.getRangeAxisEdge());
@@ -428,15 +425,13 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
             Shape shape = getItemShape(row, column);
             if (orientation == PlotOrientation.HORIZONTAL) {
                 shape = ShapeUtilities.createTranslatedShape(shape, y1, x1);
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 shape = ShapeUtilities.createTranslatedShape(shape, x1, y1);
             }
             if (getItemShapeFilled(row, column)) {
                 if (this.useFillPaint) {
                     g2.setPaint(getItemFillPaint(row, column));
-                }
-                else {
+                } else {
                     g2.setPaint(getItemPaint(row, column));
                 }
                 g2.fill(shape);
@@ -444,8 +439,7 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
             if (this.drawOutlines) {
                 if (this.useOutlinePaint) {
                     g2.setPaint(getItemOutlinePaint(row, column));
-                }
-                else {
+                } else {
                     g2.setPaint(getItemPaint(row, column));
                 }
                 g2.setStroke(getItemOutlineStroke(row, column));

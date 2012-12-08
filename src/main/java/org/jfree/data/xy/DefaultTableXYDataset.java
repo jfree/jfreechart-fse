@@ -65,8 +65,8 @@ package org.jfree.data.xy;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
@@ -88,10 +88,10 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
      * Storage for the data - this list will contain zero, one or many
      * XYSeries objects.
      */
-    private List data = null;
+    private List<XYSeries> data;
 
     /** Storage for the x values. */
-    private HashSet xPoints = null;
+    private HashSet<Number> xPoints;
 
     /** A flag that controls whether or not events are propogated. */
     private boolean propagateEvents = true;
@@ -118,8 +118,8 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
      */
     public DefaultTableXYDataset(boolean autoPrune) {
         this.autoPrune = autoPrune;
-        this.data = new ArrayList();
-        this.xPoints = new HashSet();
+        this.data = new ArrayList<XYSeries>();
+        this.xPoints = new HashSet<Number>();
         this.intervalDelegate = new IntervalXYDelegate(this, false);
         addChangeListener(this.intervalDelegate);
     }
@@ -167,7 +167,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
         if (series == null) {
             throw new IllegalArgumentException("Null 'series' not permitted.");
         }
-        HashSet seriesXPoints = new HashSet();
+        Set<Number> seriesXPoints = new HashSet<Number>();
         boolean savedState = this.propagateEvents;
         this.propagateEvents = false;
         for (int itemNo = 0; itemNo < series.getItemCount(); itemNo++) {
@@ -175,18 +175,14 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
             seriesXPoints.add(xValue);
             if (!this.xPoints.contains(xValue)) {
                 this.xPoints.add(xValue);
-                int seriesCount = this.data.size();
-                for (int seriesNo = 0; seriesNo < seriesCount; seriesNo++) {
-                    XYSeries dataSeries = (XYSeries) this.data.get(seriesNo);
+                for (XYSeries dataSeries : this.data) {
                     if (!dataSeries.equals(series)) {
                         dataSeries.add(xValue, null);
                     }
                 }
             }
         }
-        Iterator iterator = this.xPoints.iterator();
-        while (iterator.hasNext()) {
-            Number xPoint = (Number) iterator.next();
+        for (Number xPoint : this.xPoints) {
             if (!seriesXPoints.contains(xPoint)) {
                 series.add(xPoint, null);
             }
@@ -199,8 +195,8 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
      */
     public void updateXPoints() {
         this.propagateEvents = false;
-        for (int s = 0; s < this.data.size(); s++) {
-            updateXPoints((XYSeries) this.data.get(s));
+        for (XYSeries aData : this.data) {
+            updateXPoints(aData);
         }
         if (this.autoPrune) {
             prune();
@@ -244,7 +240,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
         if ((series < 0) || (series >= getSeriesCount())) {
             throw new IllegalArgumentException("Index outside valid range.");
         }
-        return (XYSeries) this.data.get(series);
+        return this.data.get(series);
     }
 
     /**
@@ -283,7 +279,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
      */
     @Override
 	public Number getX(int series, int item) {
-        XYSeries s = (XYSeries) this.data.get(series);
+        XYSeries s = this.data.get(series);
         return s.getX(item);
 
     }
@@ -325,7 +321,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
      */
     @Override
 	public Number getY(int series, int index) {
-        XYSeries s = (XYSeries) this.data.get(series);
+        XYSeries s = this.data.get(series);
         return s.getY(index);
     }
 
@@ -363,8 +359,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
 
         // Unregister the collection as a change listener to each series in
         // the collection.
-        for (int i = 0; i < this.data.size(); i++) {
-            XYSeries series = (XYSeries) this.data.get(i);
+        for (XYSeries series : this.data) {
             series.removeChangeListener(this);
         }
 
@@ -413,7 +408,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
         }
 
         // fetch the series, remove the change listener, then remove the series.
-        XYSeries s = (XYSeries) this.data.get(series);
+        XYSeries s = this.data.get(series);
         s.removeChangeListener(this);
         this.data.remove(series);
         if (this.data.size() == 0) {
@@ -437,8 +432,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
         }
         boolean savedState = this.propagateEvents;
         this.propagateEvents = false;
-        for (int s = 0; s < this.data.size(); s++) {
-            XYSeries series = (XYSeries) this.data.get(s);
+        for (XYSeries series : this.data) {
             series.remove(x);
         }
         this.propagateEvents = savedState;
@@ -455,8 +449,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
      * @return A boolean.
      */
     protected boolean canPrune(Number x) {
-        for (int s = 0; s < this.data.size(); s++) {
-            XYSeries series = (XYSeries) this.data.get(s);
+        for (XYSeries series : this.data) {
             if (series.getY(series.indexOf(x)) != null) {
                 return false;
             }
@@ -468,10 +461,8 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
      * Removes all x-values for which all the y-values are <code>null</code>.
      */
     public void prune() {
-        HashSet hs = (HashSet) this.xPoints.clone();
-        Iterator iterator = hs.iterator();
-        while (iterator.hasNext()) {
-            Number x = (Number) iterator.next();
+        Set<Number> hs = (HashSet<Number>) this.xPoints.clone();
+        for (Number x : hs) {
             if (canPrune(x)) {
                 removeAllValuesForX(x);
             }
@@ -552,10 +543,10 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
 	public Object clone() throws CloneNotSupportedException {
         DefaultTableXYDataset clone = (DefaultTableXYDataset) super.clone();
         int seriesCount = this.data.size();
-        clone.data = new java.util.ArrayList(seriesCount);
+        clone.data = new java.util.ArrayList<XYSeries>(seriesCount);
         for (int i = 0; i < seriesCount; i++) {
-            XYSeries series = (XYSeries) this.data.get(i);
-            clone.data.add(series.clone());
+            XYSeries series = this.data.get(i);
+            clone.data.add((XYSeries)series.clone());
         }
 
         clone.intervalDelegate = new IntervalXYDelegate(clone);

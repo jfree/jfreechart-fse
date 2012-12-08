@@ -593,7 +593,7 @@ public class SerialUtilities {
             int start = 0;
             while (c != CharacterIterator.DONE) {
                 int limit = stream.readInt();
-                Map atts = (Map) stream.readObject();
+                Map<? extends AttributedCharacterIterator.Attribute, ?> atts = (Map<? extends AttributedCharacterIterator.Attribute, ?>) stream.readObject();
                 result.addAttributes(atts, start, limit);
                 start = limit;
                 c = stream.readChar();
@@ -643,7 +643,7 @@ public class SerialUtilities {
                 stream.writeInt(limit - begin);
 
                 // now write the attribute set
-                Map atts = new HashMap(aci.getAttributes());
+                Map<AttributedCharacterIterator.Attribute, Object> atts = new HashMap<AttributedCharacterIterator.Attribute, Object>(aci.getAttributes());
                 stream.writeObject(atts);
                 current = aci.setIndex(limit);
             }

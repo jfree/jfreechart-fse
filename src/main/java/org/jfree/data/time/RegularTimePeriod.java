@@ -59,8 +59,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import org.jfree.chart.date.MonthConstants;
-
 /**
  * An abstract class representing a unit of time.  Convenient methods are
  * provided for calculating the next and previous time periods.  Conversion
@@ -69,8 +67,7 @@ import org.jfree.chart.date.MonthConstants;
  * <P>
  * This class is immutable, and all subclasses should be immutable also.
  */
-public abstract class RegularTimePeriod implements TimePeriod, Comparable,
-                                                   MonthConstants {
+public abstract class RegularTimePeriod implements TimePeriod, Comparable<TimePeriod> {
 
     /**
      * Creates a time period that includes the specified millisecond, assuming
@@ -90,9 +87,9 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable,
             Constructor constructor = c.getDeclaredConstructor(
                     new Class[] {Date.class, TimeZone.class, Locale.class});
             result = (RegularTimePeriod) constructor.newInstance(
-                    new Object[] {millisecond, zone, locale});
+                    millisecond, zone, locale);
         }
-        catch (Exception e) {
+        catch (ReflectiveOperationException e) {
             // do nothing, so null is returned
         }
         return result;

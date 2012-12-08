@@ -74,7 +74,7 @@ public class BoxAndWhiskerCalculatorTest  {
         }
 
         // try a list containing a single value
-        List<Double> values = new ArrayList<Double>();
+        List<Number> values = new ArrayList<Number>();
         values.add(1.1);
         BoxAndWhiskerItem item
             = BoxAndWhiskerCalculator.calculateBoxAndWhiskerStatistics(values);
@@ -101,7 +101,7 @@ public class BoxAndWhiskerCalculatorTest  {
             assertEquals("Null 'values' argument.", e.getMessage());
         }
 
-        List<Double> values = new ArrayList<Double>();
+        List<Number> values = new ArrayList<Number>();
         double q1 = BoxAndWhiskerCalculator.calculateQ1(values);
         assertTrue(Double.isNaN(q1));
         values.add(1.0);
@@ -133,7 +133,7 @@ public class BoxAndWhiskerCalculatorTest  {
             assertEquals("Null 'values' argument.", e.getMessage());
         }
 
-        List<Double> values = new ArrayList<Double>();
+        List<Number> values = new ArrayList<Number>();
         double q3 = BoxAndWhiskerCalculator.calculateQ3(values);
         assertTrue(Double.isNaN(q3));
         values.add(1.0);
@@ -155,7 +155,7 @@ public class BoxAndWhiskerCalculatorTest  {
      */
     @Test
     public void test1593149() {
-        ArrayList<Double> theList = new ArrayList<Double>(5);
+        ArrayList<Number> theList = new ArrayList<Number>(5);
         theList.add(0, 1.0);
         theList.add(1, 2.0);
         theList.add(2, Double.NaN);

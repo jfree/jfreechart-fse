@@ -183,7 +183,7 @@ public abstract class AbstractDialLayer implements DialLayer {
      */
     @Override
 	public boolean hasListener(EventListener listener) {
-        List list = Arrays.asList(this.listenerList.getListenerList());
+        List<Object> list = Arrays.asList(this.listenerList.getListenerList());
         return list.contains(listener);
     }
 

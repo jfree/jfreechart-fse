@@ -46,7 +46,6 @@ package org.jfree.chart.renderer;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -66,7 +65,7 @@ import java.util.List;
 public class OutlierList {
 
     /** Storage for the outliers. */
-    private List outliers;
+    private List<Outlier> outliers;
 
     /** The averaged outlier. */
     private Outlier averagedOutlier;
@@ -83,7 +82,7 @@ public class OutlierList {
      * @param outlier  the outlier.
      */
     public OutlierList(Outlier outlier) {
-        this.outliers = new ArrayList();
+        this.outliers = new ArrayList<Outlier>();
         setAveragedOutlier(outlier);
     }
 
@@ -172,9 +171,7 @@ public class OutlierList {
         double totalXCoords = 0.0;
         double totalYCoords = 0.0;
         int size = getItemCount();
-        for (Iterator iterator = this.outliers.iterator();
-                iterator.hasNext();) {
-            Outlier o = (Outlier) iterator.next();
+        for (Outlier o : this.outliers) {
             totalXCoords += o.getX();
             totalYCoords += o.getY();
         }

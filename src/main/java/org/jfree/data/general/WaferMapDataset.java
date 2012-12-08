@@ -165,8 +165,8 @@ public class WaferMapDataset extends AbstractDataset {
      *
      * @return The set of unique values.
      */
-    public Set getUniqueValues() {
-        Set unique = new TreeSet();
+    public Set<Number> getUniqueValues() {
+        Set<Number> unique = new TreeSet<Number>();
         //step through all the values and add them to the hash
         for (int r = 0; r < this.data.getRowCount(); r++) {
             for (int c = 0; c < this.data.getColumnCount(); c++) {

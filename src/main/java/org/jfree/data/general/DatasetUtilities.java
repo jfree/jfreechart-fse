@@ -128,7 +128,6 @@
 package org.jfree.data.general;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.util.ArrayUtilities;
@@ -182,11 +181,9 @@ public final class DatasetUtilities {
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
         }
-        List keys = dataset.getKeys();
+        List<Comparable> keys = dataset.getKeys();
         double totalValue = 0;
-        Iterator iterator = keys.iterator();
-        while (iterator.hasNext()) {
-            Comparable current = (Comparable) iterator.next();
+        for (Comparable current : keys) {
             if (current != null) {
                 Number value = dataset.getValue(current);
                 double v = 0.0;
@@ -312,11 +309,9 @@ public final class DatasetUtilities {
         double total = DatasetUtilities.calculatePieDatasetTotal(source);
 
         //  Iterate and find all keys below threshold percentThreshold
-        List keys = source.getKeys();
-        ArrayList otherKeys = new ArrayList();
-        Iterator iterator = keys.iterator();
-        while (iterator.hasNext()) {
-            Comparable currentKey = (Comparable) iterator.next();
+        List<Comparable> keys = source.getKeys();
+        List<Comparable> otherKeys = new ArrayList<Comparable>();
+        for (Comparable currentKey : keys) {
             Number dataValue = source.getValue(currentKey);
             if (dataValue != null) {
                 double value = dataValue.doubleValue();
@@ -327,18 +322,15 @@ public final class DatasetUtilities {
         }
 
         //  Create new dataset with keys above threshold percentThreshold
-        iterator = keys.iterator();
         double otherValue = 0;
-        while (iterator.hasNext()) {
-            Comparable currentKey = (Comparable) iterator.next();
+        for (Comparable currentKey : keys) {
             Number dataValue = source.getValue(currentKey);
             if (dataValue != null) {
                 if (otherKeys.contains(currentKey)
-                    && otherKeys.size() >= minItems) {
+                        && otherKeys.size() >= minItems) {
                     //  Do not add key to dataset
                     otherValue += dataValue.doubleValue();
-                }
-                else {
+                } else {
                     //  Add key to dataset
                     result.setValue(currentKey, dataValue);
                 }
@@ -444,8 +436,8 @@ public final class DatasetUtilities {
                 + "the data array.");
         }
         int columnCount = 0;
-        for (int r = 0; r < data.length; r++) {
-            columnCount = Math.max(columnCount, data[r].length);
+        for (double[] aData : data) {
+            columnCount = Math.max(columnCount, aData.length);
         }
         if (columnKeys.length != columnCount) {
             throw new IllegalArgumentException(
@@ -668,7 +660,7 @@ public final class DatasetUtilities {
             throw new IllegalArgumentException("Null 'dataset' argument.");
         }
 
-        Range result = null;
+        Range result;
         // if the dataset implements DomainInfo, life is easier
         if (dataset instanceof DomainInfo) {
             DomainInfo info = (DomainInfo) dataset;
@@ -697,11 +689,11 @@ public final class DatasetUtilities {
      * @since 1.0.13
      */
     public static Range findDomainBounds(XYDataset dataset,
-            List visibleSeriesKeys, boolean includeInterval) {
+            List<Comparable> visibleSeriesKeys, boolean includeInterval) {
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
         }
-        Range result = null;
+        Range result;
         if (dataset instanceof XYDomainInfo) {
             XYDomainInfo info = (XYDomainInfo) dataset;
             result = info.getDomainBounds(visibleSeriesKeys, includeInterval);
@@ -817,7 +809,7 @@ public final class DatasetUtilities {
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
         }
-        Range result = null;
+        Range result;
         if (dataset instanceof RangeInfo) {
             RangeInfo info = (RangeInfo) dataset;
             result = info.getRangeBounds(includeInterval);
@@ -843,11 +835,11 @@ public final class DatasetUtilities {
      * @since 1.0.13
      */
     public static Range findRangeBounds(CategoryDataset dataset,
-            List visibleSeriesKeys, boolean includeInterval) {
+            List<Comparable> visibleSeriesKeys, boolean includeInterval) {
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
         }
-        Range result = null;
+        Range result;
         if (dataset instanceof CategoryRangeInfo) {
             CategoryRangeInfo info = (CategoryRangeInfo) dataset;
             result = info.getRangeBounds(visibleSeriesKeys, includeInterval);
@@ -887,7 +879,7 @@ public final class DatasetUtilities {
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
         }
-        Range result = null;
+        Range result;
         if (dataset instanceof RangeInfo) {
             RangeInfo info = (RangeInfo) dataset;
             result = info.getRangeBounds(includeInterval);
@@ -915,11 +907,11 @@ public final class DatasetUtilities {
      * @since 1.0.13
      */
     public static Range findRangeBounds(XYDataset dataset,
-            List visibleSeriesKeys, Range xRange, boolean includeInterval) {
+            List<Comparable> visibleSeriesKeys, Range xRange, boolean includeInterval) {
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
         }
-        Range result = null;
+        Range result;
         if (dataset instanceof XYRangeInfo) {
             XYRangeInfo info = (XYRangeInfo) dataset;
             result = info.getRangeBounds(visibleSeriesKeys, xRange,
@@ -1030,7 +1022,7 @@ public final class DatasetUtilities {
      * @since 1.0.13
      */
     public static Range iterateToFindRangeBounds(CategoryDataset dataset,
-            List visibleSeriesKeys, boolean includeInterval) {
+            List<Comparable> visibleSeriesKeys, boolean includeInterval) {
 
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
@@ -1048,9 +1040,7 @@ public final class DatasetUtilities {
             // handle special case of BoxAndWhiskerDataset
             BoxAndWhiskerCategoryDataset bx
                     = (BoxAndWhiskerCategoryDataset) dataset;
-            Iterator iterator = visibleSeriesKeys.iterator();
-            while (iterator.hasNext()) {
-                Comparable seriesKey = (Comparable) iterator.next();
+            for (Comparable seriesKey : visibleSeriesKeys) {
                 int series = dataset.getRowIndex(seriesKey);
                 int itemCount = dataset.getColumnCount();
                 for (int item = 0; item < itemCount; item++) {
@@ -1077,9 +1067,7 @@ public final class DatasetUtilities {
             // we want to measure
             IntervalCategoryDataset icd = (IntervalCategoryDataset) dataset;
             Number lvalue, uvalue;
-            Iterator iterator = visibleSeriesKeys.iterator();
-            while (iterator.hasNext()) {
-                Comparable seriesKey = (Comparable) iterator.next();
+            for (Comparable seriesKey : visibleSeriesKeys) {
                 int series = dataset.getRowIndex(seriesKey);
                 for (int column = 0; column < columnCount; column++) {
                     lvalue = icd.getStartValue(series, column);
@@ -1099,24 +1087,18 @@ public final class DatasetUtilities {
             // we want to measure
             MultiValueCategoryDataset mvcd
                     = (MultiValueCategoryDataset) dataset;
-            Iterator iterator = visibleSeriesKeys.iterator();
-            while (iterator.hasNext()) {
-                Comparable seriesKey = (Comparable) iterator.next();
+            for (Comparable seriesKey : visibleSeriesKeys) {
                 int series = dataset.getRowIndex(seriesKey);
                 for (int column = 0; column < columnCount; column++) {
-                    List values = mvcd.getValues(series, column);
-                    Iterator valueIterator = values.iterator();
-                    while (valueIterator.hasNext()) {
-                        Object o = valueIterator.next();
-                        if (o instanceof Number){
-                            double v = ((Number) o).doubleValue();
-                            if (!Double.isNaN(v)){
-                                minimum = Math.min(minimum, v);
-                                maximum = Math.max(maximum, v);
-                            }
+                    List<Number> values = mvcd.getValues(series, column);
+                    for (Number o : values) {
+                        double v = o.doubleValue();
+                        if (!Double.isNaN(v)) {
+                            minimum = Math.min(minimum, v);
+                            maximum = Math.max(maximum, v);
                         }
                     }
-               }
+                }
             }
         }
         else if (includeInterval 
@@ -1125,9 +1107,7 @@ public final class DatasetUtilities {
             // we want to measure
             StatisticalCategoryDataset scd
                     = (StatisticalCategoryDataset) dataset;
-            Iterator iterator = visibleSeriesKeys.iterator();
-            while (iterator.hasNext()) {
-                Comparable seriesKey = (Comparable) iterator.next();
+            for (Comparable seriesKey : visibleSeriesKeys) {
                 int series = dataset.getRowIndex(seriesKey);
                 for (int column = 0; column < columnCount; column++) {
                     Number meanN = scd.getMeanValue(series, column);
@@ -1151,9 +1131,7 @@ public final class DatasetUtilities {
         }
         else {
             // handle the standard case (plain CategoryDataset)
-            Iterator iterator = visibleSeriesKeys.iterator();
-            while (iterator.hasNext()) {
-                Comparable seriesKey = (Comparable) iterator.next();
+            for (Comparable seriesKey : visibleSeriesKeys) {
                 int series = dataset.getRowIndex(seriesKey);
                 for (int column = 0; column < columnCount; column++) {
                     Number value = dataset.getValue(series, column);
@@ -1320,7 +1298,7 @@ public final class DatasetUtilities {
      * @return The data bounds.
      */
     public static Range findZBounds(XYZDataset dataset,
-            List visibleSeriesKeys, Range xRange, boolean includeInterval) {
+            List<Comparable> visibleSeriesKeys, Range xRange, boolean includeInterval) {
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
         }
@@ -1392,7 +1370,7 @@ public final class DatasetUtilities {
      * @since 1.0.13
      */
     public static Range iterateToFindDomainBounds(XYDataset dataset,
-            List visibleSeriesKeys, boolean includeInterval) {
+            List<Comparable> visibleSeriesKeys, boolean includeInterval) {
 
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
@@ -1408,9 +1386,7 @@ public final class DatasetUtilities {
         if (includeInterval && dataset instanceof IntervalXYDataset) {
             // handle special case of IntervalXYDataset
             IntervalXYDataset ixyd = (IntervalXYDataset) dataset;
-            Iterator iterator = visibleSeriesKeys.iterator();
-            while (iterator.hasNext()) {
-                Comparable seriesKey = (Comparable) iterator.next();
+            for (Comparable seriesKey : visibleSeriesKeys) {
                 int series = dataset.indexOf(seriesKey);
                 int itemCount = dataset.getItemCount(series);
                 for (int item = 0; item < itemCount; item++) {
@@ -1427,9 +1403,7 @@ public final class DatasetUtilities {
         }
         else {
             // standard case - plain XYDataset
-            Iterator iterator = visibleSeriesKeys.iterator();
-            while (iterator.hasNext()) {
-                Comparable seriesKey = (Comparable) iterator.next();
+            for (Comparable seriesKey : visibleSeriesKeys) {
                 int series = dataset.indexOf(seriesKey);
                 int itemCount = dataset.getItemCount(series);
                 for (int item = 0; item < itemCount; item++) {
@@ -1468,7 +1442,7 @@ public final class DatasetUtilities {
      * @since 1.0.13
      */
     public static Range iterateToFindRangeBounds(XYDataset dataset,
-            List visibleSeriesKeys, Range xRange, boolean includeInterval) {
+            List<Comparable> visibleSeriesKeys, Range xRange, boolean includeInterval) {
 
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
@@ -1488,9 +1462,7 @@ public final class DatasetUtilities {
         if (includeInterval && dataset instanceof OHLCDataset) {
             // handle special case of OHLCDataset
             OHLCDataset ohlc = (OHLCDataset) dataset;
-            Iterator iterator = visibleSeriesKeys.iterator();
-            while (iterator.hasNext()) {
-                Comparable seriesKey = (Comparable) iterator.next();
+            for (Comparable seriesKey : visibleSeriesKeys) {
                 int series = dataset.indexOf(seriesKey);
                 int itemCount = dataset.getItemCount(series);
                 for (int item = 0; item < itemCount; item++) {
@@ -1511,9 +1483,7 @@ public final class DatasetUtilities {
         else if (includeInterval && dataset instanceof BoxAndWhiskerXYDataset) {
             // handle special case of BoxAndWhiskerXYDataset
             BoxAndWhiskerXYDataset bx = (BoxAndWhiskerXYDataset) dataset;
-            Iterator iterator = visibleSeriesKeys.iterator();
-            while (iterator.hasNext()) {
-                Comparable seriesKey = (Comparable) iterator.next();
+            for (Comparable seriesKey : visibleSeriesKeys) {
                 int series = dataset.indexOf(seriesKey);
                 int itemCount = dataset.getItemCount(series);
                 for (int item = 0; item < itemCount; item++) {
@@ -1534,9 +1504,7 @@ public final class DatasetUtilities {
         else if (includeInterval && dataset instanceof IntervalXYDataset) {
             // handle special case of IntervalXYDataset
             IntervalXYDataset ixyd = (IntervalXYDataset) dataset;
-            Iterator iterator = visibleSeriesKeys.iterator();
-            while (iterator.hasNext()) {
-                Comparable seriesKey = (Comparable) iterator.next();
+            for (Comparable seriesKey : visibleSeriesKeys) {
                 int series = dataset.indexOf(seriesKey);
                 int itemCount = dataset.getItemCount(series);
                 for (int item = 0; item < itemCount; item++) {
@@ -1556,9 +1524,7 @@ public final class DatasetUtilities {
         }
         else {
             // standard case - plain XYDataset
-            Iterator iterator = visibleSeriesKeys.iterator();
-            while (iterator.hasNext()) {
-                Comparable seriesKey = (Comparable) iterator.next();
+            for (Comparable seriesKey : visibleSeriesKeys) {
                 int series = dataset.indexOf(seriesKey);
                 int itemCount = dataset.getItemCount(series);
                 for (int item = 0; item < itemCount; item++) {
@@ -1597,7 +1563,7 @@ public final class DatasetUtilities {
      * @return The y-range (possibly <code>null</code>).
      */
     public static Range iterateToFindZBounds(XYZDataset dataset,
-            List visibleSeriesKeys, Range xRange, boolean includeInterval) {
+            List<Comparable> visibleSeriesKeys, Range xRange, boolean includeInterval) {
     
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
@@ -1612,10 +1578,8 @@ public final class DatasetUtilities {
     
         double minimum = Double.POSITIVE_INFINITY;
         double maximum = Double.NEGATIVE_INFINITY;
-    
-        Iterator iterator = visibleSeriesKeys.iterator();
-        while (iterator.hasNext()) {
-            Comparable seriesKey = (Comparable) iterator.next();
+
+        for (Comparable seriesKey : visibleSeriesKeys) {
             int series = dataset.indexOf(seriesKey);
             int itemCount = dataset.getItemCount(series);
             for (int item = 0; item < itemCount; item++) {
@@ -1655,7 +1619,7 @@ public final class DatasetUtilities {
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
         }
-        Number result = null;
+        Number result;
         // if the dataset implements DomainInfo, life is easy
         if (dataset instanceof DomainInfo) {
             DomainInfo info = (DomainInfo) dataset;
@@ -1710,7 +1674,7 @@ public final class DatasetUtilities {
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
         }
-        Number result = null;
+        Number result;
         // if the dataset implements DomainInfo, life is easy
         if (dataset instanceof DomainInfo) {
             DomainInfo info = (DomainInfo) dataset;

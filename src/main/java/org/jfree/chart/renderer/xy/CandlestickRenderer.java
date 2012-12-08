@@ -830,8 +830,8 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
         }
 
         // draw the body
-        Rectangle2D body = null;
-        Rectangle2D hotspot = null;
+        Rectangle2D body;
+        Rectangle2D hotspot;
         double length = Math.abs(yyHigh - yyLow);
         double base = Math.min(yyHigh, yyLow);
         if (horiz) {

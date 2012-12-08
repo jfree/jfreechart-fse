@@ -117,7 +117,7 @@ public abstract class AbstractAnnotation implements Annotation, Cloneable,
      * @see #removeChangeListener(AnnotationChangeListener)
      */
     public boolean hasListener(EventListener listener) {
-        List list = Arrays.asList(this.listenerList.getListenerList());
+        List<Object> list = Arrays.asList(this.listenerList.getListenerList());
         return list.contains(listener);
     }
 

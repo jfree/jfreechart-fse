@@ -76,7 +76,6 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.LegendItem;
@@ -638,7 +637,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      */
     @Override
     public void drawRadialGridLines(Graphics2D g2, PolarPlot plot,
-            ValueAxis radialAxis, List ticks, Rectangle2D dataArea) {
+            ValueAxis radialAxis, List<ValueTick> ticks, Rectangle2D dataArea) {
 
         g2.setFont(radialAxis.getTickLabelFont());
         g2.setPaint(plot.getRadiusGridlinePaint());
@@ -648,13 +647,11 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         Point center = plot.translateToJava2D(axisMin, axisMin, radialAxis,
                 dataArea);
 
-        Iterator iterator = ticks.iterator();
-        while (iterator.hasNext()) {
-            NumberTick tick = (NumberTick) iterator.next();
+        for (ValueTick tick : ticks) {
             double angleDegrees = plot.isCounterClockwise()
                     ? plot.getAngleOffset() : -plot.getAngleOffset();
             Point p = plot.translateToJava2D(angleDegrees,
-                    tick.getNumber().doubleValue(), radialAxis, dataArea);
+                    ((NumberTick)tick).getNumber().doubleValue(), radialAxis, dataArea);
             int r = p.x - center.x;
             int upperLeftX = center.x - r;
             int upperLeftY = center.y - r;

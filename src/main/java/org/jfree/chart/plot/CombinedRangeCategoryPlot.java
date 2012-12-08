@@ -68,7 +68,6 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.LegendItemCollection;
@@ -278,8 +277,7 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
         // work out the maximum height or width of the non-shared axes...
         int n = this.subplots.size();
         int totalWeight = 0;
-        for (int i = 0; i < n; i++) {
-            CategoryPlot sub = this.subplots.get(i);
+        for (CategoryPlot sub : this.subplots) {
             totalWeight += sub.getWeight();
         }
         // calculate plotAreas of all sub-plots, maximum vertical/horizontal
@@ -527,8 +525,8 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
         CombinedRangeCategoryPlot result
             = (CombinedRangeCategoryPlot) super.clone();
         result.subplots = (List) ObjectUtilities.deepClone(this.subplots);
-        for (Iterator it = result.subplots.iterator(); it.hasNext();) {
-            Plot child = (Plot) it.next();
+        for (CategoryPlot subplot : result.subplots) {
+            Plot child = subplot;
             child.setParent(result);
         }
 

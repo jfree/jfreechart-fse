@@ -326,7 +326,7 @@ public class TimeSeriesCollectionTest  {
     @Test
     public void testFindDomainBounds() {
         TimeSeriesCollection dataset = new TimeSeriesCollection();
-        List<String> visibleSeriesKeys = new java.util.ArrayList<String>();
+        List<Comparable> visibleSeriesKeys = new java.util.ArrayList<Comparable>();
         Range r = DatasetUtilities.findDomainBounds(dataset, visibleSeriesKeys,
                 true);
         assertNull(r);
@@ -401,7 +401,7 @@ public class TimeSeriesCollectionTest  {
         dataset.addSeries(s1);
         dataset.addSeries(s2);
 
-        List<String> keys = new ArrayList<String>();
+        List<Comparable> keys = new ArrayList<Comparable>();
         keys.add("S1");
         keys.add("S2");
         Range r = dataset.getRangeBounds(keys, new Range(

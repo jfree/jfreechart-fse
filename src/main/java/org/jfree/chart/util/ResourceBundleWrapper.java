@@ -95,16 +95,16 @@ public class ResourceBundleWrapper {
      */
     public static void removeCodeBase(URL codeBase,
             URLClassLoader urlClassLoader) {
-        List urlsNoBase = new ArrayList();
+        List<URL> urlsNoBase = new ArrayList<URL>();
 
         URL[] urls = urlClassLoader.getURLs();
-        for (int i = 0; i < urls.length; i++) {
-            if (!urls[i].sameFile(codeBase)) {
-                urlsNoBase.add(urls[i]);
+        for (URL url : urls) {
+            if (!url.sameFile(codeBase)) {
+                urlsNoBase.add(url);
             }
         }
         // substitute the filtered URL list
-        URL[] urlsNoBaseArray = (URL[]) urlsNoBase.toArray(new URL[0]);
+        URL[] urlsNoBaseArray = urlsNoBase.toArray(new URL[urlsNoBase.size()]);
         noCodeBaseClassLoader = URLClassLoader.newInstance(urlsNoBaseArray);
     }
 

@@ -449,12 +449,12 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
         }
 
         // polygon definitions
-        LinkedList l_minuendXs    = new LinkedList();
-        LinkedList l_minuendYs    = new LinkedList();
-        LinkedList l_subtrahendXs = new LinkedList();
-        LinkedList l_subtrahendYs = new LinkedList();
-        LinkedList l_polygonXs    = new LinkedList();
-        LinkedList l_polygonYs    = new LinkedList();
+        LinkedList<Double> l_minuendXs    = new LinkedList<Double>();
+        LinkedList<Double> l_minuendYs    = new LinkedList<Double>();
+        LinkedList<Double> l_subtrahendXs = new LinkedList<Double>();
+        LinkedList<Double> l_subtrahendYs = new LinkedList<Double>();
+        LinkedList<Double> l_polygonXs    = new LinkedList<Double>();
+        LinkedList<Double> l_polygonYs    = new LinkedList<Double>();
 
         // state
         int l_minuendItem      = 0;
@@ -467,7 +467,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
         double l_minuendMinY   = Double.POSITIVE_INFINITY;
 
         int l_subtrahendItem      = 0;
-        int l_subtrahendItemCount = 0; // actual value set below
+        int l_subtrahendItemCount; // actual value set below
         Double l_subtrahendCurX   = null;
         Double l_subtrahendNextX  = null;
         Double l_subtrahendCurY   = null;

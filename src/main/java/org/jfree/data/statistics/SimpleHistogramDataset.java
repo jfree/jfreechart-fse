@@ -46,7 +46,6 @@ package org.jfree.data.statistics;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.util.ObjectUtilities;
@@ -72,7 +71,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
     private Comparable key;
 
     /** The bins. */
-    private List bins;
+    private List<SimpleHistogramBin> bins;
 
     /**
      * A flag that controls whether or not the bin count is divided by the
@@ -91,7 +90,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
             throw new IllegalArgumentException("Null 'key' argument.");
         }
         this.key = key;
-        this.bins = new ArrayList();
+        this.bins = new ArrayList<SimpleHistogramBin>();
         this.adjustForBinSize = true;
     }
 
@@ -177,10 +176,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      */
     public void addBin(SimpleHistogramBin bin) {
         // check that the new bin doesn't overlap with any existing bin
-        Iterator iterator = this.bins.iterator();
-        while (iterator.hasNext()) {
-            SimpleHistogramBin existingBin
-                    = (SimpleHistogramBin) iterator.next();
+        for (SimpleHistogramBin existingBin : this.bins) {
             if (bin.overlapsWith(existingBin)) {
                 throw new RuntimeException("Overlapping bin");
             }
@@ -210,12 +206,11 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      */
     public void addObservation(double value, boolean notify) {
         boolean placed = false;
-        Iterator iterator = this.bins.iterator();
-        while (iterator.hasNext() && !placed) {
-            SimpleHistogramBin bin = (SimpleHistogramBin) iterator.next();
+        for (SimpleHistogramBin bin : this.bins) {
             if (bin.accepts(value)) {
                 bin.setItemCount(bin.getItemCount() + 1);
                 placed = true;
+                break;
             }
         }
         if (!placed) {
@@ -235,8 +230,8 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      * @see #clearObservations()
      */
     public void addObservations(double[] values) {
-        for (int i = 0; i < values.length; i++) {
-            addObservation(values[i], false);
+        for (double value : values) {
+            addObservation(value, false);
         }
         notifyListeners(new DatasetChangeEvent(this, this));
     }
@@ -251,9 +246,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      * @see #removeAllBins()
      */
     public void clearObservations() {
-        Iterator iterator = this.bins.iterator();
-        while (iterator.hasNext()) {
-            SimpleHistogramBin bin = (SimpleHistogramBin) iterator.next();
+        for (SimpleHistogramBin bin : this.bins) {
             bin.setItemCount(0);
         }
         notifyListeners(new DatasetChangeEvent(this, this));
@@ -268,7 +261,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      * @see #addBin(SimpleHistogramBin)
      */
     public void removeAllBins() {
-        this.bins = new ArrayList();
+        this.bins = new ArrayList<SimpleHistogramBin>();
         notifyListeners(new DatasetChangeEvent(this, this));
     }
 
@@ -297,7 +290,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      */
     @Override
 	public double getXValue(int series, int item) {
-        SimpleHistogramBin bin = (SimpleHistogramBin) this.bins.get(item);
+        SimpleHistogramBin bin = this.bins.get(item);
         return (bin.getLowerBound() + bin.getUpperBound()) / 2.0;
     }
 
@@ -326,7 +319,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      */
     @Override
 	public double getYValue(int series, int item) {
-        SimpleHistogramBin bin = (SimpleHistogramBin) this.bins.get(item);
+        SimpleHistogramBin bin = this.bins.get(item);
         if (this.adjustForBinSize) {
             return bin.getItemCount()
                    / (bin.getUpperBound() - bin.getLowerBound());
@@ -360,7 +353,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      */
     @Override
 	public double getStartXValue(int series, int item) {
-        SimpleHistogramBin bin = (SimpleHistogramBin) this.bins.get(item);
+        SimpleHistogramBin bin = this.bins.get(item);
         return bin.getLowerBound();
     }
 
@@ -388,7 +381,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      */
     @Override
 	public double getEndXValue(int series, int item) {
-        SimpleHistogramBin bin = (SimpleHistogramBin) this.bins.get(item);
+        SimpleHistogramBin bin = this.bins.get(item);
         return bin.getUpperBound();
     }
 

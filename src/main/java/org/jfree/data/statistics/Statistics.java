@@ -92,12 +92,11 @@ public abstract class Statistics {
         double sum = 0.0;
         double current;
         int counter = 0;
-        for (int i = 0; i < values.length; i++) {
+        for (Number value : values) {
             // treat nulls the same as NaNs
-            if (values[i] != null) {
-                current = values[i].doubleValue();
-            }
-            else {
+            if (value != null) {
+                current = value.doubleValue();
+            } else {
                 current = Double.NaN;
             }
             // calculate the sum and count
@@ -307,8 +306,8 @@ public abstract class Statistics {
         double avg = calculateMean(data);
         double sum = 0.0;
 
-        for (int counter = 0; counter < data.length; counter++) {
-            double diff = data[counter].doubleValue() - avg;
+        for (Number aData : data) {
+            double diff = aData.doubleValue() - avg;
             sum = sum + diff * diff;
         }
         return Math.sqrt(sum / (data.length - 1));

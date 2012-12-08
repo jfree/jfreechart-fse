@@ -78,7 +78,7 @@ import org.jfree.chart.util.ObjectUtilities;
  * sorting can be used to keep the data items in order.
  *
  */
-public class TimeSeriesDataItem implements Cloneable, Comparable, Serializable {
+public class TimeSeriesDataItem implements Cloneable, Comparable<TimeSeriesDataItem>, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -2235346966016401302L;
@@ -195,25 +195,9 @@ public class TimeSeriesDataItem implements Cloneable, Comparable, Serializable {
      *         relative to another object.
      */
     @Override
-	public int compareTo(Object o1) {
+	public int compareTo(TimeSeriesDataItem o1) {
 
-        int result;
-
-        // CASE 1 : Comparing to another TimeSeriesDataItem object
-        // -------------------------------------------------------
-        if (o1 instanceof TimeSeriesDataItem) {
-            TimeSeriesDataItem datapair = (TimeSeriesDataItem) o1;
-            result = getPeriod().compareTo(datapair.getPeriod());
-        }
-
-        // CASE 2 : Comparing to a general object
-        // ---------------------------------------------
-        else {
-            // consider time periods to be ordered after general objects
-            result = 1;
-        }
-
-        return result;
+            return getPeriod().compareTo(o1.getPeriod());
 
     }
 

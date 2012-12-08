@@ -316,11 +316,11 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @see #getRowKeys()
      */
     @Override
-	public List getColumnKeys() {
+	public List<Comparable> getColumnKeys() {
         // the CategoryDataset interface expects a list of categories, but
         // we've stored them in an array...
         if (this.categoryKeys == null) {
-            return new ArrayList();
+            return new ArrayList<Comparable>();
         }
         else {
             return Collections.unmodifiableList(Arrays.asList(
@@ -345,11 +345,11 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
             throw new IllegalArgumentException(
                     "The number of categories does not match the data.");
         }
-        for (int i = 0; i < categoryKeys.length; i++) {
-            if (categoryKeys[i] == null) {
+        for (Comparable categoryKey : categoryKeys) {
+            if (categoryKey == null) {
                 throw new IllegalArgumentException(
-                    "DefaultIntervalCategoryDataset.setCategoryKeys(): "
-                    + "null category not permitted.");
+                        "DefaultIntervalCategoryDataset.setCategoryKeys(): "
+                                + "null category not permitted.");
             }
         }
         this.categoryKeys = categoryKeys;
@@ -665,11 +665,11 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @see #getColumnKeys()
      */
     @Override
-	public List getRowKeys() {
+	public List<Comparable> getRowKeys() {
         // the CategoryDataset interface expects a list of series, but
         // we've stored them in an array...
         if (this.seriesKeys == null) {
-            return new java.util.ArrayList();
+            return new java.util.ArrayList<Comparable>();
         }
         else {
             return Collections.unmodifiableList(Arrays.asList(this.seriesKeys));

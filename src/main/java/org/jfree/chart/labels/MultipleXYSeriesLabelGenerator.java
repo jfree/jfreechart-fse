@@ -45,10 +45,8 @@
 package org.jfree.chart.labels;
 
 import java.io.Serializable;
-import java.lang.StringBuilder;
 import java.text.MessageFormat;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -77,7 +75,7 @@ public class MultipleXYSeriesLabelGenerator implements XYSeriesLabelGenerator,
     private String additionalFormatPattern;
 
     /** Storage for the additional series labels. */
-    private Map seriesLabelLists;
+    private Map<Integer, List<String>> seriesLabelLists;
 
     /**
      * Creates an item label generator using default number formatters.
@@ -97,7 +95,7 @@ public class MultipleXYSeriesLabelGenerator implements XYSeriesLabelGenerator,
         }
         this.formatPattern = format;
         this.additionalFormatPattern = "\n{0}";
-        this.seriesLabelLists = new HashMap();
+        this.seriesLabelLists = new HashMap<Integer, List<String>>();
     }
 
     /**
@@ -108,9 +106,9 @@ public class MultipleXYSeriesLabelGenerator implements XYSeriesLabelGenerator,
      */
     public void addSeriesLabel(int series, String label) {
         Integer key = series;
-        List labelList = (List) this.seriesLabelLists.get(key);
+        List<String> labelList = this.seriesLabelLists.get(key);
         if (labelList == null) {
-            labelList = new java.util.ArrayList();
+            labelList = new java.util.ArrayList<String>();
             this.seriesLabelLists.put(key, labelList);
         }
         labelList.add(label);
@@ -144,13 +142,11 @@ public class MultipleXYSeriesLabelGenerator implements XYSeriesLabelGenerator,
         label.append(MessageFormat.format(this.formatPattern,
                 createItemArray(dataset, series)));
         Integer key = series;
-        List extraLabels = (List) this.seriesLabelLists.get(key);
+        List<String> extraLabels = this.seriesLabelLists.get(key);
         if (extraLabels != null) {
-            Object[] temp = new Object[1];
-            for (int i = 0; i < extraLabels.size(); i++) {
-                temp[0] = extraLabels.get(i);
+            for (String extraLabel : extraLabels) {
                 String labelAddition = MessageFormat.format(
-                        this.additionalFormatPattern, temp);
+                        this.additionalFormatPattern, extraLabel);
                 label.append(labelAddition);
             }
         }
@@ -183,16 +179,14 @@ public class MultipleXYSeriesLabelGenerator implements XYSeriesLabelGenerator,
     public Object clone() throws CloneNotSupportedException {
         MultipleXYSeriesLabelGenerator clone
                 = (MultipleXYSeriesLabelGenerator) super.clone();
-        clone.seriesLabelLists = new HashMap();
-        Set keys = this.seriesLabelLists.keySet();
-        Iterator iterator = keys.iterator();
-        while (iterator.hasNext()) {
-            Object key = iterator.next();
-            Object entry = this.seriesLabelLists.get(key);
-            Object toAdd = entry;
+        clone.seriesLabelLists = new HashMap<Integer, List<String>>();
+        Set<Integer> keys = this.seriesLabelLists.keySet();
+        for (Integer key : keys) {
+            List<String> entry = this.seriesLabelLists.get(key);
+            List<String> toAdd = entry;
             if (entry instanceof PublicCloneable) {
                 PublicCloneable pc = (PublicCloneable) entry;
-                toAdd = pc.clone();
+                toAdd = (List<String>) pc.clone();
             }
             clone.seriesLabelLists.put(key, toAdd);
         }

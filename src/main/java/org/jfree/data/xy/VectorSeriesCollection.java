@@ -329,7 +329,7 @@ public class VectorSeriesCollection extends AbstractXYDataset
     public Object clone() throws CloneNotSupportedException {
         VectorSeriesCollection clone
                 = (VectorSeriesCollection) super.clone();
-        clone.data = (List) ObjectUtilities.deepClone(this.data);
+        clone.data = ObjectUtilities.deepClone(this.data);
         return clone;
     }
 

@@ -94,7 +94,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.axis.ValueAxis;
@@ -449,7 +448,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
                 xx + width / 2));
 
         // draw the body
-        Shape box = null;
+        Shape box;
         if (yyQ1Median < yyQ3Median) {
             box = new Rectangle2D.Double(yyQ1Median, xx - width / 2,
                     yyQ3Median - yyQ1Median, width);
@@ -534,7 +533,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
         Number yAverage = boxAndWhiskerData.getMeanValue(series, item);
         Number yQ1Median = boxAndWhiskerData.getQ1Value(series, item);
         Number yQ3Median = boxAndWhiskerData.getQ3Value(series, item);
-        List yOutliers = boxAndWhiskerData.getOutliers(series, item);
+        List<Number> yOutliers = boxAndWhiskerData.getOutliers(series, item);
         // yOutliers can be null, but we'd prefer it to be an empty list in
         // that case...
         if (yOutliers == null) {
@@ -596,7 +595,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
                 yyMin));
 
         // draw the body
-        Shape box = null;
+        Shape box;
         if (yyQ1Median > yyQ3Median) {
             box = new Rectangle2D.Double(xx - width / 2, yyQ3Median, width,
                     yyQ1Median - yyQ3Median);
@@ -635,7 +634,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
             }
         }
 
-        List outliers = new ArrayList();
+        List<Outlier> outliers = new ArrayList<Outlier>();
         OutlierListCollection outlierListCollection
                 = new OutlierListCollection();
 
@@ -643,23 +642,20 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
          * an arraylist. If there are any farouts, set the flag on the
          * OutlierListCollection
          */
-        for (int i = 0; i < yOutliers.size(); i++) {
-            double outlier = ((Number) yOutliers.get(i)).doubleValue();
+        for (Number yOutlier : yOutliers) {
+            double outlier = yOutlier.doubleValue();
             if (outlier > boxAndWhiskerData.getMaxOutlier(series,
                     item).doubleValue()) {
                 outlierListCollection.setHighFarOut(true);
-            }
-            else if (outlier < boxAndWhiskerData.getMinOutlier(series,
+            } else if (outlier < boxAndWhiskerData.getMinOutlier(series,
                     item).doubleValue()) {
                 outlierListCollection.setLowFarOut(true);
-            }
-            else if (outlier > boxAndWhiskerData.getMaxRegularValue(series,
+            } else if (outlier > boxAndWhiskerData.getMaxRegularValue(series,
                     item).doubleValue()) {
                 yyOutlier = rangeAxis.valueToJava2D(outlier, dataArea,
                         location);
                 outliers.add(new Outlier(xx, yyOutlier, oRadius));
-            }
-            else if (outlier < boxAndWhiskerData.getMinRegularValue(series,
+            } else if (outlier < boxAndWhiskerData.getMinRegularValue(series,
                     item).doubleValue()) {
                 yyOutlier = rangeAxis.valueToJava2D(outlier, dataArea,
                         location);
@@ -670,8 +666,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
 
         // Process outliers. Each outlier is either added to the appropriate
         // outlier list or a new outlier list is made
-        for (Iterator iterator = outliers.iterator(); iterator.hasNext();) {
-            Outlier outlier = (Outlier) iterator.next();
+        for (Outlier outlier : outliers) {
             outlierListCollection.add(outlier);
         }
 
@@ -682,16 +677,13 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
                 dataArea, location) - aRadius;
 
         // draw outliers
-        for (Iterator iterator = outlierListCollection.iterator();
-                iterator.hasNext();) {
-            OutlierList list = (OutlierList) iterator.next();
+        for (OutlierList list : outlierListCollection) {
             Outlier outlier = list.getAveragedOutlier();
             Point2D point = outlier.getPoint();
 
             if (list.isMultiple()) {
                 drawMultipleEllipse(point, width, oRadius, g2);
-            }
-            else {
+            } else {
                 drawEllipse(point, oRadius, g2);
             }
         }

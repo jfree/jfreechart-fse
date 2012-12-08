@@ -80,9 +80,9 @@ public class LibraryTableModel extends AbstractTableModel {
      *
      * @param libraries  the libraries.
      */
-    public LibraryTableModel(final List libraries) {
+    public LibraryTableModel(final List<Library> libraries) {
 
-        this.libraries = (Library[])
+        this.libraries =
                 libraries.toArray(new Library[libraries.size()]);
 
         final String baseName = "org.jfree.ui.about.resources.AboutResources";

@@ -70,22 +70,22 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
      * Storage for the series keys.  This list must be kept in sync with the
      * seriesList.
      */
-    private List seriesKeys;
+    private List<Comparable> seriesKeys;
 
     /**
      * Storage for the series in the dataset.  We use a list because the
      * order of the series is significant.  This list must be kept in sync
      * with the seriesKeys list.
      */
-    private List seriesList;
+    private List<double[][]> seriesList;
 
     /**
      * Creates a new <code>DefaultIntervalXYDataset</code> instance, initially
      * containing no data.
      */
     public DefaultIntervalXYDataset() {
-        this.seriesKeys = new java.util.ArrayList();
-        this.seriesList = new java.util.ArrayList();
+        this.seriesKeys = new java.util.ArrayList<Comparable>();
+        this.seriesList = new java.util.ArrayList<double[][]>();
     }
 
     /**
@@ -114,7 +114,7 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
         if ((series < 0) || (series >= getSeriesCount())) {
             throw new IllegalArgumentException("Series index out of bounds");
         }
-        return (Comparable) this.seriesKeys.get(series);
+        return this.seriesKeys.get(series);
     }
 
     /**
@@ -133,7 +133,7 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
         if ((series < 0) || (series >= getSeriesCount())) {
             throw new IllegalArgumentException("Series index out of bounds");
         }
-        double[][] seriesArray = (double[][]) this.seriesList.get(series);
+        double[][] seriesArray = this.seriesList.get(series);
         return seriesArray[0].length;
     }
 
@@ -149,14 +149,12 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
      *
      * @throws ArrayIndexOutOfBoundsException if <code>series</code> is not
      *     within the specified range.
-     * @throws ArrayIndexOutOfBoundsException if <code>item</code> is not
-     *     within the specified range.
      *
      * @see #getX(int, int)
      */
     @Override
 	public double getXValue(int series, int item) {
-        double[][] seriesData = (double[][]) this.seriesList.get(series);
+        double[][] seriesData = this.seriesList.get(series);
         return seriesData[0][item];
     }
 
@@ -172,14 +170,12 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
      *
      * @throws ArrayIndexOutOfBoundsException if <code>series</code> is not
      *     within the specified range.
-     * @throws ArrayIndexOutOfBoundsException if <code>item</code> is not
-     *     within the specified range.
      *
      * @see #getY(int, int)
      */
     @Override
 	public double getYValue(int series, int item) {
-        double[][] seriesData = (double[][]) this.seriesList.get(series);
+        double[][] seriesData = this.seriesList.get(series);
         return seriesData[3][item];
     }
 
@@ -195,14 +191,12 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
      *
      * @throws ArrayIndexOutOfBoundsException if <code>series</code> is not
      *     within the specified range.
-     * @throws ArrayIndexOutOfBoundsException if <code>item</code> is not
-     *     within the specified range.
      *
      * @see #getStartX(int, int)
      */
     @Override
 	public double getStartXValue(int series, int item) {
-        double[][] seriesData = (double[][]) this.seriesList.get(series);
+        double[][] seriesData = this.seriesList.get(series);
         return seriesData[1][item];
     }
 
@@ -218,14 +212,12 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
      *
      * @throws ArrayIndexOutOfBoundsException if <code>series</code> is not
      *     within the specified range.
-     * @throws ArrayIndexOutOfBoundsException if <code>item</code> is not
-     *     within the specified range.
      *
      * @see #getEndX(int, int)
      */
     @Override
 	public double getEndXValue(int series, int item) {
-        double[][] seriesData = (double[][]) this.seriesList.get(series);
+        double[][] seriesData = this.seriesList.get(series);
         return seriesData[2][item];
     }
 
@@ -241,14 +233,12 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
      *
      * @throws ArrayIndexOutOfBoundsException if <code>series</code> is not
      *     within the specified range.
-     * @throws ArrayIndexOutOfBoundsException if <code>item</code> is not
-     *     within the specified range.
      *
      * @see #getStartY(int, int)
      */
     @Override
 	public double getStartYValue(int series, int item) {
-        double[][] seriesData = (double[][]) this.seriesList.get(series);
+        double[][] seriesData = this.seriesList.get(series);
         return seriesData[4][item];
     }
 
@@ -264,14 +254,12 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
      *
      * @throws ArrayIndexOutOfBoundsException if <code>series</code> is not
      *     within the specified range.
-     * @throws ArrayIndexOutOfBoundsException if <code>item</code> is not
-     *     within the specified range.
      *
      * @see #getEndY(int, int)
      */
     @Override
 	public double getEndYValue(int series, int item) {
-        double[][] seriesData = (double[][]) this.seriesList.get(series);
+        double[][] seriesData = this.seriesList.get(series);
         return seriesData[5][item];
     }
 
@@ -286,8 +274,6 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
      * @return The ending x-value.
      *
      * @throws ArrayIndexOutOfBoundsException if <code>series</code> is not
-     *     within the specified range.
-     * @throws ArrayIndexOutOfBoundsException if <code>item</code> is not
      *     within the specified range.
      *
      * @see #getEndXValue(int, int)
@@ -309,8 +295,6 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
      *
      * @throws ArrayIndexOutOfBoundsException if <code>series</code> is not
      *     within the specified range.
-     * @throws ArrayIndexOutOfBoundsException if <code>item</code> is not
-     *     within the specified range.
      *
      * @see #getEndYValue(int, int)
      */
@@ -330,8 +314,6 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
      * @return The starting x-value.
      *
      * @throws ArrayIndexOutOfBoundsException if <code>series</code> is not
-     *     within the specified range.
-     * @throws ArrayIndexOutOfBoundsException if <code>item</code> is not
      *     within the specified range.
      *
      * @see #getStartXValue(int, int)
@@ -353,8 +335,6 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
      *
      * @throws ArrayIndexOutOfBoundsException if <code>series</code> is not
      *     within the specified range.
-     * @throws ArrayIndexOutOfBoundsException if <code>item</code> is not
-     *     within the specified range.
      *
      * @see #getStartYValue(int, int)
      */
@@ -375,8 +355,6 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
      *
      * @throws ArrayIndexOutOfBoundsException if <code>series</code> is not
      *     within the specified range.
-     * @throws ArrayIndexOutOfBoundsException if <code>item</code> is not
-     *     within the specified range.
      *
      * @see #getXValue(int, int)
      */
@@ -396,8 +374,6 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
      * @return The y-value.
      *
      * @throws ArrayIndexOutOfBoundsException if <code>series</code> is not
-     *     within the specified range.
-     * @throws ArrayIndexOutOfBoundsException if <code>item</code> is not
      *     within the specified range.
      *
      * @see #getYValue(int, int)
@@ -478,8 +454,8 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
             return false;
         }
         for (int i = 0; i < this.seriesList.size(); i++) {
-            double[][] d1 = (double[][]) this.seriesList.get(i);
-            double[][] d2 = (double[][]) that.seriesList.get(i);
+            double[][] d1 = this.seriesList.get(i);
+            double[][] d2 = that.seriesList.get(i);
             double[] d1x = d1[0];
             double[] d2x = d2[0];
             if (!Arrays.equals(d1x, d2x)) {
@@ -539,10 +515,10 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
 	public Object clone() throws CloneNotSupportedException {
         DefaultIntervalXYDataset clone
                 = (DefaultIntervalXYDataset) super.clone();
-        clone.seriesKeys = new java.util.ArrayList(this.seriesKeys);
-        clone.seriesList = new ArrayList(this.seriesList.size());
+        clone.seriesKeys = new java.util.ArrayList<Comparable>(this.seriesKeys);
+        clone.seriesList = new ArrayList<double[][]>(this.seriesList.size());
         for (int i = 0; i < this.seriesList.size(); i++) {
-            double[][] data = (double[][]) this.seriesList.get(i);
+            double[][] data = this.seriesList.get(i);
             double[] x = data[0];
             double[] xStart = data[1];
             double[] xEnd = data[2];

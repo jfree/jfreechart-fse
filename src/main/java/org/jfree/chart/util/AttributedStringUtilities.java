@@ -88,8 +88,8 @@ public class AttributedStringUtilities {
                 return false;
             }
             // if maps aren't equivalent, return false
-            Map m1 = it1.getAttributes();
-            Map m2 = it2.getAttributes();
+            Map<AttributedCharacterIterator.Attribute, Object> m1 = it1.getAttributes();
+            Map<AttributedCharacterIterator.Attribute, Object> m2 = it2.getAttributes();
             if (!m1.equals(m2)) {
                 return false;
             }

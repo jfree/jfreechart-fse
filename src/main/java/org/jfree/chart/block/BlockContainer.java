@@ -53,7 +53,6 @@ import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.ui.Size2D;
@@ -72,7 +71,7 @@ public class BlockContainer extends AbstractBlock
     private static final long serialVersionUID = 8199508075695195293L;
 
     /** The blocks within the container. */
-    private List blocks;
+    private List<Block> blocks;
 
     /** The object responsible for laying out the blocks. */
     private Arrangement arrangement;
@@ -95,7 +94,7 @@ public class BlockContainer extends AbstractBlock
             throw new IllegalArgumentException("Null 'arrangement' argument.");
         }
         this.arrangement = arrangement;
-        this.blocks = new ArrayList();
+        this.blocks = new ArrayList<Block>();
     }
 
     /**
@@ -135,7 +134,7 @@ public class BlockContainer extends AbstractBlock
      *
      * @return A list of blocks.
      */
-    public List getBlocks() {
+    public List<Block> getBlocks() {
         return Collections.unmodifiableList(this.blocks);
     }
 
@@ -205,7 +204,7 @@ public class BlockContainer extends AbstractBlock
     @Override
 	public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
         // check if we need to collect chart entities from the container
-        EntityBlockParams ebp = null;
+        EntityBlockParams ebp;
         StandardEntityCollection sec = null;
         if (params instanceof EntityBlockParams) {
             ebp = (EntityBlockParams) params;
@@ -218,9 +217,7 @@ public class BlockContainer extends AbstractBlock
         drawBorder(g2, contentArea);
         contentArea = trimBorder(contentArea);
         contentArea = trimPadding(contentArea);
-        Iterator iterator = this.blocks.iterator();
-        while (iterator.hasNext()) {
-            Block block = (Block) iterator.next();
+        for (Block block : this.blocks) {
             Rectangle2D bounds = block.getBounds();
             Rectangle2D drawArea = new Rectangle2D.Double(bounds.getX()
                     + area.getX(), bounds.getY() + area.getY(),

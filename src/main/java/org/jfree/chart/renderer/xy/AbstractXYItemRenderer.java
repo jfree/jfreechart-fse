@@ -612,14 +612,10 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     @Override
     public void removeAnnotations() {
-        for(int i = 0; i < this.foregroundAnnotations.size(); i++){
-            XYAnnotation annotation 
-                    = this.foregroundAnnotations.get(i);
+        for (XYAnnotation annotation : this.foregroundAnnotations) {
             annotation.removeChangeListener(this);
         }
-         for(int i = 0; i < this.backgroundAnnotations.size(); i++){
-            XYAnnotation annotation 
-                    = this.backgroundAnnotations.get(i);
+        for (XYAnnotation annotation : this.backgroundAnnotations) {
             annotation.removeChangeListener(this);
         }
         this.foregroundAnnotations.clear();
@@ -785,7 +781,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             return null;
         }
         if (getDataBoundsIncludesVisibleSeriesOnly()) {
-            List visibleSeriesKeys = new ArrayList();
+            List<Comparable> visibleSeriesKeys = new ArrayList<Comparable>();
             int seriesCount = dataset.getSeriesCount();
             for (int s = 0; s < seriesCount; s++) {
                 if (isSeriesVisible(s)) {
@@ -832,7 +828,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             return null;
         }
         if (getDataBoundsIncludesVisibleSeriesOnly()) {
-            List visibleSeriesKeys = new ArrayList();
+            List<Comparable> visibleSeriesKeys = new ArrayList<Comparable>();
             int seriesCount = dataset.getSeriesCount();
             for (int s = 0; s < seriesCount; s++) {
                 if (isSeriesVisible(s)) {
@@ -913,7 +909,6 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         }
         String label = this.legendItemLabelGenerator.generateLabel(dataset,
                 series);
-        String description = label;
         String toolTipText = null;
         if (getLegendItemToolTipGenerator() != null) {
             toolTipText = getLegendItemToolTipGenerator().generateLabel(
@@ -1372,7 +1367,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             double v = rangeAxis.valueToJava2D(value, dataArea,
                     plot.getRangeAxisEdge());
             PlotOrientation orientation = plot.getOrientation();
-            Line2D line = null;
+            Line2D line;
             if (orientation == PlotOrientation.HORIZONTAL) {
                 line = new Line2D.Double(v, dataArea.getMinY(), v,
                         dataArea.getMaxY());
@@ -1737,7 +1732,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             String label = generator.generateLabel(dataset, series, item);
 
             // get the label position..
-            ItemLabelPosition position = null;
+            ItemLabelPosition position;
             if (!negative) {
                 position = getPositiveItemLabelPosition(series, item);
             }
@@ -1774,7 +1769,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
                                 Layer layer,
                                 PlotRenderingInfo info) {
 
-        Iterator<XYAnnotation> iterator = null;
+        Iterator<XYAnnotation> iterator;
         if (layer.equals(Layer.FOREGROUND)) {
             iterator = this.foregroundAnnotations.iterator();
         }

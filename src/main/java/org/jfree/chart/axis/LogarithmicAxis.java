@@ -735,11 +735,11 @@ public class LogarithmicAxis extends NumberAxis {
      * @return A list of ticks.
      */
     @Override
-	protected List refreshTicksHorizontal(Graphics2D g2,
+	protected List<ValueTick> refreshTicksHorizontal(Graphics2D g2,
                                           Rectangle2D dataArea,
                                           RectangleEdge edge) {
 
-        List ticks = new java.util.ArrayList();
+        List<ValueTick> ticks = new java.util.ArrayList<ValueTick>();
         Range range = getRange();
 
         //get lower bound value:
@@ -864,9 +864,8 @@ public class LogarithmicAxis extends NumberAxis {
                         }
                     }
 
-                    Tick tick = new NumberTick(currentTickValue,
-                            tickLabel, anchor, rotationAnchor, angle);
-                    ticks.add(tick);
+                    ticks.add(new NumberTick(currentTickValue,
+                            tickLabel, anchor, rotationAnchor, angle));
                 }
             }
         }
@@ -885,11 +884,11 @@ public class LogarithmicAxis extends NumberAxis {
      * @return A list of ticks.
      */
     @Override
-	protected List refreshTicksVertical(Graphics2D g2,
+	protected List<ValueTick> refreshTicksVertical(Graphics2D g2,
                                         Rectangle2D dataArea,
                                         RectangleEdge edge) {
 
-        List ticks = new java.util.ArrayList();
+        List<ValueTick> ticks = new java.util.ArrayList<ValueTick>();
 
         //get lower bound value:
         double lowerBoundVal = getRange().getLowerBound();

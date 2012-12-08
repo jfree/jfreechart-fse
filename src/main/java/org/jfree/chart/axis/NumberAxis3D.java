@@ -132,7 +132,7 @@ public class NumberAxis3D extends NumberAxis implements Serializable {
             AxisState state = new AxisState(cursor);
             // even though the axis is not visible, we need ticks for the
             // gridlines...
-            List ticks = refreshTicks(g2, state, dataArea, edge);
+            List<ValueTick> ticks = refreshTicks(g2, state, dataArea, edge);
             state.setTicks(ticks);
             return state;
         }

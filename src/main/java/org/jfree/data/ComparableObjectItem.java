@@ -51,7 +51,7 @@ import org.jfree.chart.util.ObjectUtilities;
  *
  * @since 1.0.3
  */
-public class ComparableObjectItem implements Cloneable, Comparable,
+public class ComparableObjectItem implements Cloneable, Comparable<ComparableObjectItem>,
         Serializable {
 
     /** For serialization. */
@@ -112,32 +112,14 @@ public class ComparableObjectItem implements Cloneable, Comparable,
      * For the order we consider only the x-value:
      * negative == "less-than", zero == "equal", positive == "greater-than".
      *
-     * @param o1  the object being compared to.
+     * @param that  the object being compared to.
      *
      * @return An integer indicating the order of this data pair object
      *      relative to another object.
      */
     @Override
-	public int compareTo(Object o1) {
-
-        int result;
-
-        // CASE 1 : Comparing to another ComparableObjectItem object
-        // ---------------------------------------------------------
-        if (o1 instanceof ComparableObjectItem) {
-            ComparableObjectItem that = (ComparableObjectItem) o1;
-            return this.x.compareTo(that.x);
-        }
-
-        // CASE 2 : Comparing to a general object
-        // ---------------------------------------------
-        else {
-            // consider these to be ordered after general objects
-            result = 1;
-        }
-
-        return result;
-
+	public int compareTo(ComparableObjectItem that) {
+       return this.x.compareTo(that.x);
     }
 
     /**

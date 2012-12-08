@@ -56,7 +56,7 @@ import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -482,12 +482,12 @@ public final class ObjectUtilities {
         return new String[0];
       }
 
-      final ArrayList versions = new ArrayList();
+      final List<String> versions = new ArrayList<String>();
       final StringTokenizer strtok = new StringTokenizer(version, ".");
       while (strtok.hasMoreTokens())
       {
         versions.add (strtok.nextToken());
       }
-      return (String[]) versions.toArray(new String[versions.size()]);
+      return versions.toArray(new String[versions.size()]);
     }
 }

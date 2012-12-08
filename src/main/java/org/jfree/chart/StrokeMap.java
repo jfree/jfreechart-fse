@@ -46,7 +46,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -70,13 +69,13 @@ public class StrokeMap implements Cloneable, Serializable {
     static final long serialVersionUID = -8148916785963525169L;
 
     /** Storage for the keys and values. */
-    private transient Map store;
+    private transient Map<Comparable, Stroke> store;
 
     /**
      * Creates a new (empty) map.
      */
     public StrokeMap() {
-        this.store = new TreeMap();
+        this.store = new TreeMap<Comparable, Stroke>();
     }
 
     /**
@@ -94,7 +93,7 @@ public class StrokeMap implements Cloneable, Serializable {
         if (key == null) {
             throw new IllegalArgumentException("Null 'key' argument.");
         }
-        return (Stroke) this.store.get(key);
+        return this.store.get(key);
     }
 
     /**
@@ -150,10 +149,8 @@ public class StrokeMap implements Cloneable, Serializable {
         if (this.store.size() != that.store.size()) {
             return false;
         }
-        Set keys = this.store.keySet();
-        Iterator iterator = keys.iterator();
-        while (iterator.hasNext()) {
-            Comparable key = (Comparable) iterator.next();
+        Set<Comparable> keys = this.store.keySet();
+        for (Comparable key : keys) {
             Stroke s1 = getStroke(key);
             Stroke s2 = that.getStroke(key);
             if (!ObjectUtilities.equal(s1, s2)) {
@@ -187,10 +184,8 @@ public class StrokeMap implements Cloneable, Serializable {
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
         stream.writeInt(this.store.size());
-        Set keys = this.store.keySet();
-        Iterator iterator = keys.iterator();
-        while (iterator.hasNext()) {
-            Comparable key = (Comparable) iterator.next();
+        Set<Comparable> keys = this.store.keySet();
+        for (Comparable key : keys) {
             stream.writeObject(key);
             Stroke stroke = getStroke(key);
             SerialUtilities.writeStroke(stroke, stream);
@@ -208,7 +203,7 @@ public class StrokeMap implements Cloneable, Serializable {
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.store = new TreeMap();
+        this.store = new TreeMap<Comparable, Stroke>();
         int keyCount = stream.readInt();
         for (int i = 0; i < keyCount; i++) {
             Comparable key = (Comparable) stream.readObject();

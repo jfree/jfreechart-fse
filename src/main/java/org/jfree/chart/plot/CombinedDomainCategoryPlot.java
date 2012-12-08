@@ -70,7 +70,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.LegendItemCollection;
@@ -295,9 +294,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
         else {
             // if the source point doesn't fall within a subplot, we do the
             // zoom on all subplots...
-            Iterator iterator = getSubplots().iterator();
-            while (iterator.hasNext()) {
-                subplot = (CategoryPlot) iterator.next();
+            for (CategoryPlot categoryPlot : getSubplots()) {
+                subplot = categoryPlot;
                 subplot.zoomRangeAxes(factor, info, source, useAnchor);
             }
         }
@@ -322,9 +320,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
         else {
             // if the source point doesn't fall within a subplot, we do the
             // zoom on all subplots...
-            Iterator iterator = getSubplots().iterator();
-            while (iterator.hasNext()) {
-                subplot = (CategoryPlot) iterator.next();
+            for (CategoryPlot categoryPlot : getSubplots()) {
+                subplot = categoryPlot;
                 subplot.zoomRangeAxes(lowerPercent, upperPercent, info, source);
             }
         }
@@ -378,8 +375,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
         // work out the maximum height or width of the non-shared axes...
         int n = this.subplots.size();
         int totalWeight = 0;
-        for (int i = 0; i < n; i++) {
-            CategoryPlot sub = this.subplots.get(i);
+        for (CategoryPlot sub : this.subplots) {
             totalWeight += sub.getWeight();
         }
         this.subplotAreas = new Rectangle2D[n];
@@ -562,14 +558,12 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @return The list.
      */
     @Override
-    public List getCategories() {
-        List result = new java.util.ArrayList();
+    public List<Comparable> getCategories() {
+        List<Comparable> result = new java.util.ArrayList<Comparable>();
         if (this.subplots != null) {
             for (CategoryPlot plot : this.subplots) {
-                List more = plot.getCategories();
-                Iterator moreIterator = more.iterator();
-                while (moreIterator.hasNext()) {
-                    Comparable category = (Comparable) moreIterator.next();
+                List<Comparable> more = plot.getCategories();
+                for (Comparable category : more) {
                     if (!result.contains(category)) {
                         result.add(category);
                     }
@@ -589,7 +583,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @since 1.0.3
      */
     @Override
-    public List getCategoriesForAxis(CategoryAxis axis) {
+    public List<Comparable> getCategoriesForAxis(CategoryAxis axis) {
         // FIXME:  this code means that it is not possible to use more than
         // one domain axis for the combined plots...
         return getCategories();
@@ -664,7 +658,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
     public Object clone() throws CloneNotSupportedException {
         CombinedDomainCategoryPlot result
             = (CombinedDomainCategoryPlot) super.clone();
-        result.subplots = (List) ObjectUtilities.deepClone(this.subplots);
+        result.subplots = ObjectUtilities.deepClone(this.subplots);
         for (CategoryPlot child : this.subplots) {
             child.setParent(result);
         }

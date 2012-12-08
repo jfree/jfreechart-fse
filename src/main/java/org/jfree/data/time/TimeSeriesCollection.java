@@ -92,7 +92,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -121,7 +120,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
     private static final long serialVersionUID = 834149929022371137L;
 
     /** Storage for the time series. */
-    private List data;
+    private List<TimeSeries> data;
 
     /** A working calendar (to recycle) */
     private Calendar workingCalendar;
@@ -176,7 +175,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
             zone = TimeZone.getDefault();
         }
         this.workingCalendar = Calendar.getInstance(zone);
-        this.data = new ArrayList();
+        this.data = new ArrayList<TimeSeries>();
         if (series != null) {
             this.data.add(series);
             series.addChangeListener(this);
@@ -226,7 +225,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
      *
      * @return The list (which is unmodifiable).
      */
-    public List getSeries() {
+    public List<TimeSeries> getSeries() {
         return Collections.unmodifiableList(this.data);
     }
 
@@ -269,7 +268,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
             throw new IllegalArgumentException(
                 "The 'series' argument is out of bounds (" + series + ").");
         }
-        return (TimeSeries) this.data.get(series);
+        return this.data.get(series);
     }
 
     /**
@@ -282,10 +281,8 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
      */
     public TimeSeries getSeries(Comparable key) {
         TimeSeries result = null;
-        Iterator iterator = this.data.iterator();
-        while (iterator.hasNext()) {
-            TimeSeries series = (TimeSeries) iterator.next();
-            Comparable k = series.getKey();
+        for (TimeSeries series : this.data) {
+           Comparable k = series.getKey();
             if (k != null && k.equals(key)) {
                 result = series;
             }
@@ -357,8 +354,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
 
         // deregister the collection as a change listener to each series in the
         // collection
-        for (int i = 0; i < this.data.size(); i++) {
-            TimeSeries series = (TimeSeries) this.data.get(i);
+        for (TimeSeries series : this.data) {
             series.removeChangeListener(this);
         }
 
@@ -391,7 +387,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
      */
     @Override
 	public double getXValue(int series, int item) {
-        TimeSeries s = (TimeSeries) this.data.get(series);
+        TimeSeries s = this.data.get(series);
         RegularTimePeriod period = s.getTimePeriod(item);
         return getX(period);
     }
@@ -406,7 +402,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
      */
     @Override
 	public Number getX(int series, int item) {
-        TimeSeries ts = (TimeSeries) this.data.get(series);
+        TimeSeries ts = this.data.get(series);
         RegularTimePeriod period = ts.getTimePeriod(item);
         return getX(period);
     }
@@ -442,7 +438,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
      */
     @Override
 	public synchronized Number getStartX(int series, int item) {
-        TimeSeries ts = (TimeSeries) this.data.get(series);
+        TimeSeries ts = this.data.get(series);
         return ts.getTimePeriod(item).getFirstMillisecond(
                 this.workingCalendar);
     }
@@ -457,7 +453,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
      */
     @Override
 	public synchronized Number getEndX(int series, int item) {
-        TimeSeries ts = (TimeSeries) this.data.get(series);
+        TimeSeries ts = this.data.get(series);
         return ts.getTimePeriod(item).getLastMillisecond(
                 this.workingCalendar);
     }
@@ -472,7 +468,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
      */
     @Override
 	public Number getY(int series, int item) {
-        TimeSeries ts = (TimeSeries) this.data.get(series);
+        TimeSeries ts = this.data.get(series);
         return ts.getValue(item);
     }
 
@@ -577,9 +573,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
     @Override
 	public Range getDomainBounds(boolean includeInterval) {
         Range result = null;
-        Iterator iterator = this.data.iterator();
-        while (iterator.hasNext()) {
-            TimeSeries series = (TimeSeries) iterator.next();
+        for (TimeSeries series : this.data) {
             int count = series.getItemCount();
             if (count > 0) {
                 RegularTimePeriod start = series.getTimePeriod(0);
@@ -587,8 +581,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
                 Range temp;
                 if (!includeInterval) {
                     temp = new Range(getX(start), getX(end));
-                }
-                else {
+                } else {
                     temp = new Range(
                             start.getFirstMillisecond(this.workingCalendar),
                             end.getLastMillisecond(this.workingCalendar));
@@ -610,12 +603,10 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
      * @since 1.0.13
      */
     @Override
-	public Range getDomainBounds(List visibleSeriesKeys,
+	public Range getDomainBounds(List<Comparable> visibleSeriesKeys,
             boolean includeInterval) {
         Range result = null;
-        Iterator iterator = visibleSeriesKeys.iterator();
-        while (iterator.hasNext()) {
-            Comparable seriesKey = (Comparable) iterator.next();
+        for (Comparable seriesKey : visibleSeriesKeys) {
             TimeSeries series = getSeries(seriesKey);
             int count = series.getItemCount();
             if (count > 0) {
@@ -624,8 +615,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
                 Range temp;
                 if (!includeInterval) {
                     temp = new Range(getX(start), getX(end));
-                }
-                else {
+                } else {
                     temp = new Range(
                             start.getFirstMillisecond(this.workingCalendar),
                             end.getLastMillisecond(this.workingCalendar));
@@ -647,11 +637,8 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
      */
     public Range getRangeBounds(boolean includeInterval) {
         Range result = null;
-        Iterator iterator = this.data.iterator();
-        while (iterator.hasNext()) {
-            TimeSeries series = (TimeSeries) iterator.next();
-            Range r = null;
-            r = new Range(series.getMinY(), series.getMaxY());
+        for (TimeSeries series : this.data) {
+            Range r = new Range(series.getMinY(), series.getMaxY());
             result = Range.combineIgnoringNaN(result, r);
         }
         return result;
@@ -669,15 +656,12 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
      * @since 1.0.14
      */
     @Override
-	public Range getRangeBounds(List visibleSeriesKeys, Range xRange,
+	public Range getRangeBounds(List<Comparable> visibleSeriesKeys, Range xRange,
             boolean includeInterval) {
         Range result = null;
-        Iterator iterator = visibleSeriesKeys.iterator();
-        while (iterator.hasNext()) {
-            Comparable seriesKey = (Comparable) iterator.next();
+        for (Comparable seriesKey : visibleSeriesKeys) {
             TimeSeries series = getSeries(seriesKey);
-            Range r = null;
-            r = new Range(series.getMinY(), series.getMaxY());
+            Range r = new Range(series.getMinY(), series.getMaxY());
             // FIXME: Here we are ignoring the xRange
             result = Range.combineIgnoringNaN(result, r);
         }

@@ -97,7 +97,7 @@ public class PeriodAxisLabelInfo implements Cloneable, Serializable {
     public static final Paint DEFAULT_DIVIDER_PAINT = Color.GRAY;
 
     /** The subclass of {@link RegularTimePeriod} to use for this band. */
-    private Class periodClass;
+    private Class<? extends RegularTimePeriod> periodClass;
 
     /** Controls the gaps around the band. */
     private RectangleInsets padding;
@@ -127,7 +127,7 @@ public class PeriodAxisLabelInfo implements Cloneable, Serializable {
      *                     (<code>null</code> not permitted).
      * @param dateFormat  the date format (<code>null</code> not permitted).
      */
-    public PeriodAxisLabelInfo(Class periodClass, DateFormat dateFormat) {
+    public PeriodAxisLabelInfo(Class<? extends RegularTimePeriod> periodClass, DateFormat dateFormat) {
         this(
             periodClass, dateFormat, DEFAULT_INSETS, DEFAULT_FONT,
             DEFAULT_LABEL_PAINT, true, DEFAULT_DIVIDER_STROKE,
@@ -151,7 +151,7 @@ public class PeriodAxisLabelInfo implements Cloneable, Serializable {
      * @param dividerPaint  the paint used to draw the dividers
      *                      (<code>null</code> not permitted).
      */
-    public PeriodAxisLabelInfo(Class periodClass, DateFormat dateFormat,
+    public PeriodAxisLabelInfo(Class<? extends RegularTimePeriod> periodClass, DateFormat dateFormat,
                                RectangleInsets padding,
                                Font labelFont, Paint labelPaint,
                                boolean drawDividers, Stroke dividerStroke,
@@ -277,12 +277,11 @@ public class PeriodAxisLabelInfo implements Cloneable, Serializable {
             Locale locale) {
         RegularTimePeriod result = null;
         try {
-            Constructor c = this.periodClass.getDeclaredConstructor(
+            Constructor<? extends RegularTimePeriod> c = this.periodClass.getDeclaredConstructor(
                     new Class[] {Date.class, TimeZone.class, Locale.class});
-            result = (RegularTimePeriod) c.newInstance(new Object[] {
-                    millisecond, zone, locale});
+            result = c.newInstance(millisecond, zone, locale);
         }
-        catch (Exception e) {
+        catch (ReflectiveOperationException e) {
             // do nothing
         }
         return result;
@@ -339,8 +338,8 @@ public class PeriodAxisLabelInfo implements Cloneable, Serializable {
     @Override
 	public int hashCode() {
         int result = 41;
-        result = 37 * this.periodClass.hashCode();
-        result = 37 * this.dateFormat.hashCode();
+        result += 37 * this.periodClass.hashCode();
+        result += 37 * this.dateFormat.hashCode();
         return result;
     }
 

@@ -104,7 +104,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.LegendItemCollection;
@@ -131,7 +130,7 @@ public class CombinedRangeXYPlot extends XYPlot
     private static final long serialVersionUID = -5177814085082031168L;
 
     /** Storage for the subplot references. */
-    private List subplots;
+    private List<XYPlot> subplots;
 
     /** The gap between subplots. */
     private double gap = 5.0;
@@ -158,7 +157,7 @@ public class CombinedRangeXYPlot extends XYPlot
               rangeAxis,
               null);
 
-        this.subplots = new java.util.ArrayList();
+        this.subplots = new java.util.ArrayList<XYPlot>();
 
     }
 
@@ -266,7 +265,7 @@ public class CombinedRangeXYPlot extends XYPlot
      *
      * @return An unmodifiable list of subplots.
      */
-    public List getSubplots() {
+    public List<XYPlot> getSubplots() {
         if (this.subplots != null) {
             return Collections.unmodifiableList(this.subplots);
         }
@@ -317,8 +316,7 @@ public class CombinedRangeXYPlot extends XYPlot
         // work out the maximum height or width of the non-shared axes...
         int n = this.subplots.size();
         int totalWeight = 0;
-        for (int i = 0; i < n; i++) {
-            XYPlot sub = (XYPlot) this.subplots.get(i);
+        for (XYPlot sub : this.subplots) {
             totalWeight += sub.getWeight();
         }
 
@@ -336,7 +334,7 @@ public class CombinedRangeXYPlot extends XYPlot
         }
 
         for (int i = 0; i < n; i++) {
-            XYPlot plot = (XYPlot) this.subplots.get(i);
+            XYPlot plot = this.subplots.get(i);
 
             // calculate sub-plot area
             if (orientation == PlotOrientation.VERTICAL) {
@@ -409,7 +407,7 @@ public class CombinedRangeXYPlot extends XYPlot
 
         // draw all the charts
         for (int i = 0; i < this.subplots.size(); i++) {
-            XYPlot plot = (XYPlot) this.subplots.get(i);
+            XYPlot plot = this.subplots.get(i);
             PlotRenderingInfo subplotInfo = null;
             if (info != null) {
                 subplotInfo = new PlotRenderingInfo(info.getOwner());
@@ -437,9 +435,7 @@ public class CombinedRangeXYPlot extends XYPlot
             result = new LegendItemCollection();
 
             if (this.subplots != null) {
-                Iterator iterator = this.subplots.iterator();
-                while (iterator.hasNext()) {
-                    XYPlot plot = (XYPlot) iterator.next();
+                for (XYPlot plot : this.subplots) {
                     LegendItemCollection more = plot.getLegendItems();
                     result.addAll(more);
                 }
@@ -480,10 +476,8 @@ public class CombinedRangeXYPlot extends XYPlot
         else {
             // if the source point doesn't fall within a subplot, we do the
             // zoom on all subplots...
-            Iterator iterator = getSubplots().iterator();
-            while (iterator.hasNext()) {
-                subplot = (XYPlot) iterator.next();
-                subplot.zoomDomainAxes(factor, info, source, useAnchor);
+            for (XYPlot innerSubplot : getSubplots()) {
+                innerSubplot.zoomDomainAxes(factor, info, source, useAnchor);
             }
         }
     }
@@ -507,10 +501,8 @@ public class CombinedRangeXYPlot extends XYPlot
         else {
             // if the source point doesn't fall within a subplot, we do the
             // zoom on all subplots...
-            Iterator iterator = getSubplots().iterator();
-            while (iterator.hasNext()) {
-                subplot = (XYPlot) iterator.next();
-                subplot.zoomDomainAxes(lowerPercent, upperPercent, info,
+            for (XYPlot innerSubplot : getSubplots()) {
+                innerSubplot.zoomDomainAxes(lowerPercent, upperPercent, info,
                         source);
             }
         }
@@ -563,7 +555,7 @@ public class CombinedRangeXYPlot extends XYPlot
         XYPlot result = null;
         int subplotIndex = info.getSubplotIndex(source);
         if (subplotIndex >= 0) {
-            result =  (XYPlot) this.subplots.get(subplotIndex);
+            result = this.subplots.get(subplotIndex);
         }
         return result;
     }
@@ -584,9 +576,7 @@ public class CombinedRangeXYPlot extends XYPlot
                                       // renderer set for the
                                       // parent plot is not used
 
-        Iterator iterator = this.subplots.iterator();
-        while (iterator.hasNext()) {
-            XYPlot plot = (XYPlot) iterator.next();
+        for (XYPlot plot : this.subplots) {
             plot.setRenderer(renderer);
         }
 
@@ -602,9 +592,7 @@ public class CombinedRangeXYPlot extends XYPlot
 
         super.setOrientation(orientation);
 
-        Iterator iterator = this.subplots.iterator();
-        while (iterator.hasNext()) {
-            XYPlot plot = (XYPlot) iterator.next();
+        for (XYPlot plot : this.subplots) {
             plot.setOrientation(orientation);
         }
 
@@ -627,9 +615,7 @@ public class CombinedRangeXYPlot extends XYPlot
 	public Range getDataRange(ValueAxis axis) {
         Range result = null;
         if (this.subplots != null) {
-            Iterator iterator = this.subplots.iterator();
-            while (iterator.hasNext()) {
-                XYPlot subplot = (XYPlot) iterator.next();
+            for (XYPlot subplot : this.subplots) {
                 result = Range.combine(result, subplot.getDataRange(axis));
             }
         }
@@ -643,9 +629,7 @@ public class CombinedRangeXYPlot extends XYPlot
      * @param space  the space.
      */
     protected void setFixedDomainAxisSpaceForSubplots(AxisSpace space) {
-        Iterator iterator = this.subplots.iterator();
-        while (iterator.hasNext()) {
-            XYPlot plot = (XYPlot) iterator.next();
+        for (XYPlot plot : this.subplots) {
             plot.setFixedDomainAxisSpace(space, false);
         }
     }
@@ -663,7 +647,7 @@ public class CombinedRangeXYPlot extends XYPlot
         Rectangle2D dataArea = info.getDataArea();
         if (dataArea.contains(x, y)) {
             for (int i = 0; i < this.subplots.size(); i++) {
-                XYPlot subplot = (XYPlot) this.subplots.get(i);
+                XYPlot subplot = this.subplots.get(i);
                 PlotRenderingInfo subplotInfo = info.getSubplotInfo(i);
                 subplot.handleClick(x, y, subplotInfo);
             }
@@ -720,8 +704,7 @@ public class CombinedRangeXYPlot extends XYPlot
 
         CombinedRangeXYPlot result = (CombinedRangeXYPlot) super.clone();
         result.subplots = ObjectUtilities.deepClone(this.subplots);
-        for (Iterator it = result.subplots.iterator(); it.hasNext();) {
-            Plot child = (Plot) it.next();
+        for (XYPlot child : result.subplots) {
             child.setParent(result);
         }
 

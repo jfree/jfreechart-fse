@@ -436,32 +436,32 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
 
         int paintCount = this.paintSequence.length;
         stream.writeInt(paintCount);
-        for (int i = 0; i < paintCount; i++) {
-            SerialUtilities.writePaint(this.paintSequence[i], stream);
+        for (Paint aPaintSequence : this.paintSequence) {
+            SerialUtilities.writePaint(aPaintSequence, stream);
         }
 
         int outlinePaintCount = this.outlinePaintSequence.length;
         stream.writeInt(outlinePaintCount);
-        for (int i = 0; i < outlinePaintCount; i++) {
-            SerialUtilities.writePaint(this.outlinePaintSequence[i], stream);
+        for (Paint anOutlinePaintSequence : this.outlinePaintSequence) {
+            SerialUtilities.writePaint(anOutlinePaintSequence, stream);
         }
 
         int strokeCount = this.strokeSequence.length;
         stream.writeInt(strokeCount);
-        for (int i = 0; i < strokeCount; i++) {
-            SerialUtilities.writeStroke(this.strokeSequence[i], stream);
+        for (Stroke aStrokeSequence : this.strokeSequence) {
+            SerialUtilities.writeStroke(aStrokeSequence, stream);
         }
 
         int outlineStrokeCount = this.outlineStrokeSequence.length;
         stream.writeInt(outlineStrokeCount);
-        for (int i = 0; i < outlineStrokeCount; i++) {
-            SerialUtilities.writeStroke(this.outlineStrokeSequence[i], stream);
+        for (Stroke anOutlineStrokeSequence : this.outlineStrokeSequence) {
+            SerialUtilities.writeStroke(anOutlineStrokeSequence, stream);
         }
 
         int shapeCount = this.shapeSequence.length;
         stream.writeInt(shapeCount);
-        for (int i = 0; i < shapeCount; i++) {
-            SerialUtilities.writeShape(this.shapeSequence[i], stream);
+        for (Shape aShapeSequence : this.shapeSequence) {
+            SerialUtilities.writeShape(aShapeSequence, stream);
         }
 
     }

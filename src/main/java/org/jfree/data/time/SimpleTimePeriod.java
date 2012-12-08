@@ -56,7 +56,7 @@ import java.util.Date;
  * This class is intentionally immutable (that is, once constructed, you cannot
  * alter the start and end attributes).
  */
-public class SimpleTimePeriod implements TimePeriod, Comparable, Serializable {
+public class SimpleTimePeriod implements TimePeriod, Comparable<TimePeriod>, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 8684672361131829554L;
@@ -164,7 +164,7 @@ public class SimpleTimePeriod implements TimePeriod, Comparable, Serializable {
      * Returns an integer that indicates the relative ordering of two
      * time periods.
      *
-     * @param obj  the object (<code>null</code> not permitted).
+     * @param that  the object (<code>null</code> not permitted).
      *
      * @return An integer.
      *
@@ -172,8 +172,7 @@ public class SimpleTimePeriod implements TimePeriod, Comparable, Serializable {
      *                            {@link TimePeriod}.
      */
     @Override
-	public int compareTo(Object obj) {
-        TimePeriod that = (TimePeriod) obj;
+	public int compareTo(TimePeriod that) {
         long t0 = getStart().getTime();
         long t1 = getEnd().getTime();
         long m0 = t0 + (t1 - t0) / 2L;

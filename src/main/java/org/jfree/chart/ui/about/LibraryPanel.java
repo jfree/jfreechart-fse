@@ -70,7 +70,7 @@ public class LibraryPanel extends JPanel {
      *
      * @param libraries  a list of libraries (represented by Library objects).
      */
-    public LibraryPanel(final List libraries) {
+    public LibraryPanel(final List<Library> libraries) {
 
         setLayout(new BorderLayout());
         this.model = new LibraryTableModel(libraries);
@@ -88,21 +88,20 @@ public class LibraryPanel extends JPanel {
         this(getLibraries(projectInfo));
     }
 
-    private static List getLibraries (final ProjectInfo info) {
+    private static List<Library> getLibraries (final ProjectInfo info) {
         if (info == null) {
-            return new ArrayList();
+            return new ArrayList<Library>();
         }
-        final ArrayList libs = new ArrayList();
+        final List<Library> libs = new ArrayList<Library>();
         collectLibraries(info, libs);
         return libs;
     }
 
     private static void collectLibraries (final ProjectInfo info,
-                                          final List list) {
+                                          final List<Library> list) {
         Library[] libs = info.getLibraries();
-        for (int i = 0; i < libs.length; i++) {
-            final Library lib = libs[i];
-            if (list.contains(lib) == false) {
+        for (final Library lib : libs) {
+            if (!list.contains(lib)) {
                 // prevent duplicates, they look ugly ..
                 list.add(lib);
                 if (lib instanceof ProjectInfo) {
@@ -112,9 +111,8 @@ public class LibraryPanel extends JPanel {
         }
 
         libs = info.getOptionalLibraries();
-        for (int i = 0; i < libs.length; i++) {
-            final Library lib = libs[i];
-            if (list.contains(lib) == false) {
+        for (final Library lib : libs) {
+            if (!list.contains(lib)) {
                 // prevent duplicates, they look ugly ..
                 list.add(lib);
                 if (lib instanceof ProjectInfo) {

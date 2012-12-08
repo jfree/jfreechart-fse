@@ -1,3 +1,4 @@
+package org.jfree.chart.axis;
 /* ===========================================================
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
@@ -21,53 +22,29 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
- * --------------
- * PlotState.java
- * --------------
- * (C) Copyright 2003-2008, by Object Refinery Limited.
+ * (C) Copyright 2012, by Michael Clarke and Contributors.
  *
- * Original Author:  David Gilbert (for Object Refinery Limited);
- * Contributor(s):   -;
- *
- * Changes
- * -------
- * 30-Oct-2003 : Version 1 (DG);
+ * Original Author:  Michael Clarke;
  *
  */
 
-package org.jfree.chart.plot;
+import java.util.Comparator;
 
-import org.jfree.chart.axis.Axis;
-import org.jfree.chart.axis.AxisState;
-
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * Records information about the state of a plot during the drawing process.
- */
-public class PlotState {
-
-    /** The shared axis states. */
-    private Map<Axis, AxisState> sharedAxisStates;
-
-    /**
-     * Creates a new state object.
-     */
-    public PlotState() {
-        this.sharedAxisStates = new HashMap<Axis, AxisState>();
+public class NumberComparartor implements Comparator<Number> {
+    @Override
+    public int compare(Number o1, Number o2) {
+        if (o1 == null) {
+            if (o2 == null) {
+                return 0;
+            }
+            return 1;
+        }
+        if (o2 == null) {
+            return -1;
+        }
+        return ((Double)o1.doubleValue()).compareTo(o2.doubleValue());
     }
-
-    /**
-     * Returns a map containing the shared axis states.
-     *
-     * @return A map.
-     */
-    public Map<Axis, AxisState> getSharedAxisStates() {
-        return this.sharedAxisStates;
-    }
-
 }

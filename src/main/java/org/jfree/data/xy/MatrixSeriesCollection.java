@@ -66,7 +66,7 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
     private static final long serialVersionUID = -3197705779242543945L;
 
     /** The series that are included in the collection. */
-    private List seriesList;
+    private List<MatrixSeries> seriesList;
 
     /**
      * Constructs an empty dataset.
@@ -82,7 +82,7 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
      * @param series the time series.
      */
     public MatrixSeriesCollection(MatrixSeries series) {
-        this.seriesList = new java.util.ArrayList();
+        this.seriesList = new java.util.ArrayList<MatrixSeries>();
 
         if (series != null) {
             this.seriesList.add(series);
@@ -117,7 +117,7 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
             throw new IllegalArgumentException("Index outside valid range.");
         }
 
-        MatrixSeries series = (MatrixSeries) this.seriesList.get(seriesIndex);
+        MatrixSeries series = this.seriesList.get(seriesIndex);
 
         return series;
     }
@@ -160,7 +160,7 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
      */
     @Override
 	public Number getX(int seriesIndex, int itemIndex) {
-        MatrixSeries series = (MatrixSeries) this.seriesList.get(seriesIndex);
+        MatrixSeries series = this.seriesList.get(seriesIndex);
         int x = series.getItemColumn(itemIndex);
 
         return x; // I know it's bad to create object. better idea?
@@ -180,7 +180,7 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
      */
     @Override
 	public Number getY(int seriesIndex, int itemIndex) {
-        MatrixSeries series = (MatrixSeries) this.seriesList.get(seriesIndex);
+        MatrixSeries series = this.seriesList.get(seriesIndex);
         int y = series.getItemRow(itemIndex);
 
         return y; // I know it's bad to create object. better idea?
@@ -200,7 +200,7 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
      */
     @Override
 	public Number getZ(int seriesIndex, int itemIndex) {
-        MatrixSeries series = (MatrixSeries) this.seriesList.get(seriesIndex);
+        MatrixSeries series = this.seriesList.get(seriesIndex);
         Number z = series.getItem(itemIndex);
         return z;
     }
@@ -289,8 +289,7 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
     public void removeAllSeries() {
         // Unregister the collection as a change listener to each series in
         // the collection.
-        for (int i = 0; i < this.seriesList.size(); i++) {
-            MatrixSeries series = (MatrixSeries) this.seriesList.get(i);
+        for (MatrixSeries series : this.seriesList) {
             series.removeChangeListener(this);
         }
 
@@ -341,7 +340,7 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
         }
 
         // fetch the series, remove the change listener, then remove the series.
-        MatrixSeries series = (MatrixSeries) this.seriesList.get(seriesIndex);
+        MatrixSeries series = this.seriesList.get(seriesIndex);
         series.removeChangeListener(this);
         this.seriesList.remove(seriesIndex);
         fireDatasetChanged();

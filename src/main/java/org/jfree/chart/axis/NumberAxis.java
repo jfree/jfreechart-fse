@@ -664,7 +664,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
             state = new AxisState(cursor);
             // even though the axis is not visible, we need ticks for the
             // gridlines...
-            List ticks = refreshTicks(g2, state, dataArea, edge);
+            List<ValueTick> ticks = refreshTicks(g2, state, dataArea, edge);
             state.setTicks(ticks);
             return state;
         }
@@ -1142,12 +1142,12 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      *
      */
     @Override
-	public List refreshTicks(Graphics2D g2,
+	public List<ValueTick> refreshTicks(Graphics2D g2,
                              AxisState state,
                              Rectangle2D dataArea,
                              RectangleEdge edge) {
 
-        List result = new java.util.ArrayList();
+        List<ValueTick> result = new java.util.ArrayList<ValueTick>();
         if (RectangleEdge.isTopOrBottom(edge)) {
             result = refreshTicksHorizontal(g2, dataArea, edge);
         }
@@ -1168,10 +1168,10 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      *
      * @return A list of ticks.
      */
-    protected List refreshTicksHorizontal(Graphics2D g2,
+    protected List<ValueTick> refreshTicksHorizontal(Graphics2D g2,
             Rectangle2D dataArea, RectangleEdge edge) {
 
-        List result = new java.util.ArrayList();
+        List<ValueTick> result = new java.util.ArrayList<ValueTick>();
 
         Font tickLabelFont = getTickLabelFont();
         g2.setFont(tickLabelFont);
@@ -1233,9 +1233,8 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
                     }
                 }
 
-                Tick tick = new NumberTick(currentTickValue,
-                        tickLabel, anchor, rotationAnchor, angle);
-                result.add(tick);
+                result.add(new NumberTick(currentTickValue,
+                        tickLabel, anchor, rotationAnchor, angle));
                 double nextTickValue = lowestTickValue + ((i + 1) * size);
                 for (int minorTick = 1; minorTick < minorTickSpaces;
                         minorTick++) {
@@ -1264,10 +1263,10 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      *
      * @return A list of ticks.
      */
-    protected List refreshTicksVertical(Graphics2D g2,
+    protected List<ValueTick> refreshTicksVertical(Graphics2D g2,
             Rectangle2D dataArea, RectangleEdge edge) {
 
-        List result = new java.util.ArrayList();
+        List<ValueTick> result = new java.util.ArrayList<ValueTick>();
         result.clear();
 
         Font tickLabelFont = getTickLabelFont();
@@ -1333,9 +1332,8 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
                     }
                 }
 
-                Tick tick = new NumberTick(currentTickValue,
-                        tickLabel, anchor, rotationAnchor, angle);
-                result.add(tick);
+                result.add(new NumberTick(currentTickValue,
+                        tickLabel, anchor, rotationAnchor, angle));
 
                 double nextTickValue = lowestTickValue + ((i + 1) * size);
                 for (int minorTick = 1; minorTick < minorTickSpaces;

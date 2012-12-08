@@ -71,7 +71,7 @@ public class XYIntervalSeriesCollection extends AbstractIntervalXYDataset
      * Creates a new instance of <code>XIntervalSeriesCollection</code>.
      */
     public XYIntervalSeriesCollection() {
-        this.data = new java.util.ArrayList();
+        this.data = new java.util.ArrayList<XYIntervalSeries>();
     }
 
     /**
@@ -385,7 +385,7 @@ public class XYIntervalSeriesCollection extends AbstractIntervalXYDataset
         XYIntervalSeriesCollection clone
                 = (XYIntervalSeriesCollection) super.clone();
         int seriesCount = getSeriesCount();
-        clone.data = new java.util.ArrayList(seriesCount);
+        clone.data = new java.util.ArrayList<XYIntervalSeries>(seriesCount);
         for (int i = 0; i < this.data.size(); i++) {
             clone.data.set(i, (XYIntervalSeries) getSeries(i).clone());
         }

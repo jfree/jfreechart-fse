@@ -128,7 +128,7 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
      * The orientation combo box (for <tt>CategoryPlot</tt>s and
      * <tt>XYPlot</tt>s).
      */
-    private JComboBox orientationCombo;
+    private JComboBox<String> orientationCombo;
 
     /** Whether or not to draw lines between each data point (for
      * <tt>LineAndShapeRenderer</tt>s and <tt>StandardXYItemRenderer</tt>s).
@@ -267,7 +267,7 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
                     : ORIENTATION_HORIZONTAL;
             interior.add(new JLabel(localizationResources.getString(
                     "Orientation")));
-            this.orientationCombo = new JComboBox(orientationNames);
+            this.orientationCombo = new JComboBox<String>(orientationNames);
             this.orientationCombo.setSelectedIndex(index);
             this.orientationCombo.setActionCommand("Orientation");
             this.orientationCombo.addActionListener(this);
