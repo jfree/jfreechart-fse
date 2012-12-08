@@ -46,6 +46,7 @@
 package org.jfree.data;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -280,7 +281,10 @@ public class KeyToGroupMap implements Cloneable, PublicCloneable, Serializable {
                 try {
                     result = (T) m.invoke(object, (Object[]) null);
                 }
-                catch (ReflectiveOperationException e) {
+                catch (InvocationTargetException e) {
+                    throw new RuntimeException("Could not clone object", e);
+                }
+                catch (IllegalAccessException e) {
                     throw new RuntimeException("Could not clone object", e);
                 }
             }

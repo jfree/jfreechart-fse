@@ -56,6 +56,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -281,9 +282,19 @@ public class PeriodAxisLabelInfo implements Cloneable, Serializable {
                     new Class[] {Date.class, TimeZone.class, Locale.class});
             result = c.newInstance(millisecond, zone, locale);
         }
-        catch (ReflectiveOperationException e) {
-            // do nothing
+        catch (InvocationTargetException e) {
+            //ignore
         }
+        catch (IllegalAccessException e) {
+            //ignore
+        }
+        catch (NoSuchMethodException e) {
+            //ignore
+        }
+        catch (InstantiationException e) {
+            //ignore
+        }
+
         return result;
     }
 

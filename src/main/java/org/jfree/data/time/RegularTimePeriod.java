@@ -54,6 +54,7 @@
 package org.jfree.data.time;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -89,7 +90,16 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable<TimePe
             result = (RegularTimePeriod) constructor.newInstance(
                     millisecond, zone, locale);
         }
-        catch (ReflectiveOperationException e) {
+        catch (NoSuchMethodException e) {
+            // do nothing, so null is returned
+        }
+        catch (IllegalAccessException e) {
+            // do nothing, so null is returned
+        }
+        catch (InvocationTargetException e) {
+            // do nothing, so null is returned
+        }
+        catch (InstantiationException e) {
             // do nothing, so null is returned
         }
         return result;
