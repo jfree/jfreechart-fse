@@ -336,7 +336,7 @@ public class TimeSeriesCollectionTest extends TestCase {
      * java.util.List, boolean)} method.
      */
     public void testFindDomainBounds() {
-        TimeSeriesCollection dataset = new TimeSeriesCollection();
+        TimeSeriesCollection dataset = new TimeSeriesCollection(TimeZone.getTimeZone("Europe/Paris"));
         List visibleSeriesKeys = new java.util.ArrayList();
         Range r = DatasetUtilities.findDomainBounds(dataset, visibleSeriesKeys,
                 true);
@@ -347,10 +347,6 @@ public class TimeSeriesCollectionTest extends TestCase {
         visibleSeriesKeys.add("S1");
         r = DatasetUtilities.findDomainBounds(dataset, visibleSeriesKeys, true);
         assertNull(r);
-
-        // store the current time zone
-        TimeZone saved = TimeZone.getDefault();
-        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
 
         s1.add(new Year(2008), 8.0);
         r = DatasetUtilities.findDomainBounds(dataset, visibleSeriesKeys, true);
@@ -370,8 +366,6 @@ public class TimeSeriesCollectionTest extends TestCase {
         assertEquals(1199142000000.0, r.getLowerBound(), EPSILON);
         assertEquals(1293836399999.0, r.getUpperBound(), EPSILON);
 
-        // restore the default time zone
-        TimeZone.setDefault(saved);
     }
 
     /**
