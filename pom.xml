@@ -1,12 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jfree.chart</groupId>
   <artifactId>jfreechart-fse</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>jfreechart-fse</name>
-  <url>http://maven.apache.org</url>
+  <url>http://www.jfree.org/jfreechart/index.html</url>
+
   <build>
     <resources>
       <resource>
@@ -14,6 +16,13 @@
       </resource>
     </resources>
   </build>
+
+  <properties>
+     <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
+     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -28,4 +37,5 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
+
 </project>
