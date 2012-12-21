@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -44,17 +44,32 @@
  *
  */
 
-package org.jfree.chart.renderer.xy;
+package org.jfree.chart.renderer.xy.junit;
+
+import java.awt.geom.Rectangle2D;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.labels.ItemLabelPosition;
-import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.ui.GradientPaintTransformType;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
 import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.labels.ItemLabelPosition;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.GradientXYBarPainter;
+import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.data.Range;
 import org.jfree.data.xy.DefaultIntervalXYDataset;
 import org.jfree.data.xy.XYBarDataset;
@@ -62,67 +77,64 @@ import org.jfree.data.xy.XYIntervalSeries;
 import org.jfree.data.xy.XYIntervalSeriesCollection;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.junit.Test;
-
-import java.awt.geom.Rectangle2D;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link XYBarRenderer} class.
  */
-public class XYBarRendererTest  {
+public class XYBarRendererTest extends TestCase {
 
+    /**
+     * Returns the tests as a test suite.
+     *
+     * @return The test suite.
+     */
+    public static Test suite() {
+        return new TestSuite(XYBarRendererTest.class);
+    }
 
-
-
+    /**
+     * Constructs a new set of tests.
+     *
+     * @param name  the name of the tests.
+     */
+    public XYBarRendererTest(String name) {
+        super(name);
+    }
 
     /**
      * Test that the equals() method distinguishes all fields.
      */
-    @Test
     public void testEquals() {
 
         // default instances
         XYBarRenderer r1 = new XYBarRenderer();
         XYBarRenderer r2 = new XYBarRenderer();
-        assertEquals(r1, r2);
-        assertEquals(r2, r1);
+        assertTrue(r1.equals(r2));
+        assertTrue(r2.equals(r1));
 
         // setBase()
         r1.setBase(1.0);
         assertFalse(r1.equals(r2));
         r2.setBase(1.0);
-        assertEquals(r1, r2);
+        assertTrue(r1.equals(r2));
 
         // setUseYInterval
         r1.setUseYInterval(!r1.getUseYInterval());
         assertFalse(r1.equals(r2));
         r2.setUseYInterval(!r2.getUseYInterval());
-        assertEquals(r1, r2);
+        assertTrue(r1.equals(r2));
 
         // setMargin()
         r1.setMargin(0.10);
         assertFalse(r1.equals(r2));
         r2.setMargin(0.10);
-        assertEquals(r1, r2);
+        assertTrue(r1.equals(r2));
 
         // setDrawBarOutline()
         r1.setDrawBarOutline(!r1.isDrawBarOutline());
         assertFalse(r1.equals(r2));
         r2.setDrawBarOutline(!r2.isDrawBarOutline());
-        assertEquals(r1, r2);
+        assertTrue(r1.equals(r2));
 
         // setGradientPaintTransformer()
         r1.setGradientPaintTransformer(new StandardGradientPaintTransformer(
@@ -130,60 +142,53 @@ public class XYBarRendererTest  {
         assertFalse(r1.equals(r2));
         r2.setGradientPaintTransformer(new StandardGradientPaintTransformer(
                 GradientPaintTransformType.CENTER_HORIZONTAL));
-        assertEquals(r1, r2);
-
-        // legendBar
-        r1.setLegendBar(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
-        assertFalse(r1.equals(r2));
-        r2.setLegendBar(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0));
-        assertEquals(r1, r2);
+        assertTrue(r1.equals(r2));
 
         // positiveItemLabelFallbackPosition
         r1.setPositiveItemLabelPositionFallback(new ItemLabelPosition());
         assertFalse(r1.equals(r2));
         r2.setPositiveItemLabelPositionFallback(new ItemLabelPosition());
-        assertEquals(r1, r2);
+        assertTrue(r1.equals(r2));
 
         // negativeItemLabelFallbackPosition
         r1.setNegativeItemLabelPositionFallback(new ItemLabelPosition());
         assertFalse(r1.equals(r2));
         r2.setNegativeItemLabelPositionFallback(new ItemLabelPosition());
-        assertEquals(r1, r2);
+        assertTrue(r1.equals(r2));
 
         // barPainter
         r1.setBarPainter(new GradientXYBarPainter(0.11, 0.22, 0.33));
         assertFalse(r1.equals(r2));
         r2.setBarPainter(new GradientXYBarPainter(0.11, 0.22, 0.33));
-        assertEquals(r1, r2);
+        assertTrue(r1.equals(r2));
 
         // shadowsVisible
         r1.setShadowVisible(false);
         assertFalse(r1.equals(r2));
         r2.setShadowVisible(false);
-        assertEquals(r1, r2);
+        assertTrue(r1.equals(r2));
 
         // shadowXOffset
         r1.setShadowXOffset(3.3);
         assertFalse(r1.equals(r2));
         r2.setShadowXOffset(3.3);
-        assertEquals(r1, r2);
+        assertTrue(r1.equals(r2));
 
         // shadowYOffset
         r1.setShadowYOffset(3.3);
         assertFalse(r1.equals(r2));
         r2.setShadowYOffset(3.3);
-        assertEquals(r1, r2);
+        assertTrue(r1.equals(r2));
 
     }
 
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
-    @Test
     public void testHashcode() {
         XYBarRenderer r1 = new XYBarRenderer();
         XYBarRenderer r2 = new XYBarRenderer();
-        assertEquals(r1, r2);
+        assertTrue(r1.equals(r2));
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
         assertEquals(h1, h2);
@@ -192,27 +197,23 @@ public class XYBarRendererTest  {
     /**
      * Confirm that cloning works.
      */
-    @Test
-    public void testCloning() throws CloneNotSupportedException {
+    public void testCloning() {
         XYBarRenderer r1 = new XYBarRenderer();
-        Rectangle2D rect = new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0);
-        r1.setLegendBar(rect);
-        XYBarRenderer r2 = (XYBarRenderer) r1.clone();
-        assertNotSame(r1, r2);
-        assertSame(r1.getClass(), r2.getClass());
-        assertEquals(r1, r2);
-
-        // check independence
-        rect.setRect(4.0, 3.0, 2.0, 1.0);
-        assertFalse(r1.equals(r2));
-        r2.setLegendBar(new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0));
-        assertEquals(r1, r2);
+        XYBarRenderer r2 = null;
+        try {
+            r2 = (XYBarRenderer) r1.clone();
+        }
+        catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        assertTrue(r1 != r2);
+        assertTrue(r1.getClass() == r2.getClass());
+        assertTrue(r1.equals(r2));
     }
 
     /**
      * Verify that this class implements {@link PublicCloneable}.
      */
-    @Test
     public void testPublicCloneable() {
         XYBarRenderer r1 = new XYBarRenderer();
         assertTrue(r1 instanceof PublicCloneable);
@@ -221,11 +222,12 @@ public class XYBarRendererTest  {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
-    @Test
-    public void testSerialization() throws IOException, ClassNotFoundException {
+    public void testSerialization() {
 
         XYBarRenderer r1 = new XYBarRenderer();
+        XYBarRenderer r2 = null;
 
+        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(r1);
@@ -233,9 +235,12 @@ public class XYBarRendererTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-        XYBarRenderer r2 = (XYBarRenderer) in.readObject();
+            r2 = (XYBarRenderer) in.readObject();
             in.close();
-
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         assertEquals(r1, r2);
 
     }
@@ -243,12 +248,13 @@ public class XYBarRendererTest  {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
-    @Test
-    public void testSerialization2() throws IOException, ClassNotFoundException {
+    public void testSerialization2() {
 
         XYBarRenderer r1 = new XYBarRenderer();
         r1.setPositiveItemLabelPositionFallback(new ItemLabelPosition());
+        XYBarRenderer r2 = null;
 
+        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(r1);
@@ -256,9 +262,12 @@ public class XYBarRendererTest  {
 
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-        XYBarRenderer r2 = (XYBarRenderer) in.readObject();
+            r2 = (XYBarRenderer) in.readObject();
             in.close();
-
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         assertEquals(r1, r2);
 
     }
@@ -266,7 +275,6 @@ public class XYBarRendererTest  {
     /**
      * Check that the renderer is calculating the domain bounds correctly.
      */
-    @Test
     public void testFindDomainBounds() {
         XYSeriesCollection dataset
                 = RendererXYPackageTests.createTestXYSeriesCollection();
@@ -283,10 +291,9 @@ public class XYBarRendererTest  {
     }
 
     /**
-     * A test for the findDomainBounds method to ensure it correctly accounts 
+     * A test for the findDomainBounds method to ensure it correctly accounts
      * for the series visibility.
      */
-    @Test
     public void testFindDomainBounds2() {
         XYIntervalSeries s1 = new XYIntervalSeries("S1");
         s1.add(1.0, 0.5, 1.5, 10.0, 9.5, 10.5);
@@ -297,12 +304,12 @@ public class XYBarRendererTest  {
         XYIntervalSeriesCollection dataset = new XYIntervalSeriesCollection();
         dataset.addSeries(s1);
         dataset.addSeries(s2);
-        
+
         XYBarRenderer renderer = new XYBarRenderer();
         Range r = renderer.findDomainBounds(dataset);
         assertEquals(0.5, r.getLowerBound(), EPSILON);
         assertEquals(4.1, r.getUpperBound(), EPSILON);
-        
+
         renderer.setSeriesVisible(1, Boolean.FALSE);
         r = renderer.findDomainBounds(dataset);
         assertEquals(0.5, r.getLowerBound(), EPSILON);
@@ -314,7 +321,6 @@ public class XYBarRendererTest  {
     /**
      * A simple test for the findRangeBounds() method.
      */
-    @Test
     public void testFindRangeBounds() {
         DefaultIntervalXYDataset dataset = new DefaultIntervalXYDataset();
         double[] x = {1.0, 2.0, 3.0, 4.0};
@@ -338,10 +344,9 @@ public class XYBarRendererTest  {
     }
 
     /**
-     * A test for the findRangeBounds method to ensure it correctly accounts 
+     * A test for the findRangeBounds method to ensure it correctly accounts
      * for the series visibility.
      */
-    @Test
     public void testFindRangeBounds2() {
         XYIntervalSeries s1 = new XYIntervalSeries("S1");
         s1.add(1.0, 0.5, 1.5, 10.0, 9.5, 10.5);
@@ -352,13 +357,13 @@ public class XYBarRendererTest  {
         XYIntervalSeriesCollection dataset = new XYIntervalSeriesCollection();
         dataset.addSeries(s1);
         dataset.addSeries(s2);
-        
+
         XYBarRenderer renderer = new XYBarRenderer();
         renderer.setUseYInterval(false);
         Range r = renderer.findRangeBounds(dataset);
         assertEquals(9.0, r.getLowerBound(), EPSILON);
         assertEquals(30.0, r.getUpperBound(), EPSILON);
-        
+
         renderer.setSeriesVisible(1, Boolean.FALSE);
         r = renderer.findRangeBounds(dataset);
         assertEquals(10.0, r.getLowerBound(), EPSILON);
@@ -369,7 +374,6 @@ public class XYBarRendererTest  {
      * A check for the datasetIndex and seriesIndex fields in the LegendItem
      * returned by the getLegendItem() method.
      */
-    @Test
     public void testGetLegendItemSeriesIndex() {
         XYSeriesCollection d1 = new XYSeriesCollection();
         XYSeries s1 = new XYSeries("S1");

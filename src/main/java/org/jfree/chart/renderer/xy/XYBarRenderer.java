@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------
@@ -276,12 +276,6 @@ public class XYBarRenderer extends AbstractXYItemRenderer
     private GradientPaintTransformer gradientPaintTransformer;
 
     /**
-     * The shape used to represent a bar in each legend item (this should never
-     * be <code>null</code>).
-     */
-    private transient Shape legendBar;
-
-    /**
      * The fallback position if a positive item label doesn't fit inside the
      * bar.
      */
@@ -323,7 +317,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
 
     /**
      * A factor used to align the bars about the x-value.
-     * 
+     *
      * @since 1.0.13
      */
     private double barAlignmentFactor;
@@ -347,7 +341,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
         this.useYInterval = false;
         this.gradientPaintTransformer = new StandardGradientPaintTransformer();
         this.drawBarOutline = false;
-        this.legendBar = new Rectangle2D.Double(-3.0, -5.0, 6.0, 10.0);
+        setDefaultLegendShape(new Rectangle2D.Double(-3.0, -5.0, 6.0, 10.0));
         this.barPainter = getDefaultBarPainter();
         this.shadowsVisible = getDefaultShadowsVisible();
         this.shadowXOffset = 4.0;
@@ -481,34 +475,6 @@ public class XYBarRenderer extends AbstractXYItemRenderer
     public void setGradientPaintTransformer(
             GradientPaintTransformer transformer) {
         this.gradientPaintTransformer = transformer;
-        fireChangeEvent();
-    }
-
-    /**
-     * Returns the shape used to represent bars in each legend item.
-     *
-     * @return The shape used to represent bars in each legend item (never
-     *         <code>null</code>).
-     *
-     * @see #setLegendBar(Shape)
-     */
-    public Shape getLegendBar() {
-        return this.legendBar;
-    }
-
-    /**
-     * Sets the shape used to represent bars in each legend item and sends a
-     * {@link RendererChangeEvent} to all registered listeners.
-     *
-     * @param bar  the bar shape (<code>null</code> not permitted).
-     *
-     * @see #getLegendBar()
-     */
-    public void setLegendBar(Shape bar) {
-        if (bar == null) {
-            throw new IllegalArgumentException("Null 'bar' argument.");
-        }
-        this.legendBar = bar;
         fireChangeEvent();
     }
 
@@ -672,10 +638,10 @@ public class XYBarRenderer extends AbstractXYItemRenderer
     }
 
     /**
-     * Returns the bar alignment factor. 
-     * 
+     * Returns the bar alignment factor.
+     *
      * @return The bar alignment factor.
-     * 
+     *
      * @since 1.0.13
      */
     public double getBarAlignmentFactor() {
@@ -712,7 +678,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @return A state object.
      */
     @Override
-	public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
+    public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
             XYPlot plot, XYDataset dataset, PlotRenderingInfo info) {
 
         XYBarRendererState state = new XYBarRendererState(info);
@@ -734,7 +700,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @return A legend item for the series.
      */
     @Override
-	public LegendItem getLegendItem(int datasetIndex, int series) {
+    public LegendItem getLegendItem(int datasetIndex, int series) {
         XYPlot xyplot = getPlot();
         if (xyplot == null) {
             return null;
@@ -754,10 +720,10 @@ public class XYBarRenderer extends AbstractXYItemRenderer
         }
         String urlText = null;
         if (getLegendItemURLGenerator() != null) {
-            urlText = getLegendItemURLGenerator().generateLabel(dataset, 
+            urlText = getLegendItemURLGenerator().generateLabel(dataset,
                     series);
         }
-        Shape shape = this.legendBar;
+        Shape shape = this.lookupLegendShape(series);
         Paint paint = lookupSeriesPaint(series);
         Paint outlinePaint = lookupSeriesOutlinePaint(series);
         Stroke outlineStroke = lookupSeriesOutlineStroke(series);
@@ -766,7 +732,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
                     urlText, shape, paint, outlineStroke, outlinePaint);
         }
         else {
-            result = new LegendItem(label, description, toolTipText, urlText, 
+            result = new LegendItem(label, description, toolTipText, urlText,
                     shape, paint);
         }
         result.setLabelFont(lookupLegendTextFont(series));
@@ -803,18 +769,10 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
-                         XYItemRendererState state,
-                         Rectangle2D dataArea,
-                         PlotRenderingInfo info,
-                         XYPlot plot,
-                         ValueAxis domainAxis,
-                         ValueAxis rangeAxis,
-                         XYDataset dataset,
-                         int series,
-                         int item,
-                         CrosshairState crosshairState,
-                         int pass) {
+    public void drawItem(Graphics2D g2, XYItemRendererState state,
+            Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
+            ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
+            int series, int item, CrosshairState crosshairState, int pass) {
 
         if (!getItemVisible(series, item)) {
             return;
@@ -1184,7 +1142,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      *         <code>null</code> or empty).
      */
     @Override
-	public Range findDomainBounds(XYDataset dataset) {
+    public Range findDomainBounds(XYDataset dataset) {
         return findDomainBounds(dataset, true);
     }
 
@@ -1199,7 +1157,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      *         <code>null</code> or empty).
      */
     @Override
-	public Range findRangeBounds(XYDataset dataset) {
+    public Range findRangeBounds(XYDataset dataset) {
         return findRangeBounds(dataset, this.useYInterval);
     }
 
@@ -1211,12 +1169,11 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         XYBarRenderer result = (XYBarRenderer) super.clone();
         if (this.gradientPaintTransformer != null) {
             result.gradientPaintTransformer = ObjectUtilities.clone(this.gradientPaintTransformer);
         }
-        result.legendBar = ShapeUtilities.clone(this.legendBar);
         return result;
     }
 
@@ -1228,7 +1185,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -1250,9 +1207,6 @@ public class XYBarRenderer extends AbstractXYItemRenderer
         }
         if (!ObjectUtilities.equal(this.gradientPaintTransformer,
                 that.gradientPaintTransformer)) {
-            return false;
-        }
-        if (!ShapeUtilities.equal(this.legendBar, that.legendBar)) {
             return false;
         }
         if (!ObjectUtilities.equal(this.positiveItemLabelPositionFallback,
@@ -1279,32 +1233,6 @@ public class XYBarRenderer extends AbstractXYItemRenderer
             return false;
         }
         return super.equals(obj);
-    }
-
-    /**
-     * Provides serialization support.
-     *
-     * @param stream  the input stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     * @throws ClassNotFoundException  if there is a classpath problem.
-     */
-    private void readObject(ObjectInputStream stream)
-            throws IOException, ClassNotFoundException {
-        stream.defaultReadObject();
-        this.legendBar = SerialUtilities.readShape(stream);
-    }
-
-    /**
-     * Provides serialization support.
-     *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     */
-    private void writeObject(ObjectOutputStream stream) throws IOException {
-        stream.defaultWriteObject();
-        SerialUtilities.writeShape(this.legendBar, stream);
     }
 
 }
