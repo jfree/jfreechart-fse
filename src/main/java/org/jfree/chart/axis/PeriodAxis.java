@@ -614,11 +614,10 @@ public class PeriodAxis extends ValueAxis
         double labelWidth = 0.0;
         double tickLabelBandsDimension = 0.0;
 
-        for (int i = 0; i < this.labelInfo.length; i++) {
-            PeriodAxisLabelInfo info = this.labelInfo[i];
+        for (PeriodAxisLabelInfo info : this.labelInfo) {
             FontMetrics fm = g2.getFontMetrics(info.getLabelFont());
             tickLabelBandsDimension
-                += info.getPadding().extendHeight(fm.getHeight());
+                    += info.getPadding().extendHeight(fm.getHeight());
         }
 
         if (RectangleEdge.isTopOrBottom(edge)) {
@@ -714,7 +713,7 @@ public class PeriodAxis extends ValueAxis
     protected void drawTickMarksHorizontal(Graphics2D g2, AxisState state,
                                            Rectangle2D dataArea,
                                            RectangleEdge edge) {
-        List ticks = new ArrayList();
+        List<ValueTick> ticks = new ArrayList<ValueTick>();
         double x0;
         double y0 = state.getCursor();
         double insideLength = getTickMarkInsideLength();
@@ -727,7 +726,7 @@ public class PeriodAxis extends ValueAxis
         long firstOnAxis = getFirst().getFirstMillisecond();
         long lastOnAxis = getLast().getLastMillisecond() + 1;
         while (t0 <= lastOnAxis) {
-            ticks.add(new NumberTick(new Double(t0), "", TextAnchor.CENTER,
+            ticks.add(new NumberTick((double) t0, "", TextAnchor.CENTER,
                     TextAnchor.CENTER, 0.0));
             x0 = valueToJava2D(t0, dataArea, edge);
             if (edge == RectangleEdge.TOP) {
@@ -963,7 +962,7 @@ public class PeriodAxis extends ValueAxis
      * @return The list of ticks.
      */
     @Override
-	public List refreshTicks(Graphics2D g2, AxisState state,
+	public List<ValueTick> refreshTicks(Graphics2D g2, AxisState state,
             Rectangle2D dataArea, RectangleEdge edge) {
         return Collections.EMPTY_LIST;
     }

@@ -197,13 +197,13 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     private XYPlot plot;
 
     /** A list of item label generators (one per series). */
-    private ObjectList itemLabelGeneratorList;
+    private ObjectList<XYItemLabelGenerator> itemLabelGeneratorList;
 
     /** The base item label generator. */
     private XYItemLabelGenerator baseItemLabelGenerator;
 
     /** A list of tool tip generators (one per series). */
-    private ObjectList toolTipGeneratorList;
+    private ObjectList<XYToolTipGenerator> toolTipGeneratorList;
 
     /** The base tool tip generator. */
     private XYToolTipGenerator baseToolTipGenerator;
@@ -238,8 +238,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     protected AbstractXYItemRenderer() {
         super();
-        this.itemLabelGeneratorList = new ObjectList();
-        this.toolTipGeneratorList = new ObjectList();
+        this.itemLabelGeneratorList = new ObjectList<XYItemLabelGenerator>();
+        this.toolTipGeneratorList = new ObjectList<XYToolTipGenerator>();
         this.urlGenerator = null;
         this.backgroundAnnotations = new java.util.ArrayList<XYAnnotation>();
         this.foregroundAnnotations = new java.util.ArrayList<XYAnnotation>();
@@ -321,7 +321,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     @Override
     public XYItemLabelGenerator getItemLabelGenerator(int series, int item) {
         XYItemLabelGenerator generator
-            = (XYItemLabelGenerator) this.itemLabelGeneratorList.get(series);
+            = this.itemLabelGeneratorList.get(series);
         if (generator == null) {
             generator = this.baseItemLabelGenerator;
         }
@@ -337,7 +337,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     @Override
     public XYItemLabelGenerator getSeriesItemLabelGenerator(int series) {
-        return (XYItemLabelGenerator) this.itemLabelGeneratorList.get(series);
+        return this.itemLabelGeneratorList.get(series);
     }
 
     /**
@@ -420,7 +420,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     @Override
     public XYToolTipGenerator getToolTipGenerator(int series, int item) {
         XYToolTipGenerator generator
-                = (XYToolTipGenerator) this.toolTipGeneratorList.get(series);
+                = this.toolTipGeneratorList.get(series);
         if (generator == null) {
             generator = this.baseToolTipGenerator;
         }
@@ -436,7 +436,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     @Override
     public XYToolTipGenerator getSeriesToolTipGenerator(int series) {
-        return (XYToolTipGenerator) this.toolTipGeneratorList.get(series);
+        return this.toolTipGeneratorList.get(series);
     }
 
     /**
@@ -612,14 +612,10 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     @Override
     public void removeAnnotations() {
-        for(int i = 0; i < this.foregroundAnnotations.size(); i++){
-            XYAnnotation annotation 
-                    = (XYAnnotation) this.foregroundAnnotations.get(i);
+        for (XYAnnotation annotation : this.foregroundAnnotations) {
             annotation.removeChangeListener(this);
         }
-         for(int i = 0; i < this.backgroundAnnotations.size(); i++){
-            XYAnnotation annotation 
-                    = (XYAnnotation) this.backgroundAnnotations.get(i);
+        for (XYAnnotation annotation : this.backgroundAnnotations) {
             annotation.removeChangeListener(this);
         }
         this.foregroundAnnotations.clear();
@@ -785,7 +781,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             return null;
         }
         if (getDataBoundsIncludesVisibleSeriesOnly()) {
-            List visibleSeriesKeys = new ArrayList();
+            List<Comparable> visibleSeriesKeys = new ArrayList<Comparable>();
             int seriesCount = dataset.getSeriesCount();
             for (int s = 0; s < seriesCount; s++) {
                 if (isSeriesVisible(s)) {
@@ -832,7 +828,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             return null;
         }
         if (getDataBoundsIncludesVisibleSeriesOnly()) {
-            List visibleSeriesKeys = new ArrayList();
+            List<Comparable> visibleSeriesKeys = new ArrayList<Comparable>();
             int seriesCount = dataset.getSeriesCount();
             for (int s = 0; s < seriesCount; s++) {
                 if (isSeriesVisible(s)) {
@@ -913,7 +909,6 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         }
         String label = this.legendItemLabelGenerator.generateLabel(dataset,
                 series);
-        String description = label;
         String toolTipText = null;
         if (getLegendItemToolTipGenerator() != null) {
             toolTipText = getLegendItemToolTipGenerator().generateLabel(
@@ -1372,7 +1367,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             double v = rangeAxis.valueToJava2D(value, dataArea,
                     plot.getRangeAxisEdge());
             PlotOrientation orientation = plot.getOrientation();
-            Line2D line = null;
+            Line2D line;
             if (orientation == PlotOrientation.HORIZONTAL) {
                 line = new Line2D.Double(v, dataArea.getMinY(), v,
                         dataArea.getMaxY());
@@ -1560,7 +1555,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         // 'plot' : just retain reference, not a deep copy
 
         clone.itemLabelGeneratorList
-                = (ObjectList) this.itemLabelGeneratorList.clone();
+                = (ObjectList<XYItemLabelGenerator>) this.itemLabelGeneratorList.clone();
         if (this.baseItemLabelGenerator != null
                 && this.baseItemLabelGenerator instanceof PublicCloneable) {
             PublicCloneable pc = (PublicCloneable) this.baseItemLabelGenerator;
@@ -1568,7 +1563,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         }
 
         clone.toolTipGeneratorList
-                = (ObjectList) this.toolTipGeneratorList.clone();
+                = (ObjectList<XYToolTipGenerator>) this.toolTipGeneratorList.clone();
         if (this.baseToolTipGenerator != null
                 && this.baseToolTipGenerator instanceof PublicCloneable) {
             PublicCloneable pc = (PublicCloneable) this.baseToolTipGenerator;
@@ -1576,21 +1571,18 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         }
 
         if (this.legendItemLabelGenerator instanceof PublicCloneable) {
-            clone.legendItemLabelGenerator = (XYSeriesLabelGenerator)
-                    ObjectUtilities.clone(this.legendItemLabelGenerator);
+            clone.legendItemLabelGenerator = ObjectUtilities.clone(this.legendItemLabelGenerator);
         }
         if (this.legendItemToolTipGenerator instanceof PublicCloneable) {
-            clone.legendItemToolTipGenerator = (XYSeriesLabelGenerator)
-                    ObjectUtilities.clone(this.legendItemToolTipGenerator);
+            clone.legendItemToolTipGenerator = ObjectUtilities.clone(this.legendItemToolTipGenerator);
         }
         if (this.legendItemURLGenerator instanceof PublicCloneable) {
-            clone.legendItemURLGenerator = (XYSeriesLabelGenerator)
-                    ObjectUtilities.clone(this.legendItemURLGenerator);
+            clone.legendItemURLGenerator = ObjectUtilities.clone(this.legendItemURLGenerator);
         }
 
-        clone.foregroundAnnotations = (List<XYAnnotation>) ObjectUtilities.deepClone(
+        clone.foregroundAnnotations = ObjectUtilities.deepClone(
                 this.foregroundAnnotations);
-        clone.backgroundAnnotations = (List<XYAnnotation>) ObjectUtilities.deepClone(
+        clone.backgroundAnnotations = ObjectUtilities.deepClone(
                 this.backgroundAnnotations);
 
         return clone;
@@ -1740,7 +1732,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             String label = generator.generateLabel(dataset, series, item);
 
             // get the label position..
-            ItemLabelPosition position = null;
+            ItemLabelPosition position;
             if (!negative) {
                 position = getPositiveItemLabelPosition(series, item);
             }
@@ -1777,7 +1769,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
                                 Layer layer,
                                 PlotRenderingInfo info) {
 
-        Iterator<XYAnnotation> iterator = null;
+        Iterator<XYAnnotation> iterator;
         if (layer.equals(Layer.FOREGROUND)) {
             iterator = this.foregroundAnnotations.iterator();
         }

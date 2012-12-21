@@ -49,7 +49,7 @@
 
 package org.jfree.data.category;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jfree.chart.util.TableOrder;
@@ -242,8 +242,8 @@ public class CategoryToPieDataset extends AbstractDataset
      * @return The keys.
      */
     @Override
-	public List getKeys() {
-        List result = Collections.EMPTY_LIST;
+	public List<Comparable> getKeys() {
+        List<Comparable> result = new ArrayList<Comparable>();// = Collections.EMPTY_LIST;
         if (this.source != null) {
             if (this.extract == TableOrder.BY_ROW) {
                 result = this.source.getColumnKeys();

@@ -95,7 +95,7 @@ public class CSV {
 
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         BufferedReader reader = new BufferedReader(in);
-        List columnKeys = null;
+        List<String> columnKeys = null;
         int lineIndex = 0;
         String line = reader.readLine();
         while (line != null) {
@@ -119,8 +119,8 @@ public class CSV {
      *
      * @return A list of column keys.
      */
-    private List extractColumnKeys(String line) {
-        List keys = new java.util.ArrayList();
+    private List<String> extractColumnKeys(String line) {
+        List<String> keys = new java.util.ArrayList<String>();
         int fieldIndex = 0;
         int start = 0;
         for (int i = 0; i < line.length(); i++) {
@@ -148,7 +148,7 @@ public class CSV {
      */
     private void extractRowKeyAndData(String line,
                                       DefaultCategoryDataset dataset,
-                                      List columnKeys) {
+                                      List<String> columnKeys) {
         Comparable rowKey = null;
         int fieldIndex = 0;
         int start = 0;
@@ -164,7 +164,7 @@ public class CSV {
                     );
                     dataset.addValue(
                         value, rowKey,
-                        (Comparable) columnKeys.get(fieldIndex - 1)
+                        columnKeys.get(fieldIndex - 1)
                     );
                 }
                 start = i + 1;
@@ -175,7 +175,7 @@ public class CSV {
             removeStringDelimiters(line.substring(start, line.length()))
         );
         dataset.addValue(
-            value, rowKey, (Comparable) columnKeys.get(fieldIndex - 1)
+            value, rowKey, columnKeys.get(fieldIndex - 1)
         );
     }
 

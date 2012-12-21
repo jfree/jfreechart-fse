@@ -256,7 +256,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
     public boolean getItemLineVisible(int series, int item) {
         Boolean flag = getSeriesLinesVisible(series);
         if (flag != null) {
-            return flag.booleanValue();
+            return flag;
         }
         return this.baseLinesVisible;
     }
@@ -371,7 +371,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
     public boolean getItemShapeVisible(int series, int item) {
         Boolean flag = getSeriesShapesVisible(series);
         if (flag != null) {
-            return flag.booleanValue();
+            return flag;
         }
         return this.baseShapesVisible;
     }
@@ -459,7 +459,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
     public boolean getItemShapeFilled(int series, int item) {
         Boolean flag = getSeriesShapesFilled(series);
         if (flag != null) {
-            return flag.booleanValue();
+            return flag;
         }
         return this.baseShapesFilled;
     }

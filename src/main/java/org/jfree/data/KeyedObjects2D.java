@@ -46,7 +46,6 @@ package org.jfree.data;
 
 import java.io.Serializable;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -59,21 +58,21 @@ public class KeyedObjects2D implements Cloneable, Serializable {
     private static final long serialVersionUID = -1015873563138522374L;
 
     /** The row keys. */
-    private List rowKeys;
+    private List<Comparable> rowKeys;
 
     /** The column keys. */
-    private List columnKeys;
+    private List<Comparable> columnKeys;
 
     /** The row data. */
-    private List rows;
+    private List<KeyedObjects> rows;
 
     /**
      * Creates a new instance (initially empty).
      */
     public KeyedObjects2D() {
-        this.rowKeys = new java.util.ArrayList();
-        this.columnKeys = new java.util.ArrayList();
-        this.rows = new java.util.ArrayList();
+        this.rowKeys = new java.util.ArrayList<Comparable>();
+        this.columnKeys = new java.util.ArrayList<Comparable>();
+        this.rows = new java.util.ArrayList<KeyedObjects>();
     }
 
     /**
@@ -110,9 +109,9 @@ public class KeyedObjects2D implements Cloneable, Serializable {
      */
     public Object getObject(int row, int column) {
         Object result = null;
-        KeyedObjects rowData = (KeyedObjects) this.rows.get(row);
+        KeyedObjects rowData = this.rows.get(row);
         if (rowData != null) {
-            Comparable columnKey = (Comparable) this.columnKeys.get(column);
+            Comparable columnKey = this.columnKeys.get(column);
             if (columnKey != null) {
                 int index = rowData.getIndex(columnKey);
                 if (index >= 0) {
@@ -133,7 +132,7 @@ public class KeyedObjects2D implements Cloneable, Serializable {
      * @see #getRowIndex(Comparable)
      */
     public Comparable getRowKey(int row) {
-        return (Comparable) this.rowKeys.get(row);
+        return this.rowKeys.get(row);
     }
 
     /**
@@ -160,7 +159,7 @@ public class KeyedObjects2D implements Cloneable, Serializable {
      *
      * @see #getRowKeys()
      */
-    public List getRowKeys() {
+    public List<Comparable> getRowKeys() {
         return Collections.unmodifiableList(this.rowKeys);
     }
 
@@ -174,7 +173,7 @@ public class KeyedObjects2D implements Cloneable, Serializable {
      * @see #getColumnIndex(Comparable)
      */
     public Comparable getColumnKey(int column) {
-        return (Comparable) this.columnKeys.get(column);
+        return this.columnKeys.get(column);
     }
 
     /**
@@ -201,7 +200,7 @@ public class KeyedObjects2D implements Cloneable, Serializable {
      *
      * @see #getRowKeys()
      */
-    public List getColumnKeys() {
+    public List<Comparable> getColumnKeys() {
         return Collections.unmodifiableList(this.columnKeys);
     }
 
@@ -235,7 +234,7 @@ public class KeyedObjects2D implements Cloneable, Serializable {
             throw new UnknownKeyException("Column key (" + columnKey
                     + ") not recognised.");
         }
-        KeyedObjects rowData = (KeyedObjects) this.rows.get(row);
+        KeyedObjects rowData = this.rows.get(row);
         int index = rowData.getIndex(columnKey);
         if (index >= 0) {
             return rowData.getObject(index);
@@ -276,7 +275,7 @@ public class KeyedObjects2D implements Cloneable, Serializable {
         KeyedObjects row;
         int rowIndex = this.rowKeys.indexOf(rowKey);
         if (rowIndex >= 0) {
-            row = (KeyedObjects) this.rows.get(rowIndex);
+            row = this.rows.get(rowIndex);
         }
         else {
             this.rowKeys.add(rowKey);
@@ -316,7 +315,7 @@ public class KeyedObjects2D implements Cloneable, Serializable {
 
         // 1. check whether the row is now empty.
         boolean allNull = true;
-        KeyedObjects row = (KeyedObjects) this.rows.get(rowIndex);
+        KeyedObjects row = this.rows.get(rowIndex);
 
         for (int item = 0, itemCount = row.getItemCount(); item < itemCount;
              item++) {
@@ -334,23 +333,19 @@ public class KeyedObjects2D implements Cloneable, Serializable {
         // 2. check whether the column is now empty.
         allNull = true;
 
-        for (int item = 0, itemCount = this.rows.size(); item < itemCount;
-             item++) {
-            row = (KeyedObjects) this.rows.get(item);
-            int colIndex = row.getIndex(columnKey);
-            if (colIndex >= 0 && row.getObject(colIndex) != null) {
+        for (KeyedObjects innerRow : this.rows) {
+            int colIndex = innerRow.getIndex(columnKey);
+            if (colIndex >= 0 && innerRow.getObject(colIndex) != null) {
                 allNull = false;
                 break;
             }
         }
 
         if (allNull) {
-            for (int item = 0, itemCount = this.rows.size(); item < itemCount;
-                 item++) {
-                row = (KeyedObjects) this.rows.get(item);
-                int colIndex = row.getIndex(columnKey);
+            for (KeyedObjects innerRow : this.rows) {
+                int colIndex = innerRow.getIndex(columnKey);
                 if (colIndex >= 0) {
-                    row.removeValue(colIndex);
+                    innerRow.removeValue(colIndex);
                 }
             }
             this.columnKeys.remove(columnKey);
@@ -414,9 +409,7 @@ public class KeyedObjects2D implements Cloneable, Serializable {
             throw new UnknownKeyException("Column key (" + columnKey
                     + ") not recognised.");
         }
-        Iterator iterator = this.rows.iterator();
-        while (iterator.hasNext()) {
-            KeyedObjects rowData = (KeyedObjects) iterator.next();
+        for (KeyedObjects rowData : this.rows) {
             int i = rowData.getIndex(columnKey);
             if (i >= 0) {
                 rowData.removeValue(i);
@@ -511,13 +504,11 @@ public class KeyedObjects2D implements Cloneable, Serializable {
     @Override
 	public Object clone() throws CloneNotSupportedException {
         KeyedObjects2D clone = (KeyedObjects2D) super.clone();
-        clone.columnKeys = new java.util.ArrayList(this.columnKeys);
-        clone.rowKeys = new java.util.ArrayList(this.rowKeys);
-        clone.rows = new java.util.ArrayList(this.rows.size());
-        Iterator iterator = this.rows.iterator();
-        while (iterator.hasNext()) {
-            KeyedObjects row = (KeyedObjects) iterator.next();
-            clone.rows.add(row.clone());
+        clone.columnKeys = new java.util.ArrayList<Comparable>(this.columnKeys);
+        clone.rowKeys = new java.util.ArrayList<Comparable>(this.rowKeys);
+        clone.rows = new java.util.ArrayList<KeyedObjects>(this.rows.size());
+        for (KeyedObjects row : this.rows) {
+            clone.rows.add((KeyedObjects) row.clone());
         }
         return clone;
     }

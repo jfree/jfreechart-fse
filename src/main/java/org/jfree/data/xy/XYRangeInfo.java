@@ -62,7 +62,7 @@ public interface XYRangeInfo {
      * @return The range (or <code>null</code> if the dataset contains no
      *     values).
      */
-    public Range getRangeBounds(List visibleSeriesKeys, Range xRange,
+    public Range getRangeBounds(List<Comparable> visibleSeriesKeys, Range xRange,
             boolean includeInterval);
 
 }

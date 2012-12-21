@@ -175,7 +175,6 @@ import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -296,7 +295,7 @@ public class JFreeChart implements Drawable,
      * The chart subtitles (zero, one or many).  This field should never be
      * <code>null</code>.
      */
-    private List subtitles;
+    private List<Title> subtitles;
 
     /** Draws the visual representation of the data. */
     private Plot plot;
@@ -399,7 +398,7 @@ public class JFreeChart implements Drawable,
         this.plot = plot;
         plot.addChangeListener(this);
 
-        this.subtitles = new ArrayList();
+        this.subtitles = new ArrayList<Title>();
 
         // create a legend, if requested...
         if (createLegend) {
@@ -652,14 +651,11 @@ public class JFreeChart implements Drawable,
      */
     public LegendTitle getLegend(int index) {
         int seen = 0;
-        Iterator iterator = this.subtitles.iterator();
-        while (iterator.hasNext()) {
-            Title subtitle = (Title) iterator.next();
+        for (Title subtitle : this.subtitles) {
             if (subtitle instanceof LegendTitle) {
                 if (seen == index) {
                     return (LegendTitle) subtitle;
-                }
-                else {
+                } else {
                     seen++;
                 }
             }
@@ -684,8 +680,8 @@ public class JFreeChart implements Drawable,
      *
      * @see #setSubtitles(List)
      */
-    public List getSubtitles() {
-        return new ArrayList(this.subtitles);
+    public List<Title> getSubtitles() {
+        return new ArrayList<Title>(this.subtitles);
     }
 
     /**
@@ -698,15 +694,13 @@ public class JFreeChart implements Drawable,
      *
      * @see #getSubtitles()
      */
-    public void setSubtitles(List subtitles) {
+    public void setSubtitles(List<? extends Title> subtitles) {
         if (subtitles == null) {
             throw new NullPointerException("Null 'subtitles' argument.");
         }
         setNotify(false);
         clearSubtitles();
-        Iterator iterator = subtitles.iterator();
-        while (iterator.hasNext()) {
-            Title t = (Title) iterator.next();
+        for (Title t : subtitles) {
             if (t != null) {
                 addSubtitle(t);
             }
@@ -738,7 +732,7 @@ public class JFreeChart implements Drawable,
         if ((index < 0) || (index >= getSubtitleCount())) {
             throw new IllegalArgumentException("Index out of range.");
         }
-        return (Title) this.subtitles.get(index);
+        return this.subtitles.get(index);
     }
 
     /**
@@ -787,9 +781,7 @@ public class JFreeChart implements Drawable,
      * @see #addSubtitle(Title)
      */
     public void clearSubtitles() {
-        Iterator iterator = this.subtitles.iterator();
-        while (iterator.hasNext()) {
-            Title t = (Title) iterator.next();
+        for (Title t : this.subtitles) {
             t.removeChangeListener(this);
         }
         this.subtitles.clear();
@@ -1215,9 +1207,7 @@ public class JFreeChart implements Drawable,
             }
         }
 
-        Iterator iterator = this.subtitles.iterator();
-        while (iterator.hasNext()) {
-            Title currentTitle = (Title) iterator.next();
+        for (Title currentTitle : this.subtitles) {
             if (currentTitle.isVisible()) {
                 EntityCollection e = drawTitle(currentTitle, g2, nonTitleArea,
                         (entities != null));
@@ -1316,7 +1306,7 @@ public class JFreeChart implements Drawable,
         RectangleConstraint constraint = new RectangleConstraint(ww,
                 new Range(0.0, ww), LengthConstraintType.RANGE, hh,
                 new Range(0.0, hh), LengthConstraintType.RANGE);
-        Object retValue = null;
+        Object retValue;
         BlockParams p = new BlockParams();
         p.setGenerateEntities(entities);
         if (position == RectangleEdge.TOP) {
@@ -1724,7 +1714,7 @@ public class JFreeChart implements Drawable,
             chart.title.addChangeListener(chart);
         }
 
-        chart.subtitles = new ArrayList();
+        chart.subtitles = new ArrayList<Title>();
         for (int i = 0; i < getSubtitleCount(); i++) {
             Title subtitle = (Title) getSubtitle(i).clone();
             chart.subtitles.add(subtitle);
@@ -1769,7 +1759,6 @@ class JFreeChartInfo extends ProjectInfo {
         setLicenceText(Licences.getInstance().getLGPL());
 
         setContributors(Arrays.asList(
-            new Contributor[]{
                 new Contributor("Eric Alexander", "-"),
                 new Contributor("Richard Atkinson",
                         "richard_c_atkinson@ntlworld.com"),
@@ -1868,8 +1857,8 @@ class JFreeChartInfo extends ProjectInfo {
                 new Contributor("Hari", "-"),
                 new Contributor("Sam (oldman)", "-"),
                 new Contributor("Patrick Schlott", "-"),
-                new Contributor("Christoph Schroeder", "-")
-            }
+                new Contributor("Christoph Schroeder", "-"),
+                new Contributor("Michael Clarke", "-")
         ));
 
 

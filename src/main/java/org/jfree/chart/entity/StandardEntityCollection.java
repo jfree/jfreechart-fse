@@ -69,13 +69,13 @@ public class StandardEntityCollection implements EntityCollection,
     private static final long serialVersionUID = 5384773031184897047L;
 
     /** Storage for the entities. */
-    private List entities;
+    private List<ChartEntity> entities;
 
     /**
      * Constructs a new entity collection (initially empty).
      */
     public StandardEntityCollection() {
-        this.entities = new java.util.ArrayList();
+        this.entities = new java.util.ArrayList<ChartEntity>();
     }
 
     /**
@@ -99,7 +99,7 @@ public class StandardEntityCollection implements EntityCollection,
      */
     @Override
 	public ChartEntity getEntity(int index) {
-        return (ChartEntity) this.entities.get(index);
+        return this.entities.get(index);
     }
 
     /**
@@ -147,7 +147,7 @@ public class StandardEntityCollection implements EntityCollection,
 	public ChartEntity getEntity(double x, double y) {
         int entityCount = this.entities.size();
         for (int i = entityCount - 1; i >= 0; i--) {
-            ChartEntity entity = (ChartEntity) this.entities.get(i);
+            ChartEntity entity = this.entities.get(i);
             if (entity.getArea().contains(x, y)) {
                 return entity;
             }
@@ -161,7 +161,7 @@ public class StandardEntityCollection implements EntityCollection,
      * @return The entities.
      */
     @Override
-	public Collection getEntities() {
+	public Collection<ChartEntity> getEntities() {
         return Collections.unmodifiableCollection(this.entities);
     }
 
@@ -171,7 +171,7 @@ public class StandardEntityCollection implements EntityCollection,
      * @return An iterator.
      */
     @Override
-	public Iterator iterator() {
+	public Iterator<ChartEntity> iterator() {
         return this.entities.iterator();
     }
 
@@ -205,10 +205,10 @@ public class StandardEntityCollection implements EntityCollection,
 	public Object clone() throws CloneNotSupportedException {
         StandardEntityCollection clone
                 = (StandardEntityCollection) super.clone();
-        clone.entities = new java.util.ArrayList(this.entities.size());
+        clone.entities = new java.util.ArrayList<ChartEntity>(this.entities.size());
         for (int i = 0; i < this.entities.size(); i++) {
-            ChartEntity entity = (ChartEntity) this.entities.get(i);
-            clone.entities.add(entity.clone());
+            ChartEntity entity = this.entities.get(i);
+            clone.entities.add((ChartEntity) entity.clone());
         }
         return clone;
     }

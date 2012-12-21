@@ -49,7 +49,7 @@ package org.jfree.chart.util;
  * <p>
  * When cloning, the objects in the list are NOT cloned, only the references. 
  */
-public class ObjectList extends AbstractObjectList {
+public class ObjectList<T> extends AbstractObjectList<T> {
     
     /**
      * Default constructor.
@@ -80,7 +80,7 @@ public class ObjectList extends AbstractObjectList {
      * @return The object or <code>null</code>.          
      */          
     @Override
-	public Object get(final int index) {         
+	public T get(final int index) {
         return super.get(index);         
     }    
          
@@ -91,7 +91,7 @@ public class ObjectList extends AbstractObjectList {
      * @param object  the object (<code>null</code> permitted).          
      */          
     @Override
-	public void set(final int index, final Object object) {      
+	public void set(final int index, final T object) {
         super.set(index, object);        
     }    
          
@@ -103,7 +103,7 @@ public class ObjectList extends AbstractObjectList {
      * @return The index or -1.          
      */          
     @Override
-	public int indexOf(final Object object) {    
+	public int indexOf(final T object) {
         return super.indexOf(object);    
     }    
          

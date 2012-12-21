@@ -328,11 +328,11 @@ public class StackedBarRenderer3D extends BarRenderer3D
      *
      * @since 1.0.13
      */
-    protected List createStackedValueList(CategoryDataset dataset,
+    protected List<Object[]> createStackedValueList(CategoryDataset dataset,
             Comparable category, int[] includedRows, double base,
             boolean asPercentages) {
 
-        List result = new ArrayList();
+        List<Object[]> result = new ArrayList<Object[]>();
         double posBase = base;
         double negBase = base;
         double total = 0.0;
@@ -342,9 +342,7 @@ public class StackedBarRenderer3D extends BarRenderer3D
         }
 
         int baseIndex = -1;
-        int rowCount = includedRows.length;
-        for (int i = 0; i < rowCount; i++) {
-            int r = includedRows[i];
+        for (int r : includedRows) {
             Number n = dataset.getValue(dataset.getRowKey(r), category);
             if (n == null) {
                 continue;
@@ -355,20 +353,19 @@ public class StackedBarRenderer3D extends BarRenderer3D
             }
             if ((v > 0.0) || (!this.ignoreZeroValues && v >= 0.0)) {
                 if (baseIndex < 0) {
-                    result.add(new Object[] {null, new Double(base)});
+                    result.add(new Object[]{null, base});
                     baseIndex = 0;
                 }
                 posBase = posBase + v;
-                result.add(new Object[] {new Integer(r), new Double(posBase)});
-            }
-            else if (v < 0.0) {
+                result.add(new Object[]{r, posBase});
+            } else if (v < 0.0) {
                 if (baseIndex < 0) {
-                    result.add(new Object[] {null, new Double(base)});
+                    result.add(new Object[]{null, base});
                     baseIndex = 0;
                 }
                 negBase = negBase + v; // '+' because v is negative
-                result.add(0, new Object[] {new Integer(-r - 1),
-                        new Double(negBase)});
+                result.add(0, new Object[]{-r - 1,
+                        negBase});
                 baseIndex++;
             }
         }
@@ -405,7 +402,7 @@ public class StackedBarRenderer3D extends BarRenderer3D
         }
         Comparable category = dataset.getColumnKey(column);
 
-        List values = createStackedValueList(dataset,
+        List<Object[]> values = createStackedValueList(dataset,
                 dataset.getColumnKey(column), state.getVisibleSeriesArray(),
                 getBase(), this.renderAsPercentages);
 
@@ -458,7 +455,7 @@ public class StackedBarRenderer3D extends BarRenderer3D
 
         // a list to store the series index and bar region, so we can draw
         // all the labels at the end...
-        List itemLabelList = new ArrayList();
+        List<Object[]> itemLabelList = new ArrayList<Object[]>(); //FIXME MMC create an internal class to handle the data
 
         // draw the blocks
         boolean inverted = rangeAxis.isInverted();
@@ -467,21 +464,21 @@ public class StackedBarRenderer3D extends BarRenderer3D
             int index = (inverted ? blockCount - k - 1 : k);
             Object[] prev = (Object[]) values.get(index);
             Object[] curr = (Object[]) values.get(index + 1);
-            int series = 0;
+            int series;
             if (curr[0] == null) {
-                series = -((Integer) prev[0]).intValue() - 1;
+                series = -(Integer) prev[0] - 1;
             }
             else {
-                series = ((Integer) curr[0]).intValue();
+                series = (Integer) curr[0];
                 if (series < 0) {
-                    series = -((Integer) prev[0]).intValue() - 1;
+                    series = -(Integer) prev[0] - 1;
                 }
             }
-            double v0 = ((Double) prev[1]).doubleValue();
+            double v0 = (Double) prev[1];
             double vv0 = rangeAxis.valueToJava2D(v0, dataArea,
                     plot.getRangeAxisEdge());
 
-            double v1 = ((Double) curr[1]).doubleValue();
+            double v1 = (Double) curr[1];
             double vv1 = rangeAxis.valueToJava2D(v1, dataArea,
                     plot.getRangeAxisEdge());
 
@@ -512,8 +509,8 @@ public class StackedBarRenderer3D extends BarRenderer3D
                 }
             }
 
-            itemLabelList.add(new Object[] {new Integer(series),
-                    faces[5].getBounds2D(), Boolean.valueOf(v0 < getBase())});
+            itemLabelList.add(new Object[] {series,
+                    faces[5].getBounds2D(), v0 < getBase()});
 
             // add an item entity, if this information is being collected
             EntityCollection entities = state.getEntityCollection();
@@ -523,11 +520,10 @@ public class StackedBarRenderer3D extends BarRenderer3D
 
         }
 
-        for (int i = 0; i < itemLabelList.size(); i++) {
-            Object[] record = (Object[]) itemLabelList.get(i);
-            int series = ((Integer) record[0]).intValue();
+        for (Object[] record : itemLabelList) {
+            int series = (Integer) record[0];
             Rectangle2D bar = (Rectangle2D) record[1];
-            boolean neg = ((Boolean) record[2]).booleanValue();
+            boolean neg = (Boolean) record[2];
             CategoryItemLabelGenerator generator
                     = getItemLabelGenerator(series, column);
             if (generator != null && isItemLabelVisible(series, column)) {
@@ -653,7 +649,7 @@ public class StackedBarRenderer3D extends BarRenderer3D
 
         // a list to store the series index and bar region, so we can draw
         // all the labels at the end...
-        List itemLabelList = new ArrayList();
+        List<Object[]> itemLabelList = new ArrayList<Object[]>();
 
         // draw the blocks
         boolean inverted = rangeAxis.isInverted();
@@ -664,19 +660,19 @@ public class StackedBarRenderer3D extends BarRenderer3D
             Object[] curr = (Object[]) values.get(index + 1);
             int series = 0;
             if (curr[0] == null) {
-                series = -((Integer) prev[0]).intValue() - 1;
+                series = -(Integer) prev[0] - 1;
             }
             else {
-                series = ((Integer) curr[0]).intValue();
+                series = (Integer) curr[0];
                 if (series < 0) {
-                    series = -((Integer) prev[0]).intValue() - 1;
+                    series = -(Integer) prev[0] - 1;
                 }
             }
-            double v0 = ((Double) prev[1]).doubleValue();
+            double v0 = (Double) prev[1];
             double vv0 = rangeAxis.valueToJava2D(v0, dataArea,
                     plot.getRangeAxisEdge());
 
-            double v1 = ((Double) curr[1]).doubleValue();
+            double v1 = (Double) curr[1];
             double vv1 = rangeAxis.valueToJava2D(v1, dataArea,
                     plot.getRangeAxisEdge());
 
@@ -708,8 +704,8 @@ public class StackedBarRenderer3D extends BarRenderer3D
                 }
             }
 
-            itemLabelList.add(new Object[] {new Integer(series),
-                    faces[5].getBounds2D(), Boolean.valueOf(v0 < getBase())});
+            itemLabelList.add(new Object[] {series,
+                    faces[5].getBounds2D(), v0 < getBase()});
 
             // add an item entity, if this information is being collected
             EntityCollection entities = state.getEntityCollection();
@@ -719,11 +715,10 @@ public class StackedBarRenderer3D extends BarRenderer3D
 
         }
 
-        for (int i = 0; i < itemLabelList.size(); i++) {
-            Object[] record = (Object[]) itemLabelList.get(i);
-            int series = ((Integer) record[0]).intValue();
+        for (Object[] record : itemLabelList) {
+            int series = (Integer) record[0];
             Rectangle2D bar = (Rectangle2D) record[1];
-            boolean neg = ((Boolean) record[2]).booleanValue();
+            boolean neg = (Boolean) record[2];
             CategoryItemLabelGenerator generator
                     = getItemLabelGenerator(series, column);
             if (generator != null && isItemLabelVisible(series, column)) {

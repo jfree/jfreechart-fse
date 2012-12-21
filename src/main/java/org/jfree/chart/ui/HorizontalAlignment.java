@@ -42,29 +42,20 @@
 
 package org.jfree.chart.ui;
 
-import java.io.ObjectStreamException;
-import java.io.Serializable;
-
 /**
  * An enumeration of the horizontal alignment types (<code>LEFT</code>, 
  * <code>RIGHT</code> and <code>CENTER</code>).
  */
-public final class HorizontalAlignment implements Serializable {
+public enum HorizontalAlignment {
 
-    /** For serialization. */
-    private static final long serialVersionUID = -8249740987565309567L;
-    
     /** Left alignment. */
-    public static final HorizontalAlignment LEFT 
-        = new HorizontalAlignment("HorizontalAlignment.LEFT");
+    LEFT("HorizontalAlignment.LEFT"),
 
     /** Right alignment. */
-    public static final HorizontalAlignment RIGHT 
-        = new HorizontalAlignment("HorizontalAlignment.RIGHT");
+    RIGHT("HorizontalAlignment.RIGHT"),
 
     /** Center alignment. */
-    public static final HorizontalAlignment CENTER 
-        = new HorizontalAlignment("HorizontalAlignment.CENTER");
+    CENTER("HorizontalAlignment.CENTER");
 
     /** The name. */
     private String name;
@@ -88,58 +79,4 @@ public final class HorizontalAlignment implements Serializable {
         return this.name;
     }
 
-    /**
-     * Returns <code>true</code> if this object is equal to the specified 
-     * object, and <code>false</code> otherwise.
-     *
-     * @param obj  the object (<code>null</code> permitted).
-     *
-     * @return A boolean.
-     */
-    @Override
-	public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof HorizontalAlignment)) {
-            return false;
-        }
-        final HorizontalAlignment that = (HorizontalAlignment) obj;
-        if (!this.name.equals(that.name)) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Returns a hash code value for the object.
-     *
-     * @return The hashcode
-     */
-    @Override
-	public int hashCode() {
-        return this.name.hashCode();
-    }
-
-    /**
-     * Ensures that serialization returns the unique instances.
-     * 
-     * @return The object.
-     * 
-     * @throws ObjectStreamException if there is a problem.
-     */
-    private Object readResolve() throws ObjectStreamException {
-        HorizontalAlignment result = null;
-        if (this.equals(HorizontalAlignment.LEFT)) {
-            result = HorizontalAlignment.LEFT;
-        }
-        else if (this.equals(HorizontalAlignment.RIGHT)) {
-            result = HorizontalAlignment.RIGHT;
-        }
-        else if (this.equals(HorizontalAlignment.CENTER)) {
-            result = HorizontalAlignment.CENTER;
-        }
-        return result;
-    }
-    
 }

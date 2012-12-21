@@ -50,7 +50,7 @@ package org.jfree.chart.date;
  *
  * @author David Gilbert
  */
-public interface MonthConstants {
+public final class MonthConstants {
 
     /** Constant for January. */
     public static final int JANUARY = 1;

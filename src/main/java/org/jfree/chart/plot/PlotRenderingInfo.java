@@ -79,7 +79,7 @@ public class PlotRenderingInfo implements Cloneable, Serializable {
     /**
      * Storage for the plot rendering info objects belonging to the subplots.
      */
-    private List subplotInfo;
+    private List<PlotRenderingInfo> subplotInfo;
 
     /**
      * Creates a new instance.
@@ -89,7 +89,7 @@ public class PlotRenderingInfo implements Cloneable, Serializable {
     public PlotRenderingInfo(ChartRenderingInfo owner) {
         this.owner = owner;
         this.dataArea = new Rectangle2D.Double();
-        this.subplotInfo = new java.util.ArrayList();
+        this.subplotInfo = new java.util.ArrayList<PlotRenderingInfo>();
     }
 
     /**
@@ -177,7 +177,7 @@ public class PlotRenderingInfo implements Cloneable, Serializable {
      * @see #addSubplotInfo(PlotRenderingInfo)
      */
     public PlotRenderingInfo getSubplotInfo(int index) {
-        return (PlotRenderingInfo) this.subplotInfo.get(index);
+        return this.subplotInfo.get(index);
     }
 
     /**
@@ -252,11 +252,11 @@ public class PlotRenderingInfo implements Cloneable, Serializable {
         if (this.dataArea != null) {
             clone.dataArea = (Rectangle2D) this.dataArea.clone();
         }
-        clone.subplotInfo = new java.util.ArrayList(this.subplotInfo.size());
+        clone.subplotInfo = new java.util.ArrayList<PlotRenderingInfo>(this.subplotInfo.size());
         for (int i = 0; i < this.subplotInfo.size(); i++) {
             PlotRenderingInfo info
-                    = (PlotRenderingInfo) this.subplotInfo.get(i);
-            clone.subplotInfo.add(info.clone());
+                    = this.subplotInfo.get(i);
+            clone.subplotInfo.add((PlotRenderingInfo)info.clone());
         }
         return clone;
     }

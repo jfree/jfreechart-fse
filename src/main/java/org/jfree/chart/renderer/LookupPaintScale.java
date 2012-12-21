@@ -69,7 +69,7 @@ public class LookupPaintScale
     /**
      * Stores the paint for a value.
      */
-    static class PaintItem implements Comparable, Serializable {
+    static class PaintItem implements Comparable<PaintItem>, Serializable {
 
         /** For serialization. */
         static final long serialVersionUID = 698920578512361570L;
@@ -94,13 +94,12 @@ public class LookupPaintScale
         /**
          * Compares this item to an arbitrary object.
          *
-         * @param obj  the object.
+         * @param that  the object.
          *
          * @return An int defining the relative order of the objects.
          */
         @Override
-        public int compareTo(Object obj) {
-            PaintItem that = (PaintItem) obj;
+        public int compareTo(PaintItem that) {
             double d1 = this.value;
             double d2 = that.value;
             if (d1 > d2) {
@@ -178,7 +177,7 @@ public class LookupPaintScale
     private transient Paint defaultPaint;
 
     /** The lookup table. */
-    private List lookupTable;
+    private List<PaintItem> lookupTable;
 
     /**
      * Creates a new paint scale.
@@ -207,7 +206,7 @@ public class LookupPaintScale
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
         this.defaultPaint = defaultPaint;
-        this.lookupTable = new java.util.ArrayList();
+        this.lookupTable = new java.util.ArrayList<PaintItem>();
     }
 
     /**
@@ -290,7 +289,7 @@ public class LookupPaintScale
         }
 
         // handle special case where value is less that item zero
-        PaintItem item = (PaintItem) this.lookupTable.get(0);
+        PaintItem item = this.lookupTable.get(0);
         if (value < item.value) {
             return this.defaultPaint;
         }
@@ -300,7 +299,7 @@ public class LookupPaintScale
         int high = this.lookupTable.size() - 1;
         while (high - low > 1) {
             int current = (low + high) / 2;
-            item = (PaintItem) this.lookupTable.get(current);
+            item = this.lookupTable.get(current);
             if (value >= item.value) {
                 low = current;
             }
@@ -309,9 +308,9 @@ public class LookupPaintScale
             }
         }
         if (high > low) {
-            item = (PaintItem) this.lookupTable.get(high);
+            item = this.lookupTable.get(high);
             if (value < item.value) {
-                item = (PaintItem) this.lookupTable.get(low);
+                item = this.lookupTable.get(low);
             }
         }
         return (item != null ? item.paint : this.defaultPaint);
@@ -360,7 +359,7 @@ public class LookupPaintScale
     @Override
     public Object clone() throws CloneNotSupportedException {
         LookupPaintScale clone = (LookupPaintScale) super.clone();
-        clone.lookupTable = new java.util.ArrayList(this.lookupTable);
+        clone.lookupTable = new java.util.ArrayList<PaintItem>(this.lookupTable);
         return clone;
     }
 

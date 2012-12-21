@@ -42,24 +42,16 @@
 
 package org.jfree.chart.plot;
 
-import java.io.ObjectStreamException;
-import java.io.Serializable;
-
 /**
  * Used to indicate the orientation (horizontal or vertical) of a 2D plot.
  */
-public final class PlotOrientation implements Serializable {
+public enum PlotOrientation {
 
-    /** For serialization. */
-    private static final long serialVersionUID = -2508771828190337782L;
-
-    /** For a plot where the range axis is horizontal. */
-    public static final PlotOrientation HORIZONTAL
-            = new PlotOrientation("PlotOrientation.HORIZONTAL");
+   /** For a plot where the range axis is horizontal. */
+    HORIZONTAL("PlotOrientation.HORIZONTAL"),
 
     /** For a plot where the range axis is vertical. */
-    public static final PlotOrientation VERTICAL
-            = new PlotOrientation("PlotOrientation.VERTICAL");
+    VERTICAL("PlotOrientation.VERTICAL");
 
     /** The name. */
     private String name;
@@ -81,57 +73,6 @@ public final class PlotOrientation implements Serializable {
     @Override
 	public String toString() {
         return this.name;
-    }
-
-    /**
-     * Returns <code>true</code> if this object is equal to the specified
-     * object, and <code>false</code> otherwise.
-     *
-     * @param obj  the object (<code>null</code> permitted).
-     *
-     * @return A boolean.
-     */
-    @Override
-	public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof PlotOrientation)) {
-            return false;
-        }
-        PlotOrientation orientation = (PlotOrientation) obj;
-        if (!this.name.equals(orientation.toString())) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Returns a hash code for this instance.
-     *
-     * @return A hash code.
-     */
-    @Override
-	public int hashCode() {
-        return this.name.hashCode();
-    }
-
-    /**
-     * Ensures that serialization returns the unique instances.
-     *
-     * @return The object.
-     *
-     * @throws ObjectStreamException if there is a problem.
-     */
-    private Object readResolve() throws ObjectStreamException {
-        Object result = null;
-        if (this.equals(PlotOrientation.HORIZONTAL)) {
-            result = PlotOrientation.HORIZONTAL;
-        }
-        else if (this.equals(PlotOrientation.VERTICAL)) {
-            result = PlotOrientation.VERTICAL;
-        }
-        return result;
     }
 
 }

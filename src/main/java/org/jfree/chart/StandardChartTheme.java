@@ -53,7 +53,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.annotations.XYAnnotation;
@@ -1132,11 +1131,11 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         DrawingSupplier result = null;
         if (this.drawingSupplier instanceof PublicCloneable) {
             PublicCloneable pc = (PublicCloneable) this.drawingSupplier;
-              try {
+            try {
                 result = (DrawingSupplier) pc.clone();
             }
             catch (CloneNotSupportedException e) {
-                e.printStackTrace();
+                throw new RuntimeException("Could not clone drawing supplier", e);
             }
         }
         return result;
@@ -1219,10 +1218,8 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         else if (title instanceof CompositeTitle) {
             CompositeTitle ct = (CompositeTitle) title;
             BlockContainer bc = ct.getContainer();
-            List blocks = bc.getBlocks();
-            Iterator iterator = blocks.iterator();
-            while (iterator.hasNext()) {
-                Block b = (Block) iterator.next();
+            List<Block> blocks = bc.getBlocks();
+            for (Block b : blocks) {
                 if (b instanceof Title) {
                     applyToTitle((Title) b);
                 }
@@ -1236,9 +1233,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @param bc  a block container (<code>null</code> not permitted).
      */
     protected void applyToBlockContainer(BlockContainer bc) {
-        Iterator iterator = bc.getBlocks().iterator();
-        while (iterator.hasNext()) {
-            Block b = (Block) iterator.next();
+        for (Block b : bc.getBlocks()) {
             applyToBlock(b);
         }
     }
@@ -1385,9 +1380,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
 
         if (plot instanceof CombinedDomainCategoryPlot) {
             CombinedDomainCategoryPlot cp = (CombinedDomainCategoryPlot) plot;
-            Iterator iterator = cp.getSubplots().iterator();
-            while (iterator.hasNext()) {
-                CategoryPlot subplot = (CategoryPlot) iterator.next();
+            for (CategoryPlot subplot : cp.getSubplots()) {
                 if (subplot != null) {
                     applyToPlot(subplot);
                 }
@@ -1395,9 +1388,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         }
         if (plot instanceof CombinedRangeCategoryPlot) {
             CombinedRangeCategoryPlot cp = (CombinedRangeCategoryPlot) plot;
-            Iterator iterator = cp.getSubplots().iterator();
-            while (iterator.hasNext()) {
-                CategoryPlot subplot = (CategoryPlot) iterator.next();
+            for (CategoryPlot subplot : cp.getSubplots()) {
                 if (subplot != null) {
                     applyToPlot(subplot);
                 }
@@ -1448,17 +1439,13 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         }
 
         // process all annotations
-        Iterator iter = plot.getAnnotations().iterator();
-        while (iter.hasNext()) {
-            XYAnnotation a = (XYAnnotation) iter.next();
+        for (XYAnnotation a : plot.getAnnotations()) {
             applyToXYAnnotation(a);
         }
 
         if (plot instanceof CombinedDomainXYPlot) {
             CombinedDomainXYPlot cp = (CombinedDomainXYPlot) plot;
-            Iterator iterator = cp.getSubplots().iterator();
-            while (iterator.hasNext()) {
-                XYPlot subplot = (XYPlot) iterator.next();
+            for (XYPlot subplot : cp.getSubplots()) {
                 if (subplot != null) {
                     applyToPlot(subplot);
                 }
@@ -1466,9 +1453,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         }
         if (plot instanceof CombinedRangeXYPlot) {
             CombinedRangeXYPlot cp = (CombinedRangeXYPlot) plot;
-            Iterator iterator = cp.getSubplots().iterator();
-            while (iterator.hasNext()) {
-                XYPlot subplot = (XYPlot) iterator.next();
+            for (XYPlot subplot : cp.getSubplots()) {
                 if (subplot != null) {
                     applyToPlot(subplot);
                 }

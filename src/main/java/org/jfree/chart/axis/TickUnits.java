@@ -71,13 +71,13 @@ public class TickUnits implements TickUnitSource, Cloneable, Serializable {
     private static final long serialVersionUID = 1134174035901467545L;
 
     /** Storage for the tick units. */
-    private List tickUnits;
+    private List<TickUnit> tickUnits;
 
     /**
      * Constructs a new collection of tick units.
      */
     public TickUnits() {
-        this.tickUnits = new ArrayList();
+        this.tickUnits = new ArrayList<TickUnit>();
     }
 
     /**
@@ -115,7 +115,7 @@ public class TickUnits implements TickUnitSource, Cloneable, Serializable {
      * @return The tickunit.
      */
     public TickUnit get(int pos) {
-        return (TickUnit) this.tickUnits.get(pos);
+        return this.tickUnits.get(pos);
     }
 
     /**
@@ -136,7 +136,7 @@ public class TickUnits implements TickUnitSource, Cloneable, Serializable {
             index = -index;
         }
 
-        return (TickUnit) this.tickUnits.get(Math.min(index,
+        return this.tickUnits.get(Math.min(index,
                 this.tickUnits.size() - 1));
 
     }
@@ -154,11 +154,11 @@ public class TickUnits implements TickUnitSource, Cloneable, Serializable {
 
         int index = Collections.binarySearch(this.tickUnits, unit);
         if (index >= 0) {
-            return (TickUnit) this.tickUnits.get(index);
+            return this.tickUnits.get(index);
         }
         else {
             index = -(index + 1);
-            return (TickUnit) this.tickUnits.get(Math.min(index,
+            return this.tickUnits.get(Math.min(index,
                     this.tickUnits.size() - 1));
         }
 
@@ -189,7 +189,7 @@ public class TickUnits implements TickUnitSource, Cloneable, Serializable {
     @Override
 	public Object clone() throws CloneNotSupportedException {
         TickUnits clone = (TickUnits) super.clone();
-        clone.tickUnits = new java.util.ArrayList(this.tickUnits);
+        clone.tickUnits = new java.util.ArrayList<TickUnit>(this.tickUnits);
         return clone;
     }
 

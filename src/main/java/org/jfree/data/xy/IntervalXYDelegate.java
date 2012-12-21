@@ -262,8 +262,8 @@ public class IntervalXYDelegate implements DatasetChangeListener,
         Number startX = null;
         Number x = this.dataset.getX(series, item);
         if (x != null) {
-            startX = new Double(x.doubleValue()
-                     - (getIntervalPositionFactor() * getIntervalWidth()));
+            startX = x.doubleValue()
+                    - (getIntervalPositionFactor() * getIntervalWidth());
         }
         return startX;
     }
@@ -297,8 +297,8 @@ public class IntervalXYDelegate implements DatasetChangeListener,
         Number endX = null;
         Number x = this.dataset.getX(series, item);
         if (x != null) {
-            endX = new Double(x.doubleValue()
-                + ((1.0 - getIntervalPositionFactor()) * getIntervalWidth()));
+            endX = x.doubleValue()
+                    + ((1.0 - getIntervalPositionFactor()) * getIntervalWidth());
         }
         return endX;
     }
