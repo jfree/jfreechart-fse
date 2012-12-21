@@ -1058,7 +1058,7 @@ public class DatasetUtilitiesTest  {
             fail("IllegalArgumentException should have been thrown");
         }
         catch (IllegalArgumentException e) {
-            assertEquals("Null 'dataset' argument.", e.getMessage());
+            assertEquals("Null 'dataset' argument", e.getMessage());
         }
 
         // null list throws IllegalArgumentException
@@ -1069,7 +1069,7 @@ public class DatasetUtilitiesTest  {
             fail("IllegalArgumentException should have been thrown on null key");
         }
         catch (IllegalArgumentException e) {
-            assertEquals("Null 'visibleSeriesKeys' argument.", e.getMessage());
+            assertEquals("Null 'visibleSeriesKeys' argument", e.getMessage());
         }
         
         // null range throws IllegalArgumentException
