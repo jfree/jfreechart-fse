@@ -56,17 +56,12 @@
 
 package org.jfree.data.general;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
-import java.beans.VetoableChangeSupport;
-import java.io.Serializable;
-
-import javax.swing.event.EventListenerList;
-
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.ParamChecks;
+
+import javax.swing.event.EventListenerList;
+import java.beans.*;
+import java.io.Serializable;
 
 /**
  * Base class representing a data series.  Subclasses are left to implement the
@@ -78,13 +73,13 @@ import org.jfree.chart.util.ParamChecks;
  * You can also register a {@link SeriesChangeListener} to receive notification
  * of changes to the series data.
  */
-public abstract class Series implements Cloneable, Serializable {
+public abstract class Series<Key extends Comparable> implements Cloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -6906561437538683581L;
 
     /** The key for the series. */
-    private Comparable key;
+    private Key key;
 
     /** A description of the series. */
     private String description;
@@ -106,7 +101,7 @@ public abstract class Series implements Cloneable, Serializable {
      *
      * @param key  the series key (<code>null</code> not permitted).
      */
-    protected Series(Comparable key) {
+    protected Series(Key key) {
         this(key, null);
     }
 
@@ -116,7 +111,7 @@ public abstract class Series implements Cloneable, Serializable {
      * @param key  the series key (<code>null</code> NOT permitted).
      * @param description  the series description (<code>null</code> permitted).
      */
-    protected Series(Comparable key, String description) {
+    protected Series(Key key, String description) {
         ParamChecks.nullNotPermitted(key, "key");       
         this.key = key;
         this.description = description;
@@ -147,7 +142,7 @@ public abstract class Series implements Cloneable, Serializable {
      *
      * @see #getKey()
      */
-    public void setKey(Comparable key) {
+    public void setKey(Key key) {
         ParamChecks.nullNotPermitted(key, "key");
         Comparable old = this.key;
         try {
