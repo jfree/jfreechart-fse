@@ -53,7 +53,8 @@ import org.jfree.data.KeyedValues;
  * name suggests, you can use this dataset to supply data for pie charts (refer
  * to the {@link org.jfree.chart.plot.PiePlot} class).
  */
-public interface PieDataset extends KeyedValues, Dataset {
+public interface PieDataset<Key extends Comparable>
+        extends KeyedValues<Key>, Dataset {
 
     // no new methods added.
 

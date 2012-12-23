@@ -298,7 +298,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
     public static final double DEFAULT_MINIMUM_ARC_ANGLE_TO_DRAW = 0.00001;
 
     /** The dataset for the pie chart. */
-    private PieDataset dataset;
+    private PieDataset<Comparable> dataset;
 
     /** The pie index (used by the {@link MultiplePiePlot} class). */
     private int pieIndex;

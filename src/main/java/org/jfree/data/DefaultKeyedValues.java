@@ -60,45 +60,44 @@
 
 package org.jfree.data;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SortOrder;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * An ordered list of (key, value) items.  This class provides a default
  * implementation of the {@link KeyedValues} interface.
  */
-public class DefaultKeyedValues implements KeyedValues, Cloneable,
-        PublicCloneable, Serializable {
+public class DefaultKeyedValues<Key extends Comparable>
+        implements KeyedValues<Key>, Cloneable, PublicCloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 8468154364608194797L;
 
     /** Storage for the keys. */
-    private ArrayList keys;
+    private ArrayList<Key> keys;
 
     /** Storage for the values. */
-    private ArrayList values;
+    private ArrayList<Number> values;
 
     /**
      * Contains (key, Integer) mappings, where the Integer is the index for
      * the key in the list.
      */
-    private HashMap indexMap;
+    private HashMap<Key, Integer> indexMap;
 
-  /**
+    /**
      * Creates a new collection (initially empty).
      */
     public DefaultKeyedValues() {
-        this.keys = new ArrayList();
-        this.values = new ArrayList();
-        this.indexMap = new HashMap();
+        this.keys = new ArrayList<Key>();
+        this.values = new ArrayList<Number>();
+        this.indexMap = new HashMap<Key, Integer>();
     }
 
     /**
@@ -107,7 +106,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @return The item count.
      */
     @Override
-	public int getItemCount() {
+    public int getItemCount() {
         return this.indexMap.size();
     }
 
@@ -121,8 +120,8 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @throws IndexOutOfBoundsException if <code>item</code> is out of bounds.
      */
     @Override
-	public Number getValue(int item) {
-        return (Number) this.values.get(item);
+    public Number getValue(int item) {
+        return this.values.get(item);
     }
 
     /**
@@ -135,8 +134,8 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @throws IndexOutOfBoundsException if <code>item</code> is out of bounds.
      */
     @Override
-	public Comparable getKey(int index) {
-        return (Comparable) this.keys.get(index);
+    public Key getKey(int index) {
+        return this.keys.get(index);
     }
 
     /**
@@ -149,12 +148,13 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @throws IllegalArgumentException if <code>key</code> is
      *     <code>null</code>.
      */
+    @SuppressWarnings("UnnecessaryUnboxing")
     @Override
-	public int getIndex(Comparable key) {
+    public int getIndex(Key key) {
         if (key == null) {
             throw new IllegalArgumentException("Null 'key' argument.");
         }
-        final Integer i = (Integer) this.indexMap.get(key);
+        final Integer i = this.indexMap.get(key);
         if (i == null) {
             return -1;  // key not found
         }
@@ -167,8 +167,8 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @return The keys (never <code>null</code>).
      */
     @Override
-	public List getKeys() {
-        return (List) this.keys.clone();
+    public List<Key> getKeys() {
+        return new ArrayList<Key>(keys);
     }
 
     /**
@@ -183,7 +183,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @see #getValue(int)
      */
     @Override
-	public Number getValue(Comparable key) {
+    public Number getValue(Key key) {
         int index = getIndex(key);
         if (index < 0) {
             throw new UnknownKeyException("Key not found: " + key);
@@ -199,7 +199,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      *
      * @see #addValue(Comparable, Number)
      */
-    public void addValue(Comparable key, double value) {
+    public void addValue(Key key, double value) {
         addValue(key, new Double(value));
     }
 
@@ -211,7 +211,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @param key  the key (<code>null</code> not permitted).
      * @param value  the value (<code>null</code> permitted).
      */
-    public void addValue(Comparable key, Number value) {
+    public void addValue(Key key, Number value) {
         setValue(key, value);
     }
 
@@ -221,7 +221,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @param key  the key (<code>null</code> not permitted).
      * @param value  the value.
      */
-    public void setValue(Comparable key, double value) {
+    public void setValue(Key key, double value) {
         setValue(key, new Double(value));
     }
 
@@ -231,7 +231,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @param key  the key (<code>null</code> not permitted).
      * @param value  the value (<code>null</code> permitted).
      */
-    public void setValue(Comparable key, Number value) {
+    public void setValue(Key key, Number value) {
         if (key == null) {
             throw new IllegalArgumentException("Null 'key' argument.");
         }
@@ -239,11 +239,10 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
         if (keyIndex >= 0) {
             this.keys.set(keyIndex, key);
             this.values.set(keyIndex, value);
-        }
-        else {
+        } else {
             this.keys.add(key);
             this.values.add(value);
-            this.indexMap.put(key, new Integer(this.keys.size() - 1));
+            this.indexMap.put(key, this.keys.size() - 1);
         }
     }
 
@@ -258,7 +257,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      *
      * @since 1.0.6
      */
-    public void insertValue(int position, Comparable key, double value) {
+    public void insertValue(int position, Key key, double value) {
         insertValue(position, key, new Double(value));
     }
 
@@ -273,7 +272,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      *
      * @since 1.0.6
      */
-    public void insertValue(int position, Comparable key, Number value) {
+    public void insertValue(int position, Key key, Number value) {
         if (position < 0 || position > getItemCount()) {
             throw new IllegalArgumentException("'position' out of bounds.");
         }
@@ -284,8 +283,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
         if (pos == position) {
             this.keys.set(pos, key);
             this.values.set(pos, value);
-        }
-        else {
+        } else {
             if (pos >= 0) {
                 this.keys.remove(pos);
                 this.values.remove(pos);
@@ -301,11 +299,11 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * Rebuilds the key to indexed-position mapping after an positioned insert
      * or a remove operation.
      */
-    private void rebuildIndex () {
+    private void rebuildIndex() {
         this.indexMap.clear();
         for (int i = 0; i < this.keys.size(); i++) {
-            final Object key = this.keys.get(i);
-            this.indexMap.put(key, new Integer(i));
+            final Key key = this.keys.get(i);
+            this.indexMap.put(key, i);
         }
     }
 
@@ -333,7 +331,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      *     <code>null</code>.
      * @throws UnknownKeyException if <code>key</code> is not recognised.
      */
-    public void removeValue(Comparable key) {
+    public void removeValue(Key key) {
         int index = getIndex(key);
         if (index < 0) {
             throw new UnknownKeyException("The key (" + key
@@ -360,20 +358,19 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      */
     public void sortByKeys(SortOrder order) {
         final int size = this.keys.size();
-        final DefaultKeyedValue[] data = new DefaultKeyedValue[size];
+
+        final List<DefaultKeyedValue<Key>> data = new ArrayList<DefaultKeyedValue<Key>>(size);
 
         for (int i = 0; i < size; i++) {
-            data[i] = new DefaultKeyedValue((Comparable) this.keys.get(i),
-                    (Number) this.values.get(i));
+            data.add(new DefaultKeyedValue<Key>(this.keys.get(i), this.values.get(i)));
         }
 
-        Comparator comparator = new KeyedValueComparator(
-                KeyedValueComparatorType.BY_KEY, order);
-        Arrays.sort(data, comparator);
+        KeyedValueComparator<Key> comparator =
+                new KeyedValueComparator<Key>(KeyedValueComparatorType.BY_KEY, order);
+        Collections.sort(data, comparator);
         clear();
 
-        for (int i = 0; i < data.length; i++) {
-            final DefaultKeyedValue value = data[i];
+        for (final DefaultKeyedValue<Key> value : data) {
             addValue(value.getKey(), value.getValue());
         }
     }
@@ -387,19 +384,17 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      */
     public void sortByValues(SortOrder order) {
         final int size = this.keys.size();
-        final DefaultKeyedValue[] data = new DefaultKeyedValue[size];
+        final List<DefaultKeyedValue<Key>> data = new ArrayList<DefaultKeyedValue<Key>>(size);
         for (int i = 0; i < size; i++) {
-            data[i] = new DefaultKeyedValue((Comparable) this.keys.get(i),
-                    (Number) this.values.get(i));
+            data.add(new DefaultKeyedValue<Key>(this.keys.get(i), this.values.get(i)));
         }
 
-        Comparator comparator = new KeyedValueComparator(
+        KeyedValueComparator<Key> comparator = new KeyedValueComparator<Key>(
                 KeyedValueComparatorType.BY_VALUE, order);
-        Arrays.sort(data, comparator);
+        Collections.sort(data, comparator);
 
         clear();
-        for (int i = 0; i < data.length; i++) {
-            final DefaultKeyedValue value = data[i];
+        for (final DefaultKeyedValue<Key> value : data) {
             addValue(value.getKey(), value.getValue());
         }
     }
@@ -412,7 +407,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -439,8 +434,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
                 if (v2 != null) {
                     return false;
                 }
-            }
-            else {
+            } else {
                 if (!v1.equals(v2)) {
                     return false;
                 }
@@ -455,7 +449,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return (this.keys != null ? this.keys.hashCode() : 0);
     }
 
@@ -468,7 +462,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      *         exception, but subclasses might.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         DefaultKeyedValues clone = (DefaultKeyedValues) super.clone();
         clone.keys = (ArrayList) this.keys.clone();
         clone.values = (ArrayList) this.values.clone();

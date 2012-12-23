@@ -49,22 +49,22 @@
 
 package org.jfree.data;
 
-import java.io.Serializable;
-
 import org.jfree.chart.util.PublicCloneable;
+
+import java.io.Serializable;
 
 /**
  * A (key, value) pair.  This class provides a default implementation
  * of the {@link KeyedValue} interface.
  */
-public class DefaultKeyedValue implements KeyedValue, Cloneable,
+public class DefaultKeyedValue<Key extends Comparable> implements KeyedValue<Key>, Cloneable,
         PublicCloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -7388924517460437712L;
 
     /** The key. */
-    private Comparable key;
+    private Key key;
 
     /** The value. */
     private Number value;
@@ -76,7 +76,7 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      *         permitted).
      * @param value  the value (<code>null</code> permitted).
      */
-    public DefaultKeyedValue(Comparable key, Number value) {
+    public DefaultKeyedValue(Key key, Number value) {
         if (key == null) {
             throw new IllegalArgumentException("Null 'key' argument.");
         }
@@ -90,7 +90,7 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      * @return The key (never <code>null</code>).
      */
     @Override
-	public Comparable getKey() {
+	public Key getKey() {
         return this.key;
     }
 
@@ -165,8 +165,7 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      */
     @Override
 	public Object clone() throws CloneNotSupportedException {
-        DefaultKeyedValue clone = (DefaultKeyedValue) super.clone();
-        return clone;
+        return super.clone();
     }
 
     /**
