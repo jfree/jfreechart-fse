@@ -43,24 +43,25 @@
 
 package org.jfree.data;
 
-import java.io.Serializable;
-
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
+
+import java.io.Serializable;
 
 /**
  * A (key, object) pair.
  */
-public class KeyedObject implements Cloneable, PublicCloneable, Serializable {
+public class KeyedObject<Key extends Comparable, Value>
+        implements Cloneable, PublicCloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 2677930479256885863L;
 
     /** The key. */
-    private Comparable key;
+    private Key key;
 
     /** The object. */
-    private Object object;
+    private Value object;
 
     /**
      * Creates a new (key, object) pair.
@@ -68,7 +69,7 @@ public class KeyedObject implements Cloneable, PublicCloneable, Serializable {
      * @param key  the key.
      * @param object  the object (<code>null</code> permitted).
      */
-    public KeyedObject(Comparable key, Object object) {
+    public KeyedObject(Key key, Value object) {
         this.key = key;
         this.object = object;
     }
@@ -78,7 +79,7 @@ public class KeyedObject implements Cloneable, PublicCloneable, Serializable {
      *
      * @return The key.
      */
-    public Comparable getKey() {
+    public Key getKey() {
         return this.key;
     }
 
@@ -87,7 +88,7 @@ public class KeyedObject implements Cloneable, PublicCloneable, Serializable {
      *
      * @return The object (possibly <code>null</code>).
      */
-    public Object getObject() {
+    public Value getObject() {
         return this.object;
     }
 
@@ -96,7 +97,7 @@ public class KeyedObject implements Cloneable, PublicCloneable, Serializable {
      *
      * @param object  the object (<code>null</code> permitted).
      */
-    public void setObject(Object object) {
+    public void setObject(Value object) {
         this.object = object;
     }
 
@@ -111,7 +112,7 @@ public class KeyedObject implements Cloneable, PublicCloneable, Serializable {
      * @throws CloneNotSupportedException if there is a problem cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         KeyedObject clone = (KeyedObject) super.clone();
         if (this.object instanceof PublicCloneable) {
             PublicCloneable pc = (PublicCloneable) this.object;
@@ -127,8 +128,9 @@ public class KeyedObject implements Cloneable, PublicCloneable, Serializable {
      *
      * @return A boolean.
      */
+    @SuppressWarnings("SimplifiableIfStatement")
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
 
         if (obj == this) {
             return true;
@@ -142,11 +144,8 @@ public class KeyedObject implements Cloneable, PublicCloneable, Serializable {
             return false;
         }
 
-        if (!ObjectUtilities.equal(this.object, that.object)) {
-            return false;
-        }
+        return ObjectUtilities.equal(this.object, that.object);
 
-        return true;
     }
 
 }

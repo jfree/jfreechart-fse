@@ -71,11 +71,12 @@ import java.util.List;
  * A convenience class that provides a default implementation of the
  * {@link StatisticalCategoryDataset} interface.
  */
-public class DefaultStatisticalCategoryDataset extends AbstractDataset
-        implements StatisticalCategoryDataset, RangeInfo, PublicCloneable {
+public class DefaultStatisticalCategoryDataset<RowKey extends Comparable, ColumnKey extends Comparable>
+        extends AbstractDataset
+        implements StatisticalCategoryDataset<RowKey, ColumnKey>, RangeInfo, PublicCloneable {
 
     /** Storage for the data. */
-    private KeyedObjects2D data;
+    private KeyedObjects2D<RowKey, ColumnKey, MeanAndStandardDeviation> data;
 
     /** The minimum range value. */
     private double minimumRangeValue;
@@ -129,7 +130,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * Creates a new dataset.
      */
     public DefaultStatisticalCategoryDataset() {
-        this.data = new KeyedObjects2D();
+        this.data = new KeyedObjects2D<RowKey, ColumnKey, MeanAndStandardDeviation>();
         this.minimumRangeValue = Double.NaN;
         this.minimumRangeValueRow = -1;
         this.minimumRangeValueColumn = -1;
@@ -188,7 +189,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The value (possibly <code>null</code>).
      */
     @Override
-    public Number getValue(Comparable rowKey, Comparable columnKey) {
+    public Number getValue(RowKey rowKey, ColumnKey columnKey) {
         return getMeanValue(rowKey, columnKey);
     }
 
@@ -201,10 +202,9 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The mean value (possibly <code>null</code>).
      */
     @Override
-    public Number getMeanValue(Comparable rowKey, Comparable columnKey) {
+    public Number getMeanValue(RowKey rowKey, ColumnKey columnKey) {
         Number result = null;
-        MeanAndStandardDeviation masd = (MeanAndStandardDeviation)
-                this.data.getObject(rowKey, columnKey);
+        MeanAndStandardDeviation masd = this.data.getObject(rowKey, columnKey);
         if (masd != null) {
             result = masd.getMean();
         }
@@ -259,10 +259,9 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The standard deviation (possibly <code>null</code>).
      */
     @Override
-    public Number getStdDevValue(Comparable rowKey, Comparable columnKey) {
+    public Number getStdDevValue(RowKey rowKey, ColumnKey columnKey) {
         Number result = null;
-        MeanAndStandardDeviation masd = (MeanAndStandardDeviation)
-                this.data.getObject(rowKey, columnKey);
+        MeanAndStandardDeviation masd = this.data.getObject(rowKey, columnKey);
         if (masd != null) {
             result = masd.getStandardDeviation();
         }
@@ -277,7 +276,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The column index.
      */
     @Override
-    public int getColumnIndex(Comparable key) {
+    public int getColumnIndex(ColumnKey key) {
         // defer null argument check
         return this.data.getColumnIndex(key);
     }
@@ -290,7 +289,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The column key.
      */
     @Override
-    public Comparable getColumnKey(int column) {
+    public ColumnKey getColumnKey(int column) {
         return this.data.getColumnKey(column);
     }
 
@@ -300,7 +299,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The keys.
      */
     @Override
-    public List getColumnKeys() {
+    public List<ColumnKey> getColumnKeys() {
         return this.data.getColumnKeys();
     }
 
@@ -312,7 +311,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The row index.
      */
     @Override
-    public int getRowIndex(Comparable key) {
+    public int getRowIndex(RowKey key) {
         // defer null argument check
         return this.data.getRowIndex(key);
     }
@@ -325,7 +324,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The row key.
      */
     @Override
-    public Comparable getRowKey(int row) {
+    public RowKey getRowKey(int row) {
         return this.data.getRowKey(row);
     }
 
@@ -335,7 +334,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The keys.
      */
     @Override
-    public List getRowKeys() {
+    public List<RowKey> getRowKeys() {
         return this.data.getRowKeys();
     }
 
@@ -372,7 +371,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @param columnKey  the column key.
      */
     public void add(double mean, double standardDeviation,
-                    Comparable rowKey, Comparable columnKey) {
+                    RowKey rowKey, ColumnKey columnKey) {
         double deviation = standardDeviation / 2d;
         add(mean, deviation, deviation, rowKey, columnKey);
     }
@@ -386,7 +385,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @param columnKey  the column key.
      */
     public void add(Number mean, Number standardDeviation,
-                    Comparable rowKey, Comparable columnKey) {
+                    RowKey rowKey, ColumnKey columnKey) {
         Number deviation = standardDeviation;
         if (deviation != null) {
             deviation = deviation.doubleValue() / 2d;
@@ -407,8 +406,8 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
             Number mean,
             Number deviationNegative,
             Number deviationPositive,
-            Comparable rowKey,
-            Comparable columnKey) {
+            RowKey rowKey,
+            ColumnKey columnKey) {
         MeanAndStandardDeviation item = new MeanAndStandardDeviation(
                 mean, deviationNegative, deviationPositive);
         this.data.addObject(item, rowKey, columnKey);
@@ -493,7 +492,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      *
      * @since 1.0.7
      */
-    public void remove(Comparable rowKey, Comparable columnKey) {
+    public void remove(RowKey rowKey, ColumnKey columnKey) {
         // defer null argument checks
         int r = getRowIndex(rowKey);
         int c = getColumnIndex(columnKey);
@@ -544,7 +543,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      *
      * @since 1.0.7
      */
-    public void removeRow(Comparable rowKey) {
+    public void removeRow(RowKey rowKey) {
         this.data.removeRow(rowKey);
         updateBounds();
         fireDatasetChanged();
@@ -576,7 +575,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      *
      * @since 1.0.7
      */
-    public void removeColumn(Comparable columnKey) {
+    public void removeColumn(ColumnKey columnKey) {
         this.data.removeColumn(columnKey);
         updateBounds();
         fireDatasetChanged();
