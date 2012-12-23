@@ -44,70 +44,30 @@
 
 package org.jfree.chart;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Paint;
-import java.awt.Stroke;
+import org.jfree.chart.annotations.XYAnnotation;
+import org.jfree.chart.annotations.XYTextAnnotation;
+import org.jfree.chart.axis.*;
+import org.jfree.chart.block.Block;
+import org.jfree.chart.block.BlockContainer;
+import org.jfree.chart.block.LabelBlock;
+import org.jfree.chart.plot.*;
+import org.jfree.chart.renderer.AbstractRenderer;
+import org.jfree.chart.renderer.category.*;
+import org.jfree.chart.renderer.xy.GradientXYBarPainter;
+import org.jfree.chart.renderer.xy.XYBarPainter;
+import org.jfree.chart.renderer.xy.XYBarRenderer;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.title.*;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.util.*;
+
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
-
-import org.jfree.chart.annotations.XYAnnotation;
-import org.jfree.chart.annotations.XYTextAnnotation;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.PeriodAxis;
-import org.jfree.chart.axis.PeriodAxisLabelInfo;
-import org.jfree.chart.axis.SubCategoryAxis;
-import org.jfree.chart.axis.SymbolAxis;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.block.Block;
-import org.jfree.chart.block.BlockContainer;
-import org.jfree.chart.block.LabelBlock;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.CombinedDomainCategoryPlot;
-import org.jfree.chart.plot.CombinedDomainXYPlot;
-import org.jfree.chart.plot.CombinedRangeCategoryPlot;
-import org.jfree.chart.plot.CombinedRangeXYPlot;
-import org.jfree.chart.plot.DefaultDrawingSupplier;
-import org.jfree.chart.plot.DrawingSupplier;
-import org.jfree.chart.plot.FastScatterPlot;
-import org.jfree.chart.plot.MeterPlot;
-import org.jfree.chart.plot.MultiplePiePlot;
-import org.jfree.chart.plot.PieLabelLinkStyle;
-import org.jfree.chart.plot.PiePlot;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PolarPlot;
-import org.jfree.chart.plot.SpiderWebPlot;
-import org.jfree.chart.plot.ThermometerPlot;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.AbstractRenderer;
-import org.jfree.chart.renderer.category.BarPainter;
-import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.chart.renderer.category.BarRenderer3D;
-import org.jfree.chart.renderer.category.CategoryItemRenderer;
-import org.jfree.chart.renderer.category.GradientBarPainter;
-import org.jfree.chart.renderer.category.LineRenderer3D;
-import org.jfree.chart.renderer.category.MinMaxCategoryRenderer;
-import org.jfree.chart.renderer.category.StatisticalBarRenderer;
-import org.jfree.chart.renderer.xy.GradientXYBarPainter;
-import org.jfree.chart.renderer.xy.XYBarPainter;
-import org.jfree.chart.renderer.xy.XYBarRenderer;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.jfree.chart.title.CompositeTitle;
-import org.jfree.chart.title.LegendTitle;
-import org.jfree.chart.title.PaintScaleLegend;
-import org.jfree.chart.title.TextTitle;
-import org.jfree.chart.title.Title;
-import org.jfree.chart.util.DefaultShadowGenerator;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.chart.util.ShadowGenerator;
 
 /**
  * A default implementation of the {@link ChartTheme} interface.  This
@@ -239,7 +199,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
 
     /**
      * The shadow generator (can be null).
-     * 
+     *
      * @since 1.0.14
      */
     private ShadowGenerator shadowGenerator;
@@ -276,16 +236,16 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         theme.shadowPaint = Color.DARK_GRAY;
         theme.itemLabelPaint = Color.WHITE;
         theme.drawingSupplier = new DefaultDrawingSupplier(
-                new Paint[] {Color.decode("0xFFFF00"),
+                new Paint[]{Color.decode("0xFFFF00"),
                         Color.decode("0x0036CC"), Color.decode("0xFF0000"),
                         Color.decode("0xFFFF7F"), Color.decode("0x6681CC"),
                         Color.decode("0xFF7F7F"), Color.decode("0xFFFFBF"),
                         Color.decode("0x99A6CC"), Color.decode("0xFFBFBF"),
                         Color.decode("0xA9A938"), Color.decode("0x2D4587")},
-                new Paint[] {Color.decode("0xFFFF00"),
+                new Paint[]{Color.decode("0xFFFF00"),
                         Color.decode("0x0036CC")},
-                new Stroke[] {new BasicStroke(2.0f)},
-                new Stroke[] {new BasicStroke(0.5f)},
+                new Stroke[]{new BasicStroke(2.0f)},
+                new Stroke[]{new BasicStroke(0.5f)},
                 DefaultDrawingSupplier.DEFAULT_SHAPE_SEQUENCE);
         theme.wallPaint = Color.DARK_GRAY;
         theme.errorIndicatorPaint = Color.LIGHT_GRAY;
@@ -305,7 +265,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
     public static ChartTheme createLegacyTheme() {
         StandardChartTheme theme = new StandardChartTheme("Legacy") {
             @Override
-			public void apply(JFreeChart chart) {
+            public void apply(JFreeChart chart) {
                 // do nothing at all
             }
         };
@@ -1132,10 +1092,9 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         DrawingSupplier result = null;
         if (this.drawingSupplier instanceof PublicCloneable) {
             PublicCloneable pc = (PublicCloneable) this.drawingSupplier;
-              try {
+            try {
                 result = (DrawingSupplier) pc.clone();
-            }
-            catch (CloneNotSupportedException e) {
+            } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
         }
@@ -1162,7 +1121,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @param chart  the chart (<code>null</code> not permitted).
      */
     @Override
-	public void apply(JFreeChart chart) {
+    public void apply(JFreeChart chart) {
         if (chart == null) {
             throw new IllegalArgumentException("Null 'chart' argument.");
         }
@@ -1196,8 +1155,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
             TextTitle tt = (TextTitle) title;
             tt.setFont(this.largeFont);
             tt.setPaint(this.subtitlePaint);
-        }
-        else if (title instanceof LegendTitle) {
+        } else if (title instanceof LegendTitle) {
             LegendTitle lt = (LegendTitle) title;
             if (lt.getBackgroundPaint() != null) {
                 lt.setBackgroundPaint(this.legendBackgroundPaint);
@@ -1207,16 +1165,14 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
             if (lt.getWrapper() != null) {
                 applyToBlockContainer(lt.getWrapper());
             }
-        }
-        else if (title instanceof PaintScaleLegend) {
+        } else if (title instanceof PaintScaleLegend) {
             PaintScaleLegend psl = (PaintScaleLegend) title;
             psl.setBackgroundPaint(this.legendBackgroundPaint);
             ValueAxis axis = psl.getAxis();
             if (axis != null) {
                 applyToValueAxis(axis);
             }
-        }
-        else if (title instanceof CompositeTitle) {
+        } else if (title instanceof CompositeTitle) {
             CompositeTitle ct = (CompositeTitle) title;
             BlockContainer bc = ct.getContainer();
             List blocks = bc.getBlocks();
@@ -1251,8 +1207,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
     protected void applyToBlock(Block b) {
         if (b instanceof Title) {
             applyToTitle((Title) b);
-        }
-        else if (b instanceof LabelBlock) {
+        } else if (b instanceof LabelBlock) {
             LabelBlock lb = (LabelBlock) b;
             lb.setFont(this.regularFont);
             lb.setPaint(this.legendItemPaint);
@@ -1282,29 +1237,21 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         // but I didn't and neither did anyone else).
         if (plot instanceof PiePlot) {
             applyToPiePlot((PiePlot) plot);
-        }
-        else if (plot instanceof MultiplePiePlot) {
+        } else if (plot instanceof MultiplePiePlot) {
             applyToMultiplePiePlot((MultiplePiePlot) plot);
-        }
-        else if (plot instanceof CategoryPlot) {
+        } else if (plot instanceof CategoryPlot) {
             applyToCategoryPlot((CategoryPlot) plot);
-        }
-        else if (plot instanceof XYPlot) {
+        } else if (plot instanceof XYPlot) {
             applyToXYPlot((XYPlot) plot);
-        }
-        else if (plot instanceof FastScatterPlot) {
+        } else if (plot instanceof FastScatterPlot) {
             applyToFastScatterPlot((FastScatterPlot) plot);
-        }
-        else if (plot instanceof MeterPlot) {
+        } else if (plot instanceof MeterPlot) {
             applyToMeterPlot((MeterPlot) plot);
-        }
-        else if (plot instanceof ThermometerPlot) {
+        } else if (plot instanceof ThermometerPlot) {
             applyToThermometerPlot((ThermometerPlot) plot);
-        }
-        else if (plot instanceof SpiderWebPlot) {
+        } else if (plot instanceof SpiderWebPlot) {
             applyToSpiderWebPlot((SpiderWebPlot) plot);
-        }
-        else if (plot instanceof PolarPlot) {
+        } else if (plot instanceof PolarPlot) {
             applyToPolarPlot((PolarPlot) plot);
         }
     }
@@ -1519,7 +1466,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
     protected void applyToSpiderWebPlot(SpiderWebPlot plot) {
         plot.setLabelFont(this.regularFont);
         plot.setLabelPaint(this.axisLabelPaint);
-        plot.setAxisLinePaint(this.axisLabelPaint);
+        plot.setAxisLinePaint(0, this.axisLabelPaint);
     }
 
     /**
@@ -1726,7 +1673,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -1847,7 +1794,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @throws CloneNotSupportedException if the theme cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -1892,7 +1839,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.titlePaint = SerialUtilities.readPaint(stream);
         this.subtitlePaint = SerialUtilities.readPaint(stream);

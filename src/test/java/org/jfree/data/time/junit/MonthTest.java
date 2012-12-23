@@ -49,26 +49,16 @@
 
 package org.jfree.data.time.junit;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
 import org.jfree.chart.date.MonthConstants;
 import org.jfree.data.time.Month;
 import org.jfree.data.time.TimePeriodFormatException;
 import org.jfree.data.time.Year;
+
+import java.io.*;
+import java.util.*;
 
 /**
  * Tests for the {@link Month} class.
@@ -214,7 +204,6 @@ public class MonthTest extends TestCase {
      * Tests the string parsing code...
      */
     public void testParseMonth() {
-
         Month month;
 
         // test 1...
@@ -243,6 +232,7 @@ public class MonthTest extends TestCase {
         }
         catch (TimePeriodFormatException e) {
             month = new Month(1, 1900);
+            e.printStackTrace();
         }
         assertEquals(3, month.getMonth());
         assertEquals(1993, month.getYear().getYear());
