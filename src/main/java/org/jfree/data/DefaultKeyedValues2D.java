@@ -85,7 +85,7 @@ public class DefaultKeyedValues2D<RowKey extends Comparable, ColumnKey extends C
     private List<ColumnKey> columnKeys;
 
     /** The row data. */
-    private List<DefaultKeyedValues> rows;
+    private List<DefaultKeyedValues<ColumnKey>> rows;
 
     /** If the row keys should be sorted by their RowKey order. */
     private boolean sortRowKeys;
@@ -105,7 +105,7 @@ public class DefaultKeyedValues2D<RowKey extends Comparable, ColumnKey extends C
     public DefaultKeyedValues2D(boolean sortRowKeys) {
         this.rowKeys = new ArrayList<RowKey>();
         this.columnKeys = new ArrayList<ColumnKey>();
-        this.rows = new ArrayList<DefaultKeyedValues>();
+        this.rows = new ArrayList<DefaultKeyedValues<ColumnKey>>();
         this.sortRowKeys = sortRowKeys;
     }
 
@@ -146,7 +146,7 @@ public class DefaultKeyedValues2D<RowKey extends Comparable, ColumnKey extends C
     @Override
     public Number getValue(int row, int column) {
         Number result = null;
-        DefaultKeyedValues rowData = this.rows.get(row);
+        DefaultKeyedValues<ColumnKey> rowData = this.rows.get(row);
         if (rowData != null) {
             ColumnKey columnKey = this.columnKeys.get(column);
             // the row may not have an entry for this key, in which case the
@@ -286,7 +286,7 @@ public class DefaultKeyedValues2D<RowKey extends Comparable, ColumnKey extends C
         // have already checked that the key is valid for the 2D structure
         int row = getRowIndex(rowKey);
         if (row >= 0) {
-            DefaultKeyedValues rowData = this.rows.get(row);
+            DefaultKeyedValues<ColumnKey> rowData = this.rows.get(row);
             int col = rowData.getIndex(columnKey);
             return (col >= 0 ? rowData.getValue(col) : null);
         } else {
@@ -322,13 +322,13 @@ public class DefaultKeyedValues2D<RowKey extends Comparable, ColumnKey extends C
      */
     public void setValue(Number value, RowKey rowKey, ColumnKey columnKey) {
 
-        DefaultKeyedValues row;
+        DefaultKeyedValues<ColumnKey> row;
         int rowIndex = getRowIndex(rowKey);
 
         if (rowIndex >= 0) {
             row = this.rows.get(rowIndex);
         } else {
-            row = new DefaultKeyedValues();
+            row = new DefaultKeyedValues<ColumnKey>();
             if (this.sortRowKeys) {
                 rowIndex = -rowIndex - 1;
                 this.rowKeys.add(rowIndex, rowKey);
@@ -372,7 +372,7 @@ public class DefaultKeyedValues2D<RowKey extends Comparable, ColumnKey extends C
         allNull = true;
         //int columnIndex = getColumnIndex(columnKey);
 
-        for (DefaultKeyedValues row : this.rows) {
+        for (DefaultKeyedValues<ColumnKey> row : this.rows) {
             int columnIndex = row.getIndex(columnKey);
             if (columnIndex >= 0 && row.getValue(columnIndex) != null) {
                 allNull = false;
@@ -381,7 +381,7 @@ public class DefaultKeyedValues2D<RowKey extends Comparable, ColumnKey extends C
         }
 
         if (allNull) {
-            for (DefaultKeyedValues row : this.rows) {
+            for (DefaultKeyedValues<ColumnKey> row : this.rows) {
                 int columnIndex = row.getIndex(columnKey);
                 if (columnIndex >= 0) {
                     row.removeValue(columnIndex);
@@ -474,7 +474,7 @@ public class DefaultKeyedValues2D<RowKey extends Comparable, ColumnKey extends C
             throw new UnknownKeyException("Unknown key: " + columnKey);
         }
         if (this.rows.size() > 0)
-            for (DefaultKeyedValues rowData : this.rows) {
+            for (DefaultKeyedValues<ColumnKey> rowData : this.rows) {
                 int index = rowData.getIndex(columnKey);
                 if (index >= 0) {
                     rowData.removeValue(columnKey);
