@@ -283,6 +283,7 @@ public class KeyedObjects<Key extends Comparable, Value> implements Cloneable, P
      *
      * @throws CloneNotSupportedException if there is a problem cloning.
      */
+    @SuppressWarnings("unchecked")
     @Override
     public Object clone() throws CloneNotSupportedException {
         KeyedObjects<Key, Value> clone = (KeyedObjects<Key, Value>) super.clone();
