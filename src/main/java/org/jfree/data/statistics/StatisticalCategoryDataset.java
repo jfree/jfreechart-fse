@@ -93,5 +93,25 @@ public interface StatisticalCategoryDataset extends CategoryDataset {
      */
     public Number getStdDevValue(Comparable rowKey, Comparable columnKey);
 
+
+    /**
+     * Gets the positive deviation value.
+     *
+     * @param row    the row.
+     * @param column the column.
+     *
+     * @return the positive deviation value.
+     */
+    public Number getDeviationValuePositive(int row, int column);
+
+    /**
+     * Gets the positive deviation value.
+     *
+     * @param row    the row.
+     * @param column the column.
+     *
+     * @return the negative deviation value.
+     */
+    public Number getDeviationValueNegative(int row, int column);
 }
 
