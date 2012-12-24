@@ -46,15 +46,13 @@ import java.io.Serializable;
  * Used to indicate the type of a {@link KeyedValueComparator} : 'by key' or
  * 'by value'.
  */
-public final class KeyedValueComparatorType implements Serializable {
+public enum KeyedValueComparatorType implements Serializable {
 
     /** An object representing 'by key' sorting. */
-    public static final KeyedValueComparatorType BY_KEY
-        = new KeyedValueComparatorType("KeyedValueComparatorType.BY_KEY");
+    BY_KEY("KeyedValueComparatorType.BY_KEY"),
 
     /** An object representing 'by value' sorting. */
-    public static final KeyedValueComparatorType BY_VALUE
-        = new KeyedValueComparatorType("KeyedValueComparatorType.BY_VALUE");
+    BY_VALUE("KeyedValueComparatorType.BY_VALUE");
 
     /** The name. */
     private String name;
@@ -76,41 +74,6 @@ public final class KeyedValueComparatorType implements Serializable {
     @Override
     public String toString() {
         return this.name;
-    }
-
-    /**
-     * Returns <code>true</code> if this object is equal to the specified
-     * object, and <code>false</code> otherwise.
-     *
-     * @param o  the other object.
-     *
-     * @return A boolean.
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof KeyedValueComparatorType)) {
-            return false;
-        }
-
-        KeyedValueComparatorType type = (KeyedValueComparatorType) o;
-        if (!this.name.equals(type.name)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Returns a hash code.
-     *
-     * @return A hash code.
-     */
-    @Override
-    public int hashCode() {
-        return this.name.hashCode();
     }
 }
 
