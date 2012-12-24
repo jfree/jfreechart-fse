@@ -1,46 +1,31 @@
 package org.jfree.chart.axis.junit;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 import org.jfree.chart.axis.CompassFormat;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for the {@link CompassFormat} class.
  */
-public class CompassFormatTest extends TestCase {
+public class CompassFormatTest {
 
-    /**
-     * Returns the tests as a test suite.
-     *
-     * @return The test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(CompassFormatTest.class);
-    }
 
-    /**
-     * Constructs a new set of tests.
-     *
-     * @param name  the name of the tests.
-     */
-    public CompassFormatTest(String name) {
-        super(name);
-    }
-
+    @Test
     public void testDefaultConstructor() {
         final CompassFormat fmt = new CompassFormat();
-        assert("N".equals(fmt.getDirectionCode(0)));
-        assert("N".equals(fmt.getDirectionCode(360)));
+        assertEquals("N", fmt.getDirectionCode(0));
+        assertEquals("N", fmt.getDirectionCode(360));
     }
 
+    @Test
     public void testCustomFormat() {
         final CompassFormat fmt = new CompassFormat();
         final CompassFormat fmtCustom = new CompassFormat("N", "O", "S", "W");
-        assert("E".equals(fmt.getDirectionCode(90)));
-        assert("O".equals(fmtCustom.getDirectionCode(90)));
-        assert("NNO".equals(fmtCustom.getDirectionCode(22.5)));
+        assertEquals("E", fmt.getDirectionCode(90));
+        assertEquals("O", fmtCustom.getDirectionCode(90));
+        assertEquals("NNO", fmtCustom.getDirectionCode(22.5));
     }
 
 }
