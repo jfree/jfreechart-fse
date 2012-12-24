@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
@@ -249,10 +249,10 @@ public class XYSeriesCollectionTest  {
             fail("Should have thrown IndexOutOfBoundsException on null key");
         }
         catch (IllegalArgumentException e) {
-            assertEquals("Null 'key' argument", e.getMessage());
+            assertEquals("Null 'key' argument.", e.getMessage());
         }
     }
-    
+
     /**
      * Some basic checks for the addSeries() method.
      */
@@ -393,7 +393,7 @@ public class XYSeriesCollectionTest  {
     }
 
     /**
-     * A check that the dataset prevents renaming a series to the name of an 
+     * A check that the dataset prevents renaming a series to the name of an
      * existing series in the dataset.
      */
     @Test
@@ -435,9 +435,9 @@ public class XYSeriesCollectionTest  {
         assertEquals(5.0, r.getLowerBound(), EPSILON);
         assertEquals(6.0, r.getUpperBound(), EPSILON);
     }
-    
+
     /**
-     * Test that a series belonging to a collection can be renamed (in fact, 
+     * Test that a series belonging to a collection can be renamed (in fact,
      * because of a bug this was not possible in JFreeChart 1.0.14).
      */
     @Test
@@ -450,7 +450,7 @@ public class XYSeriesCollectionTest  {
         collection.addSeries(series2);
         series1.setKey("C");
         assertEquals("C", collection.getSeries(0).getKey());
-        
+
         // next, check that setting a duplicate key fails
         try {
             series2.setKey("C");
@@ -458,7 +458,7 @@ public class XYSeriesCollectionTest  {
         catch (IllegalArgumentException e) {
             // expected
         }
-        assertEquals("B", series2.getKey());  // the series name should not 
+        assertEquals("B", series2.getKey());  // the series name should not
         // change because "C" is already the key for the other series in the
         // collection
     }

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------
@@ -53,6 +53,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
@@ -92,9 +93,7 @@ public class PaintMap implements Cloneable, Serializable {
      *     <code>null</code>.
      */
     public Paint getPaint(Comparable key) {
-        if (key == null) {
-            throw new IllegalArgumentException("Null 'key' argument.");
-        }
+        ParamChecks.nullNotPermitted(key, "key");
         return this.store.get(key);
     }
 
@@ -122,9 +121,7 @@ public class PaintMap implements Cloneable, Serializable {
      *     <code>null</code>.
      */
     public void put(Comparable key, Paint paint) {
-        if (key == null) {
-            throw new IllegalArgumentException("Null 'key' argument.");
-        }
+        ParamChecks.nullNotPermitted(key, "key");
         this.store.put(key, paint);
     }
 
@@ -143,7 +140,7 @@ public class PaintMap implements Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -173,7 +170,7 @@ public class PaintMap implements Cloneable, Serializable {
      * @throws CloneNotSupportedException if any key is not cloneable.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         // TODO: I think we need to make sure the keys are actually cloned,
         // whereas the paint instances are always immutable so they're OK
         return super.clone();

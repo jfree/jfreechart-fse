@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------
@@ -51,6 +51,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
@@ -90,9 +91,7 @@ public class StrokeMap implements Cloneable, Serializable {
      *     <code>null</code>.
      */
     public Stroke getStroke(Comparable key) {
-        if (key == null) {
-            throw new IllegalArgumentException("Null 'key' argument.");
-        }
+        ParamChecks.nullNotPermitted(key, "key");
         return this.store.get(key);
     }
 
@@ -117,9 +116,7 @@ public class StrokeMap implements Cloneable, Serializable {
      * @param stroke  the stroke.
      */
     public void put(Comparable key, Stroke stroke) {
-        if (key == null) {
-            throw new IllegalArgumentException("Null 'key' argument.");
-        }
+        ParamChecks.nullNotPermitted(key, "key");
         this.store.put(key, stroke);
     }
 
@@ -138,7 +135,7 @@ public class StrokeMap implements Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -168,7 +165,7 @@ public class StrokeMap implements Cloneable, Serializable {
      * @throws CloneNotSupportedException if any key is not cloneable.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         // TODO: I think we need to make sure the keys are actually cloned,
         // whereas the stroke instances are always immutable so they're OK
         return super.clone();

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------
@@ -48,21 +48,21 @@ package org.jfree.chart.util;
 public class ParamChecks {
 
     /**
-     * Throws an <code>IllegalArgumentException</code> if the supplied 
+     * Throws an <code>IllegalArgumentException</code> if the supplied
      * <code>param</code> is <code>null</code>.
      *
      * @param param  the parameter to check (<code>null</code> permitted).
      * @param name  the name of the parameter (to use in the exception message
      *     if <code>param</code> is <code>null</code>).
      *
-     * @throws IllegalArgumentException  if <code>param</code> is 
+     * @throws IllegalArgumentException  if <code>param</code> is
      *     <code>null</code>.
      *
      * @since 1.0.14
      */
     public static void nullNotPermitted(Object param, String name) {
         if (param == null) {
-            throw new IllegalArgumentException("Null '" + name + "' argument");
+            throw new IllegalArgumentException("Null '" + name + "' argument.");
         }
     }
 }

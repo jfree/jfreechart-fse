@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------
@@ -41,7 +41,7 @@
  * 03-Feb-2005 : Added testFindStackedRangeBounds2() method (DG);
  * 26-Sep-2007 : Added testIsEmptyOrNullXYDataset() method (DG);
  * 28-Mar-2008 : Added and renamed various tests (DG);
- * 08-Oct-2008 : New tests to support patch 2131001 and related 
+ * 08-Oct-2008 : New tests to support patch 2131001 and related
  *               changes (DG);
  * 25-Mar-2009 : Added tests for new iterateToFindRangeBounds() method (DG);
  * 16-May-2009 : Added
@@ -1058,7 +1058,7 @@ public class DatasetUtilitiesTest  {
             fail("IllegalArgumentException should have been thrown");
         }
         catch (IllegalArgumentException e) {
-            assertEquals("Null 'dataset' argument", e.getMessage());
+            assertEquals("Null 'dataset' argument.", e.getMessage());
         }
 
         // null list throws IllegalArgumentException
@@ -1069,9 +1069,9 @@ public class DatasetUtilitiesTest  {
             fail("IllegalArgumentException should have been thrown on null key");
         }
         catch (IllegalArgumentException e) {
-            assertEquals("Null 'visibleSeriesKeys' argument", e.getMessage());
+            assertEquals("Null 'visibleSeriesKeys' argument.", e.getMessage());
         }
-        
+
         // null range throws IllegalArgumentException
         try {
             DatasetUtilities.iterateToFindRangeBounds(new XYSeriesCollection(),
@@ -1079,7 +1079,7 @@ public class DatasetUtilitiesTest  {
             fail("IllegalArgumentException should have been thrown on null key");
         }
         catch (IllegalArgumentException e) {
-            assertEquals("Null 'xRange' argument", e.getMessage());
+            assertEquals("Null 'xRange' argument.", e.getMessage());
         }
     }
 

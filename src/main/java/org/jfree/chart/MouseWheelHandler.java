@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
@@ -110,7 +110,7 @@ class MouseWheelHandler implements MouseWheelListener, Serializable {
      * @param e  the event.
      */
     @Override
-	public void mouseWheelMoved(MouseWheelEvent e) {
+    public void mouseWheelMoved(MouseWheelEvent e) {
         JFreeChart chart = this.chartPanel.getChart();
         if (chart == null) {
             return;
