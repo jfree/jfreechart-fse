@@ -316,13 +316,7 @@ public class KeyedObjects2D
         boolean allNull = true;
         KeyedObjects<ColumnKey, Value> row = this.rows.get(rowIndex);
 
-        for (int item = 0, itemCount = row.getItemCount(); item < itemCount;
-             item++) {
-            if (row.getObject(item) != null) {
-                allNull = false;
-                break;
-            }
-        }
+        allNull = isRowEmpty(row);
 
         if (allNull) {
             this.rowKeys.remove(rowIndex);
@@ -330,15 +324,8 @@ public class KeyedObjects2D
         }
 
         // 2. check whether the column is now empty.
-        allNull = true;
+        allNull = isColumnEmpty(columnKey);
 
-        for (KeyedObjects<ColumnKey, Value> currentRow : this.rows) {
-            int colIndex = currentRow.getIndex(columnKey);
-            if (colIndex >= 0 && currentRow.getObject(colIndex) != null) {
-                allNull = false;
-                break;
-            }
-        }
 
         if (allNull) {
             for (KeyedObjects<ColumnKey, Value> currentRow : this.rows) {
@@ -349,6 +336,26 @@ public class KeyedObjects2D
             }
             this.columnKeys.remove(columnKey);
         }
+    }
+
+    private boolean isColumnEmpty(ColumnKey columnKey) {
+        for (KeyedObjects<ColumnKey, Value> currentRow : this.rows) {
+            int colIndex = currentRow.getIndex(columnKey);
+            if (colIndex >= 0 && currentRow.getObject(colIndex) != null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isRowEmpty(KeyedObjects<ColumnKey, Value> row) {
+        int itemCount = row.getItemCount();
+        for (int item = 0; item < itemCount; item++) {
+            if (row.getObject(item) != null) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

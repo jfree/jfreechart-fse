@@ -369,16 +369,7 @@ public class DefaultKeyedValues2D<RowKey extends Comparable, ColumnKey extends C
         }
 
         // 2. check whether the column is now empty.
-        allNull = true;
-        //int columnIndex = getColumnIndex(columnKey);
-
-        for (DefaultKeyedValues<ColumnKey> row : this.rows) {
-            int columnIndex = row.getIndex(columnKey);
-            if (columnIndex >= 0 && row.getValue(columnIndex) != null) {
-                allNull = false;
-                break;
-            }
-        }
+        allNull = isColumnEmpty(columnKey);
 
         if (allNull) {
             for (DefaultKeyedValues<ColumnKey> row : this.rows) {
@@ -391,17 +382,25 @@ public class DefaultKeyedValues2D<RowKey extends Comparable, ColumnKey extends C
         }
     }
 
+    private boolean isColumnEmpty(ColumnKey columnKey) {
+        for (DefaultKeyedValues<ColumnKey> row : this.rows) {
+            int columnIndex = row.getIndex(columnKey);
+            if (columnIndex >= 0 && row.getValue(columnIndex) != null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private boolean isRowEmpty(int rowIndex) {
-        boolean allNull = true;
         DefaultKeyedValues row = this.rows.get(rowIndex);
         for (int item = 0, itemCount = row.getItemCount(); item < itemCount;
              item++) {
             if (row.getValue(item) != null) {
-                allNull = false;
-                break;
+                return false;
             }
         }
-        return allNull;
+        return true;
     }
 
     /**
@@ -473,13 +472,14 @@ public class DefaultKeyedValues2D<RowKey extends Comparable, ColumnKey extends C
         if (!this.columnKeys.contains(columnKey)) {
             throw new UnknownKeyException("Unknown key: " + columnKey);
         }
-        if (this.rows.size() > 0)
+        if (!this.rows.isEmpty()) {
             for (DefaultKeyedValues<ColumnKey> rowData : this.rows) {
                 int index = rowData.getIndex(columnKey);
                 if (index >= 0) {
                     rowData.removeValue(columnKey);
                 }
             }
+        }
         this.columnKeys.remove(columnKey);
     }
 
