@@ -107,7 +107,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.ui.RectangleInsets;
@@ -400,7 +399,7 @@ public class PiePlot3D extends PiePlot implements Serializable {
             return;  // if depth is negative don't draw anything
         }
 
-        ArrayList arcList = new ArrayList();
+        ArrayList<Arc2D.Double> arcList = new ArrayList<Arc2D.Double>();
         Arc2D.Double arc;
         Paint paint;
         Paint outlinePaint;
@@ -469,7 +468,7 @@ public class PiePlot3D extends PiePlot implements Serializable {
         int categoryCount = arcList.size();
         for (int categoryIndex = 0; categoryIndex < categoryCount;
                  categoryIndex++) {
-            arc = (Arc2D.Double) arcList.get(categoryIndex);
+            arc = arcList.get(categoryIndex);
             if (arc == null) {
                 continue;
             }
@@ -507,9 +506,7 @@ public class PiePlot3D extends PiePlot implements Serializable {
 
         // cycle through once drawing only the sides at the back...
         int cat = 0;
-        Iterator iterator = arcList.iterator();
-        while (iterator.hasNext()) {
-            Arc2D segment = (Arc2D) iterator.next();
+        for (Arc2D.Double segment : arcList) {
             if (segment != null) {
                 Comparable key = getSectionKey(cat);
                 paint = lookupSectionPaint(key);
@@ -523,9 +520,7 @@ public class PiePlot3D extends PiePlot implements Serializable {
 
         // cycle through again drawing only the sides at the front...
         cat = 0;
-        iterator = arcList.iterator();
-        while (iterator.hasNext()) {
-            Arc2D segment = (Arc2D) iterator.next();
+        for (Arc2D.Double segment : arcList) {
             if (segment != null) {
                 Comparable key = getSectionKey(cat);
                 paint = lookupSectionPaint(key);
@@ -543,7 +538,7 @@ public class PiePlot3D extends PiePlot implements Serializable {
         Arc2D upperArc;
         for (int sectionIndex = 0; sectionIndex < categoryCount;
                  sectionIndex++) {
-            arc = (Arc2D.Double) arcList.get(sectionIndex);
+            arc = arcList.get(sectionIndex);
             if (arc == null) {
                 continue;
             }

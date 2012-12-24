@@ -279,7 +279,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The keys.
      */
     @Override
-	public List getColumnKeys() {
+	public List<Comparable> getColumnKeys() {
         return this.data.getColumnKeys();
     }
 
@@ -314,7 +314,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The keys.
      */
     @Override
-	public List getRowKeys() {
+	public List<Comparable> getRowKeys() {
         return this.data.getRowKeys();
     }
 

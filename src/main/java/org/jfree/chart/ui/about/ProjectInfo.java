@@ -43,7 +43,6 @@
 package org.jfree.chart.ui.about;
 
 import java.awt.Image;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -58,7 +57,7 @@ public class ProjectInfo extends BasicProjectInfo {
     private String licenceText;
 
     /** A list of contributors. */
-    private List contributors;
+    private List<Contributor> contributors;
 
     /**
      * Constructs an empty project info object.
@@ -133,7 +132,7 @@ public class ProjectInfo extends BasicProjectInfo {
      *
      * @return the list of contributors.
      */
-    public List getContributors() {
+    public List<Contributor> getContributors() {
         return this.contributors;
     }
 
@@ -142,7 +141,7 @@ public class ProjectInfo extends BasicProjectInfo {
      *
      * @param contributors  the list of contributors.
      */
-    public void setContributors(final List contributors) {
+    public void setContributors(final List<Contributor> contributors) {
         this.contributors = contributors;
     }
 
@@ -154,7 +153,7 @@ public class ProjectInfo extends BasicProjectInfo {
     @Override
 	public String toString() {
 
-        final StringBuffer result = new StringBuffer();
+        final StringBuilder result = new StringBuilder();
         result.append(getName());
         result.append(" version ");
         result.append(getVersion());
@@ -169,9 +168,7 @@ public class ProjectInfo extends BasicProjectInfo {
         result.append("\n");
         result.append("CONTRIBUTORS:");
         if (this.contributors != null) {
-            final Iterator iterator = this.contributors.iterator();
-            while (iterator.hasNext()) {
-                final Contributor contributor = (Contributor) iterator.next();
+            for (Contributor contributor : this.contributors) {
                 result.append(contributor.getName());
                 result.append(" (");
                 result.append(contributor.getEmail());
@@ -188,8 +185,7 @@ public class ProjectInfo extends BasicProjectInfo {
         result.append(":");
         final Library[] libraries = getLibraries();
         if (libraries.length != 0) {
-            for (int i = 0; i < libraries.length; i++) {
-                final Library lib = libraries[i];
+            for (final Library lib : libraries) {
                 result.append(lib.getName());
                 result.append(" ");
                 result.append(lib.getVersion());

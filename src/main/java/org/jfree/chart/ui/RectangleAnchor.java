@@ -46,52 +46,38 @@ package org.jfree.chart.ui;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.io.ObjectStreamException;
-import java.io.Serializable;
 
 /**
  * Used to indicate an anchor point for a rectangle.
  */
-public final class RectangleAnchor implements Serializable {
+public enum RectangleAnchor {
 
-    /** For serialization. */
-    private static final long serialVersionUID = -2457494205644416327L;
-    
     /** Center. */
-    public static final RectangleAnchor CENTER 
-        = new RectangleAnchor("RectangleAnchor.CENTER");
+    CENTER("RectangleAnchor.CENTER"),
 
     /** Top. */
-    public static final RectangleAnchor TOP 
-        = new RectangleAnchor("RectangleAnchor.TOP");
+    TOP("RectangleAnchor.TOP"),
 
     /** Top-Left. */
-    public static final RectangleAnchor TOP_LEFT 
-        = new RectangleAnchor("RectangleAnchor.TOP_LEFT");
+    TOP_LEFT("RectangleAnchor.TOP_LEFT"),
 
     /** Top-Right. */
-    public static final RectangleAnchor TOP_RIGHT 
-        = new RectangleAnchor("RectangleAnchor.TOP_RIGHT");
+    TOP_RIGHT("RectangleAnchor.TOP_RIGHT"),
 
     /** Bottom. */
-    public static final RectangleAnchor BOTTOM 
-        = new RectangleAnchor("RectangleAnchor.BOTTOM");
+    BOTTOM("RectangleAnchor.BOTTOM"),
 
     /** Bottom-Left. */
-    public static final RectangleAnchor BOTTOM_LEFT 
-        = new RectangleAnchor("RectangleAnchor.BOTTOM_LEFT");
+    BOTTOM_LEFT("RectangleAnchor.BOTTOM_LEFT"),
 
     /** Bottom-Right. */
-    public static final RectangleAnchor BOTTOM_RIGHT 
-        = new RectangleAnchor("RectangleAnchor.BOTTOM_RIGHT");
+    BOTTOM_RIGHT("RectangleAnchor.BOTTOM_RIGHT"),
 
     /** Left. */
-    public static final RectangleAnchor LEFT 
-        = new RectangleAnchor("RectangleAnchor.LEFT");
+    LEFT("RectangleAnchor.LEFT"),
 
     /** Right. */
-    public static final RectangleAnchor RIGHT 
-        = new RectangleAnchor("RectangleAnchor.RIGHT");
+    RIGHT("RectangleAnchor.RIGHT");
 
     /** The name. */
     private String name;
@@ -113,42 +99,6 @@ public final class RectangleAnchor implements Serializable {
     @Override
 	public String toString() {
         return this.name;
-    }
-
-    /**
-     * Returns <code>true</code> if this object is equal to the specified 
-     * object, and <code>false</code> otherwise.
-     *
-     * @param obj  the other object (<code>null</code> permitted).
-     *
-     * @return A boolean.
-     */
-    @Override
-	public boolean equals(final Object obj) {
-
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof RectangleAnchor)) {
-            return false;
-        }
-
-        final RectangleAnchor order = (RectangleAnchor) obj;
-        if (!this.name.equals(order.name)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Returns a hash code value for the object.
-     *
-     * @return The hashcode
-     */
-    @Override
-	public int hashCode() {
-        return this.name.hashCode();
     }
 
     /**
@@ -257,44 +207,5 @@ public final class RectangleAnchor implements Serializable {
         }
         return result;
     }
-    
-    /**
-     * Ensures that serialization returns the unique instances.
-     * 
-     * @return The object.
-     * 
-     * @throws ObjectStreamException if there is a problem.
-     */
-    private Object readResolve() throws ObjectStreamException {
-        RectangleAnchor result = null;
-        if (this.equals(RectangleAnchor.CENTER)) {
-            result = RectangleAnchor.CENTER;
-        }
-        else if (this.equals(RectangleAnchor.TOP)) {
-            result = RectangleAnchor.TOP;
-        }
-        else if (this.equals(RectangleAnchor.BOTTOM)) {
-            result = RectangleAnchor.BOTTOM;
-        }
-        else if (this.equals(RectangleAnchor.LEFT)) {
-            result = RectangleAnchor.LEFT;
-        }
-        else if (this.equals(RectangleAnchor.RIGHT)) {
-            result = RectangleAnchor.RIGHT;
-        }
-        else if (this.equals(RectangleAnchor.TOP_LEFT)) {
-            result = RectangleAnchor.TOP_LEFT;
-        }
-        else if (this.equals(RectangleAnchor.TOP_RIGHT)) {
-            result = RectangleAnchor.TOP_RIGHT;
-        }
-        else if (this.equals(RectangleAnchor.BOTTOM_LEFT)) {
-            result = RectangleAnchor.BOTTOM_LEFT;
-        }
-        else if (this.equals(RectangleAnchor.BOTTOM_RIGHT)) {
-            result = RectangleAnchor.BOTTOM_RIGHT;
-        }
-        return result;
-    }
-    
+
 }

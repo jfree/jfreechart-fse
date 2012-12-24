@@ -111,9 +111,6 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import org.jfree.chart.LegendItem;
@@ -123,7 +120,6 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.ItemLabelAnchor;
@@ -135,7 +131,6 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
 import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.XYDataset;
@@ -678,7 +673,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @return A state object.
      */
     @Override
-    public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
+	public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
             XYPlot plot, XYDataset dataset, PlotRenderingInfo info) {
 
         XYBarRendererState state = new XYBarRendererState(info);
@@ -700,7 +695,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @return A legend item for the series.
      */
     @Override
-    public LegendItem getLegendItem(int datasetIndex, int series) {
+	public LegendItem getLegendItem(int datasetIndex, int series) {
         XYPlot xyplot = getPlot();
         if (xyplot == null) {
             return null;
@@ -769,10 +764,18 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @param pass  the pass index.
      */
     @Override
-    public void drawItem(Graphics2D g2, XYItemRendererState state,
-            Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
-            ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
-            int series, int item, CrosshairState crosshairState, int pass) {
+	public void drawItem(Graphics2D g2,
+                         XYItemRendererState state,
+                         Rectangle2D dataArea,
+                         PlotRenderingInfo info,
+                         XYPlot plot,
+                         ValueAxis domainAxis,
+                         ValueAxis rangeAxis,
+                         XYDataset dataset,
+                         int series,
+                         int item,
+                         CrosshairState crosshairState,
+                         int pass) {
 
         if (!getItemVisible(series, item)) {
             return;
@@ -1142,7 +1145,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      *         <code>null</code> or empty).
      */
     @Override
-    public Range findDomainBounds(XYDataset dataset) {
+	public Range findDomainBounds(XYDataset dataset) {
         return findDomainBounds(dataset, true);
     }
 
@@ -1157,7 +1160,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      *         <code>null</code> or empty).
      */
     @Override
-    public Range findRangeBounds(XYDataset dataset) {
+	public Range findRangeBounds(XYDataset dataset) {
         return findRangeBounds(dataset, this.useYInterval);
     }
 
@@ -1169,11 +1172,10 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
     @Override
-    public Object clone() throws CloneNotSupportedException {
+	public Object clone() throws CloneNotSupportedException {
         XYBarRenderer result = (XYBarRenderer) super.clone();
         if (this.gradientPaintTransformer != null) {
-            result.gradientPaintTransformer = (GradientPaintTransformer)
-                ObjectUtilities.clone(this.gradientPaintTransformer);
+            result.gradientPaintTransformer = ObjectUtilities.clone(this.gradientPaintTransformer);
         }
         return result;
     }
@@ -1186,7 +1188,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @return A boolean.
      */
     @Override
-    public boolean equals(Object obj) {
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

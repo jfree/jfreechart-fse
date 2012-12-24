@@ -61,7 +61,7 @@ import org.jfree.data.general.Series;
 public class TaskSeries extends Series {
 
     /** Storage for the tasks in the series. */
-    private List tasks;
+    private List<Task> tasks;
 
     /**
      * Constructs a new series with the specified name.
@@ -70,7 +70,7 @@ public class TaskSeries extends Series {
      */
     public TaskSeries(String name) {
         super(name);
-        this.tasks = new java.util.ArrayList();
+        this.tasks = new java.util.ArrayList<Task>();
     }
 
     /**
@@ -128,7 +128,7 @@ public class TaskSeries extends Series {
      * @return The task.
      */
     public Task get(int index) {
-        return (Task) this.tasks.get(index);
+        return this.tasks.get(index);
     }
 
     /**
@@ -140,9 +140,7 @@ public class TaskSeries extends Series {
      */
     public Task get(String description) {
         Task result = null;
-        int count = this.tasks.size();
-        for (int i = 0; i < count; i++) {
-            Task t = (Task) this.tasks.get(i);
+        for (Task t : this.tasks) {
             if (t.getDescription().equals(description)) {
                 result = t;
                 break;
@@ -156,7 +154,7 @@ public class TaskSeries extends Series {
      *
      * @return The tasks.
      */
-    public List getTasks() {
+    public List<Task> getTasks() {
         return Collections.unmodifiableList(this.tasks);
     }
 
@@ -196,7 +194,7 @@ public class TaskSeries extends Series {
     @Override
 	public Object clone() throws CloneNotSupportedException {
         TaskSeries clone = (TaskSeries) super.clone();
-        clone.tasks = (List) ObjectUtilities.deepClone(this.tasks);
+        clone.tasks = ObjectUtilities.deepClone(this.tasks);
         return clone;
     }
 

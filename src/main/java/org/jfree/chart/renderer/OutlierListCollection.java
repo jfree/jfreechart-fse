@@ -58,10 +58,10 @@ import java.util.List;
  *
  * @see org.jfree.chart.renderer.OutlierList
  */
-public class OutlierListCollection {
+public class OutlierListCollection implements Iterable<OutlierList> {
 
     /** Storage for the outlier lists. */
-    private List outlierLists;
+    private List<OutlierList> outlierLists;
 
     /**
      * Unbelievably, outliers which are more than 2 * interquartile range are
@@ -79,7 +79,7 @@ public class OutlierListCollection {
      * Creates a new empty collection.
      */
     public OutlierListCollection() {
-        this.outlierLists = new ArrayList();
+        this.outlierLists = new ArrayList<OutlierList>();
     }
 
     /**
@@ -139,9 +139,7 @@ public class OutlierListCollection {
         }
         else {
             boolean updated = false;
-            for (Iterator iterator = this.outlierLists.iterator();
-                 iterator.hasNext();) {
-                OutlierList list = (OutlierList) iterator.next();
+            for (OutlierList list : this.outlierLists) {
                 if (list.isOverlapped(outlier)) {
                     updated = updateOutlierList(list, outlier);
                 }
@@ -160,7 +158,7 @@ public class OutlierListCollection {
      *
      * @return An iterator.
      */
-    public Iterator iterator() {
+    public Iterator<OutlierList> iterator() {
         return this.outlierLists.iterator();
     }
 
@@ -176,8 +174,7 @@ public class OutlierListCollection {
      * @return <tt>true</tt> (as per the general contract of Collection.add).
      */
     private boolean updateOutlierList(OutlierList list, Outlier outlier) {
-        boolean result = false;
-        result = list.add(outlier);
+        boolean result = list.add(outlier);
         list.updateAveragedOutlier();
         list.setMultiple(true);
         return result;

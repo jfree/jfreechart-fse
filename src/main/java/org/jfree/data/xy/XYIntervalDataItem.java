@@ -61,7 +61,7 @@ public class XYIntervalDataItem extends ComparableObjectItem {
      */
     public XYIntervalDataItem(double x, double xLow, double xHigh, double y,
             double yLow, double yHigh) {
-        super(new Double(x), new XYInterval(xLow, xHigh, y, yLow, yHigh));
+        super(x, new XYInterval(xLow, xHigh, y, yLow, yHigh));
     }
 
     /**

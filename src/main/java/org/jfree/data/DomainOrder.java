@@ -44,15 +44,18 @@ package org.jfree.data;
  * Used to indicate sorting order if any (ascending, descending or none).
  */
 public enum DomainOrder {
+
     /** No order. */
     NONE("DomainOrder.NONE"),
+
     /** Ascending order. */
-    ASCENDING("DomainOrder.NONE"),
+    ASCENDING("DomainOrder.ASCENDING"),
+
     /** Descending order. */
-    DESCENDING("DomainOrder.NONE");
+    DESCENDING("DomainOrder.DESCENDING");
 
     /** The name. */
-    private final String name;
+    private String name;
 
     /**
      * Private constructor.
@@ -69,7 +72,8 @@ public enum DomainOrder {
      * @return The string.
      */
     @Override
-    public String toString() {
+	public String toString() {
         return this.name;
     }
+
 }

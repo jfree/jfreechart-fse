@@ -64,7 +64,7 @@ public class CustomXYToolTipGenerator implements XYToolTipGenerator,
     private static final long serialVersionUID = 8636030004670141362L;
 
     /** Storage for the tooltip lists. */
-    private List toolTipSeries = new java.util.ArrayList();
+    private List<List<String>> toolTipSeries = new java.util.ArrayList<List<String>>();
 
     /**
      * Default constructor.
@@ -92,7 +92,7 @@ public class CustomXYToolTipGenerator implements XYToolTipGenerator,
     public int getToolTipCount(int list) {
 
         int result = 0;
-        List tooltips = (List) this.toolTipSeries.get(list);
+        List<String> tooltips = this.toolTipSeries.get(list);
         if (tooltips != null) {
             result = tooltips.size();
         }
@@ -112,10 +112,10 @@ public class CustomXYToolTipGenerator implements XYToolTipGenerator,
         String result = null;
 
         if (series < getListCount()) {
-            List tooltips = (List) this.toolTipSeries.get(series);
+            List<String> tooltips = this.toolTipSeries.get(series);
             if (tooltips != null) {
                 if (item < tooltips.size()) {
-                    result = (String) tooltips.get(item);
+                    result = tooltips.get(item);
                 }
             }
         }
@@ -128,7 +128,7 @@ public class CustomXYToolTipGenerator implements XYToolTipGenerator,
      *
      * @param toolTips  the list of tool tips.
      */
-    public void addToolTipSeries(List toolTips) {
+    public void addToolTipSeries(List<String> toolTips) {
         this.toolTipSeries.add(toolTips);
     }
 
@@ -161,7 +161,7 @@ public class CustomXYToolTipGenerator implements XYToolTipGenerator,
         CustomXYToolTipGenerator clone
             = (CustomXYToolTipGenerator) super.clone();
         if (this.toolTipSeries != null) {
-            clone.toolTipSeries = new java.util.ArrayList(this.toolTipSeries);
+            clone.toolTipSeries = new java.util.ArrayList<List<String>>(this.toolTipSeries);
         }
         return clone;
 

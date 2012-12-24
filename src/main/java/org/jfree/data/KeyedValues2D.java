@@ -74,7 +74,7 @@ public interface KeyedValues2D extends Values2D {
      *
      * @return The keys.
      */
-    public List getRowKeys();
+    public List<Comparable> getRowKeys();
 
     /**
      * Returns the column key for a given index.
@@ -101,7 +101,7 @@ public interface KeyedValues2D extends Values2D {
      *
      * @return The keys.
      */
-    public List getColumnKeys();
+    public List<Comparable> getColumnKeys();
 
     /**
      * Returns the value associated with the specified keys.

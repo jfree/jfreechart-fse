@@ -61,7 +61,7 @@ public interface XYDomainInfo {
      * @return The range (or <code>null</code> if the dataset contains no
      *     values).
      */
-    public Range getDomainBounds(List visibleSeriesKeys,
+    public Range getDomainBounds(List<Comparable> visibleSeriesKeys,
             boolean includeInterval);
 
 }

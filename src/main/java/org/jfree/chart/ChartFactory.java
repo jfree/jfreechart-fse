@@ -129,7 +129,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.text.DateFormat;
 import java.text.NumberFormat;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -199,9 +198,6 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.renderer.xy.XYStepAreaRenderer;
 import org.jfree.chart.renderer.xy.XYStepRenderer;
 import org.jfree.chart.title.TextTitle;
-import org.jfree.chart.urls.StandardXYURLGenerator;
-import org.jfree.chart.urls.StandardXYZURLGenerator;
-import org.jfree.chart.urls.XYURLGenerator;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.IntervalCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
@@ -369,42 +365,38 @@ public abstract class ChartFactory {
 
         plot.setToolTipGenerator(new StandardPieToolTipGenerator(locale));
 
-        List keys = dataset.getKeys();
+        List<Comparable> keys = dataset.getKeys();
         DefaultPieDataset series = null;
         if (showDifference) {
             series = new DefaultPieDataset();
         }
 
         double colorPerPercent = 255.0 / percentDiffForMaxScale;
-        for (Iterator it = keys.iterator(); it.hasNext();) {
-            Comparable key = (Comparable) it.next();
+        for (Comparable key : keys) {
             Number newValue = dataset.getValue(key);
             Number oldValue = previousDataset.getValue(key);
 
             if (oldValue == null) {
                 if (greenForIncrease) {
                     plot.setSectionPaint(key, Color.GREEN);
-                }
-                else {
+                } else {
                     plot.setSectionPaint(key, Color.RED);
                 }
                 if (showDifference) {
                     series.setValue(key + " (+100%)", newValue);
                 }
-            }
-            else {
+            } else {
                 double percentChange = (newValue.doubleValue()
                         / oldValue.doubleValue() - 1.0) * 100.0;
                 double shade
-                    = (Math.abs(percentChange) >= percentDiffForMaxScale ? 255
-                    : Math.abs(percentChange) * colorPerPercent);
+                        = (Math.abs(percentChange) >= percentDiffForMaxScale ? 255
+                        : Math.abs(percentChange) * colorPerPercent);
                 if (greenForIncrease
                         && newValue.doubleValue() > oldValue.doubleValue()
                         || !greenForIncrease && newValue.doubleValue()
                         < oldValue.doubleValue()) {
                     plot.setSectionPaint(key, new Color(0, (int) shade, 0));
-                }
-                else {
+                } else {
                     plot.setSectionPaint(key, new Color((int) shade, 0, 0));
                 }
                 if (showDifference) {
@@ -480,42 +472,38 @@ public abstract class ChartFactory {
 
         plot.setToolTipGenerator(new StandardPieToolTipGenerator());
 
-        List keys = dataset.getKeys();
+        List<Comparable> keys = dataset.getKeys();
         DefaultPieDataset series = null;
         if (showDifference) {
             series = new DefaultPieDataset();
         }
 
         double colorPerPercent = 255.0 / percentDiffForMaxScale;
-        for (Iterator it = keys.iterator(); it.hasNext();) {
-            Comparable key = (Comparable) it.next();
+        for (Comparable key : keys) {
             Number newValue = dataset.getValue(key);
             Number oldValue = previousDataset.getValue(key);
 
             if (oldValue == null) {
                 if (greenForIncrease) {
                     plot.setSectionPaint(key, Color.GREEN);
-                }
-                else {
+                } else {
                     plot.setSectionPaint(key, Color.RED);
                 }
                 if (showDifference) {
                     series.setValue(key + " (+100%)", newValue);
                 }
-            }
-            else {
+            } else {
                 double percentChange = (newValue.doubleValue()
                         / oldValue.doubleValue() - 1.0) * 100.0;
                 double shade
-                    = (Math.abs(percentChange) >= percentDiffForMaxScale ? 255
-                    : Math.abs(percentChange) * colorPerPercent);
+                        = (Math.abs(percentChange) >= percentDiffForMaxScale ? 255
+                        : Math.abs(percentChange) * colorPerPercent);
                 if (greenForIncrease
                         && newValue.doubleValue() > oldValue.doubleValue()
                         || !greenForIncrease && newValue.doubleValue()
                         < oldValue.doubleValue()) {
                     plot.setSectionPaint(key, new Color(0, (int) shade, 0));
-                }
-                else {
+                } else {
                     plot.setSectionPaint(key, new Color((int) shade, 0, 0));
                 }
                 if (showDifference) {
@@ -533,7 +521,7 @@ public abstract class ChartFactory {
         JFreeChart chart =  new JFreeChart(title, plot);
 
         if (subTitle) {
-            TextTitle subtitle = null;
+            TextTitle subtitle;
             subtitle = new TextTitle("Bright " + (greenForIncrease ? "red"
                     : "green") + "=change >=-" + percentDiffForMaxScale
                     + "%, Bright " + (!greenForIncrease ? "red" : "green")
@@ -1193,7 +1181,7 @@ public abstract class ChartFactory {
     public static JFreeChart createXYBarChart(String title, String xAxisLabel,
             boolean dateAxis, String yAxisLabel, IntervalXYDataset dataset) {
 
-        ValueAxis domainAxis = null;
+        ValueAxis domainAxis;
         if (dateAxis) {
             domainAxis = new DateAxis(xAxisLabel);
         }

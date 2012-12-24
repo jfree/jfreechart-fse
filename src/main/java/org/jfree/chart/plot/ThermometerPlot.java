@@ -1539,13 +1539,13 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
         if (clone.dataset != null) {
             clone.dataset.addChangeListener(clone);
         }
-        clone.rangeAxis = (ValueAxis) ObjectUtilities.clone(this.rangeAxis);
+        clone.rangeAxis = ObjectUtilities.clone(this.rangeAxis);
         if (clone.rangeAxis != null) {
             clone.rangeAxis.setPlot(clone);
             clone.rangeAxis.addChangeListener(clone);
         }
         clone.valueFormat = (NumberFormat) this.valueFormat.clone();
-        clone.subrangePaint = (Paint[]) this.subrangePaint.clone();
+        clone.subrangePaint = this.subrangePaint.clone();
 
         return clone;
 

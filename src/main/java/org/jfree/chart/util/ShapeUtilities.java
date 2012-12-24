@@ -104,13 +104,13 @@ public class ShapeUtilities {
     public static Shape clone(final Shape shape) {
         if (shape instanceof Cloneable) {
             try {
-                return (Shape) ObjectUtilities.clone(shape);
+                return ObjectUtilities.clone(shape);
             }
             catch (CloneNotSupportedException cnse) {
+                //this shouldn't be thrown if object is cloneable
             }
         }
-        final Shape result = null;
-        return result;
+        return null;
     }
 
     /**

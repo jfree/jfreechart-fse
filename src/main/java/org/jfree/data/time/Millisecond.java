@@ -69,7 +69,7 @@ import java.util.TimeZone;
  * Represents a millisecond.  This class is immutable, which is a requirement
  * for all {@link RegularTimePeriod} subclasses.
  */
-public class Millisecond extends RegularTimePeriod implements Serializable {
+public class Millisecond extends RegularTimePeriod implements Serializable, Comparable<TimePeriod> {
 
     /** For serialization. */
     static final long serialVersionUID = -5316836467277638485L;
@@ -353,7 +353,7 @@ public class Millisecond extends RegularTimePeriod implements Serializable {
      * @return negative == before, zero == same, positive == after.
      */
     @Override
-	public int compareTo(Object obj) {
+	public int compareTo(TimePeriod obj) {
         int result;
         long difference;
 
@@ -377,19 +377,12 @@ public class Millisecond extends RegularTimePeriod implements Serializable {
 
         // CASE 2 : Comparing to another TimePeriod object
         // -----------------------------------------------
-        else if (obj instanceof RegularTimePeriod) {
+        else {
             RegularTimePeriod rtp = (RegularTimePeriod) obj;
             final long thisVal = this.getFirstMillisecond();
             final long anotherVal = rtp.getFirstMillisecond();
             result = (thisVal < anotherVal ? -1
                     : (thisVal == anotherVal ? 0 : 1));
-        }
-
-        // CASE 3 : Comparing to a non-TimePeriod object
-        // ---------------------------------------------
-        else {
-            // consider time periods to be ordered after general objects
-            result = 1;
         }
 
         return result;

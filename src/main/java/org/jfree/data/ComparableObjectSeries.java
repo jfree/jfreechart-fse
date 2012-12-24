@@ -61,7 +61,7 @@ public class ComparableObjectSeries extends Series
         implements Cloneable, Serializable {
 
     /** Storage for the data items in the series. */
-    protected List data;
+    protected List<ComparableObjectItem> data;
 
     /** The maximum number of items for the series. */
     private int maximumItemCount = Integer.MAX_VALUE;
@@ -96,7 +96,7 @@ public class ComparableObjectSeries extends Series
     public ComparableObjectSeries(Comparable key, boolean autoSort,
             boolean allowDuplicateXValues) {
         super(key);
-        this.data = new java.util.ArrayList();
+        this.data = new java.util.ArrayList<ComparableObjectItem>();
         this.autoSort = autoSort;
         this.allowDuplicateXValues = allowDuplicateXValues;
     }
@@ -279,8 +279,7 @@ public class ComparableObjectSeries extends Series
         }
         else {
             for (int i = 0; i < this.data.size(); i++) {
-                ComparableObjectItem item = (ComparableObjectItem)
-                        this.data.get(i);
+                ComparableObjectItem item = this.data.get(i);
                 if (item.getComparable().equals(x)) {
                     return i;
                 }
@@ -331,7 +330,7 @@ public class ComparableObjectSeries extends Series
      * @return The data item with the specified index.
      */
     protected ComparableObjectItem getDataItem(int index) {
-        return (ComparableObjectItem) this.data.get(index);
+        return this.data.get(index);
     }
 
     /**
@@ -369,7 +368,7 @@ public class ComparableObjectSeries extends Series
      * @return The item removed.
      */
     protected ComparableObjectItem remove(int index) {
-        ComparableObjectItem result = (ComparableObjectItem) this.data.remove(
+        ComparableObjectItem result = this.data.remove(
                 index);
         fireSeriesChanged();
         return result;

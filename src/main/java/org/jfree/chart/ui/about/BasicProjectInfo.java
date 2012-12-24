@@ -116,16 +116,16 @@ public class BasicProjectInfo extends Library {
     private String copyright;
 
     /** A list of libraries used by the project. */
-    private List libraries;
+    private List<Library> libraries;
 
-    private List optionalLibraries;
+    private List<OptionalLibraryHolder> optionalLibraries;
 
     /**
      * Default constructor.
      */
     public BasicProjectInfo() {
-        this.libraries = new ArrayList();
-        this.optionalLibraries = new ArrayList();
+        this.libraries = new ArrayList<Library>();
+        this.optionalLibraries = new ArrayList<OptionalLibraryHolder>();
     }
 
     /**
@@ -225,7 +225,7 @@ public class BasicProjectInfo extends Library {
      * @return the list of libraries.
      */
     public Library[] getLibraries() {
-        return (Library[]) this.libraries.toArray
+        return this.libraries.toArray
                 (new Library[this.libraries.size()]);
     }
 
@@ -247,16 +247,14 @@ public class BasicProjectInfo extends Library {
      * @return the list of libraries.
      */
     public Library[] getOptionalLibraries() {
-        final ArrayList libraries = new ArrayList();
-        for (int i = 0; i < this.optionalLibraries.size(); i++) {
-          OptionalLibraryHolder holder =
-                  (OptionalLibraryHolder) this.optionalLibraries.get(i);
-          Library l = holder.getLibrary();
-          if (l != null) {
-              libraries.add(l);
-          }
+        final ArrayList<Library> libraries = new ArrayList<Library>();
+        for (OptionalLibraryHolder holder : this.optionalLibraries) {
+            Library l = holder.getLibrary();
+            if (l != null) {
+                libraries.add(l);
+            }
         }
-        return (Library[]) libraries.toArray(new Library[libraries.size()]);
+        return libraries.toArray(new Library[libraries.size()]);
     }
 
     /**

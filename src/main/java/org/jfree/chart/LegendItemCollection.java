@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -41,7 +41,7 @@
  *               Serializable (DG);
  * 23-Apr-2008 : Fixed clone() method (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart;
@@ -55,19 +55,19 @@ import org.jfree.chart.util.ObjectUtilities;
 /**
  * A collection of legend items.
  */
-public class LegendItemCollection implements Cloneable, Serializable {
+public class LegendItemCollection implements Cloneable, Serializable, Iterable<LegendItem> {
 
     /** For serialization. */
     private static final long serialVersionUID = 1365215565589815953L;
 
     /** Storage for the legend items. */
-    private List items;
+    private List<LegendItem> items;
 
     /**
      * Constructs a new legend item collection, initially empty.
      */
     public LegendItemCollection() {
-        this.items = new java.util.ArrayList();
+        this.items = new java.util.ArrayList<LegendItem>();
     }
 
     /**
@@ -97,7 +97,7 @@ public class LegendItemCollection implements Cloneable, Serializable {
      * @return The legend item.
      */
     public LegendItem get(int index) {
-        return (LegendItem) this.items.get(index);
+        return this.items.get(index);
     }
 
     /**
@@ -114,7 +114,7 @@ public class LegendItemCollection implements Cloneable, Serializable {
      *
      * @return An iterator.
      */
-    public Iterator iterator() {
+    public Iterator<LegendItem> iterator() {
         return this.items.iterator();
     }
 
@@ -126,7 +126,7 @@ public class LegendItemCollection implements Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -149,9 +149,9 @@ public class LegendItemCollection implements Cloneable, Serializable {
      *         cloneable.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         LegendItemCollection clone = (LegendItemCollection) super.clone();
-        clone.items = (List) ObjectUtilities.deepClone(this.items);
+        clone.items = ObjectUtilities.deepClone(this.items);
         return clone;
     }
 

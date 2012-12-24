@@ -60,7 +60,7 @@ package org.jfree.data;
 
 import java.io.Serializable;
 import java.util.Collections;
-import java.util.Iterator;
+import java.util.Comparator;
 import java.util.List;
 
 import org.jfree.chart.util.ObjectUtilities;
@@ -78,13 +78,13 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
     private static final long serialVersionUID = -5514169970951994748L;
 
     /** The row keys. */
-    private List rowKeys;
+    private List<Comparable> rowKeys;
 
     /** The column keys. */
-    private List columnKeys;
+    private List<Comparable> columnKeys;
 
     /** The row data. */
-    private List rows;
+    private List<DefaultKeyedValues> rows;
 
     /** If the row keys should be sorted by their comparable order. */
     private boolean sortRowKeys;
@@ -102,9 +102,9 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * @param sortRowKeys  if the row keys should be sorted.
      */
     public DefaultKeyedValues2D(boolean sortRowKeys) {
-        this.rowKeys = new java.util.ArrayList();
-        this.columnKeys = new java.util.ArrayList();
-        this.rows = new java.util.ArrayList();
+        this.rowKeys = new java.util.ArrayList<Comparable>();
+        this.columnKeys = new java.util.ArrayList<Comparable>();
+        this.rows = new java.util.ArrayList<DefaultKeyedValues>();
         this.sortRowKeys = sortRowKeys;
     }
 
@@ -145,9 +145,9 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
     @Override
 	public Number getValue(int row, int column) {
         Number result = null;
-        DefaultKeyedValues rowData = (DefaultKeyedValues) this.rows.get(row);
+        DefaultKeyedValues rowData = this.rows.get(row);
         if (rowData != null) {
-            Comparable columnKey = (Comparable) this.columnKeys.get(column);
+            Comparable columnKey = this.columnKeys.get(column);
             // the row may not have an entry for this key, in which case the
             // return value is null
             int index = rowData.getIndex(columnKey);
@@ -170,7 +170,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      */
     @Override
 	public Comparable getRowKey(int row) {
-        return (Comparable) this.rowKeys.get(row);
+        return this.rowKeys.get(row);
     }
 
     /**
@@ -189,7 +189,12 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
             throw new IllegalArgumentException("Null 'key' argument.");
         }
         if (this.sortRowKeys) {
-            return Collections.binarySearch(this.rowKeys, key);
+            return Collections.binarySearch(this.rowKeys, key, new Comparator<Comparable>() {
+                @Override
+                public int compare(Comparable o1, Comparable o2) {
+                    return o1.compareTo(o2);
+                }
+            }); //FIXME MMC remove this comparator
         }
         else {
             return this.rowKeys.indexOf(key);
@@ -204,7 +209,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * @see #getColumnKeys()
      */
     @Override
-	public List getRowKeys() {
+	public List<Comparable> getRowKeys() {
         return Collections.unmodifiableList(this.rowKeys);
     }
 
@@ -221,7 +226,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      */
     @Override
 	public Comparable getColumnKey(int column) {
-        return (Comparable) this.columnKeys.get(column);
+        return this.columnKeys.get(column);
     }
 
     /**
@@ -250,7 +255,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * @see #getRowKeys()
      */
     @Override
-	public List getColumnKeys() {
+	public List<Comparable> getColumnKeys() {
         return Collections.unmodifiableList(this.columnKeys);
     }
 
@@ -288,7 +293,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
         int row = getRowIndex(rowKey);
         if (row >= 0) {
             DefaultKeyedValues rowData
-                = (DefaultKeyedValues) this.rows.get(row);
+                = this.rows.get(row);
             int col = rowData.getIndex(columnKey);
             return (col >= 0 ? rowData.getValue(col) : null);
         }
@@ -331,7 +336,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
         int rowIndex = getRowIndex(rowKey);
 
         if (rowIndex >= 0) {
-            row = (DefaultKeyedValues) this.rows.get(rowIndex);
+            row = this.rows.get(rowIndex);
         }
         else {
             row = new DefaultKeyedValues();
@@ -369,7 +374,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
         // 1. check whether the row is now empty.
         boolean allNull = true;
         int rowIndex = getRowIndex(rowKey);
-        DefaultKeyedValues row = (DefaultKeyedValues) this.rows.get(rowIndex);
+        DefaultKeyedValues row = this.rows.get(rowIndex);
 
         for (int item = 0, itemCount = row.getItemCount(); item < itemCount;
              item++) {
@@ -388,23 +393,19 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
         allNull = true;
         //int columnIndex = getColumnIndex(columnKey);
 
-        for (int item = 0, itemCount = this.rows.size(); item < itemCount;
-             item++) {
-            row = (DefaultKeyedValues) this.rows.get(item);
-            int columnIndex = row.getIndex(columnKey);
-            if (columnIndex >= 0 && row.getValue(columnIndex) != null) {
+        for (DefaultKeyedValues rowItem : this.rows) {
+            int columnIndex = rowItem.getIndex(columnKey);
+            if (columnIndex >= 0 && rowItem.getValue(columnIndex) != null) {
                 allNull = false;
                 break;
             }
         }
 
         if (allNull) {
-            for (int item = 0, itemCount = this.rows.size(); item < itemCount;
-                 item++) {
-                row = (DefaultKeyedValues) this.rows.get(item);
-                int columnIndex = row.getIndex(columnKey);
+            for (DefaultKeyedValues rowItem : this.rows) {
+                int columnIndex = rowItem.getIndex(columnKey);
                 if (columnIndex >= 0) {
-                    row.removeValue(columnIndex);
+                    rowItem.removeValue(columnIndex);
                 }
             }
             this.columnKeys.remove(columnKey);
@@ -481,9 +482,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
         if (!this.columnKeys.contains(columnKey)) {
             throw new UnknownKeyException("Unknown key: " + columnKey);
         }
-        Iterator iterator = this.rows.iterator();
-        while (iterator.hasNext()) {
-            DefaultKeyedValues rowData = (DefaultKeyedValues) iterator.next();
+        for (DefaultKeyedValues rowData : this.rows) {
             int index = rowData.getIndex(columnKey);
             if (index >= 0) {
                 rowData.removeValue(columnKey);
@@ -584,11 +583,11 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
         DefaultKeyedValues2D clone = (DefaultKeyedValues2D) super.clone();
         // for the keys, a shallow copy should be fine because keys
         // should be immutable...
-        clone.columnKeys = new java.util.ArrayList(this.columnKeys);
-        clone.rowKeys = new java.util.ArrayList(this.rowKeys);
+        clone.columnKeys = new java.util.ArrayList<Comparable>(this.columnKeys);
+        clone.rowKeys = new java.util.ArrayList<Comparable>(this.rowKeys);
 
         // but the row data requires a deep copy
-        clone.rows = (List) ObjectUtilities.deepClone(this.rows);
+        clone.rows = ObjectUtilities.deepClone(this.rows);
         return clone;
     }
 

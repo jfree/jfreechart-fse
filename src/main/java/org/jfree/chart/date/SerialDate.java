@@ -84,8 +84,7 @@ import java.util.GregorianCalendar;
  * @author David Gilbert
  */
 public abstract class SerialDate implements Comparable, 
-                                            Serializable, 
-                                            MonthConstants {
+                                            Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -293716040467423637L;
@@ -326,18 +325,18 @@ public abstract class SerialDate implements Comparable,
     public static boolean isValidMonthCode(final int code) {
 
         switch(code) {
-            case JANUARY: 
-            case FEBRUARY: 
-            case MARCH: 
-            case APRIL: 
-            case MAY: 
-            case JUNE: 
-            case JULY: 
-            case AUGUST: 
-            case SEPTEMBER: 
-            case OCTOBER: 
-            case NOVEMBER: 
-            case DECEMBER: 
+            case MonthConstants.JANUARY:
+            case MonthConstants.FEBRUARY:
+            case MonthConstants.MARCH:
+            case MonthConstants.APRIL:
+            case MonthConstants.MAY:
+            case MonthConstants.JUNE:
+            case MonthConstants.JULY:
+            case MonthConstants.AUGUST:
+            case MonthConstants.SEPTEMBER:
+            case MonthConstants.OCTOBER:
+            case MonthConstants.NOVEMBER:
+            case MonthConstants.DECEMBER:
                 return true;
             default: 
                 return false;
@@ -355,18 +354,18 @@ public abstract class SerialDate implements Comparable,
     public static int monthCodeToQuarter(final int code) {
 
         switch(code) {
-            case JANUARY: 
-            case FEBRUARY: 
-            case MARCH: return 1;
-            case APRIL: 
-            case MAY: 
-            case JUNE: return 2;
-            case JULY: 
-            case AUGUST: 
-            case SEPTEMBER: return 3;
-            case OCTOBER: 
-            case NOVEMBER: 
-            case DECEMBER: return 4;
+            case MonthConstants.JANUARY:
+            case MonthConstants.FEBRUARY:
+            case MonthConstants.MARCH: return 1;
+            case MonthConstants.APRIL:
+            case MonthConstants.MAY:
+            case MonthConstants.JUNE: return 2;
+            case MonthConstants.JULY:
+            case MonthConstants.AUGUST:
+            case MonthConstants.SEPTEMBER: return 3;
+            case MonthConstants.OCTOBER:
+            case MonthConstants.NOVEMBER:
+            case MonthConstants.DECEMBER: return 4;
             default: throw new IllegalArgumentException(
                 "SerialDate.monthCodeToQuarter: invalid month code.");
         }
@@ -545,7 +544,7 @@ public abstract class SerialDate implements Comparable,
     public static int lastDayOfMonth(final int month, final int yyyy) {
 
         final int result = LAST_DAY_OF_MONTH[month];
-        if (month != FEBRUARY) {
+        if (month != MonthConstants.FEBRUARY) {
             return result;
         }
         else if (isLeapYear(yyyy)) {

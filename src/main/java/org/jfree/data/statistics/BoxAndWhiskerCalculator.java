@@ -46,9 +46,10 @@
 
 package org.jfree.data.statistics;
 
+import org.jfree.chart.axis.NumberComparartor;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -70,7 +71,7 @@ public abstract class BoxAndWhiskerCalculator {
      * @return A box-and-whisker item.
      */
     public static BoxAndWhiskerItem calculateBoxAndWhiskerStatistics(
-                                        List values) {
+                                        List<Number> values) {
         return calculateBoxAndWhiskerStatistics(values, true);
     }
 
@@ -90,31 +91,26 @@ public abstract class BoxAndWhiskerCalculator {
      * @since 1.0.3
      */
     public static BoxAndWhiskerItem calculateBoxAndWhiskerStatistics(
-            List values, boolean stripNullAndNaNItems) {
+            List<Number> values, boolean stripNullAndNaNItems) {
 
         if (values == null) {
             throw new IllegalArgumentException("Null 'values' argument.");
         }
 
-        List vlist;
+        List<Number> vlist;
         if (stripNullAndNaNItems) {
-            vlist = new ArrayList(values.size());
-            Iterator iterator = values.listIterator();
-            while (iterator.hasNext()) {
-                Object obj = iterator.next();
-                if (obj instanceof Number) {
-                    Number n = (Number) obj;
-                    double v = n.doubleValue();
-                    if (!Double.isNaN(v)) {
-                        vlist.add(n);
-                    }
+            vlist = new ArrayList<Number>(values.size());
+            for (Number n : values) {
+                double v = n.doubleValue();
+                if (!Double.isNaN(v)) {
+                    vlist.add(n);
                 }
             }
         }
         else {
             vlist = values;
         }
-        Collections.sort(vlist);
+        Collections.sort(vlist, new NumberComparartor());
 
         double mean = Statistics.calculateMean(vlist, false);
         double median = Statistics.calculateMedian(vlist, false);
@@ -133,25 +129,21 @@ public abstract class BoxAndWhiskerCalculator {
         double maxRegularValue = Double.NEGATIVE_INFINITY;
         double minOutlier = Double.POSITIVE_INFINITY;
         double maxOutlier = Double.NEGATIVE_INFINITY;
-        List outliers = new ArrayList();
+        List<Number> outliers = new ArrayList<Number>();
 
-        Iterator iterator = vlist.iterator();
-        while (iterator.hasNext()) {
-            Number number = (Number) iterator.next();
+        for (Number number : vlist) {
             double value = number.doubleValue();
             if (value > upperOutlierThreshold) {
                 outliers.add(number);
                 if (value > maxOutlier && value <= upperFaroutThreshold) {
                     maxOutlier = value;
                 }
-            }
-            else if (value < lowerOutlierThreshold) {
+            } else if (value < lowerOutlierThreshold) {
                 outliers.add(number);
                 if (value < minOutlier && value >= lowerFaroutThreshold) {
                     minOutlier = value;
                 }
-            }
-            else {
+            } else {
                 minRegularValue = Math.min(minRegularValue, value);
                 maxRegularValue = Math.max(maxRegularValue, value);
             }
@@ -159,10 +151,10 @@ public abstract class BoxAndWhiskerCalculator {
             maxOutlier = Math.max(maxOutlier, maxRegularValue);
         }
 
-        return new BoxAndWhiskerItem(new Double(mean), new Double(median),
-                new Double(q1), new Double(q3), new Double(minRegularValue),
-                new Double(maxRegularValue), new Double(minOutlier),
-                new Double(maxOutlier), outliers);
+        return new BoxAndWhiskerItem(mean, median,
+                q1, q3, minRegularValue,
+                maxRegularValue, minOutlier,
+                maxOutlier, outliers);
 
     }
 
@@ -178,7 +170,7 @@ public abstract class BoxAndWhiskerCalculator {
      *
      * @return The first quartile.
      */
-    public static double calculateQ1(List values) {
+    public static double calculateQ1(List<Number> values) {
         if (values == null) {
             throw new IllegalArgumentException("Null 'values' argument.");
         }
@@ -213,7 +205,7 @@ public abstract class BoxAndWhiskerCalculator {
      *
      * @return The third quartile.
      */
-    public static double calculateQ3(List values) {
+    public static double calculateQ3(List<Number> values) {
         if (values == null) {
             throw new IllegalArgumentException("Null 'values' argument.");
         }

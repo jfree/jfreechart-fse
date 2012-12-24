@@ -180,19 +180,19 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     private CategoryPlot plot;
 
     /** A list of item label generators (one per series). */
-    private ObjectList itemLabelGeneratorList;
+    private ObjectList<CategoryItemLabelGenerator> itemLabelGeneratorList;
 
     /** The default item label generator. */
     private CategoryItemLabelGenerator defaultItemLabelGenerator;
 
     /** A list of tool tip generators (one per series). */
-    private ObjectList toolTipGeneratorList;
+    private ObjectList<CategoryToolTipGenerator> toolTipGeneratorList;
 
     /** The default tool tip generator. */
     private CategoryToolTipGenerator defaultToolTipGenerator;
 
     /** A list of item label generators (one per series). */
-    private ObjectList itemURLGeneratorList;
+    private ObjectList<CategoryURLGenerator> itemURLGeneratorList;
 
     /** The default item label generator. */
     private CategoryURLGenerator defaultItemURLGenerator;
@@ -220,9 +220,9 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * generators.
      */
     protected AbstractCategoryItemRenderer() {
-        this.itemLabelGeneratorList = new ObjectList();
-        this.toolTipGeneratorList = new ObjectList();
-        this.itemURLGeneratorList = new ObjectList();
+        this.itemLabelGeneratorList = new ObjectList<CategoryItemLabelGenerator>();
+        this.toolTipGeneratorList = new ObjectList<CategoryToolTipGenerator>();
+        this.itemURLGeneratorList = new ObjectList<CategoryURLGenerator>();
         this.legendItemLabelGenerator
                 = new StandardCategorySeriesLabelGenerator();
     }
@@ -299,8 +299,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     @Override
     public CategoryItemLabelGenerator getSeriesItemLabelGenerator(int series) {
 
-        CategoryItemLabelGenerator generator = (CategoryItemLabelGenerator)
-            this.itemLabelGeneratorList.get(series);
+        CategoryItemLabelGenerator generator = this.itemLabelGeneratorList.get(series);
         if (generator == null) {
             generator = this.defaultItemLabelGenerator;
         }
@@ -420,7 +419,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public CategoryToolTipGenerator getSeriesToolTipGenerator(int series) {
-        return (CategoryToolTipGenerator) this.toolTipGeneratorList.get(series);
+        return this.toolTipGeneratorList.get(series);
     }
 
     /**
@@ -527,7 +526,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     @Override
     public CategoryURLGenerator getSeriesItemURLGenerator(int series) {
         CategoryURLGenerator generator
-            = (CategoryURLGenerator) this.itemURLGeneratorList.get(series);
+            = this.itemURLGeneratorList.get(series);
         if (generator == null) {
             generator = this.defaultItemURLGenerator;
         }
@@ -724,7 +723,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             return null;
         }
         if (getDataBoundsIncludesVisibleSeriesOnly()) {
-            List visibleSeriesKeys = new ArrayList();
+            List<Comparable> visibleSeriesKeys = new ArrayList<Comparable>();
             int seriesCount = dataset.getRowCount();
             for (int s = 0; s < seriesCount; s++) {
                 if (isSeriesVisible(s)) {
@@ -1461,7 +1460,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             g2.setFont(labelFont);
             g2.setPaint(paint);
             String label = generator.generateLabel(dataset, row, column);
-            ItemLabelPosition position = null;
+            ItemLabelPosition position;
             if (!negative) {
                 position = getPositiveItemLabelPosition(row, column);
             }
@@ -1496,7 +1495,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
 
         if (this.itemLabelGeneratorList != null) {
             clone.itemLabelGeneratorList
-                    = (ObjectList) this.itemLabelGeneratorList.clone();
+                    = (ObjectList<CategoryItemLabelGenerator>) this.itemLabelGeneratorList.clone();
         }
 
         if (this.defaultItemLabelGenerator != null) {
@@ -1514,7 +1513,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
 
         if (this.toolTipGeneratorList != null) {
             clone.toolTipGeneratorList
-                    = (ObjectList) this.toolTipGeneratorList.clone();
+                    = (ObjectList<CategoryToolTipGenerator>) this.toolTipGeneratorList.clone();
         }
 
         if (this.defaultToolTipGenerator != null) {
@@ -1532,7 +1531,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
 
         if (this.itemURLGeneratorList != null) {
             clone.itemURLGeneratorList
-                    = (ObjectList) this.itemURLGeneratorList.clone();
+                    = (ObjectList<CategoryURLGenerator>) this.itemURLGeneratorList.clone();
         }
 
         if (this.defaultItemURLGenerator != null) {
@@ -1548,16 +1547,13 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
         }
 
         if (this.legendItemLabelGenerator instanceof PublicCloneable) {
-            clone.legendItemLabelGenerator = (CategorySeriesLabelGenerator)
-                    ObjectUtilities.clone(this.legendItemLabelGenerator);
+            clone.legendItemLabelGenerator = ObjectUtilities.clone(this.legendItemLabelGenerator);
         }
         if (this.legendItemToolTipGenerator instanceof PublicCloneable) {
-            clone.legendItemToolTipGenerator = (CategorySeriesLabelGenerator)
-                    ObjectUtilities.clone(this.legendItemToolTipGenerator);
+            clone.legendItemToolTipGenerator = ObjectUtilities.clone(this.legendItemToolTipGenerator);
         }
         if (this.legendItemURLGenerator instanceof PublicCloneable) {
-            clone.legendItemURLGenerator = (CategorySeriesLabelGenerator)
-                    ObjectUtilities.clone(this.legendItemURLGenerator);
+            clone.legendItemURLGenerator = ObjectUtilities.clone(this.legendItemURLGenerator);
         }
         return clone;
     }

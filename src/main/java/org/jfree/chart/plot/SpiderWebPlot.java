@@ -93,7 +93,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.LegendItem;
@@ -1084,7 +1083,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
         if (getDataset() == null) {
             return result;
         }
-        List keys = null;
+        List<Comparable> keys = null;
         if (this.dataExtractOrder == TableOrder.BY_ROW) {
             keys = this.dataset.getRowKeys();
         }
@@ -1096,10 +1095,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
         }
 
         int series = 0;
-        Iterator iterator = keys.iterator();
         Shape shape = getLegendItemShape();
-        while (iterator.hasNext()) {
-            Comparable key = (Comparable) iterator.next();
+        for (Comparable key : keys) {
             String label = key.toString();
             String description = label;
             Paint paint = getSeriesPaint(series);
@@ -1170,7 +1167,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
                 getForegroundAlpha()));
 
         if (!DatasetUtilities.isEmptyOrNull(this.dataset)) {
-            int seriesCount = 0, catCount = 0;
+            int seriesCount, catCount;
 
             if (this.dataExtractOrder == TableOrder.BY_ROW) {
                 seriesCount = this.dataset.getRowCount();
@@ -1247,8 +1244,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * @param catCount  the number of categories
      */
     private void calculateMaxValue(int seriesCount, int catCount) {
-        double v = 0;
-        Number nV = null;
+        double v;
+        Number nV;
 
         for (int seriesIndex = 0; seriesIndex < seriesCount; seriesIndex++) {
             for (int catIndex = 0; catIndex < catCount; catIndex++) {
@@ -1335,7 +1332,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
                     g2.draw(head);
 
                     if (entities != null) {
-                        int row = 0; int col = 0;
+                        int row; int col;
                         if (this.dataExtractOrder == TableOrder.BY_ROW) {
                             row = series;
                             col = cat;

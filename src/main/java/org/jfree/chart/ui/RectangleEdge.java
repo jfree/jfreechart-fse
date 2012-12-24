@@ -42,32 +42,23 @@
 package org.jfree.chart.ui;
 
 import java.awt.geom.Rectangle2D;
-import java.io.ObjectStreamException;
-import java.io.Serializable;
 
 /**
  * Used to indicate the edge of a rectangle.
  */
-public final class RectangleEdge implements Serializable {
+public enum RectangleEdge {
 
-    /** For serialization. */
-    private static final long serialVersionUID = -7400988293691093548L;
-    
     /** Top. */
-    public static final RectangleEdge TOP 
-        = new RectangleEdge("RectangleEdge.TOP");
+    TOP("RectangleEdge.TOP"),
 
     /** Bottom. */
-    public static final RectangleEdge BOTTOM 
-        = new RectangleEdge("RectangleEdge.BOTTOM");
+    BOTTOM("RectangleEdge.BOTTOM"),
 
     /** Left. */
-    public static final RectangleEdge LEFT 
-        = new RectangleEdge("RectangleEdge.LEFT");
+    LEFT("RectangleEdge.LEFT"),
 
     /** Right. */
-    public static final RectangleEdge RIGHT 
-        = new RectangleEdge("RectangleEdge.RIGHT");
+    RIGHT("RectangleEdge.RIGHT");
 
     /** The name. */
     private String name;
@@ -89,43 +80,6 @@ public final class RectangleEdge implements Serializable {
     @Override
 	public String toString() {
         return this.name;
-    }
-
-    /**
-     * Returns <code>true</code> if this object is equal to the specified 
-     * object, and <code>false</code> otherwise.
-     *
-     * @param o  the other object.
-     *
-     * @return A boolean.
-     */
-    @Override
-	public boolean equals(final Object o) {
-
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof RectangleEdge)) {
-            return false;
-        }
-
-        final RectangleEdge order = (RectangleEdge) o;
-        if (!this.name.equals(order.name)) {
-            return false;
-        }
-
-        return true;
-
-    }
-
-    /**
-     * Returns a hash code value for the object.
-     *
-     * @return the hashcode
-     */
-    @Override
-	public int hashCode() {
-        return this.name.hashCode();
     }
 
     /**
@@ -201,29 +155,5 @@ public final class RectangleEdge implements Serializable {
         }
         return result;
     }
-    
-    /**
-     * Ensures that serialization returns the unique instances.
-     * 
-     * @return The object.
-     * 
-     * @throws ObjectStreamException if there is a problem.
-     */
-    private Object readResolve() throws ObjectStreamException {
-        RectangleEdge result = null;
-        if (this.equals(RectangleEdge.TOP)) {
-            result = RectangleEdge.TOP;
-        }
-        else if (this.equals(RectangleEdge.BOTTOM)) {
-            result = RectangleEdge.BOTTOM;
-        }
-        else if (this.equals(RectangleEdge.LEFT)) {
-            result = RectangleEdge.LEFT;
-        }
-        else if (this.equals(RectangleEdge.RIGHT)) {
-            result = RectangleEdge.RIGHT;
-        }
-        return result;
-    }
-    
+
 }

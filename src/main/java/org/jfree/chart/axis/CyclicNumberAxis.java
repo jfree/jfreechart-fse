@@ -424,11 +424,11 @@ public class CyclicNumberAxis extends NumberAxis {
      * @return A list of ticks.
      */
     @Override
-	protected List refreshTicksHorizontal(Graphics2D g2,
+	protected List<ValueTick> refreshTicksHorizontal(Graphics2D g2,
                                           Rectangle2D dataArea,
                                           RectangleEdge edge) {
 
-        List result = new java.util.ArrayList();
+        List<ValueTick> result = new java.util.ArrayList<ValueTick>();
 
         Font tickLabelFont = getTickLabelFont();
         g2.setFont(tickLabelFont);
@@ -473,8 +473,8 @@ public class CyclicNumberAxis extends NumberAxis {
                 tickLabel = getTickUnit().valueToString(currentTickValue);
             }
             float x = (float) xx;
-            TextAnchor anchor = null;
-            TextAnchor rotationAnchor = null;
+            TextAnchor anchor;
+            TextAnchor rotationAnchor;
             double angle = 0.0;
             if (isVerticalTickLabels()) {
                 if (edge == RectangleEdge.TOP) {
@@ -542,7 +542,7 @@ public class CyclicNumberAxis extends NumberAxis {
 
             CycleBoundTick tick = new CycleBoundTick(
                 this.boundMappedToLastCycle,
-                new Double(currentTickValue), tickLabel, anchor,
+                    currentTickValue, tickLabel, anchor,
                 rotationAnchor, angle
             );
             if (currentTickValue == cycleBound) {
@@ -577,11 +577,11 @@ public class CyclicNumberAxis extends NumberAxis {
      *
      * @return A list of ticks.
      */
-    protected List refreshVerticalTicks(Graphics2D g2,
+    protected List<ValueTick> refreshVerticalTicks(Graphics2D g2,
                                         Rectangle2D dataArea,
                                         RectangleEdge edge) {
 
-        List result = new java.util.ArrayList();
+        List<ValueTick> result = new java.util.ArrayList<ValueTick>();
         result.clear();
 
         Font tickLabelFont = getTickLabelFont();
@@ -627,8 +627,8 @@ public class CyclicNumberAxis extends NumberAxis {
             }
 
             float y = (float) yy;
-            TextAnchor anchor = null;
-            TextAnchor rotationAnchor = null;
+            TextAnchor anchor;
+            TextAnchor rotationAnchor;
             double angle = 0.0;
             if (isVerticalTickLabels()) {
 
@@ -711,7 +711,7 @@ public class CyclicNumberAxis extends NumberAxis {
             }
 
             CycleBoundTick tick = new CycleBoundTick(
-                this.boundMappedToLastCycle, new Double(currentTickValue),
+                this.boundMappedToLastCycle, currentTickValue,
                 tickLabel, anchor, rotationAnchor, angle
             );
             if (currentTickValue == cycleBound) {

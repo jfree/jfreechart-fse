@@ -197,7 +197,7 @@ public class ColumnArrangement implements Arrangement, Serializable {
     protected Size2D arrangeNF(BlockContainer container, Graphics2D g2,
                                RectangleConstraint constraint) {
 
-        List blocks = container.getBlocks();
+        List<Block> blocks = container.getBlocks();
 
         double height = constraint.getHeight();
         if (height <= 0.0) {
@@ -207,39 +207,36 @@ public class ColumnArrangement implements Arrangement, Serializable {
         double x = 0.0;
         double y = 0.0;
         double maxWidth = 0.0;
-        List itemsInColumn = new ArrayList();
-        for (int i = 0; i < blocks.size(); i++) {
-            Block block = (Block) blocks.get(i);
+        List<Block> itemsInColumn = new ArrayList<Block>();
+        for (Block block : blocks) {
             Size2D size = block.arrange(g2, RectangleConstraint.NONE);
             if (y + size.height <= height) {
                 itemsInColumn.add(block);
                 block.setBounds(
-                    new Rectangle2D.Double(x, y, size.width, size.height)
+                        new Rectangle2D.Double(x, y, size.width, size.height)
                 );
                 y = y + size.height + this.verticalGap;
                 maxWidth = Math.max(maxWidth, size.width);
-            }
-            else {
+            } else {
                 if (itemsInColumn.isEmpty()) {
                     // place in this column (truncated) anyway
                     block.setBounds(
-                        new Rectangle2D.Double(
-                            x, y, size.width, Math.min(size.height, height - y)
-                        )
+                            new Rectangle2D.Double(
+                                    x, y, size.width, Math.min(size.height, height - y)
+                            )
                     );
                     y = 0.0;
                     x = x + size.width + this.horizontalGap;
-                }
-                else {
+                } else {
                     // start new column
                     itemsInColumn.clear();
                     x = x + maxWidth + this.horizontalGap;
                     y = 0.0;
                     maxWidth = size.width;
                     block.setBounds(
-                        new Rectangle2D.Double(
-                            x, y, size.width, Math.min(size.height, height)
-                        )
+                            new Rectangle2D.Double(
+                                    x, y, size.width, Math.min(size.height, height)
+                            )
                     );
                     y = size.height + this.verticalGap;
                     itemsInColumn.add(block);
@@ -314,12 +311,12 @@ public class ColumnArrangement implements Arrangement, Serializable {
         double y = 0.0;
         double height = 0.0;
         double maxWidth = 0.0;
-        List blocks = container.getBlocks();
+        List<Block> blocks = container.getBlocks();
         int blockCount = blocks.size();
         if (blockCount > 0) {
             Size2D[] sizes = new Size2D[blocks.size()];
             for (int i = 0; i < blocks.size(); i++) {
-                Block block = (Block) blocks.get(i);
+                Block block = blocks.get(i);
                 sizes[i] = block.arrange(g2, RectangleConstraint.NONE);
                 height = height + sizes[i].getHeight();
                 maxWidth = Math.max(sizes[i].width, maxWidth);
@@ -334,13 +331,12 @@ public class ColumnArrangement implements Arrangement, Serializable {
                 height = height + this.verticalGap * (blockCount - 1);
             }
             if (this.horizontalAlignment != HorizontalAlignment.LEFT) {
-                for (int i = 0; i < blocks.size(); i++) {
+                for (Block block : blocks) {
                     //Block b = (Block) blocks.get(i);
                     if (this.horizontalAlignment
                             == HorizontalAlignment.CENTER) {
                         //TODO: shift block right by half
-                    }
-                    else if (this.horizontalAlignment
+                    } else if (this.horizontalAlignment
                             == HorizontalAlignment.RIGHT) {
                         //TODO: shift block over to right
                     }

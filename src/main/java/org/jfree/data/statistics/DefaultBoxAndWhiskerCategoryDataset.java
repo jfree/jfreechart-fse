@@ -123,7 +123,7 @@ public class DefaultBoxAndWhiskerCategoryDataset extends AbstractDataset
      *
      * @see #add(BoxAndWhiskerItem, Comparable, Comparable)
      */
-    public void add(List list, Comparable rowKey, Comparable columnKey) {
+    public void add(List<Number> list, Comparable rowKey, Comparable columnKey) {
         BoxAndWhiskerItem item = BoxAndWhiskerCalculator
                 .calculateBoxAndWhiskerStatistics(list);
         add(item, rowKey, columnKey);
@@ -544,7 +544,7 @@ public class DefaultBoxAndWhiskerCategoryDataset extends AbstractDataset
      * @see #getRowKeys()
      */
     @Override
-	public List getColumnKeys() {
+	public List<Comparable> getColumnKeys() {
         return this.data.getColumnKeys();
     }
 
@@ -585,7 +585,7 @@ public class DefaultBoxAndWhiskerCategoryDataset extends AbstractDataset
      * @see #getColumnKeys()
      */
     @Override
-	public List getRowKeys() {
+	public List<Comparable> getRowKeys() {
         return this.data.getRowKeys();
     }
 
@@ -835,8 +835,8 @@ public class DefaultBoxAndWhiskerCategoryDataset extends AbstractDataset
      * @see #getItem(int, int)
      */
     @Override
-	public List getOutliers(int row, int column) {
-        List result = null;
+	public List<Number> getOutliers(int row, int column) {
+        List<Number> result = null;
         BoxAndWhiskerItem item = (BoxAndWhiskerItem) this.data.getObject(
                 row, column);
         if (item != null) {
@@ -856,8 +856,8 @@ public class DefaultBoxAndWhiskerCategoryDataset extends AbstractDataset
      * @see #getItem(int, int)
      */
     @Override
-	public List getOutliers(Comparable rowKey, Comparable columnKey) {
-        List result = null;
+	public List<Number> getOutliers(Comparable rowKey, Comparable columnKey) {
+        List<Number> result = null;
         BoxAndWhiskerItem item = (BoxAndWhiskerItem) this.data.getObject(
                 rowKey, columnKey);
         if (item != null) {

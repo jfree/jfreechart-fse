@@ -222,8 +222,8 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
                     float[] x = new float[np]; // x-coordinates of nodes
                     float y;
                     float t;
-                    float oldy = 0;
-                    float oldt = 0;
+                    float oldy;
+                    float oldt;
 
                     float[] a = new float[np];
                     float t1;

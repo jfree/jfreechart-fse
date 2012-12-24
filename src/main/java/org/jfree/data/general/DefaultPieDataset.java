@@ -119,7 +119,7 @@ public class DefaultPieDataset extends AbstractDataset
      * @return The categories in the dataset.
      */
     @Override
-	public List getKeys() {
+	public List<Comparable> getKeys() {
         return Collections.unmodifiableList(this.data.getKeys());
     }
 

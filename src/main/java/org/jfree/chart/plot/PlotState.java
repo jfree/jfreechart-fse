@@ -40,6 +40,9 @@
 
 package org.jfree.chart.plot;
 
+import org.jfree.chart.axis.Axis;
+import org.jfree.chart.axis.AxisState;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,13 +52,13 @@ import java.util.Map;
 public class PlotState {
 
     /** The shared axis states. */
-    private Map sharedAxisStates;
+    private Map<Axis, AxisState> sharedAxisStates;
 
     /**
      * Creates a new state object.
      */
     public PlotState() {
-        this.sharedAxisStates = new HashMap();
+        this.sharedAxisStates = new HashMap<Axis, AxisState>();
     }
 
     /**
@@ -63,7 +66,7 @@ public class PlotState {
      *
      * @return A map.
      */
-    public Map getSharedAxisStates() {
+    public Map<Axis, AxisState> getSharedAxisStates() {
         return this.sharedAxisStates;
     }
 
