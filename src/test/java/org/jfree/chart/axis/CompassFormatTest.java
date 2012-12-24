@@ -1,4 +1,4 @@
-package org.jfree.chart.axis.junit;
+package org.jfree.chart.axis;
 
 
 import org.jfree.chart.axis.CompassFormat;
