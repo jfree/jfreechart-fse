@@ -56,12 +56,8 @@
 
 package org.jfree.chart.renderer.category;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.CategoryItemLabelGenerator;
 import org.jfree.chart.labels.CategoryToolTipGenerator;
@@ -70,9 +66,13 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.renderer.Renderer;
+import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.urls.CategoryURLGenerator;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 /**
  * A plug-in object that is used by the {@link CategoryPlot} class to display
@@ -94,372 +94,377 @@ import org.jfree.data.category.CategoryDataset;
  * the base setting to be <code>null</code>, while other attributes enforce
  * non-<code>null</code> values.
  */
-public interface CategoryItemRenderer extends Renderer {
+public interface CategoryItemRenderer
+        <RowKey extends Comparable, ColumnKey extends Comparable>
+        extends Renderer {
 
-  /**
-   * Returns the plot that the renderer has been assigned to (where
-   * <code>null</code> indicates that the renderer is not currently assigned
-   * to a plot).
-   *
-   * @return The plot (possibly <code>null</code>).
-   *
-   * @see #setPlot(CategoryPlot)
-   */
-  public CategoryPlot getPlot();
+    /**
+     * Returns the plot that the renderer has been assigned to (where
+     * <code>null</code> indicates that the renderer is not currently assigned
+     * to a plot).
+     *
+     * @return The plot (possibly <code>null</code>).
+     *
+     * @see #setPlot(CategoryPlot)
+     */
+    public CategoryPlot getPlot();
 
-  /**
-   * Sets the plot that the renderer has been assigned to.  This method is
-   * usually called by the {@link CategoryPlot}, in normal usage you
-   * shouldn't need to call this method directly.
-   *
-   * @param plot  the plot (<code>null</code> not permitted).
-   *
-   * @see #getPlot()
-   */
-  public void setPlot(CategoryPlot plot);
+    /**
+     * Sets the plot that the renderer has been assigned to.  This method is
+     * usually called by the {@link CategoryPlot}, in normal usage you
+     * shouldn't need to call this method directly.
+     *
+     * @param plot  the plot (<code>null</code> not permitted).
+     *
+     * @see #getPlot()
+     */
+    public void setPlot(CategoryPlot plot);
 
-  /**
-   * Returns the range of values the renderer requires to display all the
-   * items from the specified dataset.
-   *
-   * @param dataset  the dataset (<code>null</code> permitted).
-   *
-   * @return The range (or <code>null</code> if the dataset is
-   *         <code>null</code> or empty).
-   */
-  public Range findRangeBounds(CategoryDataset dataset);
+    /**
+     * Returns the range of values the renderer requires to display all the
+     * items from the specified dataset.
+     *
+     * @param dataset  the dataset (<code>null</code> permitted).
+     *
+     * @return The range (or <code>null</code> if the dataset is
+     *         <code>null</code> or empty).
+     */
+    public Range findRangeBounds(CategoryDataset<RowKey, ColumnKey> dataset);
 
-  // FIXME: LegendItemGenerator?
-
-  
-  // TOOL TIP GENERATOR
-
-  /**
-   * Returns the tool tip generator that should be used for the specified
-   * item.  This method looks up the generator using the "three-layer"
-   * approach outlined in the general description of this interface.
-   *
-   * @param row  the row index (zero-based).
-   * @param column  the column index (zero-based).
-   *
-   * @return The generator (possibly <code>null</code>).
-   */
-  public CategoryToolTipGenerator getToolTipGenerator(int row, int column);
-
-  /**
-   * Returns the tool tip generator for the specified series (a "layer 1"
-   * generator).
-   *
-   * @param series  the series index (zero-based).
-   *
-   * @return The tool tip generator (possibly <code>null</code>).
-   *
-   * @see #setSeriesToolTipGenerator(int, CategoryToolTipGenerator)
-   */
-  public CategoryToolTipGenerator getSeriesToolTipGenerator(int series);
-
-  /**
-   * Sets the tool tip generator for a series and sends a
-   * {@link org.jfree.chart.event.RendererChangeEvent} to all registered
-   * listeners.
-   *
-   * @param series  the series index (zero-based).
-   * @param generator  the generator (<code>null</code> permitted).
-   *
-   * @see #getSeriesToolTipGenerator(int)
-   */
-  public void setSeriesToolTipGenerator(int series,
-                      CategoryToolTipGenerator generator);
-
-  public void setSeriesToolTipGenerator(int series, 
-      CategoryToolTipGenerator generator, boolean notify);
-
-  /**
-   * Returns the default tool tip generator.
-   *
-   * @return The tool tip generator (possibly <code>null</code>).
-   *
-   * @see #setDefaultToolTipGenerator(CategoryToolTipGenerator)
-   */
-  public CategoryToolTipGenerator getDefaultToolTipGenerator();
-
-  /**
-   * Sets the default tool tip generator and sends a
-   * {@link org.jfree.chart.event.RendererChangeEvent} to all registered
-   * listeners.
-   *
-   * @param generator  the generator (<code>null</code> permitted).
-   *
-   * @see #getDefaultToolTipGenerator()
-   */
-  public void setDefaultToolTipGenerator(CategoryToolTipGenerator generator);
-
-  public void setDefaultToolTipGenerator(CategoryToolTipGenerator generator, 
-      boolean notify);
-
-  
-  // ITEM LABEL GENERATOR
-
-  /**
-   * Returns the item label generator for the specified data item.
-   *
-   * @param series  the series index (zero-based).
-   * @param item  the item index (zero-based).
-   *
-   * @return The generator (possibly <code>null</code>).
-   */
-  public CategoryItemLabelGenerator getItemLabelGenerator(int series,
-      int item);
-
-  /**
-   * Returns the item label generator for a series.
-   *
-   * @param series  the series index (zero-based).
-   *
-   * @return The label generator (possibly <code>null</code>).
-   *
-   * @see #setSeriesItemLabelGenerator(int, CategoryItemLabelGenerator)
-   */
-  public CategoryItemLabelGenerator getSeriesItemLabelGenerator(int series);
-
-  /**
-   * Sets the item label generator for a series and sends a
-   * {@link RendererChangeEvent} to all registered listeners.
-   *
-   * @param series  the series index (zero-based).
-   * @param generator  the generator.
-   *
-   * @see #getSeriesItemLabelGenerator(int)
-   */
-  public void setSeriesItemLabelGenerator(int series,
-      CategoryItemLabelGenerator generator);
-
-  public void setSeriesItemLabelGenerator(int series, 
-  		CategoryItemLabelGenerator generator, boolean notify);
-
-  /**
-   * Returns the default item label generator.
-   *
-   * @return The generator (possibly <code>null</code>).
-   *
-   * @see #setDefaultItemLabelGenerator(CategoryItemLabelGenerator)
-   */
-  public CategoryItemLabelGenerator getDefaultItemLabelGenerator();
-
-  /**
-   * Sets the default item label generator and sends a
-   * {@link RendererChangeEvent} to all registered listeners.
-   *
-   * @param generator  the generator (<code>null</code> permitted).
-   *
-   * @see #getDefaultItemLabelGenerator()
-   */
-  public void setDefaultItemLabelGenerator(CategoryItemLabelGenerator generator);
-
-  public void setDefaultItemLabelGenerator(CategoryItemLabelGenerator generator,
-      boolean notify);
-
-  // ITEM URL GENERATOR
-
-  /**
-   * Returns the URL generator for an item.
-   *
-   * @param series  the series index (zero-based).
-   * @param item  the item index (zero-based).
-   *
-   * @return The item URL generator.
-   */
-  public CategoryURLGenerator getItemURLGenerator(int series, int item);
-
-  /**
-   * Returns the item URL generator for a series.
-   *
-   * @param series  the series index (zero-based).
-   *
-   * @return The URL generator.
-   *
-   * @see #setSeriesItemURLGenerator(int, CategoryURLGenerator)
-   */
-  public CategoryURLGenerator getSeriesItemURLGenerator(int series);
-
-  /**
-   * Sets the item URL generator for a series.
-   *
-   * @param series  the series index (zero-based).
-   * @param generator  the generator.
-   *
-   * @see #getSeriesItemURLGenerator(int)
-   */
-  public void setSeriesItemURLGenerator(int series,
-                      CategoryURLGenerator generator);
-
-  public void setSeriesItemURLGenerator(int series, 
-      CategoryURLGenerator generator, boolean notify);
-
-  /**
-   * Returns the default item URL generator.
-   *
-   * @return The item URL generator (possibly <code>null</code>).
-   *
-   * @see #setDefaultItemURLGenerator(CategoryURLGenerator)
-   */
-  public CategoryURLGenerator getDefaultItemURLGenerator();
-
-  /**
-   * Sets the default item URL generator and sends a {@link RendererChangeEvent}
-   * to all registered listeners.
-   *
-   * @param generator  the item URL generator (<code>null</code> permitted).
-   *
-   * @see #getDefaultItemURLGenerator()
-   */
-  public void setDefaultItemURLGenerator(CategoryURLGenerator generator);
-
-  public void setDefaultItemURLGenerator(CategoryURLGenerator generator, 
-      boolean notify);
-
-  
-  // FIXME: ANNOTATIONS
+    // FIXME: LegendItemGenerator?
 
 
-  //// DRAWING //////////////////////////////////////////////////////////////
-  
-  /**
-   * Initialises the renderer.  This method will be called before the first
-   * item is rendered, giving the renderer an opportunity to initialise any
-   * state information it wants to maintain. The renderer can do nothing if
-   * it chooses.
-   *
-   * @param g2  the graphics device.
-   * @param dataArea  the area inside the axes.
-   * @param plot  the plot.
-   * @param rendererIndex  the renderer index.
-   * @param info  collects chart rendering information for return to caller.
-   *
-   * @return A state object (maintains state information relevant to one
-   *         chart drawing).
-   */
-  public CategoryItemRendererState initialise(Graphics2D g2, 
-      Rectangle2D dataArea, CategoryPlot plot, int rendererIndex,
-      PlotRenderingInfo info);
+    // TOOL TIP GENERATOR
 
-  /**
-   * Draws a background for the data area.
-   *
-   * @param g2  the graphics device.
-   * @param plot  the plot.
-   * @param dataArea  the data area.
-   */
-  public void drawBackground(Graphics2D g2, CategoryPlot plot,
-      Rectangle2D dataArea);
+    /**
+     * Returns the tool tip generator that should be used for the specified
+     * item.  This method looks up the generator using the "three-layer"
+     * approach outlined in the general description of this interface.
+     *
+     * @param row  the row index (zero-based).
+     * @param column  the column index (zero-based).
+     *
+     * @return The generator (possibly <code>null</code>).
+     */
+    public CategoryToolTipGenerator<RowKey, ColumnKey> getToolTipGenerator(int row, int column);
 
-  /**
-   * Draws an outline for the data area.
-   *
-   * @param g2  the graphics device.
-   * @param plot  the plot.
-   * @param dataArea  the data area.
-   */
-  public void drawOutline(Graphics2D g2, CategoryPlot plot,
-      Rectangle2D dataArea);
+    /**
+     * Returns the tool tip generator for the specified series (a "layer 1"
+     * generator).
+     *
+     * @param series  the series index (zero-based).
+     *
+     * @return The tool tip generator (possibly <code>null</code>).
+     *
+     * @see #setSeriesToolTipGenerator(int, CategoryToolTipGenerator)
+     */
+    public CategoryToolTipGenerator<RowKey, ColumnKey> getSeriesToolTipGenerator(int series);
 
-  /**
-   * Draws a single data item.
-   *
-   * @param g2  the graphics device.
-   * @param state  state information for one chart.
-   * @param dataArea  the data plot area.
-   * @param plot  the plot.
-   * @param domainAxis  the domain axis.
-   * @param rangeAxis  the range axis.
-   * @param dataset  the data.
-   * @param row  the row index (zero-based).
-   * @param column  the column index (zero-based).
-   * @param pass  the pass index.
-   */
-  public void drawItem(Graphics2D g2, CategoryItemRendererState state,
-      Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
-      ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
-      int pass);
+    /**
+     * Sets the tool tip generator for a series and sends a
+     * {@link org.jfree.chart.event.RendererChangeEvent} to all registered
+     * listeners.
+     *
+     * @param series  the series index (zero-based).
+     * @param generator  the generator (<code>null</code> permitted).
+     *
+     * @see #getSeriesToolTipGenerator(int)
+     */
+    public void setSeriesToolTipGenerator(int series,
+                                          CategoryToolTipGenerator<RowKey, ColumnKey> generator);
 
-  /**
-   * Draws a grid line against the domain axis.
-   *
-   * @param g2  the graphics device.
-   * @param plot  the plot.
-   * @param dataArea  the area for plotting data (not yet adjusted for any
-   *                 3D effect).
-   * @param value  the value.
-   *
-   * @see #drawRangeGridline(Graphics2D, CategoryPlot, ValueAxis,
-   *   Rectangle2D, double)
-   */
-  public void drawDomainGridline(Graphics2D g2, CategoryPlot plot,
-      Rectangle2D dataArea, double value);
+    public void setSeriesToolTipGenerator(int series,
+                                          CategoryToolTipGenerator<RowKey, ColumnKey> generator, boolean notify);
 
-  /**
-   * Draws a grid line against the range axis.
-   *
-   * @param g2  the graphics device.
-   * @param plot  the plot.
-   * @param axis  the value axis.
-   * @param dataArea  the area for plotting data (not yet adjusted for any
-   *                  3D effect).
-   * @param value  the value.
-   *
-   * @see #drawDomainGridline(Graphics2D, CategoryPlot, Rectangle2D, double)
-   */
-  public void drawRangeGridline(Graphics2D g2, CategoryPlot plot,
-      ValueAxis axis, Rectangle2D dataArea, double value);
+    /**
+     * Returns the default tool tip generator.
+     *
+     * @return The tool tip generator (possibly <code>null</code>).
+     *
+     * @see #setDefaultToolTipGenerator(CategoryToolTipGenerator)
+     */
+    public CategoryToolTipGenerator<RowKey, ColumnKey> getDefaultToolTipGenerator();
 
-  /**
-   * Draws a line (or some other marker) to indicate a particular category on
-   * the domain axis.
-   *
-   * @param g2  the graphics device.
-   * @param plot  the plot.
-   * @param axis  the category axis.
-   * @param marker  the marker.
-   * @param dataArea  the area for plotting data (not including 3D effect).
-   *
-   * @see #drawRangeMarker(Graphics2D, CategoryPlot, ValueAxis, Marker,
-   *   Rectangle2D)
-   */
-  public void drawDomainMarker(Graphics2D g2, CategoryPlot plot,
-      CategoryAxis axis, CategoryMarker marker, Rectangle2D dataArea);
+    /**
+     * Sets the default tool tip generator and sends a
+     * {@link org.jfree.chart.event.RendererChangeEvent} to all registered
+     * listeners.
+     *
+     * @param generator  the generator (<code>null</code> permitted).
+     *
+     * @see #getDefaultToolTipGenerator()
+     */
+    public void setDefaultToolTipGenerator(CategoryToolTipGenerator<RowKey, ColumnKey> generator);
 
-  /**
-   * Draws a line (or some other marker) to indicate a particular value on
-   * the range axis.
-   *
-   * @param g2  the graphics device.
-   * @param plot  the plot.
-   * @param axis  the value axis.
-   * @param marker  the marker.
-   * @param dataArea  the area for plotting data (not including 3D effect).
-   *
-   * @see #drawDomainMarker(Graphics2D, CategoryPlot, CategoryAxis,
-   *   CategoryMarker, Rectangle2D)
-   */
-  public void drawRangeMarker(Graphics2D g2, CategoryPlot plot,
-      ValueAxis axis, Marker marker, Rectangle2D dataArea);
+    public void setDefaultToolTipGenerator(CategoryToolTipGenerator<RowKey, ColumnKey> generator,
+                                           boolean notify);
 
-  /**
-   * Returns the Java2D coordinate for the middle of the specified data item.
-   *
-   * @param rowKey  the row key.
-   * @param columnKey  the column key.
-   * @param dataset  the dataset.
-   * @param axis  the axis.
-   * @param area  the data area.
-   * @param edge  the edge along which the axis lies.
-   *
-   * @return The Java2D coordinate for the middle of the item.
-   *
-   * @since 1.0.11
-   */
-  public double getItemMiddle(Comparable rowKey, Comparable columnKey,
-      CategoryDataset dataset, CategoryAxis axis, Rectangle2D area,
-      RectangleEdge edge);
+
+    // ITEM LABEL GENERATOR
+
+    /**
+     * Returns the item label generator for the specified data item.
+     *
+     * @param series  the series index (zero-based).
+     * @param item  the item index (zero-based).
+     *
+     * @return The generator (possibly <code>null</code>).
+     */
+    public CategoryItemLabelGenerator<RowKey, ColumnKey> getItemLabelGenerator(int series,
+                                                                               int item);
+
+    /**
+     * Returns the item label generator for a series.
+     *
+     * @param series  the series index (zero-based).
+     *
+     * @return The label generator (possibly <code>null</code>).
+     *
+     * @see #setSeriesItemLabelGenerator(int, CategoryItemLabelGenerator)
+     */
+    public CategoryItemLabelGenerator<RowKey, ColumnKey> getSeriesItemLabelGenerator(int series);
+
+    /**
+     * Sets the item label generator for a series and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param series  the series index (zero-based).
+     * @param generator  the generator.
+     *
+     * @see #getSeriesItemLabelGenerator(int)
+     */
+    public void setSeriesItemLabelGenerator(int series,
+                                            CategoryItemLabelGenerator<RowKey, ColumnKey> generator);
+
+    public void setSeriesItemLabelGenerator(int series,
+                                            CategoryItemLabelGenerator<RowKey, ColumnKey> generator, boolean notify);
+
+    /**
+     * Returns the default item label generator.
+     *
+     * @return The generator (possibly <code>null</code>).
+     *
+     * @see #setDefaultItemLabelGenerator(CategoryItemLabelGenerator)
+     */
+    public CategoryItemLabelGenerator<RowKey, ColumnKey> getDefaultItemLabelGenerator();
+
+    /**
+     * Sets the default item label generator and sends a
+     * {@link RendererChangeEvent} to all registered listeners.
+     *
+     * @param generator  the generator (<code>null</code> permitted).
+     *
+     * @see #getDefaultItemLabelGenerator()
+     */
+    public void setDefaultItemLabelGenerator(CategoryItemLabelGenerator<RowKey, ColumnKey> generator);
+
+    public void setDefaultItemLabelGenerator(CategoryItemLabelGenerator<RowKey, ColumnKey> generator,
+                                             boolean notify);
+
+    // ITEM URL GENERATOR
+
+    /**
+     * Returns the URL generator for an item.
+     *
+     * @param series  the series index (zero-based).
+     * @param item  the item index (zero-based).
+     *
+     * @return The item URL generator.
+     */
+    public CategoryURLGenerator<RowKey, ColumnKey> getItemURLGenerator(int series, int item);
+
+    /**
+     * Returns the item URL generator for a series.
+     *
+     * @param series  the series index (zero-based).
+     *
+     * @return The URL generator.
+     *
+     * @see #setSeriesItemURLGenerator(int, CategoryURLGenerator)
+     */
+    public CategoryURLGenerator<RowKey, ColumnKey> getSeriesItemURLGenerator(int series);
+
+    /**
+     * Sets the item URL generator for a series.
+     *
+     * @param series  the series index (zero-based).
+     * @param generator  the generator.
+     *
+     * @see #getSeriesItemURLGenerator(int)
+     */
+    public void setSeriesItemURLGenerator(int series,
+                                          CategoryURLGenerator<RowKey, ColumnKey> generator);
+
+    public void setSeriesItemURLGenerator(int series,
+                                          CategoryURLGenerator<RowKey, ColumnKey> generator, boolean notify);
+
+    /**
+     * Returns the default item URL generator.
+     *
+     * @return The item URL generator (possibly <code>null</code>).
+     *
+     * @see #setDefaultItemURLGenerator(CategoryURLGenerator)
+     */
+    public CategoryURLGenerator<RowKey, ColumnKey> getDefaultItemURLGenerator();
+
+    /**
+     * Sets the default item URL generator and sends a {@link RendererChangeEvent}
+     * to all registered listeners.
+     *
+     * @param generator  the item URL generator (<code>null</code> permitted).
+     *
+     * @see #getDefaultItemURLGenerator()
+     */
+    public void setDefaultItemURLGenerator(CategoryURLGenerator<RowKey, ColumnKey> generator);
+
+    public void setDefaultItemURLGenerator(CategoryURLGenerator<RowKey, ColumnKey> generator,
+                                           boolean notify);
+
+
+    // FIXME: ANNOTATIONS
+
+
+    //// DRAWING //////////////////////////////////////////////////////////////
+
+    /**
+     * Initialises the renderer.  This method will be called before the first
+     * item is rendered, giving the renderer an opportunity to initialise any
+     * state information it wants to maintain. The renderer can do nothing if
+     * it chooses.
+     *
+     * @param g2  the graphics device.
+     * @param dataArea  the area inside the axes.
+     * @param plot  the plot.
+     * @param rendererIndex  the renderer index.
+     * @param info  collects chart rendering information for return to caller.
+     *
+     * @return A state object (maintains state information relevant to one
+     *         chart drawing).
+     */
+    public CategoryItemRendererState initialise(Graphics2D g2,
+                                                Rectangle2D dataArea, CategoryPlot plot, int rendererIndex,
+                                                PlotRenderingInfo info);
+
+    /**
+     * Draws a background for the data area.
+     *
+     * @param g2  the graphics device.
+     * @param plot  the plot.
+     * @param dataArea  the data area.
+     */
+    public void drawBackground(Graphics2D g2, CategoryPlot plot,
+                               Rectangle2D dataArea);
+
+    /**
+     * Draws an outline for the data area.
+     *
+     * @param g2  the graphics device.
+     * @param plot  the plot.
+     * @param dataArea  the data area.
+     */
+    public void drawOutline(Graphics2D g2, CategoryPlot plot,
+                            Rectangle2D dataArea);
+
+    /**
+     * Draws a single data item.
+     *
+     * @param g2  the graphics device.
+     * @param state  state information for one chart.
+     * @param dataArea  the data plot area.
+     * @param plot  the plot.
+     * @param domainAxis  the domain axis.
+     * @param rangeAxis  the range axis.
+     * @param dataset  the data.
+     * @param row  the row index (zero-based).
+     * @param column  the column index (zero-based).
+     * @param pass  the pass index.
+     */
+    public void drawItem(Graphics2D g2, CategoryItemRendererState state,
+                         Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
+                         ValueAxis rangeAxis, CategoryDataset<RowKey, ColumnKey> dataset, int row, int column,
+                         int pass);
+
+    /**
+     * Draws a grid line against the domain axis.
+     *
+     * @param g2  the graphics device.
+     * @param plot  the plot.
+     * @param dataArea  the area for plotting data (not yet adjusted for any
+     *                 3D effect).
+     * @param value  the value.
+     *
+     * @see #drawRangeGridline(Graphics2D, CategoryPlot, ValueAxis,
+     *   Rectangle2D, double)
+     */
+    public void drawDomainGridline(Graphics2D g2, CategoryPlot plot,
+                                   Rectangle2D dataArea, double value);
+
+    /**
+     * Draws a grid line against the range axis.
+     *
+     * @param g2  the graphics device.
+     * @param plot  the plot.
+     * @param axis  the value axis.
+     * @param dataArea  the area for plotting data (not yet adjusted for any
+     *                  3D effect).
+     * @param value  the value.
+     *
+     * @see #drawDomainGridline(Graphics2D, CategoryPlot, Rectangle2D, double)
+     */
+    public void drawRangeGridline(Graphics2D g2, CategoryPlot plot,
+                                  ValueAxis axis, Rectangle2D dataArea, double value);
+
+    /**
+     * Draws a line (or some other marker) to indicate a particular category on
+     * the domain axis.
+     *
+     * @param g2  the graphics device.
+     * @param plot  the plot.
+     * @param axis  the category axis.
+     * @param marker  the marker.
+     * @param dataArea  the area for plotting data (not including 3D effect).
+     *
+     * @see #drawRangeMarker(Graphics2D, CategoryPlot, ValueAxis, Marker,
+     *   Rectangle2D)
+     */
+    public void drawDomainMarker(Graphics2D g2, CategoryPlot plot,
+                                 CategoryAxis axis, CategoryMarker marker,
+                                 Rectangle2D dataArea);
+
+    /**
+     * Draws a line (or some other marker) to indicate a particular value on
+     * the range axis.
+     *
+     * @param g2  the graphics device.
+     * @param plot  the plot.
+     * @param axis  the value axis.
+     * @param marker  the marker.
+     * @param dataArea  the area for plotting data (not including 3D effect).
+     *
+     * @see #drawDomainMarker(Graphics2D, CategoryPlot, CategoryAxis,
+     *   CategoryMarker, Rectangle2D)
+     */
+    public void drawRangeMarker(Graphics2D g2, CategoryPlot plot,
+                                ValueAxis axis, Marker marker,
+                                Rectangle2D dataArea);
+
+    /**
+     * Returns the Java2D coordinate for the middle of the specified data item.
+     *
+     * @param rowKey  the row key.
+     * @param columnKey  the column key.
+     * @param dataset  the dataset.
+     * @param axis  the axis.
+     * @param area  the data area.
+     * @param edge  the edge along which the axis lies.
+     *
+     * @return The Java2D coordinate for the middle of the item.
+     *
+     * @since 1.0.11
+     */
+    public double getItemMiddle(Comparable rowKey, Comparable columnKey,
+                                CategoryDataset<RowKey, ColumnKey> dataset,
+                                CategoryAxis axis, Rectangle2D area,
+                                RectangleEdge edge);
 
 }

@@ -142,8 +142,9 @@ import java.util.List;
  * {@link CategoryItemRenderer} you are not required to extend this class,
  * but it makes the job easier.
  */
-public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
-        implements CategoryItemRenderer, Cloneable, PublicCloneable,
+public abstract class AbstractCategoryItemRenderer
+        <RowKey extends Comparable, ColumnKey extends Comparable> extends AbstractRenderer
+        implements CategoryItemRenderer<RowKey, ColumnKey>, Cloneable, PublicCloneable,
         Serializable {
 
     /** For serialization. */
@@ -153,19 +154,19 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     private CategoryPlot plot;
 
     /** A list of item label generators (one per series). */
-    private ObjectList itemLabelGeneratorList;
+    private GenericObjectList<CategoryItemLabelGenerator> itemLabelGeneratorList;
 
     /** The default item label generator. */
     private CategoryItemLabelGenerator defaultItemLabelGenerator;
 
     /** A list of tool tip generators (one per series). */
-    private ObjectList toolTipGeneratorList;
+    private GenericObjectList<CategoryToolTipGenerator> toolTipGeneratorList;
 
     /** The default tool tip generator. */
     private CategoryToolTipGenerator defaultToolTipGenerator;
 
     /** A list of item label generators (one per series). */
-    private ObjectList itemURLGeneratorList;
+    private GenericObjectList<CategoryURLGenerator> itemURLGeneratorList;
 
     /** The default item label generator. */
     private CategoryURLGenerator defaultItemURLGenerator;
@@ -193,9 +194,9 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * generators.
      */
     protected AbstractCategoryItemRenderer() {
-        this.itemLabelGeneratorList = new ObjectList();
-        this.toolTipGeneratorList = new ObjectList();
-        this.itemURLGeneratorList = new ObjectList();
+        this.itemLabelGeneratorList = new GenericObjectList<CategoryItemLabelGenerator>();
+        this.toolTipGeneratorList = new GenericObjectList<CategoryToolTipGenerator>();
+        this.itemURLGeneratorList = new GenericObjectList<CategoryURLGenerator>();
         this.legendItemLabelGenerator
                 = new StandardCategorySeriesLabelGenerator();
     }
@@ -271,9 +272,8 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public CategoryItemLabelGenerator getSeriesItemLabelGenerator(int series) {
-
-        CategoryItemLabelGenerator generator = (CategoryItemLabelGenerator)
-                this.itemLabelGeneratorList.get(series);
+        CategoryItemLabelGenerator generator
+                = this.itemLabelGeneratorList.get(series);
         if (generator == null) {
             generator = this.defaultItemLabelGenerator;
         }
@@ -393,7 +393,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public CategoryToolTipGenerator getSeriesToolTipGenerator(int series) {
-        return (CategoryToolTipGenerator) this.toolTipGeneratorList.get(series);
+        return this.toolTipGeneratorList.get(series);
     }
 
     /**
@@ -499,8 +499,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public CategoryURLGenerator getSeriesItemURLGenerator(int series) {
-        CategoryURLGenerator generator
-                = (CategoryURLGenerator) this.itemURLGeneratorList.get(series);
+        CategoryURLGenerator generator = this.itemURLGeneratorList.get(series);
         if (generator == null) {
             generator = this.defaultItemURLGenerator;
         }
@@ -690,13 +689,13 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      *
      * @since 1.0.13
      */
-    protected Range findRangeBounds(CategoryDataset dataset,
+    protected Range findRangeBounds(CategoryDataset<RowKey, ColumnKey> dataset,
                                     boolean includeInterval) {
         if (dataset == null) {
             return null;
         }
         if (getDataBoundsIncludesVisibleSeriesOnly()) {
-            List visibleSeriesKeys = new ArrayList();
+            List<RowKey> visibleSeriesKeys = new ArrayList<RowKey>();
             int seriesCount = dataset.getRowCount();
             for (int s = 0; s < seriesCount; s++) {
                 if (isSeriesVisible(s)) {
@@ -1468,6 +1467,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      *         belonging to the renderer does not support cloning (for example,
      *         an item label generator).
      */
+    @SuppressWarnings("unchecked")
     @Override
     public Object clone() throws CloneNotSupportedException {
 
@@ -1476,7 +1476,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
 
         if (this.itemLabelGeneratorList != null) {
             clone.itemLabelGeneratorList
-                    = (ObjectList) this.itemLabelGeneratorList.clone();
+                    = (GenericObjectList<CategoryItemLabelGenerator>) this.itemLabelGeneratorList.clone();
         }
 
         if (this.defaultItemLabelGenerator != null) {
@@ -1493,7 +1493,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
 
         if (this.toolTipGeneratorList != null) {
             clone.toolTipGeneratorList
-                    = (ObjectList) this.toolTipGeneratorList.clone();
+                    = (GenericObjectList<CategoryToolTipGenerator>) this.toolTipGeneratorList.clone();
         }
 
         if (this.defaultToolTipGenerator != null) {
@@ -1510,7 +1510,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
 
         if (this.itemURLGeneratorList != null) {
             clone.itemURLGeneratorList
-                    = (ObjectList) this.itemURLGeneratorList.clone();
+                    = (GenericObjectList<CategoryURLGenerator>) this.itemURLGeneratorList.clone();
         }
 
         if (this.defaultItemURLGenerator != null) {
@@ -1525,16 +1525,13 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
         }
 
         if (this.legendItemLabelGenerator instanceof PublicCloneable) {
-            clone.legendItemLabelGenerator = (CategorySeriesLabelGenerator)
-                    ObjectUtilities.clone(this.legendItemLabelGenerator);
+            clone.legendItemLabelGenerator = ObjectUtilities.clone(this.legendItemLabelGenerator);
         }
         if (this.legendItemToolTipGenerator instanceof PublicCloneable) {
-            clone.legendItemToolTipGenerator = (CategorySeriesLabelGenerator)
-                    ObjectUtilities.clone(this.legendItemToolTipGenerator);
+            clone.legendItemToolTipGenerator = ObjectUtilities.clone(this.legendItemToolTipGenerator);
         }
         if (this.legendItemURLGenerator instanceof PublicCloneable) {
-            clone.legendItemURLGenerator = (CategorySeriesLabelGenerator)
-                    ObjectUtilities.clone(this.legendItemURLGenerator);
+            clone.legendItemURLGenerator = ObjectUtilities.clone(this.legendItemURLGenerator);
         }
         return clone;
     }

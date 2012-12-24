@@ -42,17 +42,15 @@
 
 package org.jfree.chart.util;
 
-import java.awt.Shape;
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import org.jfree.chart.util.SerialUtilities;
-
 /**
  * A table of {@link Shape} objects.
  */
-public class ShapeList extends AbstractObjectList {
+public class ShapeList extends GenericObjectList<Shape> {
 
     /**
      * Creates a new list.
@@ -69,7 +67,7 @@ public class ShapeList extends AbstractObjectList {
      * @return The object.
      */
     public Shape getShape(final int index) {
-        return (Shape) get(index);
+        return get(index);
     }
 
     /**
@@ -84,19 +82,6 @@ public class ShapeList extends AbstractObjectList {
     }
 
     /**
-     * Returns an independent copy of the list.
-     *
-     * @return A clone.
-     *
-     * @throws CloneNotSupportedException if an item in the list does not
-     *         support cloning.
-     */
-    @Override
-	public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
-    /**
      * Tests the list for equality with another object (typically also a list).
      *
      * @param obj  the other object (<code>null</code> permitted).
@@ -104,7 +89,7 @@ public class ShapeList extends AbstractObjectList {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
 
         if (obj == this) {
             return true;
@@ -115,22 +100,12 @@ public class ShapeList extends AbstractObjectList {
         ShapeList that = (ShapeList) obj;
         int listSize = size();
         for (int i = 0; i < listSize; i++) {
-           if (!ShapeUtilities.equal((Shape) get(i), (Shape) that.get(i))) {
-               return false;
-           }
+            if (!ShapeUtilities.equal((Shape) get(i), (Shape) that.get(i))) {
+                return false;
+            }
         }
         return true;
 
-    }
-
-    /**
-     * Returns a hash code value for the object.
-     *
-     * @return the hashcode
-     */
-    @Override
-	public int hashCode() {
-        return super.hashCode();
     }
 
     /**
@@ -150,8 +125,7 @@ public class ShapeList extends AbstractObjectList {
             if (shape != null) {
                 stream.writeInt(i);
                 SerialUtilities.writeShape(shape, stream);
-            }
-            else {
+            } else {
                 stream.writeInt(-1);
             }
         }
