@@ -80,7 +80,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -644,13 +643,11 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      * @param ticks  the ticks.
      */
     protected void drawDomainGridlines(Graphics2D g2, Rectangle2D dataArea,
-                                       List ticks) {
+                                       List<ValueTick> ticks) {
 
         // draw the domain grid lines, if the flag says they're visible...
         if (isDomainGridlinesVisible()) {
-            Iterator iterator = ticks.iterator();
-            while (iterator.hasNext()) {
-                ValueTick tick = (ValueTick) iterator.next();
+            for (ValueTick tick : ticks) {
                 double v = this.domainAxis.valueToJava2D(tick.getValue(),
                         dataArea, RectangleEdge.BOTTOM);
                 Line2D line = new Line2D.Double(v, dataArea.getMinY(), v,
@@ -670,13 +667,11 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      * @param ticks  the ticks.
      */
     protected void drawRangeGridlines(Graphics2D g2, Rectangle2D dataArea,
-                                      List ticks) {
+                                      List<ValueTick> ticks) {
 
         // draw the range grid lines, if the flag says they're visible...
         if (isRangeGridlinesVisible()) {
-            Iterator iterator = ticks.iterator();
-            while (iterator.hasNext()) {
-                ValueTick tick = (ValueTick) iterator.next();
+            for (ValueTick tick : ticks) {
                 double v = this.rangeAxis.valueToJava2D(tick.getValue(),
                         dataArea, RectangleEdge.LEFT);
                 Line2D line = new Line2D.Double(dataArea.getMinX(), v,

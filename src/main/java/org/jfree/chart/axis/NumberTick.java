@@ -89,7 +89,7 @@ public class NumberTick extends ValueTick {
                       TextAnchor rotationAnchor, double angle) {
 
         super(tickType, value, label, textAnchor, rotationAnchor, angle);
-        this.number = new Double(value);
+        this.number = value;
 
     }
 

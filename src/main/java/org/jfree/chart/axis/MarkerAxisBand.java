@@ -57,7 +57,6 @@ import java.awt.Graphics2D;
 import java.awt.font.LineMetrics;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.ui.RectangleEdge;
@@ -92,7 +91,7 @@ public class MarkerAxisBand implements Serializable {
     private Font font;
 
     /** Storage for the markers. */
-    private List markers;
+    private List<IntervalMarker> markers;
 
     /**
      * Constructs a new axis band.
@@ -114,7 +113,7 @@ public class MarkerAxisBand implements Serializable {
         this.bottomOuterGap = bottomOuterGap;
         this.bottomInnerGap = bottomInnerGap;
         this.font = font;
-        this.markers = new java.util.ArrayList();
+        this.markers = new java.util.ArrayList<IntervalMarker>();
     }
 
     /**
@@ -187,29 +186,27 @@ public class MarkerAxisBand implements Serializable {
                      double x, double y) {
 
         double h = getHeight(g2);
-        Iterator iterator = this.markers.iterator();
-        while (iterator.hasNext()) {
-            IntervalMarker marker = (IntervalMarker) iterator.next();
-            double start =  Math.max(
-                marker.getStartValue(), this.axis.getRange().getLowerBound()
+        for (IntervalMarker marker : this.markers) {
+            double start = Math.max(
+                    marker.getStartValue(), this.axis.getRange().getLowerBound()
             );
             double end = Math.min(
-                marker.getEndValue(), this.axis.getRange().getUpperBound()
+                    marker.getEndValue(), this.axis.getRange().getUpperBound()
             );
             double s = this.axis.valueToJava2D(
-                start, dataArea, RectangleEdge.BOTTOM
+                    start, dataArea, RectangleEdge.BOTTOM
             );
             double e = this.axis.valueToJava2D(
-                end, dataArea, RectangleEdge.BOTTOM
+                    end, dataArea, RectangleEdge.BOTTOM
             );
             Rectangle2D r = new Rectangle2D.Double(
-                s, y + this.topOuterGap, e - s,
-                h - this.topOuterGap - this.bottomOuterGap
+                    s, y + this.topOuterGap, e - s,
+                    h - this.topOuterGap - this.bottomOuterGap
             );
 
             Composite originalComposite = g2.getComposite();
             g2.setComposite(AlphaComposite.getInstance(
-                AlphaComposite.SRC_OVER, marker.getAlpha())
+                    AlphaComposite.SRC_OVER, marker.getAlpha())
             );
             g2.setPaint(marker.getPaint());
             g2.fill(r);

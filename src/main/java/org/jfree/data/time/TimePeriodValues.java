@@ -83,7 +83,7 @@ public class TimePeriodValues extends Series implements Serializable {
     private String range;
 
     /** The list of data pairs in the series. */
-    private List data;
+    private List<TimePeriodValue> data;
 
     /** Index of the time period with the minimum start milliseconds. */
     private int minStartIndex = -1;
@@ -127,7 +127,7 @@ public class TimePeriodValues extends Series implements Serializable {
         super(name);
         this.domain = domain;
         this.range = range;
-        this.data = new ArrayList();
+        this.data = new ArrayList<TimePeriodValue>();
     }
 
     /**
@@ -201,7 +201,7 @@ public class TimePeriodValues extends Series implements Serializable {
      * @return One data item for the series.
      */
     public TimePeriodValue getDataItem(int index) {
-        return (TimePeriodValue) this.data.get(index);
+        return this.data.get(index);
     }
 
     /**
@@ -344,7 +344,7 @@ public class TimePeriodValues extends Series implements Serializable {
         this.maxMiddleIndex = -1;
         this.maxEndIndex = -1;
         for (int i = 0; i < this.data.size(); i++) {
-            TimePeriodValue tpv = (TimePeriodValue) this.data.get(i);
+            TimePeriodValue tpv = this.data.get(i);
             updateBounds(tpv.getPeriod(), i);
         }
     }
@@ -499,16 +499,16 @@ public class TimePeriodValues extends Series implements Serializable {
 
         TimePeriodValues copy = (TimePeriodValues) super.clone();
 
-        copy.data = new ArrayList();
+        copy.data = new ArrayList<TimePeriodValue>();
         if (this.data.size() > 0) {
             for (int index = start; index <= end; index++) {
-                TimePeriodValue item = (TimePeriodValue) this.data.get(index);
+                TimePeriodValue item = this.data.get(index);
                 TimePeriodValue clone = (TimePeriodValue) item.clone();
                 try {
                     copy.add(clone);
                 }
                 catch (SeriesException e) {
-                    System.err.println("Failed to add cloned item.");
+                    throw new RuntimeException("Could not add cloned item", e);
                 }
             }
         }

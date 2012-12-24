@@ -156,7 +156,7 @@ public class DefaultCategoryDataset extends AbstractDataset
      * @see #getRowKey(int)
      */
     @Override
-	public List getRowKeys() {
+	public List<Comparable> getRowKeys() {
         return this.data.getRowKeys();
     }
 
@@ -197,7 +197,7 @@ public class DefaultCategoryDataset extends AbstractDataset
      * @see #getColumnKey(int)
      */
     @Override
-	public List getColumnKeys() {
+	public List<Comparable> getColumnKeys() {
         return this.data.getColumnKeys();
     }
 

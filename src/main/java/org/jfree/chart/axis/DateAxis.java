@@ -1514,12 +1514,12 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @return A list of ticks.
      */
     @Override
-	public List refreshTicks(Graphics2D g2,
+	public List<ValueTick> refreshTicks(Graphics2D g2,
                              AxisState state,
                              Rectangle2D dataArea,
                              RectangleEdge edge) {
 
-        List result = null;
+        List<ValueTick> result = null;
         if (RectangleEdge.isTopOrBottom(edge)) {
             result = refreshTicksHorizontal(g2, dataArea, edge);
         }
@@ -1561,10 +1561,10 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      *
      * @return A list of ticks.
      */
-    protected List refreshTicksHorizontal(Graphics2D g2,
+    protected List<ValueTick> refreshTicksHorizontal(Graphics2D g2,
                 Rectangle2D dataArea, RectangleEdge edge) {
 
-        List result = new java.util.ArrayList();
+        List<ValueTick> result = new java.util.ArrayList<ValueTick>();
 
         Font tickLabelFont = getTickLabelFont();
         g2.setFont(tickLabelFont);
@@ -1637,9 +1637,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                     }
                 }
 
-                Tick tick = new DateTick(tickDate, tickLabel, anchor,
-                        rotationAnchor, angle);
-                result.add(tick);
+                result.add(new DateTick(tickDate, tickLabel, anchor,
+                        rotationAnchor, angle));
                 hasRolled = false;
 
                 long currentTickTime = tickDate.getTime();
@@ -1680,10 +1679,10 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      *
      * @return A list of ticks.
      */
-    protected List refreshTicksVertical(Graphics2D g2,
+    protected List<ValueTick> refreshTicksVertical(Graphics2D g2,
             Rectangle2D dataArea, RectangleEdge edge) {
 
-        List result = new java.util.ArrayList();
+        List<ValueTick> result = new java.util.ArrayList<ValueTick>();
 
         Font tickLabelFont = getTickLabelFont();
         g2.setFont(tickLabelFont);
@@ -1755,9 +1754,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                     }
                 }
 
-                Tick tick = new DateTick(tickDate, tickLabel, anchor,
-                        rotationAnchor, angle);
-                result.add(tick);
+                result.add(new DateTick(tickDate, tickLabel, anchor,
+                        rotationAnchor, angle));
                 hasRolled = false;
 
                 long currentTickTime = tickDate.getTime();
@@ -1811,7 +1809,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             AxisState state = new AxisState(cursor);
             // even though the axis is not visible, we need to refresh ticks in
             // case the grid is being drawn...
-            List ticks = refreshTicks(g2, state, dataArea, edge);
+            List<ValueTick> ticks = refreshTicks(g2, state, dataArea, edge);
             state.setTicks(ticks);
             return state;
         }

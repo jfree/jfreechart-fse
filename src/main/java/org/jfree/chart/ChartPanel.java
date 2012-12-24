@@ -208,7 +208,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.EventListener;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -536,7 +535,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      *
      * @since 1.0.13
      */
-    private List overlays;
+    private List<Overlay> overlays;
 
     /**
      * Constructs a panel that displays the specified chart.
@@ -746,7 +745,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             this.panMask = InputEvent.ALT_MASK;
         }
 
-        this.overlays = new java.util.ArrayList();
+        this.overlays = new java.util.ArrayList<Overlay>();
     }
 
     /**
@@ -1008,7 +1007,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             Plot plot = this.chart.getPlot();
             if (plot instanceof Zoomable) {
                 Zoomable z = (Zoomable) plot;
-                this.domainZoomable = flag && (z.isDomainZoomable());
+                this.domainZoomable = z.isDomainZoomable();
             }
         }
         else {
@@ -1036,7 +1035,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             Plot plot = this.chart.getPlot();
             if (plot instanceof Zoomable) {
                 Zoomable z = (Zoomable) plot;
-                this.rangeZoomable = flag && (z.isRangeZoomable());
+                this.rangeZoomable = z.isRangeZoomable();
             }
         }
         else {
@@ -1644,9 +1643,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
         }
 
-        Iterator iterator = this.overlays.iterator();
-        while (iterator.hasNext()) {
-            Overlay overlay = (Overlay) iterator.next();
+        for (Overlay overlay : this.overlays) {
             overlay.paintOverlay(g2, this);
         }
 
@@ -1720,7 +1717,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                 doSaveAs();
             }
             catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException("Could not save chart", e);
             }
         }
         else if (command.equals(PRINT_COMMAND)) {
@@ -1924,8 +1921,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             drawZoomRectangle(g2, true);
         }
 
-        boolean hZoom = false;
-        boolean vZoom = false;
+        boolean hZoom;
+        boolean vZoom;
         if (this.orientation == PlotOrientation.HORIZONTAL) {
             hZoom = this.rangeZoomable;
             vZoom = this.domainZoomable;
@@ -1988,8 +1985,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         }
 
         else if (this.zoomRectangle != null) {
-            boolean hZoom = false;
-            boolean vZoom = false;
+            boolean hZoom;
+            boolean vZoom;
             if (this.orientation == PlotOrientation.HORIZONTAL) {
                 hZoom = this.rangeZoomable;
                 vZoom = this.domainZoomable;
@@ -2846,7 +2843,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         if (copy) {
             if (separator) {
                 result.addSeparator();
-                separator = false;
+                //separator = false; //this isn't needed as the value is replaced below
             }
             JMenuItem copyItem = new JMenuItem(
                     localizationResources.getString("Copy"));
@@ -2859,7 +2856,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         if (save) {
             if (separator) {
                 result.addSeparator();
-                separator = false;
+                //separator = false;    //this isn't neede as the value is replaced below
             }
             JMenuItem saveItem = new JMenuItem(
                     localizationResources.getString("Save_as..."));
@@ -2872,7 +2869,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         if (print) {
             if (separator) {
                 result.addSeparator();
-                separator = false;
+                //separator = false;   //This isn't necessary as the value is changed below
             }
             JMenuItem printItem = new JMenuItem(
                     localizationResources.getString("Print..."));
@@ -2885,7 +2882,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         if (zoom) {
             if (separator) {
                 result.addSeparator();
-                separator = false;
+                //separator = false;  //this isn't needed as the value isn't used after this point
             }
 
             JMenu zoomInMenu = new JMenu(

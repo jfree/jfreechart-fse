@@ -113,11 +113,10 @@ public class PaintUtilities {
     {
       try {
           final Field[] fields = Color.class.getFields();
-          for (int i = 0; i < fields.length; i++) {
-              final Field f = fields[i];
+          for (final Field f : fields) {
               if (Modifier.isPublic(f.getModifiers())
-                  && Modifier.isFinal(f.getModifiers())
-                  && Modifier.isStatic(f.getModifiers())) {
+                      && Modifier.isFinal(f.getModifiers())
+                      && Modifier.isStatic(f.getModifiers())) {
                   final String name = f.getName();
                   final Object oColor = f.get(null);
                   if (oColor instanceof Color) {

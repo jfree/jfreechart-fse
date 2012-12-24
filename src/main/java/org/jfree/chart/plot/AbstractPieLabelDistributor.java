@@ -52,13 +52,13 @@ import java.util.List;
 public abstract class AbstractPieLabelDistributor implements Serializable {
 
     /** The label records. */
-    protected List labels;
+    protected List<PieLabelRecord> labels;
 
     /**
      * Creates a new instance.
      */
     public AbstractPieLabelDistributor() {
-        this.labels = new java.util.ArrayList();
+        this.labels = new java.util.ArrayList<PieLabelRecord>();
     }
 
     /**
@@ -69,7 +69,7 @@ public abstract class AbstractPieLabelDistributor implements Serializable {
      * @return The label record.
      */
     public PieLabelRecord getPieLabelRecord(int index) {
-        return (PieLabelRecord) this.labels.get(index);
+        return this.labels.get(index);
     }
 
     /**

@@ -73,7 +73,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
     static final long serialVersionUID = -3004429093959826567L;
 
     /** Storage for the sublabels. */
-    private Map sublabels;
+    private Map<Comparable, String> sublabels;
 
     /** The sublabel font. */
     private Font sublabelFont;
@@ -88,7 +88,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
      */
     public ExtendedCategoryAxis(String label) {
         super(label);
-        this.sublabels = new HashMap();
+        this.sublabels = new HashMap<Comparable, String>();
         this.sublabelFont = new Font("SansSerif", Font.PLAIN, 10);
         this.sublabelPaint = Color.BLACK;
     }
@@ -172,7 +172,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
 	protected TextBlock createLabel(Comparable category, float width,
                                     RectangleEdge edge, Graphics2D g2) {
         TextBlock label = super.createLabel(category, width, edge, g2);
-        String s = (String) this.sublabels.get(category);
+        String s = this.sublabels.get(category);
         if (s != null) {
             if (edge == RectangleEdge.TOP || edge == RectangleEdge.BOTTOM) {
                 TextLine line = new TextLine(s, this.sublabelFont,
@@ -229,7 +229,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
     @Override
 	public Object clone() throws CloneNotSupportedException {
         ExtendedCategoryAxis clone = (ExtendedCategoryAxis) super.clone();
-        clone.sublabels = new HashMap(this.sublabels);
+        clone.sublabels = new HashMap<Comparable, String>(this.sublabels);
         return clone;
     }
 

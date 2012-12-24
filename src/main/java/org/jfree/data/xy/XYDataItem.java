@@ -55,7 +55,7 @@ import org.jfree.chart.util.ObjectUtilities;
  * Represents one (x, y) data item for an {@link XYSeries}.  Note that
  * subclasses are REQUIRED to support cloning.
  */
-public class XYDataItem implements Cloneable, Comparable, Serializable {
+public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 2751513470325494890L;
@@ -168,41 +168,29 @@ public class XYDataItem implements Cloneable, Comparable, Serializable {
      * For the order we consider only the x-value:
      * negative == "less-than", zero == "equal", positive == "greater-than".
      *
-     * @param o1  the object being compared to.
+     * @param dataItem  the object being compared to.
      *
      * @return An integer indicating the order of this data pair object
      *      relative to another object.
      */
     @Override
-	public int compareTo(Object o1) {
+	public int compareTo(XYDataItem dataItem) {
+       int result;
 
-        int result;
-
-        // CASE 1 : Comparing to another TimeSeriesDataPair object
-        // -------------------------------------------------------
-        if (o1 instanceof XYDataItem) {
-            XYDataItem dataItem = (XYDataItem) o1;
-            double compare = this.x.doubleValue()
-                             - dataItem.getX().doubleValue();
-            if (compare > 0.0) {
-                result = 1;
-            }
-            else {
-                if (compare < 0.0) {
-                    result = -1;
-                }
-                else {
-                    result = 0;
-                }
-            }
-        }
-
-        // CASE 2 : Comparing to a general object
-        // ---------------------------------------------
-        else {
-            // consider time periods to be ordered after general objects
+        double compare = this.x.doubleValue()
+                         - dataItem.getX().doubleValue();
+        if (compare > 0.0) {
             result = 1;
         }
+        else {
+            if (compare < 0.0) {
+                result = -1;
+            }
+            else {
+                result = 0;
+            }
+        }
+
 
         return result;
 
@@ -214,15 +202,16 @@ public class XYDataItem implements Cloneable, Comparable, Serializable {
      * @return A clone.
      */
     @Override
-	public Object clone() {
-        Object clone = null;
+	public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    public XYDataItem copy() {
         try {
-            clone = super.clone();
+            return (XYDataItem) clone();
+        } catch (CloneNotSupportedException e) {
+            return null;
         }
-        catch (CloneNotSupportedException e) { // won't get here...
-            e.printStackTrace();
-        }
-        return clone;
     }
 
     /**

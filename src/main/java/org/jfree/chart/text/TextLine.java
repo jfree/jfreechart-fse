@@ -54,7 +54,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.ui.Size2D;
@@ -72,13 +71,13 @@ public class TextLine implements Serializable {
     private static final long serialVersionUID = 7100085690160465444L;
     
     /** Storage for the text fragments that make up the line. */
-    private List fragments;
+    private List<TextFragment> fragments;
 
     /**
      * Creates a new empty line.
      */
     public TextLine() {
-        this.fragments = new java.util.ArrayList();
+        this.fragments = new java.util.ArrayList<TextFragment>();
     }
     
     /**
@@ -97,7 +96,7 @@ public class TextLine implements Serializable {
      * @param font  the text font (<code>null</code> not permitted).
      */
     public TextLine(final String text, final Font font) {
-        this.fragments = new java.util.ArrayList();
+        this.fragments = new java.util.ArrayList<TextFragment>();
         final TextFragment fragment = new TextFragment(text, font);
         this.fragments.add(fragment);
     }
@@ -119,7 +118,7 @@ public class TextLine implements Serializable {
         if (paint == null) {
             throw new IllegalArgumentException("Null 'paint' argument.");   
         }
-        this.fragments = new java.util.ArrayList();
+        this.fragments = new java.util.ArrayList<TextFragment>();
         final TextFragment fragment = new TextFragment(text, font, paint);
         this.fragments.add(fragment);
     }
@@ -162,13 +161,11 @@ public class TextLine implements Serializable {
     
         float x = anchorX;
         final float yOffset = calculateBaselineOffset(g2, anchor);
-        final Iterator iterator = this.fragments.iterator();
-        while (iterator.hasNext()) {
-            final TextFragment fragment = (TextFragment) iterator.next();
+        for (TextFragment fragment : this.fragments) {
             final Size2D d = fragment.calculateDimensions(g2);
             fragment.draw(
-                g2, x, anchorY + yOffset, TextAnchor.BASELINE_LEFT, 
-                rotateX, rotateY, angle
+                    g2, x, anchorY + yOffset, TextAnchor.BASELINE_LEFT,
+                    rotateX, rotateY, angle
             );
             x = x + (float) d.getWidth();
         }
@@ -185,9 +182,7 @@ public class TextLine implements Serializable {
     public Size2D calculateDimensions(final Graphics2D g2) {
         double width = 0.0;
         double height = 0.0;
-        final Iterator iterator = this.fragments.iterator();
-        while (iterator.hasNext()) {
-            final TextFragment fragment = (TextFragment) iterator.next();
+        for (TextFragment fragment : this.fragments) {
             final Size2D dimension = fragment.calculateDimensions(g2);
             width = width + dimension.getWidth();
             height = Math.max(height, dimension.getHeight());
@@ -203,7 +198,7 @@ public class TextLine implements Serializable {
     public TextFragment getFirstTextFragment() {
         TextFragment result = null;
         if (this.fragments.size() > 0) {
-            result = (TextFragment) this.fragments.get(0);
+            result = this.fragments.get(0);
         }    
         return result;
     }
@@ -216,7 +211,7 @@ public class TextLine implements Serializable {
     public TextFragment getLastTextFragment() {
         TextFragment result = null;
         if (this.fragments.size() > 0) {
-            result = (TextFragment) this.fragments.get(this.fragments.size() 
+            result = this.fragments.get(this.fragments.size()
                     - 1);
         }    
         return result;
@@ -234,10 +229,8 @@ public class TextLine implements Serializable {
     private float calculateBaselineOffset(final Graphics2D g2, 
                                           final TextAnchor anchor) {
         float result = 0.0f;
-        Iterator iterator = this.fragments.iterator();
-        while (iterator.hasNext()) {
-            TextFragment fragment = (TextFragment) iterator.next();
-            result = Math.max(result, 
+        for (TextFragment fragment : this.fragments) {
+            result = Math.max(result,
                     fragment.calculateBaselineOffset(g2, anchor));
         }
         return result;

@@ -127,7 +127,6 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.util.BooleanList;
-import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.util.UnitType;
@@ -328,7 +327,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
     public boolean getItemShapeFilled(int series, int item) {
         Boolean flag = this.seriesShapesFilled.getBoolean(series);
         if (flag != null) {
-            return flag.booleanValue();
+            return flag;
         }
         else {
             return this.baseShapesFilled;

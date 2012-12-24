@@ -82,7 +82,7 @@ public class StandardPieSectionLabelGenerator
     /**
      * An optional list of attributed labels (instances of AttributedString).
      */
-    private ObjectList attributedLabels;
+    private ObjectList<AttributedString> attributedLabels;
 
     /**
      * Creates a new section label generator using
@@ -142,7 +142,7 @@ public class StandardPieSectionLabelGenerator
     public StandardPieSectionLabelGenerator(String labelFormat,
             NumberFormat numberFormat, NumberFormat percentFormat) {
         super(labelFormat, numberFormat, percentFormat);
-        this.attributedLabels = new ObjectList();
+        this.attributedLabels = new ObjectList<AttributedString>();
     }
 
     /**
@@ -154,7 +154,7 @@ public class StandardPieSectionLabelGenerator
      * @return The attributed label.
      */
     public AttributedString getAttributedLabel(int section) {
-        return (AttributedString) this.attributedLabels.get(section);
+        return this.attributedLabels.get(section);
     }
 
     /**

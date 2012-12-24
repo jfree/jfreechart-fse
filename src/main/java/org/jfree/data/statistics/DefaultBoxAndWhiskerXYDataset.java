@@ -82,10 +82,10 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
     private Comparable seriesKey;
 
     /** Storage for the dates. */
-    private List dates;
+    private List<Date> dates;
 
     /** Storage for the box and whisker statistics. */
-    private List items;
+    private List<BoxAndWhiskerItem> items;
 
     /** The minimum range value. */
     private Number minimumRangeValue;
@@ -122,8 +122,8 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
      */
     public DefaultBoxAndWhiskerXYDataset(Comparable seriesKey) {
         this.seriesKey = seriesKey;
-        this.dates = new ArrayList();
-        this.items = new ArrayList();
+        this.dates = new ArrayList<Date>();
+        this.items = new ArrayList<BoxAndWhiskerItem>();
         this.minimumRangeValue = null;
         this.maximumRangeValue = null;
         this.rangeBounds = null;
@@ -272,7 +272,7 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
      * @return The item.
      */
     public BoxAndWhiskerItem getItem(int series, int item) {
-        return (BoxAndWhiskerItem) this.items.get(item);
+        return this.items.get(item);
     }
 
     /**
@@ -288,7 +288,7 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
      */
     @Override
 	public Number getX(int series, int item) {
-        return new Long(((Date) this.dates.get(item)).getTime());
+        return this.dates.get(item).getTime();
     }
 
     /**
@@ -302,7 +302,7 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
      * @return The x-value as a Date.
      */
     public Date getXDate(int series, int item) {
-        return (Date) this.dates.get(item);
+        return this.dates.get(item);
     }
 
     /**
@@ -332,7 +332,7 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
     @Override
 	public Number getMeanValue(int series, int item) {
         Number result = null;
-        BoxAndWhiskerItem stats = (BoxAndWhiskerItem) this.items.get(item);
+        BoxAndWhiskerItem stats = this.items.get(item);
         if (stats != null) {
             result = stats.getMean();
         }
@@ -350,7 +350,7 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
     @Override
 	public Number getMedianValue(int series, int item) {
         Number result = null;
-        BoxAndWhiskerItem stats = (BoxAndWhiskerItem) this.items.get(item);
+        BoxAndWhiskerItem stats = this.items.get(item);
         if (stats != null) {
             result = stats.getMedian();
         }
@@ -368,7 +368,7 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
     @Override
 	public Number getQ1Value(int series, int item) {
         Number result = null;
-        BoxAndWhiskerItem stats = (BoxAndWhiskerItem) this.items.get(item);
+        BoxAndWhiskerItem stats = this.items.get(item);
         if (stats != null) {
             result = stats.getQ1();
         }
@@ -386,7 +386,7 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
     @Override
 	public Number getQ3Value(int series, int item) {
         Number result = null;
-        BoxAndWhiskerItem stats = (BoxAndWhiskerItem) this.items.get(item);
+        BoxAndWhiskerItem stats = this.items.get(item);
         if (stats != null) {
             result = stats.getQ3();
         }
@@ -404,7 +404,7 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
     @Override
 	public Number getMinRegularValue(int series, int item) {
         Number result = null;
-        BoxAndWhiskerItem stats = (BoxAndWhiskerItem) this.items.get(item);
+        BoxAndWhiskerItem stats = this.items.get(item);
         if (stats != null) {
             result = stats.getMinRegularValue();
         }
@@ -422,7 +422,7 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
     @Override
 	public Number getMaxRegularValue(int series, int item) {
         Number result = null;
-        BoxAndWhiskerItem stats = (BoxAndWhiskerItem) this.items.get(item);
+        BoxAndWhiskerItem stats = this.items.get(item);
         if (stats != null) {
             result = stats.getMaxRegularValue();
         }
@@ -439,7 +439,7 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
     @Override
 	public Number getMinOutlier(int series, int item) {
         Number result = null;
-        BoxAndWhiskerItem stats = (BoxAndWhiskerItem) this.items.get(item);
+        BoxAndWhiskerItem stats = this.items.get(item);
         if (stats != null) {
             result = stats.getMinOutlier();
         }
@@ -458,7 +458,7 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
     @Override
 	public Number getMaxOutlier(int series, int item) {
         Number result = null;
-        BoxAndWhiskerItem stats = (BoxAndWhiskerItem) this.items.get(item);
+        BoxAndWhiskerItem stats = this.items.get(item);
         if (stats != null) {
             result = stats.getMaxOutlier();
         }
@@ -475,9 +475,9 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
      *         (possibly <code>null</code>).
      */
     @Override
-	public List getOutliers(int series, int item) {
-        List result = null;
-        BoxAndWhiskerItem stats = (BoxAndWhiskerItem) this.items.get(item);
+	public List<Number> getOutliers(int series, int item) {
+        List<Number> result = null;
+        BoxAndWhiskerItem stats = this.items.get(item);
         if (stats != null) {
             result = stats.getOutliers();
         }
@@ -571,8 +571,8 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
 	public Object clone() throws CloneNotSupportedException {
         DefaultBoxAndWhiskerXYDataset clone
                 = (DefaultBoxAndWhiskerXYDataset) super.clone();
-        clone.dates = new java.util.ArrayList(this.dates);
-        clone.items = new java.util.ArrayList(this.items);
+        clone.dates = new java.util.ArrayList<Date>(this.dates);
+        clone.items = new java.util.ArrayList<BoxAndWhiskerItem>(this.items);
         return clone;
     }
 

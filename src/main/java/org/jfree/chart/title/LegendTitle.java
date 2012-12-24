@@ -444,9 +444,9 @@ public class LegendTitle extends Title
         }
 
         if (this.sortOrder.equals(SortOrder.ASCENDING)) {
-            for (int s = 0; s < this.sources.length; s++) {
+            for (LegendItemSource source : this.sources) {
                 LegendItemCollection legendItems =
-                    this.sources[s].getLegendItems();
+                        source.getLegendItems();
                 if (legendItems != null) {
                     for (int i = 0; i < legendItems.getItemCount(); i++) {
                         addItemBlock(legendItems.get(i));

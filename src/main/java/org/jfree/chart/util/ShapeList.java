@@ -47,12 +47,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import org.jfree.chart.util.SerialUtilities;
-
 /**
  * A table of {@link Shape} objects.
  */
-public class ShapeList extends AbstractObjectList {
+public class ShapeList extends AbstractObjectList<Shape> {
 
     /**
      * Creates a new list.
@@ -69,7 +67,7 @@ public class ShapeList extends AbstractObjectList {
      * @return The object.
      */
     public Shape getShape(final int index) {
-        return (Shape) get(index);
+        return get(index);
     }
 
     /**
@@ -115,7 +113,7 @@ public class ShapeList extends AbstractObjectList {
         ShapeList that = (ShapeList) obj;
         int listSize = size();
         for (int i = 0; i < listSize; i++) {
-           if (!ShapeUtilities.equal((Shape) get(i), (Shape) that.get(i))) {
+           if (!ShapeUtilities.equal(get(i), that.get(i))) {
                return false;
            }
         }

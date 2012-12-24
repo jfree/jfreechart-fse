@@ -40,8 +40,6 @@
 
 package org.jfree.data.xml;
 
-import java.util.Iterator;
-
 import org.jfree.data.DefaultKeyedValues;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -140,9 +138,7 @@ public class CategorySeriesHandler extends DefaultHandler
         if (this.root instanceof CategoryDatasetHandler) {
             CategoryDatasetHandler handler = (CategoryDatasetHandler) this.root;
 
-            Iterator iterator = this.values.getKeys().iterator();
-            while (iterator.hasNext()) {
-                Comparable key = (Comparable) iterator.next();
+            for (Comparable key : this.values.getKeys()) {
                 Number value = this.values.getValue(key);
                 handler.addItem(this.seriesKey, key, value);
             }

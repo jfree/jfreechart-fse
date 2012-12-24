@@ -72,7 +72,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -135,7 +134,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
      *
      * @since 1.0.2
      */
-    private transient Map sectionPaints;
+    private transient Map<Comparable, Paint> sectionPaints;
 
     /**
      * The legend item shape (never null).
@@ -171,7 +170,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
         this.pieChart.setTitle(seriesTitle);
         this.aggregatedItemsKey = "Other";
         this.aggregatedItemsPaint = Color.LIGHT_GRAY;
-        this.sectionPaints = new HashMap();
+        this.sectionPaints = new HashMap<Comparable, Paint>();
         this.legendItemShape = new Ellipse2D.Double(-4.0, -4.0, 8.0, 8.0);
     }
 
@@ -413,7 +412,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
             return;
         }
 
-        int pieCount = 0;
+        int pieCount;
         if (this.dataExtractOrder == TableOrder.BY_ROW) {
             pieCount = this.dataset.getRowCount();
         }
@@ -449,7 +448,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
             rect.setBounds(x + xoffset + (width * column), y + (height * row),
                     width, height);
 
-            String title = null;
+            String title;
             if (this.dataExtractOrder == TableOrder.BY_ROW) {
                 title = this.dataset.getRowKey(pieIndex).toString();
             }
@@ -458,7 +457,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
             }
             this.pieChart.setTitle(title);
 
-            PieDataset piedataset = null;
+            PieDataset piedataset;
             PieDataset dd = new CategoryToPieDataset(this.dataset,
                     this.dataExtractOrder, pieIndex);
             if (this.limit > 0.0) {
@@ -480,7 +479,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
                     p = this.aggregatedItemsPaint;
                 }
                 else {
-                    p = (Paint) this.sectionPaints.get(key);
+                    p = this.sectionPaints.get(key);
                 }
                 piePlot.setSectionPaint(key, p);
             }
@@ -529,7 +528,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
                 Comparable key = this.dataset.getColumnKey(c);
                 Paint p = piePlot.getSectionPaint(key);
                 if (p == null) {
-                    p = (Paint) this.sectionPaints.get(key);
+                    p = this.sectionPaints.get(key);
                     if (p == null) {
                         p = getDrawingSupplier().getNextPaint();
                     }
@@ -543,7 +542,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
                 Comparable key = this.dataset.getRowKey(r);
                 Paint p = piePlot.getSectionPaint(key);
                 if (p == null) {
-                    p = (Paint) this.sectionPaints.get(key);
+                    p = this.sectionPaints.get(key);
                     if (p == null) {
                         p = getDrawingSupplier().getNextPaint();
                     }
@@ -567,7 +566,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
             return result;
         }
 
-        List keys = null;
+        List<Comparable> keys = null;
         prefetchSectionPaints();
         if (this.dataExtractOrder == TableOrder.BY_ROW) {
             keys = this.dataset.getColumnKeys();
@@ -579,12 +578,10 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
             return result;
         }
         int section = 0;
-        Iterator iterator = keys.iterator();
-        while (iterator.hasNext()) {
-            Comparable key = (Comparable) iterator.next();
+        for (Comparable key : keys) {
             String label = key.toString();  // TODO: use a generator here
             String description = label;
-            Paint paint = (Paint) this.sectionPaints.get(key);
+            Paint paint = this.sectionPaints.get(key);
             LegendItem item = new LegendItem(label, description, null,
                     null, getLegendItemShape(), paint,
                     Plot.DEFAULT_OUTLINE_STROKE, paint);
@@ -659,7 +656,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
 	public Object clone() throws CloneNotSupportedException {
         MultiplePiePlot clone = (MultiplePiePlot) super.clone();
         clone.pieChart = (JFreeChart) this.pieChart.clone();
-        clone.sectionPaints = new HashMap(this.sectionPaints);
+        clone.sectionPaints = new HashMap<Comparable, Paint>(this.sectionPaints);
         clone.legendItemShape = ShapeUtilities.clone(this.legendItemShape);
         return clone;
     }
@@ -690,7 +687,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
         stream.defaultReadObject();
         this.aggregatedItemsPaint = SerialUtilities.readPaint(stream);
         this.legendItemShape = SerialUtilities.readShape(stream);
-        this.sectionPaints = new HashMap();
+        this.sectionPaints = new HashMap<Comparable, Paint>();
     }
 
 }

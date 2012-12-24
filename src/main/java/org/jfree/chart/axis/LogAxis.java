@@ -456,7 +456,7 @@ public class LogAxis extends ValueAxis {
             state = new AxisState(cursor);
             // even though the axis is not visible, we need ticks for the
             // gridlines...
-            List ticks = refreshTicks(g2, state, dataArea, edge);
+            List<ValueTick> ticks = refreshTicks(g2, state, dataArea, edge);
             state.setTicks(ticks);
             return state;
         }
@@ -479,10 +479,10 @@ public class LogAxis extends ValueAxis {
      *
      */
     @Override
-	public List refreshTicks(Graphics2D g2, AxisState state,
+	public List<ValueTick> refreshTicks(Graphics2D g2, AxisState state,
             Rectangle2D dataArea, RectangleEdge edge) {
 
-        List result = new java.util.ArrayList();
+        List<ValueTick> result = new java.util.ArrayList<ValueTick>();
         if (RectangleEdge.isTopOrBottom(edge)) {
             result = refreshTicksHorizontal(g2, dataArea, edge);
         }
@@ -502,11 +502,11 @@ public class LogAxis extends ValueAxis {
      *
      * @return A list of ticks.
      */
-    protected List refreshTicksHorizontal(Graphics2D g2, Rectangle2D dataArea,
+    protected List<ValueTick> refreshTicksHorizontal(Graphics2D g2, Rectangle2D dataArea,
             RectangleEdge edge) {
 
         Range range = getRange();
-        List ticks = new ArrayList();
+        List<ValueTick> ticks = new ArrayList<ValueTick>();
         Font tickLabelFont = getTickLabelFont();
         g2.setFont(tickLabelFont);
         TextAnchor textAnchor;
@@ -556,11 +556,11 @@ public class LogAxis extends ValueAxis {
      *
      * @return A list of ticks.
      */
-    protected List refreshTicksVertical(Graphics2D g2, Rectangle2D dataArea,
+    protected List<ValueTick> refreshTicksVertical(Graphics2D g2, Rectangle2D dataArea,
             RectangleEdge edge) {
 
         Range range = getRange();
-        List ticks = new ArrayList();
+        List<ValueTick> ticks = new ArrayList<ValueTick>();
         Font tickLabelFont = getTickLabelFont();
         g2.setFont(tickLabelFont);
         TextAnchor textAnchor;

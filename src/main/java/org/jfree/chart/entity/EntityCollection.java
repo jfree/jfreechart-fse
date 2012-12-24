@@ -54,7 +54,7 @@ import java.util.Iterator;
  * This interface defines the methods used to access an ordered list of
  * {@link ChartEntity} objects.
  */
-public interface EntityCollection {
+public interface EntityCollection extends Iterable<ChartEntity> {
 
     /**
      * Clears all entities.
@@ -106,13 +106,13 @@ public interface EntityCollection {
      *
      * @return The entities.
      */
-    public Collection getEntities();
+    public Collection<ChartEntity> getEntities();
 
     /**
      * Returns an iterator for the entities in the collection.
      *
      * @return An iterator.
      */
-    public Iterator iterator();
+    public Iterator<ChartEntity> iterator();
 
 }

@@ -81,6 +81,7 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.jfree.data.Range;
 import org.jfree.data.RangeInfo;
@@ -108,7 +109,7 @@ public class JDBCXYDataset extends AbstractXYDataset
     private String[] columnNames = {};
 
     /** Rows. */
-    private ArrayList rows;
+    private List<List<Number>> rows;
 
     /** The maximum y value of the returned result set */
     private double maxValue = 0.0;
@@ -124,7 +125,7 @@ public class JDBCXYDataset extends AbstractXYDataset
      * connection.
      */
     private JDBCXYDataset() {
-        this.rows = new ArrayList();
+        this.rows = new ArrayList<List<Number>>();
     }
 
     /**
@@ -297,8 +298,7 @@ public class JDBCXYDataset extends AbstractXYDataset
 
             // Might need to add, to free memory from any previous result sets
             if (this.rows != null) {
-                for (int column = 0; column < this.rows.size(); column++) {
-                    ArrayList row = (ArrayList) this.rows.get(column);
+                for (List<Number> row : this.rows) {
                     row.clear();
                 }
                 this.rows.clear();
@@ -319,7 +319,7 @@ public class JDBCXYDataset extends AbstractXYDataset
             // Get all rows.
             // rows = new ArrayList();
             while (resultSet.next()) {
-                ArrayList newRow = new ArrayList();
+                List<Number> newRow = new ArrayList<Number>();
                 for (int column = 0; column < numberOfColumns; column++) {
                     Object xObject = resultSet.getObject(column + 1);
                     switch (columnTypes[column]) {
@@ -331,18 +331,17 @@ public class JDBCXYDataset extends AbstractXYDataset
                         case Types.DECIMAL:
                         case Types.BIGINT:
                         case Types.SMALLINT:
-                            newRow.add(xObject);
+                            newRow.add((Number)xObject);
                             break;
 
                         case Types.DATE:
                         case Types.TIME:
                         case Types.TIMESTAMP:
-                            newRow.add(new Long(((Date) xObject).getTime()));
+                            newRow.add(((Date) xObject).getTime());
                             break;
                         case Types.NULL:
                             break;
                         default:
-                            System.err.println("Unknown data");
                             columnTypes[column] = Types.NULL;
                             break;
                     }
@@ -352,10 +351,10 @@ public class JDBCXYDataset extends AbstractXYDataset
 
             /// a kludge to make everything work when no rows returned
             if (this.rows.size() == 0) {
-                ArrayList newRow = new ArrayList();
+                List<Number> newRow = new ArrayList<Number>();
                 for (int column = 0; column < numberOfColumns; column++) {
                     if (columnTypes[column] != Types.NULL) {
-                        newRow.add(new Integer(0));
+                        newRow.add(0);
                     }
                 }
                 this.rows.add(newRow);
@@ -369,8 +368,7 @@ public class JDBCXYDataset extends AbstractXYDataset
             else {
                 this.maxValue = Double.NEGATIVE_INFINITY;
                 this.minValue = Double.POSITIVE_INFINITY;
-                for (int rowNum = 0; rowNum < this.rows.size(); ++rowNum) {
-                    ArrayList row = (ArrayList) this.rows.get(rowNum);
+                for (List<Number> row : this.rows) {
                     for (int column = 1; column < numberOfColumns; column++) {
                         Object testValue = row.get(column);
                         if (testValue != null) {
@@ -514,7 +512,7 @@ public class JDBCXYDataset extends AbstractXYDataset
             this.connection.close();
         }
         catch (Exception e) {
-            System.err.println("JdbcXYDataset: swallowing exception.");
+            // silently ignore
         }
 
     }

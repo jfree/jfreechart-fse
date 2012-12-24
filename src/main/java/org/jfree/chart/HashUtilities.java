@@ -106,8 +106,8 @@ public class HashUtilities {
         }
         int result = 193;
         long temp;
-        for (int i = 0; i < a.length; i++) {
-            temp = Double.doubleToLongBits(a[i]);
+        for (double anA : a) {
+            temp = Double.doubleToLongBits(anA);
             result = 29 * result + (int) (temp ^ (temp >>> 32));
         }
         return result;

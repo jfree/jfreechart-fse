@@ -109,7 +109,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -222,7 +221,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      * A (possibly empty) list of the {@link MeterInterval}s to be highlighted
      * on the dial.
      */
-    private List intervals;
+    private List<MeterInterval> intervals;
 
     /**
      * Creates a new plot with a default range of <code>0</code> to
@@ -253,7 +252,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
         this.valueFont = MeterPlot.DEFAULT_VALUE_FONT;
         this.valuePaint = MeterPlot.DEFAULT_VALUE_PAINT;
         this.dialBackgroundPaint = MeterPlot.DEFAULT_DIAL_BACKGROUND_PAINT;
-        this.intervals = new java.util.ArrayList();
+        this.intervals = new java.util.ArrayList<MeterInterval>();
         setDataset(dataset);
     }
 
@@ -739,7 +738,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      *
      * @see #addInterval(MeterInterval)
      */
-    public List getIntervals() {
+    public List<MeterInterval> getIntervals() {
         return Collections.unmodifiableList(this.intervals);
     }
 
@@ -779,9 +778,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
     @Override
 	public LegendItemCollection getLegendItems() {
         LegendItemCollection result = new LegendItemCollection();
-        Iterator iterator = this.intervals.iterator();
-        while (iterator.hasNext()) {
-            MeterInterval mi = (MeterInterval) iterator.next();
+        for (MeterInterval mi : this.intervals) {
             Paint color = mi.getBackgroundPaint();
             if (color == null) {
                 color = mi.getOutlinePaint();
@@ -872,9 +869,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
             drawArcForInterval(g2, meterArea, new MeterInterval("", this.range,
                     this.dialOutlinePaint, new BasicStroke(1.0f), null));
 
-            Iterator iterator = this.intervals.iterator();
-            while (iterator.hasNext()) {
-                MeterInterval interval = (MeterInterval) iterator.next();
+            for (MeterInterval interval : this.intervals) {
                 drawArcForInterval(g2, meterArea, interval);
             }
 
@@ -1022,7 +1017,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
         double y = area.getY();
         double w = area.getWidth();
         double h = area.getHeight();
-        int joinType = Arc2D.OPEN;
+        int joinType;
         if (this.shape == DialShape.PIE) {
             joinType = Arc2D.PIE;
         }
@@ -1109,8 +1104,8 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
         g2.setPaint(this.tickPaint);
         g2.setStroke(new BasicStroke(2.0f));
 
-        double valueP2X = 0;
-        double valueP2Y = 0;
+        double valueP2X;
+        double valueP2Y;
 
         double radius = (meterArea.getWidth() / 2) + DEFAULT_BORDER_SIZE;
         double radius1 = radius - 15;
@@ -1334,7 +1329,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
         MeterPlot clone = (MeterPlot) super.clone();
         clone.tickLabelFormat = (NumberFormat) this.tickLabelFormat.clone();
         // the following relies on the fact that the intervals are immutable
-        clone.intervals = new java.util.ArrayList(this.intervals);
+        clone.intervals = new java.util.ArrayList<MeterInterval>(this.intervals);
         if (clone.dataset != null) {
             clone.dataset.addChangeListener(clone);
         }

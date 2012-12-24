@@ -63,7 +63,7 @@ import org.jfree.chart.util.ResourceBundleWrapper;
 public class ContributorsTableModel extends AbstractTableModel {
 
     /** Storage for the contributors. */
-    private List contributors;
+    private List<Contributor> contributors;
 
     /** Localised version of the name column label. */
     private String nameColumnLabel;
@@ -76,7 +76,7 @@ public class ContributorsTableModel extends AbstractTableModel {
      *
      * @param contributors  the contributors.
      */
-    public ContributorsTableModel(final List contributors) {
+    public ContributorsTableModel(final List<Contributor> contributors) {
 
         this.contributors = contributors;
 
@@ -149,8 +149,7 @@ public class ContributorsTableModel extends AbstractTableModel {
 	public Object getValueAt(final int row, final int column) {
 
         Object result = null;
-        final Contributor contributor
-                = (Contributor) this.contributors.get(row);
+        final Contributor contributor = this.contributors.get(row);
 
         if (column == 0) {
             result = contributor.getName();

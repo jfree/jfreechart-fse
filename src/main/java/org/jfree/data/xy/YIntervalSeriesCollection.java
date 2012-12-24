@@ -217,7 +217,7 @@ public class YIntervalSeriesCollection extends AbstractIntervalXYDataset
     @Override
     public Number getY(int series, int item) {
         YIntervalSeries s = this.data.get(series);
-        return new Double(s.getYValue(item));
+        return s.getYValue(item);
     }
 
     /**
@@ -259,7 +259,7 @@ public class YIntervalSeriesCollection extends AbstractIntervalXYDataset
     @Override
     public Number getStartY(int series, int item) {
         YIntervalSeries s = this.data.get(series);
-        return new Double(s.getYLowValue(item));
+        return s.getYLowValue(item);
     }
 
     /**
@@ -273,7 +273,7 @@ public class YIntervalSeriesCollection extends AbstractIntervalXYDataset
     @Override
     public Number getEndY(int series, int item) {
         YIntervalSeries s = this.data.get(series);
-        return new Double(s.getYHighValue(item));
+        return s.getYHighValue(item);
     }
 
     /**

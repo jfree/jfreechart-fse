@@ -45,7 +45,6 @@ package org.jfree.chart.servlet;
 
 import java.io.File;
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSessionBindingEvent;

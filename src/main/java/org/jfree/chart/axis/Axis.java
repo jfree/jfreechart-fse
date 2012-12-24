@@ -1053,7 +1053,7 @@ public abstract class Axis implements Cloneable, Serializable {
      *
      * @return The list of ticks.
      */
-    public abstract List refreshTicks(Graphics2D g2, AxisState state,
+    public abstract List<? extends Tick> refreshTicks(Graphics2D g2, AxisState state,
             Rectangle2D dataArea, RectangleEdge edge);
 
     /**
@@ -1133,7 +1133,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @return A boolean.
      */
     public boolean hasListener(EventListener listener) {
-        List list = Arrays.asList(this.listenerList.getListenerList());
+        List<Object> list = Arrays.asList(this.listenerList.getListenerList());
         return list.contains(listener);
     }
 

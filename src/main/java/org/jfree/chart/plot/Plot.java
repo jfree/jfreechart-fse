@@ -198,7 +198,7 @@ public abstract class Plot implements AxisChangeListener,
     private static final long serialVersionUID = -8831571430103671324L;
 
     /** Useful constant representing zero. */
-    public static final Number ZERO = new Integer(0);
+    public static final Number ZERO = 0;
 
     /** The default insets. */
     public static final RectangleInsets DEFAULT_INSETS
@@ -1386,10 +1386,10 @@ public abstract class Plot implements AxisChangeListener,
         // childs in combined plots instead
         if (this.datasetGroup != null) {
             clone.datasetGroup
-                = (DatasetGroup) ObjectUtilities.clone(this.datasetGroup);
+                = ObjectUtilities.clone(this.datasetGroup);
         }
         clone.drawingSupplier
-            = (DrawingSupplier) ObjectUtilities.clone(this.drawingSupplier);
+            = ObjectUtilities.clone(this.drawingSupplier);
         clone.listenerList = new EventListenerList();
         return clone;
 

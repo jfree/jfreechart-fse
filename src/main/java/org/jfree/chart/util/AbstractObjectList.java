@@ -53,7 +53,7 @@ import java.util.Arrays;
 /**
  * A list of objects that can grow as required.
  */
-public class AbstractObjectList implements Cloneable, Serializable {
+public class AbstractObjectList<T> implements Cloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 7789833772597351595L;
@@ -106,10 +106,10 @@ public class AbstractObjectList implements Cloneable, Serializable {
      *
      * @return The object or <code>null</code>.
      */
-    protected Object get(final int index) {
-        Object result = null;
+    protected T get(final int index) {
+        T result = null;
         if (index >= 0 && index < this.size) {
-            result = this.objects[index];
+            result = (T)this.objects[index];
         }
         return result;
     }
@@ -120,7 +120,7 @@ public class AbstractObjectList implements Cloneable, Serializable {
      * @param index  the object index.
      * @param object  the object (<code>null</code> permitted).
      */
-    protected void set(final int index, final Object object) {
+    protected void set(final int index, final T object) {
         if (index < 0) {
             throw new IllegalArgumentException("Requires index >= 0.");
         }
@@ -158,7 +158,7 @@ public class AbstractObjectList implements Cloneable, Serializable {
      *
      * @return The index or -1.
      */
-    protected int indexOf(final Object object) {
+    protected int indexOf(final T object) {
         for (int index = 0; index < this.size; index++) {
             if (this.objects[index] == object) {
                 return (index);
@@ -189,7 +189,7 @@ public class AbstractObjectList implements Cloneable, Serializable {
             return false;
         }
 
-        final AbstractObjectList other = (AbstractObjectList) obj;
+        final AbstractObjectList<?> other = (AbstractObjectList<?>) obj;
         final int listSize = size();
         for (int i = 0; i < listSize; i++) {
            if (!ObjectUtilities.equal(get(i), other.get(i))) {
@@ -221,7 +221,7 @@ public class AbstractObjectList implements Cloneable, Serializable {
     @Override
     public Object clone() throws CloneNotSupportedException {
 
-        final AbstractObjectList clone = (AbstractObjectList) super.clone();
+        final AbstractObjectList<?> clone = (AbstractObjectList<?>) super.clone();
         if (this.objects != null) {
             clone.objects = new Object[this.objects.length];
             System.arraycopy(
@@ -275,7 +275,7 @@ public class AbstractObjectList implements Cloneable, Serializable {
         for (int i = 0; i < count; i++) {
             final int index = stream.readInt();
             if (index != -1) {
-                set(index, stream.readObject());
+                set(index, (T)stream.readObject());
             }
         }
         

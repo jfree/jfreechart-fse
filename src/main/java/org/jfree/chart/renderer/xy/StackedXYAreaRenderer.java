@@ -135,10 +135,10 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
         private Line2D line;
 
         /** The points from the last series. */
-        private Stack lastSeriesPoints;
+        private Stack<Point> lastSeriesPoints;
 
         /** The points for the current series. */
-        private Stack currentSeriesPoints;
+        private Stack<Point> currentSeriesPoints;
 
         /**
          * Creates a new state for the renderer.
@@ -149,8 +149,8 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
             super(info);
             this.seriesArea = null;
             this.line = new Line2D.Double();
-            this.lastSeriesPoints = new Stack();
-            this.currentSeriesPoints = new Stack();
+            this.lastSeriesPoints = new Stack<Point>();
+            this.currentSeriesPoints = new Stack<Point>();
         }
 
         /**
@@ -185,7 +185,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
          *
          * @return The current series points.
          */
-        public Stack getCurrentSeriesPoints() {
+        public Stack<Point> getCurrentSeriesPoints() {
             return this.currentSeriesPoints;
         }
 
@@ -194,7 +194,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
          *
          * @param points  the points.
          */
-        public void setCurrentSeriesPoints(Stack points) {
+        public void setCurrentSeriesPoints(Stack<Point> points) {
             this.currentSeriesPoints = points;
         }
 
@@ -212,7 +212,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
          *
          * @param points  the points.
          */
-        public void setLastSeriesPoints(Stack points) {
+        public void setLastSeriesPoints(Stack<Point> points) {
             this.lastSeriesPoints = points;
         }
 
@@ -446,7 +446,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
                 areaState.setSeriesArea(new Polygon());
                 areaState.setLastSeriesPoints(
                         areaState.getCurrentSeriesPoints());
-                areaState.setCurrentSeriesPoints(new Stack());
+                areaState.setCurrentSeriesPoints(new Stack<Point>());
 
                 // start from previous height (ph1)
                 double transY2 = rangeAxis.valueToJava2D(ph1, dataArea,

@@ -234,7 +234,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
     public boolean getItemLineVisible(int series, int item) {
         Boolean flag = getSeriesLinesVisible(series);
         if (flag != null) {
-            return flag.booleanValue();
+            return flag;
         }
         else {
             return this.baseLinesVisible;
@@ -320,7 +320,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
     public boolean getItemShapeVisible(int series, int item) {
         Boolean flag = getSeriesShapesVisible(series);
         if (flag != null) {
-            return flag.booleanValue();
+            return flag;
         }
         else {
             return this.baseShapesVisible;
@@ -476,7 +476,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
 
         Boolean flag = this.seriesShapesFilled.getBoolean(series);
         if (flag != null) {
-            return flag.booleanValue();
+            return flag;
         }
         else {
             return this.baseShapesFilled;
