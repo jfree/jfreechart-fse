@@ -69,7 +69,7 @@ public enum UnitType {
      * @return The string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return this.name;
     }
 

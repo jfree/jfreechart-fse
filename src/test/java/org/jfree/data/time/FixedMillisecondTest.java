@@ -45,13 +45,7 @@ package org.jfree.data.time;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
@@ -60,10 +54,7 @@ import static org.junit.Assert.assertFalse;
 /**
  * Tests for the {@link FixedMillisecond} class.
  */
-public class FixedMillisecondTest  {
-
-
-
+public class FixedMillisecondTest {
 
 
     /**
@@ -74,15 +65,15 @@ public class FixedMillisecondTest  {
 
         FixedMillisecond m1 = new FixedMillisecond();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(m1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(m1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         FixedMillisecond m2 = (FixedMillisecond) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(m1, m2);
 

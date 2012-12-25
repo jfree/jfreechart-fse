@@ -47,11 +47,11 @@
 
 package org.jfree.chart.labels;
 
-import java.io.Serializable;
-import java.util.List;
-
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.xy.XYDataset;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * A tool tip generator that stores custom tooltips. The dataset passed into
@@ -142,7 +142,7 @@ public class CustomXYToolTipGenerator implements XYToolTipGenerator,
      * @return The tooltip text.
      */
     @Override
-	public String generateToolTip(XYDataset data, int series, int item) {
+    public String generateToolTip(XYDataset data, int series, int item) {
 
         return getToolTipText(series, item);
 
@@ -156,16 +156,17 @@ public class CustomXYToolTipGenerator implements XYToolTipGenerator,
      * @throws CloneNotSupportedException if cloning is not supported.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
 
         CustomXYToolTipGenerator clone
-            = (CustomXYToolTipGenerator) super.clone();
+                = (CustomXYToolTipGenerator) super.clone();
         if (this.toolTipSeries != null) {
             clone.toolTipSeries = new java.util.ArrayList<List<String>>(this.toolTipSeries);
         }
         return clone;
 
     }
+
     /**
      * Tests if this object is equal to another.
      *
@@ -174,7 +175,7 @@ public class CustomXYToolTipGenerator implements XYToolTipGenerator,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
 
         if (obj == this) {
             return true;
@@ -189,8 +190,7 @@ public class CustomXYToolTipGenerator implements XYToolTipGenerator,
                     String t2 = generator.getToolTipText(series, item);
                     if (t1 != null) {
                         result = result && t1.equals(t2);
-                    }
-                    else {
+                    } else {
                         result = result && (t2 == null);
                     }
                 }

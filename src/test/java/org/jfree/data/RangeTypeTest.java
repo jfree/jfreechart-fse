@@ -42,13 +42,7 @@ package org.jfree.data;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -56,10 +50,7 @@ import static org.junit.Assert.assertFalse;
 /**
  * Tests for the {@link RangeType} class.
  */
-public class RangeTypeTest  {
-
-
-
+public class RangeTypeTest {
 
 
     /**
@@ -101,16 +92,16 @@ public class RangeTypeTest  {
     public void testSerialization() throws IOException, ClassNotFoundException {
         RangeType r1 = RangeType.FULL;
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(r1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(r1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-            );
+        );
         RangeType r2 = (RangeType) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(r1, r2);
         boolean same = r1 == r2;

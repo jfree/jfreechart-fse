@@ -80,14 +80,14 @@
 
 package org.jfree.data.xy;
 
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
-
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.general.Series;
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesException;
+
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Represents a sequence of zero or more data items in the form (x, y).  By
@@ -166,7 +166,7 @@ public class XYSeries extends Series implements Cloneable, Serializable {
      *                               x-values are allowed.
      */
     public XYSeries(Comparable key, boolean autoSort,
-            boolean allowDuplicateXValues) {
+                    boolean allowDuplicateXValues) {
         super(key);
         this.data = new java.util.ArrayList<XYDataItem>();
         this.autoSort = autoSort;
@@ -282,13 +282,11 @@ public class XYSeries extends Series implements Cloneable, Serializable {
         }
         if (itemContributesToYBounds) {
             findBoundsByIteration();
-        }
-        else if (itemContributesToXBounds) {
+        } else if (itemContributesToXBounds) {
             if (getAutoSort()) {
                 this.minX = getX(0).doubleValue();
                 this.maxX = getX(getItemCount() - 1).doubleValue();
-            }
-            else {
+            } else {
                 findBoundsByIteration();
             }
         }
@@ -508,8 +506,7 @@ public class XYSeries extends Series implements Cloneable, Serializable {
             int index = Collections.binarySearch(this.data, item);
             if (index < 0) {
                 this.data.add(-index - 1, item);
-            }
-            else {
+            } else {
                 if (this.allowDuplicateXValues) {
                     // need to make sure we are adding *after* any duplicates
                     int size = this.data.size();
@@ -519,17 +516,14 @@ public class XYSeries extends Series implements Cloneable, Serializable {
                     }
                     if (index < this.data.size()) {
                         this.data.add(index, item);
-                    }
-                    else {
+                    } else {
                         this.data.add(item);
                     }
-                }
-                else {
+                } else {
                     throw new SeriesException("X-value already exists.");
                 }
             }
-        }
-        else {
+        } else {
             if (!this.allowDuplicateXValues) {
                 // can't allow duplicate values, so we need to check whether
                 // there is an item with the given x-value already
@@ -713,8 +707,7 @@ public class XYSeries extends Series implements Cloneable, Serializable {
 
         if (iterate) {
             findBoundsByIteration();
-        }
-        else if (y != null) {
+        } else if (y != null) {
             double yy = y.doubleValue();
             this.minY = minIgnoreNaN(this.minY, yy);
             this.maxY = maxIgnoreNaN(this.maxY, yy);
@@ -805,14 +798,12 @@ public class XYSeries extends Series implements Cloneable, Serializable {
 
             if (iterate) {
                 findBoundsByIteration();
-            }
-            else if (item.getY() != null) {
+            } else if (item.getY() != null) {
                 double yy = item.getY().doubleValue();
                 this.minY = minIgnoreNaN(this.minY, yy);
                 this.maxY = minIgnoreNaN(this.maxY, yy);
             }
-        }
-        else {
+        } else {
             // if the series is sorted, the negative index is a result from
             // Collections.binarySearch() and tells us where to insert the
             // new item...otherwise it will be just -1 and we should just
@@ -820,8 +811,7 @@ public class XYSeries extends Series implements Cloneable, Serializable {
             item = item.copy();
             if (this.autoSort) {
                 this.data.add(-index - 1, item);
-            }
-            else {
+            } else {
                 this.data.add(item);
             }
             updateBoundsForAddedItem(item);
@@ -849,8 +839,7 @@ public class XYSeries extends Series implements Cloneable, Serializable {
     public int indexOf(Number x) {
         if (this.autoSort) {
             return Collections.binarySearch(this.data, new XYDataItem(x, null));
-        }
-        else {
+        } else {
             for (int i = 0; i < this.data.size(); i++) {
                 XYDataItem item = this.data.get(i);
                 if (item.getX().equals(x)) {
@@ -876,8 +865,7 @@ public class XYSeries extends Series implements Cloneable, Serializable {
             Number y = getY(i);
             if (y != null) {
                 result[1][i] = y.doubleValue();
-            }
-            else {
+            } else {
                 result[1][i] = Double.NaN;
             }
         }
@@ -919,8 +907,7 @@ public class XYSeries extends Series implements Cloneable, Serializable {
                 XYDataItem clone = (XYDataItem) item.clone();
                 try {
                     copy.add(clone);
-                }
-                catch (SeriesException e) {
+                } catch (SeriesException e) {
                     throw new RuntimeException("Unable to add cloned data item.", e);
                 }
             }

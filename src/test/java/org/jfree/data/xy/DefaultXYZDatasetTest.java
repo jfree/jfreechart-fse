@@ -45,28 +45,14 @@ package org.jfree.data.xy;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for {@link DefaultXYZDataset}.
  */
-public class DefaultXYZDatasetTest  {
-
-
-
+public class DefaultXYZDatasetTest {
 
 
     /**
@@ -80,14 +66,14 @@ public class DefaultXYZDatasetTest  {
         assertEquals(d1, d2);
         assertEquals(d2, d1);
 
-        double[] x1 = new double[] {1.0, 2.0, 3.0};
-        double[] y1 = new double[] {4.0, 5.0, 6.0};
-        double[] z1 = new double[] {7.0, 8.0, 9.0};
-        double[][] data1 = new double[][] {x1, y1, z1};
-        double[] x2 = new double[] {1.0, 2.0, 3.0};
-        double[] y2 = new double[] {4.0, 5.0, 6.0};
-        double[] z2 = new double[] {7.0, 8.0, 9.0};
-        double[][] data2 = new double[][] {x2, y2, z2};
+        double[] x1 = new double[]{1.0, 2.0, 3.0};
+        double[] y1 = new double[]{4.0, 5.0, 6.0};
+        double[] z1 = new double[]{7.0, 8.0, 9.0};
+        double[][] data1 = new double[][]{x1, y1, z1};
+        double[] x2 = new double[]{1.0, 2.0, 3.0};
+        double[] y2 = new double[]{4.0, 5.0, 6.0};
+        double[] z2 = new double[]{7.0, 8.0, 9.0};
+        double[][] data2 = new double[][]{x2, y2, z2};
         d1.addSeries("S1", data1);
         assertFalse(d1.equals(d2));
         d2.addSeries("S1", data2);
@@ -106,10 +92,10 @@ public class DefaultXYZDatasetTest  {
         assertEquals(d1, d2);
 
         // try a dataset with some content...
-        double[] x1 = new double[] {1.0, 2.0, 3.0};
-        double[] y1 = new double[] {4.0, 5.0, 6.0};
-        double[] z1 = new double[] {7.0, 8.0, 9.0};
-        double[][] data1 = new double[][] {x1, y1, z1};
+        double[] x1 = new double[]{1.0, 2.0, 3.0};
+        double[] y1 = new double[]{4.0, 5.0, 6.0};
+        double[] z1 = new double[]{7.0, 8.0, 9.0};
+        double[][] data1 = new double[][]{x1, y1, z1};
         d1.addSeries("S1", data1);
         d2 = (DefaultXYZDataset) d1.clone();
 
@@ -141,24 +127,24 @@ public class DefaultXYZDatasetTest  {
 
         DefaultXYZDataset d1 = new DefaultXYZDataset();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(d1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(d1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-            );
+        );
         DefaultXYZDataset d2 = (DefaultXYZDataset) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(d1, d2);
 
         // try a dataset with some content...
-        double[] x1 = new double[] {1.0, 2.0, 3.0};
-        double[] y1 = new double[] {4.0, 5.0, 6.0};
-        double[] z1 = new double[] {7.0, 8.0, 9.0};
-        double[][] data1 = new double[][] {x1, y1, z1};
+        double[] x1 = new double[]{1.0, 2.0, 3.0};
+        double[] y1 = new double[]{4.0, 5.0, 6.0};
+        double[] z1 = new double[]{7.0, 8.0, 9.0};
+        double[][] data1 = new double[][]{x1, y1, z1};
         d1.addSeries("S1", data1);
 
         buffer = new ByteArrayOutputStream();
@@ -167,7 +153,7 @@ public class DefaultXYZDatasetTest  {
         out.close();
 
         in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
+                buffer.toByteArray()));
         d2 = (DefaultXYZDataset) in.readObject();
         in.close();
 
@@ -186,19 +172,19 @@ public class DefaultXYZDatasetTest  {
 
         // check for series key out of bounds
         try {
-            /*Comparable k =*/ d.getSeriesKey(-1);
+            /*Comparable k =*/
+            d.getSeriesKey(-1);
             fail("IllegalArgumentException should have been thrown on negative key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Series index out of bounds", e.getMessage());
         }
 
         try {
-            /*Comparable k =*/ d.getSeriesKey(2);
+            /*Comparable k =*/
+            d.getSeriesKey(2);
 
             fail("IllegalArgumentException should have been thrown on key out of range");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Series index out of bounds", e.getMessage());
         }
     }
@@ -223,23 +209,20 @@ public class DefaultXYZDatasetTest  {
     @Test
     public void testAddSeries() {
         DefaultXYZDataset d = new DefaultXYZDataset();
-        d.addSeries("S1", new double[][] {{1.0}, {2.0}, {3.0}});
+        d.addSeries("S1", new double[][]{{1.0}, {2.0}, {3.0}});
         assertEquals(1, d.getSeriesCount());
         assertEquals("S1", d.getSeriesKey(0));
 
         // check that adding a series will overwrite the old series
-        d.addSeries("S1", new double[][] {{11.0}, {12.0}, {13.0}});
+        d.addSeries("S1", new double[][]{{11.0}, {12.0}, {13.0}});
         assertEquals(1, d.getSeriesCount());
         assertEquals(12.0, d.getYValue(0, 0), EPSILON);
 
         // check null key
-        try
-        {
-          d.addSeries(null, new double[][] {{1.0}, {2.0}, {3.0}});
+        try {
+            d.addSeries(null, new double[][]{{1.0}, {2.0}, {3.0}});
             fail("IllegalArgumentException should have been thrown on null key");
-        }
-        catch (IllegalArgumentException e)
-        {
+        } catch (IllegalArgumentException e) {
             assertEquals("The 'seriesKey' cannot be null.", e.getMessage());
         }
     }
@@ -251,16 +234,16 @@ public class DefaultXYZDatasetTest  {
      */
     public DefaultXYZDataset createSampleDataset1() {
         DefaultXYZDataset d = new DefaultXYZDataset();
-        double[] x1 = new double[] {1.0, 2.0, 3.0};
-        double[] y1 = new double[] {4.0, 5.0, 6.0};
-        double[] z1 = new double[] {7.0, 8.0, 9.0};
-        double[][] data1 = new double[][] {x1, y1, z1};
+        double[] x1 = new double[]{1.0, 2.0, 3.0};
+        double[] y1 = new double[]{4.0, 5.0, 6.0};
+        double[] z1 = new double[]{7.0, 8.0, 9.0};
+        double[][] data1 = new double[][]{x1, y1, z1};
         d.addSeries("S1", data1);
 
-        double[] x2 = new double[] {1.0, 2.0, 3.0};
-        double[] y2 = new double[] {4.0, 5.0, 6.0};
-        double[] z2 = new double[] {7.0, 8.0, 9.0};
-        double[][] data2 = new double[][] {x2, y2, z2};
+        double[] x2 = new double[]{1.0, 2.0, 3.0};
+        double[] y2 = new double[]{4.0, 5.0, 6.0};
+        double[] z2 = new double[]{7.0, 8.0, 9.0};
+        double[][] data2 = new double[][]{x2, y2, z2};
         d.addSeries("S2", data2);
         return d;
     }

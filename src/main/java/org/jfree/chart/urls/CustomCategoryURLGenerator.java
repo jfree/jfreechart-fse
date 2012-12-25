@@ -42,12 +42,12 @@
  */
 package org.jfree.chart.urls;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.category.CategoryDataset;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.data.category.CategoryDataset;
 
 /**
  * A custom URL generator.
@@ -121,7 +121,7 @@ public class CustomCategoryURLGenerator implements CategoryURLGenerator,
      * @return A string containing the URL (possibly <code>null</code>).
      */
     @Override
-	public String generateURL(CategoryDataset dataset, int series, int item) {
+    public String generateURL(CategoryDataset dataset, int series, int item) {
         return getURL(series, item);
     }
 
@@ -146,7 +146,7 @@ public class CustomCategoryURLGenerator implements CategoryURLGenerator,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -191,7 +191,7 @@ public class CustomCategoryURLGenerator implements CategoryURLGenerator,
      * @throws CloneNotSupportedException if there is a problem with cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         CustomCategoryURLGenerator clone
                 = (CustomCategoryURLGenerator) super.clone();
         clone.urlSeries = new java.util.ArrayList<List<String>>(this.urlSeries);

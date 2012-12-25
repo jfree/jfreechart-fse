@@ -42,13 +42,13 @@
 
 package org.jfree.data.category;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.UnknownKeyException;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DatasetChangeEvent;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A {@link CategoryDataset} implementation that presents a subset of the
@@ -80,7 +80,7 @@ public class SlidingCategoryDataset extends AbstractDataset
      * @param maxColumns  the maximumColumnCount.
      */
     public SlidingCategoryDataset(CategoryDataset underlying, int firstColumn,
-            int maxColumns) {
+                                  int maxColumns) {
         this.underlying = underlying;
         this.firstCategoryIndex = firstColumn;
         this.maximumCategoryCount = maxColumns;
@@ -171,7 +171,7 @@ public class SlidingCategoryDataset extends AbstractDataset
      * @return The column index, or -1 if the key is not recognised.
      */
     @Override
-	public int getColumnIndex(Comparable key) {
+    public int getColumnIndex(Comparable key) {
         int index = this.underlying.getColumnIndex(key);
         if (index >= this.firstCategoryIndex && index <= lastCategoryIndex()) {
             return index - this.firstCategoryIndex;
@@ -189,7 +189,7 @@ public class SlidingCategoryDataset extends AbstractDataset
      * @throws IndexOutOfBoundsException if <code>row</code> is out of bounds.
      */
     @Override
-	public Comparable getColumnKey(int column) {
+    public Comparable getColumnKey(int column) {
         return this.underlying.getColumnKey(column + this.firstCategoryIndex);
     }
 
@@ -201,7 +201,7 @@ public class SlidingCategoryDataset extends AbstractDataset
      * @see #getColumnKey(int)
      */
     @Override
-	public List<Comparable> getColumnKeys() {
+    public List<Comparable> getColumnKeys() {
         List<Comparable> result = new java.util.ArrayList<Comparable>();
         int last = lastCategoryIndex();
         for (int i = this.firstCategoryIndex; i <= last; i++) {
@@ -218,7 +218,7 @@ public class SlidingCategoryDataset extends AbstractDataset
      * @return The row index, or <code>-1</code> if the key is unrecognised.
      */
     @Override
-	public int getRowIndex(Comparable key) {
+    public int getRowIndex(Comparable key) {
         return this.underlying.getRowIndex(key);
     }
 
@@ -232,7 +232,7 @@ public class SlidingCategoryDataset extends AbstractDataset
      * @throws IndexOutOfBoundsException if <code>row</code> is out of bounds.
      */
     @Override
-	public Comparable getRowKey(int row) {
+    public Comparable getRowKey(int row) {
         return this.underlying.getRowKey(row);
     }
 
@@ -242,7 +242,7 @@ public class SlidingCategoryDataset extends AbstractDataset
      * @return The keys.
      */
     @Override
-	public List<Comparable> getRowKeys() {
+    public List<Comparable> getRowKeys() {
         return this.underlying.getRowKeys();
     }
 
@@ -257,13 +257,12 @@ public class SlidingCategoryDataset extends AbstractDataset
      * @throws UnknownKeyException if either key is not defined in the dataset.
      */
     @Override
-	public Number getValue(Comparable rowKey, Comparable columnKey) {
+    public Number getValue(Comparable rowKey, Comparable columnKey) {
         int r = getRowIndex(rowKey);
         int c = getColumnIndex(columnKey);
         if (c != -1) {
             return this.underlying.getValue(r, c + this.firstCategoryIndex);
-        }
-        else {
+        } else {
             throw new UnknownKeyException("Unknown columnKey: " + columnKey);
         }
     }
@@ -274,12 +273,11 @@ public class SlidingCategoryDataset extends AbstractDataset
      * @return The column count.
      */
     @Override
-	public int getColumnCount() {
+    public int getColumnCount() {
         int last = lastCategoryIndex();
         if (last == -1) {
             return 0;
-        }
-        else {
+        } else {
             return Math.max(last - this.firstCategoryIndex + 1, 0);
         }
     }
@@ -290,7 +288,7 @@ public class SlidingCategoryDataset extends AbstractDataset
      * @return The row count.
      */
     @Override
-	public int getRowCount() {
+    public int getRowCount() {
         return this.underlying.getRowCount();
     }
 
@@ -303,7 +301,7 @@ public class SlidingCategoryDataset extends AbstractDataset
      * @return The value (possibly <code>null</code>).
      */
     @Override
-	public Number getValue(int row, int column) {
+    public Number getValue(int row, int column) {
         return this.underlying.getValue(row, column + this.firstCategoryIndex);
     }
 
@@ -316,7 +314,7 @@ public class SlidingCategoryDataset extends AbstractDataset
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -351,7 +349,7 @@ public class SlidingCategoryDataset extends AbstractDataset
      *         any reason.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         SlidingCategoryDataset clone = (SlidingCategoryDataset) super.clone();
         if (this.underlying instanceof PublicCloneable) {
             PublicCloneable pc = (PublicCloneable) this.underlying;

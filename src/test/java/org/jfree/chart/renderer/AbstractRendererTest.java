@@ -61,38 +61,18 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.ui.TextAnchor;
 import org.junit.Test;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Rectangle;
-import java.awt.Stroke;
+import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link AbstractRenderer} class.
  */
-public class AbstractRendererTest  {
-
-
-
+public class AbstractRendererTest {
 
 
     /**
@@ -500,8 +480,9 @@ public class AbstractRendererTest  {
         public MyRendererChangeListener() {
             this.lastEvent = null;
         }
+
         @Override
-		public void rendererChanged(RendererChangeEvent event) {
+        public void rendererChanged(RendererChangeEvent event) {
             this.lastEvent = event;
         }
     }
@@ -535,7 +516,7 @@ public class AbstractRendererTest  {
 
         RendererChangeDetector detector = new RendererChangeDetector();
         BarRenderer r1 = new BarRenderer();  // have to use a subclass of
-                                             // AbstractRenderer
+        // AbstractRenderer
         r1.addChangeListener(detector);
 
         // PAINT
@@ -648,15 +629,15 @@ public class AbstractRendererTest  {
                 3.0f, 4.0f, Color.green));
         r1.setDefaultLegendShape(new Line2D.Double(1.0, 2.0, 3.0, 4.0));
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(r1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(r1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         BarRenderer r2 = (BarRenderer) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(r1, r2);
         r2.notifyListeners(new RendererChangeEvent(r2));
@@ -693,7 +674,8 @@ public class AbstractRendererTest  {
 
         // now check autoPopulate==true
         r.setAutoPopulateSeriesPaint(true);
-        /*CategoryPlot plot =*/ new CategoryPlot(null, new CategoryAxis(
+        /*CategoryPlot plot =*/
+        new CategoryPlot(null, new CategoryAxis(
                 "Category"), new NumberAxis("Value"), r);
         assertEquals(DefaultDrawingSupplier.DEFAULT_PAINT_SEQUENCE[0],
                 r.lookupSeriesPaint(0));
@@ -715,7 +697,8 @@ public class AbstractRendererTest  {
 
         // now check autoPopulate==true
         r.setAutoPopulateSeriesFillPaint(true);
-        /*CategoryPlot plot =*/ new CategoryPlot(null, new CategoryAxis(
+        /*CategoryPlot plot =*/
+        new CategoryPlot(null, new CategoryAxis(
                 "Category"), new NumberAxis("Value"), r);
         assertEquals(DefaultDrawingSupplier.DEFAULT_FILL_PAINT_SEQUENCE[0],
                 r.lookupSeriesFillPaint(0));
@@ -737,7 +720,8 @@ public class AbstractRendererTest  {
 
         // now check autoPopulate==true
         r.setAutoPopulateSeriesOutlinePaint(true);
-        /*CategoryPlot plot =*/ new CategoryPlot(null, new CategoryAxis(
+        /*CategoryPlot plot =*/
+        new CategoryPlot(null, new CategoryAxis(
                 "Category"), new NumberAxis("Value"), r);
         assertEquals(DefaultDrawingSupplier.DEFAULT_OUTLINE_PAINT_SEQUENCE[0],
                 r.lookupSeriesOutlinePaint(0));

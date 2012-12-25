@@ -71,7 +71,7 @@ public abstract class BoxAndWhiskerCalculator {
      * @return A box-and-whisker item.
      */
     public static BoxAndWhiskerItem calculateBoxAndWhiskerStatistics(
-                                        List<Number> values) {
+            List<Number> values) {
         return calculateBoxAndWhiskerStatistics(values, true);
     }
 
@@ -106,8 +106,7 @@ public abstract class BoxAndWhiskerCalculator {
                     vlist.add(n);
                 }
             }
-        }
-        else {
+        } else {
             vlist = values;
         }
         Collections.sort(vlist, new NumberComparartor());
@@ -181,12 +180,10 @@ public abstract class BoxAndWhiskerCalculator {
             if (count % 2 == 1) {
                 if (count > 1) {
                     result = Statistics.calculateMedian(values, 0, count / 2);
-                }
-                else {
+                } else {
                     result = Statistics.calculateMedian(values, 0, 0);
                 }
-            }
-            else {
+            } else {
                 result = Statistics.calculateMedian(values, 0, count / 2 - 1);
             }
 
@@ -216,12 +213,10 @@ public abstract class BoxAndWhiskerCalculator {
                 if (count > 1) {
                     result = Statistics.calculateMedian(values, count / 2,
                             count - 1);
-                }
-                else {
+                } else {
                     result = Statistics.calculateMedian(values, 0, 0);
                 }
-            }
-            else {
+            } else {
                 result = Statistics.calculateMedian(values, count / 2,
                         count - 1);
             }

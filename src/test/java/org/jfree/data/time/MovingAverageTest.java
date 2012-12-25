@@ -49,12 +49,9 @@ import static org.junit.Assert.assertEquals;
 /**
  * Tests for the {@link MovingAverage} class.
  */
-public class MovingAverageTest  {
+public class MovingAverageTest {
 
     private static final double EPSILON = 0.0000000001;
-
-
-
 
 
     /**
@@ -64,7 +61,7 @@ public class MovingAverageTest  {
     public void test1() {
         TimeSeries source = createDailyTimeSeries1();
         TimeSeries maverage = MovingAverage.createMovingAverage(
-            source, "Moving Average", 3, 3
+                source, "Moving Average", 3, 3
         );
 
         // the moving average series has 7 items, the first three

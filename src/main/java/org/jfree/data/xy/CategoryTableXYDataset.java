@@ -72,7 +72,7 @@ import org.jfree.data.general.DatasetUtilities;
  */
 public class CategoryTableXYDataset extends AbstractIntervalXYDataset
         implements TableXYDataset, IntervalXYDataset, DomainInfo,
-                   PublicCloneable {
+        PublicCloneable {
 
     /**
      * The backing data structure.
@@ -146,7 +146,7 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
     /**
      * Clears all data from the dataset and sends a {@link DatasetChangeEvent}
      * to all registered listeners.
-     * 
+     *
      * @since 1.0.14
      */
     public void clear() {
@@ -197,7 +197,7 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
     @Override
     public int getItemCount(int series) {
         return getItemCount();  // all series have the same number of items in
-                                // this dataset
+        // this dataset
     }
 
     /**
@@ -316,8 +316,7 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
     public Range getDomainBounds(boolean includeInterval) {
         if (includeInterval) {
             return this.intervalDelegate.getDomainBounds(includeInterval);
-        }
-        else {
+        } else {
             return DatasetUtilities.iterateDomainBounds(this, includeInterval);
         }
     }

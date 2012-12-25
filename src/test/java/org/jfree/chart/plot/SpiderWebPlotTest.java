@@ -93,135 +93,135 @@ public class SpiderWebPlotTest extends TestCase {
     public void testEquals() {
         SpiderWebPlot p1 = new SpiderWebPlot(new DefaultCategoryDataset());
         SpiderWebPlot p2 = new SpiderWebPlot(new DefaultCategoryDataset());
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
         assertTrue(p2.equals(p1));
 
         // dataExtractOrder
         p1.setDataExtractOrder(TableOrder.BY_COLUMN);
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setDataExtractOrder(TableOrder.BY_COLUMN);
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // headPercent
         p1.setHeadPercent(0.321);
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setHeadPercent(0.321);
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // interiorGap
         p1.setInteriorGap(0.123);
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setInteriorGap(0.123);
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // startAngle
         p1.setStartAngle(0.456);
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setStartAngle(0.456);
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // direction
         p1.setDirection(Rotation.ANTICLOCKWISE);
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setDirection(Rotation.ANTICLOCKWISE);
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // maxValue
         p1.setMaxValue(123.4);
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setMaxValue(123.4);
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // legendItemShape
         p1.setLegendItemShape(new Rectangle(1, 2, 3, 4));
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setLegendItemShape(new Rectangle(1, 2, 3, 4));
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // seriesPaint
         p1.setSeriesPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.WHITE));
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setSeriesPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.WHITE));
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // seriesPaintList
         p1.setSeriesPaint(1, new GradientPaint(1.0f, 2.0f, Color.yellow,
                 3.0f, 4.0f, Color.WHITE));
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setSeriesPaint(1, new GradientPaint(1.0f, 2.0f, Color.yellow,
                 3.0f, 4.0f, Color.WHITE));
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // baseSeriesPaint
         p1.setBaseSeriesPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.BLACK));
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setBaseSeriesPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.BLACK));
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // seriesOutlinePaint
         p1.setSeriesOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.BLUE,
                 3.0f, 4.0f, Color.BLACK));
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setSeriesOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.BLUE,
                 3.0f, 4.0f, Color.BLACK));
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // seriesOutlinePaintList
         p1.setSeriesOutlinePaint(1, new GradientPaint(1.0f, 2.0f, Color.BLUE,
                 3.0f, 4.0f, Color.green));
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setSeriesOutlinePaint(1, new GradientPaint(1.0f, 2.0f, Color.BLUE,
                 3.0f, 4.0f, Color.green));
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // baseSeriesOutlinePaint
         p1.setBaseSeriesOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.cyan,
                 3.0f, 4.0f, Color.green));
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setBaseSeriesOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.cyan,
                 3.0f, 4.0f, Color.green));
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // seriesOutlineStroke
         BasicStroke s = new BasicStroke(1.23f);
         p1.setSeriesOutlineStroke(s);
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setSeriesOutlineStroke(s);
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // seriesOutlineStrokeList
         p1.setSeriesOutlineStroke(1, s);
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setSeriesOutlineStroke(1, s);
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // baseSeriesOutlineStroke
         p1.setBaseSeriesOutlineStroke(s);
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setBaseSeriesOutlineStroke(s);
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // webFilled
         p1.setWebFilled(false);
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setWebFilled(false);
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // axisLabelGap
         p1.setAxisLabelGap(0.11);
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setAxisLabelGap(0.11);
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // labelFont
         p1.setLabelFont(new Font("Serif", Font.PLAIN, 9));
-        assertNotSame(p1,p2);
+        assertNotSame(p1, p2);
         p2.setLabelFont(new Font("Serif", Font.PLAIN, 9));
-        assertEquals(p1,p2);
+        assertEquals(p1, p2);
 
         // labelPaint
         p1.setLabelPaint(new GradientPaint(1.0f, 2.0f, Color.RED,

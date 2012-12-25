@@ -46,27 +46,14 @@ package org.jfree.data.xy;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link VectorSeriesCollection} class.
  */
-public class VectorSeriesCollectionTest  {
-
-
-
+public class VectorSeriesCollectionTest {
 
 
     /**
@@ -130,15 +117,15 @@ public class VectorSeriesCollectionTest  {
         VectorSeriesCollection c1 = new VectorSeriesCollection();
         c1.addSeries(s1);
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(c1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(c1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         VectorSeriesCollection c2 = (VectorSeriesCollection) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(c1, c2);
     }

@@ -62,28 +62,15 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.awt.geom.Rectangle2D;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.text.DecimalFormat;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link NumberAxis} class.
  */
-public class NumberAxisTest  {
-
-
-
+public class NumberAxisTest {
 
 
     /**
@@ -396,8 +383,7 @@ public class NumberAxisTest  {
         try {
             axis.setRangeType(null);
             fail("IllegalArgumentException should have been thrown on null parameter");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'rangeType' argument.", e.getMessage());
         }
     }

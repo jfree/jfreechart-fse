@@ -84,7 +84,7 @@ public abstract class Statistics {
      * @since 1.0.3
      */
     public static double calculateMean(Number[] values,
-            boolean includeNullAndNaN) {
+                                       boolean includeNullAndNaN) {
 
         if (values == null) {
             throw new IllegalArgumentException("Null 'values' argument.");
@@ -134,7 +134,7 @@ public abstract class Statistics {
      * @since 1.0.3
      */
     public static double calculateMean(Collection<Number> values,
-            boolean includeNullAndNaN) {
+                                       boolean includeNullAndNaN) {
 
         if (values == null) {
             throw new IllegalArgumentException("Null 'values' argument.");
@@ -143,20 +143,18 @@ public abstract class Statistics {
         double total = 0.0;
         for (Number n : values) {
             if (n == null) {
-            	if (includeNullAndNaN) {
+                if (includeNullAndNaN) {
                     return Double.NaN;
-            	}
-            	else {
-            		continue;
-            	}
+                } else {
+                    continue;
+                }
             }
             double value = n.doubleValue();
             if (Double.isNaN(value)) {
                 if (includeNullAndNaN) {
                     return Double.NaN;
-                }
-                else {
-                	continue;
+                } else {
+                    continue;
                 }
             }
             total = total + value;
@@ -191,11 +189,11 @@ public abstract class Statistics {
      *
      * @return The median.
      */
-    public static double calculateMedian(List<Number> values, 
-            boolean copyAndSort) {
+    public static double calculateMedian(List<Number> values,
+                                         boolean copyAndSort) {
 
         if (values == null) {
-        	return Double.NaN;
+            return Double.NaN;
         }
         double result = Double.NaN;
         if (copyAndSort) {
@@ -209,13 +207,11 @@ public abstract class Statistics {
                 if (count > 1) {
                     Number value = values.get((count - 1) / 2);
                     result = value.doubleValue();
-                }
-                else {
+                } else {
                     Number value = values.get(0);
                     result = value.doubleValue();
                 }
-            }
-            else {
+            } else {
                 Number value1 = values.get(count / 2 - 1);
                 Number value2 = values.get(count / 2);
                 result = (value1.doubleValue() + value2.doubleValue()) / 2.0;
@@ -252,8 +248,8 @@ public abstract class Statistics {
      *
      * @return The median.
      */
-    public static double calculateMedian(List<Number> values, 
-            int start, int end, boolean copyAndSort) {
+    public static double calculateMedian(List<Number> values,
+                                         int start, int end, boolean copyAndSort) {
 
         double result = Double.NaN;
         if (copyAndSort) {
@@ -263,21 +259,18 @@ public abstract class Statistics {
             }
             Collections.sort((List) working);
             result = calculateMedian(working, false);
-        }
-        else {
+        } else {
             int count = end - start + 1;
             if (count > 0) {
                 if (count % 2 == 1) {
                     if (count > 1) {
                         Number value = values.get(start + (count - 1) / 2);
                         result = value.doubleValue();
-                    }
-                    else {
+                    } else {
                         Number value = values.get(start);
                         result = value.doubleValue();
                     }
-                }
-                else {
+                } else {
                     Number v1 = values.get(start + count / 2 - 1);
                     Number v2 = values.get(start + count / 2);
                     result = (v1.doubleValue() + v2.doubleValue()) / 2.0;
@@ -332,7 +325,7 @@ public abstract class Statistics {
         }
         if (xData.length != yData.length) {
             throw new IllegalArgumentException(
-                "Statistics.getLinearFit(): array lengths must be equal.");
+                    "Statistics.getLinearFit(): array lengths must be equal.");
         }
 
         double[] result = new double[2];
@@ -380,7 +373,7 @@ public abstract class Statistics {
             sx = sx + xData[counter].doubleValue();
             sxx = sxx + Math.pow(xData[counter].doubleValue(), 2);
             sxy = sxy + yData[counter].doubleValue()
-                      * xData[counter].doubleValue();
+                    * xData[counter].doubleValue();
             sy = sy + yData[counter].doubleValue();
         }
         return (sxy - (sx * sy) / counter) / (sxx - (sx * sx) / counter);
@@ -409,7 +402,7 @@ public abstract class Statistics {
         }
         if (data1.length != data2.length) {
             throw new IllegalArgumentException(
-                "'data1' and 'data2' arrays must have same length."
+                    "'data1' and 'data2' arrays must have same length."
             );
         }
         int n = data1.length;
@@ -458,7 +451,7 @@ public abstract class Statistics {
 
         if (period > xData.length) {
             throw new IllegalArgumentException(
-                "Period can't be longer than dataset."
+                    "Period can't be longer than dataset."
             );
         }
 

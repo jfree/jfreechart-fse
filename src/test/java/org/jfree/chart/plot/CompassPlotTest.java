@@ -44,29 +44,15 @@ package org.jfree.chart.plot;
 import org.jfree.data.general.DefaultValueDataset;
 import org.junit.Test;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link CompassPlot} class.
  */
-public class CompassPlotTest  {
-
-
-
+public class CompassPlotTest {
 
 
     /**

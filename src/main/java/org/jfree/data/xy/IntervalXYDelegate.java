@@ -53,8 +53,6 @@
 
 package org.jfree.data.xy;
 
-import java.io.Serializable;
-
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.DomainInfo;
@@ -63,6 +61,8 @@ import org.jfree.data.RangeInfo;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.general.DatasetUtilities;
+
+import java.io.Serializable;
 
 /**
  * A delegate that handles the specification or automatic calculation of the
@@ -241,8 +241,7 @@ public class IntervalXYDelegate implements DatasetChangeListener,
             // everything is fine: autoWidth is on, and an autoIntervalWidth
             // was set.
             return this.autoIntervalWidth;
-        }
-        else {
+        } else {
             // either autoWidth is off or autoIntervalWidth was not set.
             return this.fixedIntervalWidth;
         }
@@ -327,7 +326,7 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      * @return The minimum value.
      */
     @Override
-	public double getDomainLowerBound(boolean includeInterval) {
+    public double getDomainLowerBound(boolean includeInterval) {
         double result = Double.NaN;
         Range r = getDomainBounds(includeInterval);
         if (r != null) {
@@ -345,7 +344,7 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      * @return The maximum value.
      */
     @Override
-	public double getDomainUpperBound(boolean includeInterval) {
+    public double getDomainUpperBound(boolean includeInterval) {
         double result = Double.NaN;
         Range r = getDomainBounds(includeInterval);
         if (r != null) {
@@ -364,7 +363,7 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      * @return The range.
      */
     @Override
-	public Range getDomainBounds(boolean includeInterval) {
+    public Range getDomainBounds(boolean includeInterval) {
         // first get the range without the interval, then expand it for the
         // interval width
         Range range = DatasetUtilities.findDomainBounds(this.dataset, false);
@@ -372,7 +371,7 @@ public class IntervalXYDelegate implements DatasetChangeListener,
             double lowerAdj = getIntervalWidth() * getIntervalPositionFactor();
             double upperAdj = getIntervalWidth() - lowerAdj;
             range = new Range(range.getLowerBound() - lowerAdj,
-                range.getUpperBound() + upperAdj);
+                    range.getUpperBound() + upperAdj);
         }
         return range;
     }
@@ -384,7 +383,7 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      * @param e  the event.
      */
     @Override
-	public void datasetChanged(DatasetChangeEvent e) {
+    public void datasetChanged(DatasetChangeEvent e) {
         // TODO: by coding the event with some information about what changed
         // in the dataset, we could make the recalculation of the interval
         // more efficient in some cases (for instance, if the change is
@@ -442,7 +441,7 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -468,7 +467,7 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      * @throws CloneNotSupportedException if the object cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -478,7 +477,7 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int hash = 5;
         hash = HashUtilities.hashCode(hash, this.autoWidth);
         hash = HashUtilities.hashCode(hash, this.intervalPositionFactor);

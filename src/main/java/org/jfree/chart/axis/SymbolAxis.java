@@ -81,13 +81,18 @@
 
 package org.jfree.chart.axis;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
+import org.jfree.chart.event.AxisChangeEvent;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.plot.ValueAxisPlot;
+import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.SerialUtilities;
+import org.jfree.data.Range;
+
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -96,17 +101,6 @@ import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.List;
-
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.event.AxisChangeEvent;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.plot.ValueAxisPlot;
-import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.data.Range;
 
 /**
  * A standard linear value axis that replaces integer values with symbols.
@@ -271,7 +265,7 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      * @param edge  the edge along which the axis is drawn.
      */
     @Override
-	protected void selectAutoTickUnit(Graphics2D g2, Rectangle2D dataArea,
+    protected void selectAutoTickUnit(Graphics2D g2, Rectangle2D dataArea,
                                       RectangleEdge edge) {
         throw new UnsupportedOperationException();
     }
@@ -293,7 +287,7 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      * @return The axis state (never <code>null</code>).
      */
     @Override
-	public AxisState draw(Graphics2D g2,
+    public AxisState draw(Graphics2D g2,
                           double cursor,
                           Rectangle2D plotArea,
                           Rectangle2D dataArea,
@@ -333,8 +327,7 @@ public class SymbolAxis extends NumberAxis implements Serializable {
         g2.clip(dataArea);
         if (RectangleEdge.isTopOrBottom(edge)) {
             drawGridBandsHorizontal(g2, plotArea, dataArea, true, ticks);
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             drawGridBandsVertical(g2, plotArea, dataArea, true, ticks);
         }
         g2.setClip(savedClip);
@@ -367,11 +360,10 @@ public class SymbolAxis extends NumberAxis implements Serializable {
 
         //gets the outline stroke width of the plot
         double outlineStrokeWidth;
-        if (getPlot().getOutlineStroke() !=  null) {
+        if (getPlot().getOutlineStroke() != null) {
             outlineStrokeWidth
-                = ((BasicStroke) getPlot().getOutlineStroke()).getLineWidth();
-        }
-        else {
+                    = ((BasicStroke) getPlot().getOutlineStroke()).getLineWidth();
+        } else {
             outlineStrokeWidth = 1d;
         }
 
@@ -422,8 +414,7 @@ public class SymbolAxis extends NumberAxis implements Serializable {
         Stroke outlineStroke = getPlot().getOutlineStroke();
         if (outlineStroke != null && outlineStroke instanceof BasicStroke) {
             outlineStrokeWidth = ((BasicStroke) outlineStroke).getLineWidth();
-        }
-        else {
+        } else {
             outlineStrokeWidth = 1d;
         }
 
@@ -449,7 +440,7 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      * Rescales the axis to ensure that all data is visible.
      */
     @Override
-	protected void autoAdjustRange() {
+    protected void autoAdjustRange() {
 
         Plot plot = getPlot();
         if (plot == null) {
@@ -478,38 +469,31 @@ public class SymbolAxis extends NumberAxis implements Serializable {
                 if (getAutoRangeStickyZero()) {
                     if (upper <= 0.0) {
                         upper = 0.0;
-                    }
-                    else {
+                    } else {
                         upper = upper + upperMargin;
                     }
                     if (lower >= 0.0) {
                         lower = 0.0;
-                    }
-                    else {
+                    } else {
                         lower = lower - lowerMargin;
                     }
-                }
-                else {
+                } else {
                     upper = Math.max(0.0, upper + upperMargin);
                     lower = Math.min(0.0, lower - lowerMargin);
                 }
-            }
-            else {
+            } else {
                 if (getAutoRangeStickyZero()) {
                     if (upper <= 0.0) {
                         upper = Math.min(0.0, upper + upperMargin);
-                    }
-                    else {
+                    } else {
                         upper = upper + upperMargin * range;
                     }
                     if (lower >= 0.0) {
                         lower = Math.max(0.0, lower - lowerMargin);
-                    }
-                    else {
+                    } else {
                         lower = lower - lowerMargin;
                     }
-                }
-                else {
+                } else {
                     upper = upper + upperMargin;
                     lower = lower - lowerMargin;
                 }
@@ -533,15 +517,14 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      * @return A list of ticks.
      */
     @Override
-	public List<ValueTick> refreshTicks(Graphics2D g2,
-                             AxisState state,
-                             Rectangle2D dataArea,
-                             RectangleEdge edge) {
+    public List<ValueTick> refreshTicks(Graphics2D g2,
+                                        AxisState state,
+                                        Rectangle2D dataArea,
+                                        RectangleEdge edge) {
         List<ValueTick> ticks = null;
         if (RectangleEdge.isTopOrBottom(edge)) {
             ticks = refreshTicksHorizontal(g2, dataArea, edge);
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             ticks = refreshTicksVertical(g2, dataArea, edge);
         }
         return ticks;
@@ -558,9 +541,9 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      * @return The ticks.
      */
     @Override
-	protected List<ValueTick> refreshTicksHorizontal(Graphics2D g2,
-                                          Rectangle2D dataArea,
-                                          RectangleEdge edge) {
+    protected List<ValueTick> refreshTicksHorizontal(Graphics2D g2,
+                                                     Rectangle2D dataArea,
+                                                     RectangleEdge edge) {
 
         List<ValueTick> ticks = new java.util.ArrayList<ValueTick>();
 
@@ -582,8 +565,7 @@ public class SymbolAxis extends NumberAxis implements Serializable {
                 NumberFormat formatter = getNumberFormatOverride();
                 if (formatter != null) {
                     tickLabel = formatter.format(currentTickValue);
-                }
-                else {
+                } else {
                     tickLabel = valueToString(currentTickValue);
                 }
 
@@ -603,8 +585,7 @@ public class SymbolAxis extends NumberAxis implements Serializable {
                 }
                 if (tickLabelsOverlapping) {
                     tickLabel = ""; // don't draw this tick label
-                }
-                else {
+                } else {
                     // remember these values for next comparison
                     previousDrawnTickLabelPos = xx;
                     previousDrawnTickLabelLength = tickLabelLength;
@@ -618,17 +599,14 @@ public class SymbolAxis extends NumberAxis implements Serializable {
                     rotationAnchor = TextAnchor.CENTER_RIGHT;
                     if (edge == RectangleEdge.TOP) {
                         angle = Math.PI / 2.0;
-                    }
-                    else {
+                    } else {
                         angle = -Math.PI / 2.0;
                     }
-                }
-                else {
+                } else {
                     if (edge == RectangleEdge.TOP) {
                         anchor = TextAnchor.BOTTOM_CENTER;
                         rotationAnchor = TextAnchor.BOTTOM_CENTER;
-                    }
-                    else {
+                    } else {
                         anchor = TextAnchor.TOP_CENTER;
                         rotationAnchor = TextAnchor.TOP_CENTER;
                     }
@@ -653,9 +631,9 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      * @return The ticks.
      */
     @Override
-	protected List<ValueTick> refreshTicksVertical(Graphics2D g2,
-                                        Rectangle2D dataArea,
-                                        RectangleEdge edge) {
+    protected List<ValueTick> refreshTicksVertical(Graphics2D g2,
+                                                   Rectangle2D dataArea,
+                                                   RectangleEdge edge) {
 
         List<ValueTick> ticks = new java.util.ArrayList<ValueTick>();
 
@@ -677,8 +655,7 @@ public class SymbolAxis extends NumberAxis implements Serializable {
                 NumberFormat formatter = getNumberFormatOverride();
                 if (formatter != null) {
                     tickLabel = formatter.format(currentTickValue);
-                }
-                else {
+                } else {
                     tickLabel = valueToString(currentTickValue);
                 }
 
@@ -686,7 +663,7 @@ public class SymbolAxis extends NumberAxis implements Serializable {
                 Rectangle2D bounds = TextUtilities.getTextBounds(tickLabel, g2,
                         g2.getFontMetrics());
                 double tickLabelLength = isVerticalTickLabels()
-                    ? bounds.getWidth() : bounds.getHeight();
+                        ? bounds.getWidth() : bounds.getHeight();
                 boolean tickLabelsOverlapping = false;
                 if (i > 0) {
                     double avgTickLabelLength = (previousDrawnTickLabelLength
@@ -698,8 +675,7 @@ public class SymbolAxis extends NumberAxis implements Serializable {
                 }
                 if (tickLabelsOverlapping) {
                     tickLabel = ""; // don't draw this tick label
-                }
-                else {
+                } else {
                     // remember these values for next comparison
                     previousDrawnTickLabelPos = yy;
                     previousDrawnTickLabelLength = tickLabelLength;
@@ -713,17 +689,14 @@ public class SymbolAxis extends NumberAxis implements Serializable {
                     rotationAnchor = TextAnchor.BOTTOM_CENTER;
                     if (edge == RectangleEdge.LEFT) {
                         angle = -Math.PI / 2.0;
-                    }
-                    else {
+                    } else {
                         angle = Math.PI / 2.0;
                     }
-                }
-                else {
+                } else {
                     if (edge == RectangleEdge.LEFT) {
                         anchor = TextAnchor.CENTER_RIGHT;
                         rotationAnchor = TextAnchor.CENTER_RIGHT;
-                    }
-                    else {
+                    } else {
                         anchor = TextAnchor.CENTER_LEFT;
                         rotationAnchor = TextAnchor.CENTER_LEFT;
                     }
@@ -748,8 +721,7 @@ public class SymbolAxis extends NumberAxis implements Serializable {
         String strToReturn;
         try {
             strToReturn = this.symbols.get((int) value);
-        }
-        catch (IndexOutOfBoundsException  ex) {
+        } catch (IndexOutOfBoundsException ex) {
             strToReturn = "";
         }
         return strToReturn;
@@ -763,7 +735,7 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -809,7 +781,7 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.gridBandPaint = SerialUtilities.readPaint(stream);
         this.gridBandAlternatePaint = SerialUtilities.readPaint(stream);

@@ -44,14 +44,10 @@
 
 package org.jfree.chart.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Stroke;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
 
 /**
  * A component for choosing a stroke from a list of available strokes.  This
@@ -85,7 +81,7 @@ public class StrokeChooserPanel extends JPanel {
         // Changes due to focus problems!! DZ
         this.selector.addActionListener(new ActionListener() {
             @Override
-			public void actionPerformed(final ActionEvent evt) {
+            public void actionPerformed(final ActionEvent evt) {
                 getSelector().transferFocus();
             }
         });

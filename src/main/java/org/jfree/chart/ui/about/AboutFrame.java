@@ -50,21 +50,13 @@
 
 package org.jfree.chart.ui.about;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Image;
+import org.jfree.chart.util.ResourceBundleWrapper;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.border.Border;
-
-import org.jfree.chart.util.ResourceBundleWrapper;
 
 /**
  * A frame that displays information about the demonstration application.
@@ -111,14 +103,14 @@ public class AboutFrame extends JFrame {
     public AboutFrame(final String title, final ProjectInfo project) {
 
         this(title,
-             project.getName(),
-             "Version " + project.getVersion(),
-             project.getInfo(),
-             project.getLogo(),
-             project.getCopyright(),
-             project.getLicenceText(),
-             project.getContributors(),
-             project);
+                project.getName(),
+                "Version " + project.getVersion(),
+                project.getInfo(),
+                project.getLogo(),
+                project.getCopyright(),
+                project.getLicenceText(),
+                project.getContributors(),
+                project);
 
     }
 
@@ -173,7 +165,7 @@ public class AboutFrame extends JFrame {
      * @return the preferred size.
      */
     @Override
-	public Dimension getPreferredSize() {
+    public Dimension getPreferredSize() {
         return PREFERRED_SIZE;
     }
 

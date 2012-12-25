@@ -64,9 +64,9 @@ public class CompassFormat extends NumberFormat {
      * the base wind directions.
      */
     public CompassFormat(String n, String e, String s, String w) {
-        this(new String[] {
-            n, n + n + e, n + e, e + n + e, e, e + s + e, s + e, s + s + e, s,
-            s + s + w, s + w, w + s + w, w, w + n + w, n + w, n + n + w, n
+        this(new String[]{
+                n, n + n + e, n + e, e + n + e, e, e + s + e, s + e, s + s + e, s,
+                s + s + w, s + w, w + s + w, w, w + n + w, n + w, n + n + w, n
         });
     }
 
@@ -111,7 +111,7 @@ public class CompassFormat extends NumberFormat {
      * @return The string buffer.
      */
     @Override
-	public StringBuffer format(double number, StringBuffer toAppendTo,
+    public StringBuffer format(double number, StringBuffer toAppendTo,
                                FieldPosition pos) {
         return toAppendTo.append(getDirectionCode(number));
     }
@@ -126,7 +126,7 @@ public class CompassFormat extends NumberFormat {
      * @return The string buffer.
      */
     @Override
-	public StringBuffer format(long number, StringBuffer toAppendTo,
+    public StringBuffer format(long number, StringBuffer toAppendTo,
                                FieldPosition pos) {
         return toAppendTo.append(getDirectionCode(number));
     }
@@ -141,7 +141,7 @@ public class CompassFormat extends NumberFormat {
      * @return <code>null</code>.
      */
     @Override
-	public Number parse(String source, ParsePosition parsePosition) {
+    public Number parse(String source, ParsePosition parsePosition) {
         return null;
     }
 

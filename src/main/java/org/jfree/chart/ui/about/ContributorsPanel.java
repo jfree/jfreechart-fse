@@ -44,13 +44,10 @@
 
 package org.jfree.chart.ui.about;
 
-import java.awt.BorderLayout;
-import java.util.List;
-
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.TableModel;
+import java.awt.*;
+import java.util.List;
 
 /**
  * A panel containing a table that lists the contributors to a project.

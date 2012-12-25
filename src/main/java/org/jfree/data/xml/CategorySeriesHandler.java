@@ -58,7 +58,7 @@ public class CategorySeriesHandler extends DefaultHandler
     private Comparable seriesKey;
 
     /** The values. */
-    private DefaultKeyedValues values;
+    private DefaultKeyedValues<Comparable> values;
 
     /**
      * Creates a new item handler.
@@ -67,7 +67,7 @@ public class CategorySeriesHandler extends DefaultHandler
      */
     public CategorySeriesHandler(RootHandler root) {
         this.root = root;
-        this.values = new DefaultKeyedValues();
+        this.values = new DefaultKeyedValues<Comparable>();
     }
 
     /**
@@ -100,7 +100,7 @@ public class CategorySeriesHandler extends DefaultHandler
      * @throws SAXException for errors.
      */
     @Override
-	public void startElement(String namespaceURI,
+    public void startElement(String namespaceURI,
                              String localName,
                              String qName,
                              Attributes atts) throws SAXException {
@@ -109,16 +109,13 @@ public class CategorySeriesHandler extends DefaultHandler
             setSeriesKey(atts.getValue("name"));
             ItemHandler subhandler = new ItemHandler(this.root, this);
             this.root.pushSubHandler(subhandler);
-        }
-        else if (qName.equals(ITEM_TAG)) {
+        } else if (qName.equals(ITEM_TAG)) {
             ItemHandler subhandler = new ItemHandler(this.root, this);
             this.root.pushSubHandler(subhandler);
             subhandler.startElement(namespaceURI, localName, qName, atts);
-        }
-
-        else {
+        } else {
             throw new SAXException(
-                "Expecting <Series> or <Item> tag...found " + qName
+                    "Expecting <Series> or <Item> tag...found " + qName
             );
         }
     }
@@ -131,7 +128,7 @@ public class CategorySeriesHandler extends DefaultHandler
      * @param qName  the element name.
      */
     @Override
-	public void endElement(String namespaceURI,
+    public void endElement(String namespaceURI,
                            String localName,
                            String qName) {
 

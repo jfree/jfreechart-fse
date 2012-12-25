@@ -49,29 +49,14 @@ package org.jfree.data.xy;
 import org.jfree.data.general.SeriesException;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link XYSeries} class.
  */
-public class XYSeriesTest  {
-
-
-
+public class XYSeriesTest {
 
 
     /**
@@ -319,8 +304,7 @@ public class XYSeriesTest  {
         try {
             series.update(2, 99);
             fail("SeriesException should have been thrown for unknown key");
-        }
-        catch (SeriesException e) {
+        } catch (SeriesException e) {
             assertEquals("No observation for x = 2", e.getMessage());
         }
     }
@@ -330,12 +314,12 @@ public class XYSeriesTest  {
      */
     @Test
     public void testUpdate2() {
-       XYSeries series = new XYSeries("Series", false, true);
-       series.add(5.0, 55.0);
-       series.add(4.0, 44.0);
-       series.add(6.0, 66.0);
-       series.update(4.0, 99.0);
-       assertEquals(99.0, series.getY(1));
+        XYSeries series = new XYSeries("Series", false, true);
+        series.add(5.0, 55.0);
+        series.add(4.0, 44.0);
+        series.add(6.0, 66.0);
+        series.update(4.0, 99.0);
+        assertEquals(99.0, series.getY(1));
     }
 
     /**
@@ -645,7 +629,7 @@ public class XYSeriesTest  {
 
         s1.add(0.0, null);
         assertEquals(-1.1, s1.getMinY(), EPSILON);
-   }
+    }
 
     /**
      * Some checks for the getMaxY() method.

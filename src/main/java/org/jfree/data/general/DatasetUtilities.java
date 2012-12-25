@@ -127,16 +127,9 @@
 
 package org.jfree.data.general;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jfree.chart.util.ArrayUtilities;
 import org.jfree.chart.util.ParamChecks;
-import org.jfree.data.DomainInfo;
-import org.jfree.data.KeyToGroupMap;
-import org.jfree.data.KeyedValues;
-import org.jfree.data.Range;
-import org.jfree.data.RangeInfo;
+import org.jfree.data.*;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.CategoryRangeInfo;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -146,15 +139,10 @@ import org.jfree.data.statistics.BoxAndWhiskerCategoryDataset;
 import org.jfree.data.statistics.BoxAndWhiskerXYDataset;
 import org.jfree.data.statistics.MultiValueCategoryDataset;
 import org.jfree.data.statistics.StatisticalCategoryDataset;
-import org.jfree.data.xy.IntervalXYDataset;
-import org.jfree.data.xy.OHLCDataset;
-import org.jfree.data.xy.TableXYDataset;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYDomainInfo;
-import org.jfree.data.xy.XYRangeInfo;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.data.xy.XYZDataset;
+import org.jfree.data.xy.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -281,7 +269,7 @@ public final class DatasetUtilities {
      * @return The pie dataset with (possibly) aggregated items.
      */
     public static PieDataset createConsolidatedPieDataset(PieDataset source,
-            Comparable key, double minimumPercent) {
+                                                          Comparable key, double minimumPercent) {
         return DatasetUtilities.createConsolidatedPieDataset(source, key,
                 minimumPercent, 2);
     }
@@ -302,7 +290,7 @@ public final class DatasetUtilities {
      * @return The pie dataset with (possibly) aggregated items.
      */
     public static PieDataset createConsolidatedPieDataset(PieDataset source,
-            Comparable key, double minimumPercent, int minItems) {
+                                                          Comparable key, double minimumPercent, int minItems) {
 
         DefaultPieDataset result = new DefaultPieDataset();
         double total = DatasetUtilities.calculatePieDatasetTotal(source);
@@ -357,7 +345,7 @@ public final class DatasetUtilities {
      * @return The dataset.
      */
     public static CategoryDataset createCategoryDataset(String rowKeyPrefix,
-            String columnKeyPrefix, double[][] data) {
+                                                        String columnKeyPrefix, double[][] data) {
 
         DefaultCategoryDataset result = new DefaultCategoryDataset();
         for (int r = 0; r < data.length; r++) {
@@ -368,7 +356,6 @@ public final class DatasetUtilities {
             }
         }
         return result;
-
     }
 
     /**
@@ -385,7 +372,7 @@ public final class DatasetUtilities {
      * @return The dataset.
      */
     public static CategoryDataset createCategoryDataset(String rowKeyPrefix,
-            String columnKeyPrefix, Number[][] data) {
+                                                        String columnKeyPrefix, Number[][] data) {
 
         DefaultCategoryDataset result = new DefaultCategoryDataset();
         for (int r = 0; r < data.length; r++) {
@@ -413,7 +400,7 @@ public final class DatasetUtilities {
      * @return The dataset.
      */
     public static CategoryDataset createCategoryDataset(Comparable[] rowKeys,
-            Comparable[] columnKeys, double[][] data) {
+                                                        Comparable[] columnKeys, double[][] data) {
 
         ParamChecks.nullNotPermitted(rowKeys, "rowKeys");
         ParamChecks.nullNotPermitted(columnKeys, "columnKeys");
@@ -426,8 +413,8 @@ public final class DatasetUtilities {
         }
         if (rowKeys.length != data.length) {
             throw new IllegalArgumentException(
-                "The number of row keys does not match the number of rows in "
-                + "the data array.");
+                    "The number of row keys does not match the number of rows in "
+                            + "the data array.");
         }
         int columnCount = 0;
         for (double[] aData : data) {
@@ -435,8 +422,8 @@ public final class DatasetUtilities {
         }
         if (columnKeys.length != columnCount) {
             throw new IllegalArgumentException(
-                "The number of column keys does not match the number of "
-                + "columns in the data array.");
+                    "The number of column keys does not match the number of "
+                            + "columns in the data array.");
         }
 
         // now do the work...
@@ -488,7 +475,7 @@ public final class DatasetUtilities {
      * @return A dataset.
      */
     public static XYDataset sampleFunction2D(Function2D f, double start,
-            double end, int samples, Comparable seriesKey) {
+                                             double end, int samples, Comparable seriesKey) {
 
         // defer argument checking
         XYSeries series = sampleFunction2DToSeries(f, start, end, samples,
@@ -513,7 +500,7 @@ public final class DatasetUtilities {
      * @since 1.0.13
      */
     public static XYSeries sampleFunction2DToSeries(Function2D f,
-            double start, double end, int samples, Comparable seriesKey) {
+                                                    double start, double end, int samples, Comparable seriesKey) {
 
         ParamChecks.nullNotPermitted(f, "f");
         ParamChecks.nullNotPermitted(seriesKey, "seriesKey");
@@ -649,8 +636,7 @@ public final class DatasetUtilities {
         if (dataset instanceof DomainInfo) {
             DomainInfo info = (DomainInfo) dataset;
             result = info.getDomainBounds(includeInterval);
-        }
-        else {
+        } else {
             result = iterateDomainBounds(dataset, includeInterval);
         }
         return result;
@@ -673,14 +659,13 @@ public final class DatasetUtilities {
      * @since 1.0.13
      */
     public static Range findDomainBounds(XYDataset dataset,
-            List<Comparable> visibleSeriesKeys, boolean includeInterval) {
+                                         List<Comparable> visibleSeriesKeys, boolean includeInterval) {
         ParamChecks.nullNotPermitted(dataset, "dataset");
         Range result;
         if (dataset instanceof XYDomainInfo) {
             XYDomainInfo info = (XYDomainInfo) dataset;
             result = info.getDomainBounds(visibleSeriesKeys, includeInterval);
-        }
-        else {
+        } else {
             result = iterateToFindDomainBounds(dataset, visibleSeriesKeys,
                     includeInterval);
         }
@@ -742,8 +727,7 @@ public final class DatasetUtilities {
                     }
                 }
             }
-        }
-        else {
+        } else {
             for (int series = 0; series < seriesCount; series++) {
                 int itemCount = dataset.getItemCount(series);
                 for (int item = 0; item < itemCount; item++) {
@@ -758,8 +742,7 @@ public final class DatasetUtilities {
         }
         if (minimum > maximum) {
             return null;
-        }
-        else {
+        } else {
             return new Range(minimum, maximum);
         }
     }
@@ -791,8 +774,7 @@ public final class DatasetUtilities {
         if (dataset instanceof RangeInfo) {
             RangeInfo info = (RangeInfo) dataset;
             result = info.getRangeBounds(includeInterval);
-        }
-        else {
+        } else {
             result = iterateRangeBounds(dataset, includeInterval);
         }
         return result;
@@ -812,16 +794,16 @@ public final class DatasetUtilities {
      *
      * @since 1.0.13
      */
-    public static Range findRangeBounds(CategoryDataset dataset,
-            List<Comparable> visibleSeriesKeys, boolean includeInterval) {
+    public static <RowKey extends Comparable, ColumnKey extends Comparable>
+    Range findRangeBounds(CategoryDataset<RowKey, ColumnKey> dataset,
+                          List<RowKey> visibleSeriesKeys, boolean includeInterval) {
         ParamChecks.nullNotPermitted(dataset, "dataset");
         ParamChecks.nullNotPermitted(visibleSeriesKeys, "visibleSeriesKeys");
         Range result;
         if (dataset instanceof CategoryRangeInfo) {
             CategoryRangeInfo info = (CategoryRangeInfo) dataset;
             result = info.getRangeBounds(visibleSeriesKeys, includeInterval);
-        }
-        else {
+        } else {
             result = iterateToFindRangeBounds(dataset, visibleSeriesKeys,
                     includeInterval);
         }
@@ -858,8 +840,7 @@ public final class DatasetUtilities {
         if (dataset instanceof RangeInfo) {
             RangeInfo info = (RangeInfo) dataset;
             result = info.getRangeBounds(includeInterval);
-        }
-        else {
+        } else {
             result = iterateRangeBounds(dataset, includeInterval);
         }
         return result;
@@ -882,15 +863,14 @@ public final class DatasetUtilities {
      * @since 1.0.13
      */
     public static Range findRangeBounds(XYDataset dataset,
-            List<Comparable> visibleSeriesKeys, Range xRange, boolean includeInterval) {
+                                        List<Comparable> visibleSeriesKeys, Range xRange, boolean includeInterval) {
         ParamChecks.nullNotPermitted(dataset, "dataset");
         Range result;
         if (dataset instanceof XYRangeInfo) {
             XYRangeInfo info = (XYRangeInfo) dataset;
             result = info.getRangeBounds(visibleSeriesKeys, xRange,
                     includeInterval);
-        }
-        else {
+        } else {
             result = iterateToFindRangeBounds(dataset, visibleSeriesKeys,
                     xRange, includeInterval);
         }
@@ -924,7 +904,7 @@ public final class DatasetUtilities {
      * @since 1.0.10
      */
     public static Range iterateRangeBounds(CategoryDataset dataset,
-            boolean includeInterval) {
+                                           boolean includeInterval) {
         double minimum = Double.POSITIVE_INFINITY;
         double maximum = Double.NEGATIVE_INFINITY;
         int rowCount = dataset.getRowCount();
@@ -957,8 +937,7 @@ public final class DatasetUtilities {
                     }
                 }
             }
-        }
-        else {
+        } else {
             // handle the standard case (plain CategoryDataset)
             for (int row = 0; row < rowCount; row++) {
                 for (int column = 0; column < columnCount; column++) {
@@ -975,8 +954,7 @@ public final class DatasetUtilities {
         }
         if (minimum == Double.POSITIVE_INFINITY) {
             return null;
-        }
-        else {
+        } else {
             return new Range(minimum, maximum);
         }
     }
@@ -994,8 +972,10 @@ public final class DatasetUtilities {
      *
      * @since 1.0.13
      */
-    public static Range iterateToFindRangeBounds(CategoryDataset dataset,
-            List<Comparable> visibleSeriesKeys, boolean includeInterval) {
+    public static <RowKey extends Comparable, ColumnKey extends Comparable>
+    Range iterateToFindRangeBounds(CategoryDataset<RowKey, ColumnKey> dataset,
+                                   List<RowKey> visibleSeriesKeys,
+                                   boolean includeInterval) {
 
         ParamChecks.nullNotPermitted(dataset, "dataset");
         ParamChecks.nullNotPermitted(visibleSeriesKeys, "visibleSeriesKeys");
@@ -1008,7 +988,7 @@ public final class DatasetUtilities {
             // handle special case of BoxAndWhiskerDataset
             BoxAndWhiskerCategoryDataset bx
                     = (BoxAndWhiskerCategoryDataset) dataset;
-            for (Comparable seriesKey : visibleSeriesKeys) {
+            for (RowKey seriesKey : visibleSeriesKeys) {
                 int series = dataset.getRowIndex(seriesKey);
                 int itemCount = dataset.getColumnCount();
                 for (int item = 0; item < itemCount; item++) {
@@ -1028,14 +1008,13 @@ public final class DatasetUtilities {
                     }
                 }
             }
-        }
-        else if (includeInterval
+        } else if (includeInterval
                 && dataset instanceof IntervalCategoryDataset) {
             // handle the special case where the dataset has y-intervals that
             // we want to measure
             IntervalCategoryDataset icd = (IntervalCategoryDataset) dataset;
             Number lvalue, uvalue;
-            for (Comparable seriesKey : visibleSeriesKeys) {
+            for (RowKey seriesKey : visibleSeriesKeys) {
                 int series = dataset.getRowIndex(seriesKey);
                 for (int column = 0; column < columnCount; column++) {
                     lvalue = icd.getStartValue(series, column);
@@ -1048,34 +1027,34 @@ public final class DatasetUtilities {
                     }
                 }
             }
-        }
-        else if (includeInterval
+        } else if (includeInterval
                 && dataset instanceof MultiValueCategoryDataset) {
             // handle the special case where the dataset has y-intervals that
             // we want to measure
-            MultiValueCategoryDataset mvcd
-                    = (MultiValueCategoryDataset) dataset;
-            for (Comparable seriesKey : visibleSeriesKeys) {
+            MultiValueCategoryDataset<RowKey, ColumnKey> mvcd
+                    = (MultiValueCategoryDataset<RowKey, ColumnKey>) dataset;
+            for (RowKey seriesKey : visibleSeriesKeys) {
                 int series = dataset.getRowIndex(seriesKey);
                 for (int column = 0; column < columnCount; column++) {
                     List<Number> values = mvcd.getValues(series, column);
-                    for (Number o : values) {
-                        double v = o.doubleValue();
-                        if (!Double.isNaN(v)) {
-                            minimum = Math.min(minimum, v);
-                            maximum = Math.max(maximum, v);
+                    for (Number number : values) {
+                        if (number != null) {
+                            double v = number.doubleValue();
+                            if (!Double.isNaN(v)) {
+                                minimum = Math.min(minimum, v);
+                                maximum = Math.max(maximum, v);
+                            }
                         }
                     }
                 }
             }
-        }
-        else if (includeInterval
+        } else if (includeInterval
                 && dataset instanceof StatisticalCategoryDataset) {
             // handle the special case where the dataset has y-intervals that
             // we want to measure
             StatisticalCategoryDataset scd
                     = (StatisticalCategoryDataset) dataset;
-            for (Comparable seriesKey : visibleSeriesKeys) {
+            for (RowKey seriesKey : visibleSeriesKeys) {
                 int series = dataset.getRowIndex(seriesKey);
                 for (int column = 0; column < columnCount; column++) {
                     Number meanN = scd.getMeanValue(series, column);
@@ -1096,10 +1075,9 @@ public final class DatasetUtilities {
                     }
                 }
             }
-        }
-        else {
+        } else {
             // handle the standard case (plain CategoryDataset)
-            for (Comparable seriesKey : visibleSeriesKeys) {
+            for (RowKey seriesKey : visibleSeriesKeys) {
                 int series = dataset.getRowIndex(seriesKey);
                 for (int column = 0; column < columnCount; column++) {
                     Number value = dataset.getValue(series, column);
@@ -1115,8 +1093,7 @@ public final class DatasetUtilities {
         }
         if (minimum == Double.POSITIVE_INFINITY) {
             return null;
-        }
-        else {
+        } else {
             return new Range(minimum, maximum);
         }
     }
@@ -1149,7 +1126,7 @@ public final class DatasetUtilities {
      * @since 1.0.10
      */
     public static Range iterateRangeBounds(XYDataset dataset,
-            boolean includeInterval) {
+                                           boolean includeInterval) {
         double minimum = Double.POSITIVE_INFINITY;
         double maximum = Double.NEGATIVE_INFINITY;
         int seriesCount = dataset.getSeriesCount();
@@ -1178,8 +1155,7 @@ public final class DatasetUtilities {
                     }
                 }
             }
-        }
-        else if (includeInterval && dataset instanceof OHLCDataset) {
+        } else if (includeInterval && dataset instanceof OHLCDataset) {
             // handle special case of OHLCDataset
             OHLCDataset ohlc = (OHLCDataset) dataset;
             for (int series = 0; series < seriesCount; series++) {
@@ -1195,8 +1171,7 @@ public final class DatasetUtilities {
                     }
                 }
             }
-        }
-        else {
+        } else {
             // standard case - plain XYDataset
             for (int series = 0; series < seriesCount; series++) {
                 int itemCount = dataset.getItemCount(series);
@@ -1211,8 +1186,7 @@ public final class DatasetUtilities {
         }
         if (minimum == Double.POSITIVE_INFINITY) {
             return null;
-        }
-        else {
+        } else {
             return new Range(minimum, maximum);
         }
     }
@@ -1243,7 +1217,7 @@ public final class DatasetUtilities {
      * @return The range (possibly <code>null</code>).
      */
     public static Range findZBounds(XYZDataset dataset,
-                                        boolean includeInterval) {
+                                    boolean includeInterval) {
         ParamChecks.nullNotPermitted(dataset, "dataset");
         Range result = iterateZBounds(dataset, includeInterval);
         return result;
@@ -1264,10 +1238,10 @@ public final class DatasetUtilities {
      * @return The data bounds.
      */
     public static Range findZBounds(XYZDataset dataset,
-            List<Comparable> visibleSeriesKeys, Range xRange, boolean includeInterval) {
+                                    List<Comparable> visibleSeriesKeys, Range xRange, boolean includeInterval) {
         ParamChecks.nullNotPermitted(dataset, "dataset");
         Range result = iterateToFindZBounds(dataset, visibleSeriesKeys,
-                    xRange, includeInterval);
+                xRange, includeInterval);
         return result;
     }
 
@@ -1294,7 +1268,7 @@ public final class DatasetUtilities {
      * @return The range (possibly <code>null</code>).
      */
     public static Range iterateZBounds(XYZDataset dataset,
-            boolean includeInterval) {
+                                       boolean includeInterval) {
         double minimum = Double.POSITIVE_INFINITY;
         double maximum = Double.NEGATIVE_INFINITY;
         int seriesCount = dataset.getSeriesCount();
@@ -1312,8 +1286,7 @@ public final class DatasetUtilities {
 
         if (minimum == Double.POSITIVE_INFINITY) {
             return null;
-        }
-        else {
+        } else {
             return new Range(minimum, maximum);
         }
     }
@@ -1334,7 +1307,7 @@ public final class DatasetUtilities {
      * @since 1.0.13
      */
     public static Range iterateToFindDomainBounds(XYDataset dataset,
-            List<Comparable> visibleSeriesKeys, boolean includeInterval) {
+                                                  List<Comparable> visibleSeriesKeys, boolean includeInterval) {
 
         ParamChecks.nullNotPermitted(dataset, "dataset");
         ParamChecks.nullNotPermitted(visibleSeriesKeys, "visibleSeriesKeys");
@@ -1359,8 +1332,7 @@ public final class DatasetUtilities {
                     }
                 }
             }
-        }
-        else {
+        } else {
             // standard case - plain XYDataset
             for (Comparable seriesKey : visibleSeriesKeys) {
                 int series = dataset.indexOf(seriesKey);
@@ -1377,8 +1349,7 @@ public final class DatasetUtilities {
 
         if (minimum == Double.POSITIVE_INFINITY) {
             return null;
-        }
-        else {
+        } else {
             return new Range(minimum, maximum);
         }
     }
@@ -1401,7 +1372,7 @@ public final class DatasetUtilities {
      * @since 1.0.13
      */
     public static Range iterateToFindRangeBounds(XYDataset dataset,
-            List<Comparable> visibleSeriesKeys, Range xRange, boolean includeInterval) {
+                                                 List<Comparable> visibleSeriesKeys, Range xRange, boolean includeInterval) {
 
         ParamChecks.nullNotPermitted(dataset, "dataset");
         ParamChecks.nullNotPermitted(visibleSeriesKeys, "visibleSeriesKeys");
@@ -1431,8 +1402,7 @@ public final class DatasetUtilities {
                     }
                 }
             }
-        }
-        else if (includeInterval && dataset instanceof BoxAndWhiskerXYDataset) {
+        } else if (includeInterval && dataset instanceof BoxAndWhiskerXYDataset) {
             // handle special case of BoxAndWhiskerXYDataset
             BoxAndWhiskerXYDataset bx = (BoxAndWhiskerXYDataset) dataset;
             for (Comparable seriesKey : visibleSeriesKeys) {
@@ -1452,8 +1422,7 @@ public final class DatasetUtilities {
                     }
                 }
             }
-        }
-        else if (includeInterval && dataset instanceof IntervalXYDataset) {
+        } else if (includeInterval && dataset instanceof IntervalXYDataset) {
             // handle special case of IntervalXYDataset
             IntervalXYDataset ixyd = (IntervalXYDataset) dataset;
             for (Comparable seriesKey : visibleSeriesKeys) {
@@ -1473,8 +1442,7 @@ public final class DatasetUtilities {
                     }
                 }
             }
-        }
-        else {
+        } else {
             // standard case - plain XYDataset
             for (Comparable seriesKey : visibleSeriesKeys) {
                 int series = dataset.indexOf(seriesKey);
@@ -1493,8 +1461,7 @@ public final class DatasetUtilities {
         }
         if (minimum == Double.POSITIVE_INFINITY) {
             return null;
-        }
-        else {
+        } else {
             return new Range(minimum, maximum);
         }
     }
@@ -1515,7 +1482,7 @@ public final class DatasetUtilities {
      * @return The y-range (possibly <code>null</code>).
      */
     public static Range iterateToFindZBounds(XYZDataset dataset,
-            List<Comparable> visibleSeriesKeys, Range xRange, boolean includeInterval) {
+                                             List<Comparable> visibleSeriesKeys, Range xRange, boolean includeInterval) {
 
         ParamChecks.nullNotPermitted(dataset, "dataset");
         ParamChecks.nullNotPermitted(visibleSeriesKeys, "visibleSeriesKeys");
@@ -1541,8 +1508,7 @@ public final class DatasetUtilities {
 
         if (minimum == Double.POSITIVE_INFINITY) {
             return null;
-        }
-        else {
+        } else {
             return new Range(minimum, maximum);
         }
     }
@@ -1567,8 +1533,7 @@ public final class DatasetUtilities {
         if (dataset instanceof DomainInfo) {
             DomainInfo info = (DomainInfo) dataset;
             return info.getDomainLowerBound(true);
-        }
-        else {
+        } else {
             double minimum = Double.POSITIVE_INFINITY;
             int seriesCount = dataset.getSeriesCount();
             for (int series = 0; series < seriesCount; series++) {
@@ -1578,10 +1543,9 @@ public final class DatasetUtilities {
                     double value;
                     if (dataset instanceof IntervalXYDataset) {
                         IntervalXYDataset intervalXYData
-                            = (IntervalXYDataset) dataset;
+                                = (IntervalXYDataset) dataset;
                         value = intervalXYData.getStartXValue(series, item);
-                    }
-                    else {
+                    } else {
                         value = dataset.getXValue(series, item);
                     }
                     if (!Double.isNaN(value)) {
@@ -1592,8 +1556,7 @@ public final class DatasetUtilities {
             }
             if (minimum == Double.POSITIVE_INFINITY) {
                 result = null;
-            }
-            else {
+            } else {
                 result = minimum;
             }
         }
@@ -1633,10 +1596,9 @@ public final class DatasetUtilities {
                     double value;
                     if (dataset instanceof IntervalXYDataset) {
                         IntervalXYDataset intervalXYData
-                            = (IntervalXYDataset) dataset;
+                                = (IntervalXYDataset) dataset;
                         value = intervalXYData.getEndXValue(series, item);
-                    }
-                    else {
+                    } else {
                         value = dataset.getXValue(series, item);
                     }
                     if (!Double.isNaN(value)) {
@@ -1646,8 +1608,7 @@ public final class DatasetUtilities {
             }
             if (maximum == Double.NEGATIVE_INFINITY) {
                 result = null;
-            }
-            else {
+            } else {
                 result = maximum;
             }
 
@@ -1689,8 +1650,7 @@ public final class DatasetUtilities {
                         IntervalCategoryDataset icd
                                 = (IntervalCategoryDataset) dataset;
                         value = icd.getStartValue(series, item);
-                    }
-                    else {
+                    } else {
                         value = dataset.getValue(series, item);
                     }
                     if (value != null) {
@@ -1700,8 +1660,7 @@ public final class DatasetUtilities {
             }
             if (minimum == Double.POSITIVE_INFINITY) {
                 return null;
-            }
-            else {
+            } else {
                 return minimum;
             }
 
@@ -1744,12 +1703,10 @@ public final class DatasetUtilities {
                         IntervalXYDataset intervalXYData
                                 = (IntervalXYDataset) dataset;
                         value = intervalXYData.getStartYValue(series, item);
-                    }
-                    else if (dataset instanceof OHLCDataset) {
+                    } else if (dataset instanceof OHLCDataset) {
                         OHLCDataset highLowData = (OHLCDataset) dataset;
                         value = highLowData.getLowValue(series, item);
-                    }
-                    else {
+                    } else {
                         value = dataset.getYValue(series, item);
                     }
                     if (!Double.isNaN(value)) {
@@ -1760,8 +1717,7 @@ public final class DatasetUtilities {
             }
             if (minimum == Double.POSITIVE_INFINITY) {
                 return null;
-            }
-            else {
+            } else {
                 return minimum;
             }
 
@@ -1801,10 +1757,9 @@ public final class DatasetUtilities {
                     Number value;
                     if (dataset instanceof IntervalCategoryDataset) {
                         IntervalCategoryDataset icd
-                            = (IntervalCategoryDataset) dataset;
+                                = (IntervalCategoryDataset) dataset;
                         value = icd.getEndValue(series, item);
-                    }
-                    else {
+                    } else {
                         value = dataset.getValue(series, item);
                     }
                     if (value != null) {
@@ -1814,8 +1769,7 @@ public final class DatasetUtilities {
             }
             if (maximum == Double.NEGATIVE_INFINITY) {
                 return null;
-            }
-            else {
+            } else {
                 return maximum;
             }
 
@@ -1845,7 +1799,7 @@ public final class DatasetUtilities {
         }
 
         // hasn't implemented RangeInfo, so we'll have to iterate...
-        else  {
+        else {
 
             double maximum = Double.NEGATIVE_INFINITY;
             int seriesCount = dataset.getSeriesCount();
@@ -1857,12 +1811,10 @@ public final class DatasetUtilities {
                         IntervalXYDataset intervalXYData
                                 = (IntervalXYDataset) dataset;
                         value = intervalXYData.getEndYValue(series, item);
-                    }
-                    else if (dataset instanceof OHLCDataset) {
+                    } else if (dataset instanceof OHLCDataset) {
                         OHLCDataset highLowData = (OHLCDataset) dataset;
                         value = highLowData.getHighValue(series, item);
-                    }
-                    else {
+                    } else {
                         value = dataset.getYValue(series, item);
                     }
                     if (!Double.isNaN(value)) {
@@ -1872,8 +1824,7 @@ public final class DatasetUtilities {
             }
             if (maximum == Double.NEGATIVE_INFINITY) {
                 return null;
-            }
-            else {
+            } else {
                 return maximum;
             }
 
@@ -1903,7 +1854,7 @@ public final class DatasetUtilities {
      * @return The range (<code>null</code> if the dataset contains no values).
      */
     public static Range findStackedRangeBounds(CategoryDataset dataset,
-            double base) {
+                                               double base) {
         ParamChecks.nullNotPermitted(dataset, "dataset");
         Range result = null;
         double minimum = Double.POSITIVE_INFINITY;
@@ -1976,12 +1927,12 @@ public final class DatasetUtilities {
                     double value = number.doubleValue();
                     if (value > 0.0) {
                         positive[groupIndex[series]]
-                                 = positive[groupIndex[series]] + value;
+                                = positive[groupIndex[series]] + value;
                     }
                     if (value < 0.0) {
                         negative[groupIndex[series]]
-                                 = negative[groupIndex[series]] + value;
-                                 // '+', remember value is negative
+                                = negative[groupIndex[series]] + value;
+                        // '+', remember value is negative
                     }
                 }
             }
@@ -2109,8 +2060,7 @@ public final class DatasetUtilities {
                 if (!Double.isNaN(y)) {
                     if (y > 0.0) {
                         positive += y;
-                    }
-                    else {
+                    } else {
                         negative += y;
                     }
                 }
@@ -2124,8 +2074,7 @@ public final class DatasetUtilities {
         }
         if (minimum <= maximum) {
             return new Range(minimum, maximum);
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -2166,7 +2115,7 @@ public final class DatasetUtilities {
     public static Range findCumulativeRangeBounds(CategoryDataset dataset) {
         ParamChecks.nullNotPermitted(dataset, "dataset");
         boolean allItemsNull = true; // we'll set this to false if there is at
-                                     // least one non-null data item...
+        // least one non-null data item...
         double minimum = 0.0;
         double maximum = 0.0;
         for (int row = 0; row < dataset.getRowCount(); row++) {
@@ -2187,8 +2136,7 @@ public final class DatasetUtilities {
         }
         if (!allItemsNull) {
             return new Range(minimum, maximum);
-        }
-        else {
+        } else {
             return null;
         }
     }

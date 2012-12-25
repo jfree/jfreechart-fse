@@ -44,29 +44,15 @@ package org.jfree.chart.annotations;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link CategoryLineAnnotationTest} class.
  */
-public class CategoryLineAnnotationTest  {
-
-
-
+public class CategoryLineAnnotationTest {
 
 
     /**
@@ -126,9 +112,9 @@ public class CategoryLineAnnotationTest  {
      */
     @Test
     public void testHashcode() {
-        CategoryLineAnnotation a1 = new CategoryLineAnnotation("Category 1", 
+        CategoryLineAnnotation a1 = new CategoryLineAnnotation("Category 1",
                 1.0, "Category 2", 2.0, Color.RED, new BasicStroke(1.0f));
-        CategoryLineAnnotation a2 = new CategoryLineAnnotation("Category 1", 
+        CategoryLineAnnotation a2 = new CategoryLineAnnotation("Category 1",
                 1.0, "Category 2", 2.0, Color.RED, new BasicStroke(1.0f));
         assertEquals(a1, a2);
         int h1 = a1.hashCode();
@@ -141,7 +127,7 @@ public class CategoryLineAnnotationTest  {
      */
     @Test
     public void testCloning() throws CloneNotSupportedException {
-        CategoryLineAnnotation a1 = new CategoryLineAnnotation("Category 1", 
+        CategoryLineAnnotation a1 = new CategoryLineAnnotation("Category 1",
                 1.0, "Category 2", 2.0, Color.RED, new BasicStroke(1.0f));
         CategoryLineAnnotation a2 = (CategoryLineAnnotation) a1.clone();
 
@@ -166,7 +152,7 @@ public class CategoryLineAnnotationTest  {
      */
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
-        CategoryLineAnnotation a1 = new CategoryLineAnnotation("Category 1", 
+        CategoryLineAnnotation a1 = new CategoryLineAnnotation("Category 1",
                 1.0, "Category 2", 2.0, Color.RED, new BasicStroke(1.0f));
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         ObjectOutput out = new ObjectOutputStream(buffer);

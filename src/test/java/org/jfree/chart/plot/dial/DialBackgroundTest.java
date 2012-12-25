@@ -45,29 +45,15 @@ import org.jfree.chart.ui.GradientPaintTransformType;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
 import org.junit.Test;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link DialBackground} class.
  */
-public class DialBackgroundTest  {
-
-
-
+public class DialBackgroundTest {
 
 
     /**
@@ -155,15 +141,15 @@ public class DialBackgroundTest  {
         // test a default instance
         DialBackground b1 = new DialBackground();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(b1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(b1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         DialBackground b2 = (DialBackground) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(b1, b2);
 
@@ -175,15 +161,15 @@ public class DialBackgroundTest  {
                 GradientPaintTransformType.CENTER_VERTICAL));
 
 
-            buffer = new ByteArrayOutputStream();
-            out = new ObjectOutputStream(buffer);
-            out.writeObject(b1);
-            out.close();
+        buffer = new ByteArrayOutputStream();
+        out = new ObjectOutputStream(buffer);
+        out.writeObject(b1);
+        out.close();
 
-            in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            b2 = (DialBackground) in.readObject();
-            in.close();
+        in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        b2 = (DialBackground) in.readObject();
+        in.close();
 
         assertEquals(b1, b2);
     }

@@ -53,30 +53,17 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.Test;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link LogAxis} class.
  */
-public class LogAxisTest  {
-
-
-
+public class LogAxisTest {
 
 
     /**
@@ -289,7 +276,7 @@ public class LogAxisTest  {
         LogAxis axis = new LogAxis("Log Axis");
         assertTrue(axis.isTickMarksVisible());
     }
-    
+
     /**
      * Checks that a TickUnit with a size of 0 doesn't crash.
      */

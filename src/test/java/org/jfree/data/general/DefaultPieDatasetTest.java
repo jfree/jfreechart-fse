@@ -44,27 +44,16 @@ package org.jfree.data.general;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 
 /**
  * Tests for the {@link org.jfree.data.general.PieDataset} class.
  */
 public class DefaultPieDatasetTest
-    implements DatasetChangeListener {
+        implements DatasetChangeListener {
 
     private DatasetChangeEvent lastEvent;
 
@@ -74,12 +63,9 @@ public class DefaultPieDatasetTest
      * @param event  the last event.
      */
     @Override
-	public void datasetChanged(DatasetChangeEvent event) {
+    public void datasetChanged(DatasetChangeEvent event) {
         this.lastEvent = event;
     }
-
-
-
 
 
     /**
@@ -114,16 +100,14 @@ public class DefaultPieDatasetTest
         try {
             d.getKey(-1);
             fail("IndexOutOfBoundsException should have been thrown on negative key");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("-1", e.getMessage());
         }
 
         try {
             d.getKey(2);
             fail("IndexOutOfBoundsException should have been thrown on key out of range");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("Index: 2, Size: 2", e.getMessage());
         }
     }
@@ -143,8 +127,7 @@ public class DefaultPieDatasetTest
         try {
             d.getIndex(null);
             fail("IllegalArgumentException should have been thrown on null key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }
@@ -177,16 +160,16 @@ public class DefaultPieDatasetTest
         d1.setValue("C4", new Double(452.7));
 
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(d1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(d1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-            );
+        );
         DefaultPieDataset d2 = (DefaultPieDataset) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(d1, d2);
 

@@ -43,32 +43,16 @@ package org.jfree.chart.plot.dial;
 
 import org.junit.Test;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-
+import static org.junit.Assert.*;
 
 
 /**
  * Tests for the {@link ArcDialFrame} class.
  */
-public class ArcDialFrameTest  {
-
-
-
+public class ArcDialFrameTest {
 
 
     /**
@@ -171,15 +155,15 @@ public class ArcDialFrameTest  {
     public void testSerialization() throws IOException, ClassNotFoundException {
         ArcDialFrame f1 = new ArcDialFrame();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(f1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(f1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         ArcDialFrame f2 = (ArcDialFrame) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(f1, f2);
     }

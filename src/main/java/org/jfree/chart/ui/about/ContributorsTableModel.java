@@ -46,12 +46,11 @@
 
 package org.jfree.chart.ui.about;
 
-import java.util.List;
-import java.util.ResourceBundle;
+import org.jfree.chart.util.ResourceBundleWrapper;
 
 import javax.swing.table.AbstractTableModel;
-
-import org.jfree.chart.util.ResourceBundleWrapper;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * A table model containing a list of contributors to a project.
@@ -96,7 +95,7 @@ public class ContributorsTableModel extends AbstractTableModel {
      * @return The number of rows.
      */
     @Override
-	public int getRowCount() {
+    public int getRowCount() {
         return this.contributors.size();
     }
 
@@ -107,7 +106,7 @@ public class ContributorsTableModel extends AbstractTableModel {
      * @return The number of columns in the table model.
      */
     @Override
-	public int getColumnCount() {
+    public int getColumnCount() {
         return 2;
     }
 
@@ -116,20 +115,22 @@ public class ContributorsTableModel extends AbstractTableModel {
      *
      * @param column  the column index (zero-based).
      *
-     * @return  the name of the specified column.
+     * @return the name of the specified column.
      */
     @Override
-	public String getColumnName(final int column) {
+    public String getColumnName(final int column) {
 
         String result = null;
 
         switch (column) {
 
-            case 0:  result = this.nameColumnLabel;
-                     break;
+            case 0:
+                result = this.nameColumnLabel;
+                break;
 
-            case 1:  result = this.contactColumnLabel;
-                     break;
+            case 1:
+                result = this.contactColumnLabel;
+                break;
 
         }
 
@@ -146,15 +147,14 @@ public class ContributorsTableModel extends AbstractTableModel {
      * @return the value.
      */
     @Override
-	public Object getValueAt(final int row, final int column) {
+    public Object getValueAt(final int row, final int column) {
 
         Object result = null;
         final Contributor contributor = this.contributors.get(row);
 
         if (column == 0) {
             result = contributor.getName();
-        }
-        else if (column == 1) {
+        } else if (column == 1) {
             result = contributor.getEmail();
         }
         return result;

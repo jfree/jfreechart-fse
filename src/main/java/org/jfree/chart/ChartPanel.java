@@ -171,29 +171,22 @@
 
 package org.jfree.chart;
 
-import java.awt.AWTEvent;
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Composite;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.Paint;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
-import java.awt.Transparency;
+import org.jfree.chart.editor.ChartEditor;
+import org.jfree.chart.editor.ChartEditorManager;
+import org.jfree.chart.entity.ChartEntity;
+import org.jfree.chart.entity.EntityCollection;
+import org.jfree.chart.event.*;
+import org.jfree.chart.panel.Overlay;
+import org.jfree.chart.plot.*;
+import org.jfree.chart.ui.ExtensionFileFilter;
+import org.jfree.chart.util.ResourceBundleWrapper;
+import org.jfree.chart.util.SerialUtilities;
+
+import javax.swing.*;
+import javax.swing.event.EventListenerList;
+import java.awt.*;
 import java.awt.datatransfer.Clipboard;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -202,44 +195,10 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.EventListener;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import javax.swing.JFileChooser;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.SwingUtilities;
-import javax.swing.ToolTipManager;
-import javax.swing.event.EventListenerList;
-
-import org.jfree.chart.ui.ExtensionFileFilter;
-import org.jfree.chart.editor.ChartEditor;
-import org.jfree.chart.editor.ChartEditorManager;
-import org.jfree.chart.entity.ChartEntity;
-import org.jfree.chart.entity.EntityCollection;
-import org.jfree.chart.event.ChartChangeEvent;
-import org.jfree.chart.event.ChartChangeListener;
-import org.jfree.chart.event.ChartProgressEvent;
-import org.jfree.chart.event.ChartProgressListener;
-import org.jfree.chart.event.OverlayChangeEvent;
-import org.jfree.chart.event.OverlayChangeListener;
-import org.jfree.chart.panel.Overlay;
-import org.jfree.chart.plot.Pannable;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.plot.Zoomable;
-import org.jfree.chart.util.ResourceBundleWrapper;
-import org.jfree.chart.util.SerialUtilities;
 
 /**
  * A Swing GUI component for displaying a {@link JFreeChart} object.
@@ -512,7 +471,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /** The resourceBundle for the localization. */
     protected static ResourceBundle localizationResources
             = ResourceBundleWrapper.getBundle(
-                    "org.jfree.chart.LocalizationBundle");
+            "org.jfree.chart.LocalizationBundle");
 
     /**
      * Temporary storage for the width and height of the chart
@@ -545,19 +504,19 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     public ChartPanel(JFreeChart chart) {
 
         this(
-            chart,
-            DEFAULT_WIDTH,
-            DEFAULT_HEIGHT,
-            DEFAULT_MINIMUM_DRAW_WIDTH,
-            DEFAULT_MINIMUM_DRAW_HEIGHT,
-            DEFAULT_MAXIMUM_DRAW_WIDTH,
-            DEFAULT_MAXIMUM_DRAW_HEIGHT,
-            DEFAULT_BUFFER_USED,
-            true,  // properties
-            true,  // save
-            true,  // print
-            true,  // zoom
-            true   // tooltips
+                chart,
+                DEFAULT_WIDTH,
+                DEFAULT_HEIGHT,
+                DEFAULT_MINIMUM_DRAW_WIDTH,
+                DEFAULT_MINIMUM_DRAW_HEIGHT,
+                DEFAULT_MAXIMUM_DRAW_WIDTH,
+                DEFAULT_MAXIMUM_DRAW_HEIGHT,
+                DEFAULT_BUFFER_USED,
+                true,  // properties
+                true,  // save
+                true,  // print
+                true,  // zoom
+                true   // tooltips
         );
 
     }
@@ -588,7 +547,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                 true,  // print
                 true,  // zoom
                 true   // tooltips
-                );
+        );
 
     }
 
@@ -615,19 +574,19 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                       boolean tooltips) {
 
         this(chart,
-             DEFAULT_WIDTH,
-             DEFAULT_HEIGHT,
-             DEFAULT_MINIMUM_DRAW_WIDTH,
-             DEFAULT_MINIMUM_DRAW_HEIGHT,
-             DEFAULT_MAXIMUM_DRAW_WIDTH,
-             DEFAULT_MAXIMUM_DRAW_HEIGHT,
-             DEFAULT_BUFFER_USED,
-             properties,
-             save,
-             print,
-             zoom,
-             tooltips
-             );
+                DEFAULT_WIDTH,
+                DEFAULT_HEIGHT,
+                DEFAULT_MINIMUM_DRAW_WIDTH,
+                DEFAULT_MINIMUM_DRAW_HEIGHT,
+                DEFAULT_MAXIMUM_DRAW_WIDTH,
+                DEFAULT_MAXIMUM_DRAW_HEIGHT,
+                DEFAULT_BUFFER_USED,
+                properties,
+                save,
+                print,
+                zoom,
+                tooltips
+        );
 
     }
 
@@ -656,9 +615,9 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      *                  enabled for the chart.
      */
     public ChartPanel(JFreeChart chart, int width, int height,
-            int minimumDrawWidth, int minimumDrawHeight, int maximumDrawWidth,
-            int maximumDrawHeight, boolean useBuffer, boolean properties,
-            boolean save, boolean print, boolean zoom, boolean tooltips) {
+                      int minimumDrawWidth, int minimumDrawHeight, int maximumDrawWidth,
+                      int maximumDrawHeight, boolean useBuffer, boolean properties,
+                      boolean save, boolean print, boolean zoom, boolean tooltips) {
 
         this(chart, width, height, minimumDrawWidth, minimumDrawHeight,
                 maximumDrawWidth, maximumDrawHeight, useBuffer, properties,
@@ -694,10 +653,10 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @since 1.0.13
      */
     public ChartPanel(JFreeChart chart, int width, int height,
-           int minimumDrawWidth, int minimumDrawHeight, int maximumDrawWidth,
-           int maximumDrawHeight, boolean useBuffer, boolean properties,
-           boolean copy, boolean save, boolean print, boolean zoom,
-           boolean tooltips) {
+                      int minimumDrawWidth, int minimumDrawHeight, int maximumDrawWidth,
+                      int maximumDrawHeight, boolean useBuffer, boolean properties,
+                      boolean copy, boolean save, boolean print, boolean zoom,
+                      boolean tooltips) {
 
         setChart(chart);
         this.chartMouseListeners = new EventListenerList();
@@ -784,8 +743,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                 this.rangeZoomable = z.isRangeZoomable();
                 this.orientation = z.getOrientation();
             }
-        }
-        else {
+        } else {
             this.domainZoomable = false;
             this.rangeZoomable = false;
         }
@@ -1009,8 +967,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                 Zoomable z = (Zoomable) plot;
                 this.domainZoomable = z.isDomainZoomable();
             }
-        }
-        else {
+        } else {
             this.domainZoomable = false;
         }
     }
@@ -1037,8 +994,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                 Zoomable z = (Zoomable) plot;
                 this.rangeZoomable = z.isRangeZoomable();
             }
-        }
-        else {
+        } else {
             this.rangeZoomable = false;
         }
     }
@@ -1328,8 +1284,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     public void setMouseWheelEnabled(boolean flag) {
         if (flag && this.mouseWheelHandler == null) {
             this.mouseWheelHandler = new MouseWheelHandler(this);
-        }
-        else if (!flag && this.mouseWheelHandler != null) {
+        } else if (!flag && this.mouseWheelHandler != null) {
             this.removeMouseWheelListener(this.mouseWheelHandler);
             this.mouseWheelHandler = null;
         }
@@ -1392,8 +1347,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     public void setDisplayToolTips(boolean flag) {
         if (flag) {
             ToolTipManager.sharedInstance().registerComponent(this);
-        }
-        else {
+        } else {
             ToolTipManager.sharedInstance().unregisterComponent(this);
         }
     }
@@ -1551,8 +1505,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             this.scaleX = drawWidth / this.minimumDrawWidth;
             drawWidth = this.minimumDrawWidth;
             scale = true;
-        }
-        else if (drawWidth > this.maximumDrawWidth) {
+        } else if (drawWidth > this.maximumDrawWidth) {
             this.scaleX = drawWidth / this.maximumDrawWidth;
             drawWidth = this.maximumDrawWidth;
             scale = true;
@@ -1562,8 +1515,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             this.scaleY = drawHeight / this.minimumDrawHeight;
             drawHeight = this.minimumDrawHeight;
             scale = true;
-        }
-        else if (drawHeight > this.maximumDrawHeight) {
+        } else if (drawHeight > this.maximumDrawHeight) {
             this.scaleY = drawHeight / this.maximumDrawHeight;
             drawHeight = this.maximumDrawHeight;
             scale = true;
@@ -1615,8 +1567,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                     this.chart.draw(bufferG2, chartArea, this.anchor,
                             this.info);
                     bufferG2.setTransform(saved);
-                }
-                else {
+                } else {
                     this.chart.draw(bufferG2, bufferArea, this.anchor,
                             this.info);
                 }
@@ -1708,46 +1659,33 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
         if (command.equals(PROPERTIES_COMMAND)) {
             doEditChartProperties();
-        }
-        else if (command.equals(COPY_COMMAND)) {
+        } else if (command.equals(COPY_COMMAND)) {
             doCopy();
-        }
-        else if (command.equals(SAVE_COMMAND)) {
+        } else if (command.equals(SAVE_COMMAND)) {
             try {
                 doSaveAs();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 throw new RuntimeException("Could not save chart", e);
             }
-        }
-        else if (command.equals(PRINT_COMMAND)) {
+        } else if (command.equals(PRINT_COMMAND)) {
             createChartPrintJob();
-        }
-        else if (command.equals(ZOOM_IN_BOTH_COMMAND)) {
+        } else if (command.equals(ZOOM_IN_BOTH_COMMAND)) {
             zoomInBoth(screenX, screenY);
-        }
-        else if (command.equals(ZOOM_IN_DOMAIN_COMMAND)) {
+        } else if (command.equals(ZOOM_IN_DOMAIN_COMMAND)) {
             zoomInDomain(screenX, screenY);
-        }
-        else if (command.equals(ZOOM_IN_RANGE_COMMAND)) {
+        } else if (command.equals(ZOOM_IN_RANGE_COMMAND)) {
             zoomInRange(screenX, screenY);
-        }
-        else if (command.equals(ZOOM_OUT_BOTH_COMMAND)) {
+        } else if (command.equals(ZOOM_OUT_BOTH_COMMAND)) {
             zoomOutBoth(screenX, screenY);
-        }
-        else if (command.equals(ZOOM_OUT_DOMAIN_COMMAND)) {
+        } else if (command.equals(ZOOM_OUT_DOMAIN_COMMAND)) {
             zoomOutDomain(screenX, screenY);
-        }
-        else if (command.equals(ZOOM_OUT_RANGE_COMMAND)) {
+        } else if (command.equals(ZOOM_OUT_RANGE_COMMAND)) {
             zoomOutRange(screenX, screenY);
-        }
-        else if (command.equals(ZOOM_RESET_BOTH_COMMAND)) {
+        } else if (command.equals(ZOOM_RESET_BOTH_COMMAND)) {
             restoreAutoBounds();
-        }
-        else if (command.equals(ZOOM_RESET_DOMAIN_COMMAND)) {
+        } else if (command.equals(ZOOM_RESET_DOMAIN_COMMAND)) {
             restoreAutoDomainBounds();
-        }
-        else if (command.equals(ZOOM_RESET_RANGE_COMMAND)) {
+        } else if (command.equals(ZOOM_RESET_RANGE_COMMAND)) {
             restoreAutoRangeBounds();
         }
 
@@ -1831,14 +1769,12 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                 // the actual panning occurs later in the mouseDragged()
                 // method
             }
-        }
-        else if (this.zoomRectangle == null) {
+        } else if (this.zoomRectangle == null) {
             Rectangle2D screenDataArea = getScreenDataArea(e.getX(), e.getY());
             if (screenDataArea != null) {
                 this.zoomPoint = getPointInRectangle(e.getX(), e.getY(),
                         screenDataArea);
-            }
-            else {
+            } else {
                 this.zoomPoint = null;
             }
             if (e.isPopupTrigger()) {
@@ -1895,8 +1831,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                         this.panLast);
                 p.panRangeAxes(hPercent, this.info.getPlotInfo(),
                         this.panLast);
-            }
-            else {
+            } else {
                 p.panDomainAxes(hPercent, this.info.getPlotInfo(),
                         this.panLast);
                 p.panRangeAxes(wPercent, this.info.getPlotInfo(),
@@ -1926,8 +1861,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         if (this.orientation == PlotOrientation.HORIZONTAL) {
             hZoom = this.rangeZoomable;
             vZoom = this.domainZoomable;
-        }
-        else {
+        } else {
             hZoom = this.domainZoomable;
             vZoom = this.rangeZoomable;
         }
@@ -1940,14 +1874,12 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             this.zoomRectangle = new Rectangle2D.Double(
                     this.zoomPoint.getX(), this.zoomPoint.getY(),
                     xmax - this.zoomPoint.getX(), ymax - this.zoomPoint.getY());
-        }
-        else if (hZoom) {
+        } else if (hZoom) {
             double xmax = Math.min(e.getX(), scaledDataArea.getMaxX());
             this.zoomRectangle = new Rectangle2D.Double(
                     this.zoomPoint.getX(), scaledDataArea.getMinY(),
                     xmax - this.zoomPoint.getX(), scaledDataArea.getHeight());
-        }
-        else if (vZoom) {
+        } else if (vZoom) {
             double ymax = Math.min(e.getY(), scaledDataArea.getMaxY());
             this.zoomRectangle = new Rectangle2D.Double(
                     scaledDataArea.getMinX(), this.zoomPoint.getY(),
@@ -1957,8 +1889,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         // Draw the new zoom rectangle...
         if (this.useBuffer) {
             repaint();
-        }
-        else {
+        } else {
             // with no buffer, we use XOR to draw the rectangle "over" the
             // chart...
             drawZoomRectangle(g2, true);
@@ -1982,30 +1913,26 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         if (this.panLast != null) {
             this.panLast = null;
             setCursor(Cursor.getDefaultCursor());
-        }
-
-        else if (this.zoomRectangle != null) {
+        } else if (this.zoomRectangle != null) {
             boolean hZoom;
             boolean vZoom;
             if (this.orientation == PlotOrientation.HORIZONTAL) {
                 hZoom = this.rangeZoomable;
                 vZoom = this.domainZoomable;
-            }
-            else {
+            } else {
                 hZoom = this.domainZoomable;
                 vZoom = this.rangeZoomable;
             }
 
             boolean zoomTrigger1 = hZoom && Math.abs(e.getX()
-                - this.zoomPoint.getX()) >= this.zoomTriggerDistance;
+                    - this.zoomPoint.getX()) >= this.zoomTriggerDistance;
             boolean zoomTrigger2 = vZoom && Math.abs(e.getY()
-                - this.zoomPoint.getY()) >= this.zoomTriggerDistance;
+                    - this.zoomPoint.getY()) >= this.zoomTriggerDistance;
             if (zoomTrigger1 || zoomTrigger2) {
                 if ((hZoom && (e.getX() < this.zoomPoint.getX()))
-                    || (vZoom && (e.getY() < this.zoomPoint.getY()))) {
+                        || (vZoom && (e.getY() < this.zoomPoint.getY()))) {
                     restoreAutoBounds();
-                }
-                else {
+                } else {
                     double x, y, w, h;
                     Rectangle2D screenDataArea = getScreenDataArea(
                             (int) this.zoomPoint.getX(),
@@ -2021,15 +1948,13 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                         w = Math.min(this.zoomRectangle.getWidth(),
                                 maxX - this.zoomPoint.getX());
                         h = screenDataArea.getHeight();
-                    }
-                    else if (!hZoom) {
+                    } else if (!hZoom) {
                         x = screenDataArea.getMinX();
                         y = this.zoomPoint.getY();
                         w = screenDataArea.getWidth();
                         h = Math.min(this.zoomRectangle.getHeight(),
                                 maxY - this.zoomPoint.getY());
-                    }
-                    else {
+                    } else {
                         x = this.zoomPoint.getX();
                         y = this.zoomPoint.getY();
                         w = Math.min(this.zoomRectangle.getWidth(),
@@ -2042,14 +1967,12 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                 }
                 this.zoomPoint = null;
                 this.zoomRectangle = null;
-            }
-            else {
+            } else {
                 // erase the zoom rectangle
                 Graphics2D g2 = (Graphics2D) getGraphics();
                 if (this.useBuffer) {
                     repaint();
-                }
-                else {
+                } else {
                     drawZoomRectangle(g2, true);
                 }
                 g2.dispose();
@@ -2057,9 +1980,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                 this.zoomRectangle = null;
             }
 
-        }
-
-        else if (e.isPopupTrigger()) {
+        } else if (e.isPopupTrigger()) {
             if (this.popup != null) {
                 displayPopupMenu(e.getX(), e.getY());
             }
@@ -2307,13 +2228,13 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         if ((selection.getHeight() > 0) && (selection.getWidth() > 0)) {
 
             double hLower = (selection.getMinX() - scaledDataArea.getMinX())
-                / scaledDataArea.getWidth();
+                    / scaledDataArea.getWidth();
             double hUpper = (selection.getMaxX() - scaledDataArea.getMinX())
-                / scaledDataArea.getWidth();
+                    / scaledDataArea.getWidth();
             double vLower = (scaledDataArea.getMaxY() - selection.getMaxY())
-                / scaledDataArea.getHeight();
+                    / scaledDataArea.getHeight();
             double vUpper = (scaledDataArea.getMaxY() - selection.getMinY())
-                / scaledDataArea.getHeight();
+                    / scaledDataArea.getHeight();
 
             Plot p = this.chart.getPlot();
             if (p instanceof Zoomable) {
@@ -2326,8 +2247,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                 if (z.getOrientation() == PlotOrientation.HORIZONTAL) {
                     z.zoomDomainAxes(vLower, vUpper, plotInfo, selectOrigin);
                     z.zoomRangeAxes(hLower, hUpper, plotInfo, selectOrigin);
-                }
-                else {
+                } else {
                     z.zoomDomainAxes(hLower, hUpper, plotInfo, selectOrigin);
                     z.zoomRangeAxes(vLower, vUpper, plotInfo, selectOrigin);
                 }
@@ -2426,8 +2346,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         Rectangle2D result;
         if (plotInfo.getSubplotCount() == 0) {
             result = getScreenDataArea();
-        }
-        else {
+        } else {
             // get the origin of the zoom selection in the Java2D space used for
             // drawing the chart (that is, before any scaling to fit the panel)
             Point2D selectOrigin = translateScreenToJava2D(new Point(x, y));
@@ -2567,14 +2486,13 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     private void drawZoomRectangle(Graphics2D g2, boolean xor) {
         if (this.zoomRectangle != null) {
             if (xor) {
-                 // Set XOR mode to draw the zoom rectangle
+                // Set XOR mode to draw the zoom rectangle
                 g2.setXORMode(Color.GRAY);
             }
             if (this.fillZoomRectangle) {
                 g2.setPaint(this.zoomFillPaint);
                 g2.fill(this.zoomRectangle);
-            }
-            else {
+            } else {
                 g2.setPaint(this.zoomOutlinePaint);
                 g2.draw(this.zoomRectangle);
             }
@@ -2603,8 +2521,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                 g2.draw(this.verticalTraceLine);
                 this.verticalTraceLine.setLine(x, (int) dataArea.getMinY(), x,
                         (int) dataArea.getMaxY());
-            }
-            else {
+            } else {
                 this.verticalTraceLine = new Line2D.Float(x,
                         (int) dataArea.getMinY(), x, (int) dataArea.getMaxY());
             }
@@ -2633,8 +2550,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                 g2.draw(this.horizontalTraceLine);
                 this.horizontalTraceLine.setLine((int) dataArea.getMinX(), y,
                         (int) dataArea.getMaxX(), y);
-            }
-            else {
+            } else {
                 this.horizontalTraceLine = new Line2D.Float(
                         (int) dataArea.getMinX(), y, (int) dataArea.getMaxX(),
                         y);
@@ -2722,8 +2638,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             if (job.printDialog()) {
                 try {
                     job.print();
-                }
-                catch (PrinterException e) {
+                } catch (PrinterException e) {
                     JOptionPane.showMessageDialog(this, e);
                 }
             }
@@ -2808,7 +2723,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @return The popup menu.
      */
     protected JPopupMenu createPopupMenu(boolean properties, boolean save,
-            boolean print, boolean zoom) {
+                                         boolean print, boolean zoom) {
         return createPopupMenu(properties, false, save, print, zoom);
     }
 
@@ -2826,7 +2741,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @since 1.0.13
      */
     protected JPopupMenu createPopupMenu(boolean properties,
-            boolean copy, boolean save, boolean print, boolean zoom) {
+                                         boolean copy, boolean save, boolean print, boolean zoom) {
 
         JPopupMenu result = new JPopupMenu(localizationResources.getString("Chart") + ":");
         boolean separator = false;
@@ -3067,7 +2982,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.zoomFillPaint = SerialUtilities.readPaint(stream);
         this.zoomOutlinePaint = SerialUtilities.readPaint(stream);

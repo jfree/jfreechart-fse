@@ -42,30 +42,16 @@ package org.jfree.chart.title;
 
 import org.junit.Test;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-
+import static org.junit.Assert.*;
 
 
 /**
  * Tests for the {@link DateTitle} class.
  */
-public class DateTitleTest  {
-
-
-
+public class DateTitleTest {
 
 
     /**
@@ -133,15 +119,15 @@ public class DateTitleTest  {
 
         DateTitle t1 = new DateTitle();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(t1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(t1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         DateTitle t2 = (DateTitle) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(t1, t2);
 

@@ -66,23 +66,23 @@
 
 package org.jfree.chart.plot;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.util.Collections;
-import java.util.List;
-
 import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.AxisSpace;
 import org.jfree.chart.axis.AxisState;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.event.PlotChangeEvent;
+import org.jfree.chart.event.PlotChangeListener;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.event.PlotChangeEvent;
-import org.jfree.chart.event.PlotChangeListener;
 import org.jfree.data.Range;
+
+import java.awt.*;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A combined category plot where the domain axis is shared.
@@ -232,8 +232,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
     public List<CategoryPlot> getSubplots() {
         if (this.subplots != null) {
             return Collections.unmodifiableList(this.subplots);
-        }
-        else {
+        } else {
             return Collections.EMPTY_LIST;
         }
     }
@@ -290,8 +289,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
         CategoryPlot subplot = findSubplot(info, source);
         if (subplot != null) {
             subplot.zoomRangeAxes(factor, info, source, useAnchor);
-        }
-        else {
+        } else {
             // if the source point doesn't fall within a subplot, we do the
             // zoom on all subplots...
             for (CategoryPlot categoryPlot : getSubplots()) {
@@ -316,8 +314,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
         CategoryPlot subplot = findSubplot(info, source);
         if (subplot != null) {
             subplot.zoomRangeAxes(lowerPercent, upperPercent, info, source);
-        }
-        else {
+        } else {
             // if the source point doesn't fall within a subplot, we do the
             // zoom on all subplots...
             for (CategoryPlot categoryPlot : getSubplots()) {
@@ -348,21 +345,18 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
             if (orientation == PlotOrientation.HORIZONTAL) {
                 space.setLeft(fixed.getLeft());
                 space.setRight(fixed.getRight());
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 space.setTop(fixed.getTop());
                 space.setBottom(fixed.getBottom());
             }
-        }
-        else {
+        } else {
             CategoryAxis categoryAxis = getDomainAxis();
             RectangleEdge categoryEdge = Plot.resolveDomainAxisLocation(
                     getDomainAxisLocation(), orientation);
             if (categoryAxis != null) {
                 space = categoryAxis.reserveSpace(g2, this, plotArea,
                         categoryEdge, space);
-            }
-            else {
+            } else {
                 if (getDrawSharedDomainAxis()) {
                     space = getDomainAxis().reserveSpace(g2, this, plotArea,
                             categoryEdge, space);
@@ -384,8 +378,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
         double usableSize = 0.0;
         if (orientation == PlotOrientation.HORIZONTAL) {
             usableSize = adjustedPlotArea.getWidth() - this.gap * (n - 1);
-        }
-        else if (orientation == PlotOrientation.VERTICAL) {
+        } else if (orientation == PlotOrientation.VERTICAL) {
             usableSize = adjustedPlotArea.getHeight() - this.gap * (n - 1);
         }
 
@@ -398,8 +391,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
                 this.subplotAreas[i] = new Rectangle2D.Double(x, y, w,
                         adjustedPlotArea.getHeight());
                 x = x + w + this.gap;
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 double h = usableSize * plot.getWeight() / totalWeight;
                 this.subplotAreas[i] = new Rectangle2D.Double(x, y,
                         adjustedPlotArea.getWidth(), h);
@@ -430,7 +422,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      */
     @Override
     public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
-            PlotState parentState, PlotRenderingInfo info) {
+                     PlotState parentState, PlotRenderingInfo info) {
 
         // set up info collection...
         if (info != null) {
@@ -657,7 +649,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
     @Override
     public Object clone() throws CloneNotSupportedException {
         CombinedDomainCategoryPlot result
-            = (CombinedDomainCategoryPlot) super.clone();
+                = (CombinedDomainCategoryPlot) super.clone();
         result.subplots = ObjectUtilities.deepClone(this.subplots);
         for (CategoryPlot child : this.subplots) {
             child.setParent(result);

@@ -47,9 +47,9 @@
 
 package org.jfree.data.xy;
 
-import java.io.Serializable;
-
 import org.jfree.chart.util.ObjectUtilities;
+
+import java.io.Serializable;
 
 /**
  * Represents one (x, y) data item for an {@link XYSeries}.  Note that
@@ -174,19 +174,17 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
      *      relative to another object.
      */
     @Override
-	public int compareTo(XYDataItem dataItem) {
-       int result;
+    public int compareTo(XYDataItem dataItem) {
+        int result;
 
         double compare = this.x.doubleValue()
-                         - dataItem.getX().doubleValue();
+                - dataItem.getX().doubleValue();
         if (compare > 0.0) {
             result = 1;
-        }
-        else {
+        } else {
             if (compare < 0.0) {
                 result = -1;
-            }
-            else {
+            } else {
                 result = 0;
             }
         }
@@ -202,7 +200,7 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
      * @return A clone.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -223,7 +221,7 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -246,7 +244,7 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result;
         result = this.x.hashCode();
         result = 29 * result + (this.y != null ? this.y.hashCode() : 0);
@@ -260,7 +258,7 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
      * @return A string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return "[" + getXValue() + ", " + getYValue() + "]";
     }
 

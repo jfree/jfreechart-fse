@@ -72,7 +72,7 @@ public enum CategoryLabelWidthType {
      * @return The string (never </code>null</code>).
      */
     @Override
-	public String toString() {
+    public String toString() {
         return this.name;
     }
 

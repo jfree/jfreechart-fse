@@ -46,28 +46,14 @@ import org.jfree.data.time.Day;
 import org.jfree.data.time.RegularTimePeriod;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for {@link DefaultWindDataset}.
  */
-public class DefaultWindDatasetTest  {
-
-
-
+public class DefaultWindDatasetTest {
 
 
     /**
@@ -161,19 +147,19 @@ public class DefaultWindDatasetTest  {
 
         // check for series key out of bounds
         try {
-            /*Comparable k =*/ d.getSeriesKey(-1);
+            /*Comparable k =*/
+            d.getSeriesKey(-1);
             fail("IllegalArgumentException should have been thrown on negative key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Invalid series index: -1", e.getMessage());
         }
 
 
         try {
-            /*Comparable k =*/ d.getSeriesKey(2);
+            /*Comparable k =*/
+            d.getSeriesKey(2);
             fail("IllegalArgumentException should have been thrown on key out of range");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Invalid series index: 2", e.getMessage());
         }
     }
@@ -200,12 +186,12 @@ public class DefaultWindDatasetTest  {
         Object[] item1 = createItem(t, 3, 7);
         Object[] item2 = createItem(t.next(), 4, 8);
         Object[] item3 = createItem(t.next(), 5, 9);
-        Object[][] series1 = new Object[][] {item1, item2, item3};
+        Object[][] series1 = new Object[][]{item1, item2, item3};
         Object[] item1b = createItem(t, 6, 10);
         Object[] item2b = createItem(t.next(), 7, 11);
         Object[] item3b = createItem(t.next(), 8, 12);
-        Object[][] series2 = new Object[][] {item1b, item2b, item3b};
-        Object[][][] data = new Object[][][] {series1, series2};
+        Object[][] series2 = new Object[][]{item1b, item2b, item3b};
+        Object[][][] data = new Object[][][]{series1, series2};
         return new DefaultWindDataset(data);
     }
 
@@ -219,7 +205,7 @@ public class DefaultWindDatasetTest  {
      * @return An array containing the specified items.
      */
     private Object[] createItem(RegularTimePeriod t, int dir, int force) {
-        return new Object[] {t.getMiddleMillisecond(),
+        return new Object[]{t.getMiddleMillisecond(),
                 dir, force};
     }
 }

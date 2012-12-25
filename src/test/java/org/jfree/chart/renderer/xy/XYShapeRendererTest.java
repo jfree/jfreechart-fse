@@ -49,29 +49,15 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.Test;
 
-import java.awt.Color;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link XYShapeRenderer} class.
  */
-public class XYShapeRendererTest  {
-
-
-
+public class XYShapeRendererTest {
 
 
     /**
@@ -162,14 +148,14 @@ public class XYShapeRendererTest  {
         DefaultXYZDataset dataset = new DefaultXYZDataset();
         Range range;
 
-        double data1[][] = { {1,1,1}, {1,1,1}, {1,2,3} };
+        double data1[][] = {{1, 1, 1}, {1, 1, 1}, {1, 2, 3}};
         dataset.addSeries("series1", data1);
         range = r.findZBounds(dataset);
         assertNotNull(range);
         assertEquals(1d, range.getLowerBound(), EPSILON);
         assertEquals(3d, range.getUpperBound(), EPSILON);
 
-        double data2[][] = { {1,1,1}, {1,1,1}, {-1,-2,-3} };
+        double data2[][] = {{1, 1, 1}, {1, 1, 1}, {-1, -2, -3}};
         dataset.removeSeries("series1");
         dataset.addSeries("series2", data2);
         range = r.findZBounds(dataset);
@@ -177,7 +163,7 @@ public class XYShapeRendererTest  {
         assertEquals(-3d, range.getLowerBound(), EPSILON);
         assertEquals(-1d, range.getUpperBound(), EPSILON);
 
-        double data3[][] = { {1,1,1}, {1,1,1}, {-1.2,2.9,3.8} };
+        double data3[][] = {{1, 1, 1}, {1, 1, 1}, {-1.2, 2.9, 3.8}};
         dataset.removeSeries("series2");
         dataset.addSeries("series3", data3);
         range = r.findZBounds(dataset);

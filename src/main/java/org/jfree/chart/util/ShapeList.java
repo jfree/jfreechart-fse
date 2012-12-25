@@ -42,7 +42,7 @@
 
 package org.jfree.chart.util;
 
-import java.awt.Shape;
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -90,7 +90,7 @@ public class ShapeList extends AbstractObjectList<Shape> {
      *         support cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -102,7 +102,7 @@ public class ShapeList extends AbstractObjectList<Shape> {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
 
         if (obj == this) {
             return true;
@@ -113,9 +113,9 @@ public class ShapeList extends AbstractObjectList<Shape> {
         ShapeList that = (ShapeList) obj;
         int listSize = size();
         for (int i = 0; i < listSize; i++) {
-           if (!ShapeUtilities.equal(get(i), that.get(i))) {
-               return false;
-           }
+            if (!ShapeUtilities.equal(get(i), that.get(i))) {
+                return false;
+            }
         }
         return true;
 
@@ -127,7 +127,7 @@ public class ShapeList extends AbstractObjectList<Shape> {
      * @return the hashcode
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return super.hashCode();
     }
 
@@ -148,8 +148,7 @@ public class ShapeList extends AbstractObjectList<Shape> {
             if (shape != null) {
                 stream.writeInt(i);
                 SerialUtilities.writeShape(shape, stream);
-            }
-            else {
+            } else {
                 stream.writeInt(-1);
             }
         }

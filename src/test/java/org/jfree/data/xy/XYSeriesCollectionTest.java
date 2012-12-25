@@ -53,29 +53,14 @@ import org.jfree.data.Range;
 import org.jfree.data.UnknownKeyException;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link XYSeriesCollection} class.
  */
-public class XYSeriesCollectionTest  {
-
-
-
+public class XYSeriesCollectionTest {
 
 
     private static final double EPSILON = 0.0000000001;
@@ -167,15 +152,15 @@ public class XYSeriesCollectionTest  {
         XYSeriesCollection c1 = new XYSeriesCollection();
         c1.addSeries(s1);
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(c1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(c1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         XYSeriesCollection c2 = (XYSeriesCollection) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(c1, c2);
     }
@@ -189,12 +174,11 @@ public class XYSeriesCollectionTest  {
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(s1);
         try {
-            /* XYSeries s = */ dataset.getSeries(1);
-        }
-        catch (IllegalArgumentException e) {
+            /* XYSeries s = */
+            dataset.getSeries(1);
+        } catch (IllegalArgumentException e) {
             // correct outcome
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertTrue(false);  // wrong outcome
         }
     }
@@ -212,16 +196,14 @@ public class XYSeriesCollectionTest  {
         try {
             c.getSeries(-1);
             fail("Should have thrown IndexOutOfBoundsException on negative key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Series index out of bounds", e.getMessage());
         }
 
         try {
             c.getSeries(1);
             fail("Should have thrown IndexOutOfBoundsException on key out of range");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Series index out of bounds", e.getMessage());
         }
     }
@@ -239,16 +221,14 @@ public class XYSeriesCollectionTest  {
         try {
             c.getSeries("s2");
             fail("Should have thrown UnknownKeyException on unknown key");
-        }
-        catch (UnknownKeyException e) {
+        } catch (UnknownKeyException e) {
             assertEquals("Key not found: s2", e.getMessage());
         }
 
         try {
             c.getSeries(null);
             fail("Should have thrown IndexOutOfBoundsException on null key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }
@@ -289,16 +269,14 @@ public class XYSeriesCollectionTest  {
         try {
             c.removeSeries(-1);
             fail("Should have thrown IndexOutOfBoundsException on negative key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Series index out of bounds.", e.getMessage());
         }
 
         try {
             c.removeSeries(1);
             fail("Should have thrown IndexOutOfBoundsException on key out of range");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Series index out of bounds.", e.getMessage());
         }
     }
@@ -407,9 +385,8 @@ public class XYSeriesCollectionTest  {
         try {
             s2.setKey("S1");
             fail("Should have thrown IndexOutOfBoundsException on negative key");
-        }
-        catch (IllegalArgumentException e) {
-           assertEquals("java.beans.PropertyVetoException: Duplicate key", e.getMessage());
+        } catch (IllegalArgumentException e) {
+            assertEquals("java.beans.PropertyVetoException: Duplicate key", e.getMessage());
         }
     }
 
@@ -454,8 +431,7 @@ public class XYSeriesCollectionTest  {
         // next, check that setting a duplicate key fails
         try {
             series2.setKey("C");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             // expected
         }
         assertEquals("B", series2.getKey());  // the series name should not

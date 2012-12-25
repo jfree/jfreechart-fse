@@ -44,28 +44,14 @@ package org.jfree.data;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link KeyedObjects2D} class.
  */
-public class KeyedObjects2DTest  {
-
-
-
+public class KeyedObjects2DTest {
 
 
     /**
@@ -149,32 +135,28 @@ public class KeyedObjects2DTest  {
         try {
             data.getObject(-1, 0);
             fail("Should have thrown IndexOutOfBoundsException on negative key");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("-1", e.getMessage());
         }
 
         try {
             data.getObject(0, -1);
             fail("Should have thrown IndexOutOfBoundsException on key out of bounds");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("-1", e.getMessage());
         }
 
         try {
             data.getObject(2, 0);
             fail("Should have thrown IndexOutOfBoundsException on key out of bounds");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("Index: 2, Size: 2", e.getMessage());
         }
 
         try {
             data.getObject(0, 2);
             fail("Should have thrown IndexOutOfBoundsException on key out of bounds");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("Index: 2, Size: 2", e.getMessage());
         }
     }
@@ -196,32 +178,28 @@ public class KeyedObjects2DTest  {
         try {
             data.getObject("XX", "C1");
             fail("Should have thrown UnknownKeyException unknown key");
-        }
-        catch (UnknownKeyException e) {
+        } catch (UnknownKeyException e) {
             assertEquals("Row key (XX) not recognised.", e.getMessage());
         }
 
         try {
             data.getObject("R1", "XX");
             fail("Should have thrown UnknownKeyException unknown key");
-        }
-        catch (UnknownKeyException e) {
+        } catch (UnknownKeyException e) {
             assertEquals("Column key (XX) not recognised.", e.getMessage());
         }
 
         try {
             data.getObject("XX", "C1");
             fail("Should have thrown UnknownKeyException unknown key");
-        }
-        catch (UnknownKeyException e) {
+        } catch (UnknownKeyException e) {
             assertEquals("Row key (XX) not recognised.", e.getMessage());
         }
 
         try {
             data.getObject("R1", "XX");
             fail("Should have thrown UnknownKeyException unknown key");
-        }
-        catch (UnknownKeyException e) {
+        } catch (UnknownKeyException e) {
             assertEquals("Column key (XX) not recognised.", e.getMessage());
         }
     }
@@ -247,16 +225,14 @@ public class KeyedObjects2DTest  {
         try {
             data.setObject("X", null, "C1");
             fail("Should have thrown IllegalArgumentException on null key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'rowKey' argument.", e.getMessage());
         }
 
         try {
             data.setObject("X", "R1", null);
             fail("Should have thrown IllegalArgumentException on duplicate key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'columnKey' argument.", e.getMessage());
         }
     }
@@ -277,8 +253,7 @@ public class KeyedObjects2DTest  {
         try {
             data.removeRow(-1);
             fail("Should have thrown IndexOutOfBoundsException on negative index");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("-1", e.getMessage());
         }
 
@@ -286,8 +261,7 @@ public class KeyedObjects2DTest  {
         try {
             data.removeRow(data.getRowCount());
             fail("Should have thrown IndexOutOfBoundsException on index out of range");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("Index: 1, Size: 1", e.getMessage());
         }
     }
@@ -308,8 +282,7 @@ public class KeyedObjects2DTest  {
         try {
             data.removeColumn(-1);
             fail("Should have thrown IndexOutOfBoundsException on negative index");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("-1", e.getMessage());
         }
 
@@ -317,8 +290,7 @@ public class KeyedObjects2DTest  {
         try {
             data.removeColumn(data.getColumnCount());
             fail("Should have thrown IndexOutOfBoundsException on index out of range");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("Index: 1, Size: 1", e.getMessage());
         }
     }
@@ -339,8 +311,7 @@ public class KeyedObjects2DTest  {
         try {
             data.removeRow("XXX");
             fail("Should have thrown UnknownKeyException on key that doesn't exist");
-        }
-        catch (UnknownKeyException e) {
+        } catch (UnknownKeyException e) {
             assertEquals("Row key (XXX) not recognised.", e.getMessage());
         }
 
@@ -348,8 +319,7 @@ public class KeyedObjects2DTest  {
         try {
             data.removeRow(null);
             fail("Should have thrown IndexOutOfBoundsException on null key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }
@@ -370,8 +340,7 @@ public class KeyedObjects2DTest  {
         try {
             data.removeColumn("XXX");
             fail("Should have thrown UnknownKeyException on unknown key");
-        }
-        catch (UnknownKeyException e) {
+        } catch (UnknownKeyException e) {
             assertEquals("Column key (XXX) not recognised.", e.getMessage());
         }
 
@@ -380,8 +349,7 @@ public class KeyedObjects2DTest  {
         try {
             data.removeColumn(null);
             fail("Should have thrown IllegalArgumentException on null key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }

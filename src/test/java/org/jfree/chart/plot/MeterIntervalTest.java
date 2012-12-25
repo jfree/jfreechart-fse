@@ -43,27 +43,15 @@ package org.jfree.chart.plot;
 import org.jfree.data.Range;
 import org.junit.Test;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link MeterInterval} class.
  */
-public class MeterIntervalTest  {
-
-
-
+public class MeterIntervalTest {
 
 
     /**
@@ -73,24 +61,24 @@ public class MeterIntervalTest  {
     public void testEquals() {
 
         MeterInterval m1 = new MeterInterval(
-            "Label 1", new Range(1.2, 3.4), Color.RED, new BasicStroke(1.0f),
-            Color.BLUE
+                "Label 1", new Range(1.2, 3.4), Color.RED, new BasicStroke(1.0f),
+                Color.BLUE
         );
         MeterInterval m2 = new MeterInterval(
-            "Label 1", new Range(1.2, 3.4), Color.RED, new BasicStroke(1.0f),
-            Color.BLUE
+                "Label 1", new Range(1.2, 3.4), Color.RED, new BasicStroke(1.0f),
+                Color.BLUE
         );
         assertEquals(m1, m2);
         assertEquals(m2, m1);
 
         m1 = new MeterInterval(
-            "Label 2", new Range(1.2, 3.4), Color.RED, new BasicStroke(1.0f),
-            Color.BLUE
+                "Label 2", new Range(1.2, 3.4), Color.RED, new BasicStroke(1.0f),
+                Color.BLUE
         );
         assertFalse(m1.equals(m2));
         m2 = new MeterInterval(
-            "Label 2", new Range(1.2, 3.4), Color.RED, new BasicStroke(1.0f),
-            Color.BLUE
+                "Label 2", new Range(1.2, 3.4), Color.RED, new BasicStroke(1.0f),
+                Color.BLUE
         );
         assertEquals(m1, m2);
 
@@ -105,7 +93,7 @@ public class MeterIntervalTest  {
         assertFalse(m1 instanceof Cloneable);
     }
 
-   /**
+    /**
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
@@ -113,16 +101,16 @@ public class MeterIntervalTest  {
 
         MeterInterval m1 = new MeterInterval("X", new Range(1.0, 2.0));
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(m1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(m1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-            );
+        );
         MeterInterval m2 = (MeterInterval) in.readObject();
-            in.close();
+        in.close();
 
         boolean b = m1.equals(m2);
         assertTrue(b);

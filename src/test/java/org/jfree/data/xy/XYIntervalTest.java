@@ -42,26 +42,16 @@ package org.jfree.data.xy;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 
-
 /**
  * Tests for the {@link XYInterval} class.
  */
-public class XYIntervalTest  {
-
-
-
+public class XYIntervalTest {
 
 
     /**
@@ -115,15 +105,15 @@ public class XYIntervalTest  {
     public void testSerialization() throws IOException, ClassNotFoundException {
         XYInterval i1 = new XYInterval(1.0, 2.0, 3.0, 2.5, 3.5);
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(i1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(i1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         XYInterval i2 = (XYInterval) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(i1, i2);
     }

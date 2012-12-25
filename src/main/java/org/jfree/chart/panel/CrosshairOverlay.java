@@ -42,11 +42,21 @@
 
 package org.jfree.chart.panel;
 
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.Stroke;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.event.OverlayChangeEvent;
+import org.jfree.chart.plot.Crosshair;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PublicCloneable;
+
+import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -55,20 +65,6 @@ import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.ui.RectangleAnchor;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.event.OverlayChangeEvent;
-import org.jfree.chart.plot.Crosshair;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.text.TextUtilities;
 
 /**
  * An overlay for a {@link ChartPanel} that draws crosshairs on a plot.
@@ -221,7 +217,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      * @param e  the event.
      */
     @Override
-	public void propertyChange(PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
         fireOverlayChanged();
     }
 
@@ -232,7 +228,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      * @param chartPanel  the chart panel.
      */
     @Override
-	public void paintOverlay(Graphics2D g2, ChartPanel chartPanel) {
+    public void paintOverlay(Graphics2D g2, ChartPanel chartPanel) {
         Shape savedClip = g2.getClip();
         Rectangle2D dataArea = chartPanel.getScreenDataArea();
         g2.clip(dataArea);
@@ -276,7 +272,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      * @param crosshair  the crosshair.
      */
     protected void drawHorizontalCrosshair(Graphics2D g2, Rectangle2D dataArea,
-            double y, Crosshair crosshair) {
+                                           double y, Crosshair crosshair) {
 
         if (y >= dataArea.getMinY() && y <= dataArea.getMaxY()) {
             Line2D line = new Line2D.Double(dataArea.getMinX(), y,
@@ -303,7 +299,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
                     yy = (float) pt.getY();
                     alignPt = textAlignPtForLabelAnchorH(anchor);
                     hotspot = TextUtilities.calculateRotatedStringBounds(
-                           label, g2, xx, yy, alignPt, 0.0, TextAnchor.CENTER);
+                            label, g2, xx, yy, alignPt, 0.0, TextAnchor.CENTER);
                 }
 
                 g2.setPaint(crosshair.getLabelBackgroundPaint());
@@ -326,7 +322,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      * @param crosshair  the crosshair.
      */
     protected void drawVerticalCrosshair(Graphics2D g2, Rectangle2D dataArea,
-            double x, Crosshair crosshair) {
+                                         double x, Crosshair crosshair) {
 
         if (x >= dataArea.getMinX() && x <= dataArea.getMaxX()) {
             Line2D line = new Line2D.Double(x, dataArea.getMinY(), x,
@@ -353,7 +349,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
                     yy = (float) pt.getY();
                     alignPt = textAlignPtForLabelAnchorV(anchor);
                     hotspot = TextUtilities.calculateRotatedStringBounds(
-                           label, g2, xx, yy, alignPt, 0.0, TextAnchor.CENTER);
+                            label, g2, xx, yy, alignPt, 0.0, TextAnchor.CENTER);
                 }
                 g2.setPaint(crosshair.getLabelBackgroundPaint());
                 g2.fill(hotspot);
@@ -377,23 +373,23 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      * @return The anchor point.
      */
     private Point2D calculateLabelPoint(Line2D line, RectangleAnchor anchor,
-            double deltaX, double deltaY) {
+                                        double deltaX, double deltaY) {
         double x = 0.0;
         double y = 0.0;
-        boolean left = (anchor == RectangleAnchor.BOTTOM_LEFT 
-                || anchor == RectangleAnchor.LEFT 
+        boolean left = (anchor == RectangleAnchor.BOTTOM_LEFT
+                || anchor == RectangleAnchor.LEFT
                 || anchor == RectangleAnchor.TOP_LEFT);
-        boolean right = (anchor == RectangleAnchor.BOTTOM_RIGHT 
-                || anchor == RectangleAnchor.RIGHT 
+        boolean right = (anchor == RectangleAnchor.BOTTOM_RIGHT
+                || anchor == RectangleAnchor.RIGHT
                 || anchor == RectangleAnchor.TOP_RIGHT);
-        boolean top = (anchor == RectangleAnchor.TOP_LEFT 
-                || anchor == RectangleAnchor.TOP 
+        boolean top = (anchor == RectangleAnchor.TOP_LEFT
+                || anchor == RectangleAnchor.TOP
                 || anchor == RectangleAnchor.TOP_RIGHT);
         boolean bottom = (anchor == RectangleAnchor.BOTTOM_LEFT
                 || anchor == RectangleAnchor.BOTTOM
                 || anchor == RectangleAnchor.BOTTOM_RIGHT);
         Rectangle rect = line.getBounds();
-        
+
         // we expect the line to be vertical or horizontal
         if (line.getX1() == line.getX2()) {  // vertical
             x = line.getX1();
@@ -410,8 +406,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
             if (bottom) {
                 y = Math.max(line.getY1(), line.getY2()) - deltaY;
             }
-        }
-        else {  // horizontal
+        } else {  // horizontal
             x = (line.getX1() + line.getX2()) / 2.0;
             y = line.getY1();
             if (left) {
@@ -433,35 +428,28 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
     /**
      * Returns the text anchor that is used to align a label to its anchor 
      * point.
-     * 
+     *
      * @param anchor  the anchor.
-     * 
+     *
      * @return The text alignment point.
      */
     private TextAnchor textAlignPtForLabelAnchorV(RectangleAnchor anchor) {
         TextAnchor result = TextAnchor.CENTER;
         if (anchor.equals(RectangleAnchor.TOP_LEFT)) {
             result = TextAnchor.TOP_RIGHT;
-        }
-        else if (anchor.equals(RectangleAnchor.TOP)) {
+        } else if (anchor.equals(RectangleAnchor.TOP)) {
             result = TextAnchor.TOP_CENTER;
-        }
-        else if (anchor.equals(RectangleAnchor.TOP_RIGHT)) {
+        } else if (anchor.equals(RectangleAnchor.TOP_RIGHT)) {
             result = TextAnchor.TOP_LEFT;
-        }
-        else if (anchor.equals(RectangleAnchor.LEFT)) {
+        } else if (anchor.equals(RectangleAnchor.LEFT)) {
             result = TextAnchor.HALF_ASCENT_RIGHT;
-        }
-        else if (anchor.equals(RectangleAnchor.RIGHT)) {
+        } else if (anchor.equals(RectangleAnchor.RIGHT)) {
             result = TextAnchor.HALF_ASCENT_LEFT;
-        }
-        else if (anchor.equals(RectangleAnchor.BOTTOM_LEFT)) {
+        } else if (anchor.equals(RectangleAnchor.BOTTOM_LEFT)) {
             result = TextAnchor.BOTTOM_RIGHT;
-        }
-        else if (anchor.equals(RectangleAnchor.BOTTOM)) {
+        } else if (anchor.equals(RectangleAnchor.BOTTOM)) {
             result = TextAnchor.BOTTOM_CENTER;
-        }
-        else if (anchor.equals(RectangleAnchor.BOTTOM_RIGHT)) {
+        } else if (anchor.equals(RectangleAnchor.BOTTOM_RIGHT)) {
             result = TextAnchor.BOTTOM_LEFT;
         }
         return result;
@@ -479,26 +467,19 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
         TextAnchor result = TextAnchor.CENTER;
         if (anchor.equals(RectangleAnchor.TOP_LEFT)) {
             result = TextAnchor.BOTTOM_LEFT;
-        }
-        else if (anchor.equals(RectangleAnchor.TOP)) {
+        } else if (anchor.equals(RectangleAnchor.TOP)) {
             result = TextAnchor.BOTTOM_CENTER;
-        }
-        else if (anchor.equals(RectangleAnchor.TOP_RIGHT)) {
+        } else if (anchor.equals(RectangleAnchor.TOP_RIGHT)) {
             result = TextAnchor.BOTTOM_RIGHT;
-        }
-        else if (anchor.equals(RectangleAnchor.LEFT)) {
+        } else if (anchor.equals(RectangleAnchor.LEFT)) {
             result = TextAnchor.HALF_ASCENT_LEFT;
-        }
-        else if (anchor.equals(RectangleAnchor.RIGHT)) {
+        } else if (anchor.equals(RectangleAnchor.RIGHT)) {
             result = TextAnchor.HALF_ASCENT_RIGHT;
-        }
-        else if (anchor.equals(RectangleAnchor.BOTTOM_LEFT)) {
+        } else if (anchor.equals(RectangleAnchor.BOTTOM_LEFT)) {
             result = TextAnchor.TOP_LEFT;
-        }
-        else if (anchor.equals(RectangleAnchor.BOTTOM)) {
+        } else if (anchor.equals(RectangleAnchor.BOTTOM)) {
             result = TextAnchor.TOP_CENTER;
-        }
-        else if (anchor.equals(RectangleAnchor.BOTTOM_RIGHT)) {
+        } else if (anchor.equals(RectangleAnchor.BOTTOM_RIGHT)) {
             result = TextAnchor.TOP_RIGHT;
         }
         return result;
@@ -508,20 +489,15 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
         RectangleAnchor result = anchor;
         if (anchor.equals(RectangleAnchor.TOP_LEFT)) {
             result = RectangleAnchor.TOP_RIGHT;
-        }
-        else if (anchor.equals(RectangleAnchor.TOP_RIGHT)) {
+        } else if (anchor.equals(RectangleAnchor.TOP_RIGHT)) {
             result = RectangleAnchor.TOP_LEFT;
-        }
-        else if (anchor.equals(RectangleAnchor.LEFT)) {
+        } else if (anchor.equals(RectangleAnchor.LEFT)) {
             result = RectangleAnchor.RIGHT;
-        }
-        else if (anchor.equals(RectangleAnchor.RIGHT)) {
+        } else if (anchor.equals(RectangleAnchor.RIGHT)) {
             result = RectangleAnchor.LEFT;
-        }
-        else if (anchor.equals(RectangleAnchor.BOTTOM_LEFT)) {
+        } else if (anchor.equals(RectangleAnchor.BOTTOM_LEFT)) {
             result = RectangleAnchor.BOTTOM_RIGHT;
-        }
-        else if (anchor.equals(RectangleAnchor.BOTTOM_RIGHT)) {
+        } else if (anchor.equals(RectangleAnchor.BOTTOM_RIGHT)) {
             result = RectangleAnchor.BOTTOM_LEFT;
         }
         return result;
@@ -531,20 +507,15 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
         RectangleAnchor result = anchor;
         if (anchor.equals(RectangleAnchor.TOP_LEFT)) {
             result = RectangleAnchor.BOTTOM_LEFT;
-        }
-        else if (anchor.equals(RectangleAnchor.TOP_RIGHT)) {
+        } else if (anchor.equals(RectangleAnchor.TOP_RIGHT)) {
             result = RectangleAnchor.BOTTOM_RIGHT;
-        }
-        else if (anchor.equals(RectangleAnchor.TOP)) {
+        } else if (anchor.equals(RectangleAnchor.TOP)) {
             result = RectangleAnchor.BOTTOM;
-        }
-        else if (anchor.equals(RectangleAnchor.BOTTOM)) {
+        } else if (anchor.equals(RectangleAnchor.BOTTOM)) {
             result = RectangleAnchor.TOP;
-        }
-        else if (anchor.equals(RectangleAnchor.BOTTOM_LEFT)) {
+        } else if (anchor.equals(RectangleAnchor.BOTTOM_LEFT)) {
             result = RectangleAnchor.TOP_LEFT;
-        }
-        else if (anchor.equals(RectangleAnchor.BOTTOM_RIGHT)) {
+        } else if (anchor.equals(RectangleAnchor.BOTTOM_RIGHT)) {
             result = RectangleAnchor.TOP_RIGHT;
         }
         return result;
@@ -558,7 +529,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -584,7 +555,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      *     with the cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         CrosshairOverlay clone = (CrosshairOverlay) super.clone();
         clone.xCrosshairs = ObjectUtilities.deepClone(this.xCrosshairs);
         clone.yCrosshairs = ObjectUtilities.deepClone(this.yCrosshairs);

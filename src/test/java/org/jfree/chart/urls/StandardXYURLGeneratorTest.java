@@ -44,13 +44,7 @@ package org.jfree.chart.urls;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -58,10 +52,7 @@ import static org.junit.Assert.assertFalse;
 /**
  * Tests for the {@link StandardXYURLGenerator} class.
  */
-public class StandardXYURLGeneratorTest  {
-
-
-
+public class StandardXYURLGeneratorTest {
 
 
     /**
@@ -72,15 +63,15 @@ public class StandardXYURLGeneratorTest  {
 
         StandardXYURLGenerator g1 = new StandardXYURLGenerator("index.html?");
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(g1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(g1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
         StandardXYURLGenerator g2 = (StandardXYURLGenerator) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(g1, g2);
 

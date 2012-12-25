@@ -55,31 +55,26 @@ import org.jfree.data.general.DatasetUtilities;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Some tests for a stacked bar chart with 3D effect.
  */
-public class StackedBarChart3DTest  {
+public class StackedBarChart3DTest {
 
     /** A chart. */
     private JFreeChart chart;
-
-
-
 
 
     /**
      * Common test setup.
      */
     @Before
-	public void setUp() {
+    public void setUp() {
         this.chart = createChart();
     }
 
@@ -90,7 +85,7 @@ public class StackedBarChart3DTest  {
     @Test
     public void testDrawWithNullInfo() {
 
-        BufferedImage image = new BufferedImage(200 , 100,
+        BufferedImage image = new BufferedImage(200, 100,
                 BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = image.createGraphics();
         this.chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null,
@@ -108,9 +103,9 @@ public class StackedBarChart3DTest  {
 
         // create a dataset...
         Number[][] data = new Integer[][]
-            {{-30, -20},
-             {-10, 10},
-             {20, 30}};
+                {{-30, -20},
+                        {-10, 10},
+                        {20, 30}};
 
         CategoryDataset newData = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
@@ -123,9 +118,9 @@ public class StackedBarChart3DTest  {
         ValueAxis axis = plot.getRangeAxis();
         Range range = axis.getRange();
         assertTrue("Expecting the lower bound of the range to be around -30: "
-                    + range.getLowerBound(), range.getLowerBound() <= -30);
+                + range.getLowerBound(), range.getLowerBound() <= -30);
         assertTrue("Expecting the upper bound of the range to be around 30: "
-                   + range.getUpperBound(), range.getUpperBound() >= 30);
+                + range.getUpperBound(), range.getUpperBound() >= 30);
 
     }
 
@@ -166,9 +161,9 @@ public class StackedBarChart3DTest  {
      */
     private static JFreeChart createChart() {
         Number[][] data = new Integer[][]
-            {{-3, -2},
-             {-1, 1},
-             {2, 3}};
+                {{-3, -2},
+                        {-1, 1},
+                        {2, 3}};
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
         return ChartFactory.createStackedBarChart3D("Stacked Bar Chart 3D",
@@ -189,7 +184,7 @@ public class StackedBarChart3DTest  {
          * @param event  the event.
          */
         @Override
-		public void chartChanged(ChartChangeEvent event) {
+        public void chartChanged(ChartChangeEvent event) {
             this.flag = true;
         }
 

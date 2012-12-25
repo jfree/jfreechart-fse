@@ -153,17 +153,25 @@
 
 package org.jfree.chart;
 
-import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Composite;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Paint;
-import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.Stroke;
+import org.jfree.chart.block.*;
+import org.jfree.chart.entity.EntityCollection;
+import org.jfree.chart.entity.JFreeChartEntity;
+import org.jfree.chart.event.*;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.title.LegendTitle;
+import org.jfree.chart.title.TextTitle;
+import org.jfree.chart.title.Title;
+import org.jfree.chart.ui.*;
+import org.jfree.chart.ui.about.Contributor;
+import org.jfree.chart.ui.about.Licences;
+import org.jfree.chart.ui.about.ProjectInfo;
+import org.jfree.chart.util.*;
+import org.jfree.data.Range;
+
+import javax.swing.*;
+import javax.swing.event.EventListenerList;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -177,49 +185,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import javax.swing.ImageIcon;
-import javax.swing.UIManager;
-import javax.swing.event.EventListenerList;
-
-import org.jfree.chart.block.BlockParams;
-import org.jfree.chart.block.EntityBlockResult;
-import org.jfree.chart.block.LengthConstraintType;
-import org.jfree.chart.block.LineBorder;
-import org.jfree.chart.block.RectangleConstraint;
-import org.jfree.chart.ui.Align;
-import org.jfree.chart.ui.Drawable;
-import org.jfree.chart.ui.HorizontalAlignment;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.ui.VerticalAlignment;
-import org.jfree.chart.ui.about.Contributor;
-import org.jfree.chart.ui.about.Licences;
-import org.jfree.chart.ui.about.ProjectInfo;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.entity.EntityCollection;
-import org.jfree.chart.entity.JFreeChartEntity;
-import org.jfree.chart.event.ChartChangeEvent;
-import org.jfree.chart.event.ChartChangeListener;
-import org.jfree.chart.event.ChartProgressEvent;
-import org.jfree.chart.event.ChartProgressListener;
-import org.jfree.chart.event.PlotChangeEvent;
-import org.jfree.chart.event.PlotChangeListener;
-import org.jfree.chart.event.TitleChangeEvent;
-import org.jfree.chart.event.TitleChangeListener;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.title.LegendTitle;
-import org.jfree.chart.title.TextTitle;
-import org.jfree.chart.title.Title;
-import org.jfree.chart.util.ParamChecks;
-import org.jfree.chart.util.ResourceBundleWrapper;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.data.Range;
 
 /**
  * A chart class implemented using the Java 2D APIs.  The current version
@@ -379,7 +344,7 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         this.progressListeners = new EventListenerList();
         this.changeListeners = new EventListenerList();
         this.notify = true;  // default is to notify listeners when the
-                             // chart changes
+        // chart changes
 
         this.renderingHints = new RenderingHints(
                 RenderingHints.KEY_ANTIALIASING,
@@ -597,12 +562,10 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         if (text != null) {
             if (this.title == null) {
                 setTitle(new TextTitle(text, JFreeChart.DEFAULT_TITLE_FONT));
-            }
-            else {
+            } else {
                 this.title.setText(text);
             }
-        }
-        else {
+        } else {
             setTitle((TextTitle) null);
         }
     }
@@ -831,17 +794,16 @@ public class JFreeChart implements Drawable, TitleChangeListener,
             val = RenderingHints.VALUE_ANTIALIAS_DEFAULT;
         }
         if (!flag && RenderingHints.VALUE_ANTIALIAS_OFF.equals(val)
-            || flag && RenderingHints.VALUE_ANTIALIAS_ON.equals(val)) {
+                || flag && RenderingHints.VALUE_ANTIALIAS_ON.equals(val)) {
             // no change, do nothing
             return;
         }
         if (flag) {
             this.renderingHints.put(RenderingHints.KEY_ANTIALIASING,
-                                    RenderingHints.VALUE_ANTIALIAS_ON);
-        }
-        else {
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+        } else {
             this.renderingHints.put(RenderingHints.KEY_ANTIALIASING,
-                                    RenderingHints.VALUE_ANTIALIAS_OFF);
+                    RenderingHints.VALUE_ANTIALIAS_OFF);
         }
         fireChartChanged();
 
@@ -878,8 +840,7 @@ public class JFreeChart implements Drawable, TitleChangeListener,
     public void setTextAntiAlias(boolean flag) {
         if (flag) {
             setTextAntiAlias(RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        }
-        else {
+        } else {
             setTextAntiAlias(RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
         }
     }
@@ -927,8 +888,7 @@ public class JFreeChart implements Drawable, TitleChangeListener,
                 this.backgroundPaint = paint;
                 fireChartChanged();
             }
-        }
-        else {
+        } else {
             if (paint != null) {
                 this.backgroundPaint = paint;
                 fireChartChanged();
@@ -964,8 +924,7 @@ public class JFreeChart implements Drawable, TitleChangeListener,
                 this.backgroundImage = image;
                 fireChartChanged();
             }
-        }
-        else {
+        } else {
             if (image != null) {
                 this.backgroundImage = image;
                 fireChartChanged();
@@ -1201,26 +1160,22 @@ public class JFreeChart implements Drawable, TitleChangeListener,
      * @return A rectangle.
      */
     private Rectangle2D createAlignedRectangle2D(Size2D dimensions,
-            Rectangle2D frame, HorizontalAlignment hAlign,
-            VerticalAlignment vAlign) {
+                                                 Rectangle2D frame, HorizontalAlignment hAlign,
+                                                 VerticalAlignment vAlign) {
         double x = Double.NaN;
         double y = Double.NaN;
         if (hAlign == HorizontalAlignment.LEFT) {
             x = frame.getX();
-        }
-        else if (hAlign == HorizontalAlignment.CENTER) {
+        } else if (hAlign == HorizontalAlignment.CENTER) {
             x = frame.getCenterX() - (dimensions.width / 2.0);
-        }
-        else if (hAlign == HorizontalAlignment.RIGHT) {
+        } else if (hAlign == HorizontalAlignment.RIGHT) {
             x = frame.getMaxX() - dimensions.width;
         }
         if (vAlign == VerticalAlignment.TOP) {
             y = frame.getY();
-        }
-        else if (vAlign == VerticalAlignment.CENTER) {
+        } else if (vAlign == VerticalAlignment.CENTER) {
             y = frame.getCenterY() - (dimensions.height / 2.0);
-        }
-        else if (vAlign == VerticalAlignment.BOTTOM) {
+        } else if (vAlign == VerticalAlignment.BOTTOM) {
             y = frame.getMaxY() - dimensions.height;
         }
 
@@ -1271,33 +1226,28 @@ public class JFreeChart implements Drawable, TitleChangeListener,
             area.setRect(area.getX(), Math.min(area.getY() + size.height,
                     area.getMaxY()), area.getWidth(), Math.max(area.getHeight()
                     - size.height, 0));
-        }
-        else if (position == RectangleEdge.BOTTOM) {
+        } else if (position == RectangleEdge.BOTTOM) {
             Size2D size = t.arrange(g2, constraint);
             titleArea = createAlignedRectangle2D(size, area,
                     t.getHorizontalAlignment(), VerticalAlignment.BOTTOM);
             retValue = t.draw(g2, titleArea, p);
             area.setRect(area.getX(), area.getY(), area.getWidth(),
                     area.getHeight() - size.height);
-        }
-        else if (position == RectangleEdge.RIGHT) {
+        } else if (position == RectangleEdge.RIGHT) {
             Size2D size = t.arrange(g2, constraint);
             titleArea = createAlignedRectangle2D(size, area,
                     HorizontalAlignment.RIGHT, t.getVerticalAlignment());
             retValue = t.draw(g2, titleArea, p);
             area.setRect(area.getX(), area.getY(), area.getWidth()
                     - size.width, area.getHeight());
-        }
-
-        else if (position == RectangleEdge.LEFT) {
+        } else if (position == RectangleEdge.LEFT) {
             Size2D size = t.arrange(g2, constraint);
             titleArea = createAlignedRectangle2D(size, area,
                     HorizontalAlignment.LEFT, t.getVerticalAlignment());
             retValue = t.draw(g2, titleArea, p);
             area.setRect(area.getX() + size.width, area.getY(), area.getWidth()
                     - size.width, area.getHeight());
-        }
-        else {
+        } else {
             throw new RuntimeException("Unrecognised title position.");
         }
         EntityCollection result = null;
@@ -1568,7 +1518,7 @@ public class JFreeChart implements Drawable, TitleChangeListener,
             return false;
         }
         if (!PaintUtilities.equal(
-            this.backgroundPaint, that.backgroundPaint
+                this.backgroundPaint, that.backgroundPaint
         )) {
             return false;
         }
@@ -1611,7 +1561,7 @@ public class JFreeChart implements Drawable, TitleChangeListener,
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.borderStroke = SerialUtilities.readStroke(stream);
         this.borderPaint = SerialUtilities.readPaint(stream);
@@ -1651,7 +1601,7 @@ public class JFreeChart implements Drawable, TitleChangeListener,
      * @throws CloneNotSupportedException if the chart is not cloneable.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         JFreeChart chart = (JFreeChart) super.clone();
 
         chart.renderingHints = (RenderingHints) this.renderingHints.clone();
@@ -1820,7 +1770,7 @@ class JFreeChartInfo extends ProjectInfo {
      * @return The JFreeChart logo.
      */
     @Override
-	public Image getLogo() {
+    public Image getLogo() {
 
         Image logo = super.getLogo();
         if (logo == null) {
@@ -1828,7 +1778,7 @@ class JFreeChartInfo extends ProjectInfo {
                     "org/jfree/chart/gorilla.jpg");
             if (imageURL != null) {
                 ImageIcon temp = new ImageIcon(imageURL);
-                    // use ImageIcon because it waits for the image to load...
+                // use ImageIcon because it waits for the image to load...
                 logo = temp.getImage();
                 setLogo(logo);
             }

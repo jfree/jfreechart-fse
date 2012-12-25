@@ -50,14 +50,12 @@
 
 package org.jfree.chart.text;
 
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.io.Serializable;
-import java.util.List;
-
 import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.ui.TextAnchor;
+
+import java.awt.*;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * A sequence of {@link TextFragment} objects that together form a line of 
@@ -69,7 +67,7 @@ public class TextLine implements Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 7100085690160465444L;
-    
+
     /** Storage for the text fragments that make up the line. */
     private List<TextFragment> fragments;
 
@@ -79,19 +77,19 @@ public class TextLine implements Serializable {
     public TextLine() {
         this.fragments = new java.util.ArrayList<TextFragment>();
     }
-    
+
     /**
      * Creates a new text line using the default font.
-     * 
+     *
      * @param text  the text (<code>null</code> not permitted).
      */
     public TextLine(final String text) {
-        this(text, TextFragment.DEFAULT_FONT);   
+        this(text, TextFragment.DEFAULT_FONT);
     }
-    
+
     /**
      * Creates a new text line.
-     * 
+     *
      * @param text  the text (<code>null</code> not permitted).
      * @param font  the text font (<code>null</code> not permitted).
      */
@@ -100,50 +98,50 @@ public class TextLine implements Serializable {
         final TextFragment fragment = new TextFragment(text, font);
         this.fragments.add(fragment);
     }
-    
+
     /**
      * Creates a new text line.
-     * 
+     *
      * @param text  the text (<code>null</code> not permitted).
      * @param font  the text font (<code>null</code> not permitted).
      * @param paint  the text color (<code>null</code> not permitted).
      */
     public TextLine(final String text, final Font font, final Paint paint) {
         if (text == null) {
-            throw new IllegalArgumentException("Null 'text' argument.");   
+            throw new IllegalArgumentException("Null 'text' argument.");
         }
         if (font == null) {
-            throw new IllegalArgumentException("Null 'font' argument.");   
+            throw new IllegalArgumentException("Null 'font' argument.");
         }
         if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");   
+            throw new IllegalArgumentException("Null 'paint' argument.");
         }
         this.fragments = new java.util.ArrayList<TextFragment>();
         final TextFragment fragment = new TextFragment(text, font, paint);
         this.fragments.add(fragment);
     }
-    
+
     /**
      * Adds a text fragment to the text line.
-     * 
+     *
      * @param fragment  the text fragment (<code>null</code> not permitted).
      */
     public void addFragment(final TextFragment fragment) {
-        this.fragments.add(fragment);        
+        this.fragments.add(fragment);
     }
-    
+
     /**
      * Removes a fragment from the line.
-     * 
+     *
      * @param fragment  the fragment to remove.
      */
     public void removeFragment(final TextFragment fragment) {
         this.fragments.remove(fragment);
     }
-    
+
     /**
      * Draws the text line.
-     * 
+     *
      * @param g2  the graphics device.
      * @param anchorX  the x-coordinate for the anchor point.
      * @param anchorY  the y-coordinate for the anchor point.
@@ -154,11 +152,11 @@ public class TextLine implements Serializable {
      * @param angle  the rotation angle (in radians).
      */
     public void draw(final Graphics2D g2,
-                     final float anchorX, final float anchorY, 
+                     final float anchorX, final float anchorY,
                      final TextAnchor anchor,
-                     final float rotateX, final float rotateY, 
+                     final float rotateX, final float rotateY,
                      final double angle) {
-    
+
         float x = anchorX;
         final float yOffset = calculateBaselineOffset(g2, anchor);
         for (TextFragment fragment : this.fragments) {
@@ -169,14 +167,14 @@ public class TextLine implements Serializable {
             );
             x = x + (float) d.getWidth();
         }
-    
+
     }
-    
+
     /**
      * Calculates the width and height of the text line.
-     * 
+     *
      * @param g2  the graphics device.
-     * 
+     *
      * @return The width and height.
      */
     public Size2D calculateDimensions(final Graphics2D g2) {
@@ -189,23 +187,23 @@ public class TextLine implements Serializable {
         }
         return new Size2D(width, height);
     }
-    
+
     /**
      * Returns the first text fragment in the line.
-     * 
+     *
      * @return The first text fragment in the line.
      */
     public TextFragment getFirstTextFragment() {
         TextFragment result = null;
         if (this.fragments.size() > 0) {
             result = this.fragments.get(0);
-        }    
+        }
         return result;
     }
-    
+
     /**
      * Returns the last text fragment in the line.
-     * 
+     *
      * @return The last text fragment in the line.
      */
     public TextFragment getLastTextFragment() {
@@ -213,20 +211,20 @@ public class TextLine implements Serializable {
         if (this.fragments.size() > 0) {
             result = this.fragments.get(this.fragments.size()
                     - 1);
-        }    
+        }
         return result;
     }
-    
+
     /**
      * Calculate the offsets required to translate from the specified anchor 
      * position to the left baseline position.
-     * 
+     *
      * @param g2  the graphics device.
      * @param anchor  the anchor position.
-     * 
+     *
      * @return The offsets.
      */
-    private float calculateBaselineOffset(final Graphics2D g2, 
+    private float calculateBaselineOffset(final Graphics2D g2,
                                           final TextAnchor anchor) {
         float result = 0.0f;
         for (TextFragment fragment : this.fragments) {
@@ -235,21 +233,21 @@ public class TextLine implements Serializable {
         }
         return result;
     }
-    
+
     /**
      * Tests this object for equality with an arbitrary object.
-     * 
+     *
      * @param obj  the object to test against (<code>null</code> permitted).
-     * 
+     *
      * @return A boolean.
      */
     @Override
-	public boolean equals(final Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
         if (obj == this) {
-            return true;   
+            return true;
         }
         if (obj instanceof TextLine) {
             final TextLine line = (TextLine) obj;
@@ -260,11 +258,11 @@ public class TextLine implements Serializable {
 
     /**
      * Returns a hash code for this object.
-     * 
+     *
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return (this.fragments != null ? this.fragments.hashCode() : 0);
     }
 

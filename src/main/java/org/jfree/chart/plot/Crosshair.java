@@ -41,25 +41,21 @@
 
 package org.jfree.chart.plot;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Paint;
-import java.awt.Stroke;
+import org.jfree.chart.HashUtilities;
+import org.jfree.chart.labels.CrosshairLabelGenerator;
+import org.jfree.chart.labels.StandardCrosshairLabelGenerator;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.SerialUtilities;
+
+import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
-import org.jfree.chart.HashUtilities;
-import org.jfree.chart.ui.RectangleAnchor;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.labels.CrosshairLabelGenerator;
-import org.jfree.chart.labels.StandardCrosshairLabelGenerator;
-import org.jfree.chart.util.SerialUtilities;
 
 /**
  * A crosshair for display on a plot.
@@ -144,7 +140,7 @@ public class Crosshair implements Cloneable, PublicCloneable, Serializable {
      * @param value  the value.
      */
     public Crosshair(double value) {
-       this(value, Color.BLACK, new BasicStroke(1.0f));
+        this(value, Color.BLACK, new BasicStroke(1.0f));
     }
 
     /**
@@ -582,7 +578,7 @@ public class Crosshair implements Cloneable, PublicCloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -646,7 +642,7 @@ public class Crosshair implements Cloneable, PublicCloneable, Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int hash = 7;
         hash = HashUtilities.hashCode(hash, this.visible);
         hash = HashUtilities.hashCode(hash, this.value);
@@ -674,7 +670,7 @@ public class Crosshair implements Cloneable, PublicCloneable, Serializable {
      * @throws java.lang.CloneNotSupportedException
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         // FIXME: clone generator
         return super.clone();
     }
@@ -695,7 +691,7 @@ public class Crosshair implements Cloneable, PublicCloneable, Serializable {
      *
      * @param l  the listener.
      *
-     * @see #addPropertyChangeListener(java.beans.PropertyChangeListener) 
+     * @see #addPropertyChangeListener(java.beans.PropertyChangeListener)
      */
     public void removePropertyChangeListener(PropertyChangeListener l) {
         this.pcs.removePropertyChangeListener(l);

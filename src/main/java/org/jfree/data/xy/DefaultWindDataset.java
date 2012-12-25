@@ -47,13 +47,13 @@
 
 package org.jfree.data.xy;
 
+import org.jfree.chart.util.PublicCloneable;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-
-import org.jfree.chart.util.PublicCloneable;
 
 /**
  * A default implementation of the {@link WindDataset} interface.
@@ -146,13 +146,11 @@ public class DefaultWindDataset extends AbstractXYDataset
                     Number xNumber;
                     if (xObject instanceof Number) {
                         xNumber = (Number) xObject;
-                    }
-                    else {
+                    } else {
                         if (xObject instanceof Date) {
                             Date xDate = (Date) xObject;
                             xNumber = xDate.getTime();
-                        }
-                        else {
+                        } else {
                             xNumber = 0;
                         }
                     }
@@ -174,7 +172,7 @@ public class DefaultWindDataset extends AbstractXYDataset
      * @return The series count.
      */
     @Override
-	public int getSeriesCount() {
+    public int getSeriesCount() {
         return this.allSeriesData.size();
     }
 
@@ -186,7 +184,7 @@ public class DefaultWindDataset extends AbstractXYDataset
      * @return The item count.
      */
     @Override
-	public int getItemCount(int series) {
+    public int getItemCount(int series) {
         if (series < 0 || series >= getSeriesCount()) {
             throw new IllegalArgumentException("Invalid series index: "
                     + series);
@@ -203,7 +201,7 @@ public class DefaultWindDataset extends AbstractXYDataset
      * @return The series key.
      */
     @Override
-	public Comparable getSeriesKey(int series) {
+    public Comparable getSeriesKey(int series) {
         if (series < 0 || series >= getSeriesCount()) {
             throw new IllegalArgumentException("Invalid series index: "
                     + series);
@@ -222,7 +220,7 @@ public class DefaultWindDataset extends AbstractXYDataset
      * @return The x-value for the item within the series.
      */
     @Override
-	public Number getX(int series, int item) {
+    public Number getX(int series, int item) {
         List<WindDataItem> oneSeriesData = this.allSeriesData.get(series);
         WindDataItem windItem = oneSeriesData.get(item);
         return windItem.getX();
@@ -239,7 +237,7 @@ public class DefaultWindDataset extends AbstractXYDataset
      * @return The y-value for the item within the series.
      */
     @Override
-	public Number getY(int series, int item) {
+    public Number getY(int series, int item) {
         return getWindForce(series, item);
     }
 
@@ -253,7 +251,7 @@ public class DefaultWindDataset extends AbstractXYDataset
      * @return The wind direction for the item within the series.
      */
     @Override
-	public Number getWindDirection(int series, int item) {
+    public Number getWindDirection(int series, int item) {
         List<WindDataItem> oneSeriesData = this.allSeriesData.get(series);
         WindDataItem windItem = oneSeriesData.get(item);
         return windItem.getWindDirection();
@@ -269,7 +267,7 @@ public class DefaultWindDataset extends AbstractXYDataset
      * @return The wind force for the item within the series.
      */
     @Override
-	public Number getWindForce(int series, int item) {
+    public Number getWindForce(int series, int item) {
         List<WindDataItem> oneSeriesData = this.allSeriesData.get(series);
         WindDataItem windItem = oneSeriesData.get(item);
         return windItem.getWindForce();
@@ -311,7 +309,7 @@ public class DefaultWindDataset extends AbstractXYDataset
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -392,14 +390,12 @@ class WindDataItem implements Comparable<WindDataItem>, Serializable {
      * @return An int that indicates the relative comparison.
      */
     @Override
-	public int compareTo(WindDataItem item) {
+    public int compareTo(WindDataItem item) {
         if (this.x.doubleValue() > item.x.doubleValue()) {
             return 1;
-        }
-        else if (this.x.equals(item.x)) {
+        } else if (this.x.equals(item.x)) {
             return 0;
-        }
-        else {
+        } else {
             return -1;
         }
 
@@ -414,7 +410,7 @@ class WindDataItem implements Comparable<WindDataItem>, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return false;
         }

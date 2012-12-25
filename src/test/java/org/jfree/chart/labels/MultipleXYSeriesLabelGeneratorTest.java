@@ -44,27 +44,14 @@ package org.jfree.chart.labels;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link MultipleXYSeriesLabelGenerator} class.
  */
-public class MultipleXYSeriesLabelGeneratorTest  {
-
-
-
+public class MultipleXYSeriesLabelGeneratorTest {
 
 
     /**

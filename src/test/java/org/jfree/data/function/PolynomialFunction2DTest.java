@@ -42,27 +42,15 @@ package org.jfree.data.function;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 
 /**
  * Tests for the {@link PolynomialFunction2D} class.
  */
-public class PolynomialFunction2DTest  {
-
-
-
+public class PolynomialFunction2DTest {
 
 
     /**
@@ -70,15 +58,14 @@ public class PolynomialFunction2DTest  {
      */
     @Test
     public void testConstructor() {
-        PolynomialFunction2D f = new PolynomialFunction2D(new double[] {1.0,
+        PolynomialFunction2D f = new PolynomialFunction2D(new double[]{1.0,
                 2.0});
         assertArrayEquals(new double[]{1.0, 2.0}, f.getCoefficients(), 0);
 
         try {
             new PolynomialFunction2D(null);
             fail("Should have thrown an IllegalArgumnetException on null parameter");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'coefficients' argument", e.getMessage());
         }
     }
@@ -88,7 +75,7 @@ public class PolynomialFunction2DTest  {
      */
     @Test
     public void testGetCoefficients() {
-        PolynomialFunction2D f = new PolynomialFunction2D(new double[] {1.0,
+        PolynomialFunction2D f = new PolynomialFunction2D(new double[]{1.0,
                 2.0});
         double[] c = f.getCoefficients();
         assertArrayEquals(new double[]{1.0, 2.0}, c, 0);
@@ -104,7 +91,7 @@ public class PolynomialFunction2DTest  {
      */
     @Test
     public void testGetOrder() {
-        PolynomialFunction2D f = new PolynomialFunction2D(new double[] {1.0,
+        PolynomialFunction2D f = new PolynomialFunction2D(new double[]{1.0,
                 2.0});
         assertEquals(1, f.getOrder());
     }
@@ -114,14 +101,14 @@ public class PolynomialFunction2DTest  {
      */
     @Test
     public void testEquals() {
-        PolynomialFunction2D f1 = new PolynomialFunction2D(new double[] {1.0,
+        PolynomialFunction2D f1 = new PolynomialFunction2D(new double[]{1.0,
                 2.0});
-        PolynomialFunction2D f2 = new PolynomialFunction2D(new double[] {1.0,
+        PolynomialFunction2D f2 = new PolynomialFunction2D(new double[]{1.0,
                 2.0});
         assertEquals(f1, f2);
-        f1 = new PolynomialFunction2D(new double[] {2.0, 3.0});
+        f1 = new PolynomialFunction2D(new double[]{2.0, 3.0});
         assertFalse(f1.equals(f2));
-        f2 = new PolynomialFunction2D(new double[] {2.0, 3.0});
+        f2 = new PolynomialFunction2D(new double[]{2.0, 3.0});
         assertEquals(f1, f2);
     }
 
@@ -130,18 +117,18 @@ public class PolynomialFunction2DTest  {
      */
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
-        PolynomialFunction2D f1 = new PolynomialFunction2D(new double[] {1.0,
+        PolynomialFunction2D f1 = new PolynomialFunction2D(new double[]{1.0,
                 2.0});
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(f1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(f1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
         PolynomialFunction2D f2 = (PolynomialFunction2D) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(f1, f2);
     }
@@ -152,9 +139,9 @@ public class PolynomialFunction2DTest  {
      */
     @Test
     public void testHashCode() {
-        PolynomialFunction2D f1 = new PolynomialFunction2D(new double[] {1.0,
+        PolynomialFunction2D f1 = new PolynomialFunction2D(new double[]{1.0,
                 2.0});
-        PolynomialFunction2D f2 = new PolynomialFunction2D(new double[] {1.0,
+        PolynomialFunction2D f2 = new PolynomialFunction2D(new double[]{1.0,
                 2.0});
         assertEquals(f1.hashCode(), f2.hashCode());
 

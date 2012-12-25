@@ -42,32 +42,16 @@ package org.jfree.chart.plot.dial;
 
 import org.junit.Test;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-
+import static org.junit.Assert.*;
 
 
 /**
  * Tests for the {@link DialCap} class.
  */
-public class DialCapTest  {
-
-
-
+public class DialCapTest {
 
 
     /**
@@ -167,15 +151,15 @@ public class DialCapTest  {
         // test a default instance
         DialCap c1 = new DialCap();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(c1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(c1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         DialCap c2 = (DialCap) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(c1, c2);
 
@@ -190,13 +174,13 @@ public class DialCapTest  {
 
         buffer = new ByteArrayOutputStream();
         out = new ObjectOutputStream(buffer);
-            out.writeObject(c1);
-            out.close();
+        out.writeObject(c1);
+        out.close();
 
         in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            c2 = (DialCap) in.readObject();
-            in.close();
+                new ByteArrayInputStream(buffer.toByteArray()));
+        c2 = (DialCap) in.readObject();
+        in.close();
 
         assertEquals(c1, c2);
     }

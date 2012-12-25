@@ -46,18 +46,18 @@
 
 package org.jfree.chart.renderer.xy;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.data.xy.XYDataset;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A renderer that connects data points with natural cubic splines and/or
@@ -149,7 +149,7 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
      */
     @Override
     public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
-            XYPlot plot, XYDataset data, PlotRenderingInfo info) {
+                                          XYPlot plot, XYDataset data, PlotRenderingInfo info) {
 
         State state = (State) super.initialise(g2, dataArea, plot, data, info);
         state.setProcessVisibleItemsOnly(false);
@@ -178,9 +178,9 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
      */
     @Override
     protected void drawPrimaryLineAsPath(XYItemRendererState state,
-            Graphics2D g2, XYPlot plot, XYDataset dataset, int pass,
-            int series, int item, ValueAxis domainAxis, ValueAxis rangeAxis,
-            Rectangle2D dataArea) {
+                                         Graphics2D g2, XYPlot plot, XYDataset dataset, int pass,
+                                         int series, int item, ValueAxis domainAxis, ValueAxis rangeAxis,
+                                         Rectangle2D dataArea) {
 
         RectangleEdge xAxisLocation = plot.getDomainAxisEdge();
         RectangleEdge yAxisLocation = plot.getRangeAxisEdge();
@@ -194,10 +194,10 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
         // collect points
         if (!Double.isNaN(transX1) && !Double.isNaN(transY1)) {
             ControlPoint p = new ControlPoint(plot.getOrientation()
-                                == PlotOrientation.HORIZONTAL ? (float) transY1
-                                : (float) transX1, plot.getOrientation()
-                                == PlotOrientation.HORIZONTAL ? (float) transX1
-                                        : (float) transY1);
+                    == PlotOrientation.HORIZONTAL ? (float) transY1
+                    : (float) transX1, plot.getOrientation()
+                    == PlotOrientation.HORIZONTAL ? (float) transX1
+                    : (float) transY1);
             if (!this.points.contains(p)) {
                 this.points.add(p);
             }
@@ -214,8 +214,7 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
                     // for two points
                     ControlPoint cp1 = this.points.get(1);
                     s.seriesPath.lineTo(cp1.x, cp1.y);
-                }
-                else {
+                } else {
                     // construct spline
                     int np = this.points.size(); // number of points
                     float[] d = new float[np]; // Newton form coefficients
@@ -248,7 +247,7 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
                         sup[i] = h[i + 1] / 6;
                         sub[i] = h[i] / 6;
                         a[i] = (d[i + 1] - d[i]) / h[i + 1]
-                                   - (d[i] - d[i - 1]) / h[i];
+                                - (d[i] - d[i - 1]) / h[i];
                     }
                     solveTridiag(sub, diag, sup, a, np - 2);
 
@@ -280,7 +279,7 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
     }
 
     private void solveTridiag(float[] sub, float[] diag, float[] sup,
-            float[] b, int n) {
+                              float[] b, int n) {
 /*      solve linear system with tridiagonal n by n matrix a
         using Gaussian elimination *without* pivoting
         where   a(i,i-1) = sub[i]  for 2<=i<=n

@@ -43,28 +43,16 @@ package org.jfree.chart.plot;
 import org.jfree.chart.ChartRenderingInfo;
 import org.junit.Test;
 
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link PlotRenderingInfo} class.
  */
-public class PlotRenderingInfoTest  {
-
-
-
+public class PlotRenderingInfoTest {
 
 
     /**
@@ -130,16 +118,16 @@ public class PlotRenderingInfoTest  {
 
         PlotRenderingInfo p1 = new PlotRenderingInfo(new ChartRenderingInfo());
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(p1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(p1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-            );
+        );
         PlotRenderingInfo p2 = (PlotRenderingInfo) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(p1, p2);
 

@@ -44,14 +44,18 @@
 
 package org.jfree.chart.plot.dial;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
+import org.jfree.chart.HashUtilities;
+import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.Size2D;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.SerialUtilities;
+
+import java.awt.*;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -61,17 +65,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-
-import org.jfree.chart.HashUtilities;
-import org.jfree.chart.ui.RectangleAnchor;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.util.SerialUtilities;
 
 /**
  * A value indicator for a {@link DialPlot}.
@@ -570,7 +563,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * @return <code>true</code>.
      */
     @Override
-	public boolean isClippedToWindow() {
+    public boolean isClippedToWindow() {
         return true;
     }
 
@@ -585,8 +578,8 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * @param view  the view rectangle (<code>null</code> not permitted).
      */
     @Override
-	public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
-            Rectangle2D view) {
+    public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
+                     Rectangle2D view) {
 
         // work out the anchor point
         Rectangle2D f = DialPlot.rectangleByRadius(frame, this.radius,
@@ -651,11 +644,11 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
     /**
      * A utility method that adjusts a value, if necessary, to be within a 
      * specified range.
-     * 
+     *
      * @param x  the value.
      * @param minX  the minimum value in the range.
      * @param maxX  the maximum value in the range.
-     * 
+     *
      * @return The adjusted value.
      */
     private double fixToRange(double x, double minX, double maxX) {
@@ -664,11 +657,9 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
         }
         if (x < minX) {
             return minX;
-        }
-        else if (x > maxX) {
+        } else if (x > maxX) {
             return maxX;
-        }
-        else {
+        } else {
             return x;
         }
     }
@@ -681,7 +672,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -741,7 +732,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * @return The hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 193;
         result = 37 * result + HashUtilities.hashCodeForPaint(this.paint);
         result = 37 * result + HashUtilities.hashCodeForPaint(
@@ -761,7 +752,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      *     cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

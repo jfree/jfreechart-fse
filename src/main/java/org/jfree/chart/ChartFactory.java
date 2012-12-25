@@ -125,79 +125,19 @@
 
 package org.jfree.chart;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.text.DateFormat;
-import java.text.NumberFormat;
-import java.util.List;
-import java.util.Locale;
-
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.CategoryAxis3D;
-import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberAxis3D;
-import org.jfree.chart.axis.Timeline;
-import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.axis.*;
+import org.jfree.chart.labels.*;
+import org.jfree.chart.plot.*;
+import org.jfree.chart.renderer.DefaultPolarItemRenderer;
+import org.jfree.chart.renderer.WaferMapRenderer;
+import org.jfree.chart.renderer.category.*;
+import org.jfree.chart.renderer.xy.*;
+import org.jfree.chart.title.TextTitle;
 import org.jfree.chart.ui.Layer;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.TableOrder;
-import org.jfree.chart.labels.BoxAndWhiskerToolTipGenerator;
-import org.jfree.chart.labels.HighLowItemLabelGenerator;
-import org.jfree.chart.labels.IntervalCategoryToolTipGenerator;
-import org.jfree.chart.labels.ItemLabelAnchor;
-import org.jfree.chart.labels.ItemLabelPosition;
-import org.jfree.chart.labels.PieToolTipGenerator;
-import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
-import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
-import org.jfree.chart.labels.StandardPieToolTipGenerator;
-import org.jfree.chart.labels.StandardXYToolTipGenerator;
-import org.jfree.chart.labels.StandardXYZToolTipGenerator;
-import org.jfree.chart.labels.XYToolTipGenerator;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.Marker;
-import org.jfree.chart.plot.MultiplePiePlot;
-import org.jfree.chart.plot.PiePlot;
-import org.jfree.chart.plot.PiePlot3D;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.PolarPlot;
-import org.jfree.chart.plot.RingPlot;
-import org.jfree.chart.plot.ValueMarker;
-import org.jfree.chart.plot.WaferMapPlot;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.DefaultPolarItemRenderer;
-import org.jfree.chart.renderer.WaferMapRenderer;
-import org.jfree.chart.renderer.category.AreaRenderer;
-import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.chart.renderer.category.BarRenderer3D;
-import org.jfree.chart.renderer.category.BoxAndWhiskerRenderer;
-import org.jfree.chart.renderer.category.CategoryItemRenderer;
-import org.jfree.chart.renderer.category.GanttRenderer;
-import org.jfree.chart.renderer.category.GradientBarPainter;
-import org.jfree.chart.renderer.category.LineAndShapeRenderer;
-import org.jfree.chart.renderer.category.LineRenderer3D;
-import org.jfree.chart.renderer.category.StackedAreaRenderer;
-import org.jfree.chart.renderer.category.StackedBarRenderer;
-import org.jfree.chart.renderer.category.StackedBarRenderer3D;
-import org.jfree.chart.renderer.category.StandardBarPainter;
-import org.jfree.chart.renderer.category.WaterfallBarRenderer;
-import org.jfree.chart.renderer.xy.CandlestickRenderer;
-import org.jfree.chart.renderer.xy.GradientXYBarPainter;
-import org.jfree.chart.renderer.xy.HighLowRenderer;
-import org.jfree.chart.renderer.xy.StackedXYAreaRenderer2;
-import org.jfree.chart.renderer.xy.StandardXYBarPainter;
-import org.jfree.chart.renderer.xy.WindItemRenderer;
-import org.jfree.chart.renderer.xy.XYAreaRenderer;
-import org.jfree.chart.renderer.xy.XYBarRenderer;
-import org.jfree.chart.renderer.xy.XYBoxAndWhiskerRenderer;
-import org.jfree.chart.renderer.xy.XYBubbleRenderer;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.chart.renderer.xy.XYStepAreaRenderer;
-import org.jfree.chart.renderer.xy.XYStepRenderer;
-import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.IntervalCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
@@ -205,12 +145,13 @@ import org.jfree.data.general.PieDataset;
 import org.jfree.data.general.WaferMapDataset;
 import org.jfree.data.statistics.BoxAndWhiskerCategoryDataset;
 import org.jfree.data.statistics.BoxAndWhiskerXYDataset;
-import org.jfree.data.xy.IntervalXYDataset;
-import org.jfree.data.xy.OHLCDataset;
-import org.jfree.data.xy.TableXYDataset;
-import org.jfree.data.xy.WindDataset;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYZDataset;
+import org.jfree.data.xy.*;
+
+import java.awt.*;
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * A collection of utility methods for creating some standard charts with
@@ -259,8 +200,7 @@ public abstract class ChartFactory {
             if (sct.getName().equals("Legacy")) {
                 BarRenderer.setDefaultBarPainter(new StandardBarPainter());
                 XYBarRenderer.setDefaultBarPainter(new StandardXYBarPainter());
-            }
-            else {
+            } else {
                 BarRenderer.setDefaultBarPainter(new GradientBarPainter());
                 XYBarRenderer.setDefaultBarPainter(new GradientXYBarPainter());
             }
@@ -282,7 +222,7 @@ public abstract class ChartFactory {
      * @since 1.0.7
      */
     public static JFreeChart createPieChart(String title, PieDataset dataset,
-            Locale locale) {
+                                            Locale locale) {
 
         PiePlot plot = new PiePlot(dataset);
         plot.setLabelGenerator(new StandardPieSectionLabelGenerator(locale));
@@ -355,9 +295,9 @@ public abstract class ChartFactory {
      * @since 1.0.7
      */
     public static JFreeChart createPieChart(String title, PieDataset dataset,
-            PieDataset previousDataset, int percentDiffForMaxScale,
-            boolean greenForIncrease, Locale locale, boolean subTitle,
-            boolean showDifference) {
+                                            PieDataset previousDataset, int percentDiffForMaxScale,
+                                            boolean greenForIncrease, Locale locale, boolean subTitle,
+                                            boolean showDifference) {
 
         PiePlot plot = new PiePlot(dataset);
         plot.setLabelGenerator(new StandardPieSectionLabelGenerator(locale));
@@ -411,7 +351,7 @@ public abstract class ChartFactory {
             plot.setDataset(series);
         }
 
-        JFreeChart chart =  new JFreeChart(title, plot);
+        JFreeChart chart = new JFreeChart(title, plot);
 
         if (subTitle) {
             TextTitle subtitle = new TextTitle("Bright "
@@ -462,9 +402,9 @@ public abstract class ChartFactory {
      * @return A pie chart.
      */
     public static JFreeChart createPieChart(String title,
-            PieDataset dataset, PieDataset previousDataset,
-            int percentDiffForMaxScale, boolean greenForIncrease,
-            boolean subTitle, boolean showDifference) {
+                                            PieDataset dataset, PieDataset previousDataset,
+                                            int percentDiffForMaxScale, boolean greenForIncrease,
+                                            boolean subTitle, boolean showDifference) {
 
         PiePlot plot = new PiePlot(dataset);
         plot.setLabelGenerator(new StandardPieSectionLabelGenerator());
@@ -518,7 +458,7 @@ public abstract class ChartFactory {
             plot.setDataset(series);
         }
 
-        JFreeChart chart =  new JFreeChart(title, plot);
+        JFreeChart chart = new JFreeChart(title, plot);
 
         if (subTitle) {
             TextTitle subtitle;
@@ -548,7 +488,7 @@ public abstract class ChartFactory {
      * @since 1.0.7
      */
     public static JFreeChart createRingChart(String title, PieDataset dataset,
-            Locale locale) {
+                                             Locale locale) {
 
         RingPlot plot = new RingPlot(dataset);
         plot.setLabelGenerator(new StandardPieSectionLabelGenerator(locale));
@@ -595,7 +535,7 @@ public abstract class ChartFactory {
      * @return A chart.
      */
     public static JFreeChart createMultiplePieChart(String title,
-            CategoryDataset dataset, TableOrder order) {
+                                                    CategoryDataset dataset, TableOrder order) {
 
         if (order == null) {
             throw new IllegalArgumentException("Null 'order' argument.");
@@ -630,7 +570,7 @@ public abstract class ChartFactory {
      * @since 1.0.7
      */
     public static JFreeChart createPieChart3D(String title, PieDataset dataset,
-            Locale locale) {
+                                              Locale locale) {
 
         PiePlot3D plot = new PiePlot3D(dataset);
         plot.setInsets(new RectangleInsets(0.0, 5.0, 5.0, 5.0));
@@ -652,7 +592,7 @@ public abstract class ChartFactory {
      * @return A pie chart.
      */
     public static JFreeChart createPieChart3D(String title,
-            PieDataset dataset) {
+                                              PieDataset dataset) {
 
         PiePlot3D plot = new PiePlot3D(dataset);
         plot.setInsets(new RectangleInsets(0.0, 5.0, 5.0, 5.0));
@@ -676,7 +616,7 @@ public abstract class ChartFactory {
      * @return A chart.
      */
     public static JFreeChart createMultiplePieChart3D(String title,
-            CategoryDataset dataset, TableOrder order) {
+                                                      CategoryDataset dataset, TableOrder order) {
 
         if (order == null) {
             throw new IllegalArgumentException("Null 'order' argument.");
@@ -698,7 +638,7 @@ public abstract class ChartFactory {
         PieToolTipGenerator tooltipGenerator
                 = new StandardPieToolTipGenerator();
         PiePlot pp = (PiePlot) plot.getPieChart().getPlot();
-            pp.setToolTipGenerator(tooltipGenerator);
+        pp.setToolTipGenerator(tooltipGenerator);
 
         JFreeChart chart = new JFreeChart(title, plot);
         currentTheme.apply(chart);
@@ -723,8 +663,8 @@ public abstract class ChartFactory {
      * @return A bar chart.
      */
     public static JFreeChart createBarChart(String title,
-            String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset) {
+                                            String categoryAxisLabel, String valueAxisLabel,
+                                            CategoryDataset dataset) {
 
         CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
         ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
@@ -737,7 +677,7 @@ public abstract class ChartFactory {
                 ItemLabelAnchor.OUTSIDE6, TextAnchor.TOP_CENTER);
         renderer.setDefaultNegativeItemLabelPosition(position2);
         renderer.setDefaultToolTipGenerator(
-                    new StandardCategoryToolTipGenerator());
+                new StandardCategoryToolTipGenerator());
 
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
                 renderer);
@@ -764,8 +704,8 @@ public abstract class ChartFactory {
      * @return A stacked bar chart.
      */
     public static JFreeChart createStackedBarChart(String title,
-            String domainAxisLabel, String rangeAxisLabel,
-            CategoryDataset dataset) {
+                                                   String domainAxisLabel, String rangeAxisLabel,
+                                                   CategoryDataset dataset) {
 
         CategoryAxis categoryAxis = new CategoryAxis(domainAxisLabel);
         ValueAxis valueAxis = new NumberAxis(rangeAxisLabel);
@@ -798,15 +738,15 @@ public abstract class ChartFactory {
      * @return A bar chart with a 3D effect.
      */
     public static JFreeChart createBarChart3D(String title,
-            String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset) {
+                                              String categoryAxisLabel, String valueAxisLabel,
+                                              CategoryDataset dataset) {
 
         CategoryAxis categoryAxis = new CategoryAxis3D(categoryAxisLabel);
         ValueAxis valueAxis = new NumberAxis3D(valueAxisLabel);
 
         BarRenderer3D renderer = new BarRenderer3D();
         renderer.setDefaultToolTipGenerator(
-                    new StandardCategoryToolTipGenerator());
+                new StandardCategoryToolTipGenerator());
 
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
                 renderer);
@@ -843,8 +783,8 @@ public abstract class ChartFactory {
      * @return A stacked bar chart with a 3D effect.
      */
     public static JFreeChart createStackedBarChart3D(String title,
-            String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset) {
+                                                     String categoryAxisLabel, String valueAxisLabel,
+                                                     CategoryDataset dataset) {
 
         CategoryAxis categoryAxis = new CategoryAxis3D(categoryAxisLabel);
         ValueAxis valueAxis = new NumberAxis3D(valueAxisLabel);
@@ -860,8 +800,8 @@ public abstract class ChartFactory {
         // FIXME create a new method for the horizontal version
 //        plot.setOrientation(orientation);
 //        if (orientation == PlotOrientation.HORIZONTAL) {
-            // change rendering order to ensure that bar overlapping is the
-            // right way around
+        // change rendering order to ensure that bar overlapping is the
+        // right way around
 //            plot.setColumnRenderingOrder(SortOrder.DESCENDING);
 //        }
 
@@ -888,8 +828,8 @@ public abstract class ChartFactory {
      * @return An area chart.
      */
     public static JFreeChart createAreaChart(String title,
-            String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset) {
+                                             String categoryAxisLabel, String valueAxisLabel,
+                                             CategoryDataset dataset) {
 
         CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
         categoryAxis.setCategoryMargin(0.0);
@@ -898,7 +838,7 @@ public abstract class ChartFactory {
 
         AreaRenderer renderer = new AreaRenderer();
         renderer.setDefaultToolTipGenerator(
-                    new StandardCategoryToolTipGenerator());
+                new StandardCategoryToolTipGenerator());
 
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
                 renderer);
@@ -925,8 +865,8 @@ public abstract class ChartFactory {
      * @return A stacked area chart.
      */
     public static JFreeChart createStackedAreaChart(String title,
-            String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset) {
+                                                    String categoryAxisLabel, String valueAxisLabel,
+                                                    CategoryDataset dataset) {
 
         CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
         categoryAxis.setCategoryMargin(0.0);
@@ -934,7 +874,7 @@ public abstract class ChartFactory {
 
         StackedAreaRenderer renderer = new StackedAreaRenderer();
         renderer.setDefaultToolTipGenerator(
-                    new StandardCategoryToolTipGenerator());
+                new StandardCategoryToolTipGenerator());
 
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
                 renderer);
@@ -960,8 +900,8 @@ public abstract class ChartFactory {
      * @return A line chart.
      */
     public static JFreeChart createLineChart(String title,
-            String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset) {
+                                             String categoryAxisLabel, String valueAxisLabel,
+                                             CategoryDataset dataset) {
 
         CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
         ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
@@ -993,8 +933,8 @@ public abstract class ChartFactory {
      * @return A line chart.
      */
     public static JFreeChart createLineChart3D(String title,
-            String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset) {
+                                               String categoryAxisLabel, String valueAxisLabel,
+                                               CategoryDataset dataset) {
 
         CategoryAxis categoryAxis = new CategoryAxis3D(categoryAxisLabel);
         ValueAxis valueAxis = new NumberAxis3D(valueAxisLabel);
@@ -1027,8 +967,8 @@ public abstract class ChartFactory {
      * @return A Gantt chart.
      */
     public static JFreeChart createGanttChart(String title,
-            String categoryAxisLabel, String dateAxisLabel,
-            IntervalCategoryDataset dataset) {
+                                              String categoryAxisLabel, String dateAxisLabel,
+                                              IntervalCategoryDataset dataset) {
 
         CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
         DateAxis dateAxis = new DateAxis(dateAxisLabel);
@@ -1036,7 +976,7 @@ public abstract class ChartFactory {
         CategoryItemRenderer renderer = new GanttRenderer();
         renderer.setDefaultToolTipGenerator(
                 new IntervalCategoryToolTipGenerator(
-                "{3} - {4}", DateFormat.getDateInstance()));
+                        "{3} - {4}", DateFormat.getDateInstance()));
 
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, dateAxis,
                 renderer);
@@ -1063,8 +1003,8 @@ public abstract class ChartFactory {
      * @return A waterfall chart.
      */
     public static JFreeChart createWaterfallChart(String title,
-            String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset) {
+                                                  String categoryAxisLabel, String valueAxisLabel,
+                                                  CategoryDataset dataset) {
 
         CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
         categoryAxis.setCategoryMargin(0.0);
@@ -1143,7 +1083,7 @@ public abstract class ChartFactory {
      * @return A scatter plot.
      */
     public static JFreeChart createScatterPlot(String title, String xAxisLabel,
-            String yAxisLabel, XYDataset dataset) {
+                                               String yAxisLabel, XYDataset dataset) {
 
         NumberAxis xAxis = new NumberAxis(xAxisLabel);
         xAxis.setAutoRangeIncludesZero(false);
@@ -1179,13 +1119,12 @@ public abstract class ChartFactory {
      * @return An XY bar chart.
      */
     public static JFreeChart createXYBarChart(String title, String xAxisLabel,
-            boolean dateAxis, String yAxisLabel, IntervalXYDataset dataset) {
+                                              boolean dateAxis, String yAxisLabel, IntervalXYDataset dataset) {
 
         ValueAxis domainAxis;
         if (dateAxis) {
             domainAxis = new DateAxis(xAxisLabel);
-        }
-        else {
+        } else {
             NumberAxis axis = new NumberAxis(xAxisLabel);
             axis.setAutoRangeIncludesZero(false);
             domainAxis = axis;
@@ -1196,8 +1135,7 @@ public abstract class ChartFactory {
         XYToolTipGenerator tt;
         if (dateAxis) {
             tt = StandardXYToolTipGenerator.getTimeSeriesInstance();
-        }
-        else {
+        } else {
             tt = new StandardXYToolTipGenerator();
         }
         renderer.setDefaultToolTipGenerator(tt);
@@ -1225,8 +1163,8 @@ public abstract class ChartFactory {
      *
      * @return An XY area chart.
      */
-    public static JFreeChart createXYAreaChart(String title,String xAxisLabel,
-            String yAxisLabel, XYDataset dataset) {
+    public static JFreeChart createXYAreaChart(String title, String xAxisLabel,
+                                               String yAxisLabel, XYDataset dataset) {
 
         NumberAxis xAxis = new NumberAxis(xAxisLabel);
         xAxis.setAutoRangeIncludesZero(false);
@@ -1257,7 +1195,7 @@ public abstract class ChartFactory {
      * @return A stacked XY area chart.
      */
     public static JFreeChart createStackedXYAreaChart(String title,
-            String xAxisLabel, String yAxisLabel, TableXYDataset dataset) {
+                                                      String xAxisLabel, String yAxisLabel, TableXYDataset dataset) {
 
         NumberAxis xAxis = new NumberAxis(xAxisLabel);
         xAxis.setAutoRangeIncludesZero(false);
@@ -1290,7 +1228,7 @@ public abstract class ChartFactory {
      * @return The chart.
      */
     public static JFreeChart createXYLineChart(String title,
-            String xAxisLabel, String yAxisLabel, XYDataset dataset) {
+                                               String xAxisLabel, String yAxisLabel, XYDataset dataset) {
 
         NumberAxis xAxis = new NumberAxis(xAxisLabel);
         xAxis.setAutoRangeIncludesZero(false);
@@ -1316,7 +1254,7 @@ public abstract class ChartFactory {
      * @return A chart.
      */
     public static JFreeChart createXYStepChart(String title, String xAxisLabel,
-            String yAxisLabel, XYDataset dataset) {
+                                               String yAxisLabel, XYDataset dataset) {
 
         DateAxis xAxis = new DateAxis(xAxisLabel);
         NumberAxis yAxis = new NumberAxis(yAxisLabel);
@@ -1346,7 +1284,7 @@ public abstract class ChartFactory {
      * @return A chart.
      */
     public static JFreeChart createXYStepAreaChart(String title,
-            String xAxisLabel, String yAxisLabel, XYDataset dataset) {
+                                                   String xAxisLabel, String yAxisLabel, XYDataset dataset) {
 
         NumberAxis xAxis = new NumberAxis(xAxisLabel);
         xAxis.setAutoRangeIncludesZero(false);
@@ -1423,7 +1361,7 @@ public abstract class ChartFactory {
      * @return A candlestick chart.
      */
     public static JFreeChart createCandlestickChart(String title,
-            String timeAxisLabel, String valueAxisLabel, OHLCDataset dataset) {
+                                                    String timeAxisLabel, String valueAxisLabel, OHLCDataset dataset) {
 
         ValueAxis timeAxis = new DateAxis(timeAxisLabel);
         NumberAxis valueAxis = new NumberAxis(valueAxisLabel);
@@ -1448,7 +1386,7 @@ public abstract class ChartFactory {
      * @return A high-low-open-close chart.
      */
     public static JFreeChart createHighLowChart(String title,
-            String timeAxisLabel, String valueAxisLabel, OHLCDataset dataset ) {
+                                                String timeAxisLabel, String valueAxisLabel, OHLCDataset dataset) {
 
         ValueAxis timeAxis = new DateAxis(timeAxisLabel);
         NumberAxis valueAxis = new NumberAxis(valueAxisLabel);
@@ -1480,8 +1418,8 @@ public abstract class ChartFactory {
      * @return A high-low-open-close chart.
      */
     public static JFreeChart createHighLowChart(String title,
-           String timeAxisLabel, String valueAxisLabel, OHLCDataset dataset,
-           Timeline timeline, boolean legend) {
+                                                String timeAxisLabel, String valueAxisLabel, OHLCDataset dataset,
+                                                Timeline timeline, boolean legend) {
 
         DateAxis timeAxis = new DateAxis(timeAxisLabel);
         timeAxis.setTimeline(timeline);
@@ -1509,7 +1447,7 @@ public abstract class ChartFactory {
      * @return A bubble chart.
      */
     public static JFreeChart createBubbleChart(String title, String xAxisLabel,
-            String yAxisLabel, XYZDataset dataset) {
+                                               String yAxisLabel, XYZDataset dataset) {
 
         NumberAxis xAxis = new NumberAxis(xAxisLabel);
         xAxis.setAutoRangeIncludesZero(false);
@@ -1542,7 +1480,7 @@ public abstract class ChartFactory {
      * @return The chart.
      */
     public static JFreeChart createHistogram(String title,
-            String xAxisLabel, String yAxisLabel, IntervalXYDataset dataset) {
+                                             String xAxisLabel, String yAxisLabel, IntervalXYDataset dataset) {
 
         NumberAxis xAxis = new NumberAxis(xAxisLabel);
         xAxis.setAutoRangeIncludesZero(false);
@@ -1576,8 +1514,8 @@ public abstract class ChartFactory {
      * @since 1.0.4
      */
     public static JFreeChart createBoxAndWhiskerChart(String title,
-            String categoryAxisLabel, String valueAxisLabel,
-            BoxAndWhiskerCategoryDataset dataset) {
+                                                      String categoryAxisLabel, String valueAxisLabel,
+                                                      BoxAndWhiskerCategoryDataset dataset) {
 
         CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
         NumberAxis valueAxis = new NumberAxis(valueAxisLabel);
@@ -1606,8 +1544,8 @@ public abstract class ChartFactory {
      * @return A box and whisker chart.
      */
     public static JFreeChart createBoxAndWhiskerChart(String title,
-            String timeAxisLabel, String valueAxisLabel,
-            BoxAndWhiskerXYDataset dataset) {
+                                                      String timeAxisLabel, String valueAxisLabel,
+                                                      BoxAndWhiskerXYDataset dataset) {
 
         ValueAxis timeAxis = new DateAxis(timeAxisLabel);
         NumberAxis valueAxis = new NumberAxis(valueAxisLabel);
@@ -1631,7 +1569,7 @@ public abstract class ChartFactory {
      * @return A wind plot.
      */
     public static JFreeChart createWindPlot(String title,
-            String xAxisLabel, String yAxisLabel, WindDataset dataset) {
+                                            String xAxisLabel, String yAxisLabel, WindDataset dataset) {
 
         ValueAxis xAxis = new DateAxis(xAxisLabel);
         ValueAxis yAxis = new NumberAxis(yAxisLabel);
@@ -1655,7 +1593,7 @@ public abstract class ChartFactory {
      * @return A wafer map chart.
      */
     public static JFreeChart createWaferMapChart(String title,
-            WaferMapDataset dataset) {
+                                                 WaferMapDataset dataset) {
 
         WaferMapPlot plot = new WaferMapPlot(dataset);
         WaferMapRenderer renderer = new WaferMapRenderer();

@@ -48,14 +48,7 @@ import org.jfree.chart.ui.Align;
 import org.jfree.chart.ui.RectangleInsets;
 import org.junit.Test;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Paint;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.Stroke;
+import java.awt.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -63,10 +56,7 @@ import static org.junit.Assert.assertFalse;
 /**
  * Some tests for the {@link Plot} class.
  */
-public class PlotTest  {
-
-
-
+public class PlotTest {
 
 
     /**
@@ -167,16 +157,16 @@ public class PlotTest  {
 
         // drawingSupplier
         plot1.setDrawingSupplier(new DefaultDrawingSupplier(
-                new Paint[] {Color.BLUE}, new Paint[] {Color.RED},
-                new Stroke[] {new BasicStroke(1.1f)},
-                new Stroke[] {new BasicStroke(9.9f)},
-                new Shape[] {new Rectangle(1, 2, 3, 4)}));
+                new Paint[]{Color.BLUE}, new Paint[]{Color.RED},
+                new Stroke[]{new BasicStroke(1.1f)},
+                new Stroke[]{new BasicStroke(9.9f)},
+                new Shape[]{new Rectangle(1, 2, 3, 4)}));
         assertFalse(plot1.equals(plot2));
         plot2.setDrawingSupplier(new DefaultDrawingSupplier(
-                new Paint[] {Color.BLUE}, new Paint[] {Color.RED},
-                new Stroke[] {new BasicStroke(1.1f)},
-                new Stroke[] {new BasicStroke(9.9f)},
-                new Shape[] {new Rectangle(1, 2, 3, 4)}));
+                new Paint[]{Color.BLUE}, new Paint[]{Color.RED},
+                new Stroke[]{new BasicStroke(1.1f)},
+                new Stroke[]{new BasicStroke(9.9f)},
+                new Shape[]{new Rectangle(1, 2, 3, 4)}));
         assertEquals(plot1, plot2);
     }
 

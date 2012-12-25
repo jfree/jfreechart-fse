@@ -47,40 +47,23 @@ package org.jfree.chart.axis;
 import org.jfree.chart.event.AxisChangeEvent;
 import org.jfree.chart.event.AxisChangeListener;
 import org.jfree.data.Range;
-import org.jfree.data.time.DateRange;
-import org.jfree.data.time.Day;
-import org.jfree.data.time.Minute;
-import org.jfree.data.time.Month;
-import org.jfree.data.time.Quarter;
-import org.jfree.data.time.Second;
-import org.jfree.data.time.Year;
+import org.jfree.data.time.*;
 import org.junit.Test;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Stroke;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link PeriodAxis} class.
  */
-public class PeriodAxisTest  implements AxisChangeListener {
+public class PeriodAxisTest implements AxisChangeListener {
 
     /** The last event received. */
     private AxisChangeEvent lastEvent;
@@ -91,12 +74,9 @@ public class PeriodAxisTest  implements AxisChangeListener {
      * @param event  the event.
      */
     @Override
-	public void axisChanged(AxisChangeEvent event) {
+    public void axisChanged(AxisChangeEvent event) {
         this.lastEvent = event;
     }
-
-
-
 
 
     /**
@@ -188,7 +168,7 @@ public class PeriodAxisTest  implements AxisChangeListener {
         assertEquals(a1, a2);
     }
 
-        /**
+    /**
      * Two objects that are equal are required to return the same hashCode.
      */
     @Test
@@ -268,7 +248,7 @@ public class PeriodAxisTest  implements AxisChangeListener {
         PeriodAxis a2 = (PeriodAxis) in.readObject();
         in.close();
 
-       assertEquals(a1, a2);
+        assertEquals(a1, a2);
     }
 
     /**
@@ -313,8 +293,7 @@ public class PeriodAxisTest  implements AxisChangeListener {
             assertEquals(d0.getFirstMillisecond(), r.getLowerBound(), EPSILON);
             assertEquals(d1.getLastMillisecond() + 1.0, r.getUpperBound(),
                     EPSILON);
-        }
-        finally {
+        } finally {
             TimeZone.setDefault(savedTimeZone);
             Locale.setDefault(savedLocale);
         }

@@ -43,10 +43,10 @@
 
 package org.jfree.data.general;
 
+import org.jfree.data.DefaultKeyedValues2D;
+
 import java.util.Set;
 import java.util.TreeSet;
-
-import org.jfree.data.DefaultKeyedValues2D;
 
 /**
  * A dataset that can be used with the {@link org.jfree.chart.plot.WaferMapPlot}
@@ -105,8 +105,7 @@ public class WaferMapDataset extends AbstractDataset {
         this.maxChipY = maxChipY;
         if (chipSpace == null) {
             this.chipSpace = DEFAULT_CHIP_SPACE;
-        }
-        else {
+        } else {
             this.chipSpace = chipSpace.doubleValue();
         }
 

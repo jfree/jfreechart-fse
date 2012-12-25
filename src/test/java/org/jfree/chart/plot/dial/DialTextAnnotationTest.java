@@ -42,32 +42,16 @@ package org.jfree.chart.plot.dial;
 
 import org.junit.Test;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-
+import static org.junit.Assert.*;
 
 
 /**
  * Tests for the {@link DialTextAnnotation} class.
  */
-public class DialTextAnnotationTest  {
-
-
-
+public class DialTextAnnotationTest {
 
 
     /**
@@ -159,15 +143,15 @@ public class DialTextAnnotationTest  {
         // test a default instance
         DialTextAnnotation a1 = new DialTextAnnotation("A1");
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(a1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(a1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         DialTextAnnotation a2 = (DialTextAnnotation) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(a1, a2);
 
@@ -179,13 +163,13 @@ public class DialTextAnnotationTest  {
 
         buffer = new ByteArrayOutputStream();
         out = new ObjectOutputStream(buffer);
-            out.writeObject(a1);
-            out.close();
+        out.writeObject(a1);
+        out.close();
 
         in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            a2 = (DialTextAnnotation) in.readObject();
-            in.close();
+                new ByteArrayInputStream(buffer.toByteArray()));
+        a2 = (DialTextAnnotation) in.readObject();
+        in.close();
         assertEquals(a1, a2);
 
 

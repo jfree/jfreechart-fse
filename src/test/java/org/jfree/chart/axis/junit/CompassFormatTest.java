@@ -3,7 +3,6 @@ package org.jfree.chart.axis.junit;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
 import org.jfree.chart.axis.CompassFormat;
 
 /**
@@ -31,16 +30,16 @@ public class CompassFormatTest extends TestCase {
 
     public void testDefaultConstructor() {
         final CompassFormat fmt = new CompassFormat();
-        assert("N".equals(fmt.getDirectionCode(0)));
-        assert("N".equals(fmt.getDirectionCode(360)));
+        assert ("N".equals(fmt.getDirectionCode(0)));
+        assert ("N".equals(fmt.getDirectionCode(360)));
     }
 
     public void testCustomFormat() {
         final CompassFormat fmt = new CompassFormat();
         final CompassFormat fmtCustom = new CompassFormat("N", "O", "S", "W");
-        assert("E".equals(fmt.getDirectionCode(90)));
-        assert("O".equals(fmtCustom.getDirectionCode(90)));
-        assert("NNO".equals(fmtCustom.getDirectionCode(22.5)));
+        assert ("E".equals(fmt.getDirectionCode(90)));
+        assert ("O".equals(fmtCustom.getDirectionCode(90)));
+        assert ("NNO".equals(fmtCustom.getDirectionCode(22.5)));
     }
 
 }

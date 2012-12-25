@@ -132,34 +132,29 @@
 
 package org.jfree.chart.axis;
 
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
+import org.jfree.chart.event.AxisChangeEvent;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.plot.ValueAxisPlot;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.data.Range;
+import org.jfree.data.time.DateRange;
+import org.jfree.data.time.Month;
+import org.jfree.data.time.RegularTimePeriod;
+import org.jfree.data.time.Year;
+
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
-
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.event.AxisChangeEvent;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.plot.ValueAxisPlot;
-import org.jfree.data.Range;
-import org.jfree.data.time.DateRange;
-import org.jfree.data.time.Month;
-import org.jfree.data.time.RegularTimePeriod;
-import org.jfree.data.time.Year;
 
 /**
  * The base class for axes that display dates.  You will find it easier to
@@ -219,7 +214,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          * @return The timeline value.
          */
         @Override
-		public long toTimelineValue(long millisecond) {
+        public long toTimelineValue(long millisecond) {
             return millisecond;
         }
 
@@ -231,7 +226,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          * @return The timeline value.
          */
         @Override
-		public long toTimelineValue(Date date) {
+        public long toTimelineValue(Date date) {
             return date.getTime();
         }
 
@@ -244,7 +239,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          * @return The millisecond.
          */
         @Override
-		public long toMillisecond(long value) {
+        public long toMillisecond(long value) {
             return value;
         }
 
@@ -257,7 +252,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          * @return <code>true</code>.
          */
         @Override
-		public boolean containsDomainValue(long millisecond) {
+        public boolean containsDomainValue(long millisecond) {
             return true;
         }
 
@@ -270,7 +265,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          * @return <code>true</code>.
          */
         @Override
-		public boolean containsDomainValue(Date date) {
+        public boolean containsDomainValue(Date date) {
             return true;
         }
 
@@ -284,7 +279,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          * @return <code>true</code>.
          */
         @Override
-		public boolean containsDomainRange(long from, long to) {
+        public boolean containsDomainRange(long from, long to) {
             return true;
         }
 
@@ -298,7 +293,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          * @return <code>true</code>.
          */
         @Override
-		public boolean containsDomainRange(Date from, Date to) {
+        public boolean containsDomainRange(Date from, Date to) {
             return true;
         }
 
@@ -594,8 +589,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
         if (range instanceof DateRange) {
             DateRange r = (DateRange) range;
             result = r.getLowerDate();
-        }
-        else {
+        } else {
             result = new Date((long) range.getLowerBound());
         }
         return result;
@@ -644,8 +638,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
         if (range instanceof DateRange) {
             DateRange r = (DateRange) range;
             result = r.getUpperDate();
-        }
-        else {
+        } else {
             result = new Date((long) range.getUpperBound());
         }
         return result;
@@ -708,7 +701,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * auto-scaling, then sets the maximum and minimum values.
      */
     @Override
-	public void configure() {
+    public void configure() {
         if (isAutoRange()) {
             autoAdjustRange();
         }
@@ -738,7 +731,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @return The coordinate corresponding to the supplied data value.
      */
     @Override
-	public double valueToJava2D(double value, Rectangle2D area,
+    public double valueToJava2D(double value, Rectangle2D area,
                                 RectangleEdge edge) {
 
         value = this.timeline.toTimelineValue((long) value);
@@ -752,23 +745,20 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             double maxX = area.getMaxX();
             if (isInverted()) {
                 result = maxX + ((value - axisMin) / (axisMax - axisMin))
-                         * (minX - maxX);
-            }
-            else {
+                        * (minX - maxX);
+            } else {
                 result = minX + ((value - axisMin) / (axisMax - axisMin))
-                         * (maxX - minX);
+                        * (maxX - minX);
             }
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             double minY = area.getMinY();
             double maxY = area.getMaxY();
             if (isInverted()) {
                 result = minY + (((value - axisMin) / (axisMax - axisMin))
-                         * (maxY - minY));
-            }
-            else {
+                        * (maxY - minY));
+            } else {
                 result = maxY - (((value - axisMin) / (axisMax - axisMin))
-                         * (maxY - minY));
+                        * (maxY - minY));
             }
         }
         return result;
@@ -805,7 +795,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @return A data value.
      */
     @Override
-	public double java2DToValue(double java2DValue, Rectangle2D area,
+    public double java2DToValue(double java2DValue, Rectangle2D area,
                                 RectangleEdge edge) {
 
         DateRange range = (DateRange) getRange();
@@ -817,20 +807,18 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
         if (RectangleEdge.isTopOrBottom(edge)) {
             min = area.getX();
             max = area.getMaxX();
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             min = area.getMaxY();
             max = area.getY();
         }
 
         double result;
         if (isInverted()) {
-             result = axisMax - ((java2DValue - min) / (max - min)
-                      * (axisMax - axisMin));
-        }
-        else {
-             result = axisMin + ((java2DValue - min) / (max - min)
-                      * (axisMax - axisMin));
+            result = axisMax - ((java2DValue - min) / (max - min)
+                    * (axisMax - axisMin));
+        } else {
+            result = axisMin + ((java2DValue - min) / (max - min)
+                    * (axisMax - axisMin));
         }
 
         return this.timeline.toMillisecond((long) result);
@@ -897,8 +885,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                 mm = calendar.getTime();
             }
             return mm;
-        }
-        else if (DateTickUnitType.SECOND.equals(unit.getUnitType())) {
+        } else if (DateTickUnitType.SECOND.equals(unit.getUnitType())) {
             years = calendar.get(Calendar.YEAR);
             months = calendar.get(Calendar.MONTH);
             days = calendar.get(Calendar.DATE);
@@ -906,11 +893,9 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             minutes = calendar.get(Calendar.MINUTE);
             if (this.tickMarkPosition == DateTickMarkPosition.START) {
                 milliseconds = 0;
-            }
-            else if (this.tickMarkPosition == DateTickMarkPosition.MIDDLE) {
+            } else if (this.tickMarkPosition == DateTickMarkPosition.MIDDLE) {
                 milliseconds = 500;
-            }
-            else {
+            } else {
                 milliseconds = 999;
             }
             calendar.set(Calendar.MILLISECOND, milliseconds);
@@ -921,19 +906,16 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                 dd = calendar.getTime();
             }
             return dd;
-        }
-        else if (DateTickUnitType.MINUTE.equals(unit.getUnitType())) {
+        } else if (DateTickUnitType.MINUTE.equals(unit.getUnitType())) {
             years = calendar.get(Calendar.YEAR);
             months = calendar.get(Calendar.MONTH);
             days = calendar.get(Calendar.DATE);
             hours = calendar.get(Calendar.HOUR_OF_DAY);
             if (this.tickMarkPosition == DateTickMarkPosition.START) {
                 seconds = 0;
-            }
-            else if (this.tickMarkPosition == DateTickMarkPosition.MIDDLE) {
+            } else if (this.tickMarkPosition == DateTickMarkPosition.MIDDLE) {
                 seconds = 30;
-            }
-            else {
+            } else {
                 seconds = 59;
             }
             calendar.clear(Calendar.MILLISECOND);
@@ -944,20 +926,17 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                 d0 = calendar.getTime();
             }
             return d0;
-        }
-        else if (DateTickUnitType.HOUR.equals(unit.getUnitType())) {
+        } else if (DateTickUnitType.HOUR.equals(unit.getUnitType())) {
             years = calendar.get(Calendar.YEAR);
             months = calendar.get(Calendar.MONTH);
             days = calendar.get(Calendar.DATE);
             if (this.tickMarkPosition == DateTickMarkPosition.START) {
                 minutes = 0;
                 seconds = 0;
-            }
-            else if (this.tickMarkPosition == DateTickMarkPosition.MIDDLE) {
+            } else if (this.tickMarkPosition == DateTickMarkPosition.MIDDLE) {
                 minutes = 30;
                 seconds = 0;
-            }
-            else {
+            } else {
                 minutes = 59;
                 seconds = 59;
             }
@@ -969,21 +948,18 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                 d1 = calendar.getTime();
             }
             return d1;
-        }
-        else if (DateTickUnitType.DAY.equals(unit.getUnitType())) {
+        } else if (DateTickUnitType.DAY.equals(unit.getUnitType())) {
             years = calendar.get(Calendar.YEAR);
             months = calendar.get(Calendar.MONTH);
             if (this.tickMarkPosition == DateTickMarkPosition.START) {
                 hours = 0;
                 minutes = 0;
                 seconds = 0;
-            }
-            else if (this.tickMarkPosition == DateTickMarkPosition.MIDDLE) {
+            } else if (this.tickMarkPosition == DateTickMarkPosition.MIDDLE) {
                 hours = 12;
                 minutes = 0;
                 seconds = 0;
-            }
-            else {
+            } else {
                 hours = 23;
                 minutes = 59;
                 seconds = 59;
@@ -998,8 +974,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                 d2 = calendar.getTime();
             }
             return d2;
-        }
-        else if (DateTickUnitType.MONTH.equals(unit.getUnitType())) {
+        } else if (DateTickUnitType.MONTH.equals(unit.getUnitType())) {
             years = calendar.get(Calendar.YEAR);
             calendar.clear(Calendar.MILLISECOND);
             calendar.set(years, value, 1, 0, 0, 0);
@@ -1017,17 +992,14 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                         month, this.tickMarkPosition);
             }
             return standardDate;
-        }
-        else if (DateTickUnitType.YEAR.equals(unit.getUnitType())) {
+        } else if (DateTickUnitType.YEAR.equals(unit.getUnitType())) {
             if (this.tickMarkPosition == DateTickMarkPosition.START) {
                 months = 0;
                 days = 1;
-            }
-            else if (this.tickMarkPosition == DateTickMarkPosition.MIDDLE) {
+            } else if (this.tickMarkPosition == DateTickMarkPosition.MIDDLE) {
                 months = 6;
                 days = 1;
-            }
-            else {
+            } else {
                 months = 11;
                 days = 31;
             }
@@ -1039,8 +1011,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                 d3 = calendar.getTime();
             }
             return d3;
-        }
-        else {
+        } else {
             return null;
         }
 
@@ -1064,11 +1035,9 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
         Date result = null;
         if (position == DateTickMarkPosition.START) {
             result = new Date(period.getFirstMillisecond());
-        }
-        else if (position == DateTickMarkPosition.MIDDLE) {
+        } else if (position == DateTickMarkPosition.MIDDLE) {
             result = new Date(period.getMiddleMillisecond());
-        }
-        else if (position == DateTickMarkPosition.END) {
+        } else if (position == DateTickMarkPosition.END) {
             result = new Date(period.getLastMillisecond());
         }
         return result;
@@ -1121,7 +1090,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @since 1.0.11
      */
     public static TickUnitSource createStandardDateTickUnits(TimeZone zone,
-            Locale locale) {
+                                                             Locale locale) {
 
         if (zone == null) {
             throw new IllegalArgumentException("Null 'zone' argument.");
@@ -1249,7 +1218,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * Rescales the axis to ensure that all data is visible.
      */
     @Override
-	protected void autoAdjustRange() {
+    protected void autoAdjustRange() {
 
         Plot plot = getPlot();
 
@@ -1271,8 +1240,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             long fixedAutoRange = (long) getFixedAutoRange();
             if (fixedAutoRange > 0.0) {
                 lower = upper - fixedAutoRange;
-            }
-            else {
+            } else {
                 lower = this.timeline.toTimelineValue((long) r.getLowerBound());
                 double range = upper - lower;
                 long minRange = (long) getAutoRangeMinimumSize();
@@ -1308,8 +1276,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
 
         if (RectangleEdge.isTopOrBottom(edge)) {
             selectHorizontalAutoTickUnit(g2, dataArea, edge);
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             selectVerticalAutoTickUnit(g2, dataArea, edge);
         }
 
@@ -1325,7 +1292,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @param edge  the axis location.
      */
     protected void selectHorizontalAutoTickUnit(Graphics2D g2,
-            Rectangle2D dataArea, RectangleEdge edge) {
+                                                Rectangle2D dataArea, RectangleEdge edge) {
 
         long shift = 0;
         double zero = valueToJava2D(shift + 0.0, dataArea, edge);
@@ -1370,29 +1337,28 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
         // start with a unit that is at least 1/10th of the axis length
         double estimate1 = getRange().getLength() / 10.0;
         DateTickUnit candidate1
-            = (DateTickUnit) tickUnits.getCeilingTickUnit(estimate1);
+                = (DateTickUnit) tickUnits.getCeilingTickUnit(estimate1);
         double labelHeight1 = estimateMaximumTickLabelHeight(g2, candidate1);
         double y1 = valueToJava2D(candidate1.getSize(), dataArea, edge);
         double candidate1UnitHeight = Math.abs(y1 - zero);
 
         // now extrapolate based on label height and unit height...
         double estimate2
-            = (labelHeight1 / candidate1UnitHeight) * candidate1.getSize();
+                = (labelHeight1 / candidate1UnitHeight) * candidate1.getSize();
         DateTickUnit candidate2
-            = (DateTickUnit) tickUnits.getCeilingTickUnit(estimate2);
+                = (DateTickUnit) tickUnits.getCeilingTickUnit(estimate2);
         double labelHeight2 = estimateMaximumTickLabelHeight(g2, candidate2);
         double y2 = valueToJava2D(candidate2.getSize(), dataArea, edge);
         double unit2Height = Math.abs(y2 - zero);
 
-       // make final selection...
-       DateTickUnit finalUnit;
-       if (labelHeight2 < unit2Height) {
-           finalUnit = candidate2;
-       }
-       else {
-           finalUnit = (DateTickUnit) tickUnits.getLargerTickUnit(candidate2);
-       }
-       setTickUnit(finalUnit, false, false);
+        // make final selection...
+        DateTickUnit finalUnit;
+        if (labelHeight2 < unit2Height) {
+            finalUnit = candidate2;
+        } else {
+            finalUnit = (DateTickUnit) tickUnits.getLargerTickUnit(candidate2);
+        }
+        setTickUnit(finalUnit, false, false);
 
     }
 
@@ -1422,8 +1388,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             // all tick labels have the same width (equal to the height of
             // the font)...
             result += lm.getHeight();
-        }
-        else {
+        } else {
             // look at lower and upper bounds...
             DateRange range = (DateRange) getRange();
             Date lower = range.getLowerDate();
@@ -1434,8 +1399,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             if (formatter != null) {
                 lowerStr = formatter.format(lower);
                 upperStr = formatter.format(upper);
-            }
-            else {
+            } else {
                 lowerStr = unit.dateToString(lower);
                 upperStr = unit.dateToString(upper);
             }
@@ -1475,8 +1439,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             // all tick labels have the same width (equal to the height of
             // the font)...
             result += lm.getHeight();
-        }
-        else {
+        } else {
             // look at lower and upper bounds...
             DateRange range = (DateRange) getRange();
             Date lower = range.getLowerDate();
@@ -1487,8 +1450,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             if (formatter != null) {
                 lowerStr = formatter.format(lower);
                 upperStr = formatter.format(upper);
-            }
-            else {
+            } else {
                 lowerStr = unit.dateToString(lower);
                 upperStr = unit.dateToString(upper);
             }
@@ -1514,16 +1476,15 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @return A list of ticks.
      */
     @Override
-	public List<ValueTick> refreshTicks(Graphics2D g2,
-                             AxisState state,
-                             Rectangle2D dataArea,
-                             RectangleEdge edge) {
+    public List<ValueTick> refreshTicks(Graphics2D g2,
+                                        AxisState state,
+                                        Rectangle2D dataArea,
+                                        RectangleEdge edge) {
 
         List<ValueTick> result = null;
         if (RectangleEdge.isTopOrBottom(edge)) {
             result = refreshTicksHorizontal(g2, dataArea, edge);
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             result = refreshTicksVertical(g2, dataArea, edge);
         }
         return result;
@@ -1540,13 +1501,13 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @return The adjusted time.
      */
     private Date correctTickDateForPosition(Date time, DateTickUnit unit,
-            DateTickMarkPosition position) {
+                                            DateTickMarkPosition position) {
         Date result = time;
         if (unit.getUnitType().equals(DateTickUnitType.MONTH)) {
-            result = calculateDateForPosition(new Month(time, this.timeZone, 
+            result = calculateDateForPosition(new Month(time, this.timeZone,
                     this.locale), position);
         } else if (unit.getUnitType().equals(DateTickUnitType.YEAR)) {
-            result = calculateDateForPosition(new Year(time, this.timeZone, 
+            result = calculateDateForPosition(new Year(time, this.timeZone,
                     this.locale), position);
         }
         return result;
@@ -1562,7 +1523,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @return A list of ticks.
      */
     protected List<ValueTick> refreshTicksHorizontal(Graphics2D g2,
-                Rectangle2D dataArea, RectangleEdge edge) {
+                                                     Rectangle2D dataArea, RectangleEdge edge) {
 
         List<ValueTick> result = new java.util.ArrayList<ValueTick>();
 
@@ -1582,7 +1543,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             // could add a flag to make the following correction optional...
             if (!hasRolled) {
                 tickDate = correctTickDateForPosition(tickDate, unit,
-                     this.tickMarkPosition);
+                        this.tickMarkPosition);
             }
 
             long lowestTickTime = tickDate.getTime();
@@ -1609,8 +1570,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                 DateFormat formatter = getDateFormatOverride();
                 if (formatter != null) {
                     tickLabel = formatter.format(tickDate);
-                }
-                else {
+                } else {
                     tickLabel = this.tickUnit.dateToString(tickDate);
                 }
                 TextAnchor anchor;
@@ -1621,17 +1581,14 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                     rotationAnchor = TextAnchor.CENTER_RIGHT;
                     if (edge == RectangleEdge.TOP) {
                         angle = Math.PI / 2.0;
-                    }
-                    else {
+                    } else {
                         angle = -Math.PI / 2.0;
                     }
-                }
-                else {
+                } else {
                     if (edge == RectangleEdge.TOP) {
                         anchor = TextAnchor.BOTTOM_CENTER;
                         rotationAnchor = TextAnchor.BOTTOM_CENTER;
-                    }
-                    else {
+                    } else {
                         anchor = TextAnchor.TOP_CENTER;
                         rotationAnchor = TextAnchor.TOP_CENTER;
                     }
@@ -1645,7 +1602,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                 tickDate = unit.addToDate(tickDate, this.timeZone);
                 long nextTickTime = tickDate.getTime();
                 for (int minorTick = 1; minorTick < minorTickSpaces;
-                        minorTick++) {
+                     minorTick++) {
                     long minorTickTime = currentTickTime
                             + (nextTickTime - currentTickTime)
                             * minorTick / minorTickSpaces;
@@ -1658,8 +1615,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                     }
                 }
 
-            }
-            else {
+            } else {
                 tickDate = unit.rollDate(tickDate, this.timeZone);
                 hasRolled = true;
                 continue;
@@ -1680,7 +1636,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @return A list of ticks.
      */
     protected List<ValueTick> refreshTicksVertical(Graphics2D g2,
-            Rectangle2D dataArea, RectangleEdge edge) {
+                                                   Rectangle2D dataArea, RectangleEdge edge) {
 
         List<ValueTick> result = new java.util.ArrayList<ValueTick>();
 
@@ -1700,7 +1656,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             // could add a flag to make the following correction optional...
             if (!hasRolled) {
                 tickDate = correctTickDateForPosition(tickDate, unit,
-                    this.tickMarkPosition);
+                        this.tickMarkPosition);
             }
 
             long lowestTickTime = tickDate.getTime();
@@ -1726,8 +1682,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                 DateFormat formatter = getDateFormatOverride();
                 if (formatter != null) {
                     tickLabel = formatter.format(tickDate);
-                }
-                else {
+                } else {
                     tickLabel = this.tickUnit.dateToString(tickDate);
                 }
                 TextAnchor anchor;
@@ -1738,17 +1693,14 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                     rotationAnchor = TextAnchor.BOTTOM_CENTER;
                     if (edge == RectangleEdge.LEFT) {
                         angle = -Math.PI / 2.0;
-                    }
-                    else {
+                    } else {
                         angle = Math.PI / 2.0;
                     }
-                }
-                else {
+                } else {
                     if (edge == RectangleEdge.LEFT) {
                         anchor = TextAnchor.CENTER_RIGHT;
                         rotationAnchor = TextAnchor.CENTER_RIGHT;
-                    }
-                    else {
+                    } else {
                         anchor = TextAnchor.CENTER_LEFT;
                         rotationAnchor = TextAnchor.CENTER_LEFT;
                     }
@@ -1762,7 +1714,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                 tickDate = unit.addToDate(tickDate, this.timeZone);
                 long nextTickTime = tickDate.getTime();
                 for (int minorTick = 1; minorTick < minorTickSpaces;
-                        minorTick++) {
+                     minorTick++) {
                     long minorTickTime = currentTickTime
                             + (nextTickTime - currentTickTime)
                             * minorTick / minorTickSpaces;
@@ -1774,8 +1726,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                                 0.0));
                     }
                 }
-            }
-            else {
+            } else {
                 tickDate = unit.rollDate(tickDate, this.timeZone);
                 hasRolled = true;
             }
@@ -1800,9 +1751,9 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @return The axis state (never <code>null</code>).
      */
     @Override
-	public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
-            Rectangle2D dataArea, RectangleEdge edge,
-            PlotRenderingInfo plotState) {
+    public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
+                          Rectangle2D dataArea, RectangleEdge edge,
+                          PlotRenderingInfo plotState) {
 
         // if the axis is not visible, don't draw it...
         if (!isVisible()) {
@@ -1835,24 +1786,23 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
     @Override
     public void zoomRange(double lowerPercent, double upperPercent) {
         double start = this.timeline.toTimelineValue(
-            (long) getRange().getLowerBound()
+                (long) getRange().getLowerBound()
         );
         double length = (this.timeline.toTimelineValue(
                 (long) getRange().getUpperBound())
                 - this.timeline.toTimelineValue(
-                    (long) getRange().getLowerBound()));
+                (long) getRange().getLowerBound()));
         Range adjusted;
         if (isInverted()) {
             adjusted = new DateRange(this.timeline.toMillisecond((long) (start
                     + (length * (1 - upperPercent)))),
                     this.timeline.toMillisecond((long) (start + (length
-                    * (1 - lowerPercent)))));
-        }
-        else {
+                            * (1 - lowerPercent)))));
+        } else {
             adjusted = new DateRange(this.timeline.toMillisecond(
                     (long) (start + length * lowerPercent)),
                     this.timeline.toMillisecond((long) (start + length
-                    * upperPercent)));
+                            * upperPercent)));
         }
         setRange(adjusted);
     }
@@ -1899,8 +1849,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
     public int hashCode() {
         if (getLabel() != null) {
             return getLabel().hashCode();
-        }
-        else {
+        } else {
             return 0;
         }
     }
@@ -1919,7 +1868,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
         // 'dateTickUnit' is immutable : no need to clone
         if (this.dateFormatOverride != null) {
             clone.dateFormatOverride
-                = (DateFormat) this.dateFormatOverride.clone();
+                    = (DateFormat) this.dateFormatOverride.clone();
         }
         // 'tickMarkPosition' is immutable : no need to clone
         return clone;

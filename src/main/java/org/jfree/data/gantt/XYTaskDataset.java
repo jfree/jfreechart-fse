@@ -40,8 +40,6 @@
 
 package org.jfree.data.gantt;
 
-import java.util.Date;
-
 import org.jfree.chart.axis.SymbolAxis;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.data.general.DatasetChangeEvent;
@@ -49,6 +47,8 @@ import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.time.TimePeriod;
 import org.jfree.data.xy.AbstractXYDataset;
 import org.jfree.data.xy.IntervalXYDataset;
+
+import java.util.Date;
 
 /**
  * A dataset implementation that wraps a {@link TaskSeriesCollection} and
@@ -197,8 +197,7 @@ public class XYTaskDataset extends AbstractXYDataset
     public double getXValue(int series, int item) {
         if (!this.transposed) {
             return getSeriesValue(series);
-        }
-        else {
+        } else {
             return getItemValue(series, item);
         }
     }
@@ -217,8 +216,7 @@ public class XYTaskDataset extends AbstractXYDataset
     public double getStartXValue(int series, int item) {
         if (!this.transposed) {
             return getSeriesStartValue(series);
-        }
-        else {
+        } else {
             return getItemStartValue(series, item);
         }
     }
@@ -237,8 +235,7 @@ public class XYTaskDataset extends AbstractXYDataset
     public double getEndXValue(int series, int item) {
         if (!this.transposed) {
             return getSeriesEndValue(series);
-        }
-        else {
+        } else {
             return getItemEndValue(series, item);
         }
     }
@@ -298,8 +295,7 @@ public class XYTaskDataset extends AbstractXYDataset
     public double getYValue(int series, int item) {
         if (!this.transposed) {
             return getItemValue(series, item);
-        }
-        else {
+        } else {
             return getSeriesValue(series);
         }
     }
@@ -317,8 +313,7 @@ public class XYTaskDataset extends AbstractXYDataset
     public double getStartYValue(int series, int item) {
         if (!this.transposed) {
             return getItemStartValue(series, item);
-        }
-        else {
+        } else {
             return getSeriesStartValue(series);
         }
     }
@@ -336,8 +331,7 @@ public class XYTaskDataset extends AbstractXYDataset
     public double getEndYValue(int series, int item) {
         if (!this.transposed) {
             return getItemEndValue(series, item);
-        }
-        else {
+        } else {
             return getSeriesEndValue(series);
         }
     }

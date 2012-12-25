@@ -54,27 +54,15 @@ import org.jfree.data.Range;
 import org.jfree.data.statistics.DefaultStatisticalCategoryDataset;
 import org.junit.Test;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link StatisticalBarRenderer} class.
  */
-public class StatisticalBarRendererTest  {
+public class StatisticalBarRendererTest {
 
 
     /**
@@ -139,15 +127,15 @@ public class StatisticalBarRendererTest  {
 
         StatisticalBarRenderer r1 = new StatisticalBarRenderer();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(r1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(r1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
         StatisticalBarRenderer r2 = (StatisticalBarRenderer) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(r1, r2);
 
@@ -160,16 +148,17 @@ public class StatisticalBarRendererTest  {
     @Test
     public void testDrawWithNullInfo() {
 
-            DefaultStatisticalCategoryDataset dataset
-                    = new DefaultStatisticalCategoryDataset();
-            dataset.add(1.0, 2.0, "S1", "C1");
-            dataset.add(3.0, 4.0, "S1", "C2");
-            CategoryPlot plot = new CategoryPlot(dataset,
-                    new CategoryAxis("Category"), new NumberAxis("Value"),
-                    new StatisticalBarRenderer());
-            JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+        DefaultStatisticalCategoryDataset dataset
+                = new DefaultStatisticalCategoryDataset();
+        dataset.add(1.0, 2.0, "S1", "C1");
+        dataset.add(3.0, 4.0, "S1", "C2");
+        CategoryPlot plot = new CategoryPlot(dataset,
+                new CategoryAxis("Category"), new NumberAxis("Value"),
+                new StatisticalBarRenderer());
+        JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */
+        chart.createBufferedImage(300, 200,
+                null);
     }
 
     /**
@@ -179,16 +168,17 @@ public class StatisticalBarRendererTest  {
      */
     @Test
     public void testDrawWithNullMeanVertical() {
-            DefaultStatisticalCategoryDataset dataset
-                    = new DefaultStatisticalCategoryDataset();
-            dataset.add(1.0, 2.0, "S1", "C1");
-            dataset.add(null, 4.0, "S1", "C2");
-            CategoryPlot plot = new CategoryPlot(dataset,
-                    new CategoryAxis("Category"), new NumberAxis("Value"),
-                    new StatisticalBarRenderer());
-            JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+        DefaultStatisticalCategoryDataset dataset
+                = new DefaultStatisticalCategoryDataset();
+        dataset.add(1.0, 2.0, "S1", "C1");
+        dataset.add(null, 4.0, "S1", "C2");
+        CategoryPlot plot = new CategoryPlot(dataset,
+                new CategoryAxis("Category"), new NumberAxis("Value"),
+                new StatisticalBarRenderer());
+        JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */
+        chart.createBufferedImage(300, 200,
+                null);
 
     }
 
@@ -199,17 +189,18 @@ public class StatisticalBarRendererTest  {
      */
     @Test
     public void testDrawWithNullMeanHorizontal() {
-            DefaultStatisticalCategoryDataset dataset
-                    = new DefaultStatisticalCategoryDataset();
-            dataset.add(1.0, 2.0, "S1", "C1");
-            dataset.add(null, 4.0, "S1", "C2");
-            CategoryPlot plot = new CategoryPlot(dataset,
-                    new CategoryAxis("Category"), new NumberAxis("Value"),
-                    new StatisticalBarRenderer());
-            plot.setOrientation(PlotOrientation.HORIZONTAL);
-            JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+        DefaultStatisticalCategoryDataset dataset
+                = new DefaultStatisticalCategoryDataset();
+        dataset.add(1.0, 2.0, "S1", "C1");
+        dataset.add(null, 4.0, "S1", "C2");
+        CategoryPlot plot = new CategoryPlot(dataset,
+                new CategoryAxis("Category"), new NumberAxis("Value"),
+                new StatisticalBarRenderer());
+        plot.setOrientation(PlotOrientation.HORIZONTAL);
+        JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */
+        chart.createBufferedImage(300, 200,
+                null);
 
     }
 
@@ -220,16 +211,17 @@ public class StatisticalBarRendererTest  {
      */
     @Test
     public void testDrawWithNullDeviationVertical() {
-            DefaultStatisticalCategoryDataset dataset
-                    = new DefaultStatisticalCategoryDataset();
-            dataset.add(1.0, 2.0, "S1", "C1");
-            dataset.add(4.0, null, "S1", "C2");
-            CategoryPlot plot = new CategoryPlot(dataset,
-                    new CategoryAxis("Category"), new NumberAxis("Value"),
-                    new StatisticalBarRenderer());
-            JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+        DefaultStatisticalCategoryDataset dataset
+                = new DefaultStatisticalCategoryDataset();
+        dataset.add(1.0, 2.0, "S1", "C1");
+        dataset.add(4.0, null, "S1", "C2");
+        CategoryPlot plot = new CategoryPlot(dataset,
+                new CategoryAxis("Category"), new NumberAxis("Value"),
+                new StatisticalBarRenderer());
+        JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */
+        chart.createBufferedImage(300, 200,
+                null);
 
     }
 
@@ -240,17 +232,18 @@ public class StatisticalBarRendererTest  {
      */
     @Test
     public void testDrawWithNullDeviationHorizontal() {
-            DefaultStatisticalCategoryDataset dataset
-                    = new DefaultStatisticalCategoryDataset();
-            dataset.add(1.0, 2.0, "S1", "C1");
-            dataset.add(4.0, null, "S1", "C2");
-            CategoryPlot plot = new CategoryPlot(dataset,
-                    new CategoryAxis("Category"), new NumberAxis("Value"),
-                    new StatisticalBarRenderer());
-            plot.setOrientation(PlotOrientation.HORIZONTAL);
-            JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+        DefaultStatisticalCategoryDataset dataset
+                = new DefaultStatisticalCategoryDataset();
+        dataset.add(1.0, 2.0, "S1", "C1");
+        dataset.add(4.0, null, "S1", "C2");
+        CategoryPlot plot = new CategoryPlot(dataset,
+                new CategoryAxis("Category"), new NumberAxis("Value"),
+                new StatisticalBarRenderer());
+        plot.setOrientation(PlotOrientation.HORIZONTAL);
+        JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */
+        chart.createBufferedImage(300, 200,
+                null);
 
     }
 

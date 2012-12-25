@@ -45,15 +45,15 @@
 
 package org.jfree.chart;
 
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
-import java.awt.geom.Point2D;
-
-import java.io.Serializable;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.Zoomable;
+
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import java.awt.geom.Point2D;
+import java.io.Serializable;
 
 /**
  * A class that handles mouse wheel events for the {@link ChartPanel} class.
@@ -119,8 +119,7 @@ class MouseWheelHandler implements MouseWheelListener, Serializable {
         if (plot instanceof Zoomable) {
             Zoomable zoomable = (Zoomable) plot;
             handleZoomable(zoomable, e);
-        }
-        else if (plot instanceof PiePlot) {
+        } else if (plot instanceof PiePlot) {
             PiePlot pp = (PiePlot) plot;
             pp.handleMouseWheelRotation(e.getWheelRotation());
         }

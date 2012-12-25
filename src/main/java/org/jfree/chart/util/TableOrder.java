@@ -50,7 +50,7 @@ public enum TableOrder {
     BY_ROW("TableOrder.BY_ROW"),
 
     /** By column. */
-   BY_COLUMN("TableOrder.BY_COLUMN");
+    BY_COLUMN("TableOrder.BY_COLUMN");
 
     /** The name. */
     private String name;
@@ -70,7 +70,7 @@ public enum TableOrder {
      * @return The string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return this.name;
     }
 

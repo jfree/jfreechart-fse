@@ -46,13 +46,13 @@
 
 package org.jfree.data.xy;
 
-import java.io.Serializable;
-import java.util.List;
-
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.general.DatasetChangeEvent;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * A collection of {@link YIntervalSeries} objects.
@@ -321,7 +321,7 @@ public class YIntervalSeriesCollection extends AbstractIntervalXYDataset
         // Unregister the collection as a change listener to each series in
         // the collection.
         for (YIntervalSeries series : this.data) {
-          series.removeChangeListener(this);
+            series.removeChangeListener(this);
         }
         this.data.clear();
         fireDatasetChanged();

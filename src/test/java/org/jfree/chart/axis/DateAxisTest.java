@@ -51,43 +51,23 @@
 package org.jfree.chart.axis;
 
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.data.time.DateRange;
-import org.jfree.data.time.Day;
-import org.jfree.data.time.Hour;
-import org.jfree.data.time.Millisecond;
-import org.jfree.data.time.Month;
-import org.jfree.data.time.Second;
-import org.jfree.data.time.Year;
+import org.jfree.data.time.*;
 import org.junit.Test;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link DateAxis} class.
  */
-public class DateAxisTest  {
+public class DateAxisTest {
 
     static class MyDateAxis extends DateAxis {
 
@@ -102,13 +82,10 @@ public class DateAxisTest  {
 
 
         @Override
-		public Date previousStandardDate(Date d, DateTickUnit unit) {
+        public Date previousStandardDate(Date d, DateTickUnit unit) {
             return super.previousStandardDate(d, unit);
         }
     }
-
-
-
 
 
     /**
@@ -293,15 +270,15 @@ public class DateAxisTest  {
 
         DateAxis a1 = new DateAxis("Test Axis");
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(a1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(a1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            DateAxis a2 = (DateAxis) in.readObject();
-            in.close();
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        DateAxis a2 = (DateAxis) in.readObject();
+        in.close();
         boolean b = a1.equals(a2);
         assertTrue(b);
 

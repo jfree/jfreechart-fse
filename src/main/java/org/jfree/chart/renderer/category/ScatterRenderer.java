@@ -46,10 +46,21 @@
 
 package org.jfree.chart.renderer.category;
 
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.event.RendererChangeEvent;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.util.BooleanList;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.data.Range;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.statistics.MultiValueCategoryDataset;
+
+import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -57,20 +68,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
-
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.util.BooleanList;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
-import org.jfree.chart.event.RendererChangeEvent;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.Range;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.statistics.MultiValueCategoryDataset;
 
 /**
  * A renderer that handles the multiple values from a
@@ -281,8 +278,7 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
         Boolean flag = this.seriesShapesFilled.getBoolean(series);
         if (flag != null) {
             return flag;
-        }
-        else {
+        } else {
             return this.baseShapesFilled;
         }
 
@@ -366,8 +362,8 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      *         <code>null</code> or empty).
      */
     @Override
-	public Range findRangeBounds(CategoryDataset dataset) {
-         return findRangeBounds(dataset, true);
+    public Range findRangeBounds(CategoryDataset dataset) {
+        return findRangeBounds(dataset, true);
     }
 
     /**
@@ -385,10 +381,10 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2, CategoryItemRendererState state,
-            Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
-            ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
-            int pass) {
+    public void drawItem(Graphics2D g2, CategoryItemRendererState state,
+                         Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
+                         ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
+                         int pass) {
 
         // do nothing if item is not visible
         if (!getItemVisible(row, column)) {
@@ -458,7 +454,7 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * @return The legend item.
      */
     @Override
-	public LegendItem getLegendItem(int datasetIndex, int series) {
+    public LegendItem getLegendItem(int datasetIndex, int series) {
 
         CategoryPlot cp = getPlot();
         if (cp == null) {
@@ -515,7 +511,7 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -556,7 +552,7 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * @throws CloneNotSupportedException  should not happen.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         ScatterRenderer clone = (ScatterRenderer) super.clone();
         clone.seriesShapesFilled
                 = (BooleanList) this.seriesShapesFilled.clone();

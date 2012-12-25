@@ -45,25 +45,15 @@ package org.jfree.data;
 import org.jfree.data.general.DefaultPieDataset;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link KeyedObjects} class.
  */
-public class KeyedObjectsTest  {
+public class KeyedObjectsTest {
 
     /**
      * Confirm that cloning works.
@@ -140,8 +130,7 @@ public class KeyedObjectsTest  {
         try {
             data.getObject("Not a key");
             fail("Should have thrown UnknownKeyException on unknown key");
-        }
-        catch (UnknownKeyException e) {
+        } catch (UnknownKeyException e) {
             assertEquals("The key (Not a key) is not recognised.", e.getMessage());
         }
 
@@ -197,8 +186,7 @@ public class KeyedObjectsTest  {
         try {
             ko1.getObject(-1);
             fail("Should have thrown IndexOutOfBoundsException on negative key");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("-1", e.getMessage());
         }
 
@@ -206,8 +194,7 @@ public class KeyedObjectsTest  {
         try {
             ko1.getObject(3);
             fail("Should have thrown IndexOutOfBoundsException on key out of range");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("Index: 3, Size: 3", e.getMessage());
         }
     }
@@ -230,8 +217,7 @@ public class KeyedObjectsTest  {
         try {
             ko1.getKey(-1);
             fail("Should have thrown IndexOutOfBoundsException on negative key");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("-1", e.getMessage());
         }
 
@@ -239,8 +225,7 @@ public class KeyedObjectsTest  {
         try {
             ko1.getKey(3);
             fail("Should have thrown IndexOutOfBoundsException on key out of range");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("Index: 3, Size: 3", e.getMessage());
         }
     }
@@ -262,8 +247,7 @@ public class KeyedObjectsTest  {
         try {
             ko1.getIndex(null);
             fail("Should have thrown IllegalArgumentException on null key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }
@@ -292,8 +276,7 @@ public class KeyedObjectsTest  {
         try {
             ko1.setObject(null, "XX");
             fail("Should have thrown IllegalArgumentException on null key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }
@@ -320,8 +303,7 @@ public class KeyedObjectsTest  {
         try {
             ko1.removeValue("UNKNOWN");
             fail("Should have thrown UnknownKeyException on unknown key");
-        }
-        catch (UnknownKeyException e) {
+        } catch (UnknownKeyException e) {
             assertEquals("The key (UNKNOWN) is not recognised.", e.getMessage());
         }
 
@@ -329,8 +311,7 @@ public class KeyedObjectsTest  {
         try {
             ko1.removeValue(null);
             fail("Should have thrown IllegalArgumentException on null key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }
@@ -354,8 +335,7 @@ public class KeyedObjectsTest  {
         try {
             ko1.removeValue(-1);
             fail("Should have thrown IndexOutOfBoundsException on negative key");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("-1", e.getMessage());
         }
 
@@ -363,8 +343,7 @@ public class KeyedObjectsTest  {
         try {
             ko1.removeValue(2);
             fail("Should have thrown IndexOutOfBoundsException on negative key");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("Index: 2, Size: 2", e.getMessage());
         }
     }

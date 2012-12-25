@@ -46,15 +46,9 @@ import org.jfree.chart.ui.Size2D;
 import org.jfree.data.Range;
 import org.junit.Test;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -62,12 +56,9 @@ import static org.junit.Assert.assertFalse;
 /**
  * Tests for the {@link BorderArrangement} class.
  */
-public class BorderArrangementTest  {
+public class BorderArrangementTest {
 
     private static final double EPSILON = 0.0000000001;
-
-
-
 
 
     /**

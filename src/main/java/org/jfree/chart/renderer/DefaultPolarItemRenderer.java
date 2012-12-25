@@ -61,32 +61,10 @@
 
 package org.jfree.chart.renderer;
 
-import java.awt.AlphaComposite;
-import java.awt.Composite;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Point;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.PathIterator;
-import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.List;
-
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.NumberTick;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.axis.ValueTick;
-import org.jfree.chart.util.BooleanList;
-import org.jfree.chart.util.ObjectList;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.XYItemEntity;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -99,8 +77,15 @@ import org.jfree.chart.plot.PolarPlot;
 import org.jfree.chart.renderer.xy.AbstractXYItemRenderer;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.urls.XYURLGenerator;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.*;
 import org.jfree.data.xy.XYDataset;
+
+import java.awt.*;
+import java.awt.geom.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.List;
 
 /**
  * A renderer that can be used with the {@link PolarPlot} class.
@@ -471,8 +456,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
             double w = r * 2;
             if (getPlot().getOrientation() == PlotOrientation.VERTICAL) {
                 hotspot = new Ellipse2D.Double(entityX - r, entityY - r, w, w);
-            }
-            else {
+            } else {
                 hotspot = new Ellipse2D.Double(entityY - r, entityX - r, w, w);
             }
         }
@@ -502,8 +486,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      */
     @Override
     public void drawSeries(Graphics2D g2, Rectangle2D dataArea,
-            PlotRenderingInfo info, PolarPlot plot, XYDataset dataset,
-            int seriesIndex) {
+                           PlotRenderingInfo info, PolarPlot plot, XYDataset dataset,
+                           int seriesIndex) {
 
         GeneralPath poly = null;
         ValueAxis axis = plot.getAxisForDataset(plot.indexOf(dataset));
@@ -515,8 +499,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
             if (poly == null) {
                 poly = new GeneralPath();
                 poly.moveTo(p.x, p.y);
-            }
-            else {
+            } else {
                 poly.lineTo(p.x, p.y);
             }
         }
@@ -537,8 +520,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
                 g2.setPaint(lookupSeriesOutlinePaint(seriesIndex));
                 g2.draw(poly);
             }
-        }
-        else {
+        } else {
             // just the lines, no filling
             g2.draw(poly);
         }
@@ -564,13 +546,12 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
                 final int x = Math.round(coords[0]);
                 final int y = Math.round(coords[1]);
                 final Shape shape = ShapeUtilities.createTranslatedShape(
-                        getItemShape(seriesIndex, i++), x,  y);
+                        getItemShape(seriesIndex, i++), x, y);
 
                 Paint paint;
                 if (useFillPaint) {
                     paint = lookupSeriesFillPaint(seriesIndex);
-                }
-                else {
+                } else {
                     paint = lookupSeriesPaint(seriesIndex);
                 }
                 g2.setPaint(paint);
@@ -585,7 +566,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
                 // data area...
                 if (entities != null &&
                         AbstractXYItemRenderer.isPointInRect(dataArea, x, y)) {
-                    addEntity(entities, shape, dataset, seriesIndex, i-1, x, y);
+                    addEntity(entities, shape, dataset, seriesIndex, i - 1, x, y);
                 }
             }
         }
@@ -601,7 +582,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      */
     @Override
     public void drawAngularGridLines(Graphics2D g2, PolarPlot plot,
-                List<ValueTick> ticks, Rectangle2D dataArea) {
+                                     List<ValueTick> ticks, Rectangle2D dataArea) {
         g2.setFont(plot.getAngleLabelFont());
         g2.setStroke(plot.getAngleGridlineStroke());
         g2.setPaint(plot.getAngleGridlinePaint());
@@ -637,7 +618,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      */
     @Override
     public void drawRadialGridLines(Graphics2D g2, PolarPlot plot,
-            ValueAxis radialAxis, List<ValueTick> ticks, Rectangle2D dataArea) {
+                                    ValueAxis radialAxis, List<ValueTick> ticks, Rectangle2D dataArea) {
 
         g2.setFont(radialAxis.getTickLabelFont());
         g2.setPaint(plot.getRadiusGridlinePaint());
@@ -651,7 +632,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
             double angleDegrees = plot.isCounterClockwise()
                     ? plot.getAngleOffset() : -plot.getAngleOffset();
             Point p = plot.translateToJava2D(angleDegrees,
-                    ((NumberTick)tick).getNumber().doubleValue(), radialAxis, dataArea);
+                    ((NumberTick) tick).getNumber().doubleValue(), radialAxis, dataArea);
             int r = p.x - center.x;
             int upperLeftX = center.x - r;
             int upperLeftY = center.y - r;
@@ -699,8 +680,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         Paint paint;
         if (this.useFillPaint) {
             paint = lookupSeriesFillPaint(series);
-        }
-        else {
+        } else {
             paint = lookupSeriesPaint(series);
         }
         Stroke stroke = lookupSeriesStroke(series);
@@ -727,7 +707,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     @Override
     public XYToolTipGenerator getToolTipGenerator(int series, int item) {
         XYToolTipGenerator generator
-            = this.toolTipGeneratorList.get(series);
+                = this.toolTipGeneratorList.get(series);
         if (generator == null) {
             generator = this.baseToolTipGenerator;
         }
@@ -747,7 +727,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      */
     @Override
     public void setSeriesToolTipGenerator(int series,
-            XYToolTipGenerator generator) {
+                                          XYToolTipGenerator generator) {
         this.toolTipGeneratorList.set(series, generator);
         fireChangeEvent();
     }

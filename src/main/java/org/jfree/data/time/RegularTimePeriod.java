@@ -82,24 +82,20 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable<TimePe
      * @return The time period.
      */
     public static RegularTimePeriod createInstance(Class c, Date millisecond,
-                TimeZone zone, Locale locale) {
+                                                   TimeZone zone, Locale locale) {
         RegularTimePeriod result = null;
         try {
             Constructor constructor = c.getDeclaredConstructor(
-                    new Class[] {Date.class, TimeZone.class, Locale.class});
+                    new Class[]{Date.class, TimeZone.class, Locale.class});
             result = (RegularTimePeriod) constructor.newInstance(
                     millisecond, zone, locale);
-        }
-        catch (NoSuchMethodException e) {
+        } catch (NoSuchMethodException e) {
             // do nothing, so null is returned
-        }
-        catch (IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             // do nothing, so null is returned
-        }
-        catch (InvocationTargetException e) {
+        } catch (InvocationTargetException e) {
             // do nothing, so null is returned
-        }
-        catch (InstantiationException e) {
+        } catch (InstantiationException e) {
             // do nothing, so null is returned
         }
         return result;
@@ -116,26 +112,19 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable<TimePe
     public static Class downsize(Class c) {
         if (c.equals(Year.class)) {
             return Quarter.class;
-        }
-        else if (c.equals(Quarter.class)) {
+        } else if (c.equals(Quarter.class)) {
             return Month.class;
-        }
-        else if (c.equals(Month.class)) {
+        } else if (c.equals(Month.class)) {
             return Day.class;
-        }
-        else if (c.equals(Day.class)) {
+        } else if (c.equals(Day.class)) {
             return Hour.class;
-        }
-        else if (c.equals(Hour.class)) {
+        } else if (c.equals(Hour.class)) {
             return Minute.class;
-        }
-        else if (c.equals(Minute.class)) {
+        } else if (c.equals(Minute.class)) {
             return Second.class;
-        }
-        else if (c.equals(Second.class)) {
+        } else if (c.equals(Second.class)) {
             return Millisecond.class;
-        }
-        else {
+        } else {
             return Millisecond.class;
         }
     }
@@ -184,7 +173,7 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable<TimePe
      * @see #getFirstMillisecond()
      */
     @Override
-	public Date getStart() {
+    public Date getStart() {
         return new Date(getFirstMillisecond());
     }
 
@@ -197,7 +186,7 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable<TimePe
      * @see #getLastMillisecond()
      */
     @Override
-	public Date getEnd() {
+    public Date getEnd() {
         return new Date(getLastMillisecond());
     }
 

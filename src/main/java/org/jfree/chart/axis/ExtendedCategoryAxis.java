@@ -45,23 +45,20 @@
 
 package org.jfree.chart.axis;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Paint;
+import org.jfree.chart.event.AxisChangeEvent;
+import org.jfree.chart.text.TextBlock;
+import org.jfree.chart.text.TextFragment;
+import org.jfree.chart.text.TextLine;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.SerialUtilities;
+
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.event.AxisChangeEvent;
-import org.jfree.chart.text.TextBlock;
-import org.jfree.chart.text.TextFragment;
-import org.jfree.chart.text.TextLine;
-import org.jfree.chart.util.SerialUtilities;
 
 /**
  * An extended version of the {@link CategoryAxis} class that supports
@@ -169,7 +166,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
      * @return A label.
      */
     @Override
-	protected TextBlock createLabel(Comparable category, float width,
+    protected TextBlock createLabel(Comparable category, float width,
                                     RectangleEdge edge, Graphics2D g2) {
         TextBlock label = super.createLabel(category, width, edge, g2);
         String s = this.sublabels.get(category);
@@ -178,8 +175,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
                 TextLine line = new TextLine(s, this.sublabelFont,
                         this.sublabelPaint);
                 label.addLine(line);
-            }
-            else if (edge == RectangleEdge.LEFT
+            } else if (edge == RectangleEdge.LEFT
                     || edge == RectangleEdge.RIGHT) {
                 TextLine line = label.getLastLine();
                 if (line != null) {
@@ -199,7 +195,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -227,7 +223,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
      * @throws CloneNotSupportedException if there is a problem cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         ExtendedCategoryAxis clone = (ExtendedCategoryAxis) super.clone();
         clone.sublabels = new HashMap<Comparable, String>(this.sublabels);
         return clone;
@@ -254,7 +250,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.sublabelPaint = SerialUtilities.readPaint(stream);
     }

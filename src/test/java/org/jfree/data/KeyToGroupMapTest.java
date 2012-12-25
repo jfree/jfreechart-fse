@@ -42,27 +42,14 @@ package org.jfree.data;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link KeyToGroupMap} class.
  */
-public class KeyToGroupMapTest  {
-
-
-
+public class KeyToGroupMapTest {
 
 
     /**
@@ -83,14 +70,13 @@ public class KeyToGroupMapTest  {
         // clear a mapping
         m1.mapKeyToGroup("K2", null);
         assertEquals("G1", m1.getGroup("K2"));  // after clearing, reverts to
-                                                // default group
+        // default group
 
         // check handling of null key
         try {
             m1.mapKeyToGroup(null, "G1");
             fail("Should have thrown IllegalArgumentException on null key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }
@@ -208,8 +194,7 @@ public class KeyToGroupMapTest  {
         try {
             m1.getGroup(null);
             fail("Should have thrown IllegalArgumentException on null key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }
@@ -257,16 +242,16 @@ public class KeyToGroupMapTest  {
 
         KeyToGroupMap m1 = new KeyToGroupMap("Test");
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(m1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(m1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-            );
+        );
         KeyToGroupMap m2 = (KeyToGroupMap) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(m1, m2);
 

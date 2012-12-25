@@ -74,7 +74,7 @@ public enum VerticalAlignment {
      * @return the string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return this.name;
     }
 

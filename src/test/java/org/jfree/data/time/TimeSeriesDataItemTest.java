@@ -42,13 +42,7 @@ package org.jfree.data.time;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -56,7 +50,7 @@ import static org.junit.Assert.assertFalse;
 /**
  * Tests for the {@link TimeSeriesDataItem} class.
  */
-public class TimeSeriesDataItemTest  {
+public class TimeSeriesDataItemTest {
 
 
     /**
@@ -67,7 +61,7 @@ public class TimeSeriesDataItemTest  {
     @Test
     public void testEqualsSelf() {
         TimeSeriesDataItem item = new TimeSeriesDataItem(
-            new Day(23, 9, 2001), 99.7
+                new Day(23, 9, 2001), 99.7
         );
         assertEquals(item, item);
     }
@@ -78,10 +72,10 @@ public class TimeSeriesDataItemTest  {
     @Test
     public void testEquals() {
         TimeSeriesDataItem item1 = new TimeSeriesDataItem(
-            new Day(23, 9, 2001), 99.7
+                new Day(23, 9, 2001), 99.7
         );
         TimeSeriesDataItem item2 = new TimeSeriesDataItem(
-            new Day(23, 9, 2001), 99.7
+                new Day(23, 9, 2001), 99.7
         );
         assertEquals(item1, item2);
         assertEquals(item2, item1);
@@ -99,7 +93,7 @@ public class TimeSeriesDataItemTest  {
     public void testSerialization() throws IOException, ClassNotFoundException {
 
         TimeSeriesDataItem item1 = new TimeSeriesDataItem(
-            new Day(23, 9, 2001), 99.7
+                new Day(23, 9, 2001), 99.7
         );
 
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -108,7 +102,7 @@ public class TimeSeriesDataItemTest  {
         out.close();
 
         ObjectInput in = new ObjectInputStream(
-            new ByteArrayInputStream(buffer.toByteArray())
+                new ByteArrayInputStream(buffer.toByteArray())
         );
         TimeSeriesDataItem item2 = (TimeSeriesDataItem) in.readObject();
         in.close();

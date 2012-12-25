@@ -46,13 +46,7 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -60,10 +54,7 @@ import static org.junit.Assert.assertFalse;
 /**
  * Tests for the {@link StandardCategoryURLGenerator} class.
  */
-public class StandardCategoryURLGeneratorTest  {
-
-
-
+public class StandardCategoryURLGeneratorTest {
 
 
     /**
@@ -129,15 +120,15 @@ public class StandardCategoryURLGeneratorTest  {
         StandardCategoryURLGenerator g1 = new StandardCategoryURLGenerator(
                 "index.html?");
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(g1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(g1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
         StandardCategoryURLGenerator g2 = (StandardCategoryURLGenerator) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(g1, g2);
     }

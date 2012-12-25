@@ -57,11 +57,6 @@
 
 package org.jfree.data.time;
 
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
-
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.DefaultKeyedValues2D;
 import org.jfree.data.DomainInfo;
@@ -70,6 +65,11 @@ import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.xy.AbstractIntervalXYDataset;
 import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.TableXYDataset;
+
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * A dataset for regular time periods that implements the
@@ -83,7 +83,7 @@ import org.jfree.data.xy.TableXYDataset;
  */
 public class TimeTableXYDataset extends AbstractIntervalXYDataset
         implements Cloneable, PublicCloneable, IntervalXYDataset, DomainInfo,
-                   TableXYDataset {
+        TableXYDataset {
 
     /**
      * The data structure to store the values.  Each column represents
@@ -275,7 +275,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @see #add(TimePeriod, double, Comparable)
      */
     public void remove(TimePeriod period, Comparable seriesName,
-            boolean notify) {
+                       boolean notify) {
         this.values.removeValue(period, seriesName);
         if (notify) {
             fireDatasetChanged();
@@ -313,7 +313,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @return The item count.
      */
     @Override
-	public int getItemCount() {
+    public int getItemCount() {
         return this.values.getRowCount();
     }
 
@@ -327,7 +327,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @return The number of items within the series.
      */
     @Override
-	public int getItemCount(int series) {
+    public int getItemCount(int series) {
         return getItemCount();
     }
 
@@ -337,7 +337,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @return The series count.
      */
     @Override
-	public int getSeriesCount() {
+    public int getSeriesCount() {
         return this.values.getColumnCount();
     }
 
@@ -349,7 +349,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @return The key for the series.
      */
     @Override
-	public Comparable getSeriesKey(int series) {
+    public Comparable getSeriesKey(int series) {
         return this.values.getColumnKey(series);
     }
 
@@ -364,7 +364,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @return The x-value.
      */
     @Override
-	public Number getX(int series, int item) {
+    public Number getX(int series, int item) {
         return getXValue(series, item);
     }
 
@@ -377,7 +377,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @return The value.
      */
     @Override
-	public double getXValue(int series, int item) {
+    public double getXValue(int series, int item) {
         TimePeriod period = (TimePeriod) this.values.getRowKey(item);
         return getXValue(period);
     }
@@ -393,7 +393,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @see #getStartXValue(int, int)
      */
     @Override
-	public Number getStartX(int series, int item) {
+    public Number getStartX(int series, int item) {
         return getStartXValue(series, item);
     }
 
@@ -407,7 +407,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @return The value.
      */
     @Override
-	public double getStartXValue(int series, int item) {
+    public double getStartXValue(int series, int item) {
         TimePeriod period = (TimePeriod) this.values.getRowKey(item);
         return period.getStart().getTime();
     }
@@ -423,7 +423,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @see #getEndXValue(int, int)
      */
     @Override
-	public Number getEndX(int series, int item) {
+    public Number getEndX(int series, int item) {
         return getEndXValue(series, item);
     }
 
@@ -437,7 +437,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @return The value.
      */
     @Override
-	public double getEndXValue(int series, int item) {
+    public double getEndXValue(int series, int item) {
         TimePeriod period = (TimePeriod) this.values.getRowKey(item);
         return period.getEnd().getTime();
     }
@@ -451,7 +451,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @return The y-value (possibly <code>null</code>).
      */
     @Override
-	public Number getY(int series, int item) {
+    public Number getY(int series, int item) {
         return this.values.getValue(item, series);
     }
 
@@ -464,7 +464,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @return The starting Y value for the specified series and item.
      */
     @Override
-	public Number getStartY(int series, int item) {
+    public Number getStartY(int series, int item) {
         return getY(series, item);
     }
 
@@ -477,7 +477,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @return The ending Y value for the specified series and item.
      */
     @Override
-	public Number getEndY(int series, int item) {
+    public Number getEndY(int series, int item) {
         return getY(series, item);
     }
 
@@ -492,13 +492,11 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
         long result = 0L;
         if (this.xPosition == TimePeriodAnchor.START) {
             result = period.getStart().getTime();
-        }
-        else if (this.xPosition == TimePeriodAnchor.MIDDLE) {
+        } else if (this.xPosition == TimePeriodAnchor.MIDDLE) {
             long t0 = period.getStart().getTime();
             long t1 = period.getEnd().getTime();
             result = t0 + (t1 - t0) / 2L;
-        }
-        else if (this.xPosition == TimePeriodAnchor.END) {
+        } else if (this.xPosition == TimePeriodAnchor.END) {
             result = period.getEnd().getTime();
         }
         return result;
@@ -513,7 +511,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @return The minimum value.
      */
     @Override
-	public double getDomainLowerBound(boolean includeInterval) {
+    public double getDomainLowerBound(boolean includeInterval) {
         double result = Double.NaN;
         Range r = getDomainBounds(includeInterval);
         if (r != null) {
@@ -531,7 +529,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @return The maximum value.
      */
     @Override
-	public double getDomainUpperBound(boolean includeInterval) {
+    public double getDomainUpperBound(boolean includeInterval) {
         double result = Double.NaN;
         Range r = getDomainBounds(includeInterval);
         if (r != null) {
@@ -549,7 +547,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @return The range.
      */
     @Override
-	public Range getDomainBounds(boolean includeInterval) {
+    public Range getDomainBounds(boolean includeInterval) {
         List<Comparable> keys = this.values.getRowKeys();
         if (keys.isEmpty()) {
             return null;
@@ -560,8 +558,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
 
         if (!includeInterval || this.domainIsPointsInTime) {
             return new Range(getXValue(first), getXValue(last));
-        }
-        else {
+        } else {
             return new Range(first.getStart().getTime(),
                     last.getEnd().getTime());
         }
@@ -575,7 +572,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -590,8 +587,8 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
             return false;
         }
         if (!this.workingCalendar.getTimeZone().equals(
-            that.workingCalendar.getTimeZone())
-        ) {
+                that.workingCalendar.getTimeZone())
+                ) {
             return false;
         }
         if (!this.values.equals(that.values)) {
@@ -608,7 +605,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @throws CloneNotSupportedException if the dataset cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         TimeTableXYDataset clone = (TimeTableXYDataset) super.clone();
         clone.values = (DefaultKeyedValues2D) this.values.clone();
         clone.workingCalendar = (Calendar) this.workingCalendar.clone();

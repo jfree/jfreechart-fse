@@ -99,7 +99,7 @@ public class MonthTest extends TestCase {
      * Common test setup.
      */
     @Override
-	protected void setUp() {
+    protected void setUp() {
         this.jan1900 = new Month(MonthConstants.JANUARY, 1900);
         this.feb1900 = new Month(MonthConstants.FEBRUARY, 1900);
         this.nov9999 = new Month(MonthConstants.NOVEMBER, 9999);
@@ -132,7 +132,7 @@ public class MonthTest extends TestCase {
     public void testDateConstructor1() {
 
         TimeZone zone = TimeZone.getTimeZone("GMT");
-        Calendar c = new GregorianCalendar(zone);        
+        Calendar c = new GregorianCalendar(zone);
         Locale locale = Locale.UK;
         Month m1 = new Month(new Date(951868799999L), zone, locale);
         Month m2 = new Month(new Date(951868800000L), zone, locale);
@@ -209,8 +209,7 @@ public class MonthTest extends TestCase {
         // test 1...
         try {
             month = Month.parseMonth("1990-01");
-        }
-        catch (TimePeriodFormatException e) {
+        } catch (TimePeriodFormatException e) {
             month = new Month(1, 1900);
         }
         assertEquals(1, month.getMonth());
@@ -219,8 +218,7 @@ public class MonthTest extends TestCase {
         // test 2...
         try {
             month = Month.parseMonth("02-1991");
-        }
-        catch (TimePeriodFormatException e) {
+        } catch (TimePeriodFormatException e) {
             month = new Month(1, 1900);
         }
         assertEquals(2, month.getMonth());
@@ -229,8 +227,7 @@ public class MonthTest extends TestCase {
         // test 3...
         try {
             month = Month.parseMonth("March 1993");
-        }
-        catch (TimePeriodFormatException e) {
+        } catch (TimePeriodFormatException e) {
             month = new Month(1, 1900);
             e.printStackTrace();
         }
@@ -254,12 +251,11 @@ public class MonthTest extends TestCase {
             out.close();
 
             ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
+                    new ByteArrayInputStream(buffer.toByteArray())
             );
             m2 = (Month) in.readObject();
             in.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.toString());
         }
         assertEquals(m1, m2);
@@ -313,8 +309,7 @@ public class MonthTest extends TestCase {
         boolean pass = false;
         try {
             m.getFirstMillisecond((Calendar) null);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -333,8 +328,7 @@ public class MonthTest extends TestCase {
         boolean pass = false;
         try {
             m.getFirstMillisecond((Calendar) null);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -367,8 +361,7 @@ public class MonthTest extends TestCase {
         boolean pass = false;
         try {
             m.getLastMillisecond((Calendar) null);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             pass = true;
         }
         assertTrue(pass);
@@ -387,8 +380,7 @@ public class MonthTest extends TestCase {
         boolean pass = false;
         try {
             m.getLastMillisecond((Calendar) null);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             pass = true;
         }
         assertTrue(pass);

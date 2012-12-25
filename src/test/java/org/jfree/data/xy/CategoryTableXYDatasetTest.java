@@ -44,27 +44,14 @@ package org.jfree.data.xy;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link CategoryTableXYDataset} class.
  */
-public class CategoryTableXYDatasetTest  {
-
-
-
+public class CategoryTableXYDatasetTest {
 
 
     /**
@@ -164,16 +151,16 @@ public class CategoryTableXYDatasetTest  {
         d1.add(2.0, 2.2, "Series 1");
 
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(d1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(d1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-            );
+        );
         CategoryTableXYDataset d2 = (CategoryTableXYDataset) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(d1, d2);
 

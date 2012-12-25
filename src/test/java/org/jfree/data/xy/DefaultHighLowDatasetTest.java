@@ -44,28 +44,15 @@ package org.jfree.data.xy;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link DefaultHighLowDataset} class.
  */
-public class DefaultHighLowDatasetTest  {
-
-
-
+public class DefaultHighLowDatasetTest {
 
 
     /**
@@ -92,65 +79,65 @@ public class DefaultHighLowDatasetTest  {
         assertEquals(d1, d2);
 
         d1 = new DefaultHighLowDataset("Series 2",
-                new Date[] {new Date(123L)}, new double[1], new double[1],
+                new Date[]{new Date(123L)}, new double[1], new double[1],
                 new double[1], new double[1], new double[1]);
         assertFalse(d1.equals(d2));
         d2 = new DefaultHighLowDataset("Series 2",
-                new Date[] {new Date(123L)}, new double[1], new double[1],
-                new double[1], new double[1], new double[1]);
-        assertEquals(d1, d2);
-
-        d1 = new DefaultHighLowDataset("Series 2",
-                new Date[] {new Date(123L)}, new double[] {1.2}, new double[1],
-                new double[1], new double[1], new double[1]);
-        assertFalse(d1.equals(d2));
-        d2 = new DefaultHighLowDataset("Series 2",
-                new Date[] {new Date(123L)}, new double[] {1.2}, new double[1],
+                new Date[]{new Date(123L)}, new double[1], new double[1],
                 new double[1], new double[1], new double[1]);
         assertEquals(d1, d2);
 
         d1 = new DefaultHighLowDataset("Series 2",
-                new Date[] {new Date(123L)}, new double[] {1.2},
-                new double[] {3.4}, new double[1], new double[1],
+                new Date[]{new Date(123L)}, new double[]{1.2}, new double[1],
+                new double[1], new double[1], new double[1]);
+        assertFalse(d1.equals(d2));
+        d2 = new DefaultHighLowDataset("Series 2",
+                new Date[]{new Date(123L)}, new double[]{1.2}, new double[1],
+                new double[1], new double[1], new double[1]);
+        assertEquals(d1, d2);
+
+        d1 = new DefaultHighLowDataset("Series 2",
+                new Date[]{new Date(123L)}, new double[]{1.2},
+                new double[]{3.4}, new double[1], new double[1],
                 new double[1]);
         assertFalse(d1.equals(d2));
         d2 = new DefaultHighLowDataset("Series 2",
-                new Date[] {new Date(123L)}, new double[] {1.2},
-                new double[] {3.4}, new double[1], new double[1],
+                new Date[]{new Date(123L)}, new double[]{1.2},
+                new double[]{3.4}, new double[1], new double[1],
                 new double[1]);
         assertEquals(d1, d2);
 
         d1 = new DefaultHighLowDataset("Series 2",
-                new Date[] {new Date(123L)}, new double[] {1.2},
-                new double[] {3.4}, new double[] {5.6}, new double[1],
+                new Date[]{new Date(123L)}, new double[]{1.2},
+                new double[]{3.4}, new double[]{5.6}, new double[1],
                 new double[1]);
         assertFalse(d1.equals(d2));
         d2 = new DefaultHighLowDataset("Series 2",
-                new Date[] {new Date(123L)}, new double[] {1.2},
-                new double[] {3.4}, new double[] {5.6}, new double[1],
+                new Date[]{new Date(123L)}, new double[]{1.2},
+                new double[]{3.4}, new double[]{5.6}, new double[1],
                 new double[1]);
         assertEquals(d1, d2);
 
         d1 = new DefaultHighLowDataset("Series 2",
-                new Date[] {new Date(123L)}, new double[] {1.2},
-                new double[] {3.4}, new double[] {5.6}, new double[] {7.8},
+                new Date[]{new Date(123L)}, new double[]{1.2},
+                new double[]{3.4}, new double[]{5.6}, new double[]{7.8},
                 new double[1]);
         assertFalse(d1.equals(d2));
         d2 = new DefaultHighLowDataset("Series 2",
-                new Date[] {new Date(123L)}, new double[] {1.2},
-                new double[] {3.4}, new double[] {5.6}, new double[] {7.8},
+                new Date[]{new Date(123L)}, new double[]{1.2},
+                new double[]{3.4}, new double[]{5.6}, new double[]{7.8},
                 new double[1]);
         assertEquals(d1, d2);
 
         d1 = new DefaultHighLowDataset("Series 2",
-                new Date[] {new Date(123L)}, new double[] {1.2},
-                new double[] {3.4}, new double[] {5.6}, new double[] {7.8},
-                new double[] {99.9});
+                new Date[]{new Date(123L)}, new double[]{1.2},
+                new double[]{3.4}, new double[]{5.6}, new double[]{7.8},
+                new double[]{99.9});
         assertFalse(d1.equals(d2));
         d2 = new DefaultHighLowDataset("Series 2",
-                new Date[] {new Date(123L)}, new double[] {1.2},
-                new double[] {3.4}, new double[] {5.6}, new double[] {7.8},
-                new double[] {99.9});
+                new Date[]{new Date(123L)}, new double[]{1.2},
+                new double[]{3.4}, new double[]{5.6}, new double[]{7.8},
+                new double[]{99.9});
         assertEquals(d1, d2);
 
     }
@@ -161,9 +148,9 @@ public class DefaultHighLowDatasetTest  {
     @Test
     public void testCloning() throws CloneNotSupportedException {
         DefaultHighLowDataset d1 = new DefaultHighLowDataset("Series 1",
-                new Date[] {new Date(123L)}, new double[] {1.2},
-                new double[] {3.4}, new double[] {5.6}, new double[] {7.8},
-                new double[] {99.9});
+                new Date[]{new Date(123L)}, new double[]{1.2},
+                new double[]{3.4}, new double[]{5.6}, new double[]{7.8},
+                new double[]{99.9});
         DefaultHighLowDataset d2 = (DefaultHighLowDataset) d1.clone();
         assertNotSame(d1, d2);
         assertSame(d1.getClass(), d2.getClass());
@@ -187,19 +174,19 @@ public class DefaultHighLowDatasetTest  {
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
         DefaultHighLowDataset d1 = new DefaultHighLowDataset("Series 1",
-                new Date[] {new Date(123L)}, new double[] {1.2},
-                new double[] {3.4}, new double[] {5.6}, new double[] {7.8},
-                new double[] {99.9});
+                new Date[]{new Date(123L)}, new double[]{1.2},
+                new double[]{3.4}, new double[]{5.6}, new double[]{7.8},
+                new double[]{99.9});
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(d1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(d1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         DefaultHighLowDataset d2 = (DefaultHighLowDataset) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(d1, d2);
     }

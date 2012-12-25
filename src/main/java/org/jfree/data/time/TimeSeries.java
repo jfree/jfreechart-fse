@@ -90,19 +90,13 @@
 
 package org.jfree.data.time;
 
-import java.io.Serializable;
-import java.lang.StringBuilder;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
-
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.general.Series;
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesException;
+
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * Represents a sequence of zero or more data items in the form (period, value)
@@ -514,7 +508,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
             throw new IllegalArgumentException("Null 'period' argument.");
         }
         TimeSeriesDataItem dummy = new TimeSeriesDataItem(
-              period, Integer.MIN_VALUE);
+                period, Integer.MIN_VALUE);
         return Collections.binarySearch(this.data, dummy);
     }
 
@@ -572,8 +566,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
         Class<? extends TimePeriod> c = item.getPeriod().getClass();
         if (this.timePeriodClass == null) {
             this.timePeriodClass = c;
-        }
-        else if (!this.timePeriodClass.equals(c)) {
+        } else if (!this.timePeriodClass.equals(c)) {
             StringBuilder b = new StringBuilder();
             b.append("You are trying to add data where the time period class ");
             b.append("is ");
@@ -590,20 +583,17 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
         if (count == 0) {
             this.data.add(item);
             added = true;
-        }
-        else {
+        } else {
             RegularTimePeriod last = getTimePeriod(getItemCount() - 1);
             if (item.getPeriod().compareTo(last) > 0) {
                 this.data.add(item);
                 added = true;
-            }
-            else {
+            } else {
                 int index = Collections.binarySearch(this.data, item);
                 if (index < 0) {
                     this.data.add(-index - 1, item);
                     added = true;
-                }
-                else {
+                } else {
                     StringBuilder b = new StringBuilder();
                     b.append("You are attempting to add an observation for ");
                     b.append("the time period ");
@@ -624,8 +614,8 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
             }
 
             removeAgedItems(false);  // remove old items if necessary, but
-                                     // don't notify anyone, because that
-                                     // happens next anyway...
+            // don't notify anyone, because that
+            // happens next anyway...
             if (notify) {
                 fireSeriesChanged();
             }
@@ -696,7 +686,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
      * @since 1.0.14
      */
     public void update(RegularTimePeriod period, double value) {
-      update(period, new Double(value));
+        update(period, new Double(value));
     }
 
     /**
@@ -735,8 +725,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
         item.setValue(value);
         if (iterate) {
             findBoundsByIteration();
-        }
-        else if (value != null) {
+        } else if (value != null) {
             double yy = value.doubleValue();
             this.minY = minIgnoreNaN(this.minY, yy);
             this.maxY = maxIgnoreNaN(this.maxY, yy);
@@ -817,8 +806,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
         Class<? extends TimePeriod> periodClass = item.getPeriod().getClass();
         if (this.timePeriodClass == null) {
             this.timePeriodClass = periodClass;
-        }
-        else if (!this.timePeriodClass.equals(periodClass)) {
+        } else if (!this.timePeriodClass.equals(periodClass)) {
             String msg = "You are trying to add data where the time "
                     + "period class is " + periodClass.getName()
                     + ", but the TimeSeries is expecting an instance of "
@@ -842,14 +830,12 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
             existing.setValue(item.getValue());
             if (iterate) {
                 findBoundsByIteration();
-            }
-            else if (item.getValue() != null) {
+            } else if (item.getValue() != null) {
                 double yy = item.getValue().doubleValue();
                 this.minY = minIgnoreNaN(this.minY, yy);
                 this.maxY = maxIgnoreNaN(this.maxY, yy);
             }
-        }
-        else {
+        } else {
             item = (TimeSeriesDataItem) item.clone();
             this.data.add(-index - 1, item);
             updateBoundsForAddedItem(item);
@@ -861,8 +847,8 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
             }
         }
         removeAgedItems(false);  // remove old items if necessary, but
-                                 // don't notify anyone, because that
-                                 // happens next anyway...
+        // don't notify anyone, because that
+        // happens next anyway...
         fireSeriesChanged();
         return overwritten;
 
@@ -1055,9 +1041,8 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
                 TimeSeriesDataItem clone = (TimeSeriesDataItem) item.clone();
                 try {
                     copy.add(clone);
-                }
-                catch (SeriesException e) {
-                     throw new RuntimeException("Could not add cloned item to series", e);
+                } catch (SeriesException e) {
+                    throw new RuntimeException("Could not add cloned item to series", e);
                 }
             }
         }
@@ -1079,7 +1064,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
      * @throws CloneNotSupportedException if there is a cloning problem.
      */
     public TimeSeries createCopy(RegularTimePeriod start, RegularTimePeriod end)
-        throws CloneNotSupportedException {
+            throws CloneNotSupportedException {
 
         if (start == null) {
             throw new IllegalArgumentException("Null 'start' argument.");
@@ -1104,7 +1089,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
             endIndex = -(endIndex + 1); // this is first item AFTER end period
             endIndex = endIndex - 1;    // so this is last item BEFORE end
         }
-        if ((endIndex < 0)  || (endIndex < startIndex)) {
+        if ((endIndex < 0) || (endIndex < startIndex)) {
             emptyRange = true;
         }
         if (emptyRange) {
@@ -1277,8 +1262,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
         }
         if (Double.isNaN(b)) {
             return a;
-        }
-        else {
+        } else {
             return Math.max(a, b);
         }
     }

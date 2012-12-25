@@ -45,11 +45,11 @@
 
 package org.jfree.data.statistics;
 
+import org.jfree.chart.util.ObjectUtilities;
+
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-
-import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * Represents one data item within a box-and-whisker dataset.  Instances of
@@ -140,8 +140,8 @@ public class BoxAndWhiskerItem implements Serializable {
      * @since 1.0.7
      */
     public BoxAndWhiskerItem(double mean, double median, double q1, double q3,
-            double minRegularValue, double maxRegularValue, double minOutlier,
-            double maxOutlier, List<Number> outliers) {
+                             double minRegularValue, double maxRegularValue, double minOutlier,
+                             double maxOutlier, List<Number> outliers) {
 
         // pass values to other constructor
         this(new Double(mean), new Double(median), new Double(q1),
@@ -242,7 +242,7 @@ public class BoxAndWhiskerItem implements Serializable {
      * @return A string representation of this instance.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return super.toString() + "[mean=" + this.mean + ",median="
                 + this.median + ",q1=" + this.q1 + ",q3=" + this.q3 + "]";
     }
@@ -255,7 +255,7 @@ public class BoxAndWhiskerItem implements Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
 
         if (obj == this) {
             return true;

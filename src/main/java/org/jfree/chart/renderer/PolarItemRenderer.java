@@ -41,10 +41,6 @@
 
 package org.jfree.chart.renderer;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.util.List;
-
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.axis.ValueTick;
@@ -56,8 +52,12 @@ import org.jfree.chart.plot.PolarPlot;
 import org.jfree.chart.urls.XYURLGenerator;
 import org.jfree.data.xy.XYDataset;
 
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.util.List;
+
 /**
- * The interface for a renderer that can be used by the {@link PolarPlot} 
+ * The interface for a renderer that can be used by the {@link PolarPlot}
  * class.
  */
 public interface PolarItemRenderer {
@@ -73,8 +73,8 @@ public interface PolarItemRenderer {
      * @param seriesIndex  the series index.
      */
     public void drawSeries(Graphics2D g2, Rectangle2D dataArea,
-            PlotRenderingInfo info, PolarPlot plot, XYDataset dataset,
-            int seriesIndex);
+                           PlotRenderingInfo info, PolarPlot plot, XYDataset dataset,
+                           int seriesIndex);
 
     /**
      * Draw the angular gridlines - the spokes.
@@ -85,7 +85,7 @@ public interface PolarItemRenderer {
      * @param dataArea  the data area.
      */
     public void drawAngularGridLines(Graphics2D g2, PolarPlot plot,
-            List<ValueTick> ticks, Rectangle2D dataArea);
+                                     List<ValueTick> ticks, Rectangle2D dataArea);
 
     /**
      * Draw the radial gridlines - the rings.
@@ -97,7 +97,7 @@ public interface PolarItemRenderer {
      * @param dataArea  the data area.
      */
     public void drawRadialGridLines(Graphics2D g2, PolarPlot plot,
-            ValueAxis radialAxis, List<ValueTick> ticks, Rectangle2D dataArea);
+                                    ValueAxis radialAxis, List<ValueTick> ticks, Rectangle2D dataArea);
 
     /**
      * Return the legend for the given series.

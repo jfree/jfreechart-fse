@@ -44,28 +44,16 @@ package org.jfree.chart.renderer;
 
 import org.junit.Test;
 
-import java.awt.Color;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 
 /**
  * Tests for the {@link GrayPaintScale} class.
  */
-public class GrayPaintScaleTest  {
-
-
-
+public class GrayPaintScaleTest {
 
 
     private static final double EPSILON = 0.000000001;
@@ -148,15 +136,15 @@ public class GrayPaintScaleTest  {
     public void testSerialization() throws IOException, ClassNotFoundException {
         GrayPaintScale g1 = new GrayPaintScale();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(g1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(g1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         GrayPaintScale g2 = (GrayPaintScale) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(g1, g2);
     }

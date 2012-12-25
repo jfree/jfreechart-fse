@@ -41,7 +41,7 @@
 
 package org.jfree.chart.util;
 
-import java.awt.Stroke;
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -81,16 +81,16 @@ public class StrokeList extends AbstractObjectList<Stroke> {
 
     /**
      * Returns an independent copy of the list.
-     * 
+     *
      * @return A clone.
-     * 
+     *
      * @throws CloneNotSupportedException if an item in the list cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
-    
+
     /**
      * Tests the list for equality with another object (typically also a list).
      *
@@ -99,16 +99,16 @@ public class StrokeList extends AbstractObjectList<Stroke> {
      * @return A boolean.
      */
     @Override
-	public boolean equals(final Object o) {
+    public boolean equals(final Object o) {
 
         if (o == null) {
             return false;
         }
-        
+
         if (o == this) {
             return true;
         }
-        
+
         if (o instanceof StrokeList) {
             return super.equals(o);
         }
@@ -116,14 +116,14 @@ public class StrokeList extends AbstractObjectList<Stroke> {
         return false;
 
     }
-    
+
     /**
      * Returns a hash code value for the object.
      *
      * @return the hashcode
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return super.hashCode();
     }
 
@@ -144,14 +144,13 @@ public class StrokeList extends AbstractObjectList<Stroke> {
             if (stroke != null) {
                 stream.writeInt(i);
                 SerialUtilities.writeStroke(stroke, stream);
-            }
-            else {
+            } else {
                 stream.writeInt(-1);
             }
         }
 
     }
-    
+
     /**
      * Provides serialization support.
      *
@@ -170,7 +169,7 @@ public class StrokeList extends AbstractObjectList<Stroke> {
                 setStroke(index, SerialUtilities.readStroke(stream));
             }
         }
-        
+
     }
 
 }

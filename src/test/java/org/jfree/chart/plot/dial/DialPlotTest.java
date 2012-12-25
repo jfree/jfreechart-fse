@@ -44,27 +44,15 @@ import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.event.PlotChangeListener;
 import org.junit.Test;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link DialPlot} class.
  */
-public class DialPlotTest  implements PlotChangeListener {
+public class DialPlotTest implements PlotChangeListener {
 
     /** The last plot change event received. */
     private PlotChangeEvent lastEvent;
@@ -75,13 +63,9 @@ public class DialPlotTest  implements PlotChangeListener {
      * @param event  the event.
      */
     @Override
-	public void plotChanged(PlotChangeEvent event) {
+    public void plotChanged(PlotChangeEvent event) {
         this.lastEvent = event;
     }
-
-
-
-
 
 
     /**
@@ -177,15 +161,15 @@ public class DialPlotTest  implements PlotChangeListener {
     public void testSerialization() throws IOException, ClassNotFoundException {
         DialPlot p1 = new DialPlot();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(p1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(p1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         DialPlot p2 = (DialPlot) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(p1, p2);
     }

@@ -46,28 +46,14 @@ package org.jfree.data.xy;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link XYIntervalSeriesCollection} class.
  */
-public class XYIntervalSeriesCollectionTest  {
-
-
-
+public class XYIntervalSeriesCollectionTest {
 
 
     /**
@@ -134,15 +120,15 @@ public class XYIntervalSeriesCollectionTest  {
         XYIntervalSeries s1 = new XYIntervalSeries("Series");
         s1.add(1.0, 1.1, 1.2, 1.3, 1.4, 1.5);
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(c1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(c1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         XYIntervalSeriesCollection c2 = (XYIntervalSeriesCollection) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(c1, c2);
 
@@ -168,16 +154,14 @@ public class XYIntervalSeriesCollectionTest  {
         try {
             c.removeSeries(-1);
             fail("IllegalArgumentException should have been thrown on negative key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Series index out of bounds.", e.getMessage());
         }
 
         try {
             c.removeSeries(1);
             fail("IllegalArgumentException should have been thrown on key out of range");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Series index out of bounds.", e.getMessage());
         }
     }
@@ -192,10 +176,10 @@ public class XYIntervalSeriesCollectionTest  {
         XYIntervalSeriesCollection dataset = new XYIntervalSeriesCollection();
         dataset.addSeries(s1);
         try {
-            /* XYSeries s = */ dataset.getSeries(1);
+            /* XYSeries s = */
+            dataset.getSeries(1);
             fail("Should have thrown IllegalArgumentException on index out of bounds");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Series index out of bounds", e.getMessage());
         }
     }

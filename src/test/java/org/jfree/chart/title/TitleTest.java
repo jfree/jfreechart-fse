@@ -53,10 +53,7 @@ import static org.junit.Assert.assertFalse;
 /**
  * Tests for the abstract {@link Title} class.
  */
-public class TitleTest  {
-
-
-
+public class TitleTest {
 
 
     /**

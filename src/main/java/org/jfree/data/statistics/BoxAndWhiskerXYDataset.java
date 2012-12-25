@@ -52,9 +52,9 @@
 
 package org.jfree.data.statistics;
 
-import java.util.List;
-
 import org.jfree.data.xy.XYDataset;
+
+import java.util.List;
 
 /**
  * An interface that defines data in the form of (x, max, min, average, median)

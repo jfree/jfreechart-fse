@@ -48,30 +48,16 @@ import org.jfree.data.Range;
 import org.jfree.data.statistics.DefaultMultiValueCategoryDataset;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link ScatterRenderer} class.
  */
-public class ScatterRendererTest  {
-
-
-
+public class ScatterRendererTest {
 
 
     /**
@@ -162,7 +148,7 @@ public class ScatterRendererTest  {
      * @return A boolean.
      */
     private boolean checkIndependence(ScatterRenderer r1,
-            ScatterRenderer r2) {
+                                      ScatterRenderer r2) {
 
         // should be equal...
         if (!r1.equals(r2)) {

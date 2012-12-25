@@ -42,13 +42,7 @@ package org.jfree.data.general;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -56,10 +50,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Tests for the {@link DatasetGroup} class.
  */
-public class DatasetGroupTest  {
-
-
-
+public class DatasetGroupTest {
 
 
     /**
@@ -70,16 +61,16 @@ public class DatasetGroupTest  {
 
         DatasetGroup g1 = new DatasetGroup();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(g1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(g1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-            );
+        );
         DatasetGroup g2 = (DatasetGroup) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(g1, g2);
 

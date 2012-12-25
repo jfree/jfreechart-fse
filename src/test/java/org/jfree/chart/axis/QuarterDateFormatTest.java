@@ -43,27 +43,15 @@ package org.jfree.chart.axis;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.TimeZone;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link QuarterDateFormat} class.
  */
-public class QuarterDateFormatTest  {
-
-
-
+public class QuarterDateFormatTest {
 
 
     /**
@@ -72,31 +60,31 @@ public class QuarterDateFormatTest  {
     @Test
     public void testEquals() {
         QuarterDateFormat qf1 = new QuarterDateFormat(TimeZone.getTimeZone(
-                "GMT"), new String[] {"1", "2", "3", "4"});
+                "GMT"), new String[]{"1", "2", "3", "4"});
         QuarterDateFormat qf2 = new QuarterDateFormat(TimeZone.getTimeZone(
-                "GMT"), new String[] {"1", "2", "3", "4"});
+                "GMT"), new String[]{"1", "2", "3", "4"});
         assertEquals(qf1, qf2);
         assertEquals(qf2, qf1);
 
         qf1 = new QuarterDateFormat(TimeZone.getTimeZone("PST"),
-                new String[] {"1", "2", "3", "4"});
+                new String[]{"1", "2", "3", "4"});
         assertFalse(qf1.equals(qf2));
         qf2 = new QuarterDateFormat(TimeZone.getTimeZone("PST"),
-                new String[] {"1", "2", "3", "4"});
+                new String[]{"1", "2", "3", "4"});
         assertEquals(qf1, qf2);
 
         qf1 = new QuarterDateFormat(TimeZone.getTimeZone("PST"),
-                new String[] {"A", "2", "3", "4"});
+                new String[]{"A", "2", "3", "4"});
         assertFalse(qf1.equals(qf2));
         qf2 = new QuarterDateFormat(TimeZone.getTimeZone("PST"),
-                new String[] {"A", "2", "3", "4"});
+                new String[]{"A", "2", "3", "4"});
         assertEquals(qf1, qf2);
 
         qf1 = new QuarterDateFormat(TimeZone.getTimeZone("PST"),
-                new String[] {"A", "2", "3", "4"}, true);
+                new String[]{"A", "2", "3", "4"}, true);
         assertFalse(qf1.equals(qf2));
         qf2 = new QuarterDateFormat(TimeZone.getTimeZone("PST"),
-                new String[] {"A", "2", "3", "4"}, true);
+                new String[]{"A", "2", "3", "4"}, true);
         assertEquals(qf1, qf2);
     }
 
@@ -106,9 +94,9 @@ public class QuarterDateFormatTest  {
     @Test
     public void testHashCode() {
         QuarterDateFormat qf1 = new QuarterDateFormat(TimeZone.getTimeZone(
-                "GMT"), new String[] {"1", "2", "3", "4"});
+                "GMT"), new String[]{"1", "2", "3", "4"});
         QuarterDateFormat qf2 = new QuarterDateFormat(TimeZone.getTimeZone(
-                "GMT"), new String[] {"1", "2", "3", "4"});
+                "GMT"), new String[]{"1", "2", "3", "4"});
         assertEquals(qf1, qf2);
         int h1 = qf1.hashCode();
         int h2 = qf2.hashCode();
@@ -121,7 +109,7 @@ public class QuarterDateFormatTest  {
     @Test
     public void testCloning() throws CloneNotSupportedException {
         QuarterDateFormat qf1 = new QuarterDateFormat(TimeZone.getTimeZone(
-                "GMT"), new String[] {"1", "2", "3", "4"});
+                "GMT"), new String[]{"1", "2", "3", "4"});
         QuarterDateFormat qf2 = (QuarterDateFormat) qf1.clone();
         assertNotSame(qf1, qf2);
         assertSame(qf1.getClass(), qf2.getClass());
@@ -134,17 +122,17 @@ public class QuarterDateFormatTest  {
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
         QuarterDateFormat qf1 = new QuarterDateFormat(TimeZone.getTimeZone(
-                "GMT"), new String[] {"1", "2", "3", "4"});
+                "GMT"), new String[]{"1", "2", "3", "4"});
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(qf1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(qf1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            QuarterDateFormat qf2 = (QuarterDateFormat) in.readObject();
-            in.close();
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
+        QuarterDateFormat qf2 = (QuarterDateFormat) in.readObject();
+        in.close();
 
         assertEquals(qf1, qf2);
     }

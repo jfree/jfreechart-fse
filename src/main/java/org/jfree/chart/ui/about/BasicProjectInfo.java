@@ -43,11 +43,11 @@
 
 package org.jfree.chart.ui.about;
 
+import org.jfree.chart.util.ObjectUtilities;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * Basic project info.
@@ -69,11 +69,11 @@ public class BasicProjectInfo extends Library {
         }
 
         public OptionalLibraryHolder(final Library library) {
-          if (library == null) {
-              throw new NullPointerException("Library must not be null.");
-          }
-          this.library = library;
-          this.libraryClass = library.getClass().getName();
+            if (library == null) {
+                throw new NullPointerException("Library must not be null.");
+            }
+            this.library = library;
+            this.libraryClass = library.getClass().getName();
         }
 
         public String getLibraryClass() {
@@ -97,13 +97,11 @@ public class BasicProjectInfo extends Library {
                 try {
                     final Method m = c.getMethod("getInstance", (Class[]) null);
                     return (Library) m.invoke(null, (Object[]) null);
-                }
-                catch(Exception e) {
+                } catch (Exception e) {
                     // ok, fall back ...
                 }
                 return (Library) c.newInstance();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 // ok, this library has no 'getInstance()' method. Check the
                 // default constructor ...
                 return null;
@@ -185,7 +183,7 @@ public class BasicProjectInfo extends Library {
      * @param info  the info string.
      */
     @Override
-	public void setInfo(final String info) {
+    public void setInfo(final String info) {
         super.setInfo(info);
     }
 
@@ -195,7 +193,7 @@ public class BasicProjectInfo extends Library {
      * @param licence  the license name.
      */
     @Override
-	public void setLicenceName(final String licence) {
+    public void setLicenceName(final String licence) {
         super.setLicenceName(licence);
     }
 
@@ -205,7 +203,7 @@ public class BasicProjectInfo extends Library {
      * @param name  the project name.
      */
     @Override
-	public void setName(final String name) {
+    public void setName(final String name) {
         super.setName(name);
     }
 
@@ -215,7 +213,7 @@ public class BasicProjectInfo extends Library {
      * @param version  the version number.
      */
     @Override
-	public void setVersion(final String version) {
+    public void setVersion(final String version) {
         super.setVersion(version);
     }
 
@@ -234,7 +232,7 @@ public class BasicProjectInfo extends Library {
      *
      * @param library  the library.
      */
-    public void addLibrary (final Library library) {
+    public void addLibrary(final Library library) {
         if (library == null) {
             throw new NullPointerException();
         }
@@ -264,7 +262,7 @@ public class BasicProjectInfo extends Library {
      *
      * @param libraryClass  the library.
      */
-    public void addOptionalLibrary (final String libraryClass) {
+    public void addOptionalLibrary(final String libraryClass) {
         if (libraryClass == null) {
             throw new NullPointerException("Library classname must be given.");
         }
@@ -280,10 +278,10 @@ public class BasicProjectInfo extends Library {
      *
      * @param library  the library.
      */
-    public void addOptionalLibrary (final Library library) {
-      if (library == null) {
-          throw new NullPointerException("Library must be given.");
-      }
-      this.optionalLibraries.add(new OptionalLibraryHolder(library));
-  }
+    public void addOptionalLibrary(final Library library) {
+        if (library == null) {
+            throw new NullPointerException("Library must be given.");
+        }
+        this.optionalLibraries.add(new OptionalLibraryHolder(library));
+    }
 }

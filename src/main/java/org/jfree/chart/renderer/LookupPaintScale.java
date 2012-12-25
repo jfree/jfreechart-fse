@@ -44,18 +44,17 @@
 
 package org.jfree.chart.renderer;
 
-import java.awt.Color;
-import java.awt.Paint;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.SerialUtilities;
+
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtilities;
 
 /**
  * A paint scale that uses a lookup table to associate paint instances
@@ -195,7 +194,7 @@ public class LookupPaintScale
      *     permitted).
      */
     public LookupPaintScale(double lowerBound, double upperBound,
-            Paint defaultPaint) {
+                            Paint defaultPaint) {
         if (lowerBound >= upperBound) {
             throw new IllegalArgumentException(
                     "Requires lowerBound < upperBound.");
@@ -257,8 +256,7 @@ public class LookupPaintScale
         int index = Collections.binarySearch(this.lookupTable, item);
         if (index >= 0) {
             this.lookupTable.set(index, item);
-        }
-        else {
+        } else {
             this.lookupTable.add(-(index + 1), item);
         }
     }
@@ -302,8 +300,7 @@ public class LookupPaintScale
             item = this.lookupTable.get(current);
             if (value >= item.value) {
                 low = current;
-            }
-            else {
+            } else {
                 high = current;
             }
         }

@@ -44,6 +44,7 @@
  */
 
 package org.jfree.chart.axis;
+
 /**
  * Used to indicate the location of an axis on a 2D plot, prior to knowing the
  * orientation of the plot.
@@ -109,17 +110,13 @@ public enum AxisLocation {
         AxisLocation result;
         if (location == AxisLocation.TOP_OR_LEFT) {
             result = AxisLocation.BOTTOM_OR_RIGHT;
-        }
-        else if (location == AxisLocation.TOP_OR_RIGHT) {
+        } else if (location == AxisLocation.TOP_OR_RIGHT) {
             result = AxisLocation.BOTTOM_OR_LEFT;
-        }
-        else if (location == AxisLocation.BOTTOM_OR_LEFT) {
+        } else if (location == AxisLocation.BOTTOM_OR_LEFT) {
             result = AxisLocation.TOP_OR_RIGHT;
-        }
-        else if (location == AxisLocation.BOTTOM_OR_RIGHT) {
+        } else if (location == AxisLocation.BOTTOM_OR_RIGHT) {
             result = AxisLocation.TOP_OR_LEFT;
-        }
-        else {
+        } else {
             throw new IllegalStateException("AxisLocation not recognised.");
         }
         return result;

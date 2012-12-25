@@ -60,38 +60,18 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import org.junit.Test;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Stroke;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.text.AttributedString;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Some tests for the {@link PiePlot} class.
  */
-public class PiePlotTest  {
-
-
-
+public class PiePlotTest {
 
 
     /**
@@ -338,11 +318,11 @@ public class PiePlotTest  {
 
         // toolTipGenerator
         plot1.setToolTipGenerator(
-            new StandardPieToolTipGenerator("{2}{1}{0}")
+                new StandardPieToolTipGenerator("{2}{1}{0}")
         );
         assertFalse(plot1.equals(plot2));
         plot2.setToolTipGenerator(
-            new StandardPieToolTipGenerator("{2}{1}{0}")
+                new StandardPieToolTipGenerator("{2}{1}{0}")
         );
         assertEquals(plot1, plot2);
 
@@ -529,15 +509,15 @@ public class PiePlotTest  {
     public void testSerialization() throws IOException, ClassNotFoundException {
         PiePlot p1 = new PiePlot(null);
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(p1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(p1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
         PiePlot p2 = (PiePlot) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(p1, p2);
     }
@@ -587,20 +567,20 @@ public class PiePlotTest  {
         try {
             plot.setBaseSectionPaint(null);
             fail("Should have thrown a NullPointerException on null parameter");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'paint' argument.", e.getMessage());
         }
     }
 
     static class NullLegendLabelGenerator implements PieSectionLabelGenerator {
         @Override
-		public AttributedString generateAttributedSectionLabel(
+        public AttributedString generateAttributedSectionLabel(
                 PieDataset dataset, Comparable key) {
             return null;
         }
+
         @Override
-		public String generateSectionLabel(PieDataset dataset, Comparable key) {
+        public String generateSectionLabel(PieDataset dataset, Comparable key) {
             return null;
         }
     }
@@ -617,11 +597,11 @@ public class PiePlotTest  {
         PiePlot plot = (PiePlot) chart.getPlot();
         plot.setLegendLabelGenerator(new NullLegendLabelGenerator());
 
-            BufferedImage image = new BufferedImage(200 , 100,
-                    BufferedImage.TYPE_INT_RGB);
-            Graphics2D g2 = image.createGraphics();
-            chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
-            g2.dispose();
+        BufferedImage image = new BufferedImage(200, 100,
+                BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = image.createGraphics();
+        chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
+        g2.dispose();
 
     }
 

@@ -48,28 +48,14 @@ package org.jfree.data;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link DefaultKeyedValues2D} class.
  */
-public class DefaultKeyedValues2DTest  {
-
-
-
+public class DefaultKeyedValues2DTest {
 
 
     /**
@@ -83,16 +69,14 @@ public class DefaultKeyedValues2DTest  {
         try {
             d.getValue("XX", "C1");
             fail("UnknownKeyException should have been thrown on unknown key");
-        }
-        catch (UnknownKeyException e) {
+        } catch (UnknownKeyException e) {
             assertEquals("Unrecognised rowKey: XX", e.getMessage());
         }
 
         try {
             d.getValue("R1", "XX");
             fail("UnknownKeyException should have been thrown on unknown key");
-        }
-        catch (UnknownKeyException e) {
+        } catch (UnknownKeyException e) {
             assertEquals("Unrecognised columnKey: XX", e.getMessage());
         }
     }
@@ -129,15 +113,15 @@ public class DefaultKeyedValues2DTest  {
         kv2D1.addValue(345.9, "Row2", "Col1");
         kv2D1.addValue(452.7, "Row2", "Col2");
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(kv2D1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(kv2D1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            DefaultKeyedValues2D kv2D2 = (DefaultKeyedValues2D) in.readObject();
-            in.close();
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        DefaultKeyedValues2D kv2D2 = (DefaultKeyedValues2D) in.readObject();
+        in.close();
         assertEquals(kv2D1, kv2D2);
 
     }
@@ -211,8 +195,7 @@ public class DefaultKeyedValues2DTest  {
         try {
             d.getValue(0, 0);
             fail("IndexOutOfBoundsException should have been thrown on querying empty set");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("Index: 0, Size: 0", e.getMessage());
         }
         d.addValue(1.0, "R1", "C1");
@@ -225,8 +208,7 @@ public class DefaultKeyedValues2DTest  {
         try {
             d.getValue(2, 0);
             fail("IndexOutOfBoundsException should have been thrown on index out of range");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("Index: 2, Size: 2", e.getMessage());
         }
     }
@@ -241,8 +223,7 @@ public class DefaultKeyedValues2DTest  {
         try {
             d.getRowKey(0);
             fail("IndexOutOfBoundsException should have been thrown on querying empty dataset");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("Index: 0, Size: 0", e.getMessage());
         }
         d.addValue(1.0, "R1", "C1");
@@ -268,8 +249,7 @@ public class DefaultKeyedValues2DTest  {
         try {
             d.getColumnKey(0);
             fail("Should have thrown an IndexOutOfBoundsException on querying empty dataset");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("Index: 0, Size: 0", e.getMessage());
         }
         d.addValue(1.0, "R1", "C1");
@@ -321,8 +301,7 @@ public class DefaultKeyedValues2DTest  {
         try {
             d.removeRow(0);
             fail("IndexOutOfBoundsException should have been thrown on querying emty dataset");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("Index: 0, Size: 0", e.getMessage());
         }
     }
@@ -343,8 +322,7 @@ public class DefaultKeyedValues2DTest  {
         try {
             d.removeColumn("XXX");
             fail("UnknownKeyException should have been thrown on querying unknown key");
-        }
-        catch (UnknownKeyException e) {
+        } catch (UnknownKeyException e) {
             assertEquals("Unknown key: XXX", e.getMessage());
         }
     }

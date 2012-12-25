@@ -42,27 +42,15 @@ package org.jfree.data.general;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-
+import static org.junit.Assert.*;
 
 
 /**
  * Tests for the {@link DefaultKeyedValues2DDataset} class.
  */
-public class DefaultKeyedValues2DDatasetTest  {
-
-
-
+public class DefaultKeyedValues2DDatasetTest {
 
 
     /**
@@ -93,16 +81,16 @@ public class DefaultKeyedValues2DDatasetTest  {
         d1.addValue(new Double(452.7), "Row2", "Col2");
 
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(d1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(d1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-            );
+        );
         DefaultKeyedValues2DDataset d2 = (DefaultKeyedValues2DDataset) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(d1, d2);
 

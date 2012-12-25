@@ -45,22 +45,16 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ui.Size2D;
 import org.junit.Test;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link ImageTitle} class.
  */
-public class ImageTitleTest  {
-
-
-
+public class ImageTitleTest {
 
 
     /**

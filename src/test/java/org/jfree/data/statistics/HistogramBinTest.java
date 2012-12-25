@@ -42,25 +42,14 @@ package org.jfree.data.statistics;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link HistogramBin} class.
  */
-public class HistogramBinTest  {
-
-
-
+public class HistogramBinTest {
 
 
     /**
@@ -103,16 +92,16 @@ public class HistogramBinTest  {
         double end = 20.0;
         HistogramBin b1 = new HistogramBin(start, end);
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(b1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(b1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-            );
+        );
         HistogramBin b2 = (HistogramBin) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(b1, b2);
 

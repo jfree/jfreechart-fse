@@ -62,25 +62,25 @@
 
 package org.jfree.chart.plot;
 
-import java.awt.Graphics2D;
+import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.axis.AxisSpace;
+import org.jfree.chart.axis.AxisState;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.event.PlotChangeEvent;
+import org.jfree.chart.event.PlotChangeListener;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.data.Range;
+
+import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Collections;
 import java.util.List;
-
-import org.jfree.chart.LegendItemCollection;
-import org.jfree.chart.axis.AxisSpace;
-import org.jfree.chart.axis.AxisState;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.event.PlotChangeEvent;
-import org.jfree.chart.event.PlotChangeListener;
-import org.jfree.data.Range;
 
 /**
  * A combined category plot where the range axis is shared.
@@ -230,8 +230,7 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
     public List<CategoryPlot> getSubplots() {
         if (this.subplots != null) {
             return Collections.unmodifiableList(this.subplots);
-        }
-        else {
+        } else {
             return Collections.EMPTY_LIST;
         }
     }
@@ -257,13 +256,11 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
             if (orientation == PlotOrientation.VERTICAL) {
                 space.setLeft(fixed.getLeft());
                 space.setRight(fixed.getRight());
-            }
-            else if (orientation == PlotOrientation.HORIZONTAL) {
+            } else if (orientation == PlotOrientation.HORIZONTAL) {
                 space.setTop(fixed.getTop());
                 space.setBottom(fixed.getBottom());
             }
-        }
-        else {
+        } else {
             ValueAxis valueAxis = getRangeAxis();
             RectangleEdge valueEdge = Plot.resolveRangeAxisLocation(
                     getRangeAxisLocation(), orientation);
@@ -288,8 +285,7 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
         double usableSize = 0.0;
         if (orientation == PlotOrientation.VERTICAL) {
             usableSize = adjustedPlotArea.getWidth() - this.gap * (n - 1);
-        }
-        else if (orientation == PlotOrientation.HORIZONTAL) {
+        } else if (orientation == PlotOrientation.HORIZONTAL) {
             usableSize = adjustedPlotArea.getHeight() - this.gap * (n - 1);
         }
 
@@ -302,8 +298,7 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
                 this.subplotArea[i] = new Rectangle2D.Double(x, y, w,
                         adjustedPlotArea.getHeight());
                 x = x + w + this.gap;
-            }
-            else if (orientation == PlotOrientation.HORIZONTAL) {
+            } else if (orientation == PlotOrientation.HORIZONTAL) {
                 double h = usableSize * plot.getWeight() / totalWeight;
                 this.subplotArea[i] = new Rectangle2D.Double(x, y,
                         adjustedPlotArea.getWidth(), h);
@@ -334,7 +329,7 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
      */
     @Override
     public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
-            PlotState parentState, PlotRenderingInfo info) {
+                     PlotState parentState, PlotRenderingInfo info) {
 
         // set up info collection...
         if (info != null) {
@@ -413,14 +408,14 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
      */
     @Override
     public Range getDataRange(ValueAxis axis) {
-         Range result = null;
-         if (this.subplots != null) {
-             for (CategoryPlot subplot : this.subplots) {
-                 result = Range.combine(result, subplot.getDataRange(axis));
-             }
-         }
-         return result;
-     }
+        Range result = null;
+        if (this.subplots != null) {
+            for (CategoryPlot subplot : this.subplots) {
+                result = Range.combine(result, subplot.getDataRange(axis));
+            }
+        }
+        return result;
+    }
 
     /**
      * Returns a collection of legend items for the plot.
@@ -523,7 +518,7 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
     @Override
     public Object clone() throws CloneNotSupportedException {
         CombinedRangeCategoryPlot result
-            = (CombinedRangeCategoryPlot) super.clone();
+                = (CombinedRangeCategoryPlot) super.clone();
         result.subplots = (List) ObjectUtilities.deepClone(this.subplots);
         for (CategoryPlot subplot : result.subplots) {
             Plot child = subplot;
@@ -549,7 +544,7 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
 
         stream.defaultReadObject();
 

@@ -61,10 +61,10 @@ public class AttributedStringUtilities {
 
     /**
      * Tests two attributed strings for equality.
-     * 
+     *
      * @param s1  string 1 (<code>null</code> permitted).
      * @param s2  string 2 (<code>null</code> permitted).
-     * 
+     *
      * @return <code>true</code> if <code>s1</code> and <code>s2</code> are
      *         equal or both <code>null</code>, and <code>false</code> 
      *         otherwise.
@@ -105,5 +105,5 @@ public class AttributedStringUtilities {
         }
         return c2 == CharacterIterator.DONE;
     }
-    
+
 }

@@ -42,10 +42,6 @@
 
 package org.jfree.data.statistics;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.jfree.chart.axis.NumberComparartor;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.KeyedObjects2D;
@@ -53,6 +49,10 @@ import org.jfree.data.Range;
 import org.jfree.data.RangeInfo;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DatasetChangeEvent;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A category dataset that defines multiple values for each item.
@@ -134,15 +134,13 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
             // update the cached range values...
             if (this.maximumRangeValue == null) {
                 this.maximumRangeValue = maxval;
-            }
-            else if (maxval > this.maximumRangeValue.doubleValue()) {
+            } else if (maxval > this.maximumRangeValue.doubleValue()) {
                 this.maximumRangeValue = maxval;
             }
 
             if (this.minimumRangeValue == null) {
                 this.minimumRangeValue = minval;
-            }
-            else if (minval < this.minimumRangeValue.doubleValue()) {
+            } else if (minval < this.minimumRangeValue.doubleValue()) {
                 this.minimumRangeValue = minval;
             }
             this.rangeBounds = new Range(this.minimumRangeValue.doubleValue(),
@@ -162,12 +160,11 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
      * @return The list of values.
      */
     @Override
-	public List<Number> getValues(int row, int column) {
+    public List<Number> getValues(int row, int column) {
         List<Number> values = (List<Number>) this.data.getObject(row, column);
         if (values != null) {
             return Collections.unmodifiableList(values);
-        }
-        else {
+        } else {
             return Collections.EMPTY_LIST;
         }
     }
@@ -182,7 +179,7 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
      * @return The list of values.
      */
     @Override
-	public List<Number> getValues(Comparable rowKey, Comparable columnKey) {
+    public List<Number> getValues(Comparable rowKey, Comparable columnKey) {
         return Collections.unmodifiableList((List<Number>) this.data.getObject(rowKey,
                 columnKey));
     }
@@ -196,7 +193,7 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
      * @return The average value.
      */
     @Override
-	public Number getValue(Comparable row, Comparable column) {
+    public Number getValue(Comparable row, Comparable column) {
         List<Number> l = (List<Number>) this.data.getObject(row, column);
         double average = 0.0d;
         int count = 0;
@@ -224,7 +221,7 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
      * @return The average value.
      */
     @Override
-	public Number getValue(int row, int column) {
+    public Number getValue(int row, int column) {
         List<Number> l = (List<Number>) this.data.getObject(row, column);
         double average = 0.0d;
         int count = 0;
@@ -251,7 +248,7 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
      * @return The column index.
      */
     @Override
-	public int getColumnIndex(Comparable key) {
+    public int getColumnIndex(Comparable key) {
         return this.data.getColumnIndex(key);
     }
 
@@ -263,7 +260,7 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
      * @return The column key.
      */
     @Override
-	public Comparable getColumnKey(int column) {
+    public Comparable getColumnKey(int column) {
         return this.data.getColumnKey(column);
     }
 
@@ -273,7 +270,7 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
      * @return The keys.
      */
     @Override
-	public List<Comparable> getColumnKeys() {
+    public List<Comparable> getColumnKeys() {
         return this.data.getColumnKeys();
     }
 
@@ -285,7 +282,7 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
      * @return The row index.
      */
     @Override
-	public int getRowIndex(Comparable key) {
+    public int getRowIndex(Comparable key) {
         return this.data.getRowIndex(key);
     }
 
@@ -297,7 +294,7 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
      * @return The row key.
      */
     @Override
-	public Comparable getRowKey(int row) {
+    public Comparable getRowKey(int row) {
         return this.data.getRowKey(row);
     }
 
@@ -307,7 +304,7 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
      * @return The keys.
      */
     @Override
-	public List<Comparable> getRowKeys() {
+    public List<Comparable> getRowKeys() {
         return this.data.getRowKeys();
     }
 
@@ -317,7 +314,7 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
      * @return The row count.
      */
     @Override
-	public int getRowCount() {
+    public int getRowCount() {
         return this.data.getRowCount();
     }
 
@@ -327,7 +324,7 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
      * @return The column count.
      */
     @Override
-	public int getColumnCount() {
+    public int getColumnCount() {
         return this.data.getColumnCount();
     }
 
@@ -340,7 +337,7 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
      * @return The minimum value.
      */
     @Override
-	public double getRangeLowerBound(boolean includeInterval) {
+    public double getRangeLowerBound(boolean includeInterval) {
         double result = Double.NaN;
         if (this.minimumRangeValue != null) {
             result = this.minimumRangeValue.doubleValue();
@@ -357,7 +354,7 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
      * @return The maximum value.
      */
     @Override
-	public double getRangeUpperBound(boolean includeInterval) {
+    public double getRangeUpperBound(boolean includeInterval) {
         double result = Double.NaN;
         if (this.maximumRangeValue != null) {
             result = this.maximumRangeValue.doubleValue();
@@ -373,7 +370,7 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
      * @return The range.
      */
     @Override
-	public Range getRangeBounds(boolean includeInterval) {
+    public Range getRangeBounds(boolean includeInterval) {
         return this.rangeBounds;
     }
 
@@ -385,7 +382,7 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -405,7 +402,7 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
      * @throws CloneNotSupportedException if the dataset cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         DefaultMultiValueCategoryDataset clone
                 = (DefaultMultiValueCategoryDataset) super.clone();
         clone.data = (KeyedObjects2D) this.data.clone();

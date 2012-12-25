@@ -48,29 +48,15 @@ import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetChangeListener;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link HistogramDataset} class.
  */
 public class HistogramDatasetTest
         implements DatasetChangeListener {
-
-
-
 
 
     private static final double EPSILON = 0.0000000001;
@@ -104,9 +90,9 @@ public class HistogramDatasetTest
         assertEquals(d1, d2);
         assertEquals(d2, d1);
 
-        d1.addSeries("Series 2", new double[] {1.0, 2.0, 3.0}, 2);
+        d1.addSeries("Series 2", new double[]{1.0, 2.0, 3.0}, 2);
         assertFalse(d1.equals(d2));
-        d2.addSeries("Series 2", new double[] {1.0, 2.0, 3.0}, 2);
+        d2.addSeries("Series 2", new double[]{1.0, 2.0, 3.0}, 2);
         assertEquals(d1, d2);
     }
 
@@ -124,9 +110,9 @@ public class HistogramDatasetTest
         assertEquals(d1, d2);
 
         // simple check for independence
-        d1.addSeries("Series 2", new double[] {1.0, 2.0, 3.0}, 2);
+        d1.addSeries("Series 2", new double[]{1.0, 2.0, 3.0}, 2);
         assertFalse(d1.equals(d2));
-        d2.addSeries("Series 2", new double[] {1.0, 2.0, 3.0}, 2);
+        d2.addSeries("Series 2", new double[]{1.0, 2.0, 3.0}, 2);
         assertEquals(d1, d2);
     }
 
@@ -139,22 +125,22 @@ public class HistogramDatasetTest
         HistogramDataset d1 = new HistogramDataset();
         d1.addSeries("Series 1", values, 5);
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(d1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(d1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         HistogramDataset d2 = (HistogramDataset) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(d1, d2);
 
         // simple check for independence
-        d1.addSeries("Series 2", new double[] {1.0, 2.0, 3.0}, 2);
+        d1.addSeries("Series 2", new double[]{1.0, 2.0, 3.0}, 2);
         assertFalse(d1.equals(d2));
-        d2.addSeries("Series 2", new double[] {1.0, 2.0, 3.0}, 2);
+        d2.addSeries("Series 2", new double[]{1.0, 2.0, 3.0}, 2);
         assertEquals(d1, d2);
     }
 
@@ -272,7 +258,7 @@ public class HistogramDatasetTest
      * @param event  the event.
      */
     @Override
-	public void datasetChanged(DatasetChangeEvent event) {
+    public void datasetChanged(DatasetChangeEvent event) {
         this.lastEvent = event;
     }
 

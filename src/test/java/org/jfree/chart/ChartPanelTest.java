@@ -53,10 +53,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.EventListener;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link ChartPanel} class.
@@ -73,12 +70,9 @@ public class ChartPanelTest
      * @param event  the event.
      */
     @Override
-	public void chartChanged(ChartChangeEvent event) {
+    public void chartChanged(ChartChangeEvent event) {
         this.chartChangeEvents.add(event);
     }
-
-
-
 
 
     /**
@@ -122,8 +116,7 @@ public class ChartPanelTest
         try {
             p.getListeners(null);
             fail("A null pointer exception should have been thrown");
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             // we expect to go in here
         }
 
@@ -131,9 +124,8 @@ public class ChartPanelTest
         try {
             p.getListeners(Integer.class);
             fail("Should have thrown a ClassCastException");
-        }
-        catch (ClassCastException e) {
-           //We expext to go in here
+        } catch (ClassCastException e) {
+            //We expext to go in here
         }
     }
 
@@ -143,7 +135,7 @@ public class ChartPanelTest
      * @param event  the event.
      */
     @Override
-	public void chartMouseClicked(ChartMouseEvent event) {
+    public void chartMouseClicked(ChartMouseEvent event) {
         // ignore
     }
 
@@ -153,7 +145,7 @@ public class ChartPanelTest
      * @param event  the event.
      */
     @Override
-	public void chartMouseMoved(ChartMouseEvent event) {
+    public void chartMouseMoved(ChartMouseEvent event) {
         // ignore
     }
 

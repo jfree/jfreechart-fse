@@ -49,9 +49,9 @@
 
 package org.jfree.data.time;
 
-import java.io.Serializable;
-
 import org.jfree.chart.util.ObjectUtilities;
+
+import java.io.Serializable;
 
 /**
  * Represents one data item in a time series.
@@ -152,7 +152,7 @@ public class TimeSeriesDataItem implements Cloneable, Comparable<TimeSeriesDataI
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -175,7 +175,7 @@ public class TimeSeriesDataItem implements Cloneable, Comparable<TimeSeriesDataI
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result;
         result = (this.period != null ? this.period.hashCode() : 0);
         result = 29 * result + (this.value != null ? this.value.hashCode() : 0);
@@ -195,9 +195,9 @@ public class TimeSeriesDataItem implements Cloneable, Comparable<TimeSeriesDataI
      *         relative to another object.
      */
     @Override
-	public int compareTo(TimeSeriesDataItem o1) {
+    public int compareTo(TimeSeriesDataItem o1) {
 
-            return getPeriod().compareTo(o1.getPeriod());
+        return getPeriod().compareTo(o1.getPeriod());
 
     }
 
@@ -208,12 +208,11 @@ public class TimeSeriesDataItem implements Cloneable, Comparable<TimeSeriesDataI
      * @return A clone of the data item.
      */
     @Override
-	public Object clone() {
+    public Object clone() {
         Object clone = null;
         try {
             clone = super.clone();
-        }
-        catch (CloneNotSupportedException e) { // won't get here...
+        } catch (CloneNotSupportedException e) { // won't get here...
             e.printStackTrace();
         }
         return clone;
