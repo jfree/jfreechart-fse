@@ -87,14 +87,14 @@ public class LayeredBarRenderer extends BarRenderer implements Serializable {
     private static final long serialVersionUID = -8716572894780469487L;
 
     /** A list of the width of each series bar. */
-    protected ObjectList seriesBarWidthList;
+    protected ObjectList<Double> seriesBarWidthList;
 
     /**
      * Default constructor.
      */
     public LayeredBarRenderer() {
         super();
-        this.seriesBarWidthList = new ObjectList();
+        this.seriesBarWidthList = new ObjectList<Double>();
     }
 
     /**
@@ -107,7 +107,7 @@ public class LayeredBarRenderer extends BarRenderer implements Serializable {
      */
     public double getSeriesBarWidth(int series) {
         double result = Double.NaN;
-        Number n = (Number) this.seriesBarWidthList.get(series);
+        Number n = this.seriesBarWidthList.get(series);
         if (n != null) {
             result = n.doubleValue();
         }

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------
@@ -49,11 +49,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
@@ -72,13 +72,13 @@ public class PaintMap implements Cloneable, Serializable {
     static final long serialVersionUID = -4639833772123069274L;
 
     /** Storage for the keys and values. */
-    private transient Map store;
+    private transient Map<Comparable, Paint> store;
 
     /**
      * Creates a new (empty) map.
      */
     public PaintMap() {
-        this.store = new HashMap();
+        this.store = new HashMap<Comparable, Paint>();
     }
 
     /**
@@ -93,10 +93,8 @@ public class PaintMap implements Cloneable, Serializable {
      *     <code>null</code>.
      */
     public Paint getPaint(Comparable key) {
-        if (key == null) {
-            throw new IllegalArgumentException("Null 'key' argument.");
-        }
-        return (Paint) this.store.get(key);
+        ParamChecks.nullNotPermitted(key, "key");
+        return this.store.get(key);
     }
 
     /**
@@ -123,9 +121,7 @@ public class PaintMap implements Cloneable, Serializable {
      *     <code>null</code>.
      */
     public void put(Comparable key, Paint paint) {
-        if (key == null) {
-            throw new IllegalArgumentException("Null 'key' argument.");
-        }
+        ParamChecks.nullNotPermitted(key, "key");
         this.store.put(key, paint);
     }
 
@@ -144,7 +140,7 @@ public class PaintMap implements Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -155,10 +151,8 @@ public class PaintMap implements Cloneable, Serializable {
         if (this.store.size() != that.store.size()) {
             return false;
         }
-        Set keys = this.store.keySet();
-        Iterator iterator = keys.iterator();
-        while (iterator.hasNext()) {
-            Comparable key = (Comparable) iterator.next();
+        Set<Comparable> keys = this.store.keySet();
+        for (Comparable key : keys) {
             Paint p1 = getPaint(key);
             Paint p2 = that.getPaint(key);
             if (!PaintUtilities.equal(p1, p2)) {
@@ -176,7 +170,7 @@ public class PaintMap implements Cloneable, Serializable {
      * @throws CloneNotSupportedException if any key is not cloneable.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         // TODO: I think we need to make sure the keys are actually cloned,
         // whereas the paint instances are always immutable so they're OK
         return super.clone();
@@ -192,10 +186,8 @@ public class PaintMap implements Cloneable, Serializable {
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
         stream.writeInt(this.store.size());
-        Set keys = this.store.keySet();
-        Iterator iterator = keys.iterator();
-        while (iterator.hasNext()) {
-            Comparable key = (Comparable) iterator.next();
+        Set<Comparable> keys = this.store.keySet();
+        for (Comparable key : keys) {
             stream.writeObject(key);
             Paint paint = getPaint(key);
             SerialUtilities.writePaint(paint, stream);
@@ -213,7 +205,7 @@ public class PaintMap implements Cloneable, Serializable {
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.store = new HashMap();
+        this.store = new HashMap<Comparable, Paint>();
         int keyCount = stream.readInt();
         for (int i = 0; i < keyCount; i++) {
             Comparable key = (Comparable) stream.readObject();

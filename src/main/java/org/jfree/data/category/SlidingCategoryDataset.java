@@ -201,8 +201,8 @@ public class SlidingCategoryDataset extends AbstractDataset
      * @see #getColumnKey(int)
      */
     @Override
-	public List getColumnKeys() {
-        List result = new java.util.ArrayList();
+	public List<Comparable> getColumnKeys() {
+        List<Comparable> result = new java.util.ArrayList<Comparable>();
         int last = lastCategoryIndex();
         for (int i = this.firstCategoryIndex; i <= last; i++) {
             result.add(this.underlying.getColumnKey(i));
@@ -242,7 +242,7 @@ public class SlidingCategoryDataset extends AbstractDataset
      * @return The keys.
      */
     @Override
-	public List getRowKeys() {
+	public List<Comparable> getRowKeys() {
         return this.underlying.getRowKeys();
     }
 

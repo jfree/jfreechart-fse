@@ -173,7 +173,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset
         }
 
         // fetch the series, remove the change listener, then remove the series.
-        XYSeries ts = (XYSeries) this.data.get(series);
+        XYSeries ts = this.data.get(series);
         ts.removeChangeListener(this);
         this.data.remove(series);
         fireDatasetChanged();
@@ -314,7 +314,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset
         ParamChecks.nullNotPermitted(key, "key");
         int seriesCount = getSeriesCount();
         for (int i = 0; i < seriesCount; i++) {
-            XYSeries series = (XYSeries) this.data.get(i);
+            XYSeries series = this.data.get(i);
             if (key.equals(series.getKey())) {
                 return i;
             }

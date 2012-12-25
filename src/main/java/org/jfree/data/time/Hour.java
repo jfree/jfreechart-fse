@@ -425,7 +425,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
      * @return negative == before, zero == same, positive == after.
      */
     @Override
-	public int compareTo(Object o1) {
+	public int compareTo(TimePeriod o1) {
         int result;
 
         // CASE 1 : Comparing to another Hour object
@@ -440,16 +440,9 @@ public class Hour extends RegularTimePeriod implements Serializable {
 
         // CASE 2 : Comparing to another TimePeriod object
         // -----------------------------------------------
-        else if (o1 instanceof RegularTimePeriod) {
+        else {
             // more difficult case - evaluate later...
             result = 0;
-        }
-
-        // CASE 3 : Comparing to a non-TimePeriod object
-        // ---------------------------------------------
-        else {
-            // consider time periods to be ordered after general objects
-            result = 1;
         }
 
         return result;

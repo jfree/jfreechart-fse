@@ -51,7 +51,6 @@ package org.jfree.chart.ui.about;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -113,7 +112,7 @@ public class SystemPropertiesTableModel extends SortableTableModel {
      * A class for comparing SystemProperty objects.
      *
      */
-    protected static class SystemPropertyComparator implements Comparator {
+    protected static class SystemPropertyComparator implements Comparator<SystemProperty> {
 
         /** Indicates the sort order. */
         private boolean ascending;
@@ -131,28 +130,20 @@ public class SystemPropertiesTableModel extends SortableTableModel {
         /**
          * Compares two objects.
          *
-         * @param o1  the first object.
-         * @param o2  the second object.
+         * @param sp1  the first object.
+         * @param sp2  the second object.
          *
          * @return an integer that indicates the relative order of the objects.
          */
         @Override
-		public int compare(final Object o1, final Object o2) {
+		public int compare(final SystemProperty sp1, final SystemProperty sp2) {
 
-            if ((o1 instanceof SystemProperty)
-                    && (o2 instanceof SystemProperty)) {
-                final SystemProperty sp1 = (SystemProperty) o1;
-                final SystemProperty sp2 = (SystemProperty) o2;
                 if (this.ascending) {
                     return sp1.getName().compareTo(sp2.getName());
                 }
                 else {
                     return sp2.getName().compareTo(sp1.getName());
                 }
-            }
-            else {
-                return 0;
-            }
 
         }
 
@@ -195,7 +186,7 @@ public class SystemPropertiesTableModel extends SortableTableModel {
     }
 
     /** Storage for the properties. */
-    private List properties;
+    private List<SystemProperty> properties;
 
     /** Localised name column label. */
     private String nameColumnLabel;
@@ -209,15 +200,14 @@ public class SystemPropertiesTableModel extends SortableTableModel {
      */
     public SystemPropertiesTableModel() {
 
-        this.properties = new java.util.ArrayList();
+        this.properties = new java.util.ArrayList<SystemProperty>();
         try {
             final Properties p = System.getProperties();
-            final Iterator iterator = p.keySet().iterator();
-            while (iterator.hasNext()) {
-                final String name = (String) iterator.next();
-                    final String value = System.getProperty(name);
-                    final SystemProperty sp = new SystemProperty(name, value);
-                    this.properties.add(sp);
+            for (Object o : p.keySet()) {
+                final String name = (String) o;
+                final String value = System.getProperty(name);
+                final SystemProperty sp = new SystemProperty(name, value);
+                this.properties.add(sp);
             }
         }
         catch (SecurityException se) {
@@ -311,7 +301,7 @@ public class SystemPropertiesTableModel extends SortableTableModel {
     @Override
 	public Object getValueAt(final int row, final int column) {
 
-        final SystemProperty sp = (SystemProperty) this.properties.get(row);
+        final SystemProperty sp = this.properties.get(row);
         if (column == 0) {
             return sp.getName();
         }

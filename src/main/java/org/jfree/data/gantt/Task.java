@@ -44,14 +44,14 @@
 
 package org.jfree.data.gantt;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.time.SimpleTimePeriod;
 import org.jfree.data.time.TimePeriod;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 /**
  * A simple representation of a task.  The task has a description and a
@@ -72,7 +72,7 @@ public class Task implements Cloneable, PublicCloneable, Serializable {
     private Double percentComplete;
 
     /** Storage for the sub-tasks (if any). */
-    private List subtasks;
+    private List<Task> subtasks;
 
     /**
      * Creates a new task.
@@ -88,7 +88,7 @@ public class Task implements Cloneable, PublicCloneable, Serializable {
         this.description = description;
         this.duration = duration;
         this.percentComplete = null;
-        this.subtasks = new java.util.ArrayList();
+        this.subtasks = new java.util.ArrayList<Task>();
     }
 
     /**
@@ -207,7 +207,7 @@ public class Task implements Cloneable, PublicCloneable, Serializable {
      * @return The sub-task.
      */
     public Task getSubtask(int index) {
-        return (Task) this.subtasks.get(index);
+        return this.subtasks.get(index);
     }
 
     /**

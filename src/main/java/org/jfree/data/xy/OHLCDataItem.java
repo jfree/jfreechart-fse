@@ -93,11 +93,11 @@ public class OHLCDataItem implements Comparable, Serializable {
             throw new IllegalArgumentException("Null 'date' argument.");
         }
         this.date = date;
-        this.open = new Double(open);
-        this.high = new Double(high);
-        this.low = new Double(low);
-        this.close = new Double(close);
-        this.volume = new Double(volume);
+        this.open = open;
+        this.high = high;
+        this.low = low;
+        this.close = close;
+        this.volume = volume;
     }
 
     /**

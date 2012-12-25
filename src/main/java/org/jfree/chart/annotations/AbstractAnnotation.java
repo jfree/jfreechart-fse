@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -87,7 +87,7 @@ public abstract class AbstractAnnotation implements Annotation, Cloneable,
      * @see #removeChangeListener(AnnotationChangeListener)
      */
     @Override
-	public void addChangeListener(AnnotationChangeListener listener) {
+    public void addChangeListener(AnnotationChangeListener listener) {
         this.listenerList.add(AnnotationChangeListener.class, listener);
     }
 
@@ -100,7 +100,7 @@ public abstract class AbstractAnnotation implements Annotation, Cloneable,
      * @see #addChangeListener(AnnotationChangeListener)
      */
     @Override
-	public void removeChangeListener(AnnotationChangeListener listener) {
+    public void removeChangeListener(AnnotationChangeListener listener) {
         this.listenerList.remove(AnnotationChangeListener.class, listener);
     }
 
@@ -117,7 +117,7 @@ public abstract class AbstractAnnotation implements Annotation, Cloneable,
      * @see #removeChangeListener(AnnotationChangeListener)
      */
     public boolean hasListener(EventListener listener) {
-        List list = Arrays.asList(this.listenerList.getListenerList());
+        List<Object> list = Arrays.asList(this.listenerList.getListenerList());
         return list.contains(listener);
     }
 
@@ -154,7 +154,7 @@ public abstract class AbstractAnnotation implements Annotation, Cloneable,
     }
 
     /**
-     * Returns a flag that indicates whether listeners should be 
+     * Returns a flag that indicates whether listeners should be
      * notified about changes to the annotation.
      *
      * @return  the flag.
@@ -181,7 +181,7 @@ public abstract class AbstractAnnotation implements Annotation, Cloneable,
     }
 
     /**
-     * Returns a clone of the annotation. The cloned annotation will NOT 
+     * Returns a clone of the annotation. The cloned annotation will NOT
      * include the {@link AnnotationChangeListener} references that have been
      * registered with this annotation.
      *
@@ -191,7 +191,7 @@ public abstract class AbstractAnnotation implements Annotation, Cloneable,
      *                                     cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         AbstractAnnotation clone = (AbstractAnnotation) super.clone();
         clone.listenerList = new EventListenerList();
         return clone;

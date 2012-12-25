@@ -46,17 +46,16 @@
 
 package org.jfree.chart;
 
-import org.jfree.chart.util.ObjectUtilities;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * A collection of legend items.
  */
-public class LegendItemCollection implements Cloneable, Serializable {
+public class LegendItemCollection implements Cloneable, Serializable, Iterable<LegendItem> {
 
     /** For serialization. */
     private static final long serialVersionUID = 1365215565589815953L;
@@ -68,7 +67,7 @@ public class LegendItemCollection implements Cloneable, Serializable {
      * Constructs a new legend item collection, initially empty.
      */
     public LegendItemCollection() {
-        this.items = new ArrayList<LegendItem>();
+        this.items = new java.util.ArrayList<LegendItem>();
     }
 
     /**
@@ -115,7 +114,7 @@ public class LegendItemCollection implements Cloneable, Serializable {
      *
      * @return An iterator.
      */
-    public Iterator iterator() {
+    public Iterator<LegendItem> iterator() {
         return this.items.iterator();
     }
 
@@ -127,7 +126,7 @@ public class LegendItemCollection implements Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-    public boolean equals(Object obj) {
+	public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -147,9 +146,9 @@ public class LegendItemCollection implements Cloneable, Serializable {
      *         cloneable.
      */
     @Override
-    public Object clone() throws CloneNotSupportedException {
+	public Object clone() throws CloneNotSupportedException {
         LegendItemCollection clone = (LegendItemCollection) super.clone();
-        clone.items = (List<LegendItem>) ObjectUtilities.deepClone(this.items);
+        clone.items = (List) ObjectUtilities.deepClone(this.items);
         return clone;
     }
 

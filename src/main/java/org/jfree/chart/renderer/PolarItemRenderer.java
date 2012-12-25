@@ -97,7 +97,7 @@ public interface PolarItemRenderer {
      * @param dataArea  the data area.
      */
     public void drawRadialGridLines(Graphics2D g2, PolarPlot plot,
-            ValueAxis radialAxis, List ticks, Rectangle2D dataArea);
+            ValueAxis radialAxis, List<ValueTick> ticks, Rectangle2D dataArea);
 
     /**
      * Return the legend for the given series.

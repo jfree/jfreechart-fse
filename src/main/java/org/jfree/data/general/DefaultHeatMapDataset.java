@@ -247,7 +247,7 @@ public class DefaultHeatMapDataset extends AbstractDataset
      */
     @Override
 	public Number getZ(int xIndex, int yIndex) {
-        return new Double(getZValue(xIndex, yIndex));
+        return getZValue(xIndex, yIndex);
     }
 
     /**

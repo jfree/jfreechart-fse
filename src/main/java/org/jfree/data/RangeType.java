@@ -40,13 +40,11 @@
 
 package org.jfree.data;
 
-import java.io.Serializable;
-
 /**
  * Used to indicate the type of range to display on an axis (full, positive or
  * negative).
  */
-public enum RangeType implements Serializable {
+public enum RangeType {
 
     /** Full range (positive and negative). */
     FULL("RangeType.FULL"),
@@ -56,9 +54,6 @@ public enum RangeType implements Serializable {
 
     /** Negative range. */
     NEGATIVE("RangeType.NEGATIVE");
-
-    /** For serialization. */
-    private static final long serialVersionUID = -9073319010650549239L;
 
     /** The name. */
     private String name;
@@ -78,7 +73,8 @@ public enum RangeType implements Serializable {
      * @return The string.
      */
     @Override
-    public String toString() {
+	public String toString() {
         return this.name;
     }
+
 }

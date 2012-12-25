@@ -49,11 +49,11 @@ package org.jfree.chart.util;
 /**
  * A list of <code>Boolean</code> objects.
  */
-public class BooleanList extends GenericObjectList<Boolean> {
+public class BooleanList extends AbstractObjectList<Boolean> {
 
     /** For serialization. */
     private static final long serialVersionUID = -8543170333219422042L;
-
+    
     /**
      * Creates a new list.
      */
@@ -92,7 +92,19 @@ public class BooleanList extends GenericObjectList<Boolean> {
      */
     @Override
     public boolean equals(final Object o) {
-        return o instanceof BooleanList && super.equals(o);
+        if (o instanceof BooleanList) {
+            return super.equals(o);
+        }
+        return false;
     }
 
+    /**
+     * Returns a hash code value for the object.
+     *
+     * @return the hashcode
+     */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

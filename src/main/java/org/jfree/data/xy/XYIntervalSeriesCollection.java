@@ -71,7 +71,7 @@ public class XYIntervalSeriesCollection extends AbstractIntervalXYDataset
      * Creates a new instance of <code>XIntervalSeriesCollection</code>.
      */
     public XYIntervalSeriesCollection() {
-        this.data = new java.util.ArrayList();
+        this.data = new java.util.ArrayList<XYIntervalSeries>();
     }
 
     /**
@@ -246,7 +246,7 @@ public class XYIntervalSeriesCollection extends AbstractIntervalXYDataset
      */
     @Override
     public Number getY(int series, int item) {
-        return new Double(getYValue(series, item));
+        return getYValue(series, item);
     }
 
     /**
@@ -259,7 +259,7 @@ public class XYIntervalSeriesCollection extends AbstractIntervalXYDataset
      */
     @Override
     public Number getStartX(int series, int item) {
-        return new Double(getStartXValue(series, item));
+        return getStartXValue(series, item);
     }
 
     /**
@@ -272,7 +272,7 @@ public class XYIntervalSeriesCollection extends AbstractIntervalXYDataset
      */
     @Override
     public Number getEndX(int series, int item) {
-        return new Double(getEndXValue(series, item));
+        return getEndXValue(series, item);
     }
 
     /**
@@ -286,7 +286,7 @@ public class XYIntervalSeriesCollection extends AbstractIntervalXYDataset
      */
     @Override
     public Number getStartY(int series, int item) {
-        return new Double(getStartYValue(series, item));
+        return getStartYValue(series, item);
     }
 
     /**
@@ -300,7 +300,7 @@ public class XYIntervalSeriesCollection extends AbstractIntervalXYDataset
      */
     @Override
     public Number getEndY(int series, int item) {
-        return new Double(getEndYValue(series, item));
+        return getEndYValue(series, item);
     }
 
     /**
@@ -385,7 +385,7 @@ public class XYIntervalSeriesCollection extends AbstractIntervalXYDataset
         XYIntervalSeriesCollection clone
                 = (XYIntervalSeriesCollection) super.clone();
         int seriesCount = getSeriesCount();
-        clone.data = new java.util.ArrayList(seriesCount);
+        clone.data = new java.util.ArrayList<XYIntervalSeries>(seriesCount);
         for (int i = 0; i < this.data.size(); i++) {
             clone.data.set(i, (XYIntervalSeries) getSeries(i).clone());
         }

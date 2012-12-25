@@ -72,9 +72,9 @@ public abstract class Regression {
         double sumY = 0;
         double sumXX = 0;
         double sumXY = 0;
-        for (int i = 0; i < n; i++) {
-            double x = data[i][0];
-            double y = data[i][1];
+        for (double[] aData : data) {
+            double x = aData[0];
+            double y = aData[1];
             sumX += x;
             sumY += y;
             double xx = x * x;
@@ -159,9 +159,9 @@ public abstract class Regression {
         double sumY = 0;
         double sumXX = 0;
         double sumXY = 0;
-        for (int i = 0; i < n; i++) {
-            double x = Math.log(data[i][0]);
-            double y = Math.log(data[i][1]);
+        for (double[] aData : data) {
+            double x = Math.log(aData[0]);
+            double y = Math.log(aData[1]);
             sumX += x;
             sumY += y;
             double xx = x * x;
@@ -346,17 +346,12 @@ public abstract class Regression {
                 if (result[i][0] != 0) {
                     found = true;
                     double[] temp = result[0];
-                    for (int j = 0; j < result[i].length; j++) {
-                        result[0][j] = result[i][j];
-                    }
-                    for (int j = 0; j < temp.length; j++) {
-                        result[i][j] = temp[j];
-                    }
+                    System.arraycopy(result[i], 0, result[0], 0, result[i].length);
+                    System.arraycopy(temp, 0, result[i], 0, temp.length);
                     break;
                 }
             }
             if (!found) {
-                System.out.println("Equation has no solution!");
                 return new double[equations - 1][coefficients - 1];
             }
         }

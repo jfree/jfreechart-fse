@@ -167,8 +167,8 @@ public class SunJPEGEncoderAdapter implements ImageEncoder {
         if (outputStream == null) {
             throw new IllegalArgumentException("Null 'outputStream' argument.");
         }
-        Iterator iterator = ImageIO.getImageWritersByFormatName("jpeg");
-        ImageWriter writer = (ImageWriter) iterator.next();
+        Iterator<ImageWriter> iterator = ImageIO.getImageWritersByFormatName("jpeg");
+        ImageWriter writer = iterator.next();
         ImageWriteParam p = writer.getDefaultWriteParam();
         p.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
         p.setCompressionQuality(this.quality);

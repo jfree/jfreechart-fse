@@ -56,6 +56,7 @@ import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -121,12 +122,16 @@ public final class ObjectUtilities {
      * @param o2 object 2 (<code>null</code> permitted).
      * @return <code>true</code> or <code>false</code>.
      */
-    @SuppressWarnings("SimplifiableIfStatement")
     public static boolean equal(final Object o1, final Object o2) {
         if (o1 == o2) {
             return true;
         }
-        return o1 != null && o1.equals(o2);
+        if (o1 != null) {
+            return o1.equals(o2);
+        }
+        else {
+            return false;
+        }
     }
 
     /**
@@ -153,27 +158,29 @@ public final class ObjectUtilities {
      * @return A clone of the specified object.
      * @throws CloneNotSupportedException if the object cannot be cloned.
      */
-    @SuppressWarnings("unchecked")
-    public static <Type> Type clone(final Type object)
-            throws CloneNotSupportedException {
+    public static <T> T clone(final T object)
+        throws CloneNotSupportedException {
         if (object == null) {
             throw new IllegalArgumentException("Null 'object' argument.");
         }
         if (object instanceof PublicCloneable) {
             final PublicCloneable pc = (PublicCloneable) object;
-            return (Type) pc.clone();
-        } else {
+            return (T) pc.clone();
+        }
+        else {
             try {
-                final Method method = object.getClass().getMethod("clone",
-                        (Class[]) null);
+                final Method method = object.getClass().getMethod("clone");
                 if (Modifier.isPublic(method.getModifiers())) {
-                    return (Type) method.invoke(object, (Object[]) null);
+                    return (T) method.invoke(object);
                 }
-            } catch (NoSuchMethodException e) {
+            }
+            catch (NoSuchMethodException e) {
                 //Log.warn("Object without clone() method is impossible.");
-            } catch (IllegalAccessException e) {
+            }
+            catch (IllegalAccessException e) {
                 //Log.warn("Object.clone(): unable to call method.");
-            } catch (InvocationTargetException e) {
+            }
+            catch (InvocationTargetException e) {
                 //Log.warn("Object without clone() method is impossible.");
             }
         }
@@ -190,8 +197,8 @@ public final class ObjectUtilities {
      * @throws CloneNotSupportedException if any of the items in the collection
      *                                    cannot be cloned.
      */
-    public static <Type> Collection<Type> deepClone(final Collection<Type> collection)
-            throws CloneNotSupportedException {
+    public static <T, C extends Collection<T>> C deepClone(final C collection)
+        throws CloneNotSupportedException {
 
         if (collection == null) {
             throw new IllegalArgumentException("Null 'collection' argument.");
@@ -199,13 +206,13 @@ public final class ObjectUtilities {
         // all JDK-Collections are cloneable ...
         // and if the collection is not clonable, then we should throw
         // a CloneNotSupportedException anyway ...
-        final Collection<Type> result = ObjectUtilities.clone(collection);
+        final C result = ObjectUtilities.clone(collection);
         result.clear();
-        for (Type item : collection) {
-            if (item != null) {
-                result.add(clone(item));
-            } else {
+        for (T item : collection) {
+            if (item == null) {
                 result.add(null);
+            } else {
+                result.add(clone(item));
             }
         }
         return result;
@@ -227,7 +234,7 @@ public final class ObjectUtilities {
      * @return the custom classloader or null to use the default.
      */
     public static ClassLoader getClassLoader() {
-        return classLoader;
+      return classLoader;
     }
 
     /**
@@ -242,11 +249,12 @@ public final class ObjectUtilities {
      */
     public static ClassLoader getClassLoader(final Class c) {
         final String localClassLoaderSource;
-        synchronized (ObjectUtilities.class) {
-            if (classLoader != null) {
-                return classLoader;
-            }
-            localClassLoaderSource = classLoaderSource;
+        synchronized(ObjectUtilities.class)
+        {
+          if (classLoader != null) {
+              return classLoader;
+          }
+          localClassLoaderSource = classLoaderSource;
         }
 
         if ("ThreadContext".equals(localClassLoaderSource)) {
@@ -260,7 +268,8 @@ public final class ObjectUtilities {
         final ClassLoader applicationCL = c.getClassLoader();
         if (applicationCL == null) {
             return ClassLoader.getSystemClassLoader();
-        } else {
+        }
+        else {
             return applicationCL;
         }
     }
@@ -345,7 +354,8 @@ public final class ObjectUtilities {
 
         try {
             return url.openStream();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             return null;
         }
     }
@@ -359,7 +369,7 @@ public final class ObjectUtilities {
      * @return the url of the resource or null, if not found.
      */
     public static InputStream getResourceRelativeAsStream
-    (final String name, final Class context) {
+        (final String name, final Class context) {
         final URL url = getResourceRelative(name, context);
         if (url == null) {
             return null;
@@ -367,7 +377,8 @@ public final class ObjectUtilities {
 
         try {
             return url.openStream();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             return null;
         }
     }
@@ -386,7 +397,8 @@ public final class ObjectUtilities {
             final ClassLoader loader = getClassLoader(source);
             final Class c = loader.loadClass(className);
             return c.newInstance();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             return null;
         }
     }
@@ -402,17 +414,17 @@ public final class ObjectUtilities {
      * @param type  the type.
      * @return the instantiated object or null, if an error occurred.
      */
-    @SuppressWarnings("unchecked")
-    public static Object loadAndInstantiate(final String className,
-                                            final Class source,
-                                            final Class type) {
+    public static <T> T loadAndInstantiate(final String className,
+                                            final Class<?> source,
+                                            final Class<T> type) {
         try {
             final ClassLoader loader = getClassLoader(source);
-            final Class c = loader.loadClass(className);
+            final Class<?> c = loader.loadClass(className);
             if (type.isAssignableFrom(c)) {
-                return c.newInstance();
+                return (T) c.newInstance();
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             return null;
         }
         return null;
@@ -426,19 +438,22 @@ public final class ObjectUtilities {
      */
     public static boolean isJDK14() {
         try {
-            final ClassLoader loader = getClassLoader(ObjectUtilities.class);
-            if (loader != null) {
-                try {
-                    loader.loadClass("java.util.RandomAccess");
-                    return true;
-                } catch (ClassNotFoundException e) {
-                    return false;
-                } catch (Exception e) {
-                    // do nothing, but do not crash ...
-                }
-            }
-        } catch (Exception e) {
-            // cant do anything about it, we have to accept and ignore it ..
+          final ClassLoader loader = getClassLoader(ObjectUtilities.class);
+          if (loader != null) {
+              try {
+                loader.loadClass("java.util.RandomAccess");
+                return true;
+              }
+              catch (ClassNotFoundException e) {
+                return false;
+              }
+              catch(Exception e) {
+                // do nothing, but do not crash ...
+              }
+          }
+        }
+        catch (Exception e) {
+          // cant do anything about it, we have to accept and ignore it ..
         }
 
         // OK, the quick and dirty, but secure way failed. Lets try it
@@ -452,23 +467,27 @@ public final class ObjectUtilities {
             }
 
             String[] versions = parseVersions(version);
-            String[] target = new String[]{"1", "4"};
+            String[] target = new String[]{ "1", "4" };
             return (ArrayUtilities.compareVersionArrays(versions, target) >= 0);
-        } catch (Exception e) {
+        }
+        catch(Exception e) {
             return false;
         }
     }
 
-    private static String[] parseVersions(String version) {
-        if (version == null) {
-            return new String[0];
-        }
+    private static String[] parseVersions (String version)
+    {
+      if (version == null)
+      {
+        return new String[0];
+      }
 
-        final ArrayList<String> versions = new ArrayList<String>();
-        final StringTokenizer strtok = new StringTokenizer(version, ".");
-        while (strtok.hasMoreTokens()) {
-            versions.add(strtok.nextToken());
-        }
-        return versions.toArray(new String[versions.size()]);
+      final List<String> versions = new ArrayList<String>();
+      final StringTokenizer strtok = new StringTokenizer(version, ".");
+      while (strtok.hasMoreTokens())
+      {
+        versions.add (strtok.nextToken());
+      }
+      return versions.toArray(new String[versions.size()]);
     }
 }

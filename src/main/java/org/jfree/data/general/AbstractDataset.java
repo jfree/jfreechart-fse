@@ -159,7 +159,7 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      * @see #removeChangeListener(DatasetChangeListener)
      */
     public boolean hasListener(EventListener listener) {
-        List list = Arrays.asList(this.listenerList.getListenerList());
+        List<Object> list = Arrays.asList(this.listenerList.getListenerList());
         return list.contains(listener);
     }
 

@@ -104,7 +104,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.LegendItem;
@@ -716,7 +715,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
 
         // draw mean - SPECIAL AIMS REQUIREMENT...
         g2.setPaint(this.artifactPaint);
-        double aRadius = 0;                 // average radius
+        double aRadius;                 // average radius
         if (this.meanVisible) {
             Number xMean = bawDataset.getMeanValue(row, column);
             if (xMean != null) {
@@ -806,7 +805,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
             xx = xx + offset;
         }
 
-        double yyAverage = 0.0;
+        double yyAverage;
         double yyOutlier;
 
         Paint itemPaint = getItemPaint(row, column);
@@ -903,34 +902,31 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
 
         // draw outliers
         double oRadius = state.getBarWidth() / 3;    // outlier radius
-        List outliers = new ArrayList();
+        List<Outlier> outliers = new ArrayList<Outlier>();
         OutlierListCollection outlierListCollection
                 = new OutlierListCollection();
 
         // From outlier array sort out which are outliers and put these into a
         // list If there are any farouts, set the flag on the
         // OutlierListCollection
-        List yOutliers = bawDataset.getOutliers(row, column);
+        List<Number> yOutliers = bawDataset.getOutliers(row, column);
         if (yOutliers != null) {
-            for (int i = 0; i < yOutliers.size(); i++) {
-                double outlier = ((Number) yOutliers.get(i)).doubleValue();
+            for (Number yOutlier : yOutliers) {
+                double outlier = ((Number) yOutlier).doubleValue();
                 Number minOutlier = bawDataset.getMinOutlier(row, column);
                 Number maxOutlier = bawDataset.getMaxOutlier(row, column);
                 Number minRegular = bawDataset.getMinRegularValue(row, column);
                 Number maxRegular = bawDataset.getMaxRegularValue(row, column);
                 if (outlier > maxOutlier.doubleValue()) {
                     outlierListCollection.setHighFarOut(true);
-                }
-                else if (outlier < minOutlier.doubleValue()) {
+                } else if (outlier < minOutlier.doubleValue()) {
                     outlierListCollection.setLowFarOut(true);
-                }
-                else if (outlier > maxRegular.doubleValue()) {
+                } else if (outlier > maxRegular.doubleValue()) {
                     yyOutlier = rangeAxis.valueToJava2D(outlier, dataArea,
                             location);
                     outliers.add(new Outlier(xx + state.getBarWidth() / 2.0,
                             yyOutlier, oRadius));
-                }
-                else if (outlier < minRegular.doubleValue()) {
+                } else if (outlier < minRegular.doubleValue()) {
                     yyOutlier = rangeAxis.valueToJava2D(outlier, dataArea,
                             location);
                     outliers.add(new Outlier(xx + state.getBarWidth() / 2.0,
@@ -941,22 +937,18 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
 
             // Process outliers. Each outlier is either added to the
             // appropriate outlier list or a new outlier list is made
-            for (Iterator iterator = outliers.iterator(); iterator.hasNext();) {
-                Outlier outlier = (Outlier) iterator.next();
+            for (Outlier outlier : outliers) {
                 outlierListCollection.add(outlier);
             }
 
-            for (Iterator iterator = outlierListCollection.iterator();
-                     iterator.hasNext();) {
-                OutlierList list = (OutlierList) iterator.next();
+            for (OutlierList list : outlierListCollection) {
                 Outlier outlier = list.getAveragedOutlier();
                 Point2D point = outlier.getPoint();
 
                 if (list.isMultiple()) {
                     drawMultipleEllipse(point, state.getBarWidth(), oRadius,
                             g2);
-                }
-                else {
+                } else {
                     drawEllipse(point, oRadius, g2);
                 }
             }

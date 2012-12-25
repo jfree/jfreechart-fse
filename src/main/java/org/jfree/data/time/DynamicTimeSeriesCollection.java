@@ -212,7 +212,7 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
     //   A single set of extrema covers the entire SeriesCollection
 
     /** The minimum value. */
-    private Float minValue = new Float(0.0f);
+    private Float minValue = 0.0f;
 
     /** The maximum value. */
     private Float maxValue = null;
@@ -348,8 +348,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
         else {
             endL = getNewestTime().getLastMillisecond(this.workingCalendar);
         }
-        this.domainStart = new Long(startL);
-        this.domainEnd = new Long(endL);
+        this.domainStart = startL;
+        this.domainEnd = endL;
         this.domainRange = new Range(startL, endL);
 
     }
@@ -573,7 +573,7 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
         boolean extremaChanged = false;
         float oldMax = 0.0f;
         if (this.maxValue != null) {
-            oldMax = this.maxValue.floatValue();
+            oldMax = this.maxValue;
         }
         for (int s = 0; s < getSeriesCount(); s++) {
             if (this.valueHistory[s].getData(this.oldestAt) == oldMax) {
@@ -599,10 +599,10 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
             this.oldestAt = 0;
         }
         // Update the domain limits:
-        long startL = this.domainStart.longValue();  //(time is kept in msec)
-        this.domainStart = new Long(startL + this.deltaTime);
-        long endL = this.domainEnd.longValue();
-        this.domainEnd = new Long(endL + this.deltaTime);
+        long startL = this.domainStart;  //(time is kept in msec)
+        this.domainStart = startL + this.deltaTime;
+        long endL = this.domainEnd;
+        this.domainEnd = endL + this.deltaTime;
         this.domainRange = new Range(startL, endL);
         fireSeriesChanged();
         return nextInstant;
@@ -742,7 +742,7 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
     @Override
 	public Number getX(int series, int item) {
         RegularTimePeriod tp = this.pointsInTime[translateGet(item)];
-        return new Long(getX(tp));
+        return getX(tp);
     }
 
     /**
@@ -785,7 +785,7 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
     @Override
 	public Number getStartX(int series, int item) {
         RegularTimePeriod tp = this.pointsInTime[translateGet(item)];
-        return new Long(tp.getFirstMillisecond(this.workingCalendar));
+        return tp.getFirstMillisecond(this.workingCalendar);
     }
 
     /**
@@ -799,7 +799,7 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
     @Override
 	public Number getEndX(int series, int item) {
         RegularTimePeriod tp = this.pointsInTime[translateGet(item)];
-        return new Long(tp.getLastMillisecond(this.workingCalendar));
+        return tp.getLastMillisecond(this.workingCalendar);
     }
 
     /**

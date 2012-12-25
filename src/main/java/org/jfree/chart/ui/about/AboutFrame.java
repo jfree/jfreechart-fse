@@ -97,7 +97,7 @@ public class AboutFrame extends JFrame {
     private Image logo;
 
     /** A list of contributors. */
-    private List contributors;
+    private List<Contributor> contributors;
 
     /** The licence. */
     private String licence;
@@ -140,7 +140,7 @@ public class AboutFrame extends JFrame {
                       final String info,
                       final Image logo,
                       final String copyright, final String licence,
-                      final List contributors,
+                      final List<Contributor> contributors,
                       final ProjectInfo project) {
 
         super(title);

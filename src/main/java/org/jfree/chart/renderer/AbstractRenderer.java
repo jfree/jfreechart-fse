@@ -94,19 +94,12 @@
 
 package org.jfree.chart.renderer;
 
-import org.jfree.chart.HashUtilities;
-import org.jfree.chart.event.RendererChangeEvent;
-import org.jfree.chart.event.RendererChangeListener;
-import org.jfree.chart.labels.ItemLabelAnchor;
-import org.jfree.chart.labels.ItemLabelPosition;
-import org.jfree.chart.plot.DrawingSupplier;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.title.LegendTitle;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.*;
-
-import javax.swing.event.EventListenerList;
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -116,6 +109,27 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.EventListener;
 import java.util.List;
+
+import javax.swing.event.EventListenerList;
+
+import org.jfree.chart.HashUtilities;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.BooleanList;
+import org.jfree.chart.util.ObjectList;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PaintList;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.ShapeList;
+import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.StrokeList;
+import org.jfree.chart.event.RendererChangeEvent;
+import org.jfree.chart.event.RendererChangeListener;
+import org.jfree.chart.labels.ItemLabelAnchor;
+import org.jfree.chart.labels.ItemLabelPosition;
+import org.jfree.chart.plot.DrawingSupplier;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.title.LegendTitle;
+import org.jfree.chart.util.SerialUtilities;
 
 /**
  * Base class providing common services for renderers.  Most methods that update
@@ -403,17 +417,17 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         this.itemLabelsVisibleList = new BooleanList();
         this.defaultItemLabelsVisible = Boolean.FALSE;
 
-        this.itemLabelFontList = new ObjectList();
+        this.itemLabelFontList = new ObjectList<Font>();
         this.defaultItemLabelFont = new Font("SansSerif", Font.PLAIN, 10);
 
         this.itemLabelPaintList = new PaintList();
         this.defaultItemLabelPaint = Color.BLACK;
 
-        this.positiveItemLabelPositionList = new ObjectList();
+        this.positiveItemLabelPositionList = new ObjectList<ItemLabelPosition>();
         this.defaultPositiveItemLabelPosition = new ItemLabelPosition(
                 ItemLabelAnchor.OUTSIDE12, TextAnchor.BOTTOM_CENTER);
 
-        this.negativeItemLabelPositionList = new ObjectList();
+        this.negativeItemLabelPositionList = new ObjectList<ItemLabelPosition>();
         this.defaultNegativeItemLabelPosition = new ItemLabelPosition(
                 ItemLabelAnchor.OUTSIDE6, TextAnchor.TOP_CENTER);
 
@@ -427,7 +441,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
 
         this.treatLegendShapeAsLine = false;
 
-        this.legendTextFont = new ObjectList();
+        this.legendTextFont = new ObjectList<Font>();
         this.defaultLegendTextFont = null;
 
         this.legendTextPaint = new PaintList();
@@ -1763,6 +1777,8 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      *     as equivalent to <code>Boolean.FALSE</code>).
      * @param notify  a flag that controls whether or not listeners are
      *                notified.
+     *
+     * @see #getBaseItemLabelsVisible()
      */
     public void setDefaultItemLabelsVisible(boolean visible, boolean notify) {
         this.defaultItemLabelsVisible = visible;
@@ -1799,7 +1815,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @see #setSeriesItemLabelFont(int, Font)
      */
     public Font getSeriesItemLabelFont(int series) {
-        return (Font) this.itemLabelFontList.get(series);
+        return this.itemLabelFontList.get(series);
     }
 
     /**
@@ -2011,8 +2027,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      */
     public ItemLabelPosition getSeriesPositiveItemLabelPosition(int series) {
 
-        ItemLabelPosition position = (ItemLabelPosition)
-                this.positiveItemLabelPositionList.get(series);
+        ItemLabelPosition position = this.positiveItemLabelPositionList.get(series);
         if (position == null) {
             position = this.defaultPositiveItemLabelPosition;
         }
@@ -2087,7 +2102,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @see #getDefaultPositiveItemLabelPosition()
      */
     public void setDefaultPositiveItemLabelPosition(ItemLabelPosition position,
-                                                    boolean notify) {
+                                                 boolean notify) {
         if (position == null) {
             throw new IllegalArgumentException("Null 'position' argument.");
         }
@@ -2126,8 +2141,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      */
     public ItemLabelPosition getSeriesNegativeItemLabelPosition(int series) {
 
-        ItemLabelPosition position = (ItemLabelPosition)
-                this.negativeItemLabelPositionList.get(series);
+        ItemLabelPosition position = this.negativeItemLabelPositionList.get(series);
         if (position == null) {
             position = this.defaultNegativeItemLabelPosition;
         }
@@ -2202,7 +2216,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @see #getDefaultNegativeItemLabelPosition()
      */
     public void setDefaultNegativeItemLabelPosition(ItemLabelPosition position,
-                                                    boolean notify) {
+                                                 boolean notify) {
         if (position == null) {
             throw new IllegalArgumentException("Null 'position' argument.");
         }
@@ -2496,7 +2510,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @since 1.0.11
      */
     public Font getLegendTextFont(int series) {
-        return (Font) this.legendTextFont.get(series);
+        return this.legendTextFont.get(series);
     }
 
     /**
@@ -2651,84 +2665,108 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @return The anchor point (never <code>null</code>).
      */
     protected Point2D calculateLabelAnchorPoint(ItemLabelAnchor anchor,
-                                                double x, double y, PlotOrientation orientation) {
+            double x, double y, PlotOrientation orientation) {
         Point2D result = null;
         if (anchor == ItemLabelAnchor.CENTER) {
             result = new Point2D.Double(x, y);
-        } else if (anchor == ItemLabelAnchor.INSIDE1) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE1) {
             result = new Point2D.Double(x + OPP * this.itemLabelAnchorOffset,
                     y - ADJ * this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.INSIDE2) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE2) {
             result = new Point2D.Double(x + ADJ * this.itemLabelAnchorOffset,
                     y - OPP * this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.INSIDE3) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE3) {
             result = new Point2D.Double(x + this.itemLabelAnchorOffset, y);
-        } else if (anchor == ItemLabelAnchor.INSIDE4) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE4) {
             result = new Point2D.Double(x + ADJ * this.itemLabelAnchorOffset,
                     y + OPP * this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.INSIDE5) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE5) {
             result = new Point2D.Double(x + OPP * this.itemLabelAnchorOffset,
                     y + ADJ * this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.INSIDE6) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE6) {
             result = new Point2D.Double(x, y + this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.INSIDE7) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE7) {
             result = new Point2D.Double(x - OPP * this.itemLabelAnchorOffset,
                     y + ADJ * this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.INSIDE8) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE8) {
             result = new Point2D.Double(x - ADJ * this.itemLabelAnchorOffset,
                     y + OPP * this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.INSIDE9) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE9) {
             result = new Point2D.Double(x - this.itemLabelAnchorOffset, y);
-        } else if (anchor == ItemLabelAnchor.INSIDE10) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE10) {
             result = new Point2D.Double(x - ADJ * this.itemLabelAnchorOffset,
                     y - OPP * this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.INSIDE11) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE11) {
             result = new Point2D.Double(x - OPP * this.itemLabelAnchorOffset,
                     y - ADJ * this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.INSIDE12) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE12) {
             result = new Point2D.Double(x, y - this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE1) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE1) {
             result = new Point2D.Double(
                     x + 2.0 * OPP * this.itemLabelAnchorOffset,
                     y - 2.0 * ADJ * this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE2) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE2) {
             result = new Point2D.Double(
                     x + 2.0 * ADJ * this.itemLabelAnchorOffset,
                     y - 2.0 * OPP * this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE3) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE3) {
             result = new Point2D.Double(x + 2.0 * this.itemLabelAnchorOffset,
                     y);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE4) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE4) {
             result = new Point2D.Double(
                     x + 2.0 * ADJ * this.itemLabelAnchorOffset,
                     y + 2.0 * OPP * this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE5) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE5) {
             result = new Point2D.Double(
                     x + 2.0 * OPP * this.itemLabelAnchorOffset,
                     y + 2.0 * ADJ * this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE6) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE6) {
             result = new Point2D.Double(x,
                     y + 2.0 * this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE7) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE7) {
             result = new Point2D.Double(
                     x - 2.0 * OPP * this.itemLabelAnchorOffset,
                     y + 2.0 * ADJ * this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE8) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE8) {
             result = new Point2D.Double(
                     x - 2.0 * ADJ * this.itemLabelAnchorOffset,
                     y + 2.0 * OPP * this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE9) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE9) {
             result = new Point2D.Double(x - 2.0 * this.itemLabelAnchorOffset,
                     y);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE10) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE10) {
             result = new Point2D.Double(
                     x - 2.0 * ADJ * this.itemLabelAnchorOffset,
                     y - 2.0 * OPP * this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE11) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE11) {
             result = new Point2D.Double(
-                    x - 2.0 * OPP * this.itemLabelAnchorOffset,
-                    y - 2.0 * ADJ * this.itemLabelAnchorOffset);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE12) {
+                x - 2.0 * OPP * this.itemLabelAnchorOffset,
+                y - 2.0 * ADJ * this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE12) {
             result = new Point2D.Double(x,
                     y - 2.0 * this.itemLabelAnchorOffset);
         }
@@ -2774,7 +2812,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @return A boolean.
      */
     public boolean hasListener(EventListener listener) {
-        List list = Arrays.asList(this.listenerList.getListenerList());
+        List<Object> list = Arrays.asList(this.listenerList.getListenerList());
         return list.contains(listener);
     }
 
@@ -3057,7 +3095,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         // 'outlineStroke' : immutable, no need to clone reference
         if (this.outlineStrokeList != null) {
             clone.outlineStrokeList
-                    = (StrokeList) this.outlineStrokeList.clone();
+                = (StrokeList) this.outlineStrokeList.clone();
         }
         // 'baseOutlineStroke' : immutable, no need to clone reference
 
@@ -3071,35 +3109,35 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         // 'itemLabelsVisible' : immutable, no need to clone reference
         if (this.itemLabelsVisibleList != null) {
             clone.itemLabelsVisibleList
-                    = (BooleanList) this.itemLabelsVisibleList.clone();
+                = (BooleanList) this.itemLabelsVisibleList.clone();
         }
         // 'basePaint' : immutable, no need to clone reference
 
         // 'itemLabelFont' : immutable, no need to clone reference
         if (this.itemLabelFontList != null) {
             clone.itemLabelFontList
-                    = (ObjectList) this.itemLabelFontList.clone();
+                = (ObjectList<Font>) this.itemLabelFontList.clone();
         }
         // 'baseItemLabelFont' : immutable, no need to clone reference
 
         // 'itemLabelPaint' : immutable, no need to clone reference
         if (this.itemLabelPaintList != null) {
             clone.itemLabelPaintList
-                    = (PaintList) this.itemLabelPaintList.clone();
+                = (PaintList) this.itemLabelPaintList.clone();
         }
         // 'baseItemLabelPaint' : immutable, no need to clone reference
 
         // 'postiveItemLabelAnchor' : immutable, no need to clone reference
         if (this.positiveItemLabelPositionList != null) {
             clone.positiveItemLabelPositionList
-                    = (ObjectList) this.positiveItemLabelPositionList.clone();
+                = (ObjectList<ItemLabelPosition>) this.positiveItemLabelPositionList.clone();
         }
         // 'baseItemLabelAnchor' : immutable, no need to clone reference
 
         // 'negativeItemLabelAnchor' : immutable, no need to clone reference
         if (this.negativeItemLabelPositionList != null) {
             clone.negativeItemLabelPositionList
-                    = (ObjectList) this.negativeItemLabelPositionList.clone();
+                = (ObjectList<ItemLabelPosition>) this.negativeItemLabelPositionList.clone();
         }
         // 'baseNegativeItemLabelAnchor' : immutable, no need to clone reference
 
@@ -3151,7 +3189,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-            throws IOException, ClassNotFoundException {
+        throws IOException, ClassNotFoundException {
 
         stream.defaultReadObject();
         this.defaultPaint = SerialUtilities.readPaint(stream);

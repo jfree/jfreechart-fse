@@ -224,7 +224,7 @@ public interface BoxAndWhiskerCategoryDataset extends CategoryDataset {
      *
      * @return A list of outliers for an item.
      */
-    public List getOutliers(int row, int column);
+    public List<Number> getOutliers(int row, int column);
 
     /**
      * Returns a list of outlier values for an item.  The list may be empty,
@@ -235,6 +235,6 @@ public interface BoxAndWhiskerCategoryDataset extends CategoryDataset {
      *
      * @return A list of outlier values for an item.
      */
-    public List getOutliers(Comparable rowKey, Comparable columnKey);
+    public List<Number> getOutliers(Comparable rowKey, Comparable columnKey);
 
 }

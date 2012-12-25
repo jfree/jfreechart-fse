@@ -52,7 +52,6 @@
 package org.jfree.data.gantt;
 
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.util.ObjectUtilities;
@@ -76,17 +75,17 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      * Storage for aggregate task keys (the task description is used as the
      * key).
      */
-    private List keys;
+    private List<Comparable> keys;
 
     /** Storage for the series. */
-    private List data;
+    private List<TaskSeries> data;
 
     /**
      * Default constructor.
      */
     public TaskSeriesCollection() {
-        this.keys = new java.util.ArrayList();
-        this.data = new java.util.ArrayList();
+        this.keys = new java.util.ArrayList<Comparable>();
+        this.data = new java.util.ArrayList<TaskSeries>();
     }
 
     /**
@@ -123,7 +122,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
         if ((series < 0) || (series >= getSeriesCount())) {
             throw new IllegalArgumentException("Series index out of bounds");
         }
-        return (TaskSeries) this.data.get(series);
+        return this.data.get(series);
     }
 
     /**
@@ -145,7 +144,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      */
     @Override
 	public Comparable getSeriesKey(int series) {
-        TaskSeries ts = (TaskSeries) this.data.get(series);
+        TaskSeries ts = this.data.get(series);
         return ts.getKey();
     }
 
@@ -165,7 +164,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      * @return The row keys.
      */
     @Override
-	public List getRowKeys() {
+	public List getRowKeys() {        //FIXME MMC this should be typed
         return this.data;
     }
 
@@ -185,7 +184,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      * @return The category list.
      */
     @Override
-	public List getColumnKeys() {
+	public List<Comparable> getColumnKeys() {
         return this.keys;
     }
 
@@ -198,7 +197,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      */
     @Override
 	public Comparable getColumnKey(int index) {
-        return (Comparable) this.keys.get(index);
+        return this.keys.get(index);
     }
 
     /**
@@ -228,7 +227,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
         int result = -1;
         int count = this.data.size();
         for (int i = 0; i < count; i++) {
-            TaskSeries s = (TaskSeries) this.data.get(i);
+            TaskSeries s = this.data.get(i);
             if (s.getKey().equals(rowKey)) {
                 result = i;
                 break;
@@ -246,7 +245,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
      */
     @Override
 	public Comparable getRowKey(int index) {
-        TaskSeries series = (TaskSeries) this.data.get(index);
+        TaskSeries series = this.data.get(index);
         return series.getKey();
     }
 
@@ -265,9 +264,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
         series.addChangeListener(this);
 
         // look for any keys that we don't already know about...
-        Iterator iterator = series.getTasks().iterator();
-        while (iterator.hasNext()) {
-            Task task = (Task) iterator.next();
+        for (Task task : series.getTasks()) {
             String key = task.getDescription();
             int index = this.keys.indexOf(key);
             if (index < 0) {
@@ -309,7 +306,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
         }
 
         // fetch the series, remove the change listener, then remove the series.
-        TaskSeries ts = (TaskSeries) this.data.get(series);
+        TaskSeries ts = this.data.get(series);
         ts.removeChangeListener(this);
         this.data.remove(series);
         fireDatasetChanged();
@@ -325,9 +322,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
 
         // deregister the collection as a change listener to each series in
         // the collection.
-        Iterator iterator = this.data.iterator();
-        while (iterator.hasNext()) {
-            TaskSeries series = (TaskSeries) iterator.next();
+        for (TaskSeries series : this.data) {
             series.removeChangeListener(this);
         }
 
@@ -376,12 +371,12 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
 	public Number getStartValue(Comparable rowKey, Comparable columnKey) {
         Number result = null;
         int row = getRowIndex(rowKey);
-        TaskSeries series = (TaskSeries) this.data.get(row);
+        TaskSeries series = this.data.get(row);
         Task task = series.get(columnKey.toString());
         if (task != null) {
             TimePeriod duration = task.getDuration();
             if (duration != null) {
-                result = new Long(duration.getStart().getTime());
+                result = duration.getStart().getTime();
             }
         }
         return result;
@@ -415,12 +410,12 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
 	public Number getEndValue(Comparable rowKey, Comparable columnKey) {
         Number result = null;
         int row = getRowIndex(rowKey);
-        TaskSeries series = (TaskSeries) this.data.get(row);
+        TaskSeries series = this.data.get(row);
         Task task = series.get(columnKey.toString());
         if (task != null) {
             TimePeriod duration = task.getDuration();
             if (duration != null) {
-                result = new Long(duration.getEnd().getTime());
+                result = duration.getEnd().getTime();
             }
         }
         return result;
@@ -468,7 +463,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
 	public Number getPercentComplete(Comparable rowKey, Comparable columnKey) {
         Number result = null;
         int row = getRowIndex(rowKey);
-        TaskSeries series = (TaskSeries) this.data.get(row);
+        TaskSeries series = this.data.get(row);
         Task task = series.get(columnKey.toString());
         if (task != null) {
             result = task.getPercentComplete();
@@ -503,7 +498,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
 	public int getSubIntervalCount(Comparable rowKey, Comparable columnKey) {
         int result = 0;
         int row = getRowIndex(rowKey);
-        TaskSeries series = (TaskSeries) this.data.get(row);
+        TaskSeries series = this.data.get(row);
         Task task = series.get(columnKey.toString());
         if (task != null) {
             result = task.getSubtaskCount();
@@ -541,13 +536,13 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
                                 int subinterval) {
         Number result = null;
         int row = getRowIndex(rowKey);
-        TaskSeries series = (TaskSeries) this.data.get(row);
+        TaskSeries series = this.data.get(row);
         Task task = series.get(columnKey.toString());
         if (task != null) {
             Task sub = task.getSubtask(subinterval);
             if (sub != null) {
                 TimePeriod duration = sub.getDuration();
-                result = new Long(duration.getStart().getTime());
+                result = duration.getStart().getTime();
             }
         }
         return result;
@@ -583,13 +578,13 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
                               int subinterval) {
         Number result = null;
         int row = getRowIndex(rowKey);
-        TaskSeries series = (TaskSeries) this.data.get(row);
+        TaskSeries series = this.data.get(row);
         Task task = series.get(columnKey.toString());
         if (task != null) {
             Task sub = task.getSubtask(subinterval);
             if (sub != null) {
                 TimePeriod duration = sub.getDuration();
-                result = new Long(duration.getEnd().getTime());
+                result = duration.getEnd().getTime();
             }
         }
         return result;
@@ -625,7 +620,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
                                      int subinterval) {
         Number result = null;
         int row = getRowIndex(rowKey);
-        TaskSeries series = (TaskSeries) this.data.get(row);
+        TaskSeries series = this.data.get(row);
         Task task = series.get(columnKey.toString());
         if (task != null) {
             Task sub = task.getSubtask(subinterval);
@@ -654,11 +649,9 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
 
         this.keys.clear();
         for (int i = 0; i < getSeriesCount(); i++) {
-            TaskSeries series = (TaskSeries) this.data.get(i);
+            TaskSeries series = this.data.get(i);
             // look for any keys that we don't already know about...
-            Iterator iterator = series.getTasks().iterator();
-            while (iterator.hasNext()) {
-                Task task = (Task) iterator.next();
+            for (Task task : series.getTasks()) {
                 String key = task.getDescription();
                 int index = this.keys.indexOf(key);
                 if (index < 0) {
@@ -702,8 +695,8 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
     @Override
 	public Object clone() throws CloneNotSupportedException {
         TaskSeriesCollection clone = (TaskSeriesCollection) super.clone();
-        clone.data = (List) ObjectUtilities.deepClone(this.data);
-        clone.keys = new java.util.ArrayList(this.keys);
+        clone.data = ObjectUtilities.deepClone(this.data);
+        clone.keys = new java.util.ArrayList<Comparable>(this.keys);
         return clone;
     }
 

@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------
  * JFreeChartResources.java
  * ------------------------
- * (C) Copyright 2002-2009, by Object Refinery Limited.
+ * (C) Copyright 2002-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -54,11 +54,11 @@ public class JFreeChartResources extends ListResourceBundle {
 
     /** The resources to be localised. */
     private static final Object[][] CONTENTS = {
-        {"project.name",      "JFreeChart"},
-        {"project.version",   "1.0.15"},
+        {"project.name",      "JFreeChart-FSE"},
+        {"project.version",   "<pre-release>"},
         {"project.info",      "http://www.jfree.org/jfreechart/index.html"},
         {"project.copyright",
-         "(C)opyright 2000-2011, by Object Refinery Limited and Contributors"}
+         "(C)opyright 2000-2012, by Object Refinery Limited and Contributors"}
     };
 
 }

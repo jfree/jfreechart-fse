@@ -54,12 +54,11 @@
 package org.jfree.data.time;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import org.jfree.chart.date.MonthConstants;
 
 /**
  * An abstract class representing a unit of time.  Convenient methods are
@@ -69,8 +68,7 @@ import org.jfree.chart.date.MonthConstants;
  * <P>
  * This class is immutable, and all subclasses should be immutable also.
  */
-public abstract class RegularTimePeriod implements TimePeriod, Comparable,
-                                                   MonthConstants {
+public abstract class RegularTimePeriod implements TimePeriod, Comparable<TimePeriod> {
 
     /**
      * Creates a time period that includes the specified millisecond, assuming
@@ -90,9 +88,18 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable,
             Constructor constructor = c.getDeclaredConstructor(
                     new Class[] {Date.class, TimeZone.class, Locale.class});
             result = (RegularTimePeriod) constructor.newInstance(
-                    new Object[] {millisecond, zone, locale});
+                    millisecond, zone, locale);
         }
-        catch (Exception e) {
+        catch (NoSuchMethodException e) {
+            // do nothing, so null is returned
+        }
+        catch (IllegalAccessException e) {
+            // do nothing, so null is returned
+        }
+        catch (InvocationTargetException e) {
+            // do nothing, so null is returned
+        }
+        catch (InstantiationException e) {
             // do nothing, so null is returned
         }
         return result;

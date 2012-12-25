@@ -102,7 +102,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.LegendItemCollection;
@@ -368,8 +367,7 @@ public class CombinedDomainXYPlot extends XYPlot
         // work out the maximum height or width of the non-shared axes...
         int n = this.subplots.size();
         int totalWeight = 0;
-        for (int i = 0; i < n; i++) {
-            XYPlot sub = this.subplots.get(i);
+        for (XYPlot sub : this.subplots) {
             totalWeight += sub.getWeight();
         }
         this.subplotAreas = new Rectangle2D[n];
@@ -716,8 +714,8 @@ public class CombinedDomainXYPlot extends XYPlot
 
         CombinedDomainXYPlot result = (CombinedDomainXYPlot) super.clone();
         result.subplots = (List) ObjectUtilities.deepClone(this.subplots);
-        for (Iterator it = result.subplots.iterator(); it.hasNext();) {
-            Plot child = (Plot) it.next();
+        for (XYPlot subplot : result.subplots) {
+            Plot child = subplot;
             child.setParent(result);
         }
 

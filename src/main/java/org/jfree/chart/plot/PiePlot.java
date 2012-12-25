@@ -198,7 +198,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -952,7 +951,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             }
         }
         if (key == null) {
-            key = new Integer(section);
+            key = section;
         }
         return key;
     }
@@ -1581,7 +1580,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         if (this.explodePercentages == null) {
             this.explodePercentages = new TreeMap<Comparable, Number>();
         }
-        this.explodePercentages.put(key, new Double(percent));
+        this.explodePercentages.put(key, percent);
         fireChangeEvent();
     }
 
@@ -3236,10 +3235,10 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
                  m = c.getMethod("getColors", new Class[] {});
                  Object clrs = m.invoke(paint, new Object[] {});
                  Point2D center = getArcCenter(state, key);
-                 float radius = (new Float(state.getPieHRadius())).floatValue();
+                 float radius = new Float(state.getPieHRadius());
 
                  Paint radialPaint = (Paint) cc.newInstance(new Object[] {
-                         center, new Float(radius),
+                         center, radius,
                          fractions, clrs});
                  // return the new RadialGradientPaint
                  return radialPaint;
@@ -3447,21 +3446,18 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             clone.dataset.addChangeListener(clone);
         }
         if (this.urlGenerator instanceof PublicCloneable) {
-            clone.urlGenerator = (PieURLGenerator) ObjectUtilities.clone(
+            clone.urlGenerator = ObjectUtilities.clone(
                     this.urlGenerator);
         }
         clone.legendItemShape = ShapeUtilities.clone(this.legendItemShape);
         if (this.legendLabelGenerator != null) {
-            clone.legendLabelGenerator = (PieSectionLabelGenerator)
-                    ObjectUtilities.clone(this.legendLabelGenerator);
+            clone.legendLabelGenerator = ObjectUtilities.clone(this.legendLabelGenerator);
         }
         if (this.legendLabelToolTipGenerator != null) {
-            clone.legendLabelToolTipGenerator = (PieSectionLabelGenerator)
-                    ObjectUtilities.clone(this.legendLabelToolTipGenerator);
+            clone.legendLabelToolTipGenerator = ObjectUtilities.clone(this.legendLabelToolTipGenerator);
         }
         if (this.legendLabelURLGenerator instanceof PublicCloneable) {
-            clone.legendLabelURLGenerator = (PieURLGenerator)
-                    ObjectUtilities.clone(this.legendLabelURLGenerator);
+            clone.legendLabelURLGenerator = ObjectUtilities.clone(this.legendLabelURLGenerator);
         }
         return clone;
     }

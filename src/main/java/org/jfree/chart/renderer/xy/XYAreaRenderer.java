@@ -588,7 +588,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
         g2.setPaint(paint);
         g2.setStroke(stroke);
 
-        Shape shape = null;
+        Shape shape;
         if (getPlotShapes()) {
             shape = getItemShape(series, item);
             if (orientation == PlotOrientation.VERTICAL) {

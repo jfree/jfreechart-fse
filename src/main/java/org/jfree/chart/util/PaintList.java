@@ -41,7 +41,7 @@
 
 package org.jfree.chart.util;
 
-import java.awt.*;
+import java.awt.Paint;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -49,7 +49,7 @@ import java.io.ObjectOutputStream;
 /**
  * A table of {@link Paint} objects.
  */
-public class PaintList extends GenericObjectList<Paint> {
+public class PaintList extends AbstractObjectList<Paint> {
 
     /**
      * Creates a new list.
@@ -87,7 +87,7 @@ public class PaintList extends GenericObjectList<Paint> {
      * @return A boolean.
      */
     @Override
-    public boolean equals(final Object obj) {
+	public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
@@ -98,12 +98,22 @@ public class PaintList extends GenericObjectList<Paint> {
             PaintList that = (PaintList) obj;
             int listSize = size();
             for (int i = 0; i < listSize; i++) {
-                if (!PaintUtilities.equal(getPaint(i), that.getPaint(i))) {
-                    return false;
-                }
+               if (!PaintUtilities.equal(getPaint(i), that.getPaint(i))) {
+                   return false;
+               }
             }
         }
         return true;
+    }
+
+    /**
+     * Returns a hash code value for the object.
+     *
+     * @return the hashcode
+     */
+    @Override
+	public int hashCode() {
+        return super.hashCode();
     }
 
     /**
@@ -123,13 +133,14 @@ public class PaintList extends GenericObjectList<Paint> {
             if (paint != null) {
                 stream.writeInt(i);
                 SerialUtilities.writePaint(paint, stream);
-            } else {
+            }
+            else {
                 stream.writeInt(-1);
             }
         }
 
     }
-
+    
     /**
      * Provides serialization support.
      *
@@ -148,7 +159,7 @@ public class PaintList extends GenericObjectList<Paint> {
                 setPaint(index, SerialUtilities.readPaint(stream));
             }
         }
-
+        
     }
 
 }

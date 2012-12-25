@@ -76,7 +76,6 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.LegendItem;
@@ -167,7 +166,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      *
      * @since 1.0.14
      */
-    private ObjectList toolTipGeneratorList;
+    private ObjectList<XYToolTipGenerator> toolTipGeneratorList;
 
     /**
      * The base tool tip generator.
@@ -211,7 +210,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         this.shapesVisible = true;
         this.connectFirstAndLastPoint = true;
 
-        this.toolTipGeneratorList = new ObjectList();
+        this.toolTipGeneratorList = new ObjectList<XYToolTipGenerator>();
         this.urlGenerator = null;
         this.legendItemToolTipGenerator = null;
         this.legendItemURLGenerator = null;
@@ -374,7 +373,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         boolean result = false;
         Boolean b = this.seriesFilled.getBoolean(series);
         if (b != null) {
-            result = b.booleanValue();
+            result = b;
         }
         return result;
     }
@@ -386,7 +385,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @param filled  the flag.
      */
     public void setSeriesFilled(int series, boolean filled) {
-        this.seriesFilled.setBoolean(series, Boolean.valueOf(filled));
+        this.seriesFilled.setBoolean(series, filled);
     }
 
     /**
@@ -638,7 +637,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      */
     @Override
     public void drawRadialGridLines(Graphics2D g2, PolarPlot plot,
-            ValueAxis radialAxis, List ticks, Rectangle2D dataArea) {
+            ValueAxis radialAxis, List<ValueTick> ticks, Rectangle2D dataArea) {
 
         g2.setFont(radialAxis.getTickLabelFont());
         g2.setPaint(plot.getRadiusGridlinePaint());
@@ -648,13 +647,11 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         Point center = plot.translateToJava2D(axisMin, axisMin, radialAxis,
                 dataArea);
 
-        Iterator iterator = ticks.iterator();
-        while (iterator.hasNext()) {
-            NumberTick tick = (NumberTick) iterator.next();
+        for (ValueTick tick : ticks) {
             double angleDegrees = plot.isCounterClockwise()
                     ? plot.getAngleOffset() : -plot.getAngleOffset();
             Point p = plot.translateToJava2D(angleDegrees,
-                    tick.getNumber().doubleValue(), radialAxis, dataArea);
+                    ((NumberTick)tick).getNumber().doubleValue(), radialAxis, dataArea);
             int r = p.x - center.x;
             int upperLeftX = center.x - r;
             int upperLeftY = center.y - r;
@@ -730,7 +727,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     @Override
     public XYToolTipGenerator getToolTipGenerator(int series, int item) {
         XYToolTipGenerator generator
-            = (XYToolTipGenerator) this.toolTipGeneratorList.get(series);
+            = this.toolTipGeneratorList.get(series);
         if (generator == null) {
             generator = this.baseToolTipGenerator;
         }
@@ -742,7 +739,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      */
     @Override
     public XYToolTipGenerator getSeriesToolTipGenerator(int series) {
-        return (XYToolTipGenerator) this.toolTipGeneratorList.get(series);
+        return this.toolTipGeneratorList.get(series);
     }
 
     /**
@@ -917,22 +914,18 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         }
         clone.seriesFilled = (BooleanList) this.seriesFilled.clone();
         clone.toolTipGeneratorList
-                = (ObjectList) this.toolTipGeneratorList.clone();
+                = (ObjectList<XYToolTipGenerator>) this.toolTipGeneratorList.clone();
         if (clone.baseToolTipGenerator instanceof PublicCloneable) {
-            clone.baseToolTipGenerator = (XYToolTipGenerator)
-                    ObjectUtilities.clone(this.baseToolTipGenerator);
+            clone.baseToolTipGenerator = ObjectUtilities.clone(this.baseToolTipGenerator);
         }
         if (clone.urlGenerator instanceof PublicCloneable) {
-            clone.urlGenerator = (XYURLGenerator)
-                    ObjectUtilities.clone(this.urlGenerator);
+            clone.urlGenerator = ObjectUtilities.clone(this.urlGenerator);
         }
         if (clone.legendItemToolTipGenerator instanceof PublicCloneable) {
-            clone.legendItemToolTipGenerator = (XYSeriesLabelGenerator)
-                    ObjectUtilities.clone(this.legendItemToolTipGenerator);
+            clone.legendItemToolTipGenerator = ObjectUtilities.clone(this.legendItemToolTipGenerator);
         }
         if (clone.legendItemURLGenerator instanceof PublicCloneable) {
-            clone.legendItemURLGenerator = (XYSeriesLabelGenerator)
-                    ObjectUtilities.clone(this.legendItemURLGenerator);
+            clone.legendItemURLGenerator = ObjectUtilities.clone(this.legendItemURLGenerator);
         }
         return clone;
     }

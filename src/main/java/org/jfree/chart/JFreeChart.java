@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -175,7 +175,6 @@ import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -217,6 +216,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.chart.title.Title;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.ResourceBundleWrapper;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
@@ -242,11 +242,8 @@ import org.jfree.data.Range;
  * @see Title
  * @see Plot
  */
-public class JFreeChart implements Drawable,
-                                   TitleChangeListener,
-                                   PlotChangeListener,
-                                   Serializable,
-                                   Cloneable {
+public class JFreeChart implements Drawable, TitleChangeListener,
+        PlotChangeListener, Serializable, Cloneable {
 
     /** For serialization. */
     private static final long serialVersionUID = -3470703747817429120L;
@@ -296,7 +293,7 @@ public class JFreeChart implements Drawable,
      * The chart subtitles (zero, one or many).  This field should never be
      * <code>null</code>.
      */
-    private List subtitles;
+    private List<Title> subtitles;
 
     /** Draws the visual representation of the data. */
     private Plot plot;
@@ -376,9 +373,7 @@ public class JFreeChart implements Drawable,
     public JFreeChart(String title, Font titleFont, Plot plot,
                       boolean createLegend) {
 
-        if (plot == null) {
-            throw new NullPointerException("Null 'plot' argument.");
-        }
+        ParamChecks.nullNotPermitted(plot, "plot");
 
         // create storage for listeners...
         this.progressListeners = new EventListenerList();
@@ -399,7 +394,7 @@ public class JFreeChart implements Drawable,
         this.plot = plot;
         plot.addChangeListener(this);
 
-        this.subtitles = new ArrayList();
+        this.subtitles = new ArrayList<Title>();
 
         // create a legend, if requested...
         if (createLegend) {
@@ -445,16 +440,13 @@ public class JFreeChart implements Drawable,
      * Graphics2D.addRenderingHints() method) near the start of the
      * JFreeChart.draw() method.
      *
-     * @param renderingHints  the rendering hints (<code>null</code> not
-     *                        permitted).
+     * @param hints  the rendering hints (<code>null</code> not permitted).
      *
      * @see #getRenderingHints()
      */
-    public void setRenderingHints(RenderingHints renderingHints) {
-        if (renderingHints == null) {
-            throw new NullPointerException("RenderingHints given are null");
-        }
-        this.renderingHints = renderingHints;
+    public void setRenderingHints(RenderingHints hints) {
+        ParamChecks.nullNotPermitted(hints, "hints");
+        this.renderingHints = hints;
         fireChartChanged();
     }
 
@@ -549,9 +541,7 @@ public class JFreeChart implements Drawable,
      * @see #getPadding()
      */
     public void setPadding(RectangleInsets padding) {
-        if (padding == null) {
-            throw new IllegalArgumentException("Null 'padding' argument.");
-        }
+        ParamChecks.nullNotPermitted(padding, "padding");
         this.padding = padding;
         notifyListeners(new ChartChangeEvent(this));
     }
@@ -652,14 +642,11 @@ public class JFreeChart implements Drawable,
      */
     public LegendTitle getLegend(int index) {
         int seen = 0;
-        Iterator iterator = this.subtitles.iterator();
-        while (iterator.hasNext()) {
-            Title subtitle = (Title) iterator.next();
+        for (Title subtitle : this.subtitles) {
             if (subtitle instanceof LegendTitle) {
                 if (seen == index) {
                     return (LegendTitle) subtitle;
-                }
-                else {
+                } else {
                     seen++;
                 }
             }
@@ -684,8 +671,8 @@ public class JFreeChart implements Drawable,
      *
      * @see #setSubtitles(List)
      */
-    public List getSubtitles() {
-        return new ArrayList(this.subtitles);
+    public List<Title> getSubtitles() {
+        return new ArrayList<Title>(this.subtitles);
     }
 
     /**
@@ -698,15 +685,13 @@ public class JFreeChart implements Drawable,
      *
      * @see #getSubtitles()
      */
-    public void setSubtitles(List subtitles) {
+    public void setSubtitles(List<? extends Title> subtitles) {
         if (subtitles == null) {
             throw new NullPointerException("Null 'subtitles' argument.");
         }
         setNotify(false);
         clearSubtitles();
-        Iterator iterator = subtitles.iterator();
-        while (iterator.hasNext()) {
-            Title t = (Title) iterator.next();
+        for (Title t : subtitles) {
             if (t != null) {
                 addSubtitle(t);
             }
@@ -738,7 +723,7 @@ public class JFreeChart implements Drawable,
         if ((index < 0) || (index >= getSubtitleCount())) {
             throw new IllegalArgumentException("Index out of range.");
         }
-        return (Title) this.subtitles.get(index);
+        return this.subtitles.get(index);
     }
 
     /**
@@ -750,9 +735,7 @@ public class JFreeChart implements Drawable,
      * @see #getSubtitle(int)
      */
     public void addSubtitle(Title subtitle) {
-        if (subtitle == null) {
-            throw new IllegalArgumentException("Null 'subtitle' argument.");
-        }
+        ParamChecks.nullNotPermitted(subtitle, "subtitle");
         this.subtitles.add(subtitle);
         subtitle.addChangeListener(this);
         fireChartChanged();
@@ -772,9 +755,7 @@ public class JFreeChart implements Drawable,
             throw new IllegalArgumentException(
                     "The 'index' argument is out of range.");
         }
-        if (subtitle == null) {
-            throw new IllegalArgumentException("Null 'subtitle' argument.");
-        }
+        ParamChecks.nullNotPermitted(subtitle, "subtitle");
         this.subtitles.add(index, subtitle);
         subtitle.addChangeListener(this);
         fireChartChanged();
@@ -787,9 +768,7 @@ public class JFreeChart implements Drawable,
      * @see #addSubtitle(Title)
      */
     public void clearSubtitles() {
-        Iterator iterator = this.subtitles.iterator();
-        while (iterator.hasNext()) {
-            Title t = (Title) iterator.next();
+        for (Title t : this.subtitles) {
             t.removeChangeListener(this);
         }
         this.subtitles.clear();
@@ -812,40 +791,14 @@ public class JFreeChart implements Drawable,
     /**
      * Returns the plot for the chart.  The plot is a class responsible for
      * coordinating the visual representation of the data, including the axes
-     * (if any).
+     * (if any).  If you know the specific subclass of plot that you are
+     * using (e.g. PiePlot, CategoryPlot, XYPlot etc.) then you can cast this
+     * reference.
      *
      * @return The plot.
      */
     public Plot getPlot() {
         return this.plot;
-    }
-
-    /**
-     * Returns the plot cast as a {@link CategoryPlot}.
-     * <p>
-     * NOTE: if the plot is not an instance of {@link CategoryPlot}, then a
-     * <code>ClassCastException</code> is thrown.
-     *
-     * @return The plot.
-     *
-     * @see #getPlot()
-     */
-    public CategoryPlot getCategoryPlot() {
-        return (CategoryPlot) this.plot;
-    }
-
-    /**
-     * Returns the plot cast as an {@link XYPlot}.
-     * <p>
-     * NOTE: if the plot is not an instance of {@link XYPlot}, then a
-     * <code>ClassCastException</code> is thrown.
-     *
-     * @return The plot.
-     *
-     * @see #getPlot()
-     */
-    public XYPlot getXYPlot() {
-        return (XYPlot) this.plot;
     }
 
     /**
@@ -1023,7 +976,7 @@ public class JFreeChart implements Drawable,
 
     /**
      * Returns the background image alignment. Alignment constants are defined
-     * in the <code>org.jfree.ui.Align</code> class in the JCommon class
+     * in the <code>org.jfree.chart.ui.Align</code> class in the JCommon class
      * library.
      *
      * @return The alignment.
@@ -1036,7 +989,7 @@ public class JFreeChart implements Drawable,
 
     /**
      * Sets the background alignment.  Alignment options are defined by the
-     * {@link org.jfree.ui.Align} class.
+     * {@link org.jfree.chart.ui.Align} class.
      *
      * @param alignment  the alignment.
      *
@@ -1069,12 +1022,10 @@ public class JFreeChart implements Drawable,
      * @see #getBackgroundImageAlpha()
      */
     public void setBackgroundImageAlpha(float alpha) {
-
         if (this.backgroundImageAlpha != alpha) {
             this.backgroundImageAlpha = alpha;
             fireChartChanged();
         }
-
     }
 
     /**
@@ -1115,7 +1066,7 @@ public class JFreeChart implements Drawable,
      * @param area  the area within which the chart should be drawn.
      */
     @Override
-	public void draw(Graphics2D g2, Rectangle2D area) {
+    public void draw(Graphics2D g2, Rectangle2D area) {
         draw(g2, area, null, null);
     }
 
@@ -1143,13 +1094,12 @@ public class JFreeChart implements Drawable,
      *                (<code>null</code> permitted).
      * @param info  records info about the drawing (null means collect no info).
      */
-    public void draw(Graphics2D g2,
-                     Rectangle2D chartArea, Point2D anchor,
+    public void draw(Graphics2D g2, Rectangle2D chartArea, Point2D anchor,
                      ChartRenderingInfo info) {
 
         notifyListeners(new ChartProgressEvent(this, this,
                 ChartProgressEvent.DRAWING_STARTED, 0));
-        
+
         EntityCollection entities = null;
         // record the chart area, if info is requested...
         if (info != null) {
@@ -1215,9 +1165,7 @@ public class JFreeChart implements Drawable,
             }
         }
 
-        Iterator iterator = this.subtitles.iterator();
-        while (iterator.hasNext()) {
-            Title currentTitle = (Title) iterator.next();
+        for (Title currentTitle : this.subtitles) {
             if (currentTitle.isVisible()) {
                 EntityCollection e = drawTitle(currentTitle, g2, nonTitleArea,
                         (entities != null));
@@ -1297,12 +1245,8 @@ public class JFreeChart implements Drawable,
     protected EntityCollection drawTitle(Title t, Graphics2D g2,
                                          Rectangle2D area, boolean entities) {
 
-        if (t == null) {
-            throw new IllegalArgumentException("Null 't' argument.");
-        }
-        if (area == null) {
-            throw new IllegalArgumentException("Null 'area' argument.");
-        }
+        ParamChecks.nullNotPermitted(t, "t");
+        ParamChecks.nullNotPermitted(area, "area");
         Rectangle2D titleArea;
         RectangleEdge position = t.getPosition();
         double ww = area.getWidth();
@@ -1316,7 +1260,7 @@ public class JFreeChart implements Drawable,
         RectangleConstraint constraint = new RectangleConstraint(ww,
                 new Range(0.0, ww), LengthConstraintType.RANGE, hh,
                 new Range(0.0, hh), LengthConstraintType.RANGE);
-        Object retValue = null;
+        Object retValue;
         BlockParams p = new BlockParams();
         p.setGenerateEntities(entities);
         if (position == RectangleEdge.TOP) {
@@ -1475,9 +1419,7 @@ public class JFreeChart implements Drawable,
      * @see #removeChangeListener(ChartChangeListener)
      */
     public void addChangeListener(ChartChangeListener listener) {
-        if (listener == null) {
-            throw new IllegalArgumentException("Null 'listener' argument.");
-        }
+        ParamChecks.nullNotPermitted(listener, "listener");
         this.changeListeners.add(ChartChangeListener.class, listener);
     }
 
@@ -1489,9 +1431,7 @@ public class JFreeChart implements Drawable,
      * @see #addChangeListener(ChartChangeListener)
      */
     public void removeChangeListener(ChartChangeListener listener) {
-        if (listener == null) {
-            throw new IllegalArgumentException("Null 'listener' argument.");
-        }
+        ParamChecks.nullNotPermitted(listener, "listener");
         this.changeListeners.remove(ChartChangeListener.class, listener);
     }
 
@@ -1570,7 +1510,7 @@ public class JFreeChart implements Drawable,
      * @param event  information about the chart title change.
      */
     @Override
-	public void titleChanged(TitleChangeEvent event) {
+    public void titleChanged(TitleChangeEvent event) {
         event.setChart(this);
         notifyListeners(event);
     }
@@ -1582,7 +1522,7 @@ public class JFreeChart implements Drawable,
      * @param event  information about the plot change.
      */
     @Override
-	public void plotChanged(PlotChangeEvent event) {
+    public void plotChanged(PlotChangeEvent event) {
         event.setChart(this);
         notifyListeners(event);
     }
@@ -1595,7 +1535,7 @@ public class JFreeChart implements Drawable,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -1724,7 +1664,7 @@ public class JFreeChart implements Drawable,
             chart.title.addChangeListener(chart);
         }
 
-        chart.subtitles = new ArrayList();
+        chart.subtitles = new ArrayList<Title>();
         for (int i = 0; i < getSubtitleCount(); i++) {
             Title subtitle = (Title) getSubtitle(i).clone();
             chart.subtitles.add(subtitle);
@@ -1769,7 +1709,6 @@ class JFreeChartInfo extends ProjectInfo {
         setLicenceText(Licences.getInstance().getLGPL());
 
         setContributors(Arrays.asList(
-            new Contributor[]{
                 new Contributor("Eric Alexander", "-"),
                 new Contributor("Richard Atkinson",
                         "richard_c_atkinson@ntlworld.com"),
@@ -1868,8 +1807,8 @@ class JFreeChartInfo extends ProjectInfo {
                 new Contributor("Hari", "-"),
                 new Contributor("Sam (oldman)", "-"),
                 new Contributor("Patrick Schlott", "-"),
-                new Contributor("Christoph Schroeder", "-")
-            }
+                new Contributor("Christoph Schroeder", "-"),
+                new Contributor("Michael Clarke", "-")
         ));
 
 

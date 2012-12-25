@@ -56,7 +56,6 @@ import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.ui.HorizontalAlignment;
@@ -77,7 +76,7 @@ public class TextBlock implements Serializable {
     private static final long serialVersionUID = -4333175719424385526L;
     
     /** Storage for the lines of text. */
-    private List lines;
+    private List<TextLine> lines;
     
     /** The alignment of the lines. */
     private HorizontalAlignment lineAlignment;
@@ -86,7 +85,7 @@ public class TextBlock implements Serializable {
      * Creates a new empty text block.
      */
     public TextBlock() {
-        this.lines = new java.util.ArrayList();
+        this.lines = new java.util.ArrayList<TextLine>();
         this.lineAlignment = HorizontalAlignment.CENTER;
     }
     
@@ -140,7 +139,7 @@ public class TextBlock implements Serializable {
         TextLine last = null;
         final int index = this.lines.size() - 1;
         if (index >= 0) {
-            last = (TextLine) this.lines.get(index);
+            last = this.lines.get(index);
         }
         return last;
     }
@@ -150,7 +149,7 @@ public class TextBlock implements Serializable {
      *
      * @return A list of {@link TextLine} objects.
      */
-    public List getLines() {
+    public List<TextLine> getLines() {
         return Collections.unmodifiableList(this.lines);
     }
     
@@ -164,9 +163,7 @@ public class TextBlock implements Serializable {
     public Size2D calculateDimensions(final Graphics2D g2) {
         double width = 0.0;
         double height = 0.0;
-        final Iterator iterator = this.lines.iterator();
-        while (iterator.hasNext()) {
-            final TextLine line = (TextLine) iterator.next();
+        for (TextLine line : this.lines) {
             final Size2D dimension = line.calculateDimensions(g2);
             width = Math.max(width, dimension.getWidth());
             height = height + dimension.getHeight();
@@ -241,24 +238,21 @@ public class TextBlock implements Serializable {
                      final double angle) {
     
         final Size2D d = calculateDimensions(g2);
-        final float[] offsets = calculateOffsets(anchor, d.getWidth(), 
+        final float[] offsets = calculateOffsets(anchor, d.getWidth(),
                 d.getHeight());
-        final Iterator iterator = this.lines.iterator();
         float yCursor = 0.0f;
-        while (iterator.hasNext()) {
-            TextLine line = (TextLine) iterator.next();
+        for (TextLine line : this.lines) {
             Size2D dimension = line.calculateDimensions(g2);
             float lineOffset = 0.0f;
             if (this.lineAlignment == HorizontalAlignment.CENTER) {
-                lineOffset = (float) (d.getWidth() - dimension.getWidth()) 
-                    / 2.0f;   
-            }
-            else if (this.lineAlignment == HorizontalAlignment.RIGHT) {
-                lineOffset = (float) (d.getWidth() - dimension.getWidth());   
+                lineOffset = (float) (d.getWidth() - dimension.getWidth())
+                        / 2.0f;
+            } else if (this.lineAlignment == HorizontalAlignment.RIGHT) {
+                lineOffset = (float) (d.getWidth() - dimension.getWidth());
             }
             line.draw(
-                g2, anchorX + offsets[0] + lineOffset, anchorY + offsets[1] + yCursor,
-                TextAnchor.TOP_LEFT, rotateX, rotateY, angle
+                    g2, anchorX + offsets[0] + lineOffset, anchorY + offsets[1] + yCursor,
+                    TextAnchor.TOP_LEFT, rotateX, rotateY, angle
             );
             yCursor = yCursor + (float) dimension.getHeight();
         }

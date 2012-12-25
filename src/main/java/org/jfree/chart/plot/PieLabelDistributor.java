@@ -43,7 +43,6 @@
 
 package org.jfree.chart.plot;
 
-import java.lang.Override;
 import java.util.Collections;
 
 /**

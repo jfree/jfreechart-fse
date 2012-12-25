@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -84,6 +84,7 @@ import org.jfree.chart.ui.StandardGradientPaintTransformer;
 import org.jfree.chart.util.AttributedStringUtilities;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.util.SerialUtilities;
@@ -337,22 +338,14 @@ public class LegendItem implements Cloneable, Serializable {
                       boolean lineVisible, Shape line,
                       Stroke lineStroke, Paint linePaint) {
 
-        if (label == null) {
-            throw new IllegalArgumentException("Null 'label' argument.");
-        }
-        if (fillPaint == null) {
-            throw new IllegalArgumentException("Null 'fillPaint' argument.");
-        }
-        if (lineStroke == null) {
-            throw new IllegalArgumentException("Null 'lineStroke' argument.");
-        }
-        if (outlinePaint == null) {
-            throw new IllegalArgumentException("Null 'outlinePaint' argument.");
-        }
-        if (outlineStroke == null) {
-            throw new IllegalArgumentException(
-                    "Null 'outlineStroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(label, "label");
+        ParamChecks.nullNotPermitted(fillPaint, "fillPaint");
+        ParamChecks.nullNotPermitted(lineStroke, "lineStroke");
+        ParamChecks.nullNotPermitted(line, "line");
+        ParamChecks.nullNotPermitted(linePaint, "linePaint");
+        ParamChecks.nullNotPermitted(outlinePaint, "outlinePaint");
+        ParamChecks.nullNotPermitted(outlineStroke, "outlineStroke");
+
         this.label = label;
         this.labelPaint = null;
         this.attributedLabel = null;
@@ -482,28 +475,14 @@ public class LegendItem implements Cloneable, Serializable {
                       boolean lineVisible, Shape line, Stroke lineStroke,
                       Paint linePaint) {
 
-        if (label == null) {
-            throw new IllegalArgumentException("Null 'label' argument.");
-        }
-        if (fillPaint == null) {
-            throw new IllegalArgumentException("Null 'fillPaint' argument.");
-        }
-        if (lineStroke == null) {
-            throw new IllegalArgumentException("Null 'lineStroke' argument.");
-        }
-        if (line == null) {
-            throw new IllegalArgumentException("Null 'line' argument.");
-        }
-        if (linePaint == null) {
-            throw new IllegalArgumentException("Null 'linePaint' argument.");
-        }
-        if (outlinePaint == null) {
-            throw new IllegalArgumentException("Null 'outlinePaint' argument.");
-        }
-        if (outlineStroke == null) {
-            throw new IllegalArgumentException(
-                "Null 'outlineStroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(label, "label");
+        ParamChecks.nullNotPermitted(fillPaint, "fillPaint");
+        ParamChecks.nullNotPermitted(lineStroke, "lineStroke");
+        ParamChecks.nullNotPermitted(line, "line");
+        ParamChecks.nullNotPermitted(linePaint, "linePaint");
+        ParamChecks.nullNotPermitted(outlinePaint, "outlinePaint");
+        ParamChecks.nullNotPermitted(outlineStroke, "outlineStroke");
+
         this.label = characterIteratorToString(label.getIterator());
         this.attributedLabel = label;
         this.description = description;
@@ -712,7 +691,7 @@ public class LegendItem implements Cloneable, Serializable {
      *
      * @return The description (possibly <code>null</code>).
      *
-     * @see #setDescription(java.lang.String) 
+     * @see #setDescription(java.lang.String)
      */
     public String getDescription() {
         return this.description;
@@ -735,7 +714,7 @@ public class LegendItem implements Cloneable, Serializable {
      *
      * @return The tool tip text (possibly <code>null</code>).
      *
-     * @see #setToolTipText(java.lang.String) 
+     * @see #setToolTipText(java.lang.String)
      */
     public String getToolTipText() {
         return this.toolTipText;
@@ -758,7 +737,7 @@ public class LegendItem implements Cloneable, Serializable {
      *
      * @return The URL text (possibly <code>null</code>).
      *
-     * @see #setURLText(java.lang.String) 
+     * @see #setURLText(java.lang.String)
      */
     public String getURLText() {
         return this.urlText;
@@ -808,7 +787,7 @@ public class LegendItem implements Cloneable, Serializable {
      *
      * @return The shape (never <code>null</code>).
      *
-     * @see #setShape(java.awt.Shape) 
+     * @see #setShape(java.awt.Shape)
      */
     public Shape getShape() {
         return this.shape;
@@ -823,9 +802,7 @@ public class LegendItem implements Cloneable, Serializable {
      * @since 1.0.14
      */
     public void setShape(Shape shape) {
-        if (shape == null) {
-            throw new IllegalArgumentException("Null 'shape' argument.");
-        }
+        ParamChecks.nullNotPermitted(shape, "shape");
         this.shape = shape;
     }
 
@@ -855,9 +832,7 @@ public class LegendItem implements Cloneable, Serializable {
      * @since 1.0.11
      */
     public void setFillPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.fillPaint = paint;
     }
 
@@ -897,9 +872,7 @@ public class LegendItem implements Cloneable, Serializable {
      * @since 1.0.11
      */
     public void setLinePaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.linePaint = paint;
     }
 
@@ -920,9 +893,7 @@ public class LegendItem implements Cloneable, Serializable {
      * @since 1.0.11
      */
     public void setOutlinePaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.outlinePaint = paint;
     }
 
@@ -931,7 +902,7 @@ public class LegendItem implements Cloneable, Serializable {
      *
      * @return The outline stroke (never <code>null</code>).
      *
-     * @see #setOutlineStroke(java.awt.Stroke) 
+     * @see #setOutlineStroke(java.awt.Stroke)
      */
     public Stroke getOutlineStroke() {
         return this.outlineStroke;
@@ -940,13 +911,14 @@ public class LegendItem implements Cloneable, Serializable {
     /**
      * Sets the outline stroke.
      *
-     * @param stroke  the stroke (never <code>null</code>).
+     * @param stroke  the stroke (<code>null</code> not permitted).
      *
      * @see #getOutlineStroke()
      *
      * @since 1.0.14
      */
     public void setOutlineStroke(Stroke stroke) {
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         this.outlineStroke = stroke;
     }
 
@@ -955,7 +927,7 @@ public class LegendItem implements Cloneable, Serializable {
      *
      * @return A boolean.
      *
-     * @see #setLineVisible(boolean) 
+     * @see #setLineVisible(boolean)
      */
     public boolean isLineVisible() {
         return this.lineVisible;
@@ -980,7 +952,7 @@ public class LegendItem implements Cloneable, Serializable {
      * @return The line (never <code>null</code>).
      *
      * @see #setLine(java.awt.Shape)
-     * @see #isLineVisible() 
+     * @see #isLineVisible()
      */
     public Shape getLine() {
         return this.line;
@@ -995,9 +967,7 @@ public class LegendItem implements Cloneable, Serializable {
      * @since 1.0.14
      */
     public void setLine(Shape line) {
-        if (line == null) {
-            throw new IllegalArgumentException("Null 'line' argument.");
-        }
+        ParamChecks.nullNotPermitted(line, "line");
         this.line = line;
     }
 
@@ -1026,9 +996,7 @@ public class LegendItem implements Cloneable, Serializable {
      * @see #getFillPaintTransformer()
      */
     public void setFillPaintTransformer(GradientPaintTransformer transformer) {
-        if (transformer == null) {
-            throw new IllegalArgumentException("Null 'transformer' attribute.");
-        }
+        ParamChecks.nullNotPermitted(transformer, "transformer");
         this.fillPaintTransformer = transformer;
     }
 
@@ -1040,12 +1008,12 @@ public class LegendItem implements Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
         if (!(obj instanceof LegendItem)) {
-                return false;
+            return false;
         }
         LegendItem that = (LegendItem) obj;
         if (this.datasetIndex != that.datasetIndex) {
@@ -1110,6 +1078,16 @@ public class LegendItem implements Cloneable, Serializable {
         return true;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash
+                + (this.seriesKey != null ? this.seriesKey.hashCode() : 0);
+        hash = 29 * hash + this.datasetIndex;
+        hash = 29 * hash + this.series;
+        return hash;
+    }
+
     /**
      * Returns an independent copy of this object (except that the clone will
      * still reference the same dataset as the original
@@ -1122,7 +1100,7 @@ public class LegendItem implements Cloneable, Serializable {
      * @since 1.0.10
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         LegendItem clone = (LegendItem) super.clone();
         if (this.seriesKey instanceof PublicCloneable) {
             PublicCloneable pc = (PublicCloneable) this.seriesKey;

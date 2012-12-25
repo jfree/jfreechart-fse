@@ -75,8 +75,8 @@ public class StrokeChooserPanel extends JPanel {
         // with Stroke objects directly - ideally we'd change the signature
         // of the constructor too...maybe later.
         DefaultComboBoxModel model = new DefaultComboBoxModel();
-        for (int i = 0; i < available.length; i++) {
-            model.addElement(available[i].getStroke());
+        for (StrokeSample anAvailable : available) {
+            model.addElement(anAvailable.getStroke());
         }
         this.selector = new JComboBox(model);
         this.selector.setSelectedItem(current.getStroke());

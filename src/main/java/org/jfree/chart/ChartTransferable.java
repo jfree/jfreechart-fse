@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
@@ -60,8 +60,8 @@ public class ChartTransferable implements Transferable {
 
     /** The data flavor. */
     final DataFlavor imageFlavor = new DataFlavor(
-            "image/x-java-image; class=java.awt.Image", "Image");    
-    
+            "image/x-java-image; class=java.awt.Image", "Image");
+
     /** The chart. */
     private JFreeChart chart;
 
@@ -88,9 +88,9 @@ public class ChartTransferable implements Transferable {
     private int minDrawHeight;
 
     /**
-     * The largest width at which the chart will be drawn (if necessary, the 
-     * chart will then be scaled up to fit the requested width). 
-     * 
+     * The largest width at which the chart will be drawn (if necessary, the
+     * chart will then be scaled up to fit the requested width).
+     *
      * @since 1.0.14
      */
     private int maxDrawWidth;
@@ -169,11 +169,11 @@ public class ChartTransferable implements Transferable {
 
     /**
      * Returns the data flavors supported.
-     * 
+     *
      * @return The data flavors supported.
      */
     @Override
-	public DataFlavor[] getTransferDataFlavors() {
+    public DataFlavor[] getTransferDataFlavors() {
         return new DataFlavor[] {this.imageFlavor};
     }
 
@@ -185,7 +185,7 @@ public class ChartTransferable implements Transferable {
      * @return A boolean.
      */
     @Override
-	public boolean isDataFlavorSupported(DataFlavor flavor) {
+    public boolean isDataFlavorSupported(DataFlavor flavor) {
         return this.imageFlavor.equals(flavor);
     }
 
@@ -200,9 +200,9 @@ public class ChartTransferable implements Transferable {
      * @throws java.io.IOException
      */
     @Override
-	public Object getTransferData(DataFlavor flavor)
+    public Object getTransferData(DataFlavor flavor)
             throws UnsupportedFlavorException, IOException {
-        
+
         if (this.imageFlavor.equals(flavor)) {
             return createBufferedImage(this.chart, this.width, this.height,
                     this.minDrawWidth, this.minDrawHeight, this.maxDrawWidth,

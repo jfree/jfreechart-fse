@@ -142,7 +142,7 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
             throw new IllegalArgumentException("The 'polygon' array must "
                     + "contain an even number of items.");
         }
-        this.polygon = (double[]) polygon.clone();
+        this.polygon = polygon.clone();
         this.stroke = stroke;
         this.outlinePaint = outlinePaint;
         this.fillPaint = fillPaint;
@@ -158,7 +158,7 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
      * @since 1.0.2
      */
     public double[] getPolygonCoordinates() {
-        return (double[]) this.polygon.clone();
+        return this.polygon.clone();
     }
 
     /**

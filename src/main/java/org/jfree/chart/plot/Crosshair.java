@@ -226,9 +226,9 @@ public class Crosshair implements Cloneable, PublicCloneable, Serializable {
      * @see #getValue()
      */
     public void setValue(double value) {
-        Double oldValue = new Double(this.value);
+        Double oldValue = this.value;
         this.value = value;
-        this.pcs.firePropertyChange("value", oldValue, new Double(value));
+        this.pcs.firePropertyChange("value", oldValue, value);
     }
 
     /**
@@ -381,9 +381,9 @@ public class Crosshair implements Cloneable, PublicCloneable, Serializable {
      * @see #getLabelXOffset()
      */
     public void setLabelXOffset(double offset) {
-        Double old = new Double(this.labelXOffset);
+        Double old = this.labelXOffset;
         this.labelXOffset = offset;
-        this.pcs.firePropertyChange("labelXOffset", old, new Double(offset));
+        this.pcs.firePropertyChange("labelXOffset", old, offset);
     }
 
     /**
@@ -406,9 +406,9 @@ public class Crosshair implements Cloneable, PublicCloneable, Serializable {
      * @see #getLabelYOffset()
      */
     public void setLabelYOffset(double offset) {
-        Double old = new Double(this.labelYOffset);
+        Double old = this.labelYOffset;
         this.labelYOffset = offset;
-        this.pcs.firePropertyChange("labelYOffset", old, new Double(offset));
+        this.pcs.firePropertyChange("labelYOffset", old, offset);
     }
 
     /**

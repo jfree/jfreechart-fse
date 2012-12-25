@@ -40,6 +40,8 @@
 
 package org.jfree.data.statistics;
 
+import java.util.List;
+
 import org.jfree.data.category.CategoryDataset;
 
 import java.util.List;
@@ -50,7 +52,7 @@ import java.util.List;
  * @since 1.0.7
  */
 public interface MultiValueCategoryDataset
-        <RowKey extends Comparable, ColumnKey extends Comparable, Value>
+        <RowKey extends Comparable, ColumnKey extends Comparable>
         extends CategoryDataset<RowKey, ColumnKey> {
 
     /**
@@ -62,7 +64,7 @@ public interface MultiValueCategoryDataset
      *
      * @return The list of values.
      */
-    public List<Value> getValues(int row, int column);
+    public List<Number> getValues(int row, int column);
 
     /**
      * Returns a list (possibly empty) of the values for the specified item.
@@ -73,6 +75,6 @@ public interface MultiValueCategoryDataset
      *
      * @return The list of values.
      */
-    public List<Value> getValues(RowKey rowKey, ColumnKey columnKey);
+    public List<Number> getValues(RowKey rowKey, ColumnKey columnKey);
 
 }
