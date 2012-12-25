@@ -66,7 +66,7 @@ public class CompassFormat extends NumberFormat {
     public CompassFormat(String n, String e, String s, String w) {
         this(new String[] {
             n, n + n + e, n + e, e + n + e, e, e + s + e, s + e, s + s + e, s,
-            s + s + w, s + w, w + s + w, w, w + n + w, n + w, n + n + w, n
+            s + s + w, s + w, w + s + w, w, w + n + w, n + w, n + n + w
         });
     }
 
