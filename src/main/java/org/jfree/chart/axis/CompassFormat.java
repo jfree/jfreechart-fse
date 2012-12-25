@@ -64,16 +64,14 @@ public class CompassFormat extends NumberFormat {
      * the base wind directions.
      */
     public CompassFormat(String n, String e, String s, String w) {
-        this(new String[] {
-            n, n + n + e, n + e, e + n + e, e, e + s + e, s + e, s + s + e, s,
-            s + s + w, s + w, w + s + w, w, w + n + w, n + w, n + n + w
-        });
+        this(n, n + n + e, n + e, e + n + e, e, e + s + e, s + e, s + s + e, s,
+                s + s + w, s + w, w + s + w, w, w + n + w, n + w, n + n + w);
     }
 
     /**
      * Creates a new formatter using the specified identifiers.
      */
-    public CompassFormat(String[] directions) {
+    public CompassFormat(String... directions) {
         super();
         if (directions == null) {
             throw new IllegalArgumentException("directions must not be null");

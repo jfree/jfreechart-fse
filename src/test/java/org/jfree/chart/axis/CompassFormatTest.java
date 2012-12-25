@@ -1,7 +1,6 @@
 package org.jfree.chart.axis;
 
 
-import org.jfree.chart.axis.CompassFormat;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
