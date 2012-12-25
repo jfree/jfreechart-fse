@@ -163,8 +163,7 @@ public class TextLine implements Serializable {
             final Size2D d = fragment.calculateDimensions(g2);
             fragment.draw(
                     g2, x, anchorY + yOffset, TextAnchor.BASELINE_LEFT,
-                    rotateX, rotateY, angle
-            );
+                    rotateX, rotateY, angle);
             x = x + (float) d.getWidth();
         }
 
@@ -195,7 +194,7 @@ public class TextLine implements Serializable {
      */
     public TextFragment getFirstTextFragment() {
         TextFragment result = null;
-        if (this.fragments.size() > 0) {
+        if (!this.fragments.isEmpty()) {
             result = this.fragments.get(0);
         }
         return result;
@@ -208,9 +207,8 @@ public class TextLine implements Serializable {
      */
     public TextFragment getLastTextFragment() {
         TextFragment result = null;
-        if (this.fragments.size() > 0) {
-            result = this.fragments.get(this.fragments.size()
-                    - 1);
+        if (!this.fragments.isEmpty()) {
+            result = this.fragments.get(this.fragments.size() - 1);
         }
         return result;
     }
