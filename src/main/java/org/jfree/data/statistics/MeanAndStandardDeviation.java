@@ -176,10 +176,7 @@ public class MeanAndStandardDeviation implements Serializable {
             }
             boolean negativeDeviationEquals = ObjectUtilities.equal(this.deviationNegative, that.deviationNegative);
             boolean positiveDeviationEquals = ObjectUtilities.equal(this.deviationPositive, that.deviationPositive);
-            if (!negativeDeviationEquals || !positiveDeviationEquals) {
-                return false;
-            }
-            return true;
+            return !(!negativeDeviationEquals || !positiveDeviationEquals);
         }
         return false;
     }
