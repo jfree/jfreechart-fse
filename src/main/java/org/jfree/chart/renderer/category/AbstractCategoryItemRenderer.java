@@ -723,12 +723,13 @@ public abstract class AbstractCategoryItemRenderer
      *
      * @since 1.0.11
      */
+    @SuppressWarnings("unchecked")
     @Override
-    public double getItemMiddle(Comparable rowKey, Comparable columnKey,
-                                CategoryDataset dataset, CategoryAxis axis, Rectangle2D area,
+    public double getItemMiddle(RowKey rowKey, ColumnKey columnKey,
+                                CategoryDataset<RowKey, ColumnKey> dataset, CategoryAxis axis, Rectangle2D area,
                                 RectangleEdge edge) {
-        return axis.getCategoryMiddle(columnKey, dataset.getColumnKeys(), area,
-                edge);
+        List<Comparable> columnKeys = (List<Comparable>) dataset.getColumnKeys();
+        return axis.getCategoryMiddle(columnKey, columnKeys, area, edge);
     }
 
     /**

@@ -49,7 +49,7 @@ package org.jfree.chart.util;
  * <p>
  * When cloning, the objects in the list are NOT cloned, only the references. 
  */
-public class ObjectList<T> extends AbstractObjectList<T> {
+public class ObjectList<T> extends AbstractObjectList<T> implements Iterable<T> {
 
     /**
      * Default constructor.

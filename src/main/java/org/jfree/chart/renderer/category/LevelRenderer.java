@@ -51,26 +51,23 @@
 
 package org.jfree.chart.renderer.category;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Stroke;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.io.Serializable;
-
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.CategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.category.CategoryDataset;
+
+import java.awt.*;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
 
 /**
  * A {@link CategoryItemRenderer} that draws individual data items as
@@ -82,7 +79,7 @@ import org.jfree.data.category.CategoryDataset;
  * <img src="../../../../../images/LevelRendererSample.png"
  * alt="LevelRendererSample.png" />
  */
-public class LevelRenderer extends AbstractCategoryItemRenderer
+public class LevelRenderer extends AbstractCategoryItemRenderer<Comparable, Comparable>
         implements Cloneable, PublicCloneable, Serializable {
 
     /** For serialization. */

@@ -49,11 +49,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Iterator;
 
 /**
  * A list of objects that can grow as required.
  */
-public class AbstractObjectList<T> implements Cloneable, Serializable {
+public class AbstractObjectList<T> implements Cloneable, Serializable, Iterable<T> {
 
     /** For serialization. */
     private static final long serialVersionUID = 7789833772597351595L;
@@ -278,6 +279,12 @@ public class AbstractObjectList<T> implements Cloneable, Serializable {
             }
         }
 
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Iterator<T> iterator() {
+        return (Iterator<T>) Arrays.asList(objects).iterator();
     }
 
 }

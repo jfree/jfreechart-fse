@@ -462,7 +462,7 @@ public interface CategoryItemRenderer
      *
      * @since 1.0.11
      */
-    public double getItemMiddle(Comparable rowKey, Comparable columnKey,
+    public double getItemMiddle(RowKey rowKey, ColumnKey columnKey,
                                 CategoryDataset<RowKey, ColumnKey> dataset,
                                 CategoryAxis axis, Rectangle2D area,
                                 RectangleEdge edge);
