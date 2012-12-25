@@ -271,11 +271,9 @@ public abstract class Regression {
         int coefficients = order + 2;
         double[] result = new double[equations + 1];
         double[][] matrix = new double[equations][coefficients];
-        double sumX = 0.0;
         double sumY = 0.0;
 
         for (int item = 0; item < validItems; item++) {
-            sumX += data[0][item];
             sumY += data[1][item];
             for (int eq = 0; eq < equations; eq++) {
                 for (int coe = 0; coe < coefficients - 1; coe++) {
@@ -288,9 +286,7 @@ public abstract class Regression {
         double[][] subMatrix = calculateSubMatrix(matrix);
         for (int eq = 1; eq < equations; eq++) {
             matrix[eq][0] = 0;
-            for (int coe = 1; coe < coefficients; coe++) {
-                matrix[eq][coe] = subMatrix[eq - 1][coe - 1];
-            }
+            System.arraycopy(subMatrix[eq - 1], 0, matrix[eq], 1, coefficients - 1);
         }
         for (int eq = equations - 1; eq > -1; eq--) {
             double value = matrix[eq][coefficients - 1];
@@ -342,13 +338,12 @@ public abstract class Regression {
         // check for zero pivot element
         if (result[0][0] == 0) {
             boolean found = false;
-            for (int i = 0; i < result.length; i++) {
-                if (result[i][0] != 0) {
+            for (double[] aResult : result) {
+                if (!found && aResult[0] != 0) {
                     found = true;
                     double[] temp = result[0];
-                    System.arraycopy(result[i], 0, result[0], 0, result[i].length);
-                    System.arraycopy(temp, 0, result[i], 0, temp.length);
-                    break;
+                    System.arraycopy(aResult, 0, result[0], 0, aResult.length);
+                    System.arraycopy(temp, 0, aResult, 0, temp.length);
                 }
             }
             if (!found) {
@@ -358,9 +353,8 @@ public abstract class Regression {
         double[][] subMatrix = calculateSubMatrix(result);
         for (int eq = 1; eq < equations - 1; eq++) {
             result[eq][0] = 0;
-            for (int coe = 1; coe < coefficients - 1; coe++) {
-                result[eq][coe] = subMatrix[eq - 1][coe - 1];
-            }
+            System.arraycopy(subMatrix[eq - 1], 0,
+                    result[eq], 1, coefficients - 1 - 1);
         }
         return result;
     }
