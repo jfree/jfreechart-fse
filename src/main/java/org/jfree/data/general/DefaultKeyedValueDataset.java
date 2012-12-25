@@ -42,11 +42,11 @@
 
 package org.jfree.data.general;
 
-import java.io.Serializable;
-
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.DefaultKeyedValue;
 import org.jfree.data.KeyedValue;
+
+import java.io.Serializable;
 
 /**
  * A default implementation of the {@link KeyedValueDataset} interface.
@@ -74,7 +74,7 @@ public class DefaultKeyedValueDataset extends AbstractDataset
      * @param value  the value (<code>null</code> permitted).
      */
     public DefaultKeyedValueDataset(Comparable key, Number value) {
-        this(new DefaultKeyedValue(key, value));
+        this(new DefaultKeyedValue<Comparable>(key, value));
     }
 
     /**
@@ -136,7 +136,7 @@ public class DefaultKeyedValueDataset extends AbstractDataset
      * @param value  the value (<code>null</code> permitted).
      */
     public void setValue(Comparable key, Number value) {
-        this.data = new DefaultKeyedValue(key, value);
+        this.data = new DefaultKeyedValue<Comparable>(key, value);
         notifyListeners(new DatasetChangeEvent(this, this));
     }
 
@@ -157,10 +157,7 @@ public class DefaultKeyedValueDataset extends AbstractDataset
         }
         KeyedValueDataset that = (KeyedValueDataset) obj;
         if (this.data == null) {
-            if (that.getKey() != null || that.getValue() != null) {
-                return false;
-            }
-            return true;
+            return !(that.getKey() != null || that.getValue() != null);
         }
         if (!ObjectUtilities.equal(this.data.getKey(), that.getKey())) {
             return false;
