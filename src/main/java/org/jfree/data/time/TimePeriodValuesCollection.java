@@ -382,7 +382,6 @@ public class TimePeriodValuesCollection extends AbstractIntervalXYDataset
      */
     @Override
     public Range getDomainBounds(boolean includeInterval) {
-        boolean interval = includeInterval;
         Range result = null;
         Range temp = null;
         for (TimePeriodValues series : this.data) {
@@ -391,7 +390,7 @@ public class TimePeriodValuesCollection extends AbstractIntervalXYDataset
                 TimePeriod start = series.getTimePeriod(
                         series.getMinStartIndex());
                 TimePeriod end = series.getTimePeriod(series.getMaxEndIndex());
-                if (!interval) {
+                if (!includeInterval) {
                     if (this.xPosition == TimePeriodAnchor.START) {
                         TimePeriod maxStart = series.getTimePeriod(
                                 series.getMaxStartIndex());
@@ -443,10 +442,7 @@ public class TimePeriodValuesCollection extends AbstractIntervalXYDataset
         if (this.xPosition != that.xPosition) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.data, that.data)) {
-            return false;
-        }
-        return true;
+        return ObjectUtilities.equal(this.data, that.data);
     }
 
 }

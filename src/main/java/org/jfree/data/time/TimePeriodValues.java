@@ -65,7 +65,7 @@ import java.util.List;
  * This is similar to the {@link TimeSeries} class, except that the time 
  * periods can have irregular lengths.
  */
-public class TimePeriodValues extends Series implements Serializable {
+public class TimePeriodValues extends Series<Comparable> implements Serializable {
 
     /** For serialization. */
     static final long serialVersionUID = -2210593619794989709L;
@@ -494,7 +494,7 @@ public class TimePeriodValues extends Series implements Serializable {
         TimePeriodValues copy = (TimePeriodValues) super.clone();
 
         copy.data = new ArrayList<TimePeriodValue>();
-        if (this.data.size() > 0) {
+        if (!this.data.isEmpty()) {
             for (int index = start; index <= end; index++) {
                 TimePeriodValue item = this.data.get(index);
                 TimePeriodValue clone = (TimePeriodValue) item.clone();

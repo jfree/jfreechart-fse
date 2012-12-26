@@ -145,7 +145,6 @@ public class Millisecond extends RegularTimePeriod implements Serializable, Comp
      *
      * @param time  the time.
      *
-     * @see #Millisecond(Date, TimeZone)
      */
     public Millisecond(Date time) {
         this(time, TimeZone.getDefault(), Locale.getDefault());

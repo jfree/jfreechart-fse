@@ -510,7 +510,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
             }
             if (m >= milliseconds) {
                 result[1] = i;
-                break;
+                return result;
             }
         }
         return result;
@@ -677,10 +677,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
         if (this.xPosition != that.xPosition) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.data, that.data)) {
-            return false;
-        }
-        return true;
+        return ObjectUtilities.equal(this.data, that.data);
     }
 
     /**

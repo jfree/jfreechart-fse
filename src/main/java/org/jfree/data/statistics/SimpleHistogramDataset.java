@@ -205,20 +205,22 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      * @param notify  send {@link DatasetChangeEvent} to listeners?
      */
     public void addObservation(double value, boolean notify) {
-        boolean placed = false;
-        for (SimpleHistogramBin bin : this.bins) {
-            if (bin.accepts(value)) {
-                bin.setItemCount(bin.getItemCount() + 1);
-                placed = true;
-                break;
-            }
-        }
-        if (!placed) {
+        if (!isPlaced(value)) {
             throw new RuntimeException("No bin.");
         }
         if (notify) {
             notifyListeners(new DatasetChangeEvent(this, this));
         }
+    }
+
+    private boolean isPlaced(double value) {
+        for (SimpleHistogramBin bin : this.bins) {
+            if (bin.accepts(value)) {
+                bin.setItemCount(bin.getItemCount() + 1);
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -460,10 +462,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
         if (this.adjustForBinSize != that.adjustForBinSize) {
             return false;
         }
-        if (!this.bins.equals(that.bins)) {
-            return false;
-        }
-        return true;
+        return this.bins.equals(that.bins);
     }
 
     /**

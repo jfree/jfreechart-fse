@@ -105,8 +105,7 @@ public abstract class Statistics {
                 counter++;
             }
         }
-        double result = (sum / counter);
-        return result;
+        return sum / counter;
     }
 
     /**
@@ -198,7 +197,7 @@ public abstract class Statistics {
         double result = Double.NaN;
         if (copyAndSort) {
             List<Number> copy = new ArrayList<Number>(values);
-            Collections.sort((List) copy);
+            Collections.sort(copy, null);
             values = copy;
         }
         int count = values.size();
@@ -257,7 +256,7 @@ public abstract class Statistics {
             for (int i = start; i <= end; i++) {
                 working.add(values.get(i));
             }
-            Collections.sort((List) working);
+            Collections.sort(working, null);
             result = calculateMedian(working, false);
         } else {
             int count = end - start + 1;

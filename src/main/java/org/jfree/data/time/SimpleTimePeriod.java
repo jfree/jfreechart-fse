@@ -154,10 +154,7 @@ public class SimpleTimePeriod implements TimePeriod, Comparable<TimePeriod>, Ser
         if (!this.getStart().equals(that.getStart())) {
             return false;
         }
-        if (!this.getEnd().equals(that.getEnd())) {
-            return false;
-        }
-        return true;
+        return this.getEnd().equals(that.getEnd());
     }
 
     /**

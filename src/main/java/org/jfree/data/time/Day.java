@@ -147,8 +147,6 @@ public class Day extends RegularTimePeriod implements Serializable {
      * default time zone.
      *
      * @param time  the time (<code>null</code> not permitted).
-     *
-     * @see #Day(Date, TimeZone)
      */
     public Day(Date time) {
         // defer argument checking...
@@ -324,7 +322,12 @@ public class Day extends RegularTimePeriod implements Serializable {
         int month = this.serialDate.getMonth();
         int day = this.serialDate.getDayOfMonth();
         calendar.clear();
-        calendar.set(year, month - 1, day, 0, 0, 0);
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTimeInMillis();
     }
@@ -346,7 +349,12 @@ public class Day extends RegularTimePeriod implements Serializable {
         int month = this.serialDate.getMonth();
         int day = this.serialDate.getDayOfMonth();
         calendar.clear();
-        calendar.set(year, month - 1, day, 23, 59, 59);
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.HOUR, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
         calendar.set(Calendar.MILLISECOND, 999);
         return calendar.getTimeInMillis();
     }
@@ -370,10 +378,7 @@ public class Day extends RegularTimePeriod implements Serializable {
             return false;
         }
         Day that = (Day) obj;
-        if (!this.serialDate.equals(that.getSerialDate())) {
-            return false;
-        }
-        return true;
+        return this.serialDate.equals(that.getSerialDate());
     }
 
     /**

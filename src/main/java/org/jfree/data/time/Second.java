@@ -144,7 +144,6 @@ public class Second extends RegularTimePeriod implements Serializable {
      *
      * @param time  the time (<code>null</code> not permitted).
      *
-     * @see #Second(Date, TimeZone)
      */
     public Second(Date time) {
         this(time, TimeZone.getDefault(), Locale.getDefault());
@@ -296,7 +295,12 @@ public class Second extends RegularTimePeriod implements Serializable {
         int month = this.day.getMonth() - 1;
         int day = this.day.getDayOfMonth();
         calendar.clear();
-        calendar.set(year, month, day, this.hour, this.minute, this.second);
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month );
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.HOUR, this.hour);
+        calendar.set(Calendar.MINUTE, this.minute);
+        calendar.set(Calendar.SECOND, this.second);
         calendar.set(Calendar.MILLISECOND, 0);
         //return calendar.getTimeInMillis();  // this won't work for JDK 1.3
         return calendar.getTimeInMillis();
@@ -346,10 +350,7 @@ public class Second extends RegularTimePeriod implements Serializable {
         if (this.hour != that.hour) {
             return false;
         }
-        if (!this.day.equals(that.day)) {
-            return false;
-        }
-        return true;
+        return this.day.equals(that.day);
     }
 
     /**

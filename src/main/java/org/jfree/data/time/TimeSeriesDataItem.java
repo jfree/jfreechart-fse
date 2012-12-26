@@ -163,10 +163,7 @@ public class TimeSeriesDataItem implements Cloneable, Comparable<TimeSeriesDataI
         if (!ObjectUtilities.equal(this.period, that.period)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.value, that.value)) {
-            return false;
-        }
-        return true;
+        return ObjectUtilities.equal(this.value, that.value);
     }
 
     /**

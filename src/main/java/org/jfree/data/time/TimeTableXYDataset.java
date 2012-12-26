@@ -92,7 +92,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * and symmetrical anyway), each row contains values for the same
      * {@link RegularTimePeriod} (the rows are sorted into ascending order).
      */
-    private DefaultKeyedValues2D values;
+    private DefaultKeyedValues2D<Comparable, Comparable> values;
 
     /**
      * A flag that indicates that the domain is 'points in time'.  If this flag
@@ -142,7 +142,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
         if (locale == null) {
             throw new IllegalArgumentException("Null 'locale' argument.");
         }
-        this.values = new DefaultKeyedValues2D(true);
+        this.values = new DefaultKeyedValues2D<Comparable, Comparable>(true);
         this.workingCalendar = Calendar.getInstance(zone, locale);
         this.xPosition = TimePeriodAnchor.START;
     }
@@ -586,15 +586,9 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
         if (this.xPosition != that.xPosition) {
             return false;
         }
-        if (!this.workingCalendar.getTimeZone().equals(
-                that.workingCalendar.getTimeZone())
-                ) {
-            return false;
-        }
-        if (!this.values.equals(that.values)) {
-            return false;
-        }
-        return true;
+        boolean timeZoneEquals = this.workingCalendar.getTimeZone().equals(
+                that.workingCalendar.getTimeZone());
+        return timeZoneEquals && this.values.equals(that.values);
     }
 
     /**
@@ -604,10 +598,12 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      *
      * @throws CloneNotSupportedException if the dataset cannot be cloned.
      */
+    @SuppressWarnings("unchecked")
     @Override
     public Object clone() throws CloneNotSupportedException {
         TimeTableXYDataset clone = (TimeTableXYDataset) super.clone();
-        clone.values = (DefaultKeyedValues2D) this.values.clone();
+        clone.values = (DefaultKeyedValues2D<Comparable, Comparable>)
+                this.values.clone();
         clone.workingCalendar = (Calendar) this.workingCalendar.clone();
         return clone;
     }

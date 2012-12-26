@@ -137,7 +137,6 @@ public class Hour extends RegularTimePeriod implements Serializable {
      *
      * @param time  the date-time (<code>null</code> not permitted).
      *
-     * @see #Hour(Date, TimeZone)
      */
     public Hour(Date time) {
         // defer argument checking...
@@ -327,7 +326,12 @@ public class Hour extends RegularTimePeriod implements Serializable {
         int year = this.day.getYear();
         int month = this.day.getMonth() - 1;
         int dom = this.day.getDayOfMonth();
-        calendar.set(year, month, dom, this.hour, 0, 0);
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, dom);
+        calendar.set(Calendar.HOUR, this.hashCode());
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTimeInMillis();
     }
@@ -347,7 +351,12 @@ public class Hour extends RegularTimePeriod implements Serializable {
         int year = this.day.getYear();
         int month = this.day.getMonth() - 1;
         int dom = this.day.getDayOfMonth();
-        calendar.set(year, month, dom, this.hour, 59, 59);
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, dom);
+        calendar.set(Calendar.HOUR, this.hour);
+        calendar.set(Calendar.MINUTE, 23);
+        calendar.set(Calendar.SECOND, 59);
         calendar.set(Calendar.MILLISECOND, 999);
         return calendar.getTimeInMillis();
     }
@@ -375,10 +384,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
         if (this.hour != that.hour) {
             return false;
         }
-        if (!this.day.equals(that.day)) {
-            return false;
-        }
-        return true;
+        return this.day.equals(that.day);
     }
 
     /**

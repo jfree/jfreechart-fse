@@ -138,7 +138,6 @@ public class Month extends RegularTimePeriod implements Serializable {
      *
      * @param time  the date/time (<code>null</code> not permitted).
      *
-     * @see #Month(Date, TimeZone)
      */
     public Month(Date time) {
         this(time, TimeZone.getDefault(), Locale.getDefault());

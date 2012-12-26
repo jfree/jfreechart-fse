@@ -126,7 +126,6 @@ public class Year extends RegularTimePeriod implements Serializable {
      *
      * @param time  the time (<code>null</code> not permitted).
      *
-     * @see #Year(Date, TimeZone)
      */
     public Year(Date time) {
         this(time, TimeZone.getDefault(), Locale.getDefault());

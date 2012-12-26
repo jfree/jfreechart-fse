@@ -441,10 +441,7 @@ public class Week extends RegularTimePeriod implements Serializable {
         if (this.week != that.week) {
             return false;
         }
-        if (this.year != that.year) {
-            return false;
-        }
-        return true;
+        return this.year == that.year;
 
     }
 

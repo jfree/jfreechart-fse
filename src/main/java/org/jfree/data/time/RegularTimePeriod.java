@@ -81,7 +81,8 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable<TimePe
      *
      * @return The time period.
      */
-    public static RegularTimePeriod createInstance(Class c, Date millisecond,
+    public static RegularTimePeriod createInstance(Class<? extends TimePeriod> c,
+                                                   Date millisecond,
                                                    TimeZone zone, Locale locale) {
         RegularTimePeriod result = null;
         try {

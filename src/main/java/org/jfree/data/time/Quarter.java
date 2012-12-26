@@ -151,8 +151,6 @@ public class Quarter extends RegularTimePeriod implements Serializable {
      * zone.
      *
      * @param time  the date/time (<code>null</code> not permitted).
-     *
-     * @see #Quarter(Date, TimeZone)
      */
     public Quarter(Date time) {
         this(time, TimeZone.getDefault(), Locale.getDefault());
@@ -404,7 +402,12 @@ public class Quarter extends RegularTimePeriod implements Serializable {
     @Override
     public long getFirstMillisecond(Calendar calendar) {
         int month = Quarter.FIRST_MONTH_IN_QUARTER[this.quarter];
-        calendar.set(this.year, month - 1, 1, 0, 0, 0);
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTimeInMillis();
     }
@@ -424,7 +427,12 @@ public class Quarter extends RegularTimePeriod implements Serializable {
     public long getLastMillisecond(Calendar calendar) {
         int month = Quarter.LAST_MONTH_IN_QUARTER[this.quarter];
         int eom = SerialDate.lastDayOfMonth(month, this.year);
-        calendar.set(this.year, month - 1, eom, 23, 59, 59);
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, eom);
+        calendar.set(Calendar.HOUR, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
         calendar.set(Calendar.MILLISECOND, 999);
         return calendar.getTimeInMillis();
     }
@@ -462,8 +470,7 @@ public class Quarter extends RegularTimePeriod implements Serializable {
 
         // parse the string...
         Year year = Year.parseYear(remaining.trim());
-        Quarter result = new Quarter(quarter, year);
-        return result;
+        return new Quarter(quarter, year);
 
     }
 

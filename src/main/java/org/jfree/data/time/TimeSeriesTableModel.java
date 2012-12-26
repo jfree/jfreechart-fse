@@ -43,10 +43,10 @@
 
 package org.jfree.data.time;
 
-import javax.swing.table.AbstractTableModel;
-
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesChangeListener;
+
+import javax.swing.table.AbstractTableModel;
 
 /**
  * Wrapper around a time series to convert it to a table model for use in
@@ -212,17 +212,7 @@ public class TimeSeriesTableModel extends AbstractTableModel
      */
     @Override
 	public boolean isCellEditable(int row, int column) {
-        if (this.editable) {
-            if ((column == 0) || (column == 1)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            return false;
-        }
+        return this.editable && (column == 0 || column == 1);
     }
 
     /**

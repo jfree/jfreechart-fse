@@ -130,7 +130,6 @@ public class Minute extends RegularTimePeriod implements Serializable {
      *
      * @param time  the time (<code>null</code> not permitted).
      *
-     * @see #Minute(Date, TimeZone)
      */
     public Minute(Date time) {
         // defer argument checking

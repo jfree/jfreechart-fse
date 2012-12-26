@@ -105,7 +105,7 @@ import java.util.*;
  * period (for example, {@link Day}) and (b) that each period appears at
  * most one time in the series.
  */
-public class TimeSeries extends Series implements Cloneable, Serializable {
+public class TimeSeries extends Series<Comparable> implements Cloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -5032960206869675528L;
@@ -578,7 +578,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
         }
 
         // make the change (if it's not a duplicate time period)...
-        boolean added;
+        boolean added = false;
         int count = getItemCount();
         if (count == 0) {
             this.data.add(item);
@@ -923,7 +923,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
      * {@link SeriesChangeEvent} to all registered listeners.
      */
     public void clear() {
-        if (this.data.size() > 0) {
+        if (!this.data.isEmpty()) {
             this.data.clear();
             this.timePeriodClass = null;
             this.minY = Double.NaN;
@@ -1034,7 +1034,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
         copy.minY = Double.NaN;
         copy.maxY = Double.NaN;
         copy.data = new java.util.ArrayList<TimeSeriesDataItem>();
-        if (this.data.size() > 0) {
+        if (!this.data.isEmpty()) {
             for (int index = start; index <= end; index++) {
                 TimeSeriesDataItem item
                         = this.data.get(index);
@@ -1138,10 +1138,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
         if (count != that.getItemCount()) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.data, that.data)) {
-            return false;
-        }
-        return super.equals(obj);
+        return ObjectUtilities.equal(this.data, that.data) && super.equals(obj);
     }
 
     /**
@@ -1222,8 +1219,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     private void findBoundsByIteration() {
         this.minY = Double.NaN;
         this.maxY = Double.NaN;
-        for (TimeSeriesDataItem aData : this.data) {
-            TimeSeriesDataItem item = aData;
+        for (TimeSeriesDataItem item : this.data) {
             updateBoundsForAddedItem(item);
         }
     }
