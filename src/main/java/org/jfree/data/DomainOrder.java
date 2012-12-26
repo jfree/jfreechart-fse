@@ -40,12 +40,10 @@
 
 package org.jfree.data;
 
-import java.io.Serializable;
-
 /**
  * Used to indicate sorting order if any (ascending, descending or none).
  */
-public enum DomainOrder implements Serializable {
+public enum DomainOrder {
 
     /** No order. */
     NONE("DomainOrder.NONE"),
@@ -55,9 +53,6 @@ public enum DomainOrder implements Serializable {
 
     /** Descending order. */
     DESCENDING("DomainOrder.DESCENDING");
-
-    /** For serialization. */
-    private static final long serialVersionUID = 4902774943512072627L;
 
     /** The name. */
     private String name;
