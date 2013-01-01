@@ -23,3 +23,5 @@ stuff and NOT to be constrained by backwards compatibility.
 David Gilbert (david.gilbert@object-refinery.com)  
 JFreeChart Project Leader
 
+[![Build Status](https://buildhive.cloudbees.com/job/jfree/job/jfreechart-fse/badge/icon)](https://buildhive.cloudbees.com/job/jfree/job/jfreechart-fse/)
+
