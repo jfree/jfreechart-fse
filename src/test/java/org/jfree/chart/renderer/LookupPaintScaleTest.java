@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------------
  * LookupPaintScaleTests.java
  * --------------------------
- * (C) Copyright 2006-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2006-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -45,16 +45,25 @@ package org.jfree.chart.renderer;
 
 import org.junit.Test;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link LookupPaintScale} class.
  */
-public class LookupPaintScaleTest {
-
+public class LookupPaintScaleTest  {
 
     /**
      * A test for the equals() method.
@@ -121,7 +130,7 @@ public class LookupPaintScaleTest {
         out.close();
 
         ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+                    new ByteArrayInputStream(buffer.toByteArray()));
         LookupPaintScale g2 = (LookupPaintScale) in.readObject();
         in.close();
 
@@ -137,7 +146,7 @@ public class LookupPaintScaleTest {
         out.close();
 
         in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+                    new ByteArrayInputStream(buffer.toByteArray()));
         g2 = (LookupPaintScale) in.readObject();
         in.close();
 
@@ -210,6 +219,21 @@ public class LookupPaintScaleTest {
         assertEquals(Color.yellow, s.getPaint(75.0));
         assertEquals(Color.yellow, s.getPaint(100.0));
         assertEquals(Color.BLACK, s.getPaint(101.0));
+    }
+
+    /**
+     * Some checks for special values in the getPaint() method.
+     */
+    @Test
+    public void testSpecialValues() {
+        LookupPaintScale s = new LookupPaintScale(0.0, 100.0, Color.black);
+        s.add(25.0, Color.green);
+        s.add(50.0, Color.blue);
+        s.add(75.0, Color.yellow);
+        assertEquals(Color.black, s.getPaint(Double.NaN));
+        assertEquals(Color.black, s.getPaint(Double.POSITIVE_INFINITY));
+        assertEquals(Color.black, s.getPaint(Double.NEGATIVE_INFINITY));
+
     }
 
 }

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * LookupPaintScale.java
  * ---------------------
- * (C) Copyright 2006-2012, by Object Refinery Limited.
+ * (C) Copyright 2006-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -44,11 +44,8 @@
 
 package org.jfree.chart.renderer;
 
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtilities;
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Paint;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -56,14 +53,19 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.ParamChecks;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.SerialUtilities;
+
 /**
  * A paint scale that uses a lookup table to associate paint instances
  * with data value ranges.
  *
  * @since 1.0.4
  */
-public class LookupPaintScale
-        implements PaintScale, PublicCloneable, Serializable {
+public class LookupPaintScale implements PaintScale, PublicCloneable,
+        Serializable {
 
     /**
      * Stores the paint for a value.
@@ -135,6 +137,15 @@ public class LookupPaintScale
             return true;
         }
 
+        @Override
+        public int hashCode() {
+            int hash = 7;
+            hash = 37 * hash + (int) (Double.doubleToLongBits(this.value)
+                    ^ (Double.doubleToLongBits(this.value) >>> 32));
+            hash = 37 * hash + (this.paint != null ? this.paint.hashCode() : 0);
+            return hash;
+        }
+
         /**
          * Provides serialization support.
          *
@@ -194,14 +205,12 @@ public class LookupPaintScale
      *     permitted).
      */
     public LookupPaintScale(double lowerBound, double upperBound,
-                            Paint defaultPaint) {
+            Paint defaultPaint) {
         if (lowerBound >= upperBound) {
             throw new IllegalArgumentException(
                     "Requires lowerBound < upperBound.");
         }
-        if (defaultPaint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(defaultPaint, "defaultPaint");
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
         this.defaultPaint = defaultPaint;
@@ -247,16 +256,20 @@ public class LookupPaintScale
      * <code>paint</code>.
      *
      * @param value  the data value.
-     * @param paint  the paint.
+     * @param paint  the paint (<code>null</code> not permitted).
      *
      * @since 1.0.6
      */
     public void add(double value, Paint paint) {
+        ParamChecks.requireInRange(value, "value", lowerBound, upperBound);
+        ParamChecks.nullNotPermitted(paint, "paint");
+
         PaintItem item = new PaintItem(value, paint);
         int index = Collections.binarySearch(this.lookupTable, item);
         if (index >= 0) {
             this.lookupTable.set(index, item);
-        } else {
+        }
+        else {
             this.lookupTable.add(-(index + 1), item);
         }
     }
@@ -274,10 +287,8 @@ public class LookupPaintScale
     public Paint getPaint(double value) {
 
         // handle value outside bounds...
-        if (value < this.lowerBound) {
-            return this.defaultPaint;
-        }
-        if (value > this.upperBound) {
+        if (value < this.lowerBound || value > this.upperBound
+                || Double.isNaN(value)) {
             return this.defaultPaint;
         }
 
@@ -300,7 +311,8 @@ public class LookupPaintScale
             item = this.lookupTable.get(current);
             if (value >= item.value) {
                 low = current;
-            } else {
+            }
+            else {
                 high = current;
             }
         }
@@ -343,6 +355,20 @@ public class LookupPaintScale
             return false;
         }
         return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + (int) (Double.doubleToLongBits(this.lowerBound)
+                ^ (Double.doubleToLongBits(this.lowerBound) >>> 32));
+        hash = 59 * hash + (int) (Double.doubleToLongBits(this.upperBound)
+                ^ (Double.doubleToLongBits(this.upperBound) >>> 32));
+        hash = 59 * hash + (this.defaultPaint != null
+                ? this.defaultPaint.hashCode() : 0);
+        hash = 59 * hash + (this.lookupTable != null
+                ? this.lookupTable.hashCode() : 0);
+        return hash;
     }
 
     /**
