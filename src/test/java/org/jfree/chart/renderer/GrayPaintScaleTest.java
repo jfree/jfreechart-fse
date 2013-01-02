@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------
  * GrayPaintScaleTests.java
  * ------------------------
- * (C) Copyright 2006-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2006-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -64,10 +64,6 @@ import static org.junit.Assert.assertSame;
  */
 public class GrayPaintScaleTest  {
 
-
-
-
-
     private static final double EPSILON = 0.000000001;
 
     /**
@@ -98,6 +94,16 @@ public class GrayPaintScaleTest  {
         assertEquals(c, Color.BLACK);
         c = (Color) gps.getPaint(1.5);
         assertEquals(c, Color.WHITE);
+
+        // add a check for Double.NAN
+        c = (Color) gps.getPaint(Double.NaN);
+        assertEquals(c, Color.BLACK);
+
+        c = (Color) gps.getPaint(Double.POSITIVE_INFINITY);
+        assertEquals(c, Color.WHITE);
+
+        c = (Color) gps.getPaint(Double.NEGATIVE_INFINITY);
+        assertEquals(c, Color.BLACK);
     }
 
     /**
@@ -148,15 +154,15 @@ public class GrayPaintScaleTest  {
     public void testSerialization() throws IOException, ClassNotFoundException {
         GrayPaintScale g1 = new GrayPaintScale();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(g1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(g1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
         GrayPaintScale g2 = (GrayPaintScale) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(g1, g2);
     }

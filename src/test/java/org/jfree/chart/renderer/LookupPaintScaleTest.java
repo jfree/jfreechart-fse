@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------------
  * LookupPaintScaleTests.java
  * --------------------------
- * (C) Copyright 2006-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2006-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -64,10 +64,6 @@ import static org.junit.Assert.assertSame;
  * Tests for the {@link LookupPaintScale} class.
  */
 public class LookupPaintScaleTest  {
-
-
-
-
 
     /**
      * A test for the equals() method.
@@ -128,15 +124,15 @@ public class LookupPaintScaleTest  {
     public void testSerialization() throws IOException, ClassNotFoundException {
         LookupPaintScale g1 = new LookupPaintScale();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(g1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(g1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
         LookupPaintScale g2 = (LookupPaintScale) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(g1, g2);
 
@@ -144,15 +140,15 @@ public class LookupPaintScaleTest  {
                 Color.RED, 3.0f, 4.0f, Color.yellow));
         g1.add(1.5, new GradientPaint(1.1f, 2.2f, Color.RED, 3.3f, 4.4f,
                 Color.BLUE));
-            buffer = new ByteArrayOutputStream();
-            out = new ObjectOutputStream(buffer);
-            out.writeObject(g1);
-            out.close();
+        buffer = new ByteArrayOutputStream();
+        out = new ObjectOutputStream(buffer);
+        out.writeObject(g1);
+        out.close();
 
-            in = new ObjectInputStream(
+        in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            g2 = (LookupPaintScale) in.readObject();
-            in.close();
+        g2 = (LookupPaintScale) in.readObject();
+        in.close();
 
         assertEquals(g1, g2);
     }
@@ -223,6 +219,21 @@ public class LookupPaintScaleTest  {
         assertEquals(Color.yellow, s.getPaint(75.0));
         assertEquals(Color.yellow, s.getPaint(100.0));
         assertEquals(Color.BLACK, s.getPaint(101.0));
+    }
+
+    /**
+     * Some checks for special values in the getPaint() method.
+     */
+    @Test
+    public void testSpecialValues() {
+        LookupPaintScale s = new LookupPaintScale(0.0, 100.0, Color.black);
+        s.add(25.0, Color.green);
+        s.add(50.0, Color.blue);
+        s.add(75.0, Color.yellow);
+        assertEquals(Color.black, s.getPaint(Double.NaN));
+        assertEquals(Color.black, s.getPaint(Double.POSITIVE_INFINITY));
+        assertEquals(Color.black, s.getPaint(Double.NEGATIVE_INFINITY));
+
     }
 
 }

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------
  * ParamChecks.java
  * ----------------
- * (C) Copyright 2011, by Object Refinery Limited.
+ * (C) Copyright 2011, 2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -35,6 +35,7 @@
  * Changes
  * -------
  * 16-Oct-2011 : Version 1 (DG);
+ * 01-Jan-2013 : Added requireInRange() method (DG);
  *
  */
 
@@ -65,4 +66,31 @@ public class ParamChecks {
             throw new IllegalArgumentException("Null '" + name + "' argument.");
         }
     }
+
+    /**
+     * Throws an <code>IllegalArgumentException</code> if the supplied
+     * <code>value</code> is not in the range <code>lowerBound</code> to
+     * <code>upperBound</code> inclusive.
+     *
+     * @param value  the value to check.
+     * @param valueStr  the name of the parameter (to use in the exception
+     *     message).
+     * @param lowerBound  the lower bound.
+     * @param upperBound  the upper bound.
+     *
+     * @throws IllegalArgumentException  if the supplied <code>value</code> is
+     *     not in the range <code>lowerBound</code> to <code>upperBound</code>
+     *     inclusive.
+     *
+     * @since 1.0.15
+     */
+    public static void requireInRange(double value, String valueStr,
+            double lowerBound, double upperBound) {
+        if (value < lowerBound || value > upperBound || Double.isNaN(value)) {
+            throw new IllegalArgumentException("Requires '"
+                    + valueStr + "' in the range " + lowerBound + " to "
+                    + upperBound);
+        }
+    }
+
 }

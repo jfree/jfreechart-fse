@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
  * GrayPaintScale.java
  * -------------------
- * (C) Copyright 2006-2012, by Object Refinery Limited.
+ * (C) Copyright 2006-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -56,8 +56,8 @@ import org.jfree.chart.util.PublicCloneable;
  *
  * @since 1.0.4
  */
-public class GrayPaintScale
-        implements PaintScale, PublicCloneable, Serializable {
+public class GrayPaintScale implements PaintScale, PublicCloneable,
+        Serializable {
 
     /** The lower bound. */
     private double lowerBound;
@@ -71,6 +71,9 @@ public class GrayPaintScale
      * @since 1.0.13
      */
     private int alpha;
+
+    /** Cache of shades. */
+    private Color[] shades = new Color[256];
 
     /**
      * Creates a new <code>GrayPaintScale</code> instance with default values.
@@ -128,7 +131,7 @@ public class GrayPaintScale
      * @see #getUpperBound()
      */
     @Override
-	public double getLowerBound() {
+    public double getLowerBound() {
         return this.lowerBound;
     }
 
@@ -140,15 +143,15 @@ public class GrayPaintScale
      * @see #getLowerBound()
      */
     @Override
-	public double getUpperBound() {
+    public double getUpperBound() {
         return this.upperBound;
     }
 
     /**
      * Returns the alpha transparency that was specified in the constructor.
-     * 
+     *
      * @return The alpha transparency (in the range 0 to 255).
-     * 
+     *
      * @since 1.0.13
      */
     public int getAlpha() {
@@ -164,14 +167,15 @@ public class GrayPaintScale
      * @return A paint for the specified value.
      */
     @Override
-	public Paint getPaint(double value) {
+    public Paint getPaint(double value) {
         double v = Math.max(value, this.lowerBound);
         v = Math.min(v, this.upperBound);
         int g = (int) ((v - this.lowerBound) / (this.upperBound
                 - this.lowerBound) * 255.0);
-        // FIXME:  it probably makes sense to allocate an array of 256 Colors
-        // and lazily populate this array...
-        return new Color(g, g, g, this.alpha);
+        if (this.shades[g] == null) {
+            this.shades[g] = new Color(g, g, g, this.alpha);
+        }
+        return this.shades[g];
     }
 
     /**
@@ -188,7 +192,7 @@ public class GrayPaintScale
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -214,7 +218,7 @@ public class GrayPaintScale
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int hash = 7;
         hash = HashUtilities.hashCode(hash, this.lowerBound);
         hash = HashUtilities.hashCode(hash, this.upperBound);
@@ -231,7 +235,7 @@ public class GrayPaintScale
      *     instance.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
