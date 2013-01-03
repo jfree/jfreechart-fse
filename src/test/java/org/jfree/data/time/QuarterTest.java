@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
@@ -91,7 +91,7 @@ public class QuarterTest  {
      * Common test setup.
      */
     @Before
-	public void setUp() {
+    public void setUp() {
         this.q1Y1900 = new Quarter(1, 1900);
         this.q2Y1900 = new Quarter(2, 1900);
         this.q3Y9999 = new Quarter(3, 9999);

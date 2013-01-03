@@ -6,22 +6,22 @@
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
- * This library is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Lesser General Public License as published by 
- * the Free Software Foundation; either version 2.1 of the License, or 
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public 
+ * This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, 
- * USA.  
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -84,7 +84,7 @@ public class TimePeriodValuesTest  {
      * Common test setup.
      */
     @Before
-	public void setUp() {
+    public void setUp() {
 
         this.seriesA = new TimePeriodValues("Series A");
         this.seriesA.add(new Year(2000), new Integer(102000));
@@ -108,7 +108,7 @@ public class TimePeriodValuesTest  {
     }
 
     /**
-     * Set up a quarter equal to Q1 1900.  Request the previous quarter, it 
+     * Set up a quarter equal to Q1 1900.  Request the previous quarter, it
      * should be null.
      */
     @Test
@@ -192,19 +192,19 @@ public class TimePeriodValuesTest  {
         assertFalse(s1.equals(s2));
         s2.setDomainDescription("XYZ");
         assertEquals(s1, s2);
-        
+
         // domain description - null
         s1.setDomainDescription(null);
         assertFalse(s1.equals(s2));
         s2.setDomainDescription(null);
         assertEquals(s1, s2);
-        
+
         // range description
         s1.setRangeDescription("XYZ");
         assertFalse(s1.equals(s2));
         s2.setRangeDescription("XYZ");
         assertEquals(s1, s2);
-        
+
         // range description - null
         s1.setRangeDescription(null);
         assertFalse(s1.equals(s2));
@@ -224,7 +224,7 @@ public class TimePeriodValuesTest  {
         assertTrue("b4", b4);
 
     }
-    
+
     /**
      * A test for bug report 1161329.
      */
@@ -240,9 +240,9 @@ public class TimePeriodValuesTest  {
         tpv.add(t, 2.0);
         assertEquals(1, tpv.getItemCount());
     }
-    
+
     static final double EPSILON = 0.0000000001;
-    
+
     /**
      * Some checks for the add() methods.
      */
@@ -251,11 +251,11 @@ public class TimePeriodValuesTest  {
         TimePeriodValues tpv = new TimePeriodValues("Test");
         MySeriesChangeListener listener = new MySeriesChangeListener();
         tpv.addChangeListener(listener);
-        tpv.add(new TimePeriodValue(new SimpleTimePeriod(new Date(1L), 
+        tpv.add(new TimePeriodValue(new SimpleTimePeriod(new Date(1L),
                 new Date(3L)), 99.0));
         assertEquals(99.0, tpv.getValue(0).doubleValue(), EPSILON);
         assertEquals(tpv, listener.getLastEvent().getSource());
-        
+
         // a null item should throw an IllegalArgumentException
         try {
             tpv.add(null);
@@ -265,7 +265,7 @@ public class TimePeriodValuesTest  {
             assertEquals("Null item not allowed.", e.getMessage());
         }
     }
-    
+
     /**
      * Some tests for the getMinStartIndex() method.
      */
@@ -280,7 +280,7 @@ public class TimePeriodValuesTest  {
         s.add(new SimpleTimePeriod(0L, 50L), 3.0);
         assertEquals(2, s.getMinStartIndex());
     }
-    
+
     /**
      * Some tests for the getMaxStartIndex() method.
      */
@@ -310,7 +310,7 @@ public class TimePeriodValuesTest  {
         s.add(new SimpleTimePeriod(0L, 50L), 3.0);
         assertEquals(2, s.getMinMiddleIndex());
     }
-    
+
     /**
      * Some tests for the getMaxMiddleIndex() method.
      */
@@ -342,7 +342,7 @@ public class TimePeriodValuesTest  {
         s.add(new SimpleTimePeriod(0L, 50L), 3.0);
         assertEquals(2, s.getMinEndIndex());
     }
-    
+
     /**
      * Some tests for the getMaxEndIndex() method.
      */
@@ -362,19 +362,19 @@ public class TimePeriodValuesTest  {
      * A listener used for detecting series change events.
      */
     static class MySeriesChangeListener implements SeriesChangeListener {
-        
+
         SeriesChangeEvent lastEvent;
-        
+
         /**
          * Creates a new listener.
          */
         public MySeriesChangeListener() {
             this.lastEvent = null;
         }
-        
+
         /**
          * Returns the last event.
-         * 
+         *
          * @return The last event (possibly <code>null</code>).
          */
         public SeriesChangeEvent getLastEvent() {
@@ -383,11 +383,11 @@ public class TimePeriodValuesTest  {
 
         /**
          * Callback method for series change events.
-         * 
+         *
          * @param event  the event.
          */
         @Override
-		public void seriesChanged(SeriesChangeEvent event) {
+        public void seriesChanged(SeriesChangeEvent event) {
             this.lastEvent = event;
         }
     }

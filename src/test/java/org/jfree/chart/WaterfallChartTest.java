@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------
@@ -73,7 +73,7 @@ public class WaterfallChartTest  {
      * Common test setup.
      */
     @Before
-	public void setUp() {
+    public void setUp() {
         this.chart = createWaterfallChart();
     }
 
@@ -138,7 +138,7 @@ public class WaterfallChartTest  {
              {2, 3}};
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
-        return ChartFactory.createWaterfallChart("Waterfall Chart", "Domain", 
+        return ChartFactory.createWaterfallChart("Waterfall Chart", "Domain",
                 "Range", dataset);
     }
 

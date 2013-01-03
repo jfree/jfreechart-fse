@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------
@@ -79,7 +79,7 @@ public class StackedAreaChartTest  {
      * Common test setup.
      */
     @Before
-	public void setUp() {
+    public void setUp() {
         this.chart = createChart();
     }
 
@@ -173,7 +173,7 @@ public class StackedAreaChartTest  {
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
 
-        return ChartFactory.createStackedAreaChart("Stacked Area Chart", 
+        return ChartFactory.createStackedAreaChart("Stacked Area Chart",
                 "Domain", "Range", dataset);
 
     }

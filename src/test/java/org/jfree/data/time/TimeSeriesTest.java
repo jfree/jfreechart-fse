@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -50,7 +50,7 @@
  * 09-Jun-2009 : Added testAdd_TimeSeriesDataItem (DG);
  * 31-Aug-2009 : Added new test for createCopy() method (DG);
  * 03-Dec-2011 : Added testBug3446965() (DG);
- * 
+ *
  */
 
 package org.jfree.data.time;
@@ -103,7 +103,7 @@ public class TimeSeriesTest  implements SeriesChangeListener {
      * Common test setup.
      */
     @Before
-	public void setUp() {
+    public void setUp() {
 
         this.seriesA = new TimeSeries("Series A");
         this.seriesA.add(new Year(2000), new Integer(102000));
@@ -132,7 +132,7 @@ public class TimeSeriesTest  implements SeriesChangeListener {
      * @param event  the event.
      */
     @Override
-	public void seriesChanged(SeriesChangeEvent event) {
+    public void seriesChanged(SeriesChangeEvent event) {
         this.gotSeriesChangeEvent = true;
     }
 
@@ -529,7 +529,7 @@ public class TimeSeriesTest  implements SeriesChangeListener {
         s1.add(new Year(2011), 102.0);
         assertEquals(100.0, s1.getMinY(), EPSILON);
         assertEquals(102.0, s1.getMaxY(), EPSILON);
-        
+
         TimeSeries s2 = s1.createCopy(0, 1);
         assertEquals(100.0, s2.getMinY(), EPSILON);
         assertEquals(101.0, s2.getMaxY(), EPSILON);

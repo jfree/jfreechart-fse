@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -96,7 +96,7 @@ public class MonthTest  {
      * Common test setup.
      */
     @Before
-	public void setUp() {
+    public void setUp() {
         this.jan1900 = new Month(MonthConstants.JANUARY, 1900);
         this.feb1900 = new Month(MonthConstants.FEBRUARY, 1900);
         this.nov9999 = new Month(MonthConstants.NOVEMBER, 9999);
@@ -132,7 +132,7 @@ public class MonthTest  {
     public void testDateConstructor1() {
 
         TimeZone zone = TimeZone.getTimeZone("GMT");
-        Calendar c = new GregorianCalendar(zone);        
+        Calendar c = new GregorianCalendar(zone);
         Locale locale = Locale.UK;
         Month m1 = new Month(new Date(951868799999L), zone, locale);
         Month m2 = new Month(new Date(951868800000L), zone, locale);

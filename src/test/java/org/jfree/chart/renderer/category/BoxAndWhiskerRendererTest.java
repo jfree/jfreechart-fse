@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------------
@@ -156,7 +156,7 @@ public class BoxAndWhiskerRendererTest  {
     public void testCloning() throws CloneNotSupportedException {
         BoxAndWhiskerRenderer r1 = new BoxAndWhiskerRenderer();
         BoxAndWhiskerRenderer r2 = (BoxAndWhiskerRenderer) r1.clone();
-        
+
         assertNotSame(r1, r2);
         assertSame(r1.getClass(), r2.getClass());
         assertEquals(r1, r2);
@@ -224,12 +224,12 @@ public class BoxAndWhiskerRendererTest  {
                 = new DefaultBoxAndWhiskerCategoryDataset() {
 
             @Override
-			public Number getQ1Value(int row, int column) {
+            public Number getQ1Value(int row, int column) {
                 return null;
             }
 
             @Override
-			public Number getQ1Value(Comparable rowKey, Comparable columnKey) {
+            public Number getQ1Value(Comparable rowKey, Comparable columnKey) {
                 return null;
             }
         };
@@ -261,12 +261,12 @@ public class BoxAndWhiskerRendererTest  {
                 = new DefaultBoxAndWhiskerCategoryDataset() {
 
             @Override
-			public Number getQ1Value(int row, int column) {
+            public Number getQ1Value(int row, int column) {
                 return null;
             }
 
             @Override
-			public Number getQ1Value(Comparable rowKey, Comparable columnKey) {
+            public Number getQ1Value(Comparable rowKey, Comparable columnKey) {
                 return null;
             }
         };

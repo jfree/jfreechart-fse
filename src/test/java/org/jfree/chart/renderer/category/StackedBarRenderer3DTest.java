@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------------
@@ -38,7 +38,7 @@
  * 18-Jan-2007 : Added many new tests (DG);
  * 23-Apr-2008 : Added testPublicCloneable() (DG);
  * 03-Feb-2009 : Added testFindRangeBounds() (DG);
- * 
+ *
  */
 
 package org.jfree.chart.renderer.category;
@@ -74,7 +74,7 @@ public class StackedBarRenderer3DTest  {
      */
     static class MyRenderer extends StackedBarRenderer3D {
         @Override
-		public List createStackedValueList(CategoryDataset dataset,
+        public List createStackedValueList(CategoryDataset dataset,
                 Comparable category, int[] includedRows, double base,
                 boolean asPercentages) {
             return super.createStackedValueList(dataset, category,

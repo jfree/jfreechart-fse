@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------------
@@ -74,7 +74,7 @@ public class RelativeDateFormatTest  {
      * Set a known locale for the tests.
      */
     @Before
-	public void setUp() throws Exception {
+    public void setUp() throws Exception {
         this.savedLocale = Locale.getDefault();
         Locale.setDefault(Locale.UK);
     }
@@ -83,7 +83,7 @@ public class RelativeDateFormatTest  {
      * Restore the default locale after the tests complete.
      */
     @After
-	public void tearDown() throws Exception {
+    public void tearDown() throws Exception {
         Locale.setDefault(this.savedLocale);
     }
 

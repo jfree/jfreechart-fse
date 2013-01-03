@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------
@@ -501,7 +501,7 @@ public class AbstractRendererTest  {
             this.lastEvent = null;
         }
         @Override
-		public void rendererChanged(RendererChangeEvent event) {
+        public void rendererChanged(RendererChangeEvent event) {
             this.lastEvent = event;
         }
     }

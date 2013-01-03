@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------------
@@ -75,7 +75,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      * @see #getColumnCount()
      */
     @Override
-	public int getRowCount() {
+    public int getRowCount() {
         return this.data.getRowCount();
     }
 
@@ -87,7 +87,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      * @see #getRowCount()
      */
     @Override
-	public int getColumnCount() {
+    public int getColumnCount() {
         return this.data.getColumnCount();
     }
 
@@ -101,7 +101,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      *
      */
     @Override
-	public Number getValue(int row, int column) {
+    public Number getValue(int row, int column) {
         IntervalDataItem item = (IntervalDataItem) this.data.getObject(row,
                 column);
         if (item == null) {
@@ -122,7 +122,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      * @see #getColumnKey(int)
      */
     @Override
-	public Comparable getRowKey(int row) {
+    public Comparable getRowKey(int row) {
         return this.data.getRowKey(row);
     }
 
@@ -136,7 +136,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      * @see #getRowKey(int)
      */
     @Override
-	public int getRowIndex(Comparable key) {
+    public int getRowIndex(Comparable key) {
         // defer null argument check
         return this.data.getRowIndex(key);
     }
@@ -149,7 +149,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      * @see #getRowKey(int)
      */
     @Override
-	public List getRowKeys() {
+    public List getRowKeys() {
         return this.data.getRowKeys();
     }
 
@@ -163,7 +163,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      * @see #getColumnIndex(Comparable)
      */
     @Override
-	public Comparable getColumnKey(int column) {
+    public Comparable getColumnKey(int column) {
         return this.data.getColumnKey(column);
     }
 
@@ -177,7 +177,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      * @see #getColumnKey(int)
      */
     @Override
-	public int getColumnIndex(Comparable key) {
+    public int getColumnIndex(Comparable key) {
         // defer null argument check
         return this.data.getColumnIndex(key);
     }
@@ -190,7 +190,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      * @see #getColumnKey(int)
      */
     @Override
-	public List getColumnKeys() {
+    public List getColumnKeys() {
         return this.data.getColumnKeys();
     }
 
@@ -206,7 +206,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      *
      */
     @Override
-	public Number getValue(Comparable rowKey, Comparable columnKey) {
+    public Number getValue(Comparable rowKey, Comparable columnKey) {
         IntervalDataItem item = (IntervalDataItem) this.data.getObject(rowKey,
                 columnKey);
         if (item == null) {
@@ -364,7 +364,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -403,7 +403,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return this.data.hashCode();
     }
 
@@ -416,7 +416,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      *         dataset.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         TestIntervalCategoryDataset clone = (TestIntervalCategoryDataset)
                 super.clone();
         clone.data = (KeyedObjects2D) this.data.clone();
@@ -424,7 +424,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
     }
 
     @Override
-	public Number getStartValue(int series, int category) {
+    public Number getStartValue(int series, int category) {
         IntervalDataItem item = (IntervalDataItem) this.data.getObject(series,
                 category);
         if (item == null) {
@@ -434,7 +434,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
     }
 
     @Override
-	public Number getStartValue(Comparable series, Comparable category) {
+    public Number getStartValue(Comparable series, Comparable category) {
         IntervalDataItem item = (IntervalDataItem) this.data.getObject(series,
                 category);
         if (item == null) {
@@ -444,7 +444,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
     }
 
     @Override
-	public Number getEndValue(int series, int category) {
+    public Number getEndValue(int series, int category) {
         IntervalDataItem item = (IntervalDataItem) this.data.getObject(series,
                 category);
         if (item == null) {
@@ -454,7 +454,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
     }
 
     @Override
-	public Number getEndValue(Comparable series, Comparable category) {
+    public Number getEndValue(Comparable series, Comparable category) {
         IntervalDataItem item = (IntervalDataItem) this.data.getObject(series,
                 category);
         if (item == null) {

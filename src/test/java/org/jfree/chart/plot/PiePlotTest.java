@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
@@ -595,12 +595,12 @@ public class PiePlotTest  {
 
     static class NullLegendLabelGenerator implements PieSectionLabelGenerator {
         @Override
-		public AttributedString generateAttributedSectionLabel(
+        public AttributedString generateAttributedSectionLabel(
                 PieDataset dataset, Comparable key) {
             return null;
         }
         @Override
-		public String generateSectionLabel(PieDataset dataset, Comparable key) {
+        public String generateSectionLabel(PieDataset dataset, Comparable key) {
             return null;
         }
     }

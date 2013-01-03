@@ -86,12 +86,12 @@ public class ComparableObjectSeriesTest  {
             super(key, autoSort, allowDuplicateXValues);
         }
         @Override
-		public void add(Comparable x, Object y) {
+        public void add(Comparable x, Object y) {
             super.add(x, y);
         }
 
         @Override
-		public ComparableObjectItem remove(Comparable x) {
+        public ComparableObjectItem remove(Comparable x) {
             return super.remove(x);
         }
     }

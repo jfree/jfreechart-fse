@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -79,7 +79,7 @@ public class LogarithmicAxisTest  {
          * @see org.jfree.chart.axis.LogarithmicAxis#switchedLog10(double)
          */
         @Override
-		protected double switchedLog10(double val) {
+        protected double switchedLog10(double val) {
             return super.switchedLog10(val);
         }
 
@@ -100,7 +100,7 @@ public class LogarithmicAxisTest  {
      * @throws Exception
      */
     @Before
-	public void setUp() throws Exception {
+    public void setUp() throws Exception {
         this.axis = new MyLogarithmicAxis("Value (log)");
         this.axis.setAllowNegativesFlag(false);
         this.axis.setLog10TickLabelsFlag(false);
