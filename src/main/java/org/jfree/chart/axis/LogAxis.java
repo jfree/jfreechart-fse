@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------
@@ -299,7 +299,7 @@ public class LogAxis extends ValueAxis {
      * @return A value along the axis scale.
      */
     @Override
-	public double java2DToValue(double java2DValue, Rectangle2D area,
+    public double java2DToValue(double java2DValue, Rectangle2D area,
             RectangleEdge edge) {
 
         Range range = getRange();
@@ -340,7 +340,7 @@ public class LogAxis extends ValueAxis {
      * @return The Java2D coordinate corresponding to <code>value</code>.
      */
     @Override
-	public double valueToJava2D(double value, Rectangle2D area,
+    public double valueToJava2D(double value, Rectangle2D area,
             RectangleEdge edge) {
 
         Range range = getRange();
@@ -373,7 +373,7 @@ public class LogAxis extends ValueAxis {
      * is assigned to a new plot.
      */
     @Override
-	public void configure() {
+    public void configure() {
         if (isAutoRange()) {
             autoAdjustRange();
         }
@@ -384,7 +384,7 @@ public class LogAxis extends ValueAxis {
      * required to display.
      */
     @Override
-	protected void autoAdjustRange() {
+    protected void autoAdjustRange() {
         Plot plot = getPlot();
         if (plot == null) {
             return;  // no plot, no data
@@ -446,7 +446,7 @@ public class LogAxis extends ValueAxis {
      * @return The axis state (never <code>null</code>).
      */
     @Override
-	public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
+    public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
             Rectangle2D dataArea, RectangleEdge edge,
             PlotRenderingInfo plotState) {
 
@@ -479,7 +479,7 @@ public class LogAxis extends ValueAxis {
      *
      */
     @Override
-	public List<ValueTick> refreshTicks(Graphics2D g2, AxisState state,
+    public List<ValueTick> refreshTicks(Graphics2D g2, AxisState state,
             Rectangle2D dataArea, RectangleEdge edge) {
 
         List<ValueTick> result = new java.util.ArrayList<ValueTick>();
@@ -805,7 +805,7 @@ public class LogAxis extends ValueAxis {
      * @param upperPercent  the new upper bound.
      */
     @Override
-	public void zoomRange(double lowerPercent, double upperPercent) {
+    public void zoomRange(double lowerPercent, double upperPercent) {
         Range range = getRange();
         double start = range.getLowerBound();
         double end = range.getUpperBound();
@@ -834,7 +834,7 @@ public class LogAxis extends ValueAxis {
      * @since 1.0.13
      */
     @Override
-	public void pan(double percent) {
+    public void pan(double percent) {
         Range range = getRange();
         double lower = range.getLowerBound();
         double upper = range.getUpperBound();
@@ -874,7 +874,7 @@ public class LogAxis extends ValueAxis {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -897,7 +897,7 @@ public class LogAxis extends ValueAxis {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 193;
         long temp = Double.doubleToLongBits(this.base);
         result = 37 * result + (int) (temp ^ (temp >>> 32));

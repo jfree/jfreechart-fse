@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
@@ -229,7 +229,7 @@ public class MarkerAxisBand implements Serializable {
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -264,7 +264,7 @@ public class MarkerAxisBand implements Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 37;
         result = 19 * result + this.font.hashCode();
         result = 19 * result + this.markers.hashCode();

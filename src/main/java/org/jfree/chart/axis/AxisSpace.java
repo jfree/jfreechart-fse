@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------
@@ -315,7 +315,7 @@ public class AxisSpace implements Cloneable, PublicCloneable, Serializable {
      *         but subclasses (if any) might.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -327,7 +327,7 @@ public class AxisSpace implements Cloneable, PublicCloneable, Serializable {
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -375,7 +375,7 @@ public class AxisSpace implements Cloneable, PublicCloneable, Serializable {
      * @return A string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return super.toString() + "[left=" + this.left + ",right=" + this.right
                     + ",top=" + this.top + ",bottom=" + this.bottom + "]";
     }

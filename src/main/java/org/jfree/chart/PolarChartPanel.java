@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -125,7 +125,7 @@ public class PolarChartPanel extends ChartPanel {
      * @param chart  The chart.
      */
     @Override
-	public void setChart(JFreeChart chart) {
+    public void setChart(JFreeChart chart) {
         checkChart(chart);
         super.setChart(chart);
     }
@@ -141,7 +141,7 @@ public class PolarChartPanel extends ChartPanel {
      * @return The popup menu.
      */
     @Override
-	protected JPopupMenu createPopupMenu(boolean properties,
+    protected JPopupMenu createPopupMenu(boolean properties,
                                          boolean save,
                                          boolean print,
                                          boolean zoom) {
@@ -200,7 +200,7 @@ public class PolarChartPanel extends ChartPanel {
      * @param event  the event.
      */
     @Override
-	public void actionPerformed(ActionEvent event) {
+    public void actionPerformed(ActionEvent event) {
        String command = event.getActionCommand();
 
        if (command.equals(POLAR_ZOOM_IN_ACTION_COMMAND)) {

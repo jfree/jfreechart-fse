@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
@@ -192,7 +192,7 @@ public class CategoryTextAnnotation extends TextAnnotation
      * @param rangeAxis  the range axis.
      */
     @Override
-	public void draw(Graphics2D g2, CategoryPlot plot, Rectangle2D dataArea,
+    public void draw(Graphics2D g2, CategoryPlot plot, Rectangle2D dataArea,
                      CategoryAxis domainAxis, ValueAxis rangeAxis) {
 
         CategoryDataset dataset = plot.getDataset();
@@ -236,7 +236,7 @@ public class CategoryTextAnnotation extends TextAnnotation
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -265,7 +265,7 @@ public class CategoryTextAnnotation extends TextAnnotation
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = super.hashCode();
         result = 37 * result + this.category.hashCode();
         result = 37 * result + this.categoryAnchor.hashCode();
@@ -283,7 +283,7 @@ public class CategoryTextAnnotation extends TextAnnotation
      *         exception, but subclasses (if any) might.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

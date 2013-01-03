@@ -74,7 +74,7 @@ public class DefaultPolarPlotEditor extends DefaultPlotEditor
     /** The value for the plot's angle offset. */
     private double angleOffsetValue;
 
-    
+
     /**
      * Standard constructor - constructs a panel for editing the properties of
      * the specified plot.
@@ -90,7 +90,7 @@ public class DefaultPolarPlotEditor extends DefaultPlotEditor
     }
 
     @Override
-	protected JTabbedPane createPlotTabs(Plot plot) {
+    protected JTabbedPane createPlotTabs(Plot plot) {
         JTabbedPane tabs = super.createPlotTabs(plot);
         // TODO find a better localization key
         tabs.insertTab(localizationResources.getString("General1"), null, createPlotPanel(), null, 0);
@@ -131,7 +131,7 @@ public class DefaultPolarPlotEditor extends DefaultPlotEditor
      * @param event  the event.
      */
     @Override
-	public void focusGained(FocusEvent event) {
+    public void focusGained(FocusEvent event) {
         // don't need to do anything
     }
 
@@ -141,7 +141,7 @@ public class DefaultPolarPlotEditor extends DefaultPlotEditor
      *  @param event  the event.
      */
     @Override
-	public void focusLost(FocusEvent event) {
+    public void focusLost(FocusEvent event) {
         if (event.getSource() == this.angleOffset) {
             validateAngleOffset();
         }
@@ -155,7 +155,7 @@ public class DefaultPolarPlotEditor extends DefaultPlotEditor
      * @param event an event.
      */
     @Override
-	public void actionPerformed(ActionEvent event) {
+    public void actionPerformed(ActionEvent event) {
         String command = event.getActionCommand();
         if (command.equals("AngleOffsetValue")) {
             validateAngleOffset();
@@ -193,7 +193,7 @@ public class DefaultPolarPlotEditor extends DefaultPlotEditor
     }
 
     @Override
-	public void updatePlotProperties(Plot plot) {
+    public void updatePlotProperties(Plot plot) {
         super.updatePlotProperties(plot);
         PolarPlot pp = (PolarPlot) plot;
         pp.setAngleTickUnit(new NumberTickUnit(this.manualTickUnitValue));

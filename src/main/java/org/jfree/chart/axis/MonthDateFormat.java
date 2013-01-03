@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -197,7 +197,7 @@ public class MonthDateFormat extends DateFormat {
      * @return The formatted date.
      */
     @Override
-	public StringBuffer format(Date date, StringBuffer toAppendTo,
+    public StringBuffer format(Date date, StringBuffer toAppendTo,
                                FieldPosition fieldPosition) {
         this.calendar.setTime(date);
         int month = this.calendar.get(Calendar.MONTH);
@@ -217,7 +217,7 @@ public class MonthDateFormat extends DateFormat {
      * @return <code>null</code>, as this method has not been implemented.
      */
     @Override
-	public Date parse(String source, ParsePosition pos) {
+    public Date parse(String source, ParsePosition pos) {
         return null;
     }
 
@@ -229,7 +229,7 @@ public class MonthDateFormat extends DateFormat {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

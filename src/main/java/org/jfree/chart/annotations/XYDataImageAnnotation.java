@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------
@@ -200,7 +200,7 @@ public class XYDataImageAnnotation extends AbstractXYAnnotation
      * @since 1.0.13
      */
     @Override
-	public boolean getIncludeInDataBounds() {
+    public boolean getIncludeInDataBounds() {
         return this.includeInDataBounds;
     }
 
@@ -212,7 +212,7 @@ public class XYDataImageAnnotation extends AbstractXYAnnotation
      * @since 1.0.13
      */
     @Override
-	public Range getXRange() {
+    public Range getXRange() {
         return new Range(this.x, this.x + this.w);
     }
 
@@ -224,7 +224,7 @@ public class XYDataImageAnnotation extends AbstractXYAnnotation
      * @since 1.0.13
      */
     @Override
-	public Range getYRange() {
+    public Range getYRange() {
         return new Range(this.y, this.y + this.h);
     }
 
@@ -243,7 +243,7 @@ public class XYDataImageAnnotation extends AbstractXYAnnotation
      *              entity information.
      */
     @Override
-	public void draw(Graphics2D g2, XYPlot plot, Rectangle2D dataArea,
+    public void draw(Graphics2D g2, XYPlot plot, Rectangle2D dataArea,
                      ValueAxis domainAxis, ValueAxis rangeAxis,
                      int rendererIndex,
                      PlotRenderingInfo info) {
@@ -296,7 +296,7 @@ public class XYDataImageAnnotation extends AbstractXYAnnotation
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -336,7 +336,7 @@ public class XYDataImageAnnotation extends AbstractXYAnnotation
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return this.image.hashCode();
     }
 
@@ -348,7 +348,7 @@ public class XYDataImageAnnotation extends AbstractXYAnnotation
      * @throws CloneNotSupportedException  if the annotation can't be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

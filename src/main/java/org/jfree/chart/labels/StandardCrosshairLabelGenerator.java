@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------------------
@@ -115,7 +115,7 @@ public class StandardCrosshairLabelGenerator implements CrosshairLabelGenerator,
      * @return The label (possibly <code>null</code>).
      */
     @Override
-	public String generateLabel(Crosshair crosshair) {
+    public String generateLabel(Crosshair crosshair) {
         Object[] v = new Object[] {this.numberFormat.format(
                 crosshair.getValue())};
         String result = MessageFormat.format(this.labelTemplate, v);
@@ -124,13 +124,13 @@ public class StandardCrosshairLabelGenerator implements CrosshairLabelGenerator,
 
     /**
      * Tests this generator for equality with an arbitrary object.
-     * 
+     *
      * @param obj  the object (<code>null</code> permitted).
-     * 
+     *
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -154,7 +154,7 @@ public class StandardCrosshairLabelGenerator implements CrosshairLabelGenerator,
      * @return A hash code for this instance.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return this.labelTemplate.hashCode();
     }
 

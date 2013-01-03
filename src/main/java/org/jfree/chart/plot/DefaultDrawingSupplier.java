@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
@@ -210,7 +210,7 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      * @return The paint.
      */
     @Override
-	public Paint getNextPaint() {
+    public Paint getNextPaint() {
         Paint result
             = this.paintSequence[this.paintIndex % this.paintSequence.length];
         this.paintIndex++;
@@ -223,7 +223,7 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      * @return The paint.
      */
     @Override
-	public Paint getNextOutlinePaint() {
+    public Paint getNextOutlinePaint() {
         Paint result = this.outlinePaintSequence[
                 this.outlinePaintIndex % this.outlinePaintSequence.length];
         this.outlinePaintIndex++;
@@ -238,7 +238,7 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      * @since 1.0.6
      */
     @Override
-	public Paint getNextFillPaint() {
+    public Paint getNextFillPaint() {
         Paint result = this.fillPaintSequence[this.fillPaintIndex
                 % this.fillPaintSequence.length];
         this.fillPaintIndex++;
@@ -251,7 +251,7 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      * @return The stroke.
      */
     @Override
-	public Stroke getNextStroke() {
+    public Stroke getNextStroke() {
         Stroke result = this.strokeSequence[
                 this.strokeIndex % this.strokeSequence.length];
         this.strokeIndex++;
@@ -264,7 +264,7 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      * @return The stroke.
      */
     @Override
-	public Stroke getNextOutlineStroke() {
+    public Stroke getNextOutlineStroke() {
         Stroke result = this.outlineStrokeSequence[
                 this.outlineStrokeIndex % this.outlineStrokeSequence.length];
         this.outlineStrokeIndex++;
@@ -277,7 +277,7 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      * @return The shape.
      */
     @Override
-	public Shape getNextShape() {
+    public Shape getNextShape() {
         Shape result = this.shapeSequence[
                 this.shapeIndex % this.shapeSequence.length];
         this.shapeIndex++;
@@ -350,7 +350,7 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
 
         if (obj == this) {
             return true;
@@ -548,7 +548,7 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      *                                    not support cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         DefaultDrawingSupplier clone = (DefaultDrawingSupplier) super.clone();
         return clone;
     }

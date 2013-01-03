@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -127,7 +127,7 @@ public class PeriodAxis extends ValueAxis
 
     /**
      * The locale (never <code>null</code>).
-     * 
+     *
      * @since 1.0.13
      */
     private Locale locale;
@@ -384,7 +384,7 @@ public class PeriodAxis extends ValueAxis
      * @return A boolean.
      */
     @Override
-	public boolean isMinorTickMarksVisible() {
+    public boolean isMinorTickMarksVisible() {
         return this.minorTickMarksVisible;
     }
 
@@ -396,7 +396,7 @@ public class PeriodAxis extends ValueAxis
      * @param visible  the flag.
      */
     @Override
-	public void setMinorTickMarksVisible(boolean visible) {
+    public void setMinorTickMarksVisible(boolean visible) {
         this.minorTickMarksVisible = visible;
         notifyListeners(new AxisChangeEvent(this));
     }
@@ -481,7 +481,7 @@ public class PeriodAxis extends ValueAxis
      * @return The length.
      */
     @Override
-	public float getMinorTickMarkInsideLength() {
+    public float getMinorTickMarkInsideLength() {
         return this.minorTickMarkInsideLength;
     }
 
@@ -492,7 +492,7 @@ public class PeriodAxis extends ValueAxis
      * @param length  the length.
      */
     @Override
-	public void setMinorTickMarkInsideLength(float length) {
+    public void setMinorTickMarkInsideLength(float length) {
         this.minorTickMarkInsideLength = length;
         notifyListeners(new AxisChangeEvent(this));
     }
@@ -503,7 +503,7 @@ public class PeriodAxis extends ValueAxis
      * @return The length.
      */
     @Override
-	public float getMinorTickMarkOutsideLength() {
+    public float getMinorTickMarkOutsideLength() {
         return this.minorTickMarkOutsideLength;
     }
 
@@ -514,7 +514,7 @@ public class PeriodAxis extends ValueAxis
      * @param length  the length.
      */
     @Override
-	public void setMinorTickMarkOutsideLength(float length) {
+    public void setMinorTickMarkOutsideLength(float length) {
         this.minorTickMarkOutsideLength = length;
         notifyListeners(new AxisChangeEvent(this));
     }
@@ -551,7 +551,7 @@ public class PeriodAxis extends ValueAxis
      *                notified.
      */
     @Override
-	public void setRange(Range range, boolean turnOffAutoRange,
+    public void setRange(Range range, boolean turnOffAutoRange,
                          boolean notify) {
         long upper = Math.round(range.getUpperBound());
         long lower = Math.round(range.getLowerBound());
@@ -569,7 +569,7 @@ public class PeriodAxis extends ValueAxis
      * to perform any special processing (such as auto-rescaling).
      */
     @Override
-	public void configure() {
+    public void configure() {
         if (this.isAutoRange()) {
             autoAdjustRange();
         }
@@ -589,7 +589,7 @@ public class PeriodAxis extends ValueAxis
      *         space).
      */
     @Override
-	public AxisSpace reserveSpace(Graphics2D g2, Plot plot,
+    public AxisSpace reserveSpace(Graphics2D g2, Plot plot,
                                   Rectangle2D plotArea, RectangleEdge edge,
                                   AxisSpace space) {
         // create a new space object if one wasn't supplied...
@@ -657,7 +657,7 @@ public class PeriodAxis extends ValueAxis
      * @return The axis state (never <code>null</code>).
      */
     @Override
-	public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
+    public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
             Rectangle2D dataArea, RectangleEdge edge,
             PlotRenderingInfo plotState) {
 
@@ -718,7 +718,7 @@ public class PeriodAxis extends ValueAxis
         double y0 = state.getCursor();
         double insideLength = getTickMarkInsideLength();
         double outsideLength = getTickMarkOutsideLength();
-        RegularTimePeriod t = createInstance(this.majorTickTimePeriodClass, 
+        RegularTimePeriod t = createInstance(this.majorTickTimePeriodClass,
                 this.first.getStart(), getTimeZone(), this.locale);
         long t0 = t.getFirstMillisecond();
         Line2D inside = null;
@@ -962,7 +962,7 @@ public class PeriodAxis extends ValueAxis
      * @return The list of ticks.
      */
     @Override
-	public List<ValueTick> refreshTicks(Graphics2D g2, AxisState state,
+    public List<ValueTick> refreshTicks(Graphics2D g2, AxisState state,
             Rectangle2D dataArea, RectangleEdge edge) {
         return Collections.EMPTY_LIST;
     }
@@ -980,7 +980,7 @@ public class PeriodAxis extends ValueAxis
      * @return The Java2D coordinate.
      */
     @Override
-	public double valueToJava2D(double value, Rectangle2D area,
+    public double valueToJava2D(double value, Rectangle2D area,
             RectangleEdge edge) {
 
         double result = Double.NaN;
@@ -1025,7 +1025,7 @@ public class PeriodAxis extends ValueAxis
      * @return The data value.
      */
     @Override
-	public double java2DToValue(double java2DValue, Rectangle2D area,
+    public double java2DToValue(double java2DValue, Rectangle2D area,
             RectangleEdge edge) {
 
         double result = Double.NaN;
@@ -1056,7 +1056,7 @@ public class PeriodAxis extends ValueAxis
      * Rescales the axis to ensure that all data is visible.
      */
     @Override
-	protected void autoAdjustRange() {
+    protected void autoAdjustRange() {
 
         Plot plot = getPlot();
         if (plot == null) {
@@ -1090,7 +1090,7 @@ public class PeriodAxis extends ValueAxis
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -1143,7 +1143,7 @@ public class PeriodAxis extends ValueAxis
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         if (getLabel() != null) {
             return getLabel().hashCode();
         }
@@ -1161,7 +1161,7 @@ public class PeriodAxis extends ValueAxis
      *         subclasses may not be.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         PeriodAxis clone = (PeriodAxis) super.clone();
         clone.timeZone = (TimeZone) this.timeZone.clone();
         clone.labelInfo = new PeriodAxisLabelInfo[this.labelInfo.length];
@@ -1184,7 +1184,7 @@ public class PeriodAxis extends ValueAxis
      *
      * @return The time period.
      */
-    private RegularTimePeriod createInstance(Class periodClass, 
+    private RegularTimePeriod createInstance(Class periodClass,
             Date millisecond, TimeZone zone, Locale locale) {
         RegularTimePeriod result = null;
         try {

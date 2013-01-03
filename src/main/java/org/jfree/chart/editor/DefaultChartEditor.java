@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -267,7 +267,7 @@ class DefaultChartEditor extends JPanel implements ActionListener, ChartEditor {
      * @param chart  the chart.
      */
     @Override
-	public void updateChart(JFreeChart chart) {
+    public void updateChart(JFreeChart chart) {
 
         this.titleEditor.setTitleProperties(chart);
         this.plotEditor.updatePlotProperties(chart.getPlot());

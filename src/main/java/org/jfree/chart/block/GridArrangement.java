@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -85,7 +85,7 @@ public class GridArrangement implements Arrangement, Serializable {
      * @param key  the key (<code>null</code> permitted).
      */
     @Override
-	public void add(Block block, Object key) {
+    public void add(Block block, Object key) {
         // can safely ignore
     }
 
@@ -100,7 +100,7 @@ public class GridArrangement implements Arrangement, Serializable {
      * @return The size following the arrangement.
      */
     @Override
-	public Size2D arrange(BlockContainer container, Graphics2D g2,
+    public Size2D arrange(BlockContainer container, Graphics2D g2,
                           RectangleConstraint constraint) {
         LengthConstraintType w = constraint.getWidthConstraintType();
         LengthConstraintType h = constraint.getHeightConstraintType();
@@ -419,7 +419,7 @@ public class GridArrangement implements Arrangement, Serializable {
      * Clears any cached layout information retained by the arrangement.
      */
     @Override
-	public void clear() {
+    public void clear() {
         // nothing to clear
     }
 
@@ -431,7 +431,7 @@ public class GridArrangement implements Arrangement, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

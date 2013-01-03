@@ -1651,7 +1651,7 @@ public class JFreeChart implements Drawable, TitleChangeListener,
      * @throws CloneNotSupportedException if the chart is not cloneable.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         JFreeChart chart = (JFreeChart) super.clone();
 
         chart.renderingHints = (RenderingHints) this.renderingHints.clone();
@@ -1820,7 +1820,7 @@ class JFreeChartInfo extends ProjectInfo {
      * @return The JFreeChart logo.
      */
     @Override
-	public Image getLogo() {
+    public Image getLogo() {
 
         Image logo = super.getLogo();
         if (logo == null) {

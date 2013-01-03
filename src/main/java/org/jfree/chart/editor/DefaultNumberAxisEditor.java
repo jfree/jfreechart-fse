@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------------
@@ -83,8 +83,7 @@ class DefaultNumberAxisEditor extends DefaultValueAxisEditor
     }
 
     @Override
-	protected JPanel createTickUnitPanel()
-    {
+    protected JPanel createTickUnitPanel() {
         JPanel tickUnitPanel = new JPanel(new LCBLayout(3));
         tickUnitPanel.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
 
@@ -117,7 +116,7 @@ class DefaultNumberAxisEditor extends DefaultValueAxisEditor
      * @param event an event.
      */
     @Override
-	public void actionPerformed(ActionEvent event) {
+    public void actionPerformed(ActionEvent event) {
         String command = event.getActionCommand();
         if (command.equals("TickUnitValue")) {
             validateTickUnit();
@@ -129,7 +128,7 @@ class DefaultNumberAxisEditor extends DefaultValueAxisEditor
     }
 
     @Override
-	public void focusLost(FocusEvent event) {
+    public void focusLost(FocusEvent event) {
         super.focusLost(event);
         if (event.getSource() == this.manualTickUnit) {
             validateTickUnit();
@@ -137,7 +136,7 @@ class DefaultNumberAxisEditor extends DefaultValueAxisEditor
     }
 
     @Override
-	public void toggleAutoTick() {
+    public void toggleAutoTick() {
         super.toggleAutoTick();
         if (isAutoTickUnitSelection()) {
             this.manualTickUnit.setText(Double.toString(this.manualTickUnitValue));
@@ -170,7 +169,7 @@ class DefaultNumberAxisEditor extends DefaultValueAxisEditor
      * @param axis  the axis.
      */
     @Override
-	public void setAxisProperties(Axis axis) {
+    public void setAxisProperties(Axis axis) {
         super.setAxisProperties(axis);
         NumberAxis numberAxis = (NumberAxis) axis;
         if (!isAutoTickUnitSelection()) {

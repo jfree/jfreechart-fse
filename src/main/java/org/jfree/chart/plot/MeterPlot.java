@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------
@@ -776,7 +776,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      * @return A collection of legend items.
      */
     @Override
-	public LegendItemCollection getLegendItems() {
+    public LegendItemCollection getLegendItems() {
         LegendItemCollection result = new LegendItemCollection();
         for (MeterInterval mi : this.intervals) {
             Paint color = mi.getBackgroundPaint();
@@ -803,7 +803,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      * @param info  collects info about the drawing.
      */
     @Override
-	public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
                      PlotState parentState,
                      PlotRenderingInfo info) {
 
@@ -1182,7 +1182,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      * @return A string describing the type of plot.
      */
     @Override
-	public String getPlotType() {
+    public String getPlotType() {
         return localizationResources.getString("Meter_Plot");
     }
 
@@ -1194,7 +1194,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      * @param percent   The zoom percentage.
      */
     @Override
-	public void zoom(double percent) {
+    public void zoom(double percent) {
         // intentionally blank
     }
 
@@ -1207,7 +1207,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -1325,7 +1325,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      *         be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         MeterPlot clone = (MeterPlot) super.clone();
         clone.tickLabelFormat = (NumberFormat) this.tickLabelFormat.clone();
         // the following relies on the fact that the intervals are immutable

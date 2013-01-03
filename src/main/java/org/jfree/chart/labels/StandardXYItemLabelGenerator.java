@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------------
@@ -56,7 +56,7 @@
  * 25-Jan-2007 : Added new constructor - see bug 1624067 (DG);
  * 24-Jun-2009 : Added new constructor (DG);
  * 17-Jun-2012 : Removed JCommond dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.labels;
@@ -181,7 +181,7 @@ public class StandardXYItemLabelGenerator extends AbstractXYItemLabelGenerator
      * @return The label text (possibly <code>null</code>).
      */
     @Override
-	public String generateLabel(XYDataset dataset, int series, int item) {
+    public String generateLabel(XYDataset dataset, int series, int item) {
         return generateLabelString(dataset, series, item);
     }
 
@@ -193,7 +193,7 @@ public class StandardXYItemLabelGenerator extends AbstractXYItemLabelGenerator
      * @throws CloneNotSupportedException if cloning is not supported.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -205,7 +205,7 @@ public class StandardXYItemLabelGenerator extends AbstractXYItemLabelGenerator
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

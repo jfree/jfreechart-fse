@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------
@@ -219,7 +219,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          * @return The timeline value.
          */
         @Override
-		public long toTimelineValue(long millisecond) {
+        public long toTimelineValue(long millisecond) {
             return millisecond;
         }
 
@@ -231,7 +231,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          * @return The timeline value.
          */
         @Override
-		public long toTimelineValue(Date date) {
+        public long toTimelineValue(Date date) {
             return date.getTime();
         }
 
@@ -244,7 +244,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          * @return The millisecond.
          */
         @Override
-		public long toMillisecond(long value) {
+        public long toMillisecond(long value) {
             return value;
         }
 
@@ -257,7 +257,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          * @return <code>true</code>.
          */
         @Override
-		public boolean containsDomainValue(long millisecond) {
+        public boolean containsDomainValue(long millisecond) {
             return true;
         }
 
@@ -270,7 +270,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          * @return <code>true</code>.
          */
         @Override
-		public boolean containsDomainValue(Date date) {
+        public boolean containsDomainValue(Date date) {
             return true;
         }
 
@@ -284,7 +284,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          * @return <code>true</code>.
          */
         @Override
-		public boolean containsDomainRange(long from, long to) {
+        public boolean containsDomainRange(long from, long to) {
             return true;
         }
 
@@ -298,7 +298,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
          * @return <code>true</code>.
          */
         @Override
-		public boolean containsDomainRange(Date from, Date to) {
+        public boolean containsDomainRange(Date from, Date to) {
             return true;
         }
 
@@ -708,7 +708,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * auto-scaling, then sets the maximum and minimum values.
      */
     @Override
-	public void configure() {
+    public void configure() {
         if (isAutoRange()) {
             autoAdjustRange();
         }
@@ -738,7 +738,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @return The coordinate corresponding to the supplied data value.
      */
     @Override
-	public double valueToJava2D(double value, Rectangle2D area,
+    public double valueToJava2D(double value, Rectangle2D area,
                                 RectangleEdge edge) {
 
         value = this.timeline.toTimelineValue((long) value);
@@ -805,7 +805,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @return A data value.
      */
     @Override
-	public double java2DToValue(double java2DValue, Rectangle2D area,
+    public double java2DToValue(double java2DValue, Rectangle2D area,
                                 RectangleEdge edge) {
 
         DateRange range = (DateRange) getRange();
@@ -1249,7 +1249,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * Rescales the axis to ensure that all data is visible.
      */
     @Override
-	protected void autoAdjustRange() {
+    protected void autoAdjustRange() {
 
         Plot plot = getPlot();
 
@@ -1514,7 +1514,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @return A list of ticks.
      */
     @Override
-	public List<ValueTick> refreshTicks(Graphics2D g2,
+    public List<ValueTick> refreshTicks(Graphics2D g2,
                              AxisState state,
                              Rectangle2D dataArea,
                              RectangleEdge edge) {
@@ -1543,10 +1543,10 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             DateTickMarkPosition position) {
         Date result = time;
         if (unit.getUnitType().equals(DateTickUnitType.MONTH)) {
-            result = calculateDateForPosition(new Month(time, this.timeZone, 
+            result = calculateDateForPosition(new Month(time, this.timeZone,
                     this.locale), position);
         } else if (unit.getUnitType().equals(DateTickUnitType.YEAR)) {
-            result = calculateDateForPosition(new Year(time, this.timeZone, 
+            result = calculateDateForPosition(new Year(time, this.timeZone,
                     this.locale), position);
         }
         return result;
@@ -1800,7 +1800,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * @return The axis state (never <code>null</code>).
      */
     @Override
-	public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
+    public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
             Rectangle2D dataArea, RectangleEdge edge,
             PlotRenderingInfo plotState) {
 

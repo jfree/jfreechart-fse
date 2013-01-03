@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -96,7 +96,7 @@
  *               collection (DG);
  * 19-Mar-2009 : Added entity support - see patch 2603321 by Peter Kolb (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.axis;
@@ -411,7 +411,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * auto-scaling, then sets the maximum and minimum values.
      */
     @Override
-	public void configure() {
+    public void configure() {
         if (isAutoRange()) {
             autoAdjustRange();
         }
@@ -421,7 +421,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * Rescales the axis to ensure that all data is visible.
      */
     @Override
-	protected void autoAdjustRange() {
+    protected void autoAdjustRange() {
 
         Plot plot = getPlot();
         if (plot == null) {
@@ -524,7 +524,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * @see #java2DToValue(double, Rectangle2D, RectangleEdge)
      */
     @Override
-	public double valueToJava2D(double value, Rectangle2D area,
+    public double valueToJava2D(double value, Rectangle2D area,
                                 RectangleEdge edge) {
 
         Range range = getRange();
@@ -565,7 +565,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * @see #valueToJava2D(double, Rectangle2D, RectangleEdge)
      */
     @Override
-	public double java2DToValue(double java2DValue, Rectangle2D area,
+    public double java2DToValue(double java2DValue, Rectangle2D area,
                                 RectangleEdge edge) {
 
         Range range = getRange();
@@ -654,7 +654,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * @return The axis state (never <code>null</code>).
      */
     @Override
-	public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
+    public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
             Rectangle2D dataArea, RectangleEdge edge,
             PlotRenderingInfo plotState) {
 
@@ -1142,7 +1142,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      *
      */
     @Override
-	public List<ValueTick> refreshTicks(Graphics2D g2,
+    public List<ValueTick> refreshTicks(Graphics2D g2,
                              AxisState state,
                              Rectangle2D dataArea,
                              RectangleEdge edge) {
@@ -1191,7 +1191,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
                 minorTickSpaces = tu.getMinorTickCount();
             }
             for (int minorTick = 1; minorTick < minorTickSpaces; minorTick++) {
-                double minorTickValue = lowestTickValue 
+                double minorTickValue = lowestTickValue
                         - size * minorTick / minorTickSpaces;
                 if (getRange().contains(minorTickValue)) {
                     result.add(new NumberTick(TickType.MINOR, minorTickValue,
@@ -1362,7 +1362,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      *         not support cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         NumberAxis clone = (NumberAxis) super.clone();
         if (this.numberFormatOverride != null) {
             clone.numberFormatOverride

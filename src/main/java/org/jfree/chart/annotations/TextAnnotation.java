@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
@@ -50,7 +50,7 @@
  * 24-Jun-2009 : Fire change events (see patch 2809117 by PK) (DG);
  * 28-Oct-2011 : Added missing argument check, Bug #3428870 (MH);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.annotations;
@@ -297,7 +297,7 @@ public class TextAnnotation extends AbstractAnnotation implements Serializable {
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -337,7 +337,7 @@ public class TextAnnotation extends AbstractAnnotation implements Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 193;
         result = 37 * result + this.font.hashCode();
         result = 37 * result + HashUtilities.hashCodeForPaint(this.paint);

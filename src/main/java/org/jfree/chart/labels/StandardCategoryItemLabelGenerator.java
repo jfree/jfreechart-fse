@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------------------
@@ -40,7 +40,7 @@
  * ------------- JFREECHART 1.0.0 ---------------------------------------------
  * 03-May-2005 : Added equals() implementation, to fix bug 1481087 (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.labels;
@@ -126,7 +126,7 @@ public class StandardCategoryItemLabelGenerator
      * @return The label (possibly <code>null</code>).
      */
     @Override
-	public String generateLabel(CategoryDataset dataset, int row, int column) {
+    public String generateLabel(CategoryDataset dataset, int row, int column) {
         return generateLabelString(dataset, row, column);
     }
 
@@ -139,7 +139,7 @@ public class StandardCategoryItemLabelGenerator
      *     <code>obj</code>, and <code>false</code> otherwise.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------------
@@ -84,7 +84,7 @@ public class StandardEntityCollection implements EntityCollection,
      * @return The entity count.
      */
     @Override
-	public int getEntityCount() {
+    public int getEntityCount() {
         return this.entities.size();
     }
 
@@ -98,7 +98,7 @@ public class StandardEntityCollection implements EntityCollection,
      * @see #add(ChartEntity)
      */
     @Override
-	public ChartEntity getEntity(int index) {
+    public ChartEntity getEntity(int index) {
         return this.entities.get(index);
     }
 
@@ -106,7 +106,7 @@ public class StandardEntityCollection implements EntityCollection,
      * Clears all the entities from the collection.
      */
     @Override
-	public void clear() {
+    public void clear() {
         this.entities.clear();
     }
 
@@ -116,7 +116,7 @@ public class StandardEntityCollection implements EntityCollection,
      * @param entity  the entity (<code>null</code> not permitted).
      */
     @Override
-	public void add(ChartEntity entity) {
+    public void add(ChartEntity entity) {
         if (entity == null) {
             throw new IllegalArgumentException("Null 'entity' argument.");
         }
@@ -130,7 +130,7 @@ public class StandardEntityCollection implements EntityCollection,
      *     permitted).
      */
     @Override
-	public void addAll(EntityCollection collection) {
+    public void addAll(EntityCollection collection) {
         this.entities.addAll(collection.getEntities());
     }
 
@@ -144,7 +144,7 @@ public class StandardEntityCollection implements EntityCollection,
      * @return The entity (possibly <code>null</code>).
      */
     @Override
-	public ChartEntity getEntity(double x, double y) {
+    public ChartEntity getEntity(double x, double y) {
         int entityCount = this.entities.size();
         for (int i = entityCount - 1; i >= 0; i--) {
             ChartEntity entity = this.entities.get(i);
@@ -161,7 +161,7 @@ public class StandardEntityCollection implements EntityCollection,
      * @return The entities.
      */
     @Override
-	public Collection<ChartEntity> getEntities() {
+    public Collection<ChartEntity> getEntities() {
         return Collections.unmodifiableCollection(this.entities);
     }
 
@@ -171,7 +171,7 @@ public class StandardEntityCollection implements EntityCollection,
      * @return An iterator.
      */
     @Override
-	public Iterator<ChartEntity> iterator() {
+    public Iterator<ChartEntity> iterator() {
         return this.entities.iterator();
     }
 
@@ -183,7 +183,7 @@ public class StandardEntityCollection implements EntityCollection,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -202,7 +202,7 @@ public class StandardEntityCollection implements EntityCollection,
      * @throws CloneNotSupportedException if the object cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         StandardEntityCollection clone
                 = (StandardEntityCollection) super.clone();
         clone.entities = new java.util.ArrayList<ChartEntity>(this.entities.size());

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
@@ -70,7 +70,7 @@ public class StandardTickUnitSource implements TickUnitSource, Serializable {
      * @return A tick unit that is larger than the supplied unit.
      */
     @Override
-	public TickUnit getLargerTickUnit(TickUnit unit) {
+    public TickUnit getLargerTickUnit(TickUnit unit) {
         double x = unit.getSize();
         double log = Math.log(x) / LOG_10_VALUE;
         double higher = Math.ceil(log);
@@ -87,7 +87,7 @@ public class StandardTickUnitSource implements TickUnitSource, Serializable {
      * @return A unit from the collection.
      */
     @Override
-	public TickUnit getCeilingTickUnit(TickUnit unit) {
+    public TickUnit getCeilingTickUnit(TickUnit unit) {
         return getLargerTickUnit(unit);
     }
 
@@ -100,7 +100,7 @@ public class StandardTickUnitSource implements TickUnitSource, Serializable {
      * @return A unit from the collection.
      */
     @Override
-	public TickUnit getCeilingTickUnit(double size) {
+    public TickUnit getCeilingTickUnit(double size) {
         double log = Math.log(size) / LOG_10_VALUE;
         double higher = Math.ceil(log);
         return new NumberTickUnit(Math.pow(10, higher),
@@ -115,7 +115,7 @@ public class StandardTickUnitSource implements TickUnitSource, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -128,7 +128,7 @@ public class StandardTickUnitSource implements TickUnitSource, Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return 0;
     }
 

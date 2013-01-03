@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------
@@ -141,7 +141,7 @@ public abstract class Tick implements Serializable, Cloneable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -172,7 +172,7 @@ public abstract class Tick implements Serializable, Cloneable {
      * @throws CloneNotSupportedException if there is a problem cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         Tick clone = (Tick) super.clone();
         return clone;
     }
@@ -183,7 +183,7 @@ public abstract class Tick implements Serializable, Cloneable {
      * @return A string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return this.text;
     }
 }

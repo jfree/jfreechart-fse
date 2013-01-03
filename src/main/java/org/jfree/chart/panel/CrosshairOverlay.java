@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -221,7 +221,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      * @param e  the event.
      */
     @Override
-	public void propertyChange(PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
         fireOverlayChanged();
     }
 
@@ -232,7 +232,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      * @param chartPanel  the chart panel.
      */
     @Override
-	public void paintOverlay(Graphics2D g2, ChartPanel chartPanel) {
+    public void paintOverlay(Graphics2D g2, ChartPanel chartPanel) {
         Shape savedClip = g2.getClip();
         Rectangle2D dataArea = chartPanel.getScreenDataArea();
         g2.clip(dataArea);
@@ -380,20 +380,20 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
             double deltaX, double deltaY) {
         double x = 0.0;
         double y = 0.0;
-        boolean left = (anchor == RectangleAnchor.BOTTOM_LEFT 
-                || anchor == RectangleAnchor.LEFT 
+        boolean left = (anchor == RectangleAnchor.BOTTOM_LEFT
+                || anchor == RectangleAnchor.LEFT
                 || anchor == RectangleAnchor.TOP_LEFT);
-        boolean right = (anchor == RectangleAnchor.BOTTOM_RIGHT 
-                || anchor == RectangleAnchor.RIGHT 
+        boolean right = (anchor == RectangleAnchor.BOTTOM_RIGHT
+                || anchor == RectangleAnchor.RIGHT
                 || anchor == RectangleAnchor.TOP_RIGHT);
-        boolean top = (anchor == RectangleAnchor.TOP_LEFT 
-                || anchor == RectangleAnchor.TOP 
+        boolean top = (anchor == RectangleAnchor.TOP_LEFT
+                || anchor == RectangleAnchor.TOP
                 || anchor == RectangleAnchor.TOP_RIGHT);
         boolean bottom = (anchor == RectangleAnchor.BOTTOM_LEFT
                 || anchor == RectangleAnchor.BOTTOM
                 || anchor == RectangleAnchor.BOTTOM_RIGHT);
         Rectangle rect = line.getBounds();
-        
+
         // we expect the line to be vertical or horizontal
         if (line.getX1() == line.getX2()) {  // vertical
             x = line.getX1();
@@ -431,11 +431,11 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
     }
 
     /**
-     * Returns the text anchor that is used to align a label to its anchor 
+     * Returns the text anchor that is used to align a label to its anchor
      * point.
-     * 
+     *
      * @param anchor  the anchor.
-     * 
+     *
      * @return The text alignment point.
      */
     private TextAnchor textAlignPtForLabelAnchorV(RectangleAnchor anchor) {
@@ -558,7 +558,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -584,7 +584,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      *     with the cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         CrosshairOverlay clone = (CrosshairOverlay) super.clone();
         clone.xCrosshairs = ObjectUtilities.deepClone(this.xCrosshairs);
         clone.yCrosshairs = ObjectUtilities.deepClone(this.yCrosshairs);

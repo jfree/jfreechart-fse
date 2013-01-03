@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------
@@ -309,7 +309,7 @@ public class RectangleConstraint {
      * @return A string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return "RectangleConstraint["
                 + this.widthConstraintType.toString() + ": width="
                 + this.width + ", height=" + this.height + "]";

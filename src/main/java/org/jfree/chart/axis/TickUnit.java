@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------
@@ -140,7 +140,7 @@ public abstract class TickUnit implements Comparable<TickUnit>, Serializable {
      *      size is less than the others.
      */
     @Override
-	public int compareTo(TickUnit other) {
+    public int compareTo(TickUnit other) {
 
         if (this.size > other.getSize()) {
             return 1;
@@ -162,7 +162,7 @@ public abstract class TickUnit implements Comparable<TickUnit>, Serializable {
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -185,7 +185,7 @@ public abstract class TickUnit implements Comparable<TickUnit>, Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         long temp = this.size != +0.0d ? Double.doubleToLongBits(this.size)
                 : 0L;
         return (int) (temp ^ (temp >>> 32));

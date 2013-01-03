@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -74,7 +74,7 @@ public class WindNeedle extends ArrowNeedle
      * @param angle  the angle.
      */
     @Override
-	protected void drawNeedle(Graphics2D g2, Rectangle2D plotArea,
+    protected void drawNeedle(Graphics2D g2, Rectangle2D plotArea,
                               Point2D rotate, double angle) {
 
         super.drawNeedle(g2, plotArea, rotate, angle);
@@ -104,7 +104,7 @@ public class WindNeedle extends ArrowNeedle
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object object) {
+    public boolean equals(Object object) {
         if (object == null) {
             return false;
         }
@@ -123,7 +123,7 @@ public class WindNeedle extends ArrowNeedle
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return super.hashCode();
     }
 

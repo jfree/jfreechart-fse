@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------------
@@ -307,7 +307,7 @@ public class AbstractXYItemLabelGenerator implements Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -342,7 +342,7 @@ public class AbstractXYItemLabelGenerator implements Cloneable, Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 127;
         result = HashUtilities.hashCode(result, this.formatString);
         result = HashUtilities.hashCode(result, this.xFormat);
@@ -360,7 +360,7 @@ public class AbstractXYItemLabelGenerator implements Cloneable, Serializable {
      * @throws CloneNotSupportedException if cloning is not supported.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         AbstractXYItemLabelGenerator clone
                 = (AbstractXYItemLabelGenerator) super.clone();
         if (this.xFormat != null) {

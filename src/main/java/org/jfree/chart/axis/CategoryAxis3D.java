@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
@@ -109,7 +109,7 @@ public class CategoryAxis3D extends CategoryAxis
      * @return The axis state (never <code>null</code>).
      */
     @Override
-	public AxisState draw(Graphics2D g2,
+    public AxisState draw(Graphics2D g2,
                           double cursor,
                           Rectangle2D plotArea,
                           Rectangle2D dataArea,
@@ -175,7 +175,7 @@ public class CategoryAxis3D extends CategoryAxis
      * @return The coordinate.
      */
     @Override
-	public double getCategoryJava2DCoordinate(CategoryAnchor anchor,
+    public double getCategoryJava2DCoordinate(CategoryAnchor anchor,
                                               int category,
                                               int categoryCount,
                                               Rectangle2D area,
@@ -227,7 +227,7 @@ public class CategoryAxis3D extends CategoryAxis
      *         some reason.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

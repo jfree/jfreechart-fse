@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
@@ -104,7 +104,7 @@ public class ColumnArrangement implements Arrangement, Serializable {
      * @param key  a key that controls the position of the block.
      */
     @Override
-	public void add(Block block, Object key) {
+    public void add(Block block, Object key) {
         // since the flow layout is relatively straightforward, no information
         // needs to be recorded here
     }
@@ -122,7 +122,7 @@ public class ColumnArrangement implements Arrangement, Serializable {
      * @return The size of the container after arrangement of the contents.
      */
     @Override
-	public Size2D arrange(BlockContainer container, Graphics2D g2,
+    public Size2D arrange(BlockContainer container, Graphics2D g2,
                           RectangleConstraint constraint) {
 
         LengthConstraintType w = constraint.getWidthConstraintType();
@@ -350,7 +350,7 @@ public class ColumnArrangement implements Arrangement, Serializable {
      * Clears any cached information.
      */
     @Override
-	public void clear() {
+    public void clear() {
         // no action required.
     }
 
@@ -362,7 +362,7 @@ public class ColumnArrangement implements Arrangement, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

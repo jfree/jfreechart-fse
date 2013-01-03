@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -276,7 +276,7 @@ public class LogarithmicAxis extends NumberAxis {
      * @param range  the new range.
      */
     @Override
-	public void setRange(Range range) {
+    public void setRange(Range range) {
         super.setRange(range);      // call parent method
         setupSmallLogFlag();        // setup flag based on bounds values
     }
@@ -505,7 +505,7 @@ public class LogarithmicAxis extends NumberAxis {
      * Rescales the axis to ensure that all data is visible.
      */
     @Override
-	public void autoAdjustRange() {
+    public void autoAdjustRange() {
 
         Plot plot = getPlot();
         if (plot == null) {
@@ -625,7 +625,7 @@ public class LogarithmicAxis extends NumberAxis {
      * @return The Java2D coordinate.
      */
     @Override
-	public double valueToJava2D(double value, Rectangle2D plotArea,
+    public double valueToJava2D(double value, Rectangle2D plotArea,
                                 RectangleEdge edge) {
 
         Range range = getRange();
@@ -668,7 +668,7 @@ public class LogarithmicAxis extends NumberAxis {
      * @return The data value.
      */
     @Override
-	public double java2DToValue(double java2DValue, Rectangle2D plotArea,
+    public double java2DToValue(double java2DValue, Rectangle2D plotArea,
                                 RectangleEdge edge) {
 
         Range range = getRange();
@@ -703,7 +703,7 @@ public class LogarithmicAxis extends NumberAxis {
      * @param upperPercent  the new upper bound.
      */
     @Override
-	public void zoomRange(double lowerPercent, double upperPercent) {
+    public void zoomRange(double lowerPercent, double upperPercent) {
         double startLog = switchedLog10(getRange().getLowerBound());
         double lengthLog = switchedLog10(getRange().getUpperBound()) - startLog;
         Range adjusted;
@@ -735,7 +735,7 @@ public class LogarithmicAxis extends NumberAxis {
      * @return A list of ticks.
      */
     @Override
-	protected List<ValueTick> refreshTicksHorizontal(Graphics2D g2,
+    protected List<ValueTick> refreshTicksHorizontal(Graphics2D g2,
                                           Rectangle2D dataArea,
                                           RectangleEdge edge) {
 
@@ -884,7 +884,7 @@ public class LogarithmicAxis extends NumberAxis {
      * @return A list of ticks.
      */
     @Override
-	protected List<ValueTick> refreshTicksVertical(Graphics2D g2,
+    protected List<ValueTick> refreshTicksVertical(Graphics2D g2,
                                         Rectangle2D dataArea,
                                         RectangleEdge edge) {
 

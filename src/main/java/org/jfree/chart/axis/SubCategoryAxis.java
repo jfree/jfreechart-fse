@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -181,7 +181,7 @@ public class SubCategoryAxis extends CategoryAxis
      * @return The space required to draw the axis.
      */
     @Override
-	public AxisSpace reserveSpace(Graphics2D g2, Plot plot,
+    public AxisSpace reserveSpace(Graphics2D g2, Plot plot,
                                   Rectangle2D plotArea,
                                   RectangleEdge edge, AxisSpace space) {
 
@@ -250,7 +250,7 @@ public class SubCategoryAxis extends CategoryAxis
      * @return The axis state (never <code>null</code>).
      */
     @Override
-	public AxisState draw(Graphics2D g2,
+    public AxisState draw(Graphics2D g2,
                           double cursor,
                           Rectangle2D plotArea,
                           Rectangle2D dataArea,
@@ -268,7 +268,7 @@ public class SubCategoryAxis extends CategoryAxis
 
         // draw the category labels and axis label
         AxisState state = new AxisState(cursor);
-        state = drawSubCategoryLabels(g2, plotArea, dataArea, edge, state, 
+        state = drawSubCategoryLabels(g2, plotArea, dataArea, edge, state,
                 plotState);
         state = drawCategoryLabels(g2, plotArea, dataArea, edge, state,
                 plotState);
@@ -401,7 +401,7 @@ public class SubCategoryAxis extends CategoryAxis
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

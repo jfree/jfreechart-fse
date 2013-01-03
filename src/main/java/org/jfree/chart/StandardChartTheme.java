@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -238,7 +238,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
 
     /**
      * The shadow generator (can be null).
-     * 
+     *
      * @since 1.0.14
      */
     private ShadowGenerator shadowGenerator;
@@ -304,7 +304,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
     public static ChartTheme createLegacyTheme() {
         StandardChartTheme theme = new StandardChartTheme("Legacy") {
             @Override
-			public void apply(JFreeChart chart) {
+            public void apply(JFreeChart chart) {
                 // do nothing at all
             }
         };
@@ -324,7 +324,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * Creates a new default instance.
      *
      * @param name  the name of the theme (<code>null</code> not permitted).
-     * @param shadow  a flag that controls whether a shadow generator is 
+     * @param shadow  a flag that controls whether a shadow generator is
      *                included.
      *
      * @since 1.0.14
@@ -1161,7 +1161,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @param chart  the chart (<code>null</code> not permitted).
      */
     @Override
-	public void apply(JFreeChart chart) {
+    public void apply(JFreeChart chart) {
         if (chart == null) {
             throw new IllegalArgumentException("Null 'chart' argument.");
         }
@@ -1711,7 +1711,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -1832,7 +1832,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @throws CloneNotSupportedException if the theme cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

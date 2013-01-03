@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------
@@ -84,7 +84,7 @@ public class SunJPEGEncoderAdapter implements ImageEncoder {
      * @see #setQuality(float)
      */
     @Override
-	public float getQuality() {
+    public float getQuality() {
         return this.quality;
     }
 
@@ -97,7 +97,7 @@ public class SunJPEGEncoderAdapter implements ImageEncoder {
      * @see #getQuality()
      */
     @Override
-	public void setQuality(float quality) {
+    public void setQuality(float quality) {
         if (quality < 0.0f || quality > 1.0f) {
             throw new IllegalArgumentException(
                     "The 'quality' must be in the range 0.0f to 1.0f");
@@ -112,7 +112,7 @@ public class SunJPEGEncoderAdapter implements ImageEncoder {
      * @return <code>false</code>.
      */
     @Override
-	public boolean isEncodingAlpha() {
+    public boolean isEncodingAlpha() {
         return false;
     }
 
@@ -123,7 +123,7 @@ public class SunJPEGEncoderAdapter implements ImageEncoder {
      * @param encodingAlpha  ignored.
      */
     @Override
-	public void setEncodingAlpha(boolean encodingAlpha) {
+    public void setEncodingAlpha(boolean encodingAlpha) {
         //  No op
     }
 
@@ -140,7 +140,7 @@ public class SunJPEGEncoderAdapter implements ImageEncoder {
      *     <code>null</code>.
      */
     @Override
-	public byte[] encode(BufferedImage bufferedImage) throws IOException {
+    public byte[] encode(BufferedImage bufferedImage) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         encode(bufferedImage, outputStream);
         return outputStream.toByteArray();
@@ -159,7 +159,7 @@ public class SunJPEGEncoderAdapter implements ImageEncoder {
      *     <code>null</code>.
      */
     @Override
-	public void encode(BufferedImage bufferedImage, OutputStream outputStream)
+    public void encode(BufferedImage bufferedImage, OutputStream outputStream)
             throws IOException {
         if (bufferedImage == null) {
             throw new IllegalArgumentException("Null 'image' argument.");

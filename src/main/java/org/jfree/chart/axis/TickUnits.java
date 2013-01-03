@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------
@@ -126,7 +126,7 @@ public class TickUnits implements TickUnitSource, Cloneable, Serializable {
      * @return A tick unit that is larger than the supplied unit.
      */
     @Override
-	public TickUnit getLargerTickUnit(TickUnit unit) {
+    public TickUnit getLargerTickUnit(TickUnit unit) {
 
         int index = Collections.binarySearch(this.tickUnits, unit);
         if (index >= 0) {
@@ -150,7 +150,7 @@ public class TickUnits implements TickUnitSource, Cloneable, Serializable {
      * @return A unit from the collection.
      */
     @Override
-	public TickUnit getCeilingTickUnit(TickUnit unit) {
+    public TickUnit getCeilingTickUnit(TickUnit unit) {
 
         int index = Collections.binarySearch(this.tickUnits, unit);
         if (index >= 0) {
@@ -173,7 +173,7 @@ public class TickUnits implements TickUnitSource, Cloneable, Serializable {
      * @return A unit from the collection.
      */
     @Override
-	public TickUnit getCeilingTickUnit(double size) {
+    public TickUnit getCeilingTickUnit(double size) {
         return getCeilingTickUnit(new NumberTickUnit(size,
                 NumberFormat.getInstance()));
     }
@@ -187,7 +187,7 @@ public class TickUnits implements TickUnitSource, Cloneable, Serializable {
      *         support cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         TickUnits clone = (TickUnits) super.clone();
         clone.tickUnits = new java.util.ArrayList<TickUnit>(this.tickUnits);
         return clone;
@@ -201,7 +201,7 @@ public class TickUnits implements TickUnitSource, Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

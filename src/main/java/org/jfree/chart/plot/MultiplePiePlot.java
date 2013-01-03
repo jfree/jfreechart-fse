@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -346,7 +346,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
      * @return The plot type.
      */
     @Override
-	public String getPlotType() {
+    public String getPlotType() {
         return "Multiple Pie Plot";
          // TODO: need to fetch this from localised resources
     }
@@ -393,7 +393,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
      * @param info  collects info about the drawing.
      */
     @Override
-	public void draw(Graphics2D g2,
+    public void draw(Graphics2D g2,
                      Rectangle2D area,
                      Point2D anchor,
                      PlotState parentState,
@@ -559,7 +559,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
      * @return The legend items.
      */
     @Override
-	public LegendItemCollection getLegendItems() {
+    public LegendItemCollection getLegendItems() {
 
         LegendItemCollection result = new LegendItemCollection();
         if (this.dataset == null) {
@@ -611,7 +611,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
      *     <code>false</code> otherwise.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -653,7 +653,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
      *         not support cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         MultiplePiePlot clone = (MultiplePiePlot) super.clone();
         clone.pieChart = (JFreeChart) this.pieChart.clone();
         clone.sectionPaints = new HashMap<Comparable, Paint>(this.sectionPaints);
