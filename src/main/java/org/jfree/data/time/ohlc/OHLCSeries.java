@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -85,7 +85,7 @@ public class OHLCSeries extends ComparableObjectSeries {
      * @return The data item.
      */
     @Override
-	public ComparableObjectItem getDataItem(int index) {
+    public ComparableObjectItem getDataItem(int index) {
         return super.getDataItem(index);
     }
 
@@ -118,7 +118,7 @@ public class OHLCSeries extends ComparableObjectSeries {
      * @since 1.0.14
      */
     @Override
-	public ComparableObjectItem remove(int index) {
+    public ComparableObjectItem remove(int index) {
         return super.remove(index);
     }
 

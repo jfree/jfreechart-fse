@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -174,7 +174,7 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
      *      relative to another object.
      */
     @Override
-	public int compareTo(XYDataItem dataItem) {
+    public int compareTo(XYDataItem dataItem) {
        int result;
 
         double compare = this.x.doubleValue()
@@ -202,7 +202,7 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
      * @return A clone.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -223,7 +223,7 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -246,7 +246,7 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result;
         result = this.x.hashCode();
         result = 29 * result + (this.y != null ? this.y.hashCode() : 0);
@@ -260,7 +260,7 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
      * @return A string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return "[" + getXValue() + ", " + getYValue() + "]";
     }
 

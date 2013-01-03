@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------
@@ -421,7 +421,7 @@ public class JDBCXYDataset extends AbstractXYDataset
      * @see XYDataset
      */
     @Override
-	public Number getX(int seriesIndex, int itemIndex) {
+    public Number getX(int seriesIndex, int itemIndex) {
         ArrayList row = (ArrayList) this.rows.get(itemIndex);
         return (Number) row.get(0);
     }
@@ -437,7 +437,7 @@ public class JDBCXYDataset extends AbstractXYDataset
      * @see XYDataset
      */
     @Override
-	public Number getY(int seriesIndex, int itemIndex) {
+    public Number getY(int seriesIndex, int itemIndex) {
         ArrayList row = (ArrayList) this.rows.get(itemIndex);
         return (Number) row.get(seriesIndex + 1);
     }
@@ -452,7 +452,7 @@ public class JDBCXYDataset extends AbstractXYDataset
      * @see XYDataset
      */
     @Override
-	public int getItemCount(int seriesIndex) {
+    public int getItemCount(int seriesIndex) {
         return this.rows.size();
     }
 
@@ -463,7 +463,7 @@ public class JDBCXYDataset extends AbstractXYDataset
      * @return The item count.
      */
     @Override
-	public int getItemCount() {
+    public int getItemCount() {
         return getItemCount(0);
     }
 
@@ -476,7 +476,7 @@ public class JDBCXYDataset extends AbstractXYDataset
      * @see Dataset
      */
     @Override
-	public int getSeriesCount() {
+    public int getSeriesCount() {
         return this.columnNames.length;
     }
 
@@ -491,7 +491,7 @@ public class JDBCXYDataset extends AbstractXYDataset
      * @see Dataset
      */
     @Override
-	public Comparable getSeriesKey(int seriesIndex) {
+    public Comparable getSeriesKey(int seriesIndex) {
 
         if ((seriesIndex < this.columnNames.length)
                 && (this.columnNames[seriesIndex] != null)) {
@@ -526,7 +526,7 @@ public class JDBCXYDataset extends AbstractXYDataset
      * @return The minimum value.
      */
     @Override
-	public double getRangeLowerBound(boolean includeInterval) {
+    public double getRangeLowerBound(boolean includeInterval) {
         return this.minValue;
     }
 
@@ -539,7 +539,7 @@ public class JDBCXYDataset extends AbstractXYDataset
      * @return The maximum value.
      */
     @Override
-	public double getRangeUpperBound(boolean includeInterval) {
+    public double getRangeUpperBound(boolean includeInterval) {
         return this.maxValue;
     }
 
@@ -552,7 +552,7 @@ public class JDBCXYDataset extends AbstractXYDataset
      * @return The range.
      */
     @Override
-	public Range getRangeBounds(boolean includeInterval) {
+    public Range getRangeBounds(boolean includeInterval) {
         return new Range(this.minValue, this.maxValue);
     }
 

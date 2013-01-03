@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------------------
@@ -153,7 +153,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The mean value (possibly <code>null</code>).
      */
     @Override
-	public Number getMeanValue(int row, int column) {
+    public Number getMeanValue(int row, int column) {
         Number result = null;
         MeanAndStandardDeviation masd = (MeanAndStandardDeviation)
                 this.data.getObject(row, column);
@@ -173,7 +173,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The value (possibly <code>null</code>).
      */
     @Override
-	public Number getValue(int row, int column) {
+    public Number getValue(int row, int column) {
         return getMeanValue(row, column);
     }
 
@@ -187,7 +187,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The value (possibly <code>null</code>).
      */
     @Override
-	public Number getValue(Comparable rowKey, Comparable columnKey) {
+    public Number getValue(Comparable rowKey, Comparable columnKey) {
         return getMeanValue(rowKey, columnKey);
     }
 
@@ -200,7 +200,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The mean value (possibly <code>null</code>).
      */
     @Override
-	public Number getMeanValue(Comparable rowKey, Comparable columnKey) {
+    public Number getMeanValue(Comparable rowKey, Comparable columnKey) {
         Number result = null;
         MeanAndStandardDeviation masd = (MeanAndStandardDeviation)
                 this.data.getObject(rowKey, columnKey);
@@ -219,7 +219,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The standard deviation (possibly <code>null</code>).
      */
     @Override
-	public Number getStdDevValue(int row, int column) {
+    public Number getStdDevValue(int row, int column) {
         Number result = null;
         MeanAndStandardDeviation masd = (MeanAndStandardDeviation)
                 this.data.getObject(row, column);
@@ -238,7 +238,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The standard deviation (possibly <code>null</code>).
      */
     @Override
-	public Number getStdDevValue(Comparable rowKey, Comparable columnKey) {
+    public Number getStdDevValue(Comparable rowKey, Comparable columnKey) {
         Number result = null;
         MeanAndStandardDeviation masd = (MeanAndStandardDeviation)
                 this.data.getObject(rowKey, columnKey);
@@ -256,7 +256,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The column index.
      */
     @Override
-	public int getColumnIndex(Comparable key) {
+    public int getColumnIndex(Comparable key) {
         // defer null argument check
         return this.data.getColumnIndex(key);
     }
@@ -269,7 +269,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The column key.
      */
     @Override
-	public Comparable getColumnKey(int column) {
+    public Comparable getColumnKey(int column) {
         return this.data.getColumnKey(column);
     }
 
@@ -279,7 +279,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The keys.
      */
     @Override
-	public List<Comparable> getColumnKeys() {
+    public List<Comparable> getColumnKeys() {
         return this.data.getColumnKeys();
     }
 
@@ -291,7 +291,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The row index.
      */
     @Override
-	public int getRowIndex(Comparable key) {
+    public int getRowIndex(Comparable key) {
         // defer null argument check
         return this.data.getRowIndex(key);
     }
@@ -304,7 +304,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The row key.
      */
     @Override
-	public Comparable getRowKey(int row) {
+    public Comparable getRowKey(int row) {
         return this.data.getRowKey(row);
     }
 
@@ -314,7 +314,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The keys.
      */
     @Override
-	public List<Comparable> getRowKeys() {
+    public List<Comparable> getRowKeys() {
         return this.data.getRowKeys();
     }
 
@@ -326,7 +326,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @see #getColumnCount()
      */
     @Override
-	public int getRowCount() {
+    public int getRowCount() {
         return this.data.getRowCount();
     }
 
@@ -338,7 +338,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @see #getRowCount()
      */
     @Override
-	public int getColumnCount() {
+    public int getColumnCount() {
         return this.data.getColumnCount();
     }
 
@@ -649,7 +649,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @see #getRangeUpperBound(boolean)
      */
     @Override
-	public double getRangeLowerBound(boolean includeInterval) {
+    public double getRangeLowerBound(boolean includeInterval) {
         if (includeInterval && !Double.isNaN(this.minimumRangeValueIncStdDev)) {
             return this.minimumRangeValueIncStdDev;
         }
@@ -669,7 +669,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @see #getRangeLowerBound(boolean)
      */
     @Override
-	public double getRangeUpperBound(boolean includeInterval) {
+    public double getRangeUpperBound(boolean includeInterval) {
         if (includeInterval && !Double.isNaN(this.maximumRangeValueIncStdDev)) {
             return this.maximumRangeValueIncStdDev;
         }
@@ -687,7 +687,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return The range.
      */
     @Override
-	public Range getRangeBounds(boolean includeInterval) {
+    public Range getRangeBounds(boolean includeInterval) {
         double lower = getRangeLowerBound(includeInterval);
         double upper = getRangeUpperBound(includeInterval);
         if (Double.isNaN(lower) && Double.isNaN(upper)) {
@@ -704,7 +704,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -727,7 +727,7 @@ public class DefaultStatisticalCategoryDataset extends AbstractDataset
      * @throws CloneNotSupportedException if cloning cannot be completed.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         DefaultStatisticalCategoryDataset clone
                 = (DefaultStatisticalCategoryDataset) super.clone();
         clone.data = (KeyedObjects2D) this.data.clone();

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -97,7 +97,7 @@ public class SimpleTimePeriod implements TimePeriod, Comparable<TimePeriod>, Ser
      * @return The start date/time (never <code>null</code>).
      */
     @Override
-	public Date getStart() {
+    public Date getStart() {
         return new Date(this.start);
     }
 
@@ -118,7 +118,7 @@ public class SimpleTimePeriod implements TimePeriod, Comparable<TimePeriod>, Ser
      * @return The end date/time (never <code>null</code>).
      */
     @Override
-	public Date getEnd() {
+    public Date getEnd() {
         return new Date(this.end);
     }
 
@@ -143,7 +143,7 @@ public class SimpleTimePeriod implements TimePeriod, Comparable<TimePeriod>, Ser
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -172,7 +172,7 @@ public class SimpleTimePeriod implements TimePeriod, Comparable<TimePeriod>, Ser
      *                            {@link TimePeriod}.
      */
     @Override
-	public int compareTo(TimePeriod that) {
+    public int compareTo(TimePeriod that) {
         long t0 = getStart().getTime();
         long t1 = getEnd().getTime();
         long m0 = t0 + (t1 - t0) / 2L;
@@ -216,7 +216,7 @@ public class SimpleTimePeriod implements TimePeriod, Comparable<TimePeriod>, Ser
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 17;
         result = 37 * result + (int) this.start;
         result = 37 * result + (int) this.end;

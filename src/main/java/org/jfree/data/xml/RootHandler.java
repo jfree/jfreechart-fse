@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------
@@ -79,7 +79,7 @@ public class RootHandler extends DefaultHandler implements DatasetTags {
      * @throws SAXException for errors.
      */
     @Override
-	public void characters(char[] ch, int start, int length)
+    public void characters(char[] ch, int start, int length)
         throws SAXException {
         DefaultHandler handler = getCurrentHandler();
         if (handler != this) {

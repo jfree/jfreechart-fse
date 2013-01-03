@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -327,7 +327,7 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      * @return The minimum value.
      */
     @Override
-	public double getDomainLowerBound(boolean includeInterval) {
+    public double getDomainLowerBound(boolean includeInterval) {
         double result = Double.NaN;
         Range r = getDomainBounds(includeInterval);
         if (r != null) {
@@ -345,7 +345,7 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      * @return The maximum value.
      */
     @Override
-	public double getDomainUpperBound(boolean includeInterval) {
+    public double getDomainUpperBound(boolean includeInterval) {
         double result = Double.NaN;
         Range r = getDomainBounds(includeInterval);
         if (r != null) {
@@ -364,7 +364,7 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      * @return The range.
      */
     @Override
-	public Range getDomainBounds(boolean includeInterval) {
+    public Range getDomainBounds(boolean includeInterval) {
         // first get the range without the interval, then expand it for the
         // interval width
         Range range = DatasetUtilities.findDomainBounds(this.dataset, false);
@@ -384,7 +384,7 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      * @param e  the event.
      */
     @Override
-	public void datasetChanged(DatasetChangeEvent e) {
+    public void datasetChanged(DatasetChangeEvent e) {
         // TODO: by coding the event with some information about what changed
         // in the dataset, we could make the recalculation of the interval
         // more efficient in some cases (for instance, if the change is
@@ -442,7 +442,7 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -468,7 +468,7 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      * @throws CloneNotSupportedException if the object cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -478,7 +478,7 @@ public class IntervalXYDelegate implements DatasetChangeListener,
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int hash = 5;
         hash = HashUtilities.hashCode(hash, this.autoWidth);
         hash = HashUtilities.hashCode(hash, this.intervalPositionFactor);

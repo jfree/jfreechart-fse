@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
@@ -162,7 +162,7 @@ public class OHLCDataItem implements Comparable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -199,7 +199,7 @@ public class OHLCDataItem implements Comparable, Serializable {
      *         is less than, equal to, or greater than the specified object.
      */
     @Override
-	public int compareTo(Object object) {
+    public int compareTo(Object object) {
         if (object instanceof OHLCDataItem) {
             OHLCDataItem item = (OHLCDataItem) object;
             return this.date.compareTo(item.date);

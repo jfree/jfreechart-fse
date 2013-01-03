@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -109,7 +109,7 @@ public class FixedMillisecond extends RegularTimePeriod
      * @since 1.0.3
      */
     @Override
-	public void peg(Calendar calendar) {
+    public void peg(Calendar calendar) {
         // nothing to do
     }
 
@@ -119,7 +119,7 @@ public class FixedMillisecond extends RegularTimePeriod
      * @return The millisecond preceding this one.
      */
     @Override
-	public RegularTimePeriod previous() {
+    public RegularTimePeriod previous() {
         RegularTimePeriod result = null;
         long t = this.time;
         if (t != Long.MIN_VALUE) {
@@ -134,7 +134,7 @@ public class FixedMillisecond extends RegularTimePeriod
      * @return The millisecond following this one.
      */
     @Override
-	public RegularTimePeriod next() {
+    public RegularTimePeriod next() {
         RegularTimePeriod result = null;
         long t = this.time;
         if (t != Long.MAX_VALUE) {
@@ -151,7 +151,7 @@ public class FixedMillisecond extends RegularTimePeriod
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object object) {
+    public boolean equals(Object object) {
         if (object instanceof FixedMillisecond) {
             FixedMillisecond m = (FixedMillisecond) object;
             return this.time == m.getFirstMillisecond();
@@ -168,7 +168,7 @@ public class FixedMillisecond extends RegularTimePeriod
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return (int) this.time;
     }
 
@@ -182,7 +182,7 @@ public class FixedMillisecond extends RegularTimePeriod
      * @return negative == before, zero == same, positive == after.
      */
     @Override
-	public int compareTo(TimePeriod o1) {
+    public int compareTo(TimePeriod o1) {
 
         int result;
         long difference;
@@ -223,7 +223,7 @@ public class FixedMillisecond extends RegularTimePeriod
      * @return The first millisecond of the time period.
      */
     @Override
-	public long getFirstMillisecond() {
+    public long getFirstMillisecond() {
         return this.time;
     }
 
@@ -236,7 +236,7 @@ public class FixedMillisecond extends RegularTimePeriod
      * @return The first millisecond of the time period.
      */
     @Override
-	public long getFirstMillisecond(Calendar calendar) {
+    public long getFirstMillisecond(Calendar calendar) {
         return this.time;
     }
 
@@ -246,7 +246,7 @@ public class FixedMillisecond extends RegularTimePeriod
      * @return The last millisecond of the time period.
      */
     @Override
-	public long getLastMillisecond() {
+    public long getLastMillisecond() {
         return this.time;
     }
 
@@ -258,7 +258,7 @@ public class FixedMillisecond extends RegularTimePeriod
      * @return The last millisecond of the time period.
      */
     @Override
-	public long getLastMillisecond(Calendar calendar) {
+    public long getLastMillisecond(Calendar calendar) {
         return this.time;
     }
 
@@ -268,7 +268,7 @@ public class FixedMillisecond extends RegularTimePeriod
      * @return The millisecond closest to the middle of the time period.
      */
     @Override
-	public long getMiddleMillisecond() {
+    public long getMiddleMillisecond() {
         return this.time;
     }
 
@@ -280,7 +280,7 @@ public class FixedMillisecond extends RegularTimePeriod
      * @return The millisecond closest to the middle of the time period.
      */
     @Override
-	public long getMiddleMillisecond(Calendar calendar) {
+    public long getMiddleMillisecond(Calendar calendar) {
         return this.time;
     }
 
@@ -290,7 +290,7 @@ public class FixedMillisecond extends RegularTimePeriod
      * @return The serial index number.
      */
     @Override
-	public long getSerialIndex() {
+    public long getSerialIndex() {
         return this.time;
     }
 

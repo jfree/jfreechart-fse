@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
@@ -184,7 +184,7 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable<TimePe
      * @see #getFirstMillisecond()
      */
     @Override
-	public Date getStart() {
+    public Date getStart() {
         return new Date(getFirstMillisecond());
     }
 
@@ -197,7 +197,7 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable<TimePe
      * @see #getLastMillisecond()
      */
     @Override
-	public Date getEnd() {
+    public Date getEnd() {
         return new Date(getLastMillisecond());
     }
 

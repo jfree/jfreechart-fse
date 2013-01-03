@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -71,7 +71,7 @@ public class PieChart3DTest  {
      * Common test setup.
      */
     @Before
-	public void setUp() {
+    public void setUp() {
         // create a dataset...
         DefaultPieDataset dataset = new DefaultPieDataset();
         dataset.setValue("Java", new Double(43.2));
@@ -139,7 +139,7 @@ public class PieChart3DTest  {
          * @param event  the event.
          */
         @Override
-		public void chartChanged(ChartChangeEvent event) {
+        public void chartChanged(ChartChangeEvent event) {
             this.flag = true;
         }
 

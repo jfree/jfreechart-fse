@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -303,7 +303,7 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      * @return The series count.
      */
     @Override
-	public int getSeriesCount() {
+    public int getSeriesCount() {
         return this.list.size();
     }
 
@@ -319,7 +319,7 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      *     specified range.
      */
     @Override
-	public Comparable getSeriesKey(int series) {
+    public Comparable getSeriesKey(int series) {
         Map<String, Object> map = this.list.get(series);
         return (Comparable) map.get("key");
     }
@@ -336,7 +336,7 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      *     specified range.
      */
     @Override
-	public int getItemCount(int series) {
+    public int getItemCount(int series) {
         return getBins(series).size();
     }
 
@@ -356,7 +356,7 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      *     specified range.
      */
     @Override
-	public Number getX(int series, int item) {
+    public Number getX(int series, int item) {
         List<HistogramBin> bins = getBins(series);
         HistogramBin bin = bins.get(item);
         double x = (bin.getStartBoundary() + bin.getEndBoundary()) / 2.;
@@ -377,7 +377,7 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      *     specified range.
      */
     @Override
-	public Number getY(int series, int item) {
+    public Number getY(int series, int item) {
         List<HistogramBin> bins = getBins(series);
         HistogramBin bin = bins.get(item);
         double total = getTotal(series);
@@ -410,7 +410,7 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      *     specified range.
      */
     @Override
-	public Number getStartX(int series, int item) {
+    public Number getStartX(int series, int item) {
         List<HistogramBin> bins = getBins(series);
         HistogramBin bin = bins.get(item);
         return bin.getStartBoundary();
@@ -429,7 +429,7 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      *     specified range.
      */
     @Override
-	public Number getEndX(int series, int item) {
+    public Number getEndX(int series, int item) {
         List<HistogramBin> bins = getBins(series);
         HistogramBin bin = bins.get(item);
         return bin.getEndBoundary();
@@ -450,7 +450,7 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      *     specified range.
      */
     @Override
-	public Number getStartY(int series, int item) {
+    public Number getStartY(int series, int item) {
         return getY(series, item);
     }
 
@@ -469,7 +469,7 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      *     specified range.
      */
     @Override
-	public Number getEndY(int series, int item) {
+    public Number getEndY(int series, int item) {
         return getY(series, item);
     }
 
@@ -481,7 +481,7 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -506,7 +506,7 @@ public class HistogramDataset extends AbstractIntervalXYDataset
      * @throws CloneNotSupportedException if the object cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         HistogramDataset clone = (HistogramDataset) super.clone();
         int seriesCount = getSeriesCount();
         clone.list = new java.util.ArrayList<Map<String, Object>>(seriesCount);

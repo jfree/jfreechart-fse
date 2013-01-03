@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -44,7 +44,7 @@
  * ------------- JFREECHART 1.0.x ---------------------------------------------
  * 09-Jun-2009 : Tidied up equals() (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.data.time;
@@ -152,7 +152,7 @@ public class TimeSeriesDataItem implements Cloneable, Comparable<TimeSeriesDataI
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -175,7 +175,7 @@ public class TimeSeriesDataItem implements Cloneable, Comparable<TimeSeriesDataI
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result;
         result = (this.period != null ? this.period.hashCode() : 0);
         result = 29 * result + (this.value != null ? this.value.hashCode() : 0);
@@ -195,10 +195,8 @@ public class TimeSeriesDataItem implements Cloneable, Comparable<TimeSeriesDataI
      *         relative to another object.
      */
     @Override
-	public int compareTo(TimeSeriesDataItem o1) {
-
-            return getPeriod().compareTo(o1.getPeriod());
-
+    public int compareTo(TimeSeriesDataItem o1) {
+        return getPeriod().compareTo(o1.getPeriod());
     }
 
     /**
@@ -208,7 +206,7 @@ public class TimeSeriesDataItem implements Cloneable, Comparable<TimeSeriesDataI
      * @return A clone of the data item.
      */
     @Override
-	public Object clone() {
+    public Object clone() {
         Object clone = null;
         try {
             clone = super.clone();

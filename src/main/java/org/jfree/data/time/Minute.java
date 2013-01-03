@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------
@@ -229,7 +229,7 @@ public class Minute extends RegularTimePeriod implements Serializable {
      * @see #getLastMillisecond()
      */
     @Override
-	public long getFirstMillisecond() {
+    public long getFirstMillisecond() {
         return this.firstMillisecond;
     }
 
@@ -244,7 +244,7 @@ public class Minute extends RegularTimePeriod implements Serializable {
      * @see #getFirstMillisecond()
      */
     @Override
-	public long getLastMillisecond() {
+    public long getLastMillisecond() {
         return this.lastMillisecond;
     }
 
@@ -257,7 +257,7 @@ public class Minute extends RegularTimePeriod implements Serializable {
      * @since 1.0.3
      */
     @Override
-	public void peg(Calendar calendar) {
+    public void peg(Calendar calendar) {
         this.firstMillisecond = getFirstMillisecond(calendar);
         this.lastMillisecond = getLastMillisecond(calendar);
     }
@@ -268,7 +268,7 @@ public class Minute extends RegularTimePeriod implements Serializable {
      * @return The minute preceding this one.
      */
     @Override
-	public RegularTimePeriod previous() {
+    public RegularTimePeriod previous() {
         Minute result;
         if (this.minute != FIRST_MINUTE_IN_HOUR) {
             result = new Minute(this.minute - 1, getHour());
@@ -291,7 +291,7 @@ public class Minute extends RegularTimePeriod implements Serializable {
      * @return The minute following this one.
      */
     @Override
-	public RegularTimePeriod next() {
+    public RegularTimePeriod next() {
         Minute result;
         if (this.minute != LAST_MINUTE_IN_HOUR) {
             result = new Minute(this.minute + 1, getHour());
@@ -314,7 +314,7 @@ public class Minute extends RegularTimePeriod implements Serializable {
      * @return The serial index number.
      */
     @Override
-	public long getSerialIndex() {
+    public long getSerialIndex() {
         long hourIndex = this.day.getSerialIndex() * 24L + this.hour;
         return hourIndex * 60L + this.minute;
     }
@@ -331,7 +331,7 @@ public class Minute extends RegularTimePeriod implements Serializable {
      *     <code>null</code>.
      */
     @Override
-	public long getFirstMillisecond(Calendar calendar) {
+    public long getFirstMillisecond(Calendar calendar) {
         int year = this.day.getYear();
         int month = this.day.getMonth() - 1;
         int day = this.day.getDayOfMonth();
@@ -355,7 +355,7 @@ public class Minute extends RegularTimePeriod implements Serializable {
      *     <code>null</code>.
      */
     @Override
-	public long getLastMillisecond(Calendar calendar) {
+    public long getLastMillisecond(Calendar calendar) {
         int year = this.day.getYear();
         int month = this.day.getMonth() - 1;
         int day = this.day.getDayOfMonth();
@@ -379,7 +379,7 @@ public class Minute extends RegularTimePeriod implements Serializable {
      *      object are the same.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -406,7 +406,7 @@ public class Minute extends RegularTimePeriod implements Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 17;
         result = 37 * result + this.minute;
         result = 37 * result + this.hour;
@@ -425,7 +425,7 @@ public class Minute extends RegularTimePeriod implements Serializable {
      * @return negative == before, zero == same, positive == after.
      */
     @Override
-	public int compareTo(TimePeriod o1) {
+    public int compareTo(TimePeriod o1) {
         int result;
 
         // CASE 1 : Comparing to another Minute object

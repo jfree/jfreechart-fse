@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -143,12 +143,12 @@ public abstract class Statistics {
         double total = 0.0;
         for (Number n : values) {
             if (n == null) {
-            	if (includeNullAndNaN) {
+                if (includeNullAndNaN) {
                     return Double.NaN;
-            	}
-            	else {
-            		continue;
-            	}
+                }
+                else {
+                    continue;
+                }
             }
             double value = n.doubleValue();
             if (Double.isNaN(value)) {
@@ -156,7 +156,7 @@ public abstract class Statistics {
                     return Double.NaN;
                 }
                 else {
-                	continue;
+                    continue;
                 }
             }
             total = total + value;
@@ -191,11 +191,11 @@ public abstract class Statistics {
      *
      * @return The median.
      */
-    public static double calculateMedian(List<Number> values, 
+    public static double calculateMedian(List<Number> values,
             boolean copyAndSort) {
 
         if (values == null) {
-        	return Double.NaN;
+            return Double.NaN;
         }
         double result = Double.NaN;
         if (copyAndSort) {
@@ -252,7 +252,7 @@ public abstract class Statistics {
      *
      * @return The median.
      */
-    public static double calculateMedian(List<Number> values, 
+    public static double calculateMedian(List<Number> values,
             int start, int end, boolean copyAndSort) {
 
         double result = Double.NaN;

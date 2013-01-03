@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -89,7 +89,7 @@ public class DefaultXYDataset extends AbstractXYDataset
      * @return The series count.
      */
     @Override
-	public int getSeriesCount() {
+    public int getSeriesCount() {
         return this.seriesList.size();
     }
 
@@ -105,7 +105,7 @@ public class DefaultXYDataset extends AbstractXYDataset
      *     specified range.
      */
     @Override
-	public Comparable getSeriesKey(int series) {
+    public Comparable getSeriesKey(int series) {
         if ((series < 0) || (series >= getSeriesCount())) {
             throw new IllegalArgumentException("Series index out of bounds");
         }
@@ -121,7 +121,7 @@ public class DefaultXYDataset extends AbstractXYDataset
      * @return The index, or -1.
      */
     @Override
-	public int indexOf(Comparable seriesKey) {
+    public int indexOf(Comparable seriesKey) {
         return this.seriesKeys.indexOf(seriesKey);
     }
 
@@ -133,7 +133,7 @@ public class DefaultXYDataset extends AbstractXYDataset
      * @return <code>DomainOrder.NONE</code>.
      */
     @Override
-	public DomainOrder getDomainOrder() {
+    public DomainOrder getDomainOrder() {
         return DomainOrder.NONE;
     }
 
@@ -149,7 +149,7 @@ public class DefaultXYDataset extends AbstractXYDataset
      *     specified range.
      */
     @Override
-	public int getItemCount(int series) {
+    public int getItemCount(int series) {
         if ((series < 0) || (series >= getSeriesCount())) {
             throw new IllegalArgumentException("Series index out of bounds");
         }
@@ -173,7 +173,7 @@ public class DefaultXYDataset extends AbstractXYDataset
      * @see #getX(int, int)
      */
     @Override
-	public double getXValue(int series, int item) {
+    public double getXValue(int series, int item) {
         double[][] seriesData = this.seriesList.get(series);
         return seriesData[0][item];
     }
@@ -194,7 +194,7 @@ public class DefaultXYDataset extends AbstractXYDataset
      * @see #getXValue(int, int)
      */
     @Override
-	public Number getX(int series, int item) {
+    public Number getX(int series, int item) {
         return getXValue(series, item);
     }
 
@@ -214,7 +214,7 @@ public class DefaultXYDataset extends AbstractXYDataset
      * @see #getY(int, int)
      */
     @Override
-	public double getYValue(int series, int item) {
+    public double getYValue(int series, int item) {
         double[][] seriesData = this.seriesList.get(series);
         return seriesData[1][item];
     }
@@ -235,7 +235,7 @@ public class DefaultXYDataset extends AbstractXYDataset
      * @see #getX(int, int)
      */
     @Override
-	public Number getY(int series, int item) {
+    public Number getY(int series, int item) {
         return getYValue(series, item);
     }
 
@@ -309,7 +309,7 @@ public class DefaultXYDataset extends AbstractXYDataset
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -343,7 +343,7 @@ public class DefaultXYDataset extends AbstractXYDataset
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result;
         result = this.seriesKeys.hashCode();
         result = 29 * result + this.seriesList.hashCode();
@@ -360,7 +360,7 @@ public class DefaultXYDataset extends AbstractXYDataset
      *     series key).
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         DefaultXYDataset clone = (DefaultXYDataset) super.clone();
         clone.seriesKeys = new java.util.ArrayList<Comparable>(this.seriesKeys);
         clone.seriesList = new ArrayList<double[][]>(this.seriesList.size());

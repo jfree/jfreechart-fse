@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------
@@ -100,7 +100,7 @@ public class CategorySeriesHandler extends DefaultHandler
      * @throws SAXException for errors.
      */
     @Override
-	public void startElement(String namespaceURI,
+    public void startElement(String namespaceURI,
                              String localName,
                              String qName,
                              Attributes atts) throws SAXException {
@@ -131,7 +131,7 @@ public class CategorySeriesHandler extends DefaultHandler
      * @param qName  the element name.
      */
     @Override
-	public void endElement(String namespaceURI,
+    public void endElement(String namespaceURI,
                            String localName,
                            String qName) {
 

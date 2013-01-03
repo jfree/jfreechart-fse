@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------
@@ -198,7 +198,7 @@ public class Second extends RegularTimePeriod implements Serializable {
      * @see #getLastMillisecond()
      */
     @Override
-	public long getFirstMillisecond() {
+    public long getFirstMillisecond() {
         return this.firstMillisecond;
     }
 
@@ -213,7 +213,7 @@ public class Second extends RegularTimePeriod implements Serializable {
      * @see #getFirstMillisecond()
      */
     @Override
-	public long getLastMillisecond() {
+    public long getLastMillisecond() {
         return this.firstMillisecond + 999L;
     }
 
@@ -226,7 +226,7 @@ public class Second extends RegularTimePeriod implements Serializable {
      * @since 1.0.3
      */
     @Override
-	public void peg(Calendar calendar) {
+    public void peg(Calendar calendar) {
         this.firstMillisecond = getFirstMillisecond(calendar);
     }
 
@@ -236,7 +236,7 @@ public class Second extends RegularTimePeriod implements Serializable {
      * @return The second preceding this one.
      */
     @Override
-	public RegularTimePeriod previous() {
+    public RegularTimePeriod previous() {
         Second result = null;
         if (this.second != FIRST_SECOND_IN_MINUTE) {
             result = new Second(this.second - 1, getMinute());
@@ -256,7 +256,7 @@ public class Second extends RegularTimePeriod implements Serializable {
      * @return The second following this one.
      */
     @Override
-	public RegularTimePeriod next() {
+    public RegularTimePeriod next() {
         Second result = null;
         if (this.second != LAST_SECOND_IN_MINUTE) {
             result = new Second(this.second + 1, getMinute());
@@ -276,7 +276,7 @@ public class Second extends RegularTimePeriod implements Serializable {
      * @return The serial index number.
      */
     @Override
-	public long getSerialIndex() {
+    public long getSerialIndex() {
         long hourIndex = this.day.getSerialIndex() * 24L + this.hour;
         long minuteIndex = hourIndex * 60L + this.minute;
         return minuteIndex * 60L + this.second;
@@ -293,7 +293,7 @@ public class Second extends RegularTimePeriod implements Serializable {
      *     <code>null</code>.
      */
     @Override
-	public long getFirstMillisecond(Calendar calendar) {
+    public long getFirstMillisecond(Calendar calendar) {
         int year = this.day.getYear();
         int month = this.day.getMonth() - 1;
         int day = this.day.getDayOfMonth();
@@ -315,7 +315,7 @@ public class Second extends RegularTimePeriod implements Serializable {
      *     <code>null</code>.
      */
     @Override
-	public long getLastMillisecond(Calendar calendar) {
+    public long getLastMillisecond(Calendar calendar) {
         return getFirstMillisecond(calendar) + 999L;
     }
 
@@ -331,7 +331,7 @@ public class Second extends RegularTimePeriod implements Serializable {
      *         are the same.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -364,7 +364,7 @@ public class Second extends RegularTimePeriod implements Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 17;
         result = 37 * result + this.second;
         result = 37 * result + this.minute;
@@ -383,7 +383,7 @@ public class Second extends RegularTimePeriod implements Serializable {
      * @return negative == before, zero == same, positive == after.
      */
     @Override
-	public int compareTo(TimePeriod o1) {
+    public int compareTo(TimePeriod o1) {
         int result;
 
         // CASE 1 : Comparing to another Second object
