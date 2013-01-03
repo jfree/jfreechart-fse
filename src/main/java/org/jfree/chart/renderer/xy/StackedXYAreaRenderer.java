@@ -69,25 +69,7 @@
 
 package org.jfree.chart.renderer.xy;
 
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Point;
-import java.awt.Polygon;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.Stack;
-
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.XYItemEntity;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -97,11 +79,20 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.urls.XYURLGenerator;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.*;
 import org.jfree.data.Range;
 import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.xy.TableXYDataset;
 import org.jfree.data.xy.XYDataset;
+
+import java.awt.*;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.Stack;
 
 /**
  * A stacked area renderer for the {@link XYPlot} class.
@@ -123,7 +114,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
     /** For serialization. */
     private static final long serialVersionUID = 5217394318178570889L;
 
-     /**
+    /**
      * A state object for use by this renderer.
      */
     static class StackedXYAreaRendererState extends XYItemRendererState {
@@ -329,7 +320,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      *         drawItem() method.
      */
     @Override
-	public XYItemRendererState initialise(Graphics2D g2,
+    public XYItemRendererState initialise(Graphics2D g2,
                                           Rectangle2D dataArea,
                                           XYPlot plot,
                                           XYDataset data,
@@ -348,7 +339,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      * @return 2.
      */
     @Override
-	public int getPassCount() {
+    public int getPassCount() {
         return 2;
     }
 
@@ -365,12 +356,11 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      *         of {@link TableXYDataset}.
      */
     @Override
-	public Range findRangeBounds(XYDataset dataset) {
+    public Range findRangeBounds(XYDataset dataset) {
         if (dataset != null) {
             return DatasetUtilities.findStackedRangeBounds(
-                (TableXYDataset) dataset);
-        }
-        else {
+                    (TableXYDataset) dataset);
+        } else {
             return null;
         }
     }
@@ -397,7 +387,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      *         is not an instance of {@link TableXYDataset}.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
                          PlotRenderingInfo info,
@@ -412,7 +402,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
 
         PlotOrientation orientation = plot.getOrientation();
         StackedXYAreaRendererState areaState
-            = (StackedXYAreaRendererState) state;
+                = (StackedXYAreaRendererState) state;
         // Get the item count for the series, so that we can know which is the
         // end of the series.
         TableXYDataset tdataset = (TableXYDataset) dataset;
@@ -456,8 +446,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
                 if (orientation == PlotOrientation.VERTICAL) {
                     areaState.getSeriesArea().addPoint((int) transX1,
                             (int) transY2);
-                }
-                else if (orientation == PlotOrientation.HORIZONTAL) {
+                } else if (orientation == PlotOrientation.HORIZONTAL) {
                     areaState.getSeriesArea().addPoint((int) transY2,
                             (int) transX1);
                 }
@@ -469,8 +458,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
                 areaState.getSeriesArea().addPoint((int) point.getX(),
                         (int) point.getY());
                 areaState.getCurrentSeriesPoints().push(point);
-            }
-            else if (orientation == PlotOrientation.HORIZONTAL) {
+            } else if (orientation == PlotOrientation.HORIZONTAL) {
                 areaState.getSeriesArea().addPoint((int) transY1,
                         (int) transX1);
             }
@@ -489,8 +477,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
                     if (orientation == PlotOrientation.VERTICAL) {
                         areaState.getLine().setLine(transX0, transY0, transX1,
                                 transY1);
-                    }
-                    else if (orientation == PlotOrientation.HORIZONTAL) {
+                    } else if (orientation == PlotOrientation.HORIZONTAL) {
                         areaState.getLine().setLine(transY0, transX0, transY1,
                                 transX1);
                     }
@@ -509,8 +496,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
                     // Add the last point (x,0)
                     areaState.getSeriesArea().addPoint((int) transX1,
                             (int) transY2);
-                }
-                else if (orientation == PlotOrientation.HORIZONTAL) {
+                } else if (orientation == PlotOrientation.HORIZONTAL) {
                     // Add the last point (x,0)
                     areaState.getSeriesArea().addPoint((int) transY2,
                             (int) transX1);
@@ -545,8 +531,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
             updateCrosshairValues(crosshairState, x1, ph1 + y1, domainAxisIndex,
                     rangeAxisIndex, transX1, transY1, orientation);
 
-        }
-        else if (pass == 1) {
+        } else if (pass == 1) {
             // On second pass render shapes and collect entity and tooltip
             // information
 
@@ -556,33 +541,28 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
                 if (plot.getOrientation() == PlotOrientation.VERTICAL) {
                     shape = ShapeUtilities.createTranslatedShape(shape,
                             transX1, transY1);
-                }
-                else if (plot.getOrientation() == PlotOrientation.HORIZONTAL) {
+                } else if (plot.getOrientation() == PlotOrientation.HORIZONTAL) {
                     shape = ShapeUtilities.createTranslatedShape(shape,
                             transY1, transX1);
                 }
                 if (!nullPoint) {
                     if (getShapePaint() != null) {
                         g2.setPaint(getShapePaint());
-                    }
-                    else {
+                    } else {
                         g2.setPaint(seriesPaint);
                     }
                     if (getShapeStroke() != null) {
                         g2.setStroke(getShapeStroke());
-                    }
-                    else {
+                    } else {
                         g2.setStroke(seriesStroke);
                     }
                     g2.draw(shape);
                 }
-            }
-            else {
+            } else {
                 if (plot.getOrientation() == PlotOrientation.VERTICAL) {
                     shape = new Rectangle2D.Double(transX1 - 3, transY1 - 3,
                             6.0, 6.0);
-                }
-                else if (plot.getOrientation() == PlotOrientation.HORIZONTAL) {
+                } else if (plot.getOrientation() == PlotOrientation.HORIZONTAL) {
                     shape = new Rectangle2D.Double(transY1 - 3, transX1 - 3,
                             6.0, 6.0);
                 }
@@ -594,7 +574,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
                 if (entities != null && shape != null && !nullPoint) {
                     String tip = null;
                     XYToolTipGenerator generator
-                        = getToolTipGenerator(series, item);
+                            = getToolTipGenerator(series, item);
                     if (generator != null) {
                         tip = generator.generateToolTip(dataset, series, item);
                     }
@@ -644,7 +624,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -669,7 +649,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      * @throws CloneNotSupportedException if the renderer cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

@@ -78,79 +78,73 @@ public enum RectangleEdge {
      * @return The string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return this.name;
     }
 
     /**
      * Returns <code>true</code> if the edge is <code>TOP</code> or 
      * <code>BOTTOM</code>, and <code>false</code> otherwise.
-     * 
+     *
      * @param edge  the edge.
-     * 
+     *
      * @return A boolean.
      */
     public static boolean isTopOrBottom(final RectangleEdge edge) {
-        return (edge == RectangleEdge.TOP || edge == RectangleEdge.BOTTOM);    
+        return (edge == RectangleEdge.TOP || edge == RectangleEdge.BOTTOM);
     }
-    
+
     /**
      * Returns <code>true</code> if the edge is <code>LEFT</code> or 
      * <code>RIGHT</code>, and <code>false</code> otherwise.
-     * 
+     *
      * @param edge  the edge.
-     * 
+     *
      * @return A boolean.
      */
     public static boolean isLeftOrRight(final RectangleEdge edge) {
-        return (edge == RectangleEdge.LEFT || edge == RectangleEdge.RIGHT);    
+        return (edge == RectangleEdge.LEFT || edge == RectangleEdge.RIGHT);
     }
 
     /**
      * Returns the opposite edge.
-     * 
+     *
      * @param edge  an edge.
-     * 
+     *
      * @return The opposite edge.
      */
     public static RectangleEdge opposite(final RectangleEdge edge) {
         RectangleEdge result = null;
         if (edge == RectangleEdge.TOP) {
             result = RectangleEdge.BOTTOM;
-        }
-        else if (edge == RectangleEdge.BOTTOM) {
+        } else if (edge == RectangleEdge.BOTTOM) {
             result = RectangleEdge.TOP;
-        }
-        else if (edge == RectangleEdge.LEFT) {
+        } else if (edge == RectangleEdge.LEFT) {
             result = RectangleEdge.RIGHT;
-        }
-        else if (edge == RectangleEdge.RIGHT) {
+        } else if (edge == RectangleEdge.RIGHT) {
             result = RectangleEdge.LEFT;
         }
         return result;
     }
-    
+
     /**
      * Returns the x or y coordinate of the specified edge.
-     * 
+     *
      * @param rectangle  the rectangle.
      * @param edge  the edge.
-     * 
+     *
      * @return The coordinate.
      */
-    public static double coordinate(final Rectangle2D rectangle, 
+    public static double coordinate(final Rectangle2D rectangle,
                                     final RectangleEdge edge) {
         double result = 0.0;
         if (edge == RectangleEdge.TOP) {
             result = rectangle.getMinY();
-        }
-        else if (edge == RectangleEdge.BOTTOM) {
+        } else if (edge == RectangleEdge.BOTTOM) {
             result = rectangle.getMaxY();
-        }
-        else if (edge == RectangleEdge.LEFT) {
+        } else if (edge == RectangleEdge.LEFT) {
             result = rectangle.getMinX();
-        }
-        else if (edge == RectangleEdge.RIGHT) {
+        } else if (edge == RectangleEdge.RIGHT) {
             result = rectangle.getMaxX();
         }
         return result;

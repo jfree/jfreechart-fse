@@ -56,8 +56,8 @@ public enum Rotation {
 
     /** The name. */
     private String name;
-    
-    /** 
+
+    /**
      * The factor (-1.0 for <code>CLOCKWISE</code> and 1.0 for 
      * <code>ANTICLOCKWISE</code>). 
      */
@@ -80,14 +80,14 @@ public enum Rotation {
      * @return the string (never <code>null</code>).
      */
     @Override
-	public String toString() {
+    public String toString() {
         return this.name;
     }
 
     /**
      * Returns the rotation factor, which is -1.0 for <code>CLOCKWISE</code> 
      * and 1.0 for <code>ANTICLOCKWISE</code>.
-     * 
+     *
      * @return the rotation factor.
      */
     public double getFactor() {

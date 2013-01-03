@@ -52,29 +52,15 @@ import org.jfree.data.Range;
 import org.jfree.data.statistics.DefaultStatisticalCategoryDataset;
 import org.junit.Test;
 
-import java.awt.Color;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link StatisticalLineAndShapeRenderer} class.
  */
-public class StatisticalLineAndShapeRendererTest  {
-
-
-
+public class StatisticalLineAndShapeRendererTest {
 
 
     /**
@@ -83,9 +69,9 @@ public class StatisticalLineAndShapeRendererTest  {
     @Test
     public void testEquals() {
         StatisticalLineAndShapeRenderer r1
-            = new StatisticalLineAndShapeRenderer();
+                = new StatisticalLineAndShapeRenderer();
         StatisticalLineAndShapeRenderer r2
-            = new StatisticalLineAndShapeRenderer();
+                = new StatisticalLineAndShapeRenderer();
         assertEquals(r1, r2);
         assertEquals(r2, r1);
 
@@ -101,9 +87,9 @@ public class StatisticalLineAndShapeRendererTest  {
     @Test
     public void testHashcode() {
         StatisticalLineAndShapeRenderer r1
-            = new StatisticalLineAndShapeRenderer();
+                = new StatisticalLineAndShapeRenderer();
         StatisticalLineAndShapeRenderer r2
-            = new StatisticalLineAndShapeRenderer();
+                = new StatisticalLineAndShapeRenderer();
         assertEquals(r1, r2);
         int h1 = r1.hashCode();
         int h2 = r2.hashCode();
@@ -140,17 +126,17 @@ public class StatisticalLineAndShapeRendererTest  {
     public void testSerialization() throws IOException, ClassNotFoundException {
 
         StatisticalLineAndShapeRenderer r1
-            = new StatisticalLineAndShapeRenderer();
+                = new StatisticalLineAndShapeRenderer();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(r1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(r1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         StatisticalLineAndShapeRenderer r2 = (StatisticalLineAndShapeRenderer) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(r1, r2);
 
@@ -162,16 +148,17 @@ public class StatisticalLineAndShapeRendererTest  {
      */
     @Test
     public void testDrawWithNullInfo() {
-            DefaultStatisticalCategoryDataset dataset
+        DefaultStatisticalCategoryDataset dataset
                 = new DefaultStatisticalCategoryDataset();
-            dataset.add(1.0, 2.0, "S1", "C1");
-            dataset.add(3.0, 4.0, "S1", "C2");
-            CategoryPlot plot = new CategoryPlot(dataset,
-                    new CategoryAxis("Category"), new NumberAxis("Value"),
-                    new StatisticalLineAndShapeRenderer());
-            JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+        dataset.add(1.0, 2.0, "S1", "C1");
+        dataset.add(3.0, 4.0, "S1", "C2");
+        CategoryPlot plot = new CategoryPlot(dataset,
+                new CategoryAxis("Category"), new NumberAxis("Value"),
+                new StatisticalLineAndShapeRenderer());
+        JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */
+        chart.createBufferedImage(300, 200,
+                null);
     }
 
     /**
@@ -180,7 +167,7 @@ public class StatisticalLineAndShapeRendererTest  {
     @Test
     public void test1562759() {
         StatisticalLineAndShapeRenderer r
-            = new StatisticalLineAndShapeRenderer(true, false);
+                = new StatisticalLineAndShapeRenderer(true, false);
         assertTrue(r.getBaseLinesVisible());
         assertFalse(r.getBaseShapesVisible());
 

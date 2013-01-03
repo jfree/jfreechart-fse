@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------
@@ -58,11 +58,10 @@
 
 package org.jfree.chart.text;
 
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Shape;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ObjectUtilities;
+
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 import java.awt.font.TextLayout;
@@ -70,9 +69,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.text.AttributedString;
 import java.text.BreakIterator;
-
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * Some utility methods for working with text.
@@ -95,9 +91,9 @@ public class TextUtilities {
 
         final boolean isJava14 = ObjectUtilities.isJDK14();
 
-        useDrawRotatedStringWorkaround = (isJava14 == false);
+        useDrawRotatedStringWorkaround = !isJava14;
 
-        useFontMetricsGetStringBounds = (isJava14 == true);
+        useFontMetricsGetStringBounds = isJava14;
 
 
     }
@@ -125,7 +121,7 @@ public class TextUtilities {
         }
         final TextBlock result = new TextBlock();
         String input = text;
-        boolean moreInputToProcess = (text.length() > 0);
+        boolean moreInputToProcess = !text.isEmpty();
         final int start = 0;
         while (moreInputToProcess) {
             final int index = input.indexOf("\n");
@@ -181,19 +177,22 @@ public class TextUtilities {
      * text into lines so that the <code>maxWidth</code> value is
      * respected.
      *
-     * @param text  the text.
-     * @param font  the font.
-     * @param paint  the paint.
-     * @param maxWidth  the maximum width for each line.
-     * @param maxLines  the maximum number of lines.
-     * @param measurer  the text measurer.
+     * @param input    the text.
+     * @param font     the font.
+     * @param paint    the paint.
+     * @param maxWidth the maximum width for each line.
+     * @param maxLines the maximum number of lines.
+     * @param measurer the text measurer.
      *
      * @return A text block.
      */
-    public static TextBlock createTextBlock(final String text, final Font font,
+    public static TextBlock createTextBlock(final String input, final Font font,
             final Paint paint, final float maxWidth, final int maxLines,
             final TextMeasurer measurer) {
-
+        String text = input;
+        while (text.contains("\n\n")) {
+            text = text.replace("\n\n", "\n \n");
+        }
         final TextBlock result = new TextBlock();
         final BreakIterator iterator = BreakIterator.getLineInstance();
         iterator.setText(text);
@@ -273,13 +272,11 @@ public class TextUtilities {
                     return end;
                 }
             }
-            else {
+            // we found at least one word that fits ...
+            firstWord = false;
                 if (end > newline) {
                     return newline;
                 }
-            }
-            // we found at least one word that fits ...
-            firstWord = false;
             current = end;
         }
         return BreakIterator.DONE;
@@ -597,10 +594,9 @@ public class TextUtilities {
                 textAnchor);
         final float[] rotateAdj = deriveRotationAnchorOffsets(g2, text,
                 rotationAnchor);
-        final Shape result = calculateRotatedStringBounds(text, g2,
+        return calculateRotatedStringBounds(text, g2,
                 x + textAdj[0], y + textAdj[1], angle,
                 x + textAdj[0] + rotateAdj[0], y + textAdj[1] + rotateAdj[1]);
-        return result;
 
     }
 
@@ -817,8 +813,7 @@ public class TextUtilities {
         final Shape translatedBounds = translate.createTransformedShape(bounds);
         final AffineTransform rotate = AffineTransform.getRotateInstance(
                 angle, rotateX, rotateY);
-        final Shape result = rotate.createTransformedShape(translatedBounds);
-        return result;
+        return rotate.createTransformedShape(translatedBounds);
 
     }
 

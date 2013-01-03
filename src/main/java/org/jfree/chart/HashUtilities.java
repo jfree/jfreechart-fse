@@ -46,27 +46,25 @@
 
 package org.jfree.chart;
 
-import java.awt.GradientPaint;
-import java.awt.Paint;
-import java.awt.Stroke;
-
 import org.jfree.chart.util.BooleanList;
 import org.jfree.chart.util.PaintList;
 import org.jfree.chart.util.StrokeList;
 
+import java.awt.*;
+
 /**
  * Some utility methods for calculating hash codes.  
- * 
+ *
  * @since 1.0.3
  */
 public class HashUtilities {
-    
+
     /**
      * Returns a hash code for a <code>Paint</code> instance.  If 
      * <code>p</code> is <code>null</code>, this method returns zero.
-     * 
+     *
      * @param p  the paint (<code>null</code> permitted).
-     * 
+     *
      * @return The hash code.
      */
     public static int hashCodeForPaint(Paint p) {
@@ -82,8 +80,7 @@ public class HashUtilities {
             result = 37 * result + gp.getPoint1().hashCode();
             result = 37 * result + gp.getColor2().hashCode();
             result = 37 * result + gp.getPoint2().hashCode();
-        }
-        else {
+        } else {
             // we assume that all other Paint instances implement equals() and
             // hashCode()...of course that might not be true, but what can we
             // do about it?
@@ -91,17 +88,17 @@ public class HashUtilities {
         }
         return result;
     }
-    
+
     /**
      * Returns a hash code for a <code>double[]</code> instance.  If the array
      * is <code>null</code>, this method returns zero.
-     * 
+     *
      * @param a  the array (<code>null</code> permitted).
-     * 
+     *
      * @return The hash code.
      */
     public static int hashCodeForDoubleArray(double[] a) {
-        if (a == null) { 
+        if (a == null) {
             return 0;
         }
         int result = 193;
@@ -112,31 +109,31 @@ public class HashUtilities {
         }
         return result;
     }
-    
+
     /**
      * Returns a hash value based on a seed value and the value of a boolean
      * primitive.
-     * 
+     *
      * @param pre  the seed value.
      * @param b  the boolean value.
-     * 
+     *
      * @return A hash value.
-     * 
+     *
      * @since 1.0.7
      */
     public static int hashCode(int pre, boolean b) {
         return 37 * pre + (b ? 0 : 1);
     }
-    
+
     /**
      * Returns a hash value based on a seed value and the value of an int
      * primitive.
-     * 
+     *
      * @param pre  the seed value.
      * @param i  the int value.
-     * 
+     *
      * @return A hash value.
-     * 
+     *
      * @since 1.0.8
      */
     public static int hashCode(int pre, int i) {
@@ -146,27 +143,27 @@ public class HashUtilities {
     /**
      * Returns a hash value based on a seed value and the value of a double
      * primitive.
-     * 
+     *
      * @param pre  the seed value.
      * @param d  the double value.
-     * 
+     *
      * @return A hash value.
-     * 
+     *
      * @since 1.0.7
      */
     public static int hashCode(int pre, double d) {
         long l = Double.doubleToLongBits(d);
         return 37 * pre + (int) (l ^ (l >>> 32));
     }
-    
+
     /**
      * Returns a hash value based on a seed value and a paint instance.
-     * 
+     *
      * @param pre  the seed value.
      * @param p  the paint (<code>null</code> permitted).
-     * 
+     *
      * @return A hash value.
-     * 
+     *
      * @since 1.0.7
      */
     public static int hashCode(int pre, Paint p) {
@@ -175,12 +172,12 @@ public class HashUtilities {
 
     /**
      * Returns a hash value based on a seed value and a stroke instance.
-     * 
+     *
      * @param pre  the seed value.
      * @param s  the stroke (<code>null</code> permitted).
-     * 
+     *
      * @return A hash value.
-     * 
+     *
      * @since 1.0.7
      */
     public static int hashCode(int pre, Stroke s) {
@@ -190,12 +187,12 @@ public class HashUtilities {
 
     /**
      * Returns a hash value based on a seed value and a string instance.
-     * 
+     *
      * @param pre  the seed value.
      * @param s  the string (<code>null</code> permitted).
-     * 
+     *
      * @return A hash value.
-     * 
+     *
      * @since 1.0.7
      */
     public static int hashCode(int pre, String s) {
@@ -206,12 +203,12 @@ public class HashUtilities {
     /**
      * Returns a hash value based on a seed value and a <code>Comparable</code>
      * instance.
-     * 
+     *
      * @param pre  the seed value.
      * @param c  the comparable (<code>null</code> permitted).
-     * 
+     *
      * @return A hash value.
-     * 
+     *
      * @since 1.0.7
      */
     public static int hashCode(int pre, Comparable c) {
@@ -222,30 +219,30 @@ public class HashUtilities {
     /**
      * Returns a hash value based on a seed value and an <code>Object</code>
      * instance.
-     * 
+     *
      * @param pre  the seed value.
      * @param obj  the object (<code>null</code> permitted).
-     * 
+     *
      * @return A hash value.
-     * 
+     *
      * @since 1.0.8
      */
     public static int hashCode(int pre, Object obj) {
         int h = (obj != null ? obj.hashCode() : 0);
         return 37 * pre + h;
     }
-    
+
     /**
      * Computes a hash code for a {@link BooleanList}.  In the latest version
      * of JCommon, the {@link BooleanList} class should implement the hashCode()
      * method correctly, but we compute it here anyway so that we can work with 
      * older versions of JCommon (back to 1.0.0).
-     * 
+     *
      * @param pre  the seed value.
      * @param list  the list (<code>null</code> permitted).
-     * 
+     *
      * @return The hash code.
-     * 
+     *
      * @since 1.0.9
      */
     public static int hashCode(int pre, BooleanList list) {
@@ -255,16 +252,16 @@ public class HashUtilities {
         int result = 127;
         int size = list.size();
         result = HashUtilities.hashCode(result, size);
-        
+
         // for efficiency, we just use the first, last and middle items to
         // compute a hashCode...
         if (size > 0) {
             result = HashUtilities.hashCode(result, list.getBoolean(0));
             if (size > 1) {
-                result = HashUtilities.hashCode(result, 
+                result = HashUtilities.hashCode(result,
                         list.getBoolean(size - 1));
                 if (size > 2) {
-                    result = HashUtilities.hashCode(result, 
+                    result = HashUtilities.hashCode(result,
                             list.getBoolean(size / 2));
                 }
             }
@@ -277,12 +274,12 @@ public class HashUtilities {
      * of JCommon, the {@link PaintList} class should implement the hashCode()
      * method correctly, but we compute it here anyway so that we can work with 
      * older versions of JCommon (back to 1.0.0).
-     * 
+     *
      * @param pre  the seed value.
      * @param list  the list (<code>null</code> permitted).
-     * 
+     *
      * @return The hash code.
-     * 
+     *
      * @since 1.0.9
      */
     public static int hashCode(int pre, PaintList list) {
@@ -292,16 +289,16 @@ public class HashUtilities {
         int result = 127;
         int size = list.size();
         result = HashUtilities.hashCode(result, size);
-        
+
         // for efficiency, we just use the first, last and middle items to
         // compute a hashCode...
         if (size > 0) {
             result = HashUtilities.hashCode(result, list.getPaint(0));
             if (size > 1) {
-                result = HashUtilities.hashCode(result, 
+                result = HashUtilities.hashCode(result,
                         list.getPaint(size - 1));
                 if (size > 2) {
-                    result = HashUtilities.hashCode(result, 
+                    result = HashUtilities.hashCode(result,
                             list.getPaint(size / 2));
                 }
             }
@@ -314,12 +311,12 @@ public class HashUtilities {
      * of JCommon, the {@link StrokeList} class should implement the hashCode()
      * method correctly, but we compute it here anyway so that we can work with 
      * older versions of JCommon (back to 1.0.0).
-     * 
+     *
      * @param pre  the seed value.
      * @param list  the list (<code>null</code> permitted).
-     * 
+     *
      * @return The hash code.
-     * 
+     *
      * @since 1.0.9
      */
     public static int hashCode(int pre, StrokeList list) {
@@ -329,16 +326,16 @@ public class HashUtilities {
         int result = 127;
         int size = list.size();
         result = HashUtilities.hashCode(result, size);
-        
+
         // for efficiency, we just use the first, last and middle items to
         // compute a hashCode...
         if (size > 0) {
             result = HashUtilities.hashCode(result, list.getStroke(0));
             if (size > 1) {
-                result = HashUtilities.hashCode(result, 
+                result = HashUtilities.hashCode(result,
                         list.getStroke(size - 1));
                 if (size > 2) {
-                    result = HashUtilities.hashCode(result, 
+                    result = HashUtilities.hashCode(result,
                             list.getStroke(size / 2));
                 }
             }

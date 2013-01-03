@@ -43,31 +43,16 @@ package org.jfree.chart.plot.dial;
 
 import org.junit.Test;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-
+import static org.junit.Assert.*;
 
 
 /**
  * Tests for the {@link DialPointer} class.
  */
-public class DialPointerTest  {
-
-
-
+public class DialPointerTest {
 
 
     /**
@@ -172,15 +157,15 @@ public class DialPointerTest  {
         // test a default instance
         DialPointer i1 = new DialPointer.Pin(1);
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(i1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(i1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         DialPointer i2 = (DialPointer) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(i1, i2);
 
@@ -195,15 +180,15 @@ public class DialPointerTest  {
         // test a default instance
         DialPointer i1 = new DialPointer.Pointer(1);
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(i1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(i1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         DialPointer i2 = (DialPointer) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(i1, i2);
 

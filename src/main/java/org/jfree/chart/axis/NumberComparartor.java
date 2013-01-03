@@ -45,6 +45,6 @@ public class NumberComparartor implements Comparator<Number> {
         if (o2 == null) {
             return -1;
         }
-        return ((Double)o1.doubleValue()).compareTo(o2.doubleValue());
+        return ((Double) o1.doubleValue()).compareTo(o2.doubleValue());
     }
 }

@@ -43,16 +43,12 @@
 
 package org.jfree.chart.urls;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.plot.MultiplePiePlot;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.general.PieDataset;
+
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * A custom URL generator for pie charts.
@@ -87,7 +83,7 @@ public class CustomPieURLGenerator implements PieURLGenerator,
      * @see #getURL(Comparable, int)
      */
     @Override
-	public String generateURL(PieDataset dataset, Comparable key,
+    public String generateURL(PieDataset dataset, Comparable key,
                               int pieIndex) {
         return getURL(key, pieIndex);
     }
@@ -164,7 +160,7 @@ public class CustomPieURLGenerator implements PieURLGenerator,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object o) {
+    public boolean equals(Object o) {
 
         if (o == this) {
             return true;
@@ -200,7 +196,7 @@ public class CustomPieURLGenerator implements PieURLGenerator,
      * @throws CloneNotSupportedException if cloning is not supported.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         CustomPieURLGenerator urlGen = (CustomPieURLGenerator) super.clone();
         urlGen.urls = new ArrayList<Map<Comparable, String>>();
 

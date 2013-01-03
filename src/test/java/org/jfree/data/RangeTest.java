@@ -44,27 +44,14 @@ package org.jfree.data;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link Range} class.
  */
-public class RangeTest  {
-
-
-
+public class RangeTest {
 
 
     /**
@@ -77,10 +64,10 @@ public class RangeTest  {
         assertEquals(r1.getUpperBound(), 1000.0, 0.0d);
 
         try {
-            /*Range r2 =*/ new Range(10.0, 0.0);
+            /*Range r2 =*/
+            new Range(10.0, 0.0);
             fail("Lower bound cannot be greater than the upper");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             // expected
         }
     }
@@ -208,8 +195,7 @@ public class RangeTest  {
         try {
             Range.expand(null, 0.1, 0.1);
             fail("Null value is accepted");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
         }
 
         // Lower > upper: mid point is used
@@ -260,8 +246,7 @@ public class RangeTest  {
         try {
             Range.shift(null, 0.1);
             fail("Null value is accepted");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
         }
     }
 
@@ -287,15 +272,13 @@ public class RangeTest  {
         try {
             Range.scale(null, 0.1);
             fail("Null value is accepted");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
         }
 
         try {
             Range.scale(r1, -0.5);
             fail("Negative factor accepted");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
         }
     }
 
@@ -307,15 +290,15 @@ public class RangeTest  {
 
         Range r1 = new Range(25.0, 133.42);
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(r1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(r1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
         Range r2 = (Range) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(r1, r2);
 

@@ -43,11 +43,11 @@ package org.jfree.chart.ui;
 
 /**
  * Represents a type of transform for a <code>GradientPaint</code>.
- * 
+ *
  * @author David Gilbert
  */
 public enum GradientPaintTransformType {
-    
+
     /** Vertical. */
     VERTICAL("GradientPaintTransformType.VERTICAL"),
 
@@ -59,7 +59,7 @@ public enum GradientPaintTransformType {
 
     /** Center/horizontal. */
     CENTER_HORIZONTAL("GradientPaintTransformType.CENTER_HORIZONTAL");
-        
+
     /** The name. */
     private String name;
 
@@ -78,9 +78,9 @@ public enum GradientPaintTransformType {
      * @return The string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return this.name;
     }
- 
+
 }
 

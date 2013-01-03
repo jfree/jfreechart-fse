@@ -45,14 +45,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 
-
 /**
  * Tests for the {@link StandardURLTagFragmentGenerator} class.
  */
-public class StandardURLTagFragmentGeneratorTest  {
-
-
-
+public class StandardURLTagFragmentGeneratorTest {
 
 
     /**

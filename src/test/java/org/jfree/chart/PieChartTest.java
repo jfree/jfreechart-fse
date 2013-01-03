@@ -55,20 +55,17 @@ import static org.junit.Assert.assertNull;
  * Tests for a pie chart.
  *
  */
-public class PieChartTest  {
+public class PieChartTest {
 
     /** A chart. */
     private JFreeChart pieChart;
-
-
-
 
 
     /**
      * Common test setup.
      */
     @Before
-	public void setUp() {
+    public void setUp() {
 
         this.pieChart = createPieChart();
 

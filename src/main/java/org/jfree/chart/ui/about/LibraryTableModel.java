@@ -46,12 +46,11 @@
 
 package org.jfree.chart.ui.about;
 
-import java.util.List;
-import java.util.ResourceBundle;
+import org.jfree.chart.util.ResourceBundleWrapper;
 
 import javax.swing.table.AbstractTableModel;
-
-import org.jfree.chart.util.ResourceBundleWrapper;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * A table model containing a list of libraries used in a project.
@@ -106,7 +105,7 @@ public class LibraryTableModel extends AbstractTableModel {
      * @return the number of rows.
      */
     @Override
-	public int getRowCount() {
+    public int getRowCount() {
         return this.libraries.length;
     }
 
@@ -117,7 +116,7 @@ public class LibraryTableModel extends AbstractTableModel {
      * @return the number of columns in the table model.
      */
     @Override
-	public int getColumnCount() {
+    public int getColumnCount() {
         return 4;
     }
 
@@ -129,23 +128,27 @@ public class LibraryTableModel extends AbstractTableModel {
      * @return the name of the specified column.
      */
     @Override
-	public String getColumnName(final int column) {
+    public String getColumnName(final int column) {
 
         String result = null;
 
         switch (column) {
 
-            case 0:  result = this.nameColumnLabel;
-                     break;
+            case 0:
+                result = this.nameColumnLabel;
+                break;
 
-            case 1:  result = this.versionColumnLabel;
-                     break;
+            case 1:
+                result = this.versionColumnLabel;
+                break;
 
-            case 2:  result = this.licenceColumnLabel;
-                     break;
+            case 2:
+                result = this.licenceColumnLabel;
+                break;
 
-            case 3:  result = this.infoColumnLabel;
-                     break;
+            case 3:
+                result = this.infoColumnLabel;
+                break;
 
         }
 
@@ -162,21 +165,18 @@ public class LibraryTableModel extends AbstractTableModel {
      * @return the value.
      */
     @Override
-	public Object getValueAt(final int row, final int column) {
+    public Object getValueAt(final int row, final int column) {
 
         Object result = null;
         final Library library = this.libraries[row];
 
         if (column == 0) {
             result = library.getName();
-        }
-        else if (column == 1) {
+        } else if (column == 1) {
             result = library.getVersion();
-        }
-        else if (column == 2) {
+        } else if (column == 2) {
             result = library.getLicenceName();
-        }
-        else if (column == 3) {
+        } else if (column == 3) {
             result = library.getInfo();
         }
         return result;
@@ -189,6 +189,6 @@ public class LibraryTableModel extends AbstractTableModel {
      * @return An array of libraries.
      */
     public Library[] getLibraries() {
-      return this.libraries.clone();
+        return this.libraries.clone();
     }
 }

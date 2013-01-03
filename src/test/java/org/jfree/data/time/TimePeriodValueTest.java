@@ -42,20 +42,14 @@ package org.jfree.data.time;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for the {@link TimePeriodValue} class.
  */
-public class TimePeriodValueTest  {
+public class TimePeriodValueTest {
 
 
     /**
@@ -86,16 +80,16 @@ public class TimePeriodValueTest  {
 
         TimePeriodValue tpv1 = new TimePeriodValue(new Day(30, 7, 2003), 55.75);
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(tpv1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(tpv1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-            );
+        );
         TimePeriodValue tpv2 = (TimePeriodValue) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(tpv1, tpv2);
 

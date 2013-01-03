@@ -85,27 +85,9 @@
 
 package org.jfree.chart.renderer.xy;
 
-import java.awt.BasicStroke;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.geom.Area;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.ui.GradientPaintTransformer;
-import org.jfree.chart.ui.StandardGradientPaintTransformer;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.XYSeriesLabelGenerator;
@@ -114,9 +96,22 @@ import org.jfree.chart.plot.CrosshairState;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.ui.GradientPaintTransformer;
+import org.jfree.chart.ui.StandardGradientPaintTransformer;
 import org.jfree.chart.urls.XYURLGenerator;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.data.xy.XYDataset;
+
+import java.awt.*;
+import java.awt.geom.Area;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * Area item renderer for an {@link XYPlot}.  This class can draw (a) shapes at
@@ -198,7 +193,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
     /**
      * A flag that can be set to specify that the fill paint should be used
      * to fill the area under the renderer.
-     * 
+     *
      * @since 1.0.14
      */
     private boolean useFillPaint;
@@ -417,8 +412,8 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      * @return A state object for use by the renderer.
      */
     @Override
-	public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
-            XYPlot plot, XYDataset data, PlotRenderingInfo info) {
+    public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
+                                          XYPlot plot, XYDataset data, PlotRenderingInfo info) {
         XYAreaRendererState state = new XYAreaRendererState(info);
 
         // in the rendering process, there is special handling for item
@@ -437,7 +432,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      * @return A legend item for the series.
      */
     @Override
-	public LegendItem getLegendItem(int datasetIndex, int series) {
+    public LegendItem getLegendItem(int datasetIndex, int series) {
         LegendItem result = null;
         XYPlot xyplot = getPlot();
         if (xyplot != null) {
@@ -492,10 +487,10 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2, XYItemRendererState state,
-            Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
-            ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
-            int series, int item, CrosshairState crosshairState, int pass) {
+    public void drawItem(Graphics2D g2, XYItemRendererState state,
+                         Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
+                         ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
+                         int series, int item, CrosshairState crosshairState, int pass) {
 
         if (!getItemVisible(series, item)) {
             return;
@@ -543,20 +538,19 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
         GeneralPath hotspot = new GeneralPath();
         if (plot.getOrientation() == PlotOrientation.HORIZONTAL) {
             moveTo(hotspot, transZero, ((transX0 + transX1) / 2.0));
-            lineTo(hotspot, ((transY0 + transY1) / 2.0), 
-                            ((transX0 + transX1) / 2.0));
+            lineTo(hotspot, ((transY0 + transY1) / 2.0),
+                    ((transX0 + transX1) / 2.0));
             lineTo(hotspot, transY1, transX1);
-            lineTo(hotspot, ((transY1 + transY2) / 2.0), 
-                            ((transX1 + transX2) / 2.0));
+            lineTo(hotspot, ((transY1 + transY2) / 2.0),
+                    ((transX1 + transX2) / 2.0));
             lineTo(hotspot, transZero, ((transX1 + transX2) / 2.0));
-        }
-        else {  // vertical orientation
+        } else {  // vertical orientation
             moveTo(hotspot, ((transX0 + transX1) / 2.0), transZero);
             lineTo(hotspot, ((transX0 + transX1) / 2.0),
-                            ((transY0 + transY1) / 2.0));
+                    ((transY0 + transY1) / 2.0));
             lineTo(hotspot, transX1, transY1);
             lineTo(hotspot, ((transX1 + transX2) / 2.0),
-                            ((transY1 + transY2) / 2.0));
+                    ((transY1 + transY2) / 2.0));
             lineTo(hotspot, ((transX1 + transX2) / 2.0), transZero);
         }
         hotspot.closePath();
@@ -568,8 +562,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
                     plot.getRangeAxisEdge());
             if (plot.getOrientation() == PlotOrientation.VERTICAL) {
                 moveTo(areaState.area, transX1, zero);
-            }
-            else if (plot.getOrientation() == PlotOrientation.HORIZONTAL) {
+            } else if (plot.getOrientation() == PlotOrientation.HORIZONTAL) {
                 moveTo(areaState.area, zero, transX1);
             }
         }
@@ -577,8 +570,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
         // Add each point to Area (x, y)
         if (plot.getOrientation() == PlotOrientation.VERTICAL) {
             lineTo(areaState.area, transX1, transY1);
-        }
-        else if (plot.getOrientation() == PlotOrientation.HORIZONTAL) {
+        } else if (plot.getOrientation() == PlotOrientation.HORIZONTAL) {
             lineTo(areaState.area, transY1, transX1);
         }
 
@@ -594,8 +586,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
             if (orientation == PlotOrientation.VERTICAL) {
                 shape = ShapeUtilities.createTranslatedShape(shape, transX1,
                         transY1);
-            }
-            else if (orientation == PlotOrientation.HORIZONTAL) {
+            } else if (orientation == PlotOrientation.HORIZONTAL) {
                 shape = ShapeUtilities.createTranslatedShape(shape, transY1,
                         transX1);
             }
@@ -606,8 +597,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
             if (item > 0) {
                 if (plot.getOrientation() == PlotOrientation.VERTICAL) {
                     areaState.line.setLine(transX0, transY0, transX1, transY1);
-                }
-                else if (plot.getOrientation() == PlotOrientation.HORIZONTAL) {
+                } else if (plot.getOrientation() == PlotOrientation.HORIZONTAL) {
                     areaState.line.setLine(transY0, transX0, transY1, transX1);
                 }
                 g2.draw(areaState.line);
@@ -622,8 +612,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
                 // Add the last point (x,0)
                 lineTo(areaState.area, transX1, transZero);
                 areaState.area.closePath();
-            }
-            else if (orientation == PlotOrientation.HORIZONTAL) {
+            } else if (orientation == PlotOrientation.HORIZONTAL) {
                 // Add the last point (x,0)
                 lineTo(areaState.area, transZero, transX1);
                 areaState.area.closePath();
@@ -693,7 +682,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         XYAreaRenderer clone = (XYAreaRenderer) super.clone();
         clone.legendArea = ShapeUtilities.clone(this.legendArea);
         return clone;
@@ -707,7 +696,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -745,7 +734,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = super.hashCode();
         result = HashUtilities.hashCode(result, this.plotArea);
         result = HashUtilities.hashCode(result, this.plotLines);

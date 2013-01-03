@@ -58,17 +58,9 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.annotations.CategoryLineAnnotation;
 import org.jfree.chart.annotations.CategoryTextAnnotation;
-import org.jfree.chart.axis.AxisLocation;
-import org.jfree.chart.axis.AxisSpace;
-import org.jfree.chart.axis.CategoryAnchor;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.*;
 import org.jfree.chart.event.MarkerChangeListener;
-import org.jfree.chart.renderer.category.AreaRenderer;
-import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.chart.renderer.category.CategoryItemRenderer;
-import org.jfree.chart.renderer.category.DefaultCategoryItemRenderer;
-import org.jfree.chart.renderer.category.LineAndShapeRenderer;
+import org.jfree.chart.renderer.category.*;
 import org.jfree.chart.ui.Layer;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.DefaultShadowGenerator;
@@ -78,38 +70,20 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.junit.Test;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
+import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link CategoryPlot} class.
  */
-public class CategoryPlotTest  {
-
-
-
+public class CategoryPlotTest {
 
 
     /**
@@ -630,15 +604,15 @@ public class CategoryPlotTest  {
                 renderer);
         p1.setOrientation(PlotOrientation.HORIZONTAL);
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(p1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(p1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            CategoryPlot p2 = (CategoryPlot) in.readObject();
-            in.close();
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        CategoryPlot p2 = (CategoryPlot) in.readObject();
+        in.close();
         assertEquals(p1, p2);
     }
 
@@ -674,7 +648,7 @@ public class CategoryPlotTest  {
     @Test
     public void testSerialization3() throws IOException, ClassNotFoundException {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        JFreeChart chart = ChartFactory.createBarChart("Test Chart", 
+        JFreeChart chart = ChartFactory.createBarChart("Test Chart",
                 "Category Axis", "Value Axis", dataset);
 
         // serialize and deserialize the chart....
@@ -700,7 +674,7 @@ public class CategoryPlotTest  {
     @Test
     public void testSerialization4() throws IOException, ClassNotFoundException {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        JFreeChart chart = ChartFactory.createBarChart("Test Chart", 
+        JFreeChart chart = ChartFactory.createBarChart("Test Chart",
                 "Category Axis", "Value Axis", dataset);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         plot.addRangeMarker(new ValueMarker(1.1), Layer.FOREGROUND);
@@ -765,7 +739,7 @@ public class CategoryPlotTest  {
         NumberAxis rangeAxisB = (NumberAxis) p2.getRangeAxis(1);
         DefaultCategoryDataset datasetB
                 = (DefaultCategoryDataset) p2.getDataset(1);
-        BarRenderer rendererB  = (BarRenderer) p2.getRenderer(1);
+        BarRenderer rendererB = (BarRenderer) p2.getRenderer(1);
         assertTrue(datasetA.hasListener(p2));
         assertTrue(domainAxisA.hasListener(p2));
         assertTrue(rangeAxisA.hasListener(p2));
@@ -849,7 +823,7 @@ public class CategoryPlotTest  {
                 dataset);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         plot.setRenderer(1, new LineAndShapeRenderer());
-        BufferedImage image = new BufferedImage(200 , 100,
+        BufferedImage image = new BufferedImage(200, 100,
                 BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = image.createGraphics();
         chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
@@ -875,8 +849,7 @@ public class CategoryPlotTest  {
         try {
             plot.getDomainAxisIndex(null);
             fail("IllegalArgumentException should have been thrown on null parameter");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'axis' argument.", e.getMessage());
         }
     }
@@ -900,8 +873,7 @@ public class CategoryPlotTest  {
         try {
             plot.getRangeAxisIndex(null);
             fail("IllegalArgumentException should have been thrown on null parameter");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'axis' argument.", e.getMessage());
         }
     }
@@ -942,8 +914,7 @@ public class CategoryPlotTest  {
         try {
             plot.getDomainAxisForDataset(-1);
             fail("IllegalArgumentException should have been thrown on null parameter");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Negative 'index'.", e.getMessage());
         }
 
@@ -981,8 +952,7 @@ public class CategoryPlotTest  {
         try {
             plot.getRangeAxisForDataset(-1);
             fail("IllegalArgumentException should have been thrown on negative parameter");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Negative 'index'.", e.getMessage());
         }
 

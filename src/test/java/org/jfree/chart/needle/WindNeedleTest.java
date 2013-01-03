@@ -42,27 +42,15 @@ package org.jfree.chart.needle;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-
+import static org.junit.Assert.*;
 
 
 /**
  * Tests for the {@link WindNeedle} class.
  */
-public class WindNeedleTest  {
-
-
-
+public class WindNeedleTest {
 
 
     /**
@@ -70,10 +58,10 @@ public class WindNeedleTest  {
      */
     @Test
     public void testEquals() {
-       WindNeedle n1 = new WindNeedle();
-       WindNeedle n2 = new WindNeedle();
-       assertEquals(n1, n2);
-       assertEquals(n2, n1);
+        WindNeedle n1 = new WindNeedle();
+        WindNeedle n2 = new WindNeedle();
+        assertEquals(n1, n2);
+        assertEquals(n2, n1);
     }
 
     /**
@@ -95,15 +83,15 @@ public class WindNeedleTest  {
     public void testSerialization() throws IOException, ClassNotFoundException {
         WindNeedle n1 = new WindNeedle();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(n1);
-            out.close();
-            ObjectInput in = new ObjectInputStream(
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(n1);
+        out.close();
+        ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-            );
+        );
         WindNeedle n2 = (WindNeedle) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(n1, n2);
     }

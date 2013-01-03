@@ -42,15 +42,14 @@
 
 package org.jfree.chart.plot.dial;
 
+import org.jfree.chart.HashUtilities;
+
+import javax.swing.event.EventListenerList;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Arrays;
 import java.util.EventListener;
 import java.util.List;
-
-import javax.swing.event.EventListenerList;
-
-import org.jfree.chart.HashUtilities;
 
 /**
  * A base class that can be used to implement a {@link DialLayer}.  It includes
@@ -83,7 +82,7 @@ public abstract class AbstractDialLayer implements DialLayer {
      * @see #setVisible(boolean)
      */
     @Override
-	public boolean isVisible() {
+    public boolean isVisible() {
         return this.visible;
     }
 
@@ -109,7 +108,7 @@ public abstract class AbstractDialLayer implements DialLayer {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -126,7 +125,7 @@ public abstract class AbstractDialLayer implements DialLayer {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 23;
         result = HashUtilities.hashCode(result, this.visible);
         return result;
@@ -141,7 +140,7 @@ public abstract class AbstractDialLayer implements DialLayer {
      *     instance.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         AbstractDialLayer clone = (AbstractDialLayer) super.clone();
         // we don't clone the listeners
         clone.listenerList = new EventListenerList();
@@ -156,7 +155,7 @@ public abstract class AbstractDialLayer implements DialLayer {
      * @see #removeChangeListener(DialLayerChangeListener)
      */
     @Override
-	public void addChangeListener(DialLayerChangeListener listener) {
+    public void addChangeListener(DialLayerChangeListener listener) {
         this.listenerList.add(DialLayerChangeListener.class, listener);
     }
 
@@ -168,7 +167,7 @@ public abstract class AbstractDialLayer implements DialLayer {
      * @see #addChangeListener(DialLayerChangeListener)
      */
     @Override
-	public void removeChangeListener(DialLayerChangeListener listener) {
+    public void removeChangeListener(DialLayerChangeListener listener) {
         this.listenerList.remove(DialLayerChangeListener.class, listener);
     }
 
@@ -182,7 +181,7 @@ public abstract class AbstractDialLayer implements DialLayer {
      * @return A boolean.
      */
     @Override
-	public boolean hasListener(EventListener listener) {
+    public boolean hasListener(EventListener listener) {
         List<Object> list = Arrays.asList(this.listenerList.getListenerList());
         return list.contains(listener);
     }
@@ -212,7 +211,7 @@ public abstract class AbstractDialLayer implements DialLayer {
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.listenerList = new EventListenerList();
     }

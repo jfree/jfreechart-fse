@@ -97,7 +97,7 @@ public class SimpleTimePeriod implements TimePeriod, Comparable<TimePeriod>, Ser
      * @return The start date/time (never <code>null</code>).
      */
     @Override
-	public Date getStart() {
+    public Date getStart() {
         return new Date(this.start);
     }
 
@@ -118,7 +118,7 @@ public class SimpleTimePeriod implements TimePeriod, Comparable<TimePeriod>, Ser
      * @return The end date/time (never <code>null</code>).
      */
     @Override
-	public Date getEnd() {
+    public Date getEnd() {
         return new Date(this.end);
     }
 
@@ -143,7 +143,7 @@ public class SimpleTimePeriod implements TimePeriod, Comparable<TimePeriod>, Ser
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -154,10 +154,7 @@ public class SimpleTimePeriod implements TimePeriod, Comparable<TimePeriod>, Ser
         if (!this.getStart().equals(that.getStart())) {
             return false;
         }
-        if (!this.getEnd().equals(that.getEnd())) {
-            return false;
-        }
-        return true;
+        return this.getEnd().equals(that.getEnd());
     }
 
     /**
@@ -172,7 +169,7 @@ public class SimpleTimePeriod implements TimePeriod, Comparable<TimePeriod>, Ser
      *                            {@link TimePeriod}.
      */
     @Override
-	public int compareTo(TimePeriod that) {
+    public int compareTo(TimePeriod that) {
         long t0 = getStart().getTime();
         long t1 = getEnd().getTime();
         long m0 = t0 + (t1 - t0) / 2L;
@@ -181,25 +178,19 @@ public class SimpleTimePeriod implements TimePeriod, Comparable<TimePeriod>, Ser
         long m1 = t2 + (t3 - t2) / 2L;
         if (m0 < m1) {
             return -1;
-        }
-        else if (m0 > m1) {
+        } else if (m0 > m1) {
             return 1;
-        }
-        else {
+        } else {
             if (t0 < t2) {
                 return -1;
-            }
-            else if (t0 > t2) {
+            } else if (t0 > t2) {
                 return 1;
-            }
-            else {
+            } else {
                 if (t1 < t3) {
                     return -1;
-                }
-                else if (t1 > t3) {
+                } else if (t1 > t3) {
                     return 1;
-                }
-                else {
+                } else {
                     return 0;
                 }
             }
@@ -216,7 +207,7 @@ public class SimpleTimePeriod implements TimePeriod, Comparable<TimePeriod>, Ser
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 17;
         result = 37 * result + (int) this.start;
         result = 37 * result + (int) this.end;

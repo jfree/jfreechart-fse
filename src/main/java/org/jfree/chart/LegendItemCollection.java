@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -41,16 +41,16 @@
  *               Serializable (DG);
  * 23-Apr-2008 : Fixed clone() method (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
- *
+ * 
  */
 
 package org.jfree.chart;
 
+import org.jfree.chart.util.ObjectUtilities;
+
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
-
-import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * A collection of legend items.
@@ -134,10 +134,7 @@ public class LegendItemCollection implements Cloneable, Serializable, Iterable<L
             return false;
         }
         LegendItemCollection that = (LegendItemCollection) obj;
-        if (!this.items.equals(that.items)) {
-            return false;
-        }
-        return true;
+        return this.items.equals(that.items);
     }
 
     /**
@@ -151,7 +148,7 @@ public class LegendItemCollection implements Cloneable, Serializable, Iterable<L
     @Override
     public Object clone() throws CloneNotSupportedException {
         LegendItemCollection clone = (LegendItemCollection) super.clone();
-        clone.items = ObjectUtilities.deepClone(this.items);
+        clone.items = (List) ObjectUtilities.deepClone(this.items);
         return clone;
     }
 

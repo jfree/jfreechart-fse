@@ -48,21 +48,16 @@
 
 package org.jfree.chart.axis;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Composite;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
+import org.jfree.chart.plot.IntervalMarker;
+import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.util.ObjectUtilities;
+
+import java.awt.*;
 import java.awt.font.LineMetrics;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.List;
-
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.plot.IntervalMarker;
-import org.jfree.chart.text.TextUtilities;
 
 /**
  * A band that can be added to a number axis to display regions.
@@ -137,10 +132,10 @@ public class MarkerAxisBand implements Serializable {
         double result = 0.0;
         if (this.markers.size() > 0) {
             LineMetrics metrics = this.font.getLineMetrics(
-                "123g", g2.getFontRenderContext()
+                    "123g", g2.getFontRenderContext()
             );
             result = this.topOuterGap + this.topInnerGap + metrics.getHeight()
-                     + this.bottomInnerGap + this.bottomOuterGap;
+                    + this.bottomInnerGap + this.bottomOuterGap;
         }
         return result;
 
@@ -165,10 +160,10 @@ public class MarkerAxisBand implements Serializable {
             x = x + (bounds.getWidth() - r.getWidth()) / 2;
         }
         LineMetrics metrics = font.getLineMetrics(
-            text, g2.getFontRenderContext()
+                text, g2.getFontRenderContext()
         );
         g2.drawString(
-            text, (float) x, (float) (bounds.getMaxY()
+                text, (float) x, (float) (bounds.getMaxY()
                 - this.bottomInnerGap - metrics.getDescent())
         );
     }
@@ -229,7 +224,7 @@ public class MarkerAxisBand implements Serializable {
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -264,7 +259,7 @@ public class MarkerAxisBand implements Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 37;
         result = 19 * result + this.font.hashCode();
         result = 19 * result + this.markers.hashCode();

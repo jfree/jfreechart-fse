@@ -60,20 +60,11 @@
 
 package org.jfree.chart.util;
 
-import java.awt.Graphics2D;
-import java.awt.Polygon;
-import java.awt.Shape;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Arc2D;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.PathIterator;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.util.Arrays;
-
 import org.jfree.chart.ui.RectangleAnchor;
+
+import java.awt.*;
+import java.awt.geom.*;
+import java.util.Arrays;
 
 /**
  * Utility methods for {@link Shape} objects.
@@ -105,8 +96,7 @@ public class ShapeUtilities {
         if (shape instanceof Cloneable) {
             try {
                 return ObjectUtilities.clone(shape);
-            }
-            catch (CloneNotSupportedException cnse) {
+            } catch (CloneNotSupportedException cnse) {
                 //this shouldn't be thrown if object is cloneable
             }
         }
@@ -129,20 +119,15 @@ public class ShapeUtilities {
     public static boolean equal(final Shape s1, final Shape s2) {
         if (s1 instanceof Line2D && s2 instanceof Line2D) {
             return equal((Line2D) s1, (Line2D) s2);
-        }
-        else if (s1 instanceof Ellipse2D && s2 instanceof Ellipse2D) {
+        } else if (s1 instanceof Ellipse2D && s2 instanceof Ellipse2D) {
             return equal((Ellipse2D) s1, (Ellipse2D) s2);
-        }
-        else if (s1 instanceof Arc2D && s2 instanceof Arc2D) {
+        } else if (s1 instanceof Arc2D && s2 instanceof Arc2D) {
             return equal((Arc2D) s1, (Arc2D) s2);
-        }
-        else if (s1 instanceof Polygon && s2 instanceof Polygon) {
+        } else if (s1 instanceof Polygon && s2 instanceof Polygon) {
             return equal((Polygon) s1, (Polygon) s2);
-        }
-        else if (s1 instanceof GeneralPath && s2 instanceof GeneralPath) {
+        } else if (s1 instanceof GeneralPath && s2 instanceof GeneralPath) {
             return equal((GeneralPath) s1, (GeneralPath) s2);
-        }
-        else {
+        } else {
             // this will handle Rectangle2D...
             return ObjectUtilities.equal(s1, s2);
         }
@@ -519,8 +504,7 @@ public class ShapeUtilities {
             result.lineTo(x2 + dx, y2 - dy);
             result.lineTo(x2 - dx, y2 + dy);
             result.closePath();
-        }
-        else {
+        } else {
             // special case, vertical line
             result.moveTo(x1 - width / 2.0f, y1);
             result.lineTo(x1 + width / 2.0f, y1);
@@ -588,18 +572,18 @@ public class ShapeUtilities {
      *
      * @return A boolean.
      */
-    public static boolean intersects (final Rectangle2D rect1,
-                                      final Rectangle2D rect2) {
+    public static boolean intersects(final Rectangle2D rect1,
+                                     final Rectangle2D rect2) {
 
-      final double x0 = rect1.getX();
-      final double y0 = rect1.getY();
+        final double x0 = rect1.getX();
+        final double y0 = rect1.getY();
 
-      final double x = rect2.getX();
-      final double width = rect2.getWidth();
-      final double y = rect2.getY();
-      final double height = rect2.getHeight();
-      return (x + width >= x0 && y + height >= y0 && x <= x0 + rect1.getWidth()
-              && y <= y0 + rect1.getHeight());
+        final double x = rect2.getX();
+        final double width = rect2.getWidth();
+        final double y = rect2.getY();
+        final double height = rect2.getHeight();
+        return (x + width >= x0 && y + height >= y0 && x <= x0 + rect1.getWidth()
+                && y <= y0 + rect1.getHeight());
     }
 
 }

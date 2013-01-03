@@ -111,11 +111,17 @@
 
 package org.jfree.chart.axis;
 
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
-import java.awt.Polygon;
-import java.awt.Shape;
+import org.jfree.chart.event.AxisChangeEvent;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.SerialUtilities;
+import org.jfree.data.Range;
+
+import java.awt.*;
 import java.awt.font.LineMetrics;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
@@ -125,16 +131,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
-
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.event.AxisChangeEvent;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.data.Range;
 
 /**
  * The base class for axes that display value data, where values are measured
@@ -535,16 +531,13 @@ public abstract class ValueAxis extends Axis
         if (edge == RectangleEdge.TOP) {
             axisLine = new Line2D.Double(dataArea.getX(), cursor,
                     dataArea.getMaxX(), cursor);
-        }
-        else if (edge == RectangleEdge.BOTTOM) {
+        } else if (edge == RectangleEdge.BOTTOM) {
             axisLine = new Line2D.Double(dataArea.getX(), cursor,
                     dataArea.getMaxX(), cursor);
-        }
-        else if (edge == RectangleEdge.LEFT) {
+        } else if (edge == RectangleEdge.LEFT) {
             axisLine = new Line2D.Double(cursor, dataArea.getY(), cursor,
                     dataArea.getMaxY());
-        }
-        else if (edge == RectangleEdge.RIGHT) {
+        } else if (edge == RectangleEdge.RIGHT) {
             axisLine = new Line2D.Double(cursor, dataArea.getY(), cursor,
                     dataArea.getMaxY());
         }
@@ -557,16 +550,14 @@ public abstract class ValueAxis extends Axis
         if (this.positiveArrowVisible) {
             if (this.inverted) {
                 drawDownOrLeft = true;
-            }
-            else {
+            } else {
                 drawUpOrRight = true;
             }
         }
         if (this.negativeArrowVisible) {
             if (this.inverted) {
                 drawUpOrRight = true;
-            }
-            else {
+            } else {
                 drawDownOrLeft = true;
             }
         }
@@ -578,8 +569,7 @@ public abstract class ValueAxis extends Axis
                 x = dataArea.getMaxX();
                 y = cursor;
                 arrow = this.rightArrow;
-            }
-            else if (edge == RectangleEdge.LEFT
+            } else if (edge == RectangleEdge.LEFT
                     || edge == RectangleEdge.RIGHT) {
                 x = cursor;
                 y = dataArea.getMinY();
@@ -602,8 +592,7 @@ public abstract class ValueAxis extends Axis
                 x = dataArea.getMinX();
                 y = cursor;
                 arrow = this.leftArrow;
-            }
-            else if (edge == RectangleEdge.LEFT
+            } else if (edge == RectangleEdge.LEFT
                     || edge == RectangleEdge.RIGHT) {
                 x = cursor;
                 y = dataArea.getMaxY();
@@ -640,16 +629,13 @@ public abstract class ValueAxis extends Axis
         if (edge == RectangleEdge.TOP) {
             result[0] = (float) valueToJava2D(tick.getValue(), dataArea, edge);
             result[1] = (float) (cursor - insets.getBottom() - 2.0);
-        }
-        else if (edge == RectangleEdge.BOTTOM) {
+        } else if (edge == RectangleEdge.BOTTOM) {
             result[0] = (float) valueToJava2D(tick.getValue(), dataArea, edge);
             result[1] = (float) (cursor + insets.getTop() + 2.0);
-        }
-        else if (edge == RectangleEdge.LEFT) {
+        } else if (edge == RectangleEdge.LEFT) {
             result[0] = (float) (cursor - insets.getLeft() - 2.0);
             result[1] = (float) valueToJava2D(tick.getValue(), dataArea, edge);
-        }
-        else if (edge == RectangleEdge.RIGHT) {
+        } else if (edge == RectangleEdge.RIGHT) {
             result[0] = (float) (cursor + insets.getRight() + 2.0);
             result[1] = (float) valueToJava2D(tick.getValue(), dataArea, edge);
         }
@@ -669,8 +655,8 @@ public abstract class ValueAxis extends Axis
      * @return The width or height used to draw the axis.
      */
     protected AxisState drawTickMarksAndLabels(Graphics2D g2,
-            double cursor, Rectangle2D plotArea, Rectangle2D dataArea,
-            RectangleEdge edge) {
+                                               double cursor, Rectangle2D plotArea, Rectangle2D dataArea,
+                                               RectangleEdge edge) {
 
         AxisState state = new AxisState(cursor);
 
@@ -729,18 +715,15 @@ public abstract class ValueAxis extends Axis
                 used += findMaximumTickLabelWidth(ticks, g2, plotArea,
                         isVerticalTickLabels());
                 state.cursorLeft(used);
-            }
-            else if (edge == RectangleEdge.RIGHT) {
+            } else if (edge == RectangleEdge.RIGHT) {
                 used = findMaximumTickLabelWidth(ticks, g2, plotArea,
                         isVerticalTickLabels());
                 state.cursorRight(used);
-            }
-            else if (edge == RectangleEdge.TOP) {
+            } else if (edge == RectangleEdge.TOP) {
                 used = findMaximumTickLabelHeight(ticks, g2, plotArea,
                         isVerticalTickLabels());
                 state.cursorUp(used);
-            }
-            else if (edge == RectangleEdge.BOTTOM) {
+            } else if (edge == RectangleEdge.BOTTOM) {
                 used = findMaximumTickLabelHeight(ticks, g2, plotArea,
                         isVerticalTickLabels());
                 state.cursorDown(used);
@@ -762,7 +745,7 @@ public abstract class ValueAxis extends Axis
      * @return The list of ticks.
      */
     public abstract List<ValueTick> refreshTicks(Graphics2D g2, AxisState state,
-                                                      Rectangle2D dataArea, RectangleEdge edge);
+                                                 Rectangle2D dataArea, RectangleEdge edge);
 
     /**
      * Returns the space required to draw the axis.
@@ -807,8 +790,7 @@ public abstract class ValueAxis extends Axis
             if (RectangleEdge.isTopOrBottom(edge)) {
                 tickLabelHeight = findMaximumTickLabelHeight(ticks, g2,
                         plotArea, isVerticalTickLabels());
-            }
-            else if (RectangleEdge.isLeftOrRight(edge)) {
+            } else if (RectangleEdge.isLeftOrRight(edge)) {
                 tickLabelWidth = findMaximumTickLabelWidth(ticks, g2, plotArea,
                         isVerticalTickLabels());
             }
@@ -821,8 +803,7 @@ public abstract class ValueAxis extends Axis
         if (RectangleEdge.isTopOrBottom(edge)) {
             labelHeight = labelEnclosure.getHeight();
             space.add(labelHeight + tickLabelHeight, edge);
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             labelWidth = labelEnclosure.getWidth();
             space.add(labelWidth + tickLabelWidth, edge);
         }
@@ -861,12 +842,11 @@ public abstract class ValueAxis extends Axis
                             + insets.getTop() + insets.getBottom();
                 }
             }
-        }
-        else {
+        } else {
             LineMetrics metrics = font.getLineMetrics("ABCxyz",
                     g2.getFontRenderContext());
             maxHeight = metrics.getHeight()
-                        + insets.getTop() + insets.getBottom();
+                    + insets.getTop() + insets.getBottom();
         }
         return maxHeight;
 
@@ -902,12 +882,11 @@ public abstract class ValueAxis extends Axis
                             + insets.getLeft() + insets.getRight();
                 }
             }
-        }
-        else {
+        } else {
             LineMetrics metrics = font.getLineMetrics("ABCxyz",
                     g2.getFontRenderContext());
             maxWidth = metrics.getHeight()
-                       + insets.getTop() + insets.getBottom();
+                    + insets.getTop() + insets.getBottom();
         }
         return maxWidth;
 
@@ -1028,7 +1007,7 @@ public abstract class ValueAxis extends Axis
     public void setAutoRangeMinimumSize(double size, boolean notify) {
         if (size <= 0.0) {
             throw new IllegalArgumentException(
-                "NumberAxis.setAutoRangeMinimumSize(double): must be > 0.0.");
+                    "NumberAxis.setAutoRangeMinimumSize(double): must be > 0.0.");
         }
         if (this.autoRangeMinimumSize != size) {
             this.autoRangeMinimumSize = size;
@@ -1187,8 +1166,7 @@ public abstract class ValueAxis extends Axis
     public void setLowerBound(double min) {
         if (this.range.getUpperBound() > min) {
             setRange(new Range(min, this.range.getUpperBound()));
-        }
-        else {
+        } else {
             setRange(new Range(min, min + 1.0));
         }
     }
@@ -1215,8 +1193,7 @@ public abstract class ValueAxis extends Axis
     public void setUpperBound(double max) {
         if (this.range.getLowerBound() < max) {
             setRange(new Range(this.range.getLowerBound(), max));
-        }
-        else {
+        } else {
             setRange(max - 1.0, max);
         }
     }
@@ -1553,8 +1530,7 @@ public abstract class ValueAxis extends Axis
             Range adjusted = new Range(anchorValue - halfLength,
                     anchorValue + halfLength);
             setRange(adjusted);
-        }
-        else {
+        } else {
             setAutoRange(true);
         }
     }
@@ -1581,8 +1557,7 @@ public abstract class ValueAxis extends Axis
             Range adjusted = new Range(anchorValue - left * percent,
                     anchorValue + right * percent);
             setRange(adjusted);
-        }
-        else {
+        } else {
             setAutoRange(true);
         }
     }
@@ -1599,9 +1574,8 @@ public abstract class ValueAxis extends Axis
         Range adjusted;
         if (isInverted()) {
             adjusted = new Range(start + (length * (1 - upperPercent)),
-                                 start + (length * (1 - lowerPercent)));
-        }
-        else {
+                    start + (length * (1 - lowerPercent)));
+        } else {
             adjusted = new Range(start + length * lowerPercent,
                     start + length * upperPercent);
         }

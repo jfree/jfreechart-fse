@@ -42,28 +42,14 @@ package org.jfree.data;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link DefaultKeyedValue} class.
  */
-public class DefaultKeyedValueTest  {
-
-
-
+public class DefaultKeyedValueTest {
 
 
     /**
@@ -76,11 +62,11 @@ public class DefaultKeyedValueTest  {
         assertEquals(1, v.getValue());
 
         // try null key
-       try {
-            /*v =*/ new DefaultKeyedValue(null, 1);
-           fail("IllegalArgumentException should have been thrown on null parameter");
-        }
-        catch (IllegalArgumentException e) {
+        try {
+            /*v =*/
+            new DefaultKeyedValue(null, 1);
+            fail("IllegalArgumentException should have been thrown on null parameter");
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
 

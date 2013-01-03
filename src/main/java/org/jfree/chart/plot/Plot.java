@@ -133,17 +133,31 @@
 
 package org.jfree.chart.plot;
 
-import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Composite;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.LegendItemSource;
+import org.jfree.chart.annotations.Annotation;
+import org.jfree.chart.axis.AxisLocation;
+import org.jfree.chart.entity.EntityCollection;
+import org.jfree.chart.entity.PlotEntity;
+import org.jfree.chart.event.*;
+import org.jfree.chart.text.G2TextMeasurer;
+import org.jfree.chart.text.TextBlock;
+import org.jfree.chart.text.TextBlockAnchor;
+import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.ui.Align;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.SerialUtilities;
+import org.jfree.data.general.DatasetChangeEvent;
+import org.jfree.data.general.DatasetChangeListener;
+import org.jfree.data.general.DatasetGroup;
+
+import javax.swing.event.EventListenerList;
+import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -151,39 +165,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
-import javax.swing.event.EventListenerList;
-
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItemCollection;
-import org.jfree.chart.LegendItemSource;
-import org.jfree.chart.annotations.Annotation;
-import org.jfree.chart.axis.AxisLocation;
-import org.jfree.chart.ui.Align;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.entity.EntityCollection;
-import org.jfree.chart.entity.PlotEntity;
-import org.jfree.chart.event.AnnotationChangeEvent;
-import org.jfree.chart.event.AnnotationChangeListener;
-import org.jfree.chart.event.AxisChangeEvent;
-import org.jfree.chart.event.AxisChangeListener;
-import org.jfree.chart.event.ChartChangeEventType;
-import org.jfree.chart.event.MarkerChangeEvent;
-import org.jfree.chart.event.MarkerChangeListener;
-import org.jfree.chart.event.PlotChangeEvent;
-import org.jfree.chart.event.PlotChangeListener;
-import org.jfree.chart.text.G2TextMeasurer;
-import org.jfree.chart.text.TextBlock;
-import org.jfree.chart.text.TextBlockAnchor;
-import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.data.general.DatasetChangeEvent;
-import org.jfree.data.general.DatasetChangeListener;
-import org.jfree.data.general.DatasetGroup;
 
 /**
  * The base class for all plots in JFreeChart.  The {@link JFreeChart} class
@@ -198,7 +179,7 @@ public abstract class Plot implements AxisChangeListener,
     private static final long serialVersionUID = -8831571430103671324L;
 
     /** Useful constant representing zero. */
-    public static final Number ZERO = 0;
+    public static final int ZERO = 0;
 
     /** The default insets. */
     public static final RectangleInsets DEFAULT_INSETS
@@ -571,8 +552,7 @@ public abstract class Plot implements AxisChangeListener,
                 this.backgroundPaint = null;
                 fireChangeEvent();
             }
-        }
-        else {
+        } else {
             if (this.backgroundPaint != null) {
                 if (this.backgroundPaint.equals(paint)) {
                     return;  // nothing to do
@@ -622,8 +602,7 @@ public abstract class Plot implements AxisChangeListener,
         Plot p = getParent();
         if (p != null) {
             result = p.getDrawingSupplier();
-        }
-        else {
+        } else {
             result = this.drawingSupplier;
         }
         return result;
@@ -816,8 +795,7 @@ public abstract class Plot implements AxisChangeListener,
                 this.outlineStroke = null;
                 fireChangeEvent();
             }
-        }
-        else {
+        } else {
             if (this.outlineStroke != null) {
                 if (this.outlineStroke.equals(stroke)) {
                     return;  // nothing to do
@@ -854,8 +832,7 @@ public abstract class Plot implements AxisChangeListener,
                 this.outlinePaint = null;
                 fireChangeEvent();
             }
-        }
-        else {
+        } else {
             if (this.outlinePaint != null) {
                 if (this.outlinePaint.equals(paint)) {
                     return;  // nothing to do
@@ -900,7 +877,7 @@ public abstract class Plot implements AxisChangeListener,
      * @return The legend items for the plot (possibly <code>null</code>).
      */
     @Override
-	public LegendItemCollection getLegendItems() {
+    public LegendItemCollection getLegendItems() {
         return null;
     }
 
@@ -1050,7 +1027,7 @@ public abstract class Plot implements AxisChangeListener,
      * @since 1.0.6
      */
     protected void fillBackground(Graphics2D g2, Rectangle2D area,
-            PlotOrientation orientation) {
+                                  PlotOrientation orientation) {
         if (orientation == null) {
             throw new IllegalArgumentException("Null 'orientation' argument.");
         }
@@ -1065,8 +1042,7 @@ public abstract class Plot implements AxisChangeListener,
                         (float) area.getMaxY(), gp.getColor1(),
                         (float) area.getCenterX(), (float) area.getMinY(),
                         gp.getColor2());
-            }
-            else if (orientation == PlotOrientation.HORIZONTAL) {
+            } else if (orientation == PlotOrientation.HORIZONTAL) {
                 p = new GradientPaint((float) area.getMinX(),
                         (float) area.getCenterY(), gp.getColor1(),
                         (float) area.getMaxX(), (float) area.getCenterY(),
@@ -1170,7 +1146,7 @@ public abstract class Plot implements AxisChangeListener,
      *  @since 1.0.13
      */
     protected void createAndAddEntity(Rectangle2D dataArea,
-            PlotRenderingInfo plotState, String toolTip, String urlText) {
+                                      PlotRenderingInfo plotState, String toolTip, String urlText) {
         if (plotState != null && plotState.getOwner() != null) {
             EntityCollection e = plotState.getOwner().getEntityCollection();
             if (e != null) {
@@ -1212,7 +1188,7 @@ public abstract class Plot implements AxisChangeListener,
      * @since 1.0.14
      */
     @Override
-	public void annotationChanged(AnnotationChangeEvent event) {
+    public void annotationChanged(AnnotationChangeEvent event) {
         fireChangeEvent();
     }
 
@@ -1222,7 +1198,7 @@ public abstract class Plot implements AxisChangeListener,
      * @param event  information about the event (not used here).
      */
     @Override
-	public void axisChanged(AxisChangeEvent event) {
+    public void axisChanged(AxisChangeEvent event) {
         fireChangeEvent();
     }
 
@@ -1235,7 +1211,7 @@ public abstract class Plot implements AxisChangeListener,
      * @param event  information about the event (not used here).
      */
     @Override
-	public void datasetChanged(DatasetChangeEvent event) {
+    public void datasetChanged(DatasetChangeEvent event) {
         PlotChangeEvent newEvent = new PlotChangeEvent(this);
         newEvent.setType(ChartChangeEventType.DATASET_UPDATED);
         notifyListeners(newEvent);
@@ -1250,7 +1226,7 @@ public abstract class Plot implements AxisChangeListener,
      * @since 1.0.3
      */
     @Override
-	public void markerChanged(MarkerChangeEvent event) {
+    public void markerChanged(MarkerChangeEvent event) {
         fireChangeEvent();
     }
 
@@ -1270,8 +1246,7 @@ public abstract class Plot implements AxisChangeListener,
         double result = x;
         if (edge == RectangleEdge.LEFT) {
             result = result + w1;
-        }
-        else if (edge == RectangleEdge.RIGHT) {
+        } else if (edge == RectangleEdge.RIGHT) {
             result = result + w2;
         }
         return result;
@@ -1294,8 +1269,7 @@ public abstract class Plot implements AxisChangeListener,
         double result = y;
         if (edge == RectangleEdge.TOP) {
             result = result + h1;
-        }
-        else if (edge == RectangleEdge.BOTTOM) {
+        } else if (edge == RectangleEdge.BOTTOM) {
             result = result + h2;
         }
         return result;
@@ -1310,7 +1284,7 @@ public abstract class Plot implements AxisChangeListener,
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -1322,7 +1296,7 @@ public abstract class Plot implements AxisChangeListener,
             return false;
         }
         if (!ObjectUtilities.equal(
-            this.noDataMessageFont, that.noDataMessageFont
+                this.noDataMessageFont, that.noDataMessageFont
         )) {
             return false;
         }
@@ -1379,17 +1353,17 @@ public abstract class Plot implements AxisChangeListener,
      *         support cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
 
         Plot clone = (Plot) super.clone();
         // private Plot parent <-- don't clone the parent plot, but take care
         // childs in combined plots instead
         if (this.datasetGroup != null) {
             clone.datasetGroup
-                = ObjectUtilities.clone(this.datasetGroup);
+                    = ObjectUtilities.clone(this.datasetGroup);
         }
         clone.drawingSupplier
-            = ObjectUtilities.clone(this.drawingSupplier);
+                = ObjectUtilities.clone(this.drawingSupplier);
         clone.listenerList = new EventListenerList();
         return clone;
 
@@ -1420,7 +1394,7 @@ public abstract class Plot implements AxisChangeListener,
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.noDataMessagePaint = SerialUtilities.readPaint(stream);
         this.outlineStroke = SerialUtilities.readStroke(stream);
@@ -1455,32 +1429,25 @@ public abstract class Plot implements AxisChangeListener,
         if (location == AxisLocation.TOP_OR_RIGHT) {
             if (orientation == PlotOrientation.HORIZONTAL) {
                 result = RectangleEdge.RIGHT;
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 result = RectangleEdge.TOP;
             }
-        }
-        else if (location == AxisLocation.TOP_OR_LEFT) {
+        } else if (location == AxisLocation.TOP_OR_LEFT) {
             if (orientation == PlotOrientation.HORIZONTAL) {
                 result = RectangleEdge.LEFT;
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 result = RectangleEdge.TOP;
             }
-        }
-        else if (location == AxisLocation.BOTTOM_OR_RIGHT) {
+        } else if (location == AxisLocation.BOTTOM_OR_RIGHT) {
             if (orientation == PlotOrientation.HORIZONTAL) {
                 result = RectangleEdge.RIGHT;
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 result = RectangleEdge.BOTTOM;
             }
-        }
-        else if (location == AxisLocation.BOTTOM_OR_LEFT) {
+        } else if (location == AxisLocation.BOTTOM_OR_LEFT) {
             if (orientation == PlotOrientation.HORIZONTAL) {
                 result = RectangleEdge.LEFT;
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 result = RectangleEdge.BOTTOM;
             }
         }
@@ -1515,32 +1482,25 @@ public abstract class Plot implements AxisChangeListener,
         if (location == AxisLocation.TOP_OR_RIGHT) {
             if (orientation == PlotOrientation.HORIZONTAL) {
                 result = RectangleEdge.TOP;
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 result = RectangleEdge.RIGHT;
             }
-        }
-        else if (location == AxisLocation.TOP_OR_LEFT) {
+        } else if (location == AxisLocation.TOP_OR_LEFT) {
             if (orientation == PlotOrientation.HORIZONTAL) {
                 result = RectangleEdge.TOP;
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 result = RectangleEdge.LEFT;
             }
-        }
-        else if (location == AxisLocation.BOTTOM_OR_RIGHT) {
+        } else if (location == AxisLocation.BOTTOM_OR_RIGHT) {
             if (orientation == PlotOrientation.HORIZONTAL) {
                 result = RectangleEdge.BOTTOM;
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 result = RectangleEdge.RIGHT;
             }
-        }
-        else if (location == AxisLocation.BOTTOM_OR_LEFT) {
+        } else if (location == AxisLocation.BOTTOM_OR_LEFT) {
             if (orientation == PlotOrientation.HORIZONTAL) {
                 result = RectangleEdge.BOTTOM;
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 result = RectangleEdge.LEFT;
             }
         }

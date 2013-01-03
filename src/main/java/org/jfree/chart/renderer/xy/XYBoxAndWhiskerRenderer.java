@@ -79,11 +79,26 @@
 
 package org.jfree.chart.renderer.xy;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.entity.EntityCollection;
+import org.jfree.chart.event.RendererChangeEvent;
+import org.jfree.chart.labels.BoxAndWhiskerXYToolTipGenerator;
+import org.jfree.chart.plot.CrosshairState;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.Outlier;
+import org.jfree.chart.renderer.OutlierList;
+import org.jfree.chart.renderer.OutlierListCollection;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.SerialUtilities;
+import org.jfree.data.Range;
+import org.jfree.data.statistics.BoxAndWhiskerXYDataset;
+import org.jfree.data.xy.XYDataset;
+
+import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -95,25 +110,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.entity.EntityCollection;
-import org.jfree.chart.event.RendererChangeEvent;
-import org.jfree.chart.labels.BoxAndWhiskerXYToolTipGenerator;
-import org.jfree.chart.plot.CrosshairState;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.Outlier;
-import org.jfree.chart.renderer.OutlierList;
-import org.jfree.chart.renderer.OutlierListCollection;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.data.Range;
-import org.jfree.data.statistics.BoxAndWhiskerXYDataset;
-import org.jfree.data.xy.XYDataset;
 
 /**
  * A renderer that draws box-and-whisker items on an {@link XYPlot}.  This
@@ -288,7 +284,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
      * @see #findDomainBounds(XYDataset)
      */
     @Override
-	public Range findRangeBounds(XYDataset dataset) {
+    public Range findRangeBounds(XYDataset dataset) {
         return findRangeBounds(dataset, true);
     }
 
@@ -308,8 +304,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
         Paint p = getBoxPaint();
         if (p != null) {
             return p;
-        }
-        else {
+        } else {
             // TODO: could change this to itemFillPaint().  For backwards
             // compatibility, it might require a useFillPaint flag.
             return getItemPaint(series, item);
@@ -336,18 +331,17 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2, XYItemRendererState state,
-            Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
-            ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
-            int series, int item, CrosshairState crosshairState, int pass) {
+    public void drawItem(Graphics2D g2, XYItemRendererState state,
+                         Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
+                         ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
+                         int series, int item, CrosshairState crosshairState, int pass) {
 
         PlotOrientation orientation = plot.getOrientation();
 
         if (orientation == PlotOrientation.HORIZONTAL) {
             drawHorizontalItem(g2, dataArea, info, plot, domainAxis, rangeAxis,
                     dataset, series, item, crosshairState, pass);
-        }
-        else if (orientation == PlotOrientation.VERTICAL) {
+        } else if (orientation == PlotOrientation.VERTICAL) {
             drawVerticalItem(g2, dataArea, info, plot, domainAxis, rangeAxis,
                     dataset, series, item, crosshairState, pass);
         }
@@ -373,9 +367,9 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
      * @param pass  the pass index.
      */
     public void drawHorizontalItem(Graphics2D g2, Rectangle2D dataArea,
-            PlotRenderingInfo info, XYPlot plot, ValueAxis domainAxis,
-            ValueAxis rangeAxis, XYDataset dataset, int series,
-            int item, CrosshairState crosshairState, int pass) {
+                                   PlotRenderingInfo info, XYPlot plot, ValueAxis domainAxis,
+                                   ValueAxis rangeAxis, XYDataset dataset, int series,
+                                   int item, CrosshairState crosshairState, int pass) {
 
         // setup for collecting optional entity info...
         EntityCollection entities = null;
@@ -424,11 +418,9 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
             exactBoxWidth = dataAreaX / itemCount * 4.5 / 7;
             if (exactBoxWidth < 3) {
                 width = 3;
-            }
-            else if (exactBoxWidth > maxBoxWidth) {
+            } else if (exactBoxWidth > maxBoxWidth) {
                 width = maxBoxWidth;
-            }
-            else {
+            } else {
                 width = exactBoxWidth;
             }
         }
@@ -452,8 +444,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
         if (yyQ1Median < yyQ3Median) {
             box = new Rectangle2D.Double(yyQ1Median, xx - width / 2,
                     yyQ3Median - yyQ1Median, width);
-        }
-        else {
+        } else {
             box = new Rectangle2D.Double(yyQ3Median, xx - width / 2,
                     yyQ1Median - yyQ3Median, width);
         }
@@ -513,9 +504,9 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
      * @param pass  the pass index.
      */
     public void drawVerticalItem(Graphics2D g2, Rectangle2D dataArea,
-            PlotRenderingInfo info, XYPlot plot, ValueAxis domainAxis,
-            ValueAxis rangeAxis, XYDataset dataset, int series,
-            int item, CrosshairState crosshairState, int pass) {
+                                 PlotRenderingInfo info, XYPlot plot, ValueAxis domainAxis,
+                                 ValueAxis rangeAxis, XYDataset dataset, int series,
+                                 int item, CrosshairState crosshairState, int pass) {
 
         // setup for collecting optional entity info...
         EntityCollection entities = null;
@@ -524,7 +515,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
         }
 
         BoxAndWhiskerXYDataset boxAndWhiskerData
-            = (BoxAndWhiskerXYDataset) dataset;
+                = (BoxAndWhiskerXYDataset) dataset;
 
         Number x = boxAndWhiskerData.getX(series, item);
         Number yMax = boxAndWhiskerData.getMaxRegularValue(series, item);
@@ -571,11 +562,9 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
             exactBoxWidth = dataAreaX / itemCount * 4.5 / 7;
             if (exactBoxWidth < 3) {
                 width = 3;
-            }
-            else if (exactBoxWidth > maxBoxWidth) {
+            } else if (exactBoxWidth > maxBoxWidth) {
                 width = maxBoxWidth;
-            }
-            else {
+            } else {
                 width = exactBoxWidth;
             }
         }
@@ -599,8 +588,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
         if (yyQ1Median > yyQ3Median) {
             box = new Rectangle2D.Double(xx - width / 2, yyQ3Median, width,
                     yyQ1Median - yyQ3Median);
-        }
-        else {
+        } else {
             box = new Rectangle2D.Double(xx - width / 2, yyQ1Median, width,
                     yyQ3Median - yyQ1Median);
         }
@@ -746,7 +734,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
      * @param m  the max y value.
      */
     protected void drawHighFarOut(double aRadius, Graphics2D g2, double xx,
-            double m) {
+                                  double m) {
         double side = aRadius * 2;
         g2.draw(new Line2D.Double(xx - side, m + side, xx + side, m + side));
         g2.draw(new Line2D.Double(xx - side, m + side, xx, m));
@@ -762,7 +750,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
      * @param m  the min y value.
      */
     protected void drawLowFarOut(double aRadius, Graphics2D g2, double xx,
-            double m) {
+                                 double m) {
         double side = aRadius * 2;
         g2.draw(new Line2D.Double(xx - side, m - side, xx + side, m - side));
         g2.draw(new Line2D.Double(xx - side, m - side, xx, m));
@@ -777,7 +765,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -826,7 +814,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
 
         stream.defaultReadObject();
         this.boxPaint = SerialUtilities.readPaint(stream);
@@ -841,7 +829,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

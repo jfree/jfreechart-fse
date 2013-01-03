@@ -47,7 +47,7 @@ import java.util.List;
  * An extension of the {@link Values2D} interface where a unique key is
  * associated with the row and column indices.
  */
-public interface KeyedValues2D extends Values2D {
+public interface KeyedValues2D<RowKey extends Comparable, ColumnKey extends Comparable> extends Values2D {
 
     /**
      * Returns the row key for a given index.
@@ -58,7 +58,7 @@ public interface KeyedValues2D extends Values2D {
      *
      * @throws IndexOutOfBoundsException if <code>row</code> is out of bounds.
      */
-    public Comparable getRowKey(int row);
+    public RowKey getRowKey(int row);
 
     /**
      * Returns the row index for a given key.
@@ -67,14 +67,14 @@ public interface KeyedValues2D extends Values2D {
      *
      * @return The row index, or <code>-1</code> if the key is unrecognised.
      */
-    public int getRowIndex(Comparable key);
+    public int getRowIndex(RowKey key);
 
     /**
      * Returns the row keys.
      *
      * @return The keys.
      */
-    public List<Comparable> getRowKeys();
+    public List<RowKey> getRowKeys();
 
     /**
      * Returns the column key for a given index.
@@ -85,7 +85,7 @@ public interface KeyedValues2D extends Values2D {
      *
      * @throws IndexOutOfBoundsException if <code>row</code> is out of bounds.
      */
-    public Comparable getColumnKey(int column);
+    public ColumnKey getColumnKey(int column);
 
     /**
      * Returns the column index for a given key.
@@ -94,14 +94,14 @@ public interface KeyedValues2D extends Values2D {
      *
      * @return The column index, or <code>-1</code> if the key is unrecognised.
      */
-    public int getColumnIndex(Comparable key);
+    public int getColumnIndex(ColumnKey key);
 
     /**
      * Returns the column keys.
      *
      * @return The keys.
      */
-    public List<Comparable> getColumnKeys();
+    public List<ColumnKey> getColumnKeys();
 
     /**
      * Returns the value associated with the specified keys.
@@ -113,6 +113,6 @@ public interface KeyedValues2D extends Values2D {
      *
      * @throws UnknownKeyException if either key is not recognised.
      */
-    public Number getValue(Comparable rowKey, Comparable columnKey);
+    public Number getValue(RowKey rowKey, ColumnKey columnKey);
 
 }

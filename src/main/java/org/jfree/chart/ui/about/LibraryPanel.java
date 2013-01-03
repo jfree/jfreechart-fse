@@ -44,13 +44,10 @@
 
 package org.jfree.chart.ui.about;
 
-import java.awt.BorderLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 
 /**
  * A panel containing a table that lists the libraries used in a project.
@@ -88,7 +85,7 @@ public class LibraryPanel extends JPanel {
         this(getLibraries(projectInfo));
     }
 
-    private static List<Library> getLibraries (final ProjectInfo info) {
+    private static List<Library> getLibraries(final ProjectInfo info) {
         if (info == null) {
             return new ArrayList<Library>();
         }
@@ -97,8 +94,8 @@ public class LibraryPanel extends JPanel {
         return libs;
     }
 
-    private static void collectLibraries (final ProjectInfo info,
-                                          final List<Library> list) {
+    private static void collectLibraries(final ProjectInfo info,
+                                         final List<Library> list) {
         Library[] libs = info.getLibraries();
         for (final Library lib : libs) {
             if (!list.contains(lib)) {
@@ -128,7 +125,7 @@ public class LibraryPanel extends JPanel {
      * @return The table model.
      */
     public LibraryTableModel getModel() {
-      return this.model;
+        return this.model;
     }
 
     /**
@@ -137,6 +134,6 @@ public class LibraryPanel extends JPanel {
      * @return The table.
      */
     protected JTable getTable() {
-      return this.table;
+        return this.table;
     }
 }

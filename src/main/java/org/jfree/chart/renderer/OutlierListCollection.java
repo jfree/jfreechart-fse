@@ -121,6 +121,7 @@ public class OutlierListCollection implements Iterable<OutlierList> {
     public void setLowFarOut(boolean farOut) {
         this.lowFarOut = farOut;
     }
+
     /**
      * Appends the specified element as a new <code>OutlierList</code> to the
      * end of this list if it does not overlap an outlier in an existing list.
@@ -136,8 +137,7 @@ public class OutlierListCollection implements Iterable<OutlierList> {
 
         if (this.outlierLists.isEmpty()) {
             return this.outlierLists.add(new OutlierList(outlier));
-        }
-        else {
+        } else {
             boolean updated = false;
             for (OutlierList list : this.outlierLists) {
                 if (list.isOverlapped(outlier)) {

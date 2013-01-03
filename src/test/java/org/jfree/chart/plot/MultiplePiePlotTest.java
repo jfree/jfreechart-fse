@@ -54,23 +54,11 @@ import org.jfree.chart.util.TableOrder;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.junit.Test;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Some tests for the {@link MultiplePiePlot} class.
@@ -82,7 +70,6 @@ public class MultiplePiePlotTest
     PlotChangeEvent lastEvent;
 
 
-
     /**
      * Receives a plot change event and records it.  Some tests will use this
      * to check that events have been generated (or not) when required.
@@ -90,10 +77,9 @@ public class MultiplePiePlotTest
      * @param event  the event.
      */
     @Override
-	public void plotChanged(PlotChangeEvent event) {
+    public void plotChanged(PlotChangeEvent event) {
         this.lastEvent = event;
     }
-
 
 
     /**
@@ -181,15 +167,15 @@ public class MultiplePiePlotTest
         p1.setAggregatedItemsPaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
                 3.0f, 4.0f, Color.RED));
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(p1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(p1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
         MultiplePiePlot p2 = (MultiplePiePlot) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(p1, p2);
     }

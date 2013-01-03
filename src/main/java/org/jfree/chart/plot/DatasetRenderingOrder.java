@@ -48,7 +48,7 @@ package org.jfree.chart.plot;
  * {@link org.jfree.chart.plot.XYPlot}.
  */
 public enum DatasetRenderingOrder {
-    
+
     /**
      * Render datasets in the order 0, 1, 2, ..., N-1, where N is the number
      * of datasets.
@@ -79,7 +79,7 @@ public enum DatasetRenderingOrder {
      * @return The string (never <code>null</code>).
      */
     @Override
-	public String toString() {
+    public String toString() {
         return this.name;
     }
 

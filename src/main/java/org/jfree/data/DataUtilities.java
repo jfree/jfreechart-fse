@@ -47,8 +47,9 @@
 
 package org.jfree.data;
 
-import java.util.Arrays;
 import org.jfree.data.general.DatasetUtilities;
+
+import java.util.Arrays;
 
 /**
  * Utility methods for use with some of the data classes (but not the datasets,
@@ -147,21 +148,21 @@ public abstract class DataUtilities {
      *
      * @since 1.0.13
      */
-     public static double calculateColumnTotal(Values2D data, int column,
-             int[] validRows) {
+    public static double calculateColumnTotal(Values2D data, int column,
+                                              int[] validRows) {
         if (data == null) {
             throw new IllegalArgumentException("Null 'data' argument.");
         }
         double total = 0.0;
         int rowCount = data.getRowCount();
-         for (int row : validRows) {
-             if (row < rowCount) {
-                 Number n = data.getValue(row, column);
-                 if (n != null) {
-                     total += n.doubleValue();
-                 }
-             }
-         }
+        for (int row : validRows) {
+            if (row < rowCount) {
+                Number n = data.getValue(row, column);
+                if (n != null) {
+                    total += n.doubleValue();
+                }
+            }
+        }
         return total;
     }
 
@@ -201,21 +202,21 @@ public abstract class DataUtilities {
      *
      * @since 1.0.13
      */
-     public static double calculateRowTotal(Values2D data, int row,
-             int[] validCols) {
+    public static double calculateRowTotal(Values2D data, int row,
+                                           int[] validCols) {
         if (data == null) {
             throw new IllegalArgumentException("Null 'data' argument.");
         }
         double total = 0.0;
         int colCount = data.getColumnCount();
-         for (int col : validCols) {
-             if (col < colCount) {
-                 Number n = data.getValue(row, col);
-                 if (n != null) {
-                     total += n.doubleValue();
-                 }
-             }
-         }
+        for (int col : validCols) {
+            if (col < colCount) {
+                Number n = data.getValue(row, col);
+                if (n != null) {
+                    total += n.doubleValue();
+                }
+            }
+        }
         return total;
     }
 
@@ -268,11 +269,11 @@ public abstract class DataUtilities {
      *
      * @return The cumulative percentages.
      */
-    public static KeyedValues getCumulativePercentages(KeyedValues data) {
+    public static <Key extends Comparable> KeyedValues<Key> getCumulativePercentages(KeyedValues<Key> data) {
         if (data == null) {
             throw new IllegalArgumentException("Null 'data' argument.");
         }
-        DefaultKeyedValues result = new DefaultKeyedValues();
+        DefaultKeyedValues<Key> result = new DefaultKeyedValues<Key>();
         double total = 0.0;
         for (int i = 0; i < data.getItemCount(); i++) {
             Number v = data.getValue(i);
@@ -286,7 +287,7 @@ public abstract class DataUtilities {
             if (v != null) {
                 runningTotal = runningTotal + v.doubleValue();
             }
-            result.addValue(data.getKey(i), new Double(runningTotal / total));
+            result.addValue(data.getKey(i), runningTotal / total);
         }
         return result;
     }

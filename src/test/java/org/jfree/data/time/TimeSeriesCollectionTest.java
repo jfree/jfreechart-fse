@@ -48,32 +48,17 @@ import org.jfree.data.Range;
 import org.jfree.data.general.DatasetUtilities;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * A collection of test cases for the {@link TimeSeriesCollection} class.
  */
-public class TimeSeriesCollectionTest  {
-
-
-
+public class TimeSeriesCollectionTest {
 
 
     /**
@@ -240,15 +225,15 @@ public class TimeSeriesCollectionTest  {
     public void testSerialization() throws IOException, ClassNotFoundException {
         TimeSeriesCollection c1 = new TimeSeriesCollection(createSeries());
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(c1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(c1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         TimeSeriesCollection c2 = (TimeSeriesCollection) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(c1, c2);
     }
@@ -280,10 +265,10 @@ public class TimeSeriesCollectionTest  {
         TimeSeriesCollection dataset = new TimeSeriesCollection();
         dataset.addSeries(s1);
         try {
-            /* TimeSeries s = */ dataset.getSeries(1);
+            /* TimeSeries s = */
+            dataset.getSeries(1);
             fail("Should have thrown an IllegalArgumentException on index out of bounds");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("The 'series' argument is out of bounds (1).", e.getMessage());
         }
 

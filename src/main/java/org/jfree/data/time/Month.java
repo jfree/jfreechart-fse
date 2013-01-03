@@ -138,7 +138,6 @@ public class Month extends RegularTimePeriod implements Serializable {
      *
      * @param time  the date/time (<code>null</code> not permitted).
      *
-     * @see #Month(Date, TimeZone)
      */
     public Month(Date time) {
         this(time, TimeZone.getDefault(), Locale.getDefault());
@@ -200,7 +199,7 @@ public class Month extends RegularTimePeriod implements Serializable {
      * @see #getLastMillisecond()
      */
     @Override
-	public long getFirstMillisecond() {
+    public long getFirstMillisecond() {
         return this.firstMillisecond;
     }
 
@@ -215,7 +214,7 @@ public class Month extends RegularTimePeriod implements Serializable {
      * @see #getFirstMillisecond()
      */
     @Override
-	public long getLastMillisecond() {
+    public long getLastMillisecond() {
         return this.lastMillisecond;
     }
 
@@ -228,7 +227,7 @@ public class Month extends RegularTimePeriod implements Serializable {
      * @since 1.0.3
      */
     @Override
-	public void peg(Calendar calendar) {
+    public void peg(Calendar calendar) {
         this.firstMillisecond = getFirstMillisecond(calendar);
         this.lastMillisecond = getLastMillisecond(calendar);
     }
@@ -242,16 +241,14 @@ public class Month extends RegularTimePeriod implements Serializable {
      * @return The month preceding this one.
      */
     @Override
-	public RegularTimePeriod previous() {
+    public RegularTimePeriod previous() {
         Month result;
         if (this.month != MonthConstants.JANUARY) {
             result = new Month(this.month - 1, this.year);
-        }
-        else {
+        } else {
             if (this.year > 1900) {
                 result = new Month(MonthConstants.DECEMBER, this.year - 1);
-            }
-            else {
+            } else {
                 result = null;
             }
         }
@@ -267,16 +264,14 @@ public class Month extends RegularTimePeriod implements Serializable {
      * @return The month following this one.
      */
     @Override
-	public RegularTimePeriod next() {
+    public RegularTimePeriod next() {
         Month result;
         if (this.month != MonthConstants.DECEMBER) {
             result = new Month(this.month + 1, this.year);
-        }
-        else {
+        } else {
             if (this.year < 9999) {
                 result = new Month(MonthConstants.JANUARY, this.year + 1);
-            }
-            else {
+            } else {
                 result = null;
             }
         }
@@ -289,7 +284,7 @@ public class Month extends RegularTimePeriod implements Serializable {
      * @return The serial index number.
      */
     @Override
-	public long getSerialIndex() {
+    public long getSerialIndex() {
         return this.year * 12L + this.month;
     }
 
@@ -301,7 +296,7 @@ public class Month extends RegularTimePeriod implements Serializable {
      * @return A string representing the month.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return SerialDate.monthCodeToString(this.month) + " " + this.year;
     }
 
@@ -316,7 +311,7 @@ public class Month extends RegularTimePeriod implements Serializable {
      *         same.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -343,7 +338,7 @@ public class Month extends RegularTimePeriod implements Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 17;
         result = 37 * result + this.month;
         result = 37 * result + this.year;
@@ -360,7 +355,7 @@ public class Month extends RegularTimePeriod implements Serializable {
      * @return negative == before, zero == same, positive == after.
      */
     @Override
-	public int compareTo(TimePeriod o1) {
+    public int compareTo(TimePeriod o1) {
 
         int result;
 
@@ -397,7 +392,7 @@ public class Month extends RegularTimePeriod implements Serializable {
      *     <code>null</code>.
      */
     @Override
-	public long getFirstMillisecond(Calendar calendar) {
+    public long getFirstMillisecond(Calendar calendar) {
         calendar.set(this.year, this.month - 1, 1, 0, 0, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTimeInMillis();
@@ -415,7 +410,7 @@ public class Month extends RegularTimePeriod implements Serializable {
      *     <code>null</code>.
      */
     @Override
-	public long getLastMillisecond(Calendar calendar) {
+    public long getLastMillisecond(Calendar calendar) {
         int eom = SerialDate.lastDayOfMonth(this.month, this.year);
         calendar.set(this.year, this.month - 1, eom, 23, 59, 59);
         calendar.set(Calendar.MILLISECOND, 999);
@@ -448,21 +443,18 @@ public class Month extends RegularTimePeriod implements Serializable {
             yearIsFirst = true;
             s1 = s.substring(0, 5);
             s2 = s.substring(5);
-        }
-        else {
+        } else {
             s1 = s.substring(0, i).trim();
             s2 = s.substring(i + 1, s.length()).trim();
             // now it is trickier to determine if the month or year is first
             Year y1 = Month.evaluateAsYear(s1);
             if (y1 == null) {
                 yearIsFirst = false;
-            }
-            else {
+            } else {
                 Year y2 = Month.evaluateAsYear(s2);
                 if (y2 == null) {
                     yearIsFirst = true;
-                }
-                else {
+                } else {
                     yearIsFirst = (s1.length() > s2.length());
                 }
             }
@@ -472,8 +464,7 @@ public class Month extends RegularTimePeriod implements Serializable {
         if (yearIsFirst) {
             year = Month.evaluateAsYear(s1);
             month = SerialDate.stringToMonthCode(s2);
-        }
-        else {
+        } else {
             year = Month.evaluateAsYear(s2);
             month = SerialDate.stringToMonthCode(s1);
         }
@@ -523,8 +514,7 @@ public class Month extends RegularTimePeriod implements Serializable {
         Year result = null;
         try {
             result = Year.parseYear(s);
-        }
-        catch (TimePeriodFormatException e) {
+        } catch (TimePeriodFormatException e) {
             // suppress
         }
         return result;

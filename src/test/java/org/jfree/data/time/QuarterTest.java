@@ -48,28 +48,15 @@ package org.jfree.data.time;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.io.*;
+import java.util.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {link Quarter} class.
  */
-public class QuarterTest  {
+public class QuarterTest {
 
     /** A quarter. */
     private Quarter q1Y1900;
@@ -84,14 +71,11 @@ public class QuarterTest  {
     private Quarter q4Y9999;
 
 
-
-
-
     /**
      * Common test setup.
      */
     @Before
-	public void setUp() {
+    public void setUp() {
         this.q1Y1900 = new Quarter(1, 1900);
         this.q2Y1900 = new Quarter(2, 1900);
         this.q3Y9999 = new Quarter(3, 9999);
@@ -234,16 +218,16 @@ public class QuarterTest  {
         Quarter q1 = new Quarter(4, 1999);
 
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(q1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(q1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-            );
-            Quarter q2 = (Quarter) in.readObject();
-            in.close();
+        );
+        Quarter q2 = (Quarter) in.readObject();
+        in.close();
 
         assertEquals(q1, q2);
 
@@ -279,18 +263,18 @@ public class QuarterTest  {
     @Test
     public void testConstructor() {
         try {
-            /*Quarter q =*/ new Quarter(0, 2005);
+            /*Quarter q =*/
+            new Quarter(0, 2005);
             fail("IllegalArgumentException should have been thrown from 0 querter");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Quarter outside valid range.", e.getMessage());
         }
 
         try {
-            /*Quarter q =*/ new Quarter(5, 2005);
+            /*Quarter q =*/
+            new Quarter(5, 2005);
             fail("IllegalArgumentException should have been thrown from 5 quarter");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Quarter outside valid range.", e.getMessage());
         }
     }
@@ -324,8 +308,7 @@ public class QuarterTest  {
         try {
             q.getFirstMillisecond(null);
             fail("NullPointerException should have been thrown on null parameter");
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             //we expect to go in here
         }
     }
@@ -344,8 +327,7 @@ public class QuarterTest  {
         try {
             q.getFirstMillisecond(null);
             fail("NullPointerException should have been thrown on null parameter");
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             //we expect to go in here
         }
     }
@@ -379,8 +361,7 @@ public class QuarterTest  {
         try {
             q.getLastMillisecond(null);
             fail("NullPointerException should have been thrown with null parameter");
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             // we expect to go in here
         }
     }
@@ -399,8 +380,7 @@ public class QuarterTest  {
         try {
             q.getLastMillisecond(null);
             fail("NullPointerException should have been thrown by null parameter");
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             //we expect to go in here
         }
     }

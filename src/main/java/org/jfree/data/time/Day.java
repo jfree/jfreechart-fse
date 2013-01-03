@@ -63,6 +63,8 @@
 
 package org.jfree.data.time;
 
+import org.jfree.chart.date.SerialDate;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -71,8 +73,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import org.jfree.chart.date.SerialDate;
 
 /**
  * Represents a single day in the range 1-Jan-1900 to 31-Dec-9999.  This class
@@ -86,19 +86,19 @@ public class Day extends RegularTimePeriod implements Serializable {
 
     /** A standard date formatter. */
     protected static final DateFormat DATE_FORMAT
-        = new SimpleDateFormat("yyyy-MM-dd");
+            = new SimpleDateFormat("yyyy-MM-dd");
 
     /** A date formatter for the default locale. */
     protected static final DateFormat
-        DATE_FORMAT_SHORT = DateFormat.getDateInstance(DateFormat.SHORT);
+            DATE_FORMAT_SHORT = DateFormat.getDateInstance(DateFormat.SHORT);
 
     /** A date formatter for the default locale. */
     protected static final DateFormat
-        DATE_FORMAT_MEDIUM = DateFormat.getDateInstance(DateFormat.MEDIUM);
+            DATE_FORMAT_MEDIUM = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
     /** A date formatter for the default locale. */
     protected static final DateFormat
-        DATE_FORMAT_LONG = DateFormat.getDateInstance(DateFormat.LONG);
+            DATE_FORMAT_LONG = DateFormat.getDateInstance(DateFormat.LONG);
 
     /** The day (uses SerialDate for convenience). */
     private SerialDate serialDate;
@@ -147,8 +147,6 @@ public class Day extends RegularTimePeriod implements Serializable {
      * default time zone.
      *
      * @param time  the time (<code>null</code> not permitted).
-     *
-     * @see #Day(Date, TimeZone)
      */
     public Day(Date time) {
         // defer argument checking...
@@ -232,7 +230,7 @@ public class Day extends RegularTimePeriod implements Serializable {
      * @see #getLastMillisecond()
      */
     @Override
-	public long getFirstMillisecond() {
+    public long getFirstMillisecond() {
         return this.firstMillisecond;
     }
 
@@ -247,7 +245,7 @@ public class Day extends RegularTimePeriod implements Serializable {
      * @see #getFirstMillisecond()
      */
     @Override
-	public long getLastMillisecond() {
+    public long getLastMillisecond() {
         return this.lastMillisecond;
     }
 
@@ -260,7 +258,7 @@ public class Day extends RegularTimePeriod implements Serializable {
      * @since 1.0.3
      */
     @Override
-	public void peg(Calendar calendar) {
+    public void peg(Calendar calendar) {
         this.firstMillisecond = getFirstMillisecond(calendar);
         this.lastMillisecond = getLastMillisecond(calendar);
     }
@@ -271,7 +269,7 @@ public class Day extends RegularTimePeriod implements Serializable {
      * @return The day preceding this one.
      */
     @Override
-	public RegularTimePeriod previous() {
+    public RegularTimePeriod previous() {
         int serial = this.serialDate.toSerial();
         if (serial > SerialDate.SERIAL_LOWER_BOUND) {
             SerialDate yesterday = SerialDate.createInstance(serial - 1);
@@ -288,7 +286,7 @@ public class Day extends RegularTimePeriod implements Serializable {
      *         has been reached.
      */
     @Override
-	public RegularTimePeriod next() {
+    public RegularTimePeriod next() {
         int serial = this.serialDate.toSerial();
         if (serial < SerialDate.SERIAL_UPPER_BOUND) {
             SerialDate tomorrow = SerialDate.createInstance(serial + 1);
@@ -303,7 +301,7 @@ public class Day extends RegularTimePeriod implements Serializable {
      * @return The serial index number.
      */
     @Override
-	public long getSerialIndex() {
+    public long getSerialIndex() {
         return this.serialDate.toSerial();
     }
 
@@ -319,12 +317,17 @@ public class Day extends RegularTimePeriod implements Serializable {
      *     <code>null</code>.
      */
     @Override
-	public long getFirstMillisecond(Calendar calendar) {
+    public long getFirstMillisecond(Calendar calendar) {
         int year = this.serialDate.getYYYY();
         int month = this.serialDate.getMonth();
         int day = this.serialDate.getDayOfMonth();
         calendar.clear();
-        calendar.set(year, month - 1, day, 0, 0, 0);
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTimeInMillis();
     }
@@ -341,12 +344,17 @@ public class Day extends RegularTimePeriod implements Serializable {
      *     <code>null</code>.
      */
     @Override
-	public long getLastMillisecond(Calendar calendar) {
+    public long getLastMillisecond(Calendar calendar) {
         int year = this.serialDate.getYYYY();
         int month = this.serialDate.getMonth();
         int day = this.serialDate.getDayOfMonth();
         calendar.clear();
-        calendar.set(year, month - 1, day, 23, 59, 59);
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.HOUR, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
         calendar.set(Calendar.MILLISECOND, 999);
         return calendar.getTimeInMillis();
     }
@@ -362,7 +370,7 @@ public class Day extends RegularTimePeriod implements Serializable {
      * @return A flag indicating whether or not an object is equal to this day.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -370,10 +378,7 @@ public class Day extends RegularTimePeriod implements Serializable {
             return false;
         }
         Day that = (Day) obj;
-        if (!this.serialDate.equals(that.getSerialDate())) {
-            return false;
-        }
-        return true;
+        return this.serialDate.equals(that.getSerialDate());
     }
 
     /**
@@ -386,7 +391,7 @@ public class Day extends RegularTimePeriod implements Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return this.serialDate.hashCode();
     }
 
@@ -401,7 +406,7 @@ public class Day extends RegularTimePeriod implements Serializable {
      * @return negative == before, zero == same, positive == after.
      */
     @Override
-	public int compareTo(TimePeriod o1) {
+    public int compareTo(TimePeriod o1) {
         int result;
 
         // CASE 1 : Comparing to another Day object
@@ -428,7 +433,7 @@ public class Day extends RegularTimePeriod implements Serializable {
      * @return A string representing the day.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return this.serialDate.toString();
     }
 
@@ -445,14 +450,12 @@ public class Day extends RegularTimePeriod implements Serializable {
      */
     public static Day parseDay(String s) {
         try {
-            return new Day (Day.DATE_FORMAT.parse(s));
-        }
-        catch (ParseException e1) {
+            return new Day(Day.DATE_FORMAT.parse(s));
+        } catch (ParseException e1) {
             try {
-                return new Day (Day.DATE_FORMAT_SHORT.parse(s));
-            }
-            catch (ParseException e2) {
-              // ignore
+                return new Day(Day.DATE_FORMAT_SHORT.parse(s));
+            } catch (ParseException e2) {
+                // ignore
             }
         }
         return null;

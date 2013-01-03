@@ -43,17 +43,17 @@
 
 package org.jfree.data;
 
+import org.jfree.chart.util.ParamChecks;
+import org.jfree.chart.util.SortOrder;
+
 import java.io.Serializable;
 import java.util.Comparator;
-import org.jfree.chart.util.ParamChecks;
-
-import org.jfree.chart.util.SortOrder;
 
 /**
  * A utility class that can compare and order two {@link KeyedValue} instances
  * and sort them into ascending or descending order by key or by value.
  */
-public class KeyedValueComparator implements Comparator<KeyedValue>, Serializable {
+public class KeyedValueComparator<Key extends Comparable> implements Comparator<KeyedValue<Key>>, Serializable {
 
     /** The comparator type. */
     private KeyedValueComparatorType type;
@@ -98,21 +98,18 @@ public class KeyedValueComparator implements Comparator<KeyedValue>, Serializabl
      * Compares two {@link KeyedValue} instances and returns an
      * <code>int</code> that indicates the relative order of the two objects.
      *
-     * @param kv1  object 1.
-     * @param kv2  object 2.
+     * @param o1  object 1.
+     * @param o2  object 2.
      *
      * @return An int indicating the relative order of the objects.
      */
     @Override
-	public int compare(KeyedValue kv1, KeyedValue kv2) {
+    public int compare(KeyedValue<Key> o1, KeyedValue<Key> o2) {
 
-        if (kv2 == null) {
-            if (kv1 ==null) {
-                return 0;
-            }
+        if (o2 == null) {
             return -1;
         }
-        if (kv1 == null) {
+        if (o1 == null) {
             return 1;
         }
 
@@ -120,18 +117,15 @@ public class KeyedValueComparator implements Comparator<KeyedValue>, Serializabl
 
         if (this.type == KeyedValueComparatorType.BY_KEY) {
             if (this.order.equals(SortOrder.ASCENDING)) {
-                result = kv1.getKey().compareTo(kv2.getKey());
-            }
-            else if (this.order.equals(SortOrder.DESCENDING)) {
-                result = kv2.getKey().compareTo(kv1.getKey());
-            }
-            else {
+                result = o1.getKey().compareTo(o2.getKey());
+            } else if (this.order.equals(SortOrder.DESCENDING)) {
+                result = o2.getKey().compareTo(o1.getKey());
+            } else {
                 throw new IllegalArgumentException("Unrecognised sort order.");
             }
-        }
-        else if (this.type == KeyedValueComparatorType.BY_VALUE) {
-            Number n1 = kv1.getValue();
-            Number n2 = kv2.getValue();
+        } else if (this.type == KeyedValueComparatorType.BY_VALUE) {
+            Number n1 = ((KeyedValue) o1).getValue();
+            Number n2 = ((KeyedValue) o2).getValue();
             if (n2 == null) {
                 return -1;
             }
@@ -143,30 +137,23 @@ public class KeyedValueComparator implements Comparator<KeyedValue>, Serializabl
             if (this.order.equals(SortOrder.ASCENDING)) {
                 if (d1 > d2) {
                     result = 1;
-                }
-                else if (d1 < d2) {
+                } else if (d1 < d2) {
                     result = -1;
-                }
-                else {
+                } else {
                     result = 0;
                 }
-            }
-            else if (this.order.equals(SortOrder.DESCENDING)) {
+            } else if (this.order.equals(SortOrder.DESCENDING)) {
                 if (d1 > d2) {
                     result = -1;
-                }
-                else if (d1 < d2) {
+                } else if (d1 < d2) {
                     result = 1;
-                }
-                else {
+                } else {
                     result = 0;
                 }
-            }
-            else {
+            } else {
                 throw new IllegalArgumentException("Unrecognised sort order.");
             }
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Unrecognised type.");
         }
 

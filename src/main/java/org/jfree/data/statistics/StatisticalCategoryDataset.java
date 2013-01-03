@@ -51,7 +51,9 @@ import org.jfree.data.category.CategoryDataset;
  * A category dataset that defines a mean and standard deviation value for
  * each item.
  */
-public interface StatisticalCategoryDataset extends CategoryDataset {
+public interface StatisticalCategoryDataset
+        <RowKey extends Comparable, ColumnKey extends Comparable>
+        extends CategoryDataset<RowKey, ColumnKey> {
 
     /**
      * Returns the mean value for an item.
@@ -71,7 +73,7 @@ public interface StatisticalCategoryDataset extends CategoryDataset {
      *
      * @return The mean value (possibly <code>null</code>).
      */
-    public Number getMeanValue(Comparable rowKey, Comparable columnKey);
+    public Number getMeanValue(RowKey rowKey, ColumnKey columnKey);
 
     /**
      * Returns the standard deviation value for an item.
@@ -91,7 +93,27 @@ public interface StatisticalCategoryDataset extends CategoryDataset {
      *
      * @return The standard deviation (possibly <code>null</code>).
      */
-    public Number getStdDevValue(Comparable rowKey, Comparable columnKey);
+    public Number getStdDevValue(RowKey rowKey, ColumnKey columnKey);
 
+
+    /**
+     * Gets the positive deviation value.
+     *
+     * @param row    the row.
+     * @param column the column.
+     *
+     * @return the positive deviation value.
+     */
+    public Number getDeviationValuePositive(int row, int column);
+
+    /**
+     * Gets the positive deviation value.
+     *
+     * @param row    the row.
+     * @param column the column.
+     *
+     * @return the negative deviation value.
+     */
+    public Number getDeviationValueNegative(int row, int column);
 }
 

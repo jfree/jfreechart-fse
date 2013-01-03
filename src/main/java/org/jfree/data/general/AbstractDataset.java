@@ -57,17 +57,11 @@
 
 package org.jfree.data.general;
 
-import java.io.IOException;
-import java.io.InvalidObjectException;
-import java.io.ObjectInputStream;
-import java.io.ObjectInputValidation;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import javax.swing.event.EventListenerList;
+import java.io.*;
 import java.util.Arrays;
 import java.util.EventListener;
 import java.util.List;
-
-import javax.swing.event.EventListenerList;
 
 /**
  * An abstract implementation of the {@link Dataset} interface, containing a
@@ -102,7 +96,7 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      * @see #setGroup(DatasetGroup)
      */
     @Override
-	public DatasetGroup getGroup() {
+    public DatasetGroup getGroup() {
         return this.group;
     }
 
@@ -114,7 +108,7 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      * @see #getGroup()
      */
     @Override
-	public void setGroup(DatasetGroup group) {
+    public void setGroup(DatasetGroup group) {
         if (group == null) {
             throw new IllegalArgumentException("Null 'group' argument.");
         }
@@ -129,7 +123,7 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      * @see #removeChangeListener(DatasetChangeListener)
      */
     @Override
-	public void addChangeListener(DatasetChangeListener listener) {
+    public void addChangeListener(DatasetChangeListener listener) {
         this.listenerList.add(DatasetChangeListener.class, listener);
     }
 
@@ -142,7 +136,7 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      * @see #addChangeListener(DatasetChangeListener)
      */
     @Override
-	public void removeChangeListener(DatasetChangeListener listener) {
+    public void removeChangeListener(DatasetChangeListener listener) {
         this.listenerList.remove(DatasetChangeListener.class, listener);
     }
 
@@ -204,7 +198,7 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      *                                     cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         AbstractDataset clone = (AbstractDataset) super.clone();
         clone.listenerList = new EventListenerList();
         return clone;
@@ -230,11 +224,11 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      * @throws ClassNotFoundException if there is a problem loading a class.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.listenerList = new EventListenerList();
         stream.registerValidation(this, 10);  // see comments about priority of
-                                              // 10 in validateObject()
+        // 10 in validateObject()
     }
 
     /**
@@ -255,7 +249,7 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      * @exception InvalidObjectException If the object cannot validate itself.
      */
     @Override
-	public void validateObject() throws InvalidObjectException {
+    public void validateObject() throws InvalidObjectException {
         fireDatasetChanged();
     }
 

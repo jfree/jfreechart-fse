@@ -44,19 +44,20 @@
 
 package org.jfree.chart.labels;
 
-import java.io.Serializable;
-import java.text.MessageFormat;
-
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.category.CategoryDataset;
+
+import java.io.Serializable;
+import java.text.MessageFormat;
 
 /**
  * A standard series label generator for plots that use data from
  * a {@link org.jfree.data.category.CategoryDataset}.
  */
-public class StandardCategorySeriesLabelGenerator implements
-    CategorySeriesLabelGenerator, Cloneable, PublicCloneable, Serializable {
+public class StandardCategorySeriesLabelGenerator
+        <RowKey extends Comparable, ColumnKey extends Comparable>
+        implements CategorySeriesLabelGenerator<RowKey, ColumnKey>, Cloneable, PublicCloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 4630760091523940820L;
@@ -96,13 +97,12 @@ public class StandardCategorySeriesLabelGenerator implements
      * @return A series label.
      */
     @Override
-	public String generateLabel(CategoryDataset dataset, int series) {
+    public String generateLabel(CategoryDataset<RowKey, ColumnKey> dataset, int series) {
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
         }
-        String label = MessageFormat.format(this.formatPattern,
+        return MessageFormat.format(this.formatPattern,
                 createItemArray(dataset, series));
-        return label;
     }
 
     /**
@@ -114,10 +114,9 @@ public class StandardCategorySeriesLabelGenerator implements
      *
      * @return The items (never <code>null</code>).
      */
-    protected Object[] createItemArray(CategoryDataset dataset, int series) {
-        Object[] result = new Object[1];
-        result[0] = dataset.getRowKey(series).toString();
-        return result;
+    protected Object[] createItemArray(CategoryDataset<RowKey, ColumnKey> dataset, int series) {
+        String label = dataset.getRowKey(series).toString();
+        return new Object[]{label};
     }
 
     /**
@@ -128,7 +127,7 @@ public class StandardCategorySeriesLabelGenerator implements
      * @throws CloneNotSupportedException if cloning is not supported.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -140,7 +139,7 @@ public class StandardCategorySeriesLabelGenerator implements
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -149,10 +148,7 @@ public class StandardCategorySeriesLabelGenerator implements
         }
         StandardCategorySeriesLabelGenerator that
                 = (StandardCategorySeriesLabelGenerator) obj;
-        if (!this.formatPattern.equals(that.formatPattern)) {
-            return false;
-        }
-        return true;
+        return this.formatPattern.equals(that.formatPattern);
     }
 
     /**
@@ -161,7 +157,7 @@ public class StandardCategorySeriesLabelGenerator implements
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 127;
         result = HashUtilities.hashCode(result, this.formatPattern);
         return result;

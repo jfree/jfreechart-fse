@@ -42,18 +42,18 @@
 
 package org.jfree.chart.axis;
 
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.text.TextBlock;
 import org.jfree.chart.text.TextBlockAnchor;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * A tick for a {@link CategoryAxis}.
  */
-public class CategoryTick extends Tick {
+public class CategoryTick<Category extends Comparable> extends Tick {
 
     /** The category. */
-    private Comparable category;
+    private Category category;
 
     /** The label. */
     private TextBlock label;
@@ -70,7 +70,7 @@ public class CategoryTick extends Tick {
      * @param rotationAnchor  the rotation anchor.
      * @param angle  the rotation angle (in radians).
      */
-    public CategoryTick(Comparable category,
+    public CategoryTick(Category category,
                         TextBlock label,
                         TextBlockAnchor labelAnchor,
                         TextAnchor rotationAnchor,
@@ -88,7 +88,7 @@ public class CategoryTick extends Tick {
      *
      * @return The category.
      */
-    public Comparable getCategory() {
+    public Category getCategory() {
         return this.category;
     }
 

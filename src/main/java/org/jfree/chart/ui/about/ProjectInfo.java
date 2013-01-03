@@ -42,7 +42,7 @@
 
 package org.jfree.chart.ui.about;
 
-import java.awt.Image;
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -151,7 +151,7 @@ public class ProjectInfo extends BasicProjectInfo {
      * @return a string describing the project.
      */
     @Override
-	public String toString() {
+    public String toString() {
 
         final StringBuilder result = new StringBuilder();
         result.append(getName());
@@ -174,8 +174,7 @@ public class ProjectInfo extends BasicProjectInfo {
                 result.append(contributor.getEmail());
                 result.append(").");
             }
-        }
-        else {
+        } else {
             result.append("None");
         }
 
@@ -193,8 +192,7 @@ public class ProjectInfo extends BasicProjectInfo {
                 result.append(lib.getInfo());
                 result.append(").");
             }
-        }
-        else {
+        } else {
             result.append("None");
         }
         result.append("\n");

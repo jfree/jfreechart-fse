@@ -42,26 +42,16 @@ package org.jfree.data.function;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 
-
 /**
  * Tests for the {@link PowerFunction2D} class.
  */
-public class PowerFunction2DTest  {
-
-
-
+public class PowerFunction2DTest {
 
 
     private static final double EPSILON = 0.000000001;
@@ -97,15 +87,15 @@ public class PowerFunction2DTest  {
     public void testSerialization() throws IOException, ClassNotFoundException {
         PowerFunction2D f1 = new PowerFunction2D(1.0, 2.0);
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(f1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(f1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
         PowerFunction2D f2 = (PowerFunction2D) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(f1, f2);
     }

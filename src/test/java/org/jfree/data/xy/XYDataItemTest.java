@@ -42,28 +42,15 @@ package org.jfree.data.xy;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-
+import static org.junit.Assert.*;
 
 
 /**
  * Tests for the {@link XYDataItem} class.
  */
-public class XYDataItemTest  {
-
-
-
+public class XYDataItemTest {
 
 
     /**
@@ -105,15 +92,15 @@ public class XYDataItemTest  {
 
         XYDataItem i1 = new XYDataItem(1.0, 1.1);
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(i1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(i1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         XYDataItem i2 = (XYDataItem) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(i1, i2);
 

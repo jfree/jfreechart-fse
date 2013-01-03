@@ -42,28 +42,15 @@ package org.jfree.data.general;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-
+import static org.junit.Assert.*;
 
 
 /**
  * Tests for the {@link DefaultKeyedValueDataset} class.
  */
-public class DefaultKeyedValueDatasetTest  {
-
-
-
+public class DefaultKeyedValueDatasetTest {
 
 
     /**
@@ -73,9 +60,9 @@ public class DefaultKeyedValueDatasetTest  {
     public void testEquals() {
 
         DefaultKeyedValueDataset d1
-            = new DefaultKeyedValueDataset("Test", 45.5);
+                = new DefaultKeyedValueDataset("Test", 45.5);
         DefaultKeyedValueDataset d2
-            = new DefaultKeyedValueDataset("Test", 45.5);
+                = new DefaultKeyedValueDataset("Test", 45.5);
         assertEquals(d1, d2);
         assertEquals(d2, d1);
 
@@ -95,7 +82,7 @@ public class DefaultKeyedValueDatasetTest  {
     @Test
     public void testCloning() throws CloneNotSupportedException {
         DefaultKeyedValueDataset d1
-            = new DefaultKeyedValueDataset("Test", 45.5);
+                = new DefaultKeyedValueDataset("Test", 45.5);
         DefaultKeyedValueDataset d2 = (DefaultKeyedValueDataset) d1.clone();
 
         assertNotSame(d1, d2);
@@ -109,7 +96,7 @@ public class DefaultKeyedValueDatasetTest  {
     @Test
     public void testCloneIndependence() throws CloneNotSupportedException {
         DefaultKeyedValueDataset d1
-            = new DefaultKeyedValueDataset("Key", 10.0);
+                = new DefaultKeyedValueDataset("Key", 10.0);
         DefaultKeyedValueDataset d2 = (DefaultKeyedValueDataset) d1.clone();
 
         assertEquals(d1, d2);
@@ -126,7 +113,7 @@ public class DefaultKeyedValueDatasetTest  {
     public void testSerialization() throws IOException, ClassNotFoundException {
 
         DefaultKeyedValueDataset d1
-            = new DefaultKeyedValueDataset("Test", 25.3);
+                = new DefaultKeyedValueDataset("Test", 25.3);
 
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         ObjectOutput out = new ObjectOutputStream(buffer);
@@ -134,7 +121,7 @@ public class DefaultKeyedValueDatasetTest  {
         out.close();
 
         ObjectInput in = new ObjectInputStream(
-            new ByteArrayInputStream(buffer.toByteArray())
+                new ByteArrayInputStream(buffer.toByteArray())
         );
         DefaultKeyedValueDataset d2 = (DefaultKeyedValueDataset) in.readObject();
         in.close();

@@ -40,9 +40,9 @@
 
 package org.jfree.chart.plot;
 
-import java.awt.geom.Point2D;
-
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
+
+import java.awt.geom.Point2D;
 
 /**
  * Represents state information for the crosshairs in a {@link CategoryPlot}.
@@ -53,17 +53,18 @@ import org.jfree.chart.renderer.category.CategoryItemRenderer;
  *
  * @since 1.0.11
  */
-public class CategoryCrosshairState extends CrosshairState {
+public class CategoryCrosshairState<RowKey extends Comparable, ColumnKey extends Comparable>
+        extends CrosshairState {
 
     /**
      * The row key for the crosshair point.
      */
-    private Comparable rowKey;
+    private RowKey rowKey;
 
     /**
      * The column key for the crosshair point.
      */
-    private Comparable columnKey;
+    private ColumnKey columnKey;
 
     /**
      * Creates a new instance.
@@ -78,7 +79,7 @@ public class CategoryCrosshairState extends CrosshairState {
      *
      * @return The row key.
      */
-    public Comparable getRowKey() {
+    public RowKey getRowKey() {
         return this.rowKey;
     }
 
@@ -87,7 +88,7 @@ public class CategoryCrosshairState extends CrosshairState {
      *
      * @param key  the row key.
      */
-    public void setRowKey(Comparable key) {
+    public void setRowKey(RowKey key) {
         this.rowKey = key;
     }
 
@@ -96,7 +97,7 @@ public class CategoryCrosshairState extends CrosshairState {
      *
      * @return The column key.
      */
-    public Comparable getColumnKey() {
+    public ColumnKey getColumnKey() {
         return this.columnKey;
     }
 
@@ -105,7 +106,7 @@ public class CategoryCrosshairState extends CrosshairState {
      *
      * @param key  the key.
      */
-    public void setColumnKey(Comparable key) {
+    public void setColumnKey(ColumnKey key) {
         this.columnKey = key;
     }
 
@@ -121,9 +122,9 @@ public class CategoryCrosshairState extends CrosshairState {
      * @param transY  y translated into Java2D space.
      * @param orientation  the plot orientation.
      */
-    public void updateCrosshairPoint(Comparable rowKey, Comparable columnKey,
-            double value, int datasetIndex, double transX, double transY,
-            PlotOrientation orientation) {
+    public void updateCrosshairPoint(RowKey rowKey, ColumnKey columnKey,
+                                     double value, int datasetIndex, double transX, double transY,
+                                     PlotOrientation orientation) {
 
         Point2D anchor = getAnchor();
         if (anchor != null) {
@@ -158,8 +159,8 @@ public class CategoryCrosshairState extends CrosshairState {
      * @param transX  the translated x-value.
      * @param orientation  the plot orientation.
      */
-    public void updateCrosshairX(Comparable rowKey, Comparable columnKey,
-            int datasetIndex, double transX, PlotOrientation orientation) {
+    public void updateCrosshairX(RowKey rowKey, ColumnKey columnKey,
+                                 int datasetIndex, double transX, PlotOrientation orientation) {
 
         Point2D anchor = getAnchor();
         if (anchor != null) {

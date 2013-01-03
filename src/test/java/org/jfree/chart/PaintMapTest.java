@@ -43,24 +43,15 @@ package org.jfree.chart;
 
 import org.junit.Test;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Some tests for the {@link PaintMap} class.
  */
-public class PaintMapTest  {
+public class PaintMapTest {
 
     /**
      * Some checks for the getPaint() method.
@@ -78,8 +69,7 @@ public class PaintMapTest  {
         try {
             m1.getPaint(null);
             fail("IllegalArgumentException should have been thrown on passing null value");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }
@@ -98,8 +88,7 @@ public class PaintMapTest  {
         try {
             m1.put(null, Color.BLUE);
             fail("IllegalArgumentException should have been thrown on null key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }

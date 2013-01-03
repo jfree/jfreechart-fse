@@ -43,13 +43,7 @@ package org.jfree.chart.axis;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
@@ -57,10 +51,7 @@ import static org.junit.Assert.assertSame;
 /**
  * Tests for the {@link AxisLocation} class.
  */
-public class AxisLocationTest  {
-
-
-
+public class AxisLocationTest {
 
 
     /**
@@ -94,15 +85,15 @@ public class AxisLocationTest  {
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
         AxisLocation location1 = AxisLocation.BOTTOM_OR_RIGHT;
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(location1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(location1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            AxisLocation location2 = (AxisLocation) in.readObject();
-            in.close();
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        AxisLocation location2 = (AxisLocation) in.readObject();
+        in.close();
 
         assertSame(location1, location2);
     }

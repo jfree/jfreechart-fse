@@ -48,27 +48,16 @@ import org.jfree.chart.ui.Drawable;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link XYDrawableAnnotation} class.
  */
-public class XYDrawableAnnotationTest  {
+public class XYDrawableAnnotationTest {
 
     static class TestDrawable implements Drawable, Cloneable, Serializable {
         /**
@@ -76,6 +65,7 @@ public class XYDrawableAnnotationTest  {
          */
         public TestDrawable() {
         }
+
         /**
          * Draws something.
          * @param g2  the graphics device.
@@ -85,6 +75,7 @@ public class XYDrawableAnnotationTest  {
         public void draw(Graphics2D g2, Rectangle2D area) {
             // do nothing
         }
+
         /**
          * Tests this object for equality with an arbitrary object.
          * @param obj  the object to test against (<code>null</code> permitted).
@@ -100,6 +91,7 @@ public class XYDrawableAnnotationTest  {
             }
             return true;
         }
+
         /**
          * Returns a clone.
          *
@@ -112,9 +104,6 @@ public class XYDrawableAnnotationTest  {
             return super.clone();
         }
     }
-
-
-
 
 
     /**

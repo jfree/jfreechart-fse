@@ -48,28 +48,15 @@ package org.jfree.data.time;
 import org.jfree.chart.date.MonthConstants;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.io.*;
+import java.util.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link Second} class.
  */
-public class SecondTest  {
+public class SecondTest {
 
 
     /**
@@ -107,7 +94,7 @@ public class SecondTest  {
     public void testDateConstructor1() {
         TimeZone zone = TimeZone.getTimeZone("GMT");
         Calendar c = new GregorianCalendar(zone);
-        
+
         Locale locale = Locale.getDefault();  // locale shouldn't matter here
         Second s1 = new Second(new Date(1016729758999L), zone, locale);
         Second s2 = new Second(new Date(1016729759000L), zone, locale);
@@ -211,8 +198,7 @@ public class SecondTest  {
         try {
             s.getFirstMillisecond(null);
             fail("NullPointerException should have been thrown on null parameter");
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             //we expect to go in here
         }
     }
@@ -231,8 +217,7 @@ public class SecondTest  {
         try {
             s.getFirstMillisecond(null);
             fail("NullPointerException should have been thrown on null paramter");
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             //we expect to go in here
         }
     }
@@ -266,8 +251,7 @@ public class SecondTest  {
         try {
             s.getLastMillisecond(null);
             fail("NullPointerException should have been thrown on Null Parameter");
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             // we expect to go in here
         }
     }
@@ -286,8 +270,7 @@ public class SecondTest  {
         try {
             s.getLastMillisecond(null);
             fail("NullPointerException should have been thrown on null parameter");
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             // we expect to go in here
         }
     }

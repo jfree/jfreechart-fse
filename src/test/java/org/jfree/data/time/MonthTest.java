@@ -47,34 +47,23 @@
  *
  */
 
-package org.jfree.data.time;
+package org.jfree.data.time.junit;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 import org.jfree.chart.date.MonthConstants;
-import org.junit.Before;
-import org.junit.Test;
+import org.jfree.data.time.Month;
+import org.jfree.data.time.TimePeriodFormatException;
+import org.jfree.data.time.Year;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import java.io.*;
+import java.util.*;
 
 /**
  * Tests for the {@link Month} class.
  */
-public class MonthTest  {
+public class MonthTest extends TestCase {
 
     /** A month. */
     private Month jan1900;
@@ -88,15 +77,29 @@ public class MonthTest  {
     /** A month. */
     private Month dec9999;
 
+    /**
+     * Returns the tests as a test suite.
+     *
+     * @return The test suite.
+     */
+    public static Test suite() {
+        return new TestSuite(MonthTest.class);
+    }
 
-
-
+    /**
+     * Constructs a new set of tests.
+     *
+     * @param name  the name of the tests.
+     */
+    public MonthTest(String name) {
+        super(name);
+    }
 
     /**
      * Common test setup.
      */
-    @Before
-	public void setUp() {
+    @Override
+    protected void setUp() {
         this.jan1900 = new Month(MonthConstants.JANUARY, 1900);
         this.feb1900 = new Month(MonthConstants.FEBRUARY, 1900);
         this.nov9999 = new Month(MonthConstants.NOVEMBER, 9999);
@@ -108,31 +111,28 @@ public class MonthTest  {
      *
      * SourceForge Bug ID: 558850.
      */
-    @Test
     public void testEqualsSelf() {
         Month month = new Month();
-        assertEquals(month, month);
+        assertTrue(month.equals(month));
     }
 
     /**
      * Tests the equals method.
      */
-    @Test
     public void testEquals() {
         Month m1 = new Month(MonthConstants.MAY, 2002);
         Month m2 = new Month(MonthConstants.MAY, 2002);
-        assertEquals(m1, m2);
+        assertTrue(m1.equals(m2));
     }
 
     /**
      * In GMT, the end of Feb 2000 is java.util.Date(951,868,799,999L).  Use
      * this to check the Month constructor.
      */
-    @Test
     public void testDateConstructor1() {
 
         TimeZone zone = TimeZone.getTimeZone("GMT");
-        Calendar c = new GregorianCalendar(zone);        
+        Calendar c = new GregorianCalendar(zone);
         Locale locale = Locale.UK;
         Month m1 = new Month(new Date(951868799999L), zone, locale);
         Month m2 = new Month(new Date(951868800000L), zone, locale);
@@ -149,7 +149,6 @@ public class MonthTest  {
      * In Auckland, the end of Feb 2000 is java.util.Date(951,821,999,999L).
      * Use this to check the Month constructor.
      */
-    @Test
     public void testDateConstructor2() {
 
         TimeZone zone = TimeZone.getTimeZone("Pacific/Auckland");
@@ -169,7 +168,6 @@ public class MonthTest  {
      * Set up a month equal to Jan 1900.  Request the previous month, it should
      * be null.
      */
-    @Test
     public void testJan1900Previous() {
         Month previous = (Month) this.jan1900.previous();
         assertNull(previous);
@@ -179,7 +177,6 @@ public class MonthTest  {
      * Set up a month equal to Jan 1900.  Request the next month, it should be
      * Feb 1900.
      */
-    @Test
     public void testJan1900Next() {
         Month next = (Month) this.jan1900.next();
         assertEquals(this.feb1900, next);
@@ -189,7 +186,6 @@ public class MonthTest  {
      * Set up a month equal to Dec 9999.  Request the previous month, it should
      * be Nov 9999.
      */
-    @Test
     public void testDec9999Previous() {
         Month previous = (Month) this.dec9999.previous();
         assertEquals(this.nov9999, previous);
@@ -199,7 +195,6 @@ public class MonthTest  {
      * Set up a month equal to Dec 9999.  Request the next month, it should be
      * null.
      */
-    @Test
     public void testDec9999Next() {
         Month next = (Month) this.dec9999.next();
         assertNull(next);
@@ -208,21 +203,34 @@ public class MonthTest  {
     /**
      * Tests the string parsing code...
      */
-    @Test
     public void testParseMonth() {
+        Month month;
 
-        Month month = Month.parseMonth("1990-01");
-
+        // test 1...
+        try {
+            month = Month.parseMonth("1990-01");
+        } catch (TimePeriodFormatException e) {
+            month = new Month(1, 1900);
+        }
         assertEquals(1, month.getMonth());
         assertEquals(1990, month.getYear().getYear());
 
-        month = Month.parseMonth("02-1991");
-
+        // test 2...
+        try {
+            month = Month.parseMonth("02-1991");
+        } catch (TimePeriodFormatException e) {
+            month = new Month(1, 1900);
+        }
         assertEquals(2, month.getMonth());
         assertEquals(1991, month.getYear().getYear());
 
-        month = Month.parseMonth("March 1993");
-
+        // test 3...
+        try {
+            month = Month.parseMonth("March 1993");
+        } catch (TimePeriodFormatException e) {
+            month = new Month(1, 1900);
+            e.printStackTrace();
+        }
         assertEquals(3, month.getMonth());
         assertEquals(1993, month.getYear().getYear());
 
@@ -231,22 +239,25 @@ public class MonthTest  {
     /**
      * Serialize an instance, restore it, and check for equality.
      */
-    @Test
-    public void testSerialization() throws IOException, ClassNotFoundException {
+    public void testSerialization() {
 
         Month m1 = new Month(12, 1999);
+        Month m2 = null;
 
+        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutput out = new ObjectOutputStream(buffer);
             out.writeObject(m1);
             out.close();
 
             ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
+                    new ByteArrayInputStream(buffer.toByteArray())
             );
-        Month m2 = (Month) in.readObject();
+            m2 = (Month) in.readObject();
             in.close();
-
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
         assertEquals(m1, m2);
 
     }
@@ -254,11 +265,10 @@ public class MonthTest  {
     /**
      * Two objects that are equal are required to return the same hashCode.
      */
-    @Test
     public void testHashcode() {
         Month m1 = new Month(2, 2003);
         Month m2 = new Month(2, 2003);
-        assertEquals(m1, m2);
+        assertTrue(m1.equals(m2));
         int h1 = m1.hashCode();
         int h2 = m2.hashCode();
         assertEquals(h1, h2);
@@ -267,7 +277,6 @@ public class MonthTest  {
     /**
      * The {@link Month} class is immutable, so should not be {@link Cloneable}.
      */
-    @Test
     public void testNotCloneable() {
         Month m = new Month(2, 2003);
         assertFalse(m instanceof Cloneable);
@@ -276,7 +285,6 @@ public class MonthTest  {
     /**
      * Some checks for the getFirstMillisecond() method.
      */
-    @Test
     public void testGetFirstMillisecond() {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -291,7 +299,6 @@ public class MonthTest  {
     /**
      * Some checks for the getFirstMillisecond(TimeZone) method.
      */
-    @Test
     public void testGetFirstMillisecondWithTimeZone() {
         Month m = new Month(2, 1950);
         TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
@@ -299,19 +306,18 @@ public class MonthTest  {
         assertEquals(-628444800000L, m.getFirstMillisecond(c));
 
         // try null calendar
+        boolean pass = false;
         try {
-            m.getFirstMillisecond(null);
-            fail("NullPointerException should have been thrown on null parameter");
+            m.getFirstMillisecond((Calendar) null);
+        } catch (NullPointerException e) {
+            pass = true;
         }
-        catch (NullPointerException e) {
-            //we expect to go in here
-        }
+        assertTrue(pass);
     }
 
     /**
      * Some checks for the getFirstMillisecond(TimeZone) method.
      */
-    @Test
     public void testGetFirstMillisecondWithCalendar() {
         Month m = new Month(1, 2001);
         GregorianCalendar calendar = new GregorianCalendar(Locale.GERMANY);
@@ -319,19 +325,18 @@ public class MonthTest  {
         assertEquals(978307200000L, m.getFirstMillisecond(calendar));
 
         // try null calendar
+        boolean pass = false;
         try {
-            m.getFirstMillisecond(null);
-            fail("NullPointerException should have been thrown on null parameter");
+            m.getFirstMillisecond((Calendar) null);
+        } catch (NullPointerException e) {
+            pass = true;
         }
-        catch (NullPointerException e) {
-            // we expect to go in here
-        }
+        assertTrue(pass);
     }
 
     /**
      * Some checks for the getLastMillisecond() method.
      */
-    @Test
     public void testGetLastMillisecond() {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -346,7 +351,6 @@ public class MonthTest  {
     /**
      * Some checks for the getLastMillisecond(TimeZone) method.
      */
-    @Test
     public void testGetLastMillisecondWithTimeZone() {
         Month m = new Month(2, 1950);
         TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
@@ -354,19 +358,18 @@ public class MonthTest  {
         assertEquals(-626025600001L, m.getLastMillisecond(c));
 
         // try null calendar
+        boolean pass = false;
         try {
-            m.getLastMillisecond(null);
-            fail("NullPointerException should have been thrown on null parameter");
+            m.getLastMillisecond((Calendar) null);
+        } catch (NullPointerException e) {
+            pass = true;
         }
-        catch (NullPointerException e) {
-            // we expect to go in here
-        }
+        assertTrue(pass);
     }
 
     /**
      * Some checks for the getLastMillisecond(TimeZone) method.
      */
-    @Test
     public void testGetLastMillisecondWithCalendar() {
         Month m = new Month(3, 2001);
         GregorianCalendar calendar = new GregorianCalendar(Locale.GERMANY);
@@ -374,19 +377,18 @@ public class MonthTest  {
         assertEquals(986083199999L, m.getLastMillisecond(calendar));
 
         // try null calendar
+        boolean pass = false;
         try {
-            m.getLastMillisecond(null);
-            fail("NullPointerException should have been thrown on null parameter");
+            m.getLastMillisecond((Calendar) null);
+        } catch (NullPointerException e) {
+            pass = true;
         }
-        catch (NullPointerException e) {
-            //we expect to go in here
-        }
+        assertTrue(pass);
     }
 
     /**
      * Some checks for the getSerialIndex() method.
      */
-    @Test
     public void testGetSerialIndex() {
         Month m = new Month(1, 2000);
         assertEquals(24001L, m.getSerialIndex());
@@ -397,7 +399,6 @@ public class MonthTest  {
     /**
      * Some checks for the testNext() method.
      */
-    @Test
     public void testNext() {
         Month m = new Month(12, 2000);
         m = (Month) m.next();
@@ -410,7 +411,6 @@ public class MonthTest  {
     /**
      * Some checks for the getStart() method.
      */
-    @Test
     public void testGetStart() {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.ITALY);
@@ -425,7 +425,6 @@ public class MonthTest  {
     /**
      * Some checks for the getEnd() method.
      */
-    @Test
     public void testGetEnd() {
         Locale saved = Locale.getDefault();
         Locale.setDefault(Locale.ITALY);

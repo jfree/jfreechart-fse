@@ -77,26 +77,16 @@
 
 package org.jfree.chart;
 
-import java.awt.Graphics2D;
+import org.jfree.chart.encoders.EncoderUtil;
+import org.jfree.chart.encoders.ImageFormat;
+import org.jfree.chart.imagemap.*;
+import org.jfree.chart.util.ParamChecks;
+
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-
-import org.jfree.chart.encoders.EncoderUtil;
-import org.jfree.chart.encoders.ImageFormat;
-import org.jfree.chart.imagemap.ImageMapUtilities;
-import org.jfree.chart.imagemap.OverLIBToolTipTagFragmentGenerator;
-import org.jfree.chart.imagemap.StandardToolTipTagFragmentGenerator;
-import org.jfree.chart.imagemap.StandardURLTagFragmentGenerator;
-import org.jfree.chart.imagemap.ToolTipTagFragmentGenerator;
-import org.jfree.chart.imagemap.URLTagFragmentGenerator;
-import org.jfree.chart.util.ParamChecks;
+import java.io.*;
 
 /**
  * A collection of utility methods for JFreeChart.  Includes methods for
@@ -131,7 +121,7 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void writeChartAsPNG(OutputStream out, JFreeChart chart,
-            int width, int height) throws IOException {
+                                       int width, int height) throws IOException {
 
         // defer argument checking...
         writeChartAsPNG(out, chart, width, height, null);
@@ -151,7 +141,7 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void writeChartAsPNG(OutputStream out, JFreeChart chart,
-            int width, int height, boolean encodeAlpha, int compression)
+                                       int width, int height, boolean encodeAlpha, int compression)
             throws IOException {
 
         // defer argument checking...
@@ -175,7 +165,7 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void writeChartAsPNG(OutputStream out, JFreeChart chart,
-            int width, int height,  ChartRenderingInfo info)
+                                       int width, int height, ChartRenderingInfo info)
             throws IOException {
 
         ParamChecks.nullNotPermitted(chart, "chart");
@@ -202,8 +192,8 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void writeChartAsPNG(OutputStream out, JFreeChart chart,
-            int width, int height, ChartRenderingInfo info,
-            boolean encodeAlpha, int compression) throws IOException {
+                                       int width, int height, ChartRenderingInfo info,
+                                       boolean encodeAlpha, int compression) throws IOException {
 
         ParamChecks.nullNotPermitted(out, "out");
         ParamChecks.nullNotPermitted(chart, "chart");
@@ -228,8 +218,8 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O problems.
      */
     public static void writeScaledChartAsPNG(OutputStream out,
-            JFreeChart chart, int width, int height, int widthScaleFactor,
-            int heightScaleFactor) throws IOException {
+                                             JFreeChart chart, int width, int height, int widthScaleFactor,
+                                             int heightScaleFactor) throws IOException {
 
         ParamChecks.nullNotPermitted(out, "out");
         ParamChecks.nullNotPermitted(chart, "chart");
@@ -259,8 +249,7 @@ public abstract class ChartUtilities {
                     defaultHeight), null, null);
             g2.setTransform(saved);
             g2.dispose();
-        }
-        else {
+        } else {
             chart.draw(g2, new Rectangle2D.Double(0, 0, defaultWidth,
                     defaultHeight), null, null);
         }
@@ -279,7 +268,7 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void saveChartAsPNG(File file, JFreeChart chart,
-            int width, int height) throws IOException {
+                                      int width, int height) throws IOException {
 
         // defer argument checking...
         saveChartAsPNG(file, chart, width, height, null);
@@ -301,15 +290,14 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void saveChartAsPNG(File file, JFreeChart chart,
-            int width, int height, ChartRenderingInfo info)
-        throws IOException {
+                                      int width, int height, ChartRenderingInfo info)
+            throws IOException {
 
         ParamChecks.nullNotPermitted(file, "file");
         OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
         try {
             ChartUtilities.writeChartAsPNG(out, chart, width, height, info);
-        }
-        finally {
+        } finally {
             out.close();
         }
     }
@@ -331,8 +319,8 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void saveChartAsPNG(File file, JFreeChart chart,
-           int width, int height, ChartRenderingInfo info, boolean encodeAlpha,
-           int compression) throws IOException {
+                                      int width, int height, ChartRenderingInfo info, boolean encodeAlpha,
+                                      int compression) throws IOException {
 
         ParamChecks.nullNotPermitted(file, "file");
         ParamChecks.nullNotPermitted(chart, "chart");
@@ -341,8 +329,7 @@ public abstract class ChartUtilities {
         try {
             writeChartAsPNG(out, chart, width, height, info, encodeAlpha,
                     compression);
-        }
-        finally {
+        } finally {
             out.close();
         }
 
@@ -360,7 +347,7 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void writeChartAsJPEG(OutputStream out,
-            JFreeChart chart, int width, int height) throws IOException {
+                                        JFreeChart chart, int width, int height) throws IOException {
 
         // defer argument checking...
         writeChartAsJPEG(out, chart, width, height, null);
@@ -380,7 +367,7 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void writeChartAsJPEG(OutputStream out, float quality,
-            JFreeChart chart, int width, int height) throws IOException {
+                                        JFreeChart chart, int width, int height) throws IOException {
 
         // defer argument checking...
         ChartUtilities.writeChartAsJPEG(out, quality, chart, width, height,
@@ -403,7 +390,7 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void writeChartAsJPEG(OutputStream out, JFreeChart chart,
-            int width, int height, ChartRenderingInfo info)
+                                        int width, int height, ChartRenderingInfo info)
             throws IOException {
 
         ParamChecks.nullNotPermitted(chart, "chart");
@@ -429,7 +416,7 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void writeChartAsJPEG(OutputStream out, float quality,
-            JFreeChart chart, int width, int height, ChartRenderingInfo info)
+                                        JFreeChart chart, int width, int height, ChartRenderingInfo info)
             throws IOException {
 
         ParamChecks.nullNotPermitted(chart, "chart");
@@ -451,7 +438,7 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void saveChartAsJPEG(File file, JFreeChart chart,
-            int width, int height) throws IOException {
+                                       int width, int height) throws IOException {
 
         // defer argument checking...
         saveChartAsJPEG(file, chart, width, height, null);
@@ -470,7 +457,7 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void saveChartAsJPEG(File file, float quality,
-            JFreeChart chart, int width, int height) throws IOException {
+                                       JFreeChart chart, int width, int height) throws IOException {
 
         // defer argument checking...
         saveChartAsJPEG(file, quality, chart, width, height, null);
@@ -492,7 +479,7 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void saveChartAsJPEG(File file, JFreeChart chart,
-            int width, int height, ChartRenderingInfo info) throws IOException {
+                                       int width, int height, ChartRenderingInfo info) throws IOException {
 
         ParamChecks.nullNotPermitted(file, "file");
         ParamChecks.nullNotPermitted(chart, "chart");
@@ -500,8 +487,7 @@ public abstract class ChartUtilities {
         OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
         try {
             writeChartAsJPEG(out, chart, width, height, info);
-        }
-        finally {
+        } finally {
             out.close();
         }
 
@@ -523,8 +509,8 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void saveChartAsJPEG(File file, float quality,
-            JFreeChart chart, int width, int height,
-            ChartRenderingInfo info) throws IOException {
+                                       JFreeChart chart, int width, int height,
+                                       ChartRenderingInfo info) throws IOException {
 
         ParamChecks.nullNotPermitted(file, "file");
         ParamChecks.nullNotPermitted(chart, "chart");
@@ -533,8 +519,7 @@ public abstract class ChartUtilities {
                 file));
         try {
             writeChartAsJPEG(out, quality, chart, width, height, info);
-        }
-        finally {
+        } finally {
             out.close();
         }
 
@@ -549,7 +534,7 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void writeBufferedImageAsJPEG(OutputStream out,
-            BufferedImage image) throws IOException {
+                                                BufferedImage image) throws IOException {
 
         // defer argument checking...
         writeBufferedImageAsJPEG(out, 0.75f, image);
@@ -566,7 +551,7 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void writeBufferedImageAsJPEG(OutputStream out, float quality,
-            BufferedImage image) throws IOException {
+                                                BufferedImage image) throws IOException {
 
         EncoderUtil.writeBufferedImage(image, ImageFormat.JPEG, out, quality);
 
@@ -581,7 +566,7 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void writeBufferedImageAsPNG(OutputStream out,
-            BufferedImage image) throws IOException {
+                                               BufferedImage image) throws IOException {
 
         EncoderUtil.writeBufferedImage(image, ImageFormat.PNG, out);
 
@@ -598,7 +583,7 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void writeBufferedImageAsPNG(OutputStream out,
-            BufferedImage image, boolean encodeAlpha, int compression)
+                                               BufferedImage image, boolean encodeAlpha, int compression)
             throws IOException {
 
         EncoderUtil.writeBufferedImage(image, ImageFormat.PNG, out,
@@ -630,7 +615,7 @@ public abstract class ChartUtilities {
      * @throws IOException if there is an I/O problem.
      */
     public static byte[] encodeAsPNG(BufferedImage image, boolean encodeAlpha,
-            int compression) throws IOException {
+                                     int compression) throws IOException {
         return EncoderUtil.encode(image, ImageFormat.PNG, compression,
                 encodeAlpha);
     }
@@ -647,15 +632,14 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void writeImageMap(PrintWriter writer, String name,
-            ChartRenderingInfo info, boolean useOverLibForToolTips)
-        throws IOException {
+                                     ChartRenderingInfo info, boolean useOverLibForToolTips)
+            throws IOException {
 
         ToolTipTagFragmentGenerator toolTipTagFragmentGenerator = null;
         if (useOverLibForToolTips) {
             toolTipTagFragmentGenerator
                     = new OverLIBToolTipTagFragmentGenerator();
-        }
-        else {
+        } else {
             toolTipTagFragmentGenerator
                     = new StandardToolTipTagFragmentGenerator();
         }
@@ -681,9 +665,9 @@ public abstract class ChartUtilities {
      * @throws IOException if there are any I/O errors.
      */
     public static void writeImageMap(PrintWriter writer, String name,
-            ChartRenderingInfo info,
-            ToolTipTagFragmentGenerator toolTipTagFragmentGenerator,
-            URLTagFragmentGenerator urlTagFragmentGenerator)
+                                     ChartRenderingInfo info,
+                                     ToolTipTagFragmentGenerator toolTipTagFragmentGenerator,
+                                     URLTagFragmentGenerator urlTagFragmentGenerator)
             throws IOException {
 
         writer.println(ImageMapUtilities.getImageMap(name, info,
@@ -724,8 +708,8 @@ public abstract class ChartUtilities {
      * @return The map tag.
      */
     public static String getImageMap(String name, ChartRenderingInfo info,
-            ToolTipTagFragmentGenerator toolTipTagFragmentGenerator,
-            URLTagFragmentGenerator urlTagFragmentGenerator) {
+                                     ToolTipTagFragmentGenerator toolTipTagFragmentGenerator,
+                                     URLTagFragmentGenerator urlTagFragmentGenerator) {
 
         return ImageMapUtilities.getImageMap(name, info,
                 toolTipTagFragmentGenerator, urlTagFragmentGenerator);

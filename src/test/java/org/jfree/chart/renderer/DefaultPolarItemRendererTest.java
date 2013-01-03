@@ -43,26 +43,14 @@ package org.jfree.chart.renderer;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link DefaultPolarItemRenderer} class.
  */
-public class DefaultPolarItemRendererTest  {
-
-
-
+public class DefaultPolarItemRendererTest {
 
 
     /**
@@ -118,15 +106,15 @@ public class DefaultPolarItemRendererTest  {
     public void testSerialization() throws IOException, ClassNotFoundException {
         DefaultPolarItemRenderer r1 = new DefaultPolarItemRenderer();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(r1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(r1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         DefaultPolarItemRenderer r2 = (DefaultPolarItemRenderer) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(r1, r2);
     }

@@ -48,26 +48,14 @@ import org.jfree.chart.text.TextLine;
 import org.jfree.chart.ui.TextAnchor;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link CategoryTick} class.
  */
-public class CategoryTickTest  {
-
-
-
+public class CategoryTickTest {
 
 
     /**
@@ -144,8 +132,8 @@ public class CategoryTickTest  {
     @Test
     public void testCloning() throws CloneNotSupportedException {
         CategoryTick t1 = new CategoryTick(
-            "C1", new TextBlock(), TextBlockAnchor.CENTER,
-            TextAnchor.CENTER, 1.5f
+                "C1", new TextBlock(), TextBlockAnchor.CENTER,
+                TextAnchor.CENTER, 1.5f
         );
         CategoryTick t2 = (CategoryTick) t1.clone();
         assertNotSame(t1, t2);

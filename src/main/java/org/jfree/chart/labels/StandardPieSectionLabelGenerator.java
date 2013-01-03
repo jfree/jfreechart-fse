@@ -47,17 +47,16 @@
 
 package org.jfree.chart.labels;
 
-import java.awt.Font;
-import java.awt.Paint;
+import org.jfree.chart.util.ObjectList;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.general.PieDataset;
+
+import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.io.Serializable;
 import java.text.AttributedString;
 import java.text.NumberFormat;
 import java.util.Locale;
-
-import org.jfree.chart.util.ObjectList;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.data.general.PieDataset;
 
 /**
  * A standard item label generator for plots that use data from a
@@ -71,7 +70,7 @@ import org.jfree.data.general.PieDataset;
 public class StandardPieSectionLabelGenerator
         extends AbstractPieItemLabelGenerator
         implements PieSectionLabelGenerator, Cloneable, PublicCloneable,
-                   Serializable {
+        Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 3064190563760203668L;
@@ -140,7 +139,7 @@ public class StandardPieSectionLabelGenerator
      *                       (<code>null</code> not permitted).
      */
     public StandardPieSectionLabelGenerator(String labelFormat,
-            NumberFormat numberFormat, NumberFormat percentFormat) {
+                                            NumberFormat numberFormat, NumberFormat percentFormat) {
         super(labelFormat, numberFormat, percentFormat);
         this.attributedLabels = new ObjectList<AttributedString>();
     }
@@ -176,7 +175,7 @@ public class StandardPieSectionLabelGenerator
      * @return The label (possibly <code>null</code>).
      */
     @Override
-	public String generateSectionLabel(PieDataset dataset, Comparable key) {
+    public String generateSectionLabel(PieDataset dataset, Comparable key) {
         return super.generateSectionLabel(dataset, key);
     }
 
@@ -208,7 +207,7 @@ public class StandardPieSectionLabelGenerator
      * @return An attributed label (possibly <code>null</code>).
      */
     @Override
-	public AttributedString generateAttributedSectionLabel(PieDataset dataset,
+    public AttributedString generateAttributedSectionLabel(PieDataset dataset,
                                                            Comparable key) {
         return getAttributedLabel(dataset.getIndex(key));
     }
@@ -221,7 +220,7 @@ public class StandardPieSectionLabelGenerator
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -247,7 +246,7 @@ public class StandardPieSectionLabelGenerator
      * @throws CloneNotSupportedException  should not happen.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

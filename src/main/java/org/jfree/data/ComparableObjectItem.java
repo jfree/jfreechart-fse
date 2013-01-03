@@ -41,9 +41,9 @@
 
 package org.jfree.data;
 
-import java.io.Serializable;
-
 import org.jfree.chart.util.ObjectUtilities;
+
+import java.io.Serializable;
 
 /**
  * Represents one (Comparable, Object) data item for use in a
@@ -51,17 +51,17 @@ import org.jfree.chart.util.ObjectUtilities;
  *
  * @since 1.0.3
  */
-public class ComparableObjectItem implements Cloneable, Comparable<ComparableObjectItem>,
-        Serializable {
+public class ComparableObjectItem<Key extends Comparable, Value>
+        implements Cloneable, Comparable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 2751513470325494890L;
 
     /** The x-value. */
-    private Comparable x;
+    private Key x;
 
     /** The y-value. */
-    private Object obj;
+    private Value obj;
 
     /**
      * Constructs a new data item.
@@ -69,7 +69,7 @@ public class ComparableObjectItem implements Cloneable, Comparable<ComparableObj
      * @param x  the x-value (<code>null</code> NOT permitted).
      * @param y  the y-value (<code>null</code> permitted).
      */
-    public ComparableObjectItem(Comparable x, Object y) {
+    public ComparableObjectItem(Key x, Value y) {
         if (x == null) {
             throw new IllegalArgumentException("Null 'x' argument.");
         }
@@ -82,7 +82,7 @@ public class ComparableObjectItem implements Cloneable, Comparable<ComparableObj
      *
      * @return The x-value (never <code>null</code>).
      */
-    protected Comparable getComparable() {
+    protected Key getComparable() {
         return this.x;
     }
 
@@ -91,7 +91,7 @@ public class ComparableObjectItem implements Cloneable, Comparable<ComparableObj
      *
      * @return The y-value (possibly <code>null</code>).
      */
-    protected Object getObject() {
+    protected Value getObject() {
         return this.obj;
     }
 
@@ -101,7 +101,7 @@ public class ComparableObjectItem implements Cloneable, Comparable<ComparableObj
      *
      * @param y  the new y-value (<code>null</code> permitted).
      */
-    protected void setObject(Object y) {
+    protected void setObject(Value y) {
         this.obj = y;
     }
 
@@ -112,14 +112,33 @@ public class ComparableObjectItem implements Cloneable, Comparable<ComparableObj
      * For the order we consider only the x-value:
      * negative == "less-than", zero == "equal", positive == "greater-than".
      *
-     * @param that  the object being compared to.
+     * @param o1  the object being compared to.
      *
      * @return An integer indicating the order of this data pair object
      *      relative to another object.
      */
+    @SuppressWarnings("unchecked")
     @Override
-	public int compareTo(ComparableObjectItem that) {
-       return this.x.compareTo(that.x);
+    public int compareTo(Object o1) {
+
+        int result;
+
+        // CASE 1 : Comparing to another ComparableObjectItem object
+        // ---------------------------------------------------------
+        if (o1 instanceof ComparableObjectItem) {
+            ComparableObjectItem that = (ComparableObjectItem) o1;
+            return this.x.compareTo(that.x);
+        }
+
+        // CASE 2 : Comparing to a general object
+        // ---------------------------------------------
+        else {
+            // consider these to be ordered after general objects
+            result = 1;
+        }
+
+        return result;
+
     }
 
     /**
@@ -131,7 +150,7 @@ public class ComparableObjectItem implements Cloneable, Comparable<ComparableObj
      *         subclasses may differ.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -143,8 +162,9 @@ public class ComparableObjectItem implements Cloneable, Comparable<ComparableObj
      *
      * @return A boolean.
      */
+    @SuppressWarnings("SimplifiableIfStatement")
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -155,10 +175,7 @@ public class ComparableObjectItem implements Cloneable, Comparable<ComparableObj
         if (!this.x.equals(that.x)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.obj, that.obj)) {
-            return false;
-        }
-        return true;
+        return ObjectUtilities.equal(this.obj, that.obj);
     }
 
     /**
@@ -167,7 +184,7 @@ public class ComparableObjectItem implements Cloneable, Comparable<ComparableObj
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result;
         result = this.x.hashCode();
         result = 29 * result + (this.obj != null ? this.obj.hashCode() : 0);

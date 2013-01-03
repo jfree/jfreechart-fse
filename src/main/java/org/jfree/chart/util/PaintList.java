@@ -41,7 +41,7 @@
 
 package org.jfree.chart.util;
 
-import java.awt.Paint;
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -87,7 +87,7 @@ public class PaintList extends AbstractObjectList<Paint> {
      * @return A boolean.
      */
     @Override
-	public boolean equals(final Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
@@ -98,9 +98,9 @@ public class PaintList extends AbstractObjectList<Paint> {
             PaintList that = (PaintList) obj;
             int listSize = size();
             for (int i = 0; i < listSize; i++) {
-               if (!PaintUtilities.equal(getPaint(i), that.getPaint(i))) {
-                   return false;
-               }
+                if (!PaintUtilities.equal(getPaint(i), that.getPaint(i))) {
+                    return false;
+                }
             }
         }
         return true;
@@ -112,7 +112,7 @@ public class PaintList extends AbstractObjectList<Paint> {
      * @return the hashcode
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return super.hashCode();
     }
 
@@ -133,14 +133,13 @@ public class PaintList extends AbstractObjectList<Paint> {
             if (paint != null) {
                 stream.writeInt(i);
                 SerialUtilities.writePaint(paint, stream);
-            }
-            else {
+            } else {
                 stream.writeInt(-1);
             }
         }
 
     }
-    
+
     /**
      * Provides serialization support.
      *
@@ -159,7 +158,7 @@ public class PaintList extends AbstractObjectList<Paint> {
                 setPaint(index, SerialUtilities.readPaint(stream));
             }
         }
-        
+
     }
 
 }

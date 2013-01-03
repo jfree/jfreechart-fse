@@ -44,16 +44,16 @@
 
 package org.jfree.chart.labels;
 
+import org.jfree.chart.HashUtilities;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.xy.XYDataset;
+
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.jfree.chart.HashUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.data.xy.XYDataset;
 
 /**
  * A series label generator for plots that use data from

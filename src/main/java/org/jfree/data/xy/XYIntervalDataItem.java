@@ -60,7 +60,7 @@ public class XYIntervalDataItem extends ComparableObjectItem {
      * @param yHigh  the upper bound of the y-interval.
      */
     public XYIntervalDataItem(double x, double xLow, double xHigh, double y,
-            double yLow, double yHigh) {
+                              double yLow, double yHigh) {
         super(x, new XYInterval(xLow, xHigh, y, yLow, yHigh));
     }
 
@@ -82,8 +82,7 @@ public class XYIntervalDataItem extends ComparableObjectItem {
         XYInterval interval = (XYInterval) getObject();
         if (interval != null) {
             return interval.getY();
-        }
-        else {
+        } else {
             return Double.NaN;
         }
     }
@@ -97,8 +96,7 @@ public class XYIntervalDataItem extends ComparableObjectItem {
         XYInterval interval = (XYInterval) getObject();
         if (interval != null) {
             return interval.getXLow();
-        }
-        else {
+        } else {
             return Double.NaN;
         }
     }
@@ -112,8 +110,7 @@ public class XYIntervalDataItem extends ComparableObjectItem {
         XYInterval interval = (XYInterval) getObject();
         if (interval != null) {
             return interval.getXHigh();
-        }
-        else {
+        } else {
             return Double.NaN;
         }
     }
@@ -127,8 +124,7 @@ public class XYIntervalDataItem extends ComparableObjectItem {
         XYInterval interval = (XYInterval) getObject();
         if (interval != null) {
             return interval.getYLow();
-        }
-        else {
+        } else {
             return Double.NaN;
         }
     }
@@ -142,8 +138,7 @@ public class XYIntervalDataItem extends ComparableObjectItem {
         XYInterval interval = (XYInterval) getObject();
         if (interval != null) {
             return interval.getYHigh();
-        }
-        else {
+        } else {
             return Double.NaN;
         }
     }

@@ -42,32 +42,16 @@ package org.jfree.chart.plot;
 
 import org.junit.Test;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link DefaultDrawingSupplier} class.
  */
-public class DefaultDrawingSupplierTest  {
-
-
-
+public class DefaultDrawingSupplierTest {
 
 
     /**
@@ -81,39 +65,39 @@ public class DefaultDrawingSupplierTest  {
         assertEquals(r2, r1);
 
         // set up some objects...
-        Paint[] ps1A = new Paint[] {Color.RED, Color.BLUE};
-        Paint[] ps2A = new Paint[] {Color.green, Color.yellow, Color.WHITE};
-        Paint[] ops1A = new Paint[] {Color.lightGray, Color.BLUE};
-        Paint[] ops2A = new Paint[] {Color.BLACK, Color.yellow, Color.cyan};
-        Stroke[] ss1A = new Stroke[] {new BasicStroke(1.1f)};
+        Paint[] ps1A = new Paint[]{Color.RED, Color.BLUE};
+        Paint[] ps2A = new Paint[]{Color.green, Color.yellow, Color.WHITE};
+        Paint[] ops1A = new Paint[]{Color.lightGray, Color.BLUE};
+        Paint[] ops2A = new Paint[]{Color.BLACK, Color.yellow, Color.cyan};
+        Stroke[] ss1A = new Stroke[]{new BasicStroke(1.1f)};
         Stroke[] ss2A
-            = new Stroke[] {new BasicStroke(2.2f), new BasicStroke(3.3f)};
-        Stroke[] oss1A = new Stroke[] {new BasicStroke(4.4f)};
+                = new Stroke[]{new BasicStroke(2.2f), new BasicStroke(3.3f)};
+        Stroke[] oss1A = new Stroke[]{new BasicStroke(4.4f)};
         Stroke[] oss2A
-            = new Stroke[] {new BasicStroke(5.5f), new BasicStroke(6.6f)};
-        Shape[] shapes1A = new Shape[] {
-            new Rectangle2D.Double(1.0, 1.0, 1.0, 1.0)
+                = new Stroke[]{new BasicStroke(5.5f), new BasicStroke(6.6f)};
+        Shape[] shapes1A = new Shape[]{
+                new Rectangle2D.Double(1.0, 1.0, 1.0, 1.0)
         };
-        Shape[] shapes2A = new Shape[] {
-            new Rectangle2D.Double(2.0, 2.0, 2.0, 2.0),
-            new Rectangle2D.Double(2.0, 2.0, 2.0, 2.0)
+        Shape[] shapes2A = new Shape[]{
+                new Rectangle2D.Double(2.0, 2.0, 2.0, 2.0),
+                new Rectangle2D.Double(2.0, 2.0, 2.0, 2.0)
         };
-        Paint[] ps1B = new Paint[] {Color.RED, Color.BLUE};
-        Paint[] ps2B = new Paint[] {Color.green, Color.yellow, Color.WHITE};
-        Paint[] ops1B = new Paint[] {Color.lightGray, Color.BLUE};
-        Paint[] ops2B = new Paint[] {Color.BLACK, Color.yellow, Color.cyan};
-        Stroke[] ss1B = new Stroke[] {new BasicStroke(1.1f)};
+        Paint[] ps1B = new Paint[]{Color.RED, Color.BLUE};
+        Paint[] ps2B = new Paint[]{Color.green, Color.yellow, Color.WHITE};
+        Paint[] ops1B = new Paint[]{Color.lightGray, Color.BLUE};
+        Paint[] ops2B = new Paint[]{Color.BLACK, Color.yellow, Color.cyan};
+        Stroke[] ss1B = new Stroke[]{new BasicStroke(1.1f)};
         Stroke[] ss2B
-            = new Stroke[] {new BasicStroke(2.2f), new BasicStroke(3.3f)};
-        Stroke[] oss1B = new Stroke[] {new BasicStroke(4.4f)};
+                = new Stroke[]{new BasicStroke(2.2f), new BasicStroke(3.3f)};
+        Stroke[] oss1B = new Stroke[]{new BasicStroke(4.4f)};
         Stroke[] oss2B
-            = new Stroke[] {new BasicStroke(5.5f), new BasicStroke(6.6f)};
-        Shape[] shapes1B = new Shape[] {
-            new Rectangle2D.Double(1.0, 1.0, 1.0, 1.0)
+                = new Stroke[]{new BasicStroke(5.5f), new BasicStroke(6.6f)};
+        Shape[] shapes1B = new Shape[]{
+                new Rectangle2D.Double(1.0, 1.0, 1.0, 1.0)
         };
-        Shape[] shapes2B = new Shape[] {
-            new Rectangle2D.Double(2.0, 2.0, 2.0, 2.0),
-            new Rectangle2D.Double(2.0, 2.0, 2.0, 2.0)
+        Shape[] shapes2B = new Shape[]{
+                new Rectangle2D.Double(2.0, 2.0, 2.0, 2.0),
+                new Rectangle2D.Double(2.0, 2.0, 2.0, 2.0)
         };
 
         r1 = new DefaultDrawingSupplier(ps1A, ops1A, ss1A, oss1A, shapes1A);
@@ -203,7 +187,7 @@ public class DefaultDrawingSupplierTest  {
         out.close();
 
         ObjectInput in = new ObjectInputStream(
-            new ByteArrayInputStream(buffer.toByteArray())
+                new ByteArrayInputStream(buffer.toByteArray())
         );
         DefaultDrawingSupplier r2 = (DefaultDrawingSupplier) in.readObject();
         in.close();

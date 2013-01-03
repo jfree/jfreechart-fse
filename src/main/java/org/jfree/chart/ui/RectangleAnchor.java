@@ -97,60 +97,52 @@ public enum RectangleAnchor {
      * @return The string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return this.name;
     }
 
     /**
      * Returns the (x, y) coordinates of the specified anchor.
-     * 
+     *
      * @param rectangle  the rectangle.
      * @param anchor  the anchor.
-     * 
+     *
      * @return The (x, y) coordinates.
      */
-    public static Point2D coordinates(final Rectangle2D rectangle, 
+    public static Point2D coordinates(final Rectangle2D rectangle,
                                       final RectangleAnchor anchor) {
         Point2D result = new Point2D.Double();
         if (anchor == RectangleAnchor.CENTER) {
             result.setLocation(rectangle.getCenterX(), rectangle.getCenterY());
-        }
-        else if (anchor == RectangleAnchor.TOP) {
+        } else if (anchor == RectangleAnchor.TOP) {
             result.setLocation(rectangle.getCenterX(), rectangle.getMinY());
-        }
-        else if (anchor == RectangleAnchor.BOTTOM) {
+        } else if (anchor == RectangleAnchor.BOTTOM) {
             result.setLocation(rectangle.getCenterX(), rectangle.getMaxY());
-        }
-        else if (anchor == RectangleAnchor.LEFT) {
+        } else if (anchor == RectangleAnchor.LEFT) {
             result.setLocation(rectangle.getMinX(), rectangle.getCenterY());
-        }
-        else if (anchor == RectangleAnchor.RIGHT) {
+        } else if (anchor == RectangleAnchor.RIGHT) {
             result.setLocation(rectangle.getMaxX(), rectangle.getCenterY());
-        }
-        else if (anchor == RectangleAnchor.TOP_LEFT) {
+        } else if (anchor == RectangleAnchor.TOP_LEFT) {
             result.setLocation(rectangle.getMinX(), rectangle.getMinY());
-        }
-        else if (anchor == RectangleAnchor.TOP_RIGHT) {
+        } else if (anchor == RectangleAnchor.TOP_RIGHT) {
             result.setLocation(rectangle.getMaxX(), rectangle.getMinY());
-        }
-        else if (anchor == RectangleAnchor.BOTTOM_LEFT) {
+        } else if (anchor == RectangleAnchor.BOTTOM_LEFT) {
             result.setLocation(rectangle.getMinX(), rectangle.getMaxY());
-        }
-        else if (anchor == RectangleAnchor.BOTTOM_RIGHT) {
+        } else if (anchor == RectangleAnchor.BOTTOM_RIGHT) {
             result.setLocation(rectangle.getMaxX(), rectangle.getMaxY());
         }
         return result;
     }
-    
+
     /**
      * Creates a new rectangle with the specified dimensions that is aligned to
      * the given anchor point <code>(anchorX, anchorY)</code>.
-     * 
+     *
      * @param dimensions  the dimensions (<code>null</code> not permitted).
      * @param anchorX  the x-anchor.
      * @param anchorY  the y-anchor.
      * @param anchor  the anchor (<code>null</code> not permitted).
-     * 
+     *
      * @return A rectangle.
      */
     public static Rectangle2D createRectangle(final Size2D dimensions,
@@ -162,47 +154,39 @@ public enum RectangleAnchor {
         final double h = dimensions.getHeight();
         if (anchor == RectangleAnchor.CENTER) {
             result = new Rectangle2D.Double(
-                anchorX - w / 2.0, anchorY - h / 2.0, w, h
+                    anchorX - w / 2.0, anchorY - h / 2.0, w, h
             );
-        }
-        else if (anchor == RectangleAnchor.TOP) {
+        } else if (anchor == RectangleAnchor.TOP) {
             result = new Rectangle2D.Double(
-                anchorX - w / 2.0, anchorY - h / 2.0, w, h
+                    anchorX - w / 2.0, anchorY - h / 2.0, w, h
             );
-        }
-        else if (anchor == RectangleAnchor.BOTTOM) {
+        } else if (anchor == RectangleAnchor.BOTTOM) {
             result = new Rectangle2D.Double(
-                anchorX - w / 2.0, anchorY - h / 2.0, w, h
+                    anchorX - w / 2.0, anchorY - h / 2.0, w, h
             );
-        }
-        else if (anchor == RectangleAnchor.LEFT) {
+        } else if (anchor == RectangleAnchor.LEFT) {
             result = new Rectangle2D.Double(
-                anchorX, anchorY - h / 2.0, w, h
+                    anchorX, anchorY - h / 2.0, w, h
             );
-        }
-        else if (anchor == RectangleAnchor.RIGHT) {
+        } else if (anchor == RectangleAnchor.RIGHT) {
             result = new Rectangle2D.Double(
-                anchorX - w, anchorY - h / 2.0, w, h
+                    anchorX - w, anchorY - h / 2.0, w, h
             );
-        }
-        else if (anchor == RectangleAnchor.TOP_LEFT) {
+        } else if (anchor == RectangleAnchor.TOP_LEFT) {
             result = new Rectangle2D.Double(
-                anchorX - w / 2.0, anchorY - h / 2.0, w, h
+                    anchorX - w / 2.0, anchorY - h / 2.0, w, h
             );
-        }
-        else if (anchor == RectangleAnchor.TOP_RIGHT) {
+        } else if (anchor == RectangleAnchor.TOP_RIGHT) {
             result = new Rectangle2D.Double(
-                anchorX - w / 2.0, anchorY - h / 2.0, w, h
+                    anchorX - w / 2.0, anchorY - h / 2.0, w, h
             );
-        }
-        else if (anchor == RectangleAnchor.BOTTOM_LEFT) {
+        } else if (anchor == RectangleAnchor.BOTTOM_LEFT) {
             result = new Rectangle2D.Double(
-                anchorX - w / 2.0, anchorY - h / 2.0, w, h
+                    anchorX - w / 2.0, anchorY - h / 2.0, w, h
             );
-        }
-        else if (anchor == RectangleAnchor.BOTTOM_RIGHT) {
+        } else if (anchor == RectangleAnchor.BOTTOM_RIGHT) {
             result = new Rectangle2D.Double(
-                anchorX - w / 2.0, anchorY - h / 2.0, w, h
+                    anchorX - w / 2.0, anchorY - h / 2.0, w, h
             );
         }
         return result;

@@ -48,14 +48,14 @@
 
 package org.jfree.data.time;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.general.Series;
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesException;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A structure containing zero, one or many {@link TimePeriodValue} instances.  
@@ -65,11 +65,11 @@ import org.jfree.data.general.SeriesException;
  * This is similar to the {@link TimeSeries} class, except that the time 
  * periods can have irregular lengths.
  */
-public class TimePeriodValues extends Series implements Serializable {
+public class TimePeriodValues extends Series<Comparable> implements Serializable {
 
     /** For serialization. */
     static final long serialVersionUID = -2210593619794989709L;
-    
+
     /** Default value for the domain description. */
     protected static final String DEFAULT_DOMAIN_DESCRIPTION = "Time";
 
@@ -87,19 +87,19 @@ public class TimePeriodValues extends Series implements Serializable {
 
     /** Index of the time period with the minimum start milliseconds. */
     private int minStartIndex = -1;
-    
+
     /** Index of the time period with the maximum start milliseconds. */
     private int maxStartIndex = -1;
-    
+
     /** Index of the time period with the minimum middle milliseconds. */
     private int minMiddleIndex = -1;
-    
+
     /** Index of the time period with the maximum middle milliseconds. */
     private int maxMiddleIndex = -1;
-    
+
     /** Index of the time period with the minimum end milliseconds. */
     private int minEndIndex = -1;
-    
+
     /** Index of the time period with the maximum end milliseconds. */
     private int maxEndIndex = -1;
 
@@ -134,7 +134,7 @@ public class TimePeriodValues extends Series implements Serializable {
      * Returns the domain description.
      *
      * @return The domain description (possibly <code>null</code>).
-     * 
+     *
      * @see #getRangeDescription()
      * @see #setDomainDescription(String)
      */
@@ -147,7 +147,7 @@ public class TimePeriodValues extends Series implements Serializable {
      * property name <code>Domain</code> if the description changes).
      *
      * @param description  the new description (<code>null</code> permitted).
-     * 
+     *
      * @see #getDomainDescription()
      */
     public void setDomainDescription(String description) {
@@ -160,7 +160,7 @@ public class TimePeriodValues extends Series implements Serializable {
      * Returns the range description.
      *
      * @return The range description (possibly <code>null</code>).
-     * 
+     *
      * @see #getDomainDescription()
      * @see #setRangeDescription(String)
      */
@@ -173,7 +173,7 @@ public class TimePeriodValues extends Series implements Serializable {
      * name <code>Range</code>.
      *
      * @param description  the new description (<code>null</code> permitted).
-     * 
+     *
      * @see #getRangeDescription()
      */
     public void setRangeDescription(String description) {
@@ -188,7 +188,7 @@ public class TimePeriodValues extends Series implements Serializable {
      * @return The item count.
      */
     @Override
-	public int getItemCount() {
+    public int getItemCount() {
         return this.data.size();
     }
 
@@ -211,7 +211,7 @@ public class TimePeriodValues extends Series implements Serializable {
      *     <code>getItemCount() - 1</code>).
      *
      * @return The time period at the specified index.
-     * 
+     *
      * @see #getDataItem(int)
      */
     public TimePeriod getTimePeriod(int index) {
@@ -225,7 +225,7 @@ public class TimePeriodValues extends Series implements Serializable {
      *     <code>getItemCount() - 1</code>).
      *
      * @return The value at the specified index (possibly <code>null</code>).
-     * 
+     *
      * @see #getDataItem(int)
      */
     public Number getValue(int index) {
@@ -246,93 +246,87 @@ public class TimePeriodValues extends Series implements Serializable {
         updateBounds(item.getPeriod(), this.data.size() - 1);
         fireSeriesChanged();
     }
-    
+
     /**
      * Update the index values for the maximum and minimum bounds.
-     * 
+     *
      * @param period  the time period.
      * @param index  the index of the time period.
      */
     private void updateBounds(TimePeriod period, int index) {
-        
+
         long start = period.getStart().getTime();
         long end = period.getEnd().getTime();
         long middle = start + ((end - start) / 2);
 
         if (this.minStartIndex >= 0) {
             long minStart = getDataItem(this.minStartIndex).getPeriod()
-                .getStart().getTime();
+                    .getStart().getTime();
             if (start < minStart) {
-                this.minStartIndex = index;           
+                this.minStartIndex = index;
             }
-        }
-        else {
+        } else {
             this.minStartIndex = index;
         }
-        
+
         if (this.maxStartIndex >= 0) {
             long maxStart = getDataItem(this.maxStartIndex).getPeriod()
-                .getStart().getTime();
+                    .getStart().getTime();
             if (start > maxStart) {
-                this.maxStartIndex = index;           
+                this.maxStartIndex = index;
             }
-        }
-        else {
+        } else {
             this.maxStartIndex = index;
         }
-        
+
         if (this.minMiddleIndex >= 0) {
             long s = getDataItem(this.minMiddleIndex).getPeriod().getStart()
-                .getTime();
+                    .getTime();
             long e = getDataItem(this.minMiddleIndex).getPeriod().getEnd()
-                .getTime();
+                    .getTime();
             long minMiddle = s + (e - s) / 2;
             if (middle < minMiddle) {
-                this.minMiddleIndex = index;           
+                this.minMiddleIndex = index;
             }
-        }
-        else {
+        } else {
             this.minMiddleIndex = index;
         }
-        
+
         if (this.maxMiddleIndex >= 0) {
             long s = getDataItem(this.maxMiddleIndex).getPeriod().getStart()
-                .getTime();
+                    .getTime();
             long e = getDataItem(this.maxMiddleIndex).getPeriod().getEnd()
-                .getTime();
+                    .getTime();
             long maxMiddle = s + (e - s) / 2;
             if (middle > maxMiddle) {
-                this.maxMiddleIndex = index;           
+                this.maxMiddleIndex = index;
             }
-        }
-        else {
+        } else {
             this.maxMiddleIndex = index;
         }
-        
+
         if (this.minEndIndex >= 0) {
             long minEnd = getDataItem(this.minEndIndex).getPeriod().getEnd()
-                .getTime();
+                    .getTime();
             if (end < minEnd) {
-                this.minEndIndex = index;           
+                this.minEndIndex = index;
             }
-        }
-        else {
+        } else {
             this.minEndIndex = index;
         }
-       
+
         if (this.maxEndIndex >= 0) {
             long maxEnd = getDataItem(this.maxEndIndex).getPeriod().getEnd()
-                .getTime();
+                    .getTime();
             if (end > maxEnd) {
-                this.maxEndIndex = index;           
+                this.maxEndIndex = index;
             }
-        }
-        else {
+        } else {
             this.maxEndIndex = index;
         }
-        
+
     }
-    
+
     /**
      * Recalculates the bounds for the collection of items.
      */
@@ -355,7 +349,7 @@ public class TimePeriodValues extends Series implements Serializable {
      *
      * @param period  the time period (<code>null</code> not permitted).
      * @param value  the value.
-     * 
+     *
      * @see #add(TimePeriod, Number)
      */
     public void add(TimePeriod period, double value) {
@@ -402,7 +396,7 @@ public class TimePeriodValues extends Series implements Serializable {
         recalculateBounds();
         fireSeriesChanged();
     }
-    
+
     /**
      * Tests the series for equality with another object.
      *
@@ -411,7 +405,7 @@ public class TimePeriodValues extends Series implements Serializable {
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -422,11 +416,11 @@ public class TimePeriodValues extends Series implements Serializable {
             return false;
         }
         TimePeriodValues that = (TimePeriodValues) obj;
-        if (!ObjectUtilities.equal(this.getDomainDescription(), 
+        if (!ObjectUtilities.equal(this.getDomainDescription(),
                 that.getDomainDescription())) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.getRangeDescription(), 
+        if (!ObjectUtilities.equal(this.getRangeDescription(),
                 that.getRangeDescription())) {
             return false;
         }
@@ -448,7 +442,7 @@ public class TimePeriodValues extends Series implements Serializable {
      * @return The hashcode
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result;
         result = (this.domain != null ? this.domain.hashCode() : 0);
         result = 29 * result + (this.range != null ? this.range.hashCode() : 0);
@@ -474,11 +468,11 @@ public class TimePeriodValues extends Series implements Serializable {
      * </ul>
      *
      * @return A clone of the time series.
-     * 
+     *
      * @throws CloneNotSupportedException if there is a cloning problem.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         Object clone = createCopy(0, getItemCount() - 1);
         return clone;
     }
@@ -491,23 +485,22 @@ public class TimePeriodValues extends Series implements Serializable {
      * @param end  the index of the last item to copy.
      *
      * @return A copy of a subset of the items.
-     * 
+     *
      * @throws CloneNotSupportedException if there is a cloning problem.
      */
-    public TimePeriodValues createCopy(int start, int end) 
-        throws CloneNotSupportedException {
+    public TimePeriodValues createCopy(int start, int end)
+            throws CloneNotSupportedException {
 
         TimePeriodValues copy = (TimePeriodValues) super.clone();
 
         copy.data = new ArrayList<TimePeriodValue>();
-        if (this.data.size() > 0) {
+        if (!this.data.isEmpty()) {
             for (int index = start; index <= end; index++) {
                 TimePeriodValue item = this.data.get(index);
                 TimePeriodValue clone = (TimePeriodValue) item.clone();
                 try {
                     copy.add(clone);
-                }
-                catch (SeriesException e) {
+                } catch (SeriesException e) {
                     throw new RuntimeException("Could not add cloned item", e);
                 }
             }
@@ -515,19 +508,19 @@ public class TimePeriodValues extends Series implements Serializable {
         return copy;
 
     }
-    
+
     /**
      * Returns the index of the time period with the minimum start milliseconds.
-     * 
+     *
      * @return The index.
      */
     public int getMinStartIndex() {
         return this.minStartIndex;
     }
-    
+
     /**
      * Returns the index of the time period with the maximum start milliseconds.
-     * 
+     *
      * @return The index.
      */
     public int getMaxStartIndex() {
@@ -537,17 +530,17 @@ public class TimePeriodValues extends Series implements Serializable {
     /**
      * Returns the index of the time period with the minimum middle 
      * milliseconds.
-     * 
+     *
      * @return The index.
      */
     public int getMinMiddleIndex() {
         return this.minMiddleIndex;
     }
-    
+
     /**
      * Returns the index of the time period with the maximum middle 
      * milliseconds.
-     * 
+     *
      * @return The index.
      */
     public int getMaxMiddleIndex() {
@@ -556,16 +549,16 @@ public class TimePeriodValues extends Series implements Serializable {
 
     /**
      * Returns the index of the time period with the minimum end milliseconds.
-     * 
+     *
      * @return The index.
      */
     public int getMinEndIndex() {
         return this.minEndIndex;
     }
-    
+
     /**
      * Returns the index of the time period with the maximum end milliseconds.
-     * 
+     *
      * @return The index.
      */
     public int getMaxEndIndex() {

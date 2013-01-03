@@ -63,6 +63,7 @@ import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  *  An abstract class that defines our requirements for manipulating dates,
@@ -83,15 +84,15 @@ import java.util.GregorianCalendar;
  *
  * @author David Gilbert
  */
-public abstract class SerialDate implements Comparable, 
-                                            Serializable {
+public abstract class SerialDate implements Comparable,
+        Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -293716040467423637L;
-    
+
     /** Date format symbols. */
-    public static final DateFormatSymbols
-        DATE_FORMAT_SYMBOLS = new SimpleDateFormat().getDateFormatSymbols();
+    public static final DateFormatSymbols DATE_FORMAT_SYMBOLS = createDateSymbols();
+
 
     /** The serial number for 1 January 1900. */
     public static final int SERIAL_LOWER_BOUND = 2;
@@ -108,18 +109,18 @@ public abstract class SerialDate implements Comparable,
     /** Useful constant for Monday. Equivalent to java.util.Calendar.MONDAY. */
     public static final int MONDAY = Calendar.MONDAY;
 
-    /** 
+    /**
      * Useful constant for Tuesday. Equivalent to java.util.Calendar.TUESDAY. 
      */
     public static final int TUESDAY = Calendar.TUESDAY;
 
-    /** 
+    /**
      * Useful constant for Wednesday. Equivalent to 
      * java.util.Calendar.WEDNESDAY. 
      */
     public static final int WEDNESDAY = Calendar.WEDNESDAY;
 
-    /** 
+    /**
      * Useful constant for Thrusday. Equivalent to java.util.Calendar.THURSDAY. 
      */
     public static final int THURSDAY = Calendar.THURSDAY;
@@ -127,7 +128,7 @@ public abstract class SerialDate implements Comparable,
     /** Useful constant for Friday. Equivalent to java.util.Calendar.FRIDAY. */
     public static final int FRIDAY = Calendar.FRIDAY;
 
-    /** 
+    /**
      * Useful constant for Saturday. Equivalent to java.util.Calendar.SATURDAY.
      */
     public static final int SATURDAY = Calendar.SATURDAY;
@@ -137,25 +138,25 @@ public abstract class SerialDate implements Comparable,
 
     /** The number of days in each month in non leap years. */
     static final int[] LAST_DAY_OF_MONTH =
-        {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+            {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     /** The number of days in a (non-leap) year up to the end of each month. */
     static final int[] AGGREGATE_DAYS_TO_END_OF_MONTH =
-        {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365};
+            {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365};
 
     /** The number of days in a year up to the end of the preceding month. */
     static final int[] AGGREGATE_DAYS_TO_END_OF_PRECEDING_MONTH =
-        {0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365};
+            {0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365};
 
     /** The number of days in a leap year up to the end of each month. */
     static final int[] LEAP_YEAR_AGGREGATE_DAYS_TO_END_OF_MONTH =
-        {0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366};
+            {0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366};
 
-    /** 
+    /**
      * The number of days in a leap year up to the end of the preceding month. 
      */
-    static final int[] 
-        LEAP_YEAR_AGGREGATE_DAYS_TO_END_OF_PRECEDING_MONTH =
+    static final int[]
+            LEAP_YEAR_AGGREGATE_DAYS_TO_END_OF_PRECEDING_MONTH =
             {0, 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366};
 
     /** A useful constant for referring to the first week in a month. */
@@ -185,19 +186,19 @@ public abstract class SerialDate implements Comparable,
     /** Useful range constant. */
     public static final int INCLUDE_BOTH = 3;
 
-    /** 
+    /**
      * Useful constant for specifying a day of the week relative to a fixed 
      * date. 
      */
     public static final int PRECEDING = -1;
 
-    /** 
+    /**
      * Useful constant for specifying a day of the week relative to a fixed 
      * date. 
      */
     public static final int NEAREST = 0;
 
-    /** 
+    /**
      * Useful constant for specifying a day of the week relative to a fixed 
      * date. 
      */
@@ -223,16 +224,16 @@ public abstract class SerialDate implements Comparable,
      */
     public static boolean isValidWeekdayCode(final int code) {
 
-        switch(code) {
-            case SUNDAY: 
-            case MONDAY: 
-            case TUESDAY: 
-            case WEDNESDAY: 
-            case THURSDAY: 
-            case FRIDAY: 
-            case SATURDAY: 
+        switch (code) {
+            case SUNDAY:
+            case MONDAY:
+            case TUESDAY:
+            case WEDNESDAY:
+            case THURSDAY:
+            case FRIDAY:
+            case SATURDAY:
                 return true;
-            default: 
+            default:
                 return false;
         }
 
@@ -248,8 +249,8 @@ public abstract class SerialDate implements Comparable,
      */
     public static int stringToWeekdayCode(String s) {
 
-        final String[] shortWeekdayNames 
-            = DATE_FORMAT_SYMBOLS.getShortWeekdays();
+        final String[] shortWeekdayNames
+                = DATE_FORMAT_SYMBOLS.getShortWeekdays();
         final String[] weekDayNames = DATE_FORMAT_SYMBOLS.getWeekdays();
 
         int result = -1;
@@ -307,8 +308,7 @@ public abstract class SerialDate implements Comparable,
 
         if (shortened) {
             return DATE_FORMAT_SYMBOLS.getShortMonths();
-        }
-        else {
+        } else {
             return DATE_FORMAT_SYMBOLS.getMonths();
         }
 
@@ -324,7 +324,7 @@ public abstract class SerialDate implements Comparable,
      */
     public static boolean isValidMonthCode(final int code) {
 
-        switch(code) {
+        switch (code) {
             case MonthConstants.JANUARY:
             case MonthConstants.FEBRUARY:
             case MonthConstants.MARCH:
@@ -338,7 +338,7 @@ public abstract class SerialDate implements Comparable,
             case MonthConstants.NOVEMBER:
             case MonthConstants.DECEMBER:
                 return true;
-            default: 
+            default:
                 return false;
         }
 
@@ -353,21 +353,26 @@ public abstract class SerialDate implements Comparable,
      */
     public static int monthCodeToQuarter(final int code) {
 
-        switch(code) {
+        switch (code) {
             case MonthConstants.JANUARY:
             case MonthConstants.FEBRUARY:
-            case MonthConstants.MARCH: return 1;
+            case MonthConstants.MARCH:
+                return 1;
             case MonthConstants.APRIL:
             case MonthConstants.MAY:
-            case MonthConstants.JUNE: return 2;
+            case MonthConstants.JUNE:
+                return 2;
             case MonthConstants.JULY:
             case MonthConstants.AUGUST:
-            case MonthConstants.SEPTEMBER: return 3;
+            case MonthConstants.SEPTEMBER:
+                return 3;
             case MonthConstants.OCTOBER:
             case MonthConstants.NOVEMBER:
-            case MonthConstants.DECEMBER: return 4;
-            default: throw new IllegalArgumentException(
-                "SerialDate.monthCodeToQuarter: invalid month code.");
+            case MonthConstants.DECEMBER:
+                return 4;
+            default:
+                throw new IllegalArgumentException(
+                        "SerialDate.monthCodeToQuarter: invalid month code.");
         }
 
     }
@@ -400,21 +405,20 @@ public abstract class SerialDate implements Comparable,
      *
      * @return a string representing the supplied month.
      */
-    public static String monthCodeToString(final int month, 
+    public static String monthCodeToString(final int month,
                                            final boolean shortened) {
 
         // check arguments...
         if (!isValidMonthCode(month)) {
             throw new IllegalArgumentException(
-                "SerialDate.monthCodeToString: month outside valid range.");
+                    "SerialDate.monthCodeToString: month outside valid range.");
         }
 
         final String[] months;
 
         if (shortened) {
             months = DATE_FORMAT_SYMBOLS.getShortMonths();
-        }
-        else {
+        } else {
             months = DATE_FORMAT_SYMBOLS.getMonths();
         }
 
@@ -445,8 +449,7 @@ public abstract class SerialDate implements Comparable,
         // first try parsing the string as an integer (1-12)...
         try {
             result = Integer.parseInt(s);
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             // suppress
         }
 
@@ -478,13 +481,15 @@ public abstract class SerialDate implements Comparable,
      */
     public static boolean isValidWeekInMonthCode(final int code) {
 
-        switch(code) {
-            case FIRST_WEEK_IN_MONTH: 
-            case SECOND_WEEK_IN_MONTH: 
-            case THIRD_WEEK_IN_MONTH: 
-            case FOURTH_WEEK_IN_MONTH: 
-            case LAST_WEEK_IN_MONTH: return true;
-            default: return false;
+        switch (code) {
+            case FIRST_WEEK_IN_MONTH:
+            case SECOND_WEEK_IN_MONTH:
+            case THIRD_WEEK_IN_MONTH:
+            case FOURTH_WEEK_IN_MONTH:
+            case LAST_WEEK_IN_MONTH:
+                return true;
+            default:
+                return false;
         }
 
     }
@@ -500,14 +505,11 @@ public abstract class SerialDate implements Comparable,
 
         if ((yyyy % 4) != 0) {
             return false;
-        }
-        else if ((yyyy % 400) == 0) {
+        } else if ((yyyy % 400) == 0) {
             return true;
-        }
-        else if ((yyyy % 100) == 0) {
+        } else if ((yyyy % 100) == 0) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
 
@@ -546,11 +548,9 @@ public abstract class SerialDate implements Comparable,
         final int result = LAST_DAY_OF_MONTH[month];
         if (month != MonthConstants.FEBRUARY) {
             return result;
-        }
-        else if (isLeapYear(yyyy)) {
+        } else if (isLeapYear(yyyy)) {
             return result + 1;
-        }
-        else {
+        } else {
             return result;
         }
 
@@ -584,15 +584,15 @@ public abstract class SerialDate implements Comparable,
      *
      * @return a new date.
      */
-    public static SerialDate addMonths(final int months, 
+    public static SerialDate addMonths(final int months,
                                        final SerialDate base) {
 
-        final int yy = (12 * base.getYYYY() + base.getMonth() + months - 1) 
-                       / 12;
-        final int mm = (12 * base.getYYYY() + base.getMonth() + months - 1) 
-                       % 12 + 1;
+        final int yy = (12 * base.getYYYY() + base.getMonth() + months - 1)
+                / 12;
+        final int mm = (12 * base.getYYYY() + base.getMonth() + months - 1)
+                % 12 + 1;
         final int dd = Math.min(
-            base.getDayOfMonth(), SerialDate.lastDayOfMonth(mm, yy)
+                base.getDayOfMonth(), SerialDate.lastDayOfMonth(mm, yy)
         );
         return SerialDate.createInstance(dd, mm, yy);
 
@@ -615,7 +615,7 @@ public abstract class SerialDate implements Comparable,
 
         final int targetY = baseY + years;
         final int targetD = Math.min(
-            baseD, SerialDate.lastDayOfMonth(baseM, targetY)
+                baseD, SerialDate.lastDayOfMonth(baseM, targetY)
         );
 
         return SerialDate.createInstance(targetD, baseM, targetY);
@@ -632,13 +632,13 @@ public abstract class SerialDate implements Comparable,
      * @return the latest date that falls on the specified day-of-the-week and 
      *         is BEFORE the base date.
      */
-    public static SerialDate getPreviousDayOfWeek(final int targetWeekday, 
+    public static SerialDate getPreviousDayOfWeek(final int targetWeekday,
                                                   final SerialDate base) {
 
         // check arguments...
         if (!SerialDate.isValidWeekdayCode(targetWeekday)) {
             throw new IllegalArgumentException(
-                "Invalid day-of-the-week code."
+                    "Invalid day-of-the-week code."
             );
         }
 
@@ -647,8 +647,7 @@ public abstract class SerialDate implements Comparable,
         final int baseDOW = base.getDayOfWeek();
         if (baseDOW > targetWeekday) {
             adjust = Math.min(0, targetWeekday - baseDOW);
-        }
-        else {
+        } else {
             adjust = -7 + Math.max(0, targetWeekday - baseDOW);
         }
 
@@ -666,13 +665,13 @@ public abstract class SerialDate implements Comparable,
      * @return the earliest date that falls on the specified day-of-the-week 
      *         and is AFTER the base date.
      */
-    public static SerialDate getFollowingDayOfWeek(final int targetWeekday, 
+    public static SerialDate getFollowingDayOfWeek(final int targetWeekday,
                                                    final SerialDate base) {
 
         // check arguments...
         if (!SerialDate.isValidWeekdayCode(targetWeekday)) {
             throw new IllegalArgumentException(
-                "Invalid day-of-the-week code."
+                    "Invalid day-of-the-week code."
             );
         }
 
@@ -681,8 +680,7 @@ public abstract class SerialDate implements Comparable,
         final int baseDOW = base.getDayOfWeek();
         if (baseDOW > targetWeekday) {
             adjust = 7 + Math.min(0, targetWeekday - baseDOW);
-        }
-        else {
+        } else {
             adjust = Math.max(0, targetWeekday - baseDOW);
         }
 
@@ -699,13 +697,13 @@ public abstract class SerialDate implements Comparable,
      * @return the date that falls on the specified day-of-the-week and is 
      *         CLOSEST to the base date.
      */
-    public static SerialDate getNearestDayOfWeek(final int targetDOW,  
+    public static SerialDate getNearestDayOfWeek(final int targetDOW,
                                                  final SerialDate base) {
 
         // check arguments...
         if (!SerialDate.isValidWeekdayCode(targetDOW)) {
             throw new IllegalArgumentException(
-                "Invalid day-of-the-week code."
+                    "Invalid day-of-the-week code."
             );
         }
 
@@ -731,7 +729,7 @@ public abstract class SerialDate implements Comparable,
      */
     public SerialDate getEndOfCurrentMonth(final SerialDate base) {
         final int last = SerialDate.lastDayOfMonth(
-            base.getMonth(), base.getYYYY()
+                base.getMonth(), base.getYYYY()
         );
         return SerialDate.createInstance(last, base.getMonth(), base.getYYYY());
     }
@@ -748,12 +746,17 @@ public abstract class SerialDate implements Comparable,
     public static String weekInMonthToString(final int count) {
 
         switch (count) {
-            case SerialDate.FIRST_WEEK_IN_MONTH : return "First";
-            case SerialDate.SECOND_WEEK_IN_MONTH : return "Second";
-            case SerialDate.THIRD_WEEK_IN_MONTH : return "Third";
-            case SerialDate.FOURTH_WEEK_IN_MONTH : return "Fourth";
-            case SerialDate.LAST_WEEK_IN_MONTH : return "Last";
-            default :
+            case SerialDate.FIRST_WEEK_IN_MONTH:
+                return "First";
+            case SerialDate.SECOND_WEEK_IN_MONTH:
+                return "Second";
+            case SerialDate.THIRD_WEEK_IN_MONTH:
+                return "Third";
+            case SerialDate.FOURTH_WEEK_IN_MONTH:
+                return "Fourth";
+            case SerialDate.LAST_WEEK_IN_MONTH:
+                return "Last";
+            default:
                 return "SerialDate.weekInMonthToString(): invalid code.";
         }
 
@@ -771,10 +774,14 @@ public abstract class SerialDate implements Comparable,
     public static String relativeToString(final int relative) {
 
         switch (relative) {
-            case SerialDate.PRECEDING : return "Preceding";
-            case SerialDate.NEAREST : return "Nearest";
-            case SerialDate.FOLLOWING : return "Following";
-            default : return "ERROR : Relative To String";
+            case SerialDate.PRECEDING:
+                return "Preceding";
+            case SerialDate.NEAREST:
+                return "Nearest";
+            case SerialDate.FOLLOWING:
+                return "Following";
+            default:
+                return "ERROR : Relative To String";
         }
 
     }
@@ -789,7 +796,7 @@ public abstract class SerialDate implements Comparable,
      *
      * @return An instance of {@link SerialDate}.
      */
-    public static SerialDate createInstance(final int day, final int month, 
+    public static SerialDate createInstance(final int day, final int month,
                                             final int yyyy) {
         return new SpreadsheetDate(day, month, yyyy);
     }
@@ -818,8 +825,8 @@ public abstract class SerialDate implements Comparable,
         final GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         return new SpreadsheetDate(calendar.get(Calendar.DATE),
-                                   calendar.get(Calendar.MONTH) + 1,
-                                   calendar.get(Calendar.YEAR));
+                calendar.get(Calendar.MONTH) + 1,
+                calendar.get(Calendar.YEAR));
 
     }
 
@@ -864,12 +871,12 @@ public abstract class SerialDate implements Comparable,
     /**
      * Converts the date to a string.
      *
-     * @return  a string representation of the date.
+     * @return a string representation of the date.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return getDayOfMonth() + "-" + SerialDate.monthCodeToString(getMonth())
-                               + "-" + getYYYY();
+                + "-" + getYYYY();
     }
 
     /**
@@ -992,7 +999,7 @@ public abstract class SerialDate implements Comparable,
      *
      * @return A boolean.
      */
-    public abstract boolean isInRange(SerialDate d1, SerialDate d2, 
+    public abstract boolean isInRange(SerialDate d1, SerialDate d2,
                                       int include);
 
     /**
@@ -1032,4 +1039,14 @@ public abstract class SerialDate implements Comparable,
         return getNearestDayOfWeek(targetDOW, this);
     }
 
+    /**
+     * Creates the date format symbols.
+     *
+     * @return the list of english date format symbols.
+     */
+    private static DateFormatSymbols createDateSymbols() {
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat format = new SimpleDateFormat(pattern, new Locale("en"));
+        return format.getDateFormatSymbols();
+    }
 }

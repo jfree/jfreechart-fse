@@ -46,28 +46,14 @@ package org.jfree.data.xy;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link DefaultTableXYDataset} class.
  */
-public class DefaultTableXYDatasetTest  {
-
-
-
+public class DefaultTableXYDatasetTest {
 
 
     /**
@@ -141,15 +127,15 @@ public class DefaultTableXYDatasetTest  {
         d1.addSeries(s1);
 
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(d1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(d1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         DefaultTableXYDataset d2 = (DefaultTableXYDataset) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(d1, d2);
 
@@ -214,8 +200,7 @@ public class DefaultTableXYDatasetTest  {
         try {
             d1.getSeries(-1);
             fail("IllegalArgumentException should have been thrown on negative key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Index outside valid range.", e.getMessage());
         }
 
@@ -223,8 +208,7 @@ public class DefaultTableXYDatasetTest  {
         try {
             d1.getSeries(1);
             fail("IllegalArgumentException should have been thrown on key out of range");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Index outside valid range.", e.getMessage());
         }
     }

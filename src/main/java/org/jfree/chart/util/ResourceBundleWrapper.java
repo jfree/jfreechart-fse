@@ -94,7 +94,7 @@ public class ResourceBundleWrapper {
      * @param urlClassLoader  the class loader.
      */
     public static void removeCodeBase(URL codeBase,
-            URLClassLoader urlClassLoader) {
+                                      URLClassLoader urlClassLoader) {
         List<URL> urlsNoBase = new ArrayList<URL>();
 
         URL[] urls = urlClassLoader.getURLs();
@@ -122,8 +122,7 @@ public class ResourceBundleWrapper {
         if (noCodeBaseClassLoader != null) {
             return ResourceBundle.getBundle(baseName, Locale.getDefault(),
                     noCodeBaseClassLoader);
-        }
-        else {
+        } else {
             // standard ResourceBundle behaviour
             return ResourceBundle.getBundle(baseName);
         }
@@ -145,8 +144,7 @@ public class ResourceBundleWrapper {
         if (noCodeBaseClassLoader != null) {
             return ResourceBundle.getBundle(baseName, locale,
                     noCodeBaseClassLoader);
-        }
-        else {
+        } else {
             // standard ResourceBundle behaviour
             return ResourceBundle.getBundle(baseName, locale);
         }
@@ -163,7 +161,7 @@ public class ResourceBundleWrapper {
      * @return The resource bundle.
      */
     public static ResourceBundle getBundle(String baseName, Locale locale,
-            ClassLoader loader) {
+                                           ClassLoader loader) {
         return ResourceBundle.getBundle(baseName, locale, loader);
     }
 

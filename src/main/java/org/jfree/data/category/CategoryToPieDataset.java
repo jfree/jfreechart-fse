@@ -49,14 +49,14 @@
 
 package org.jfree.data.category;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jfree.chart.util.TableOrder;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.general.PieDataset;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A {@link PieDataset} implementation that obtains its data from one row or
@@ -144,13 +144,12 @@ public class CategoryToPieDataset extends AbstractDataset
      * @return The item count.
      */
     @Override
-	public int getItemCount() {
+    public int getItemCount() {
         int result = 0;
         if (this.source != null) {
             if (this.extract == TableOrder.BY_ROW) {
                 result = this.source.getColumnCount();
-            }
-            else if (this.extract == TableOrder.BY_COLUMN) {
+            } else if (this.extract == TableOrder.BY_COLUMN) {
                 result = this.source.getRowCount();
             }
         }
@@ -168,7 +167,7 @@ public class CategoryToPieDataset extends AbstractDataset
      *     range <code>0</code> to <code>getItemCount() - 1</code>.
      */
     @Override
-	public Number getValue(int item) {
+    public Number getValue(int item) {
         Number result = null;
         if (item < 0 || item >= getItemCount()) {
             // this will include the case where the underlying dataset is null
@@ -177,8 +176,7 @@ public class CategoryToPieDataset extends AbstractDataset
         }
         if (this.extract == TableOrder.BY_ROW) {
             result = this.source.getValue(this.index, item);
-        }
-        else if (this.extract == TableOrder.BY_COLUMN) {
+        } else if (this.extract == TableOrder.BY_COLUMN) {
             result = this.source.getValue(item, this.index);
         }
         return result;
@@ -196,7 +194,7 @@ public class CategoryToPieDataset extends AbstractDataset
      *     specified range.
      */
     @Override
-	public Comparable getKey(int index) {
+    public Comparable getKey(int index) {
         Comparable result = null;
         if (index < 0 || index >= getItemCount()) {
             // this includes the case where the underlying dataset is null
@@ -204,8 +202,7 @@ public class CategoryToPieDataset extends AbstractDataset
         }
         if (this.extract == TableOrder.BY_ROW) {
             result = this.source.getColumnKey(index);
-        }
-        else if (this.extract == TableOrder.BY_COLUMN) {
+        } else if (this.extract == TableOrder.BY_COLUMN) {
             result = this.source.getRowKey(index);
         }
         return result;
@@ -220,13 +217,12 @@ public class CategoryToPieDataset extends AbstractDataset
      * @return The index for the key, or <code>-1</code>.
      */
     @Override
-	public int getIndex(Comparable key) {
+    public int getIndex(Comparable key) {
         int result = -1;
         if (this.source != null) {
             if (this.extract == TableOrder.BY_ROW) {
                 result = this.source.getColumnIndex(key);
-            }
-            else if (this.extract == TableOrder.BY_COLUMN) {
+            } else if (this.extract == TableOrder.BY_COLUMN) {
                 result = this.source.getRowIndex(key);
             }
         }
@@ -242,13 +238,12 @@ public class CategoryToPieDataset extends AbstractDataset
      * @return The keys.
      */
     @Override
-	public List<Comparable> getKeys() {
+    public List<Comparable> getKeys() {
         List<Comparable> result = new ArrayList<Comparable>();// = Collections.EMPTY_LIST;
         if (this.source != null) {
             if (this.extract == TableOrder.BY_ROW) {
                 result = this.source.getColumnKeys();
-            }
-            else if (this.extract == TableOrder.BY_COLUMN) {
+            } else if (this.extract == TableOrder.BY_COLUMN) {
                 result = this.source.getRowKeys();
             }
         }
@@ -265,14 +260,13 @@ public class CategoryToPieDataset extends AbstractDataset
      * @return The value (possibly <code>null</code>).
      */
     @Override
-	public Number getValue(Comparable key) {
+    public Number getValue(Comparable key) {
         Number result = null;
         int keyIndex = getIndex(key);
         if (keyIndex != -1) {
             if (this.extract == TableOrder.BY_ROW) {
                 result = this.source.getValue(this.index, keyIndex);
-            }
-            else if (this.extract == TableOrder.BY_COLUMN) {
+            } else if (this.extract == TableOrder.BY_COLUMN) {
                 result = this.source.getValue(keyIndex, this.index);
             }
         }
@@ -287,7 +281,7 @@ public class CategoryToPieDataset extends AbstractDataset
      *     source is sent to the listeners).
      */
     @Override
-	public void datasetChanged(DatasetChangeEvent event) {
+    public void datasetChanged(DatasetChangeEvent event) {
         fireDatasetChanged();
     }
 
@@ -301,7 +295,7 @@ public class CategoryToPieDataset extends AbstractDataset
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -326,8 +320,7 @@ public class CategoryToPieDataset extends AbstractDataset
                 if (v2 != null) {
                     return false;
                 }
-            }
-            else {
+            } else {
                 if (!v1.equals(v2)) {
                     return false;
                 }

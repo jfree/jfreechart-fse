@@ -79,8 +79,7 @@ public class XIntervalDataItem extends ComparableObjectItem {
         YWithXInterval interval = (YWithXInterval) getObject();
         if (interval != null) {
             return interval.getY();
-        }
-        else {
+        } else {
             return Double.NaN;
         }
     }
@@ -94,8 +93,7 @@ public class XIntervalDataItem extends ComparableObjectItem {
         YWithXInterval interval = (YWithXInterval) getObject();
         if (interval != null) {
             return interval.getXLow();
-        }
-        else {
+        } else {
             return Double.NaN;
         }
     }
@@ -109,8 +107,7 @@ public class XIntervalDataItem extends ComparableObjectItem {
         YWithXInterval interval = (YWithXInterval) getObject();
         if (interval != null) {
             return interval.getXHigh();
-        }
-        else {
+        } else {
             return Double.NaN;
         }
     }

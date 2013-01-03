@@ -72,10 +72,19 @@
 
 package org.jfree.chart.renderer.xy;
 
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.entity.EntityCollection;
+import org.jfree.chart.event.RendererChangeEvent;
+import org.jfree.chart.plot.CrosshairState;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.util.*;
+import org.jfree.data.xy.XYDataset;
+
+import java.awt.*;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -83,23 +92,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.BooleanList;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
-import org.jfree.chart.entity.EntityCollection;
-import org.jfree.chart.event.RendererChangeEvent;
-import org.jfree.chart.plot.CrosshairState;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.util.LineUtilities;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.data.xy.XYDataset;
 
 /**
  * A renderer that connects data points with lines and/or draws shapes at each
@@ -197,7 +189,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
 
         this.drawOutlines = true;
         this.useOutlinePaint = false;  // use item paint for outlines by
-                                       // default, not outline paint
+        // default, not outline paint
 
         this.drawSeriesLineAsPath = false;
     }
@@ -678,12 +670,12 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
          */
         @Override
         public void startSeriesPass(XYDataset dataset, int series,
-                int firstItem, int lastItem, int pass, int passCount) {
+                                    int firstItem, int lastItem, int pass, int passCount) {
             this.seriesPath.reset();
             this.lastPointGood = false;
             super.startSeriesPass(dataset, series, firstItem, lastItem, pass,
                     passCount);
-       }
+        }
 
     }
 
@@ -759,8 +751,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
                 if (this.drawSeriesLineAsPath) {
                     drawPrimaryLineAsPath(state, g2, plot, dataset, pass,
                             series, item, domainAxis, rangeAxis, dataArea);
-                }
-                else {
+                } else {
                     drawPrimaryLine(state, g2, plot, dataset, pass, series,
                             item, domainAxis, rangeAxis, dataArea);
                 }
@@ -858,7 +849,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
 
         // only draw if we have good values
         if (Double.isNaN(transX0) || Double.isNaN(transY0)
-            || Double.isNaN(transX1) || Double.isNaN(transY1)) {
+                || Double.isNaN(transX1) || Double.isNaN(transY1)) {
             return;
         }
 
@@ -866,8 +857,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
         boolean visible = false;
         if (orientation == PlotOrientation.HORIZONTAL) {
             state.workingLine.setLine(transY0, transX0, transY1, transX1);
-        }
-        else if (orientation == PlotOrientation.VERTICAL) {
+        } else if (orientation == PlotOrientation.VERTICAL) {
             state.workingLine.setLine(transX0, transY0, transX1, transY1);
         }
         visible = LineUtilities.clipLine(state.workingLine, dataArea);
@@ -943,13 +933,11 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
             }
             if (s.isLastPointGood()) {
                 s.seriesPath.lineTo(x, y);
-            }
-            else {
+            } else {
                 s.seriesPath.moveTo(x, y);
             }
             s.setLastPointGood(true);
-        }
-        else {
+        } else {
             s.setLastPointGood(false);
         }
         // if this is the last item, draw the path ...
@@ -1007,8 +995,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
             if (orientation == PlotOrientation.HORIZONTAL) {
                 shape = ShapeUtilities.createTranslatedShape(shape, transY1,
                         transX1);
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 shape = ShapeUtilities.createTranslatedShape(shape, transX1,
                         transY1);
             }
@@ -1017,8 +1004,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
                 if (getItemShapeFilled(series, item)) {
                     if (this.useFillPaint) {
                         g2.setPaint(getItemFillPaint(series, item));
-                    }
-                    else {
+                    } else {
                         g2.setPaint(getItemPaint(series, item));
                     }
                     g2.fill(shape);
@@ -1026,8 +1012,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
                 if (this.drawOutlines) {
                     if (getUseOutlinePaint()) {
                         g2.setPaint(getItemOutlinePaint(series, item));
-                    }
-                    else {
+                    } else {
                         g2.setPaint(getItemPaint(series, item));
                     }
                     g2.setStroke(getItemOutlineStroke(series, item));
@@ -1081,7 +1066,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
         if (dataset == null) {
             return null;
         }
-        
+
         if (!getItemVisible(series, 0)) {
             return null;
         }
@@ -1123,7 +1108,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
         result.setSeriesIndex(series);
         result.setDataset(dataset);
         result.setDatasetIndex(datasetIndex);
-        
+
         return result;
     }
 
@@ -1168,7 +1153,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
             return false;
         }
         XYLineAndShapeRenderer that = (XYLineAndShapeRenderer) obj;
-        if (!ObjectUtilities.equal(this.seriesLinesVisible, 
+        if (!ObjectUtilities.equal(this.seriesLinesVisible,
                 that.seriesLinesVisible)) {
             return false;
         }
@@ -1178,14 +1163,14 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
         if (!ShapeUtilities.equal(this.legendLine, that.legendLine)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.seriesShapesVisible, 
+        if (!ObjectUtilities.equal(this.seriesShapesVisible,
                 that.seriesShapesVisible)) {
             return false;
         }
         if (this.baseShapesVisible != that.baseShapesVisible) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.seriesShapesFilled, 
+        if (!ObjectUtilities.equal(this.seriesShapesFilled,
                 that.seriesShapesFilled)) {
             return false;
         }

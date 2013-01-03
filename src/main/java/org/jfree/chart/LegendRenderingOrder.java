@@ -45,7 +45,7 @@ package org.jfree.chart;
  */
 public enum LegendRenderingOrder {
 
-   /** In order. */
+    /** In order. */
     STANDARD("LegendRenderingOrder.STANDARD"),
 
     /** In reverse order. */

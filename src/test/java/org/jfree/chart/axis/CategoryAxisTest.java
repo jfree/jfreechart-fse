@@ -44,29 +44,15 @@ package org.jfree.chart.axis;
 
 import org.junit.Test;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link CategoryAxis} class.
  */
-public class CategoryAxisTest  {
-
-
-
+public class CategoryAxisTest {
 
 
     /**
@@ -212,16 +198,16 @@ public class CategoryAxisTest  {
         a1.setTickLabelPaint("C1", new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.WHITE));
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(a1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(a1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-            );
-            CategoryAxis a2 = (CategoryAxis) in.readObject();
-            in.close();
+        );
+        CategoryAxis a2 = (CategoryAxis) in.readObject();
+        in.close();
         assertEquals(a1, a2);
     }
 

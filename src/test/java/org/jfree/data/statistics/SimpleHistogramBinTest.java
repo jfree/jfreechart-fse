@@ -42,27 +42,14 @@ package org.jfree.data.statistics;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link SimpleHistogramBin} class.
  */
-public class SimpleHistogramBinTest  {
-
-
-
+public class SimpleHistogramBinTest {
 
 
     /**
@@ -79,7 +66,7 @@ public class SimpleHistogramBinTest  {
         assertFalse(bin1.accepts(Double.NaN));
 
         SimpleHistogramBin bin2
-            = new SimpleHistogramBin(1.0, 2.0, false, false);
+                = new SimpleHistogramBin(1.0, 2.0, false, false);
         assertFalse(bin2.accepts(0.0));
         assertFalse(bin2.accepts(1.0));
         assertTrue(bin2.accepts(1.5));
@@ -173,15 +160,15 @@ public class SimpleHistogramBinTest  {
         SimpleHistogramBin b1 = new SimpleHistogramBin(1.0, 2.0, false, true);
         b1.setItemCount(123);
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(b1);
-            out.close();
-            ObjectInput in = new ObjectInputStream(
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(b1);
+        out.close();
+        ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-            );
+        );
         SimpleHistogramBin b2 = (SimpleHistogramBin) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(b1, b2);
     }

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------------
@@ -44,9 +44,9 @@
 
 package org.jfree.data.statistics;
 
-import java.io.Serializable;
-
 import org.jfree.chart.util.ObjectUtilities;
+
+import java.io.Serializable;
 
 /**
  * A simple data structure that holds a mean value and a standard deviation
@@ -56,34 +56,53 @@ import org.jfree.chart.util.ObjectUtilities;
 public class MeanAndStandardDeviation implements Serializable {
 
     /** For serialization. */
-    private static final long serialVersionUID = 7413468697315721515L;
+    private static final long serialVersionUID = 7414153420015721515L;
 
     /** The mean. */
     private Number mean;
 
-    /** The standard deviation. */
-    private Number standardDeviation;
+    /** The negative deviation. */
+    private Number deviationNegative;
+
+    /** The positive deviation. */
+    private Number deviationPositive;
 
     /**
      * Creates a new mean and standard deviation record.
      *
-     * @param mean  the mean.
-     * @param standardDeviation  the standard deviation.
+     * @param mean      the mean.
+     * @param deviation the standard deviation.
      */
-    public MeanAndStandardDeviation(double mean, double standardDeviation) {
-        this(new Double(mean), new Double(standardDeviation));
+    public MeanAndStandardDeviation(double mean, double deviation) {
+        this(new Double(mean), new Double(deviation));
     }
 
     /**
      * Creates a new mean and standard deviation record.
      *
-     * @param mean  the mean (<code>null</code> permitted).
-     * @param standardDeviation  the standard deviation (<code>null</code>
-     *                           permitted.
+     * @param mean      the mean (<code>null</code> permitted).
+     * @param deviation the standard deviation (<code>null</code>
+     *                          permitted.
      */
-    public MeanAndStandardDeviation(Number mean, Number standardDeviation) {
+    public MeanAndStandardDeviation(Number mean, Number deviation) {
         this.mean = mean;
-        this.standardDeviation = standardDeviation;
+        if (deviation != null) {
+            this.deviationNegative = deviation.doubleValue() / 2;
+            this.deviationPositive = deviation.doubleValue() / 2;
+        }
+    }
+
+    /**
+     * Creates a new mean and standard deviation record.
+     *
+     * @param mean                      the mean (<code>null</code> permitted).
+     * @param deviationNegative the negative standard deviation (<code>null</code> permitted.
+     * @param deviationPositive the positive standard deviation (<code>null</code> permitted.
+     */
+    public MeanAndStandardDeviation(Number mean, Number deviationNegative, Number deviationPositive) {
+        this.mean = mean;
+        this.deviationNegative = deviationNegative;
+        this.deviationPositive = deviationPositive;
     }
 
     /**
@@ -102,7 +121,6 @@ public class MeanAndStandardDeviation implements Serializable {
      * @return The mean.
      *
      * @see #getMean()
-     *
      * @since 1.0.7
      */
     public double getMeanValue() {
@@ -113,13 +131,18 @@ public class MeanAndStandardDeviation implements Serializable {
         return result;
     }
 
+
     /**
      * Returns the standard deviation.
      *
      * @return The standard deviation.
      */
     public Number getStandardDeviation() {
-        return this.standardDeviation;
+
+        double negative = getStandardDeviationNegativeValue();
+        double positive = getStandardDeviationPositiveValue();
+
+        return negative + positive;
     }
 
     /**
@@ -132,38 +155,74 @@ public class MeanAndStandardDeviation implements Serializable {
      * @since 1.0.7
      */
     public double getStandardDeviationValue() {
-        double result = Double.NaN;
-        if (this.standardDeviation != null) {
-            result = this.standardDeviation.doubleValue();
-        }
-        return result;
+        return getStandardDeviation().doubleValue();
     }
 
     /**
      * Tests this instance for equality with an arbitrary object.
      *
-     * @param obj  the object (<code>null</code> permitted).
+     * @param obj the object (<code>null</code> permitted).
      *
      * @return A boolean.
      */
-    @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof MeanAndStandardDeviation)) {
-            return false;
+        if (obj instanceof MeanAndStandardDeviation) {
+            MeanAndStandardDeviation that = (MeanAndStandardDeviation) obj;
+            if (!ObjectUtilities.equal(this.mean, that.mean)) {
+                return false;
+            }
+            boolean negativeDeviationEquals = ObjectUtilities.equal(this.deviationNegative, that.deviationNegative);
+            boolean positiveDeviationEquals = ObjectUtilities.equal(this.deviationPositive, that.deviationPositive);
+            return !(!negativeDeviationEquals || !positiveDeviationEquals);
         }
-        MeanAndStandardDeviation that = (MeanAndStandardDeviation) obj;
-        if (!ObjectUtilities.equal(this.mean, that.mean)) {
-            return false;
+        return false;
+    }
+
+    /**
+     * Gets the negative deviation.
+     *
+     * @return the negative deviation.
+     */
+    public Number getDeviationNegative() {
+        return deviationNegative;
+    }
+
+    /**
+     * Gets the negative deviation as a primitive.
+     * If it's null, the resulting value is NaN.
+     *
+     * @return the negative deviation.
+     */
+    public double getStandardDeviationNegativeValue() {
+        if (deviationNegative == null) {
+            return Double.NaN;
         }
-        if (!ObjectUtilities.equal(
-            this.standardDeviation, that.standardDeviation)
-        ) {
-            return false;
+        return deviationNegative.doubleValue();
+    }
+
+
+    /**
+     * Gets the positive deviation.
+     *
+     * @return the positive deviation.
+     */
+    public double getStandardDeviationPositiveValue() {
+        if (deviationPositive == null) {
+            return Double.NaN;
         }
-        return true;
+        return deviationPositive.doubleValue();
+    }
+
+    /**
+     * Gets the positive deviation.
+     *
+     * @return the positive deviation.
+     */
+    public Number getDeviationPositive() {
+        return deviationPositive;
     }
 
     /**
@@ -173,9 +232,9 @@ public class MeanAndStandardDeviation implements Serializable {
      *
      * @since 1.0.7
      */
-    @Override
-	public String toString() {
-        return "[" + this.mean + ", " + this.standardDeviation + "]";
+    public String toString() {
+        return "[" + this.mean + ", " + this.deviationNegative
+                + ", " + this.deviationPositive + "]";
     }
 
 }

@@ -65,38 +65,19 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.RenderingHints;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.awt.*;
+import java.io.*;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link JFreeChart} class.
  */
-public class JFreeChartTest  implements ChartChangeListener {
+public class JFreeChartTest implements ChartChangeListener {
 
     /** A pie chart. */
     private JFreeChart pieChart;
-
-
-
 
 
     /**
@@ -243,24 +224,21 @@ public class JFreeChartTest  implements ChartChangeListener {
         try {
             chart.getSubtitle(-1);
             fail("Should have thrown an IllegalArgumentException on negative number");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Index out of range.", e.getMessage());
         }
 
         try {
-           chart.getSubtitle(1);
+            chart.getSubtitle(1);
             fail("Should have thrown an IllegalArgumentException on excesive number");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Index out of range.", e.getMessage());
         }
 
         try {
             chart.getSubtitle(2);
             fail("Should have thrown an IllegalArgumentException on number being out of range");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Index out of range.", e.getMessage());
         }
 
@@ -279,15 +257,15 @@ public class JFreeChartTest  implements ChartChangeListener {
 
         JFreeChart c1 = ChartFactory.createPieChart("Test", data);
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(c1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(c1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            JFreeChart c2 = (JFreeChart) in.readObject();
-            in.close();
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
+        JFreeChart c2 = (JFreeChart) in.readObject();
+        in.close();
 
         assertEquals(c1, c2);
         LegendTitle lt2 = c2.getLegend();
@@ -438,8 +416,7 @@ public class JFreeChartTest  implements ChartChangeListener {
         try {
             chart.addSubtitle(null);
             fail("Should have thrown an IllegalArgumentException on index out of range");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'subtitle' argument.", e.getMessage());
         }
 
@@ -447,19 +424,16 @@ public class JFreeChartTest  implements ChartChangeListener {
         try {
             chart.addSubtitle(-1, t0);
             fail("Should have thrown an IllegalArgumentException on index out of range");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("The 'index' argument is out of range.", e.getMessage());
         }
-
 
 
         try {
             chart.addSubtitle(4, t0);
             fail("Should have thrown an IllegalArgumentException on index out of range");
-        }
-        catch (IllegalArgumentException e) {
-             assertEquals("The 'index' argument is out of range.", e.getMessage());
+        } catch (IllegalArgumentException e) {
+            assertEquals("The 'index' argument is out of range.", e.getMessage());
         }
 
     }
@@ -537,7 +511,7 @@ public class JFreeChartTest  implements ChartChangeListener {
      * @param event  the event.
      */
     @Override
-	public void chartChanged(ChartChangeEvent event) {
+    public void chartChanged(ChartChangeEvent event) {
         this.lastChartChangeEvent = event;
     }
 

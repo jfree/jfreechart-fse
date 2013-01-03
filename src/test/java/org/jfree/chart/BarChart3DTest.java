@@ -58,31 +58,26 @@ import org.jfree.data.general.DatasetUtilities;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for a 3D bar chart.
  */
-public class BarChart3DTest  {
+public class BarChart3DTest {
 
     /** The chart. */
     private JFreeChart chart;
-
-
-
 
 
     /**
      * Common test setup.
      */
     @Before
-	public void setUp() {
+    public void setUp() {
         this.chart = createBarChart3D();
     }
 
@@ -92,7 +87,7 @@ public class BarChart3DTest  {
      */
     @Test
     public void testDrawWithNullInfo() {
-       BufferedImage image = new BufferedImage(200 , 100,
+        BufferedImage image = new BufferedImage(200, 100,
                 BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = image.createGraphics();
         this.chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null,
@@ -109,9 +104,9 @@ public class BarChart3DTest  {
 
         // create a dataset...
         Number[][] data = new Integer[][]
-            {{-30, -20},
-             {-10, 10},
-             {20, 30}};
+                {{-30, -20},
+                        {-10, 10},
+                        {20, 30}};
 
         CategoryDataset newData = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
@@ -167,13 +162,13 @@ public class BarChart3DTest  {
      */
     private static JFreeChart createBarChart3D() {
         Number[][] data = new Integer[][]
-            {{-3, -2},
-             {-1, 1},
-             {2, 3}};
+                {{-3, -2},
+                        {-1, 1},
+                        {2, 3}};
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
         return ChartFactory.createBarChart3D("Bar Chart 3D", "Domain", "Range",
-                dataset); 
+                dataset);
     }
 
     /**

@@ -47,41 +47,20 @@
 
 package org.jfree.chart.editor;
 
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Paint;
-import java.awt.Stroke;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ResourceBundle;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JColorChooser;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-
 import org.jfree.chart.axis.Axis;
-import org.jfree.chart.ui.LCBLayout;
-import org.jfree.chart.ui.PaintSample;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.StrokeChooserPanel;
-import org.jfree.chart.ui.StrokeSample;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.PolarPlot;
-import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.plot.*;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.ui.*;
 import org.jfree.chart.util.ResourceBundleWrapper;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
 /**
  * A panel for editing the properties of a {@link Plot}.
@@ -153,7 +132,7 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
     /** The resourceBundle for the localization. */
     protected static ResourceBundle localizationResources
             = ResourceBundleWrapper.getBundle(
-                    "org.jfree.chart.editor.LocalizationBundle");
+            "org.jfree.chart.editor.LocalizationBundle");
 
     /**
      * Standard constructor - constructs a panel for editing the properties of
@@ -170,7 +149,7 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
         JPanel panel = createPlotPanel(plot);
         add(panel);
     }
-    
+
     protected JPanel createPlotPanel(Plot plot) {
         this.plotInsets = plot.getInsets();
         this.backgroundPaintSample = new PaintSample(plot.getBackgroundPaint());
@@ -178,8 +157,7 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
         this.outlinePaintSample = new PaintSample(plot.getOutlinePaint());
         if (plot instanceof CategoryPlot) {
             this.plotOrientation = ((CategoryPlot) plot).getOrientation();
-        }
-        else if (plot instanceof XYPlot) {
+        } else if (plot instanceof XYPlot) {
             this.plotOrientation = ((XYPlot) plot).getOrientation();
         }
         if (plot instanceof CategoryPlot) {
@@ -189,8 +167,7 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
                 this.drawLines = r.getBaseLinesVisible();
                 this.drawShapes = r.getBaseShapesVisible();
             }
-        }
-        else if (plot instanceof XYPlot) {
+        } else if (plot instanceof XYPlot) {
             XYItemRenderer renderer = ((XYPlot) plot).getRenderer();
             if (renderer instanceof StandardXYItemRenderer) {
                 StandardXYItemRenderer r = (StandardXYItemRenderer) renderer;
@@ -306,20 +283,18 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
         JTabbedPane tabs = createPlotTabs(plot);
         tabs.add(localizationResources.getString("Appearance"), appearance);
         panel.add(tabs);
-        
+
         return panel;
     }
 
-    protected JTabbedPane createPlotTabs(Plot plot)
-    {
+    protected JTabbedPane createPlotTabs(Plot plot) {
         JTabbedPane tabs = new JTabbedPane();
         tabs.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
 
         Axis domainAxis = null;
         if (plot instanceof CategoryPlot) {
             domainAxis = ((CategoryPlot) plot).getDomainAxis();
-        }
-        else if (plot instanceof XYPlot) {
+        } else if (plot instanceof XYPlot) {
             domainAxis = ((XYPlot) plot).getDomainAxis();
         }
         this.domainAxisPropertyPanel = DefaultAxisEditor.getInstance(
@@ -334,11 +309,9 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
         Axis rangeAxis = null;
         if (plot instanceof CategoryPlot) {
             rangeAxis = ((CategoryPlot) plot).getRangeAxis();
-        }
-        else if (plot instanceof XYPlot) {
+        } else if (plot instanceof XYPlot) {
             rangeAxis = ((XYPlot) plot).getRangeAxis();
-        }
-        else if (plot instanceof PolarPlot) {
+        } else if (plot instanceof PolarPlot) {
             rangeAxis = ((PolarPlot) plot).getAxis();
         }
 
@@ -417,15 +390,13 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
      * @param event     the event
      */
     @Override
-	public void actionPerformed(ActionEvent event) {
+    public void actionPerformed(ActionEvent event) {
         String command = event.getActionCommand();
         if (command.equals("BackgroundPaint")) {
             attemptBackgroundPaintSelection();
-        }
-        else if (command.equals("OutlineStroke")) {
+        } else if (command.equals("OutlineStroke")) {
             attemptOutlineStrokeSelection();
-        }
-        else if (command.equals("OutlinePaint")) {
+        } else if (command.equals("OutlinePaint")) {
             attemptOutlinePaintSelection();
         }
 //        else if (command.equals("Insets")) {
@@ -433,11 +404,9 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
 //        }
         else if (command.equals("Orientation")) {
             attemptOrientationSelection();
-        }
-        else if (command.equals("DrawLines")) {
+        } else if (command.equals("DrawLines")) {
             attemptDrawLinesSelection();
-        }
-        else if (command.equals("DrawShapes")) {
+        } else if (command.equals("DrawShapes")) {
             attemptDrawShapesSelection();
         }
     }
@@ -499,6 +468,7 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
 //
 //    }
 //
+
     /**
      * Allow the user to modify the plot orientation if this is an editor for a
      * <tt>CategoryPlot</tt> or a <tt>XYPlot</tt>.
@@ -509,8 +479,7 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
 
         if (index == ORIENTATION_VERTICAL) {
             this.plotOrientation = PlotOrientation.VERTICAL;
-        }
-        else {
+        } else {
             this.plotOrientation = PlotOrientation.HORIZONTAL;
         }
     }
@@ -551,8 +520,7 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
             if (plot instanceof CategoryPlot) {
                 CategoryPlot p = (CategoryPlot) plot;
                 domainAxis = p.getDomainAxis();
-            }
-            else if (plot instanceof XYPlot) {
+            } else if (plot instanceof XYPlot) {
                 XYPlot p = (XYPlot) plot;
                 domainAxis = p.getDomainAxis();
             }
@@ -566,12 +534,10 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
             if (plot instanceof CategoryPlot) {
                 CategoryPlot p = (CategoryPlot) plot;
                 rangeAxis = p.getRangeAxis();
-            }
-            else if (plot instanceof XYPlot) {
+            } else if (plot instanceof XYPlot) {
                 XYPlot p = (XYPlot) plot;
                 rangeAxis = p.getRangeAxis();
-            }
-            else if (plot instanceof PolarPlot) {
+            } else if (plot instanceof PolarPlot) {
                 PolarPlot p = (PolarPlot) plot;
                 rangeAxis = p.getAxis();
             }
@@ -584,8 +550,7 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
             if (plot instanceof CategoryPlot) {
                 CategoryPlot p = (CategoryPlot) plot;
                 p.setOrientation(this.plotOrientation);
-            }
-            else if (plot instanceof XYPlot) {
+            } else if (plot instanceof XYPlot) {
                 XYPlot p = (XYPlot) plot;
                 p.setOrientation(this.plotOrientation);
             }
@@ -599,8 +564,7 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
                     ((LineAndShapeRenderer) r).setBaseLinesVisible(
                             this.drawLines);
                 }
-            }
-            else if (plot instanceof XYPlot) {
+            } else if (plot instanceof XYPlot) {
                 XYPlot p = (XYPlot) plot;
                 XYItemRenderer r = p.getRenderer();
                 if (r instanceof StandardXYItemRenderer) {
@@ -618,8 +582,7 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
                     ((LineAndShapeRenderer) r).setBaseShapesVisible(
                             this.drawShapes);
                 }
-            }
-            else if (plot instanceof XYPlot) {
+            } else if (plot instanceof XYPlot) {
                 XYPlot p = (XYPlot) plot;
                 XYItemRenderer r = p.getRenderer();
                 if (r instanceof StandardXYItemRenderer) {

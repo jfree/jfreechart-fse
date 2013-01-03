@@ -68,9 +68,10 @@ import org.jfree.data.category.CategoryDataset;
  * items in a {@link org.jfree.chart.plot.CategoryPlot}.
  * <p>
  * To assist with cloning charts, classes that implement this interface should
- * also implement the {@link org.jfree.util.PublicCloneable} interface.
+ * also implement the {@link org.jfree.chart.util.PublicCloneable} interface.
  */
-public interface CategoryItemLabelGenerator {
+public interface CategoryItemLabelGenerator
+        <RowKey extends Comparable, ColumnKey extends Comparable> {
 
     /**
      * Generates a label for the specified row.
@@ -80,7 +81,7 @@ public interface CategoryItemLabelGenerator {
      *
      * @return The label.
      */
-    public String generateRowLabel(CategoryDataset dataset, int row);
+    public String generateRowLabel(CategoryDataset<RowKey, ColumnKey> dataset, int row);
 
     /**
      * Generates a label for the specified row.
@@ -90,7 +91,7 @@ public interface CategoryItemLabelGenerator {
      *
      * @return The label.
      */
-    public String generateColumnLabel(CategoryDataset dataset, int column);
+    public String generateColumnLabel(CategoryDataset<RowKey, ColumnKey> dataset, int column);
 
     /**
      * Generates a label for the specified item. The label is typically a
@@ -102,6 +103,6 @@ public interface CategoryItemLabelGenerator {
      *
      * @return The label (possibly <code>null</code>).
      */
-    public String generateLabel(CategoryDataset dataset, int row, int column);
+    public String generateLabel(CategoryDataset<RowKey, ColumnKey> dataset, int row, int column);
 
 }

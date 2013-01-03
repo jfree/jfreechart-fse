@@ -61,9 +61,17 @@
 
 package org.jfree.chart.axis;
 
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
+import org.jfree.chart.event.AxisChangeEvent;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.plot.ValueAxisPlot;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.LogFormat;
+import org.jfree.data.Range;
+
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 import java.awt.geom.Rectangle2D;
@@ -72,16 +80,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.event.AxisChangeEvent;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.plot.ValueAxisPlot;
-import org.jfree.chart.util.LogFormat;
-import org.jfree.data.Range;
 
 /**
  * A numerical axis that uses a logarithmic scale.  The class is an
@@ -299,8 +297,8 @@ public class LogAxis extends ValueAxis {
      * @return A value along the axis scale.
      */
     @Override
-	public double java2DToValue(double java2DValue, Rectangle2D area,
-            RectangleEdge edge) {
+    public double java2DToValue(double java2DValue, Rectangle2D area,
+                                RectangleEdge edge) {
 
         Range range = getRange();
         double axisMin = calculateLog(range.getLowerBound());
@@ -311,8 +309,7 @@ public class LogAxis extends ValueAxis {
         if (RectangleEdge.isTopOrBottom(edge)) {
             min = area.getX();
             max = area.getMaxX();
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             min = area.getMaxY();
             max = area.getY();
         }
@@ -320,8 +317,7 @@ public class LogAxis extends ValueAxis {
         if (isInverted()) {
             log = axisMax - (java2DValue - min) / (max - min)
                     * (axisMax - axisMin);
-        }
-        else {
+        } else {
             log = axisMin + (java2DValue - min) / (max - min)
                     * (axisMax - axisMin);
         }
@@ -340,8 +336,8 @@ public class LogAxis extends ValueAxis {
      * @return The Java2D coordinate corresponding to <code>value</code>.
      */
     @Override
-	public double valueToJava2D(double value, Rectangle2D area,
-            RectangleEdge edge) {
+    public double valueToJava2D(double value, Rectangle2D area,
+                                RectangleEdge edge) {
 
         Range range = getRange();
         double axisMin = calculateLog(range.getLowerBound());
@@ -353,18 +349,16 @@ public class LogAxis extends ValueAxis {
         if (RectangleEdge.isTopOrBottom(edge)) {
             min = area.getX();
             max = area.getMaxX();
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             max = area.getMinY();
             min = area.getMaxY();
         }
         if (isInverted()) {
             return max
-                   - ((value - axisMin) / (axisMax - axisMin)) * (max - min);
-        }
-        else {
+                    - ((value - axisMin) / (axisMax - axisMin)) * (max - min);
+        } else {
             return min
-                   + ((value - axisMin) / (axisMax - axisMin)) * (max - min);
+                    + ((value - axisMin) / (axisMax - axisMin)) * (max - min);
         }
     }
 
@@ -373,7 +367,7 @@ public class LogAxis extends ValueAxis {
      * is assigned to a new plot.
      */
     @Override
-	public void configure() {
+    public void configure() {
         if (isAutoRange()) {
             autoAdjustRange();
         }
@@ -384,7 +378,7 @@ public class LogAxis extends ValueAxis {
      * required to display.
      */
     @Override
-	protected void autoAdjustRange() {
+    protected void autoAdjustRange() {
         Plot plot = getPlot();
         if (plot == null) {
             return;  // no plot, no data
@@ -406,8 +400,7 @@ public class LogAxis extends ValueAxis {
             double fixedAutoRange = getFixedAutoRange();
             if (fixedAutoRange > 0.0) {
                 lower = Math.max(upper - fixedAutoRange, this.smallestValue);
-            }
-            else {
+            } else {
                 // ensure the autorange is at least <minRange> in size...
                 double minRange = getAutoRangeMinimumSize();
                 if (range < minRange) {
@@ -446,9 +439,9 @@ public class LogAxis extends ValueAxis {
      * @return The axis state (never <code>null</code>).
      */
     @Override
-	public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
-            Rectangle2D dataArea, RectangleEdge edge,
-            PlotRenderingInfo plotState) {
+    public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
+                          Rectangle2D dataArea, RectangleEdge edge,
+                          PlotRenderingInfo plotState) {
 
         AxisState state = null;
         // if the axis is not visible, don't draw it...
@@ -479,14 +472,13 @@ public class LogAxis extends ValueAxis {
      *
      */
     @Override
-	public List<ValueTick> refreshTicks(Graphics2D g2, AxisState state,
-            Rectangle2D dataArea, RectangleEdge edge) {
+    public List<ValueTick> refreshTicks(Graphics2D g2, AxisState state,
+                                        Rectangle2D dataArea, RectangleEdge edge) {
 
         List<ValueTick> result = new java.util.ArrayList<ValueTick>();
         if (RectangleEdge.isTopOrBottom(edge)) {
             result = refreshTicksHorizontal(g2, dataArea, edge);
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             result = refreshTicksVertical(g2, dataArea, edge);
         }
         return result;
@@ -503,7 +495,7 @@ public class LogAxis extends ValueAxis {
      * @return A list of ticks.
      */
     protected List<ValueTick> refreshTicksHorizontal(Graphics2D g2, Rectangle2D dataArea,
-            RectangleEdge edge) {
+                                                     RectangleEdge edge) {
 
         Range range = getRange();
         List<ValueTick> ticks = new ArrayList<ValueTick>();
@@ -512,8 +504,7 @@ public class LogAxis extends ValueAxis {
         TextAnchor textAnchor;
         if (edge == RectangleEdge.TOP) {
             textAnchor = TextAnchor.BOTTOM_CENTER;
-        }
-        else {
+        } else {
             textAnchor = TextAnchor.TOP_CENTER;
         }
 
@@ -525,7 +516,7 @@ public class LogAxis extends ValueAxis {
         double end = Math.ceil(calculateLog(getUpperBound()));
         double current = start;
         boolean hasTicks = (this.tickUnit.getSize() > 0.0)
-                           && !Double.isInfinite(start);
+                && !Double.isInfinite(start);
         while (hasTicks && current <= end) {
             double v = calculateValue(current);
             if (range.contains(v)) {
@@ -557,7 +548,7 @@ public class LogAxis extends ValueAxis {
      * @return A list of ticks.
      */
     protected List<ValueTick> refreshTicksVertical(Graphics2D g2, Rectangle2D dataArea,
-            RectangleEdge edge) {
+                                                   RectangleEdge edge) {
 
         Range range = getRange();
         List<ValueTick> ticks = new ArrayList<ValueTick>();
@@ -566,8 +557,7 @@ public class LogAxis extends ValueAxis {
         TextAnchor textAnchor;
         if (edge == RectangleEdge.RIGHT) {
             textAnchor = TextAnchor.CENTER_LEFT;
-        }
-        else {
+        } else {
             textAnchor = TextAnchor.CENTER_RIGHT;
         }
 
@@ -579,7 +569,7 @@ public class LogAxis extends ValueAxis {
         double end = Math.ceil(calculateLog(getUpperBound()));
         double current = start;
         boolean hasTicks = (this.tickUnit.getSize() > 0.0)
-                           && !Double.isInfinite(start);
+                && !Double.isInfinite(start);
         while (hasTicks && current <= end) {
             double v = calculateValue(current);
             if (range.contains(v)) {
@@ -613,12 +603,11 @@ public class LogAxis extends ValueAxis {
      * @since 1.0.7
      */
     protected void selectAutoTickUnit(Graphics2D g2, Rectangle2D dataArea,
-            RectangleEdge edge) {
+                                      RectangleEdge edge) {
 
         if (RectangleEdge.isTopOrBottom(edge)) {
             selectHorizontalAutoTickUnit(g2, dataArea, edge);
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             selectVerticalAutoTickUnit(g2, dataArea, edge);
         }
 
@@ -635,8 +624,8 @@ public class LogAxis extends ValueAxis {
      *
      * @since 1.0.7
      */
-   protected void selectHorizontalAutoTickUnit(Graphics2D g2,
-           Rectangle2D dataArea, RectangleEdge edge) {
+    protected void selectHorizontalAutoTickUnit(Graphics2D g2,
+                                                Rectangle2D dataArea, RectangleEdge edge) {
 
         double tickLabelWidth = estimateMaximumTickLabelWidth(g2,
                 getTickUnit());
@@ -677,7 +666,7 @@ public class LogAxis extends ValueAxis {
      * @since 1.0.7
      */
     public double exponentLengthToJava2D(double length, Rectangle2D area,
-                                RectangleEdge edge) {
+                                         RectangleEdge edge) {
         double one = valueToJava2D(calculateValue(1.0), area, edge);
         double l = valueToJava2D(calculateValue(length + 1.0), area, edge);
         return Math.abs(l - one);
@@ -771,8 +760,7 @@ public class LogAxis extends ValueAxis {
             FontRenderContext frc = g2.getFontRenderContext();
             LineMetrics lm = getTickLabelFont().getLineMetrics("0", frc);
             result += lm.getHeight();
-        }
-        else {
+        } else {
             // look at lower and upper bounds...
             FontMetrics fm = g2.getFontMetrics(getTickLabelFont());
             Range range = getRange();
@@ -784,8 +772,7 @@ public class LogAxis extends ValueAxis {
             if (formatter != null) {
                 lowerStr = formatter.format(lower);
                 upperStr = formatter.format(upper);
-            }
-            else {
+            } else {
                 lowerStr = unit.valueToString(lower);
                 upperStr = unit.valueToString(upper);
             }
@@ -805,7 +792,7 @@ public class LogAxis extends ValueAxis {
      * @param upperPercent  the new upper bound.
      */
     @Override
-	public void zoomRange(double lowerPercent, double upperPercent) {
+    public void zoomRange(double lowerPercent, double upperPercent) {
         Range range = getRange();
         double start = range.getLowerBound();
         double end = range.getUpperBound();
@@ -817,8 +804,7 @@ public class LogAxis extends ValueAxis {
             double logA = log1 + length * (1 - upperPercent);
             double logB = log1 + length * (1 - lowerPercent);
             adjusted = new Range(calculateValue(logA), calculateValue(logB));
-        }
-        else {
+        } else {
             double logA = log1 + length * lowerPercent;
             double logB = log1 + length * upperPercent;
             adjusted = new Range(calculateValue(logA), calculateValue(logB));
@@ -834,7 +820,7 @@ public class LogAxis extends ValueAxis {
      * @since 1.0.13
      */
     @Override
-	public void pan(double percent) {
+    public void pan(double percent) {
         Range range = getRange();
         double lower = range.getLowerBound();
         double upper = range.getUpperBound();
@@ -860,8 +846,7 @@ public class LogAxis extends ValueAxis {
     protected String createTickLabel(double value) {
         if (this.numberFormatOverride != null) {
             return this.numberFormatOverride.format(value);
-        }
-        else {
+        } else {
             return this.tickUnit.valueToString(value);
         }
     }
@@ -874,7 +859,7 @@ public class LogAxis extends ValueAxis {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -897,7 +882,7 @@ public class LogAxis extends ValueAxis {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 193;
         long temp = Double.doubleToLongBits(this.base);
         result = 37 * result + (int) (temp ^ (temp >>> 32));

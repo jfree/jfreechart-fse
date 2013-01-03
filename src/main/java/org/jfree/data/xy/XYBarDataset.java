@@ -148,7 +148,7 @@ public class XYBarDataset extends AbstractIntervalXYDataset
      * @return The item count.
      */
     @Override
-	public int getItemCount(int series) {
+    public int getItemCount(int series) {
         return this.underlying.getItemCount(series);
     }
 
@@ -163,7 +163,7 @@ public class XYBarDataset extends AbstractIntervalXYDataset
      * @see #getXValue(int, int)
      */
     @Override
-	public Number getX(int series, int item) {
+    public Number getX(int series, int item) {
         return this.underlying.getX(series, item);
     }
 
@@ -193,7 +193,7 @@ public class XYBarDataset extends AbstractIntervalXYDataset
      * @see #getYValue(int, int)
      */
     @Override
-	public Number getY(int series, int item) {
+    public Number getY(int series, int item) {
         return this.underlying.getY(series, item);
     }
 
@@ -221,11 +221,11 @@ public class XYBarDataset extends AbstractIntervalXYDataset
      * @return The value.
      */
     @Override
-	public Number getStartX(int series, int item) {
+    public Number getStartX(int series, int item) {
         Number result = null;
         Number xnum = this.underlying.getX(series, item);
         if (xnum != null) {
-             result = xnum.doubleValue() - this.barWidth / 2.0;
+            result = xnum.doubleValue() - this.barWidth / 2.0;
         }
         return result;
     }
@@ -255,11 +255,11 @@ public class XYBarDataset extends AbstractIntervalXYDataset
      * @return The value.
      */
     @Override
-	public Number getEndX(int series, int item) {
+    public Number getEndX(int series, int item) {
         Number result = null;
         Number xnum = this.underlying.getX(series, item);
         if (xnum != null) {
-             result = xnum.doubleValue() + this.barWidth / 2.0;
+            result = xnum.doubleValue() + this.barWidth / 2.0;
         }
         return result;
     }
@@ -289,7 +289,7 @@ public class XYBarDataset extends AbstractIntervalXYDataset
      * @return The value.
      */
     @Override
-	public Number getStartY(int series, int item) {
+    public Number getStartY(int series, int item) {
         return this.underlying.getY(series, item);
     }
 
@@ -318,7 +318,7 @@ public class XYBarDataset extends AbstractIntervalXYDataset
      * @return The value.
      */
     @Override
-	public Number getEndY(int series, int item) {
+    public Number getEndY(int series, int item) {
         return this.underlying.getY(series, item);
     }
 
@@ -344,7 +344,7 @@ public class XYBarDataset extends AbstractIntervalXYDataset
      * @param event  information about the event.
      */
     @Override
-	public void datasetChanged(DatasetChangeEvent event) {
+    public void datasetChanged(DatasetChangeEvent event) {
         notifyListeners(event);
     }
 

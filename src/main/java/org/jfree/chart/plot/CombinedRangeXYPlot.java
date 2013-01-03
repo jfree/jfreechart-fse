@@ -100,24 +100,24 @@
 
 package org.jfree.chart.plot;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.util.Collections;
-import java.util.List;
-
 import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.AxisSpace;
 import org.jfree.chart.axis.AxisState;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.event.PlotChangeListener;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.Range;
+
+import java.awt.*;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * An extension of {@link XYPlot} that contains multiple subplots that share a
@@ -153,9 +153,9 @@ public class CombinedRangeXYPlot extends XYPlot
     public CombinedRangeXYPlot(ValueAxis rangeAxis) {
 
         super(null, // no data in the parent plot
-              null,
-              rangeAxis,
-              null);
+                null,
+                rangeAxis,
+                null);
 
         this.subplots = new java.util.ArrayList<XYPlot>();
 
@@ -167,7 +167,7 @@ public class CombinedRangeXYPlot extends XYPlot
      * @return The type of plot.
      */
     @Override
-	public String getPlotType() {
+    public String getPlotType() {
         return localizationResources.getString("Combined_Range_XYPlot");
     }
 
@@ -268,8 +268,7 @@ public class CombinedRangeXYPlot extends XYPlot
     public List<XYPlot> getSubplots() {
         if (this.subplots != null) {
             return Collections.unmodifiableList(this.subplots);
-        }
-        else {
+        } else {
             return Collections.EMPTY_LIST;
         }
     }
@@ -283,7 +282,7 @@ public class CombinedRangeXYPlot extends XYPlot
      * @return The space required for the axes.
      */
     @Override
-	protected AxisSpace calculateAxisSpace(Graphics2D g2,
+    protected AxisSpace calculateAxisSpace(Graphics2D g2,
                                            Rectangle2D plotArea) {
 
         AxisSpace space = new AxisSpace();
@@ -295,16 +294,14 @@ public class CombinedRangeXYPlot extends XYPlot
             if (orientation == PlotOrientation.VERTICAL) {
                 space.setLeft(fixed.getLeft());
                 space.setRight(fixed.getRight());
-            }
-            else if (orientation == PlotOrientation.HORIZONTAL) {
+            } else if (orientation == PlotOrientation.HORIZONTAL) {
                 space.setTop(fixed.getTop());
                 space.setBottom(fixed.getBottom());
             }
-        }
-        else {
+        } else {
             ValueAxis valueAxis = getRangeAxis();
             RectangleEdge valueEdge = Plot.resolveRangeAxisLocation(
-                getRangeAxisLocation(), orientation
+                    getRangeAxisLocation(), orientation
             );
             if (valueAxis != null) {
                 space = valueAxis.reserveSpace(g2, this, plotArea, valueEdge,
@@ -328,8 +325,7 @@ public class CombinedRangeXYPlot extends XYPlot
         double usableSize = 0.0;
         if (orientation == PlotOrientation.VERTICAL) {
             usableSize = adjustedPlotArea.getWidth() - this.gap * (n - 1);
-        }
-        else if (orientation == PlotOrientation.HORIZONTAL) {
+        } else if (orientation == PlotOrientation.HORIZONTAL) {
             usableSize = adjustedPlotArea.getHeight() - this.gap * (n - 1);
         }
 
@@ -342,8 +338,7 @@ public class CombinedRangeXYPlot extends XYPlot
                 this.subplotAreas[i] = new Rectangle2D.Double(x, y, w,
                         adjustedPlotArea.getHeight());
                 x = x + w + this.gap;
-            }
-            else if (orientation == PlotOrientation.HORIZONTAL) {
+            } else if (orientation == PlotOrientation.HORIZONTAL) {
                 double h = usableSize * plot.getWeight() / totalWeight;
                 this.subplotAreas[i] = new Rectangle2D.Double(x, y,
                         adjustedPlotArea.getWidth(), h);
@@ -372,7 +367,7 @@ public class CombinedRangeXYPlot extends XYPlot
      *              permitted).
      */
     @Override
-	public void draw(Graphics2D g2,
+    public void draw(Graphics2D g2,
                      Rectangle2D area,
                      Point2D anchor,
                      PlotState parentState,
@@ -429,7 +424,7 @@ public class CombinedRangeXYPlot extends XYPlot
      * @return The legend items.
      */
     @Override
-	public LegendItemCollection getLegendItems() {
+    public LegendItemCollection getLegendItems() {
         LegendItemCollection result = getFixedLegendItems();
         if (result == null) {
             result = new LegendItemCollection();
@@ -452,7 +447,7 @@ public class CombinedRangeXYPlot extends XYPlot
      * @param source  the source point (<code>null</code> not permitted).
      */
     @Override
-	public void zoomDomainAxes(double factor, PlotRenderingInfo info,
+    public void zoomDomainAxes(double factor, PlotRenderingInfo info,
                                Point2D source) {
         zoomDomainAxes(factor, info, source, false);
     }
@@ -466,14 +461,13 @@ public class CombinedRangeXYPlot extends XYPlot
      * @param useAnchor  zoom about the anchor point?
      */
     @Override
-	public void zoomDomainAxes(double factor, PlotRenderingInfo info,
+    public void zoomDomainAxes(double factor, PlotRenderingInfo info,
                                Point2D source, boolean useAnchor) {
         // delegate 'info' and 'source' argument checks...
         XYPlot subplot = findSubplot(info, source);
         if (subplot != null) {
             subplot.zoomDomainAxes(factor, info, source, useAnchor);
-        }
-        else {
+        } else {
             // if the source point doesn't fall within a subplot, we do the
             // zoom on all subplots...
             for (XYPlot innerSubplot : getSubplots()) {
@@ -491,14 +485,13 @@ public class CombinedRangeXYPlot extends XYPlot
      * @param source  the source point (<code>null</code> not permitted).
      */
     @Override
-	public void zoomDomainAxes(double lowerPercent, double upperPercent,
+    public void zoomDomainAxes(double lowerPercent, double upperPercent,
                                PlotRenderingInfo info, Point2D source) {
         // delegate 'info' and 'source' argument checks...
         XYPlot subplot = findSubplot(info, source);
         if (subplot != null) {
             subplot.zoomDomainAxes(lowerPercent, upperPercent, info, source);
-        }
-        else {
+        } else {
             // if the source point doesn't fall within a subplot, we do the
             // zoom on all subplots...
             for (XYPlot innerSubplot : getSubplots()) {
@@ -507,7 +500,7 @@ public class CombinedRangeXYPlot extends XYPlot
             }
         }
     }
-    
+
     /**
      * Pans all domain axes by the specified percentage.
      *
@@ -518,8 +511,8 @@ public class CombinedRangeXYPlot extends XYPlot
      * @since 1.0.15
      */
     @Override
-	public void panDomainAxes(double panRange, PlotRenderingInfo info,
-            Point2D source) {
+    public void panDomainAxes(double panRange, PlotRenderingInfo info,
+                              Point2D source) {
 
         XYPlot subplot = findSubplot(info, source);
         if (subplot != null) {
@@ -535,7 +528,7 @@ public class CombinedRangeXYPlot extends XYPlot
             }
         }
     }
-    
+
     /**
      * Returns the subplot (if any) that contains the (x, y) point (specified
      * in Java2D space).
@@ -570,11 +563,11 @@ public class CombinedRangeXYPlot extends XYPlot
      * @param renderer the new renderer.
      */
     @Override
-	public void setRenderer(XYItemRenderer renderer) {
+    public void setRenderer(XYItemRenderer renderer) {
 
         super.setRenderer(renderer);  // not strictly necessary, since the
-                                      // renderer set for the
-                                      // parent plot is not used
+        // renderer set for the
+        // parent plot is not used
 
         for (XYPlot plot : this.subplots) {
             plot.setRenderer(renderer);
@@ -588,7 +581,7 @@ public class CombinedRangeXYPlot extends XYPlot
      * @param orientation  the orientation.
      */
     @Override
-	public void setOrientation(PlotOrientation orientation) {
+    public void setOrientation(PlotOrientation orientation) {
 
         super.setOrientation(orientation);
 
@@ -612,7 +605,7 @@ public class CombinedRangeXYPlot extends XYPlot
      * @return The range.
      */
     @Override
-	public Range getDataRange(ValueAxis axis) {
+    public Range getDataRange(ValueAxis axis) {
         Range result = null;
         if (this.subplots != null) {
             for (XYPlot subplot : this.subplots) {
@@ -642,7 +635,7 @@ public class CombinedRangeXYPlot extends XYPlot
      * @param info  object containing information about the plot dimensions.
      */
     @Override
-	public void handleClick(int x, int y, PlotRenderingInfo info) {
+    public void handleClick(int x, int y, PlotRenderingInfo info) {
 
         Rectangle2D dataArea = info.getDataArea();
         if (dataArea.contains(x, y)) {
@@ -662,7 +655,7 @@ public class CombinedRangeXYPlot extends XYPlot
      * @param event  the event.
      */
     @Override
-	public void plotChanged(PlotChangeEvent event) {
+    public void plotChanged(PlotChangeEvent event) {
         notifyListeners(event);
     }
 
@@ -674,7 +667,7 @@ public class CombinedRangeXYPlot extends XYPlot
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -700,7 +693,7 @@ public class CombinedRangeXYPlot extends XYPlot
      *         exception, but subclasses (if any) might.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
 
         CombinedRangeXYPlot result = (CombinedRangeXYPlot) super.clone();
         result.subplots = ObjectUtilities.deepClone(this.subplots);

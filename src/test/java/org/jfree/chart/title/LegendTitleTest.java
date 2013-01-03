@@ -49,30 +49,16 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.util.SortOrder;
 import org.junit.Test;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 /**
  * Some tests for the {@link LegendTitle} class.
  */
-public class LegendTitleTest  {
-
-
-
+public class LegendTitleTest {
 
 
     /**
@@ -86,11 +72,11 @@ public class LegendTitleTest  {
         assertEquals(t1, t2);
 
         t1.setBackgroundPaint(
-            new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f, Color.yellow)
+                new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f, Color.yellow)
         );
         assertFalse(t1.equals(t2));
         t2.setBackgroundPaint(
-            new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f, Color.yellow)
+                new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f, Color.yellow)
         );
         assertEquals(t1, t2);
 
@@ -166,16 +152,16 @@ public class LegendTitleTest  {
         XYPlot plot = new XYPlot();
         LegendTitle t1 = new LegendTitle(plot);
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(t1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(t1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-            );
+        );
         LegendTitle t2 = (LegendTitle) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(t1, t2);
         assertEquals(t2.getSources()[0], plot);

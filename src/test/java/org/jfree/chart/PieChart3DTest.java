@@ -48,7 +48,7 @@ import org.jfree.data.general.PieDataset;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
@@ -58,20 +58,17 @@ import static org.junit.Assert.assertNull;
 /**
  * Tests for a pie chart with a 3D effect.
  */
-public class PieChart3DTest  {
+public class PieChart3DTest {
 
     /** A chart. */
     private JFreeChart pieChart;
-
-
-
 
 
     /**
      * Common test setup.
      */
     @Before
-	public void setUp() {
+    public void setUp() {
         // create a dataset...
         DefaultPieDataset dataset = new DefaultPieDataset();
         dataset.setValue("Java", new Double(43.2));
@@ -106,7 +103,7 @@ public class PieChart3DTest  {
         dataset.setValue("Section 2", 11.0);
         dataset.setValue("Section 3", null);
         JFreeChart chart = createPieChart3D(dataset);
-        BufferedImage image = new BufferedImage(200 , 100,
+        BufferedImage image = new BufferedImage(200, 100,
                 BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = image.createGraphics();
         chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
@@ -139,7 +136,7 @@ public class PieChart3DTest  {
          * @param event  the event.
          */
         @Override
-		public void chartChanged(ChartChangeEvent event) {
+        public void chartChanged(ChartChangeEvent event) {
             this.flag = true;
         }
 

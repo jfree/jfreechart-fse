@@ -45,17 +45,12 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link BoxAndWhiskerCalculator} class.
  */
-public class BoxAndWhiskerCalculatorTest  {
-
-
-
+public class BoxAndWhiskerCalculatorTest {
 
 
     /**
@@ -68,8 +63,7 @@ public class BoxAndWhiskerCalculatorTest  {
         try {
             BoxAndWhiskerCalculator.calculateBoxAndWhiskerStatistics(null);
             fail("IllegalArgumentException should have been thrown on a null key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'values' argument.", e.getMessage());
         }
 
@@ -77,7 +71,7 @@ public class BoxAndWhiskerCalculatorTest  {
         List<Number> values = new ArrayList<Number>();
         values.add(1.1);
         BoxAndWhiskerItem item
-            = BoxAndWhiskerCalculator.calculateBoxAndWhiskerStatistics(values);
+                = BoxAndWhiskerCalculator.calculateBoxAndWhiskerStatistics(values);
         assertEquals(1.1, item.getMean().doubleValue(), EPSILON);
         assertEquals(1.1, item.getMedian().doubleValue(), EPSILON);
         assertEquals(1.1, item.getQ1().doubleValue(), EPSILON);
@@ -96,8 +90,7 @@ public class BoxAndWhiskerCalculatorTest  {
         try {
             BoxAndWhiskerCalculator.calculateQ1(null);
             fail("IllegalArgumentException should have been thrown on a null key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'values' argument.", e.getMessage());
         }
 
@@ -128,8 +121,7 @@ public class BoxAndWhiskerCalculatorTest  {
         try {
             BoxAndWhiskerCalculator.calculateQ3(null);
             fail("IllegalArgumentException should have been thrown on a null key");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals("Null 'values' argument.", e.getMessage());
         }
 
@@ -162,7 +154,7 @@ public class BoxAndWhiskerCalculatorTest  {
         theList.add(3, 3.0);
         theList.add(4, 4.0);
         BoxAndWhiskerItem theItem =
-            BoxAndWhiskerCalculator.calculateBoxAndWhiskerStatistics(theList);
+                BoxAndWhiskerCalculator.calculateBoxAndWhiskerStatistics(theList);
         assertEquals(1.0, theItem.getMinRegularValue().doubleValue(), EPSILON);
         assertEquals(4.0, theItem.getMaxRegularValue().doubleValue(), EPSILON);
     }

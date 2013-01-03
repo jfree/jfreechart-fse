@@ -49,28 +49,15 @@ package org.jfree.data.time;
 import org.jfree.chart.date.MonthConstants;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.io.*;
+import java.util.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link Millisecond} class.
  */
-public class MillisecondTest  {
+public class MillisecondTest {
 
     /**
      * Check that a {@link Millisecond} instance is equal to itself.
@@ -152,15 +139,15 @@ public class MillisecondTest  {
     public void testSerialization() throws IOException, ClassNotFoundException {
         Millisecond m1 = new Millisecond();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(m1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(m1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
         Millisecond m2 = (Millisecond) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(m1, m2);
     }
@@ -231,8 +218,7 @@ public class MillisecondTest  {
         try {
             m.getFirstMillisecond(null);
             fail("NullPointerException should have been thrown");
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             //we expect to go in here
         }
     }
@@ -251,8 +237,7 @@ public class MillisecondTest  {
         try {
             m.getFirstMillisecond(null);
             fail("NullPointerException should have been thrown");
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             // we expect to go in here
         }
     }
@@ -286,8 +271,7 @@ public class MillisecondTest  {
         try {
             m.getLastMillisecond(null);
             fail("Should have thrown a NullPointerException");
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             //we should enter here
         }
     }
@@ -306,8 +290,7 @@ public class MillisecondTest  {
         try {
             m.getLastMillisecond(null);
             fail("Should have thrown NullPointerException");
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             //expected to enter here
         }
     }

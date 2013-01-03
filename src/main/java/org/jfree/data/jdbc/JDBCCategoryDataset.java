@@ -63,17 +63,10 @@
 
 package org.jfree.data.jdbc;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
-
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
+
+import java.sql.*;
 
 /**
  * A {@link CategoryDataset} implementation over a database JDBC result set.
@@ -122,7 +115,7 @@ public class JDBCCategoryDataset extends DefaultCategoryDataset {
                                String driverName,
                                String user,
                                String passwd)
-        throws ClassNotFoundException, SQLException {
+            throws ClassNotFoundException, SQLException {
 
         Class.forName(driverName);
         this.connection = DriverManager.getConnection(url, user, passwd);
@@ -150,7 +143,7 @@ public class JDBCCategoryDataset extends DefaultCategoryDataset {
      * @throws SQLException if there is a problem executing the query.
      */
     public JDBCCategoryDataset(Connection connection, String query)
-        throws SQLException {
+            throws SQLException {
         this(connection);
         executeQuery(query);
     }
@@ -217,8 +210,8 @@ public class JDBCCategoryDataset extends DefaultCategoryDataset {
 
             if (columnCount < 2) {
                 throw new SQLException(
-                    "JDBCCategoryDataset.executeQuery() : insufficient columns "
-                    + "returned from the database.");
+                        "JDBCCategoryDataset.executeQuery() : insufficient columns "
+                                + "returned from the database.");
             }
 
             // Remove any previous old data
@@ -248,8 +241,7 @@ public class JDBCCategoryDataset extends DefaultCategoryDataset {
                             Number value = (Number) resultSet.getObject(column);
                             if (this.transpose) {
                                 setValue(value, columnKey, rowKey);
-                            }
-                            else {
+                            } else {
                                 setValue(value, rowKey, columnKey);
                             }
                             break;
@@ -261,8 +253,7 @@ public class JDBCCategoryDataset extends DefaultCategoryDataset {
                             Number value = date.getTime();
                             if (this.transpose) {
                                 setValue(value, columnKey, rowKey);
-                            }
-                            else {
+                            } else {
                                 setValue(value, rowKey, columnKey);
                             }
                             break;
@@ -271,17 +262,15 @@ public class JDBCCategoryDataset extends DefaultCategoryDataset {
                         case Types.VARCHAR:
                         case Types.LONGVARCHAR: {
                             String string
-                                = (String) resultSet.getObject(column);
+                                    = (String) resultSet.getObject(column);
                             try {
                                 Number value = Double.valueOf(string);
                                 if (this.transpose) {
                                     setValue(value, columnKey, rowKey);
-                                }
-                                else {
+                                } else {
                                     setValue(value, rowKey, columnKey);
                                 }
-                            }
-                            catch (NumberFormatException e) {
+                            } catch (NumberFormatException e) {
                                 // suppress (value defaults to null)
                             }
                             break;
@@ -294,21 +283,18 @@ public class JDBCCategoryDataset extends DefaultCategoryDataset {
             }
 
             fireDatasetChanged();
-        }
-        finally {
+        } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     // report this?
                 }
             }
             if (statement != null) {
                 try {
                     statement.close();
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     // report this?
                 }
             }

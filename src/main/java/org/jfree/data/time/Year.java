@@ -114,7 +114,7 @@ public class Year extends RegularTimePeriod implements Serializable {
     public Year(int year) {
         if ((year < Year.MINIMUM_YEAR) || (year > Year.MAXIMUM_YEAR)) {
             throw new IllegalArgumentException(
-                "Year constructor: year (" + year + ") outside valid range.");
+                    "Year constructor: year (" + year + ") outside valid range.");
         }
         this.year = (short) year;
         peg(Calendar.getInstance());
@@ -126,7 +126,6 @@ public class Year extends RegularTimePeriod implements Serializable {
      *
      * @param time  the time (<code>null</code> not permitted).
      *
-     * @see #Year(Date, TimeZone)
      */
     public Year(Date time) {
         this(time, TimeZone.getDefault(), Locale.getDefault());
@@ -226,8 +225,7 @@ public class Year extends RegularTimePeriod implements Serializable {
     public RegularTimePeriod next() {
         if (this.year < Year.MAXIMUM_YEAR) {
             return new Year(this.year + 1);
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -344,7 +342,7 @@ public class Year extends RegularTimePeriod implements Serializable {
 
         // CASE 2 : Comparing to another TimePeriod object
         // -----------------------------------------------
-        else  {
+        else {
             // more difficult case - evaluate later...
             result = 0;
         }
@@ -380,16 +378,14 @@ public class Year extends RegularTimePeriod implements Serializable {
         int y;
         try {
             y = Integer.parseInt(s.trim());
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             throw new TimePeriodFormatException("Cannot parse string.");
         }
 
         // create the year...
         try {
             return new Year(y);
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             throw new TimePeriodFormatException("Year outside valid range.");
         }
     }

@@ -48,34 +48,16 @@ import org.jfree.chart.renderer.xy.StandardXYBarPainter;
 import org.jfree.chart.ui.RectangleInsets;
 import org.junit.Test;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.Stroke;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link StandardChartTheme} class.
  */
-public class StandardChartThemeTest  {
-
-
-
+public class StandardChartThemeTest {
 
 
     /**
@@ -144,18 +126,18 @@ public class StandardChartThemeTest  {
 
         //drawingSupplier;
         t1.setDrawingSupplier(new DefaultDrawingSupplier(
-                new Paint[] {Color.RED},
-                new Paint[] {Color.BLUE},
-                new Stroke[] {new BasicStroke(1.0f)},
-                new Stroke[] {new BasicStroke(1.0f)},
-                new Shape[] {new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0)}));
+                new Paint[]{Color.RED},
+                new Paint[]{Color.BLUE},
+                new Stroke[]{new BasicStroke(1.0f)},
+                new Stroke[]{new BasicStroke(1.0f)},
+                new Shape[]{new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0)}));
         assertFalse(t1.equals(t2));
         t2.setDrawingSupplier(new DefaultDrawingSupplier(
-                new Paint[] {Color.RED},
-                new Paint[] {Color.BLUE},
-                new Stroke[] {new BasicStroke(1.0f)},
-                new Stroke[] {new BasicStroke(1.0f)},
-                new Shape[] {new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0)}));
+                new Paint[]{Color.RED},
+                new Paint[]{Color.BLUE},
+                new Stroke[]{new BasicStroke(1.0f)},
+                new Stroke[]{new BasicStroke(1.0f)},
+                new Shape[]{new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0)}));
         assertEquals(t1, t2);
 
         //plotBackgroundPaint;

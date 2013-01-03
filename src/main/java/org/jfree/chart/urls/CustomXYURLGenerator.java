@@ -48,12 +48,12 @@
 
 package org.jfree.chart.urls;
 
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.xy.XYDataset;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.data.xy.XYDataset;
 
 /**
  * A custom URL generator.
@@ -130,7 +130,7 @@ public class CustomXYURLGenerator implements XYURLGenerator, Cloneable,
      * @return A string containing the URL (possibly <code>null</code>).
      */
     @Override
-	public String generateURL(XYDataset dataset, int series, int item) {
+    public String generateURL(XYDataset dataset, int series, int item) {
         return getURL(series, item);
     }
 
@@ -156,7 +156,7 @@ public class CustomXYURLGenerator implements XYURLGenerator, Cloneable,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -182,8 +182,7 @@ public class CustomXYURLGenerator implements XYURLGenerator, Cloneable,
                     if (!u1.equals(u2)) {
                         return false;
                     }
-                }
-                else {
+                } else {
                     if (u2 != null) {
                         return false;
                     }
@@ -203,7 +202,7 @@ public class CustomXYURLGenerator implements XYURLGenerator, Cloneable,
      * @throws CloneNotSupportedException if there is a problem with cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         CustomXYURLGenerator clone = (CustomXYURLGenerator) super.clone();
         clone.urlSeries = new java.util.ArrayList<List<String>>(this.urlSeries);
         return clone;

@@ -46,11 +46,11 @@
 
 package org.jfree.data.gantt;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.general.Series;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A series that contains zero, one or many {@link Task} objects.
@@ -116,7 +116,7 @@ public class TaskSeries extends Series {
      * @return The item count.
      */
     @Override
-	public int getItemCount() {
+    public int getItemCount() {
         return this.tasks.size();
     }
 
@@ -166,7 +166,7 @@ public class TaskSeries extends Series {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -192,7 +192,7 @@ public class TaskSeries extends Series {
      *     the dataset.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         TaskSeries clone = (TaskSeries) super.clone();
         clone.tasks = ObjectUtilities.deepClone(this.tasks);
         return clone;

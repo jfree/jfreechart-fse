@@ -46,25 +46,24 @@
 
 package org.jfree.chart.plot.dial;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.event.PlotChangeEvent;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.plot.PlotState;
+import org.jfree.chart.util.ObjectList;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.data.general.Dataset;
+import org.jfree.data.general.DatasetChangeEvent;
+import org.jfree.data.general.ValueDataset;
+
+import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
-
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.util.ObjectList;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.event.PlotChangeEvent;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.plot.PlotState;
-import org.jfree.data.general.Dataset;
-import org.jfree.data.general.DatasetChangeEvent;
-import org.jfree.data.general.ValueDataset;
 
 /**
  * A dial plot composed of user-definable layers.
@@ -532,8 +531,8 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      *     permitted).
      */
     @Override
-	public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
-            PlotState parentState, PlotRenderingInfo info) {
+    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+                     PlotState parentState, PlotRenderingInfo info) {
 
         Shape origClip = g2.getClip();
         g2.setClip(area);
@@ -548,8 +547,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
                 g2.clip(this.dialFrame.getWindow(frame));
                 this.background.draw(g2, this, frame, area);
                 g2.setClip(savedClip);
-            }
-            else {
+            } else {
                 this.background.draw(g2, this, frame, area);
             }
         }
@@ -588,8 +586,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
                 g2.clip(this.dialFrame.getWindow(frame));
                 this.cap.draw(g2, this, frame, area);
                 g2.setClip(savedClip);
-            }
-            else {
+            } else {
                 this.cap.draw(g2, this, frame, area);
             }
         }
@@ -709,7 +706,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      * @return A new rectangle.
      */
     public static Rectangle2D rectangleByRadius(Rectangle2D rect,
-            double radiusW, double radiusH) {
+                                                double radiusW, double radiusH) {
         if (rect == null) {
             throw new IllegalArgumentException("Null 'rect' argument.");
         }
@@ -727,7 +724,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      * @param event  the event.
      */
     @Override
-	public void dialLayerChanged(DialLayerChangeEvent event) {
+    public void dialLayerChanged(DialLayerChangeEvent event) {
         fireChangeEvent();
     }
 
@@ -741,7 +738,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -785,7 +782,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      * @return The hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 193;
         result = 37 * result + ObjectUtilities.hashCode(this.background);
         result = 37 * result + ObjectUtilities.hashCode(this.cap);
@@ -807,7 +804,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      * @return <code>"DialPlot"</code>
      */
     @Override
-	public String getPlotType() {
+    public String getPlotType() {
         return "DialPlot";
     }
 

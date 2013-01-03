@@ -49,22 +49,22 @@
 
 package org.jfree.data;
 
-import java.io.Serializable;
-
 import org.jfree.chart.util.PublicCloneable;
+
+import java.io.Serializable;
 
 /**
  * A (key, value) pair.  This class provides a default implementation
  * of the {@link KeyedValue} interface.
  */
-public class DefaultKeyedValue implements KeyedValue, Cloneable,
+public class DefaultKeyedValue<Key extends Comparable> implements KeyedValue<Key>, Cloneable,
         PublicCloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -7388924517460437712L;
 
     /** The key. */
-    private Comparable key;
+    private Key key;
 
     /** The value. */
     private Number value;
@@ -76,7 +76,7 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      *         permitted).
      * @param value  the value (<code>null</code> permitted).
      */
-    public DefaultKeyedValue(Comparable key, Number value) {
+    public DefaultKeyedValue(Key key, Number value) {
         if (key == null) {
             throw new IllegalArgumentException("Null 'key' argument.");
         }
@@ -90,7 +90,7 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      * @return The key (never <code>null</code>).
      */
     @Override
-	public Comparable getKey() {
+    public Key getKey() {
         return this.key;
     }
 
@@ -100,7 +100,7 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      * @return The value (possibly <code>null</code>).
      */
     @Override
-	public Number getValue() {
+    public Number getValue() {
         return this.value;
     }
 
@@ -120,8 +120,9 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      *
      * @return A boolean.
      */
+    @SuppressWarnings("RedundantIfStatement")
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -146,7 +147,7 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result;
         result = (this.key != null ? this.key.hashCode() : 0);
         result = 29 * result + (this.value != null ? this.value.hashCode() : 0);
@@ -164,9 +165,8 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      *         subclasses (if any) might.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
-        DefaultKeyedValue clone = (DefaultKeyedValue) super.clone();
-        return clone;
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     /**
@@ -176,7 +176,7 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      * @return A string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return "(" + this.key.toString() + ", " + this.value.toString() + ")";
     }
 

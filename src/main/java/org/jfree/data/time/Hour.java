@@ -137,7 +137,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
      *
      * @param time  the date-time (<code>null</code> not permitted).
      *
-     * @see #Hour(Date, TimeZone)
+     * @see #Hour(Date)
      */
     public Hour(Date time) {
         // defer argument checking...
@@ -227,7 +227,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
      * @see #getLastMillisecond()
      */
     @Override
-	public long getFirstMillisecond() {
+    public long getFirstMillisecond() {
         return this.firstMillisecond;
     }
 
@@ -242,7 +242,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
      * @see #getFirstMillisecond()
      */
     @Override
-	public long getLastMillisecond() {
+    public long getLastMillisecond() {
         return this.lastMillisecond;
     }
 
@@ -255,7 +255,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
      * @since 1.0.3
      */
     @Override
-	public void peg(Calendar calendar) {
+    public void peg(Calendar calendar) {
         this.firstMillisecond = getFirstMillisecond(calendar);
         this.lastMillisecond = getLastMillisecond(calendar);
     }
@@ -266,17 +266,15 @@ public class Hour extends RegularTimePeriod implements Serializable {
      * @return The hour preceding this one.
      */
     @Override
-	public RegularTimePeriod previous() {
+    public RegularTimePeriod previous() {
         Hour result;
         if (this.hour != FIRST_HOUR_IN_DAY) {
             result = new Hour(this.hour - 1, this.day);
-        }
-        else { // we are at the first hour in the day...
+        } else { // we are at the first hour in the day...
             Day prevDay = (Day) this.day.previous();
             if (prevDay != null) {
                 result = new Hour(LAST_HOUR_IN_DAY, prevDay);
-            }
-            else {
+            } else {
                 result = null;
             }
         }
@@ -289,17 +287,15 @@ public class Hour extends RegularTimePeriod implements Serializable {
      * @return The hour following this one.
      */
     @Override
-	public RegularTimePeriod next() {
+    public RegularTimePeriod next() {
         Hour result;
         if (this.hour != LAST_HOUR_IN_DAY) {
             result = new Hour(this.hour + 1, this.day);
-        }
-        else { // we are at the last hour in the day...
+        } else { // we are at the last hour in the day...
             Day nextDay = (Day) this.day.next();
             if (nextDay != null) {
                 result = new Hour(FIRST_HOUR_IN_DAY, nextDay);
-            }
-            else {
+            } else {
                 result = null;
             }
         }
@@ -312,7 +308,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
      * @return The serial index number.
      */
     @Override
-	public long getSerialIndex() {
+    public long getSerialIndex() {
         return this.day.getSerialIndex() * 24L + this.hour;
     }
 
@@ -327,7 +323,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
      *     <code>null</code>.
      */
     @Override
-	public long getFirstMillisecond(Calendar calendar) {
+    public long getFirstMillisecond(Calendar calendar) {
         int year = this.day.getYear();
         int month = this.day.getMonth() - 1;
         int dom = this.day.getDayOfMonth();
@@ -347,7 +343,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
      *     <code>null</code>.
      */
     @Override
-	public long getLastMillisecond(Calendar calendar) {
+    public long getLastMillisecond(Calendar calendar) {
         int year = this.day.getYear();
         int month = this.day.getMonth() - 1;
         int dom = this.day.getDayOfMonth();
@@ -368,7 +364,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
      *      is the same as this.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -392,11 +388,11 @@ public class Hour extends RegularTimePeriod implements Serializable {
      * @return A string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return "[" + this.hour + "," + getDayOfMonth() + "/" + getMonth() + "/"
                 + getYear() + "]";
     }
- 
+
     /**
      * Returns a hash code for this object instance.  The approach described by
      * Joshua Bloch in "Effective Java" has been used here:
@@ -407,7 +403,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 17;
         result = 37 * result + this.hour;
         result = 37 * result + this.day.hashCode();
@@ -425,7 +421,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
      * @return negative == before, zero == same, positive == after.
      */
     @Override
-	public int compareTo(TimePeriod o1) {
+    public int compareTo(TimePeriod o1) {
         int result;
 
         // CASE 1 : Comparing to another Hour object
@@ -466,7 +462,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
         Day day = Day.parseDay(daystr);
         if (day != null) {
             String hourstr = s.substring(
-                Math.min(daystr.length() + 1, s.length()), s.length()
+                    Math.min(daystr.length() + 1, s.length()), s.length()
             );
             hourstr = hourstr.trim();
             int hour = Integer.parseInt(hourstr);

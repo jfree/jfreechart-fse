@@ -57,7 +57,8 @@ import org.jfree.data.category.CategoryDataset;
 /**
  * A URL generator for items in a {@link CategoryDataset}.
  */
-public interface CategoryURLGenerator {
+public interface CategoryURLGenerator
+        <RowKey extends Comparable, ColumnKey extends Comparable> {
 
     /**
      * Returns a URL for one item in a dataset. As a guideline, the URL
@@ -72,7 +73,7 @@ public interface CategoryURLGenerator {
      *
      * @return A string containing the URL.
      */
-    public String generateURL(CategoryDataset dataset, int series,
-            int category);
+    public String generateURL(CategoryDataset<RowKey, ColumnKey> dataset, int series,
+                              int category);
 
 }

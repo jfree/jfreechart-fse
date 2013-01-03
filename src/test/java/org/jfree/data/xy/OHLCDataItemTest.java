@@ -42,27 +42,17 @@ package org.jfree.data.xy;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 
-
 /**
  * Tests for the {@link OHLCDataItem} class.
  */
-public class OHLCDataItemTest  {
-
-
-
+public class OHLCDataItemTest {
 
 
     /**
@@ -71,10 +61,10 @@ public class OHLCDataItemTest  {
     @Test
     public void testEquals() {
         OHLCDataItem i1 = new OHLCDataItem(
-            new Date(1L), 1.0, 2.0, 3.0, 4.0, 5.0
+                new Date(1L), 1.0, 2.0, 3.0, 4.0, 5.0
         );
         OHLCDataItem i2 = new OHLCDataItem(
-            new Date(1L), 1.0, 2.0, 3.0, 4.0, 5.0
+                new Date(1L), 1.0, 2.0, 3.0, 4.0, 5.0
         );
         assertEquals(i1, i2);
         assertEquals(i2, i1);
@@ -86,7 +76,7 @@ public class OHLCDataItemTest  {
     @Test
     public void testCloning() throws CloneNotSupportedException {
         OHLCDataItem i1 = new OHLCDataItem(
-            new Date(1L), 1.0, 2.0, 3.0, 4.0, 5.0
+                new Date(1L), 1.0, 2.0, 3.0, 4.0, 5.0
         );
         assertFalse(i1 instanceof Cloneable);
     }
@@ -97,19 +87,19 @@ public class OHLCDataItemTest  {
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
         OHLCDataItem i1 = new OHLCDataItem(
-            new Date(1L), 1.0, 2.0, 3.0, 4.0, 5.0
+                new Date(1L), 1.0, 2.0, 3.0, 4.0, 5.0
         );
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(i1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(i1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-            );
+        );
         OHLCDataItem i2 = (OHLCDataItem) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(i1, i2);
     }

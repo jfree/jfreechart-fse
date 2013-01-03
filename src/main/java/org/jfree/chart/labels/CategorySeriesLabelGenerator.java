@@ -52,7 +52,8 @@ import org.jfree.data.category.CategoryDataset;
  * the JCommon class library).  This provides a mechanism for the referring
  * renderer to clone the generator if necessary.
  */
-public interface CategorySeriesLabelGenerator {
+public interface CategorySeriesLabelGenerator
+        <RowKey extends Comparable, ColumnKey extends Comparable> {
 
     /**
      * Generates a label for the specified series.
@@ -62,6 +63,6 @@ public interface CategorySeriesLabelGenerator {
      *
      * @return A series label.
      */
-    public String generateLabel(CategoryDataset dataset, int series);
+    public String generateLabel(CategoryDataset<RowKey, ColumnKey> dataset, int series);
 
 }

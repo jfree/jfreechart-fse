@@ -55,15 +55,15 @@
 
 package org.jfree.chart.labels;
 
+import org.jfree.chart.HashUtilities;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.data.xy.XYDataset;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.util.Date;
-
-import org.jfree.chart.HashUtilities;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.data.xy.XYDataset;
 
 /**
  * A base class for creating item label generators.
@@ -162,7 +162,7 @@ public class AbstractXYItemLabelGenerator implements Cloneable, Serializable {
      * @since 1.0.4
      */
     protected AbstractXYItemLabelGenerator(String formatString,
-            NumberFormat xFormat, DateFormat yFormat) {
+                                           NumberFormat xFormat, DateFormat yFormat) {
 
         this(formatString, xFormat, NumberFormat.getInstance());
         this.yDateFormat = yFormat;
@@ -279,20 +279,17 @@ public class AbstractXYItemLabelGenerator implements Cloneable, Serializable {
         double x = dataset.getXValue(series, item);
         if (this.xDateFormat != null) {
             result[1] = this.xDateFormat.format(new Date((long) x));
-        }
-        else {
+        } else {
             result[1] = this.xFormat.format(x);
         }
 
         double y = dataset.getYValue(series, item);
         if (Double.isNaN(y) && dataset.getY(series, item) == null) {
             result[2] = this.nullYString;
-        }
-        else {
+        } else {
             if (this.yDateFormat != null) {
                 result[2] = this.yDateFormat.format(new Date((long) y));
-            }
-            else {
+            } else {
                 result[2] = this.yFormat.format(y);
             }
         }
@@ -307,7 +304,7 @@ public class AbstractXYItemLabelGenerator implements Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -342,7 +339,7 @@ public class AbstractXYItemLabelGenerator implements Cloneable, Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 127;
         result = HashUtilities.hashCode(result, this.formatString);
         result = HashUtilities.hashCode(result, this.xFormat);
@@ -360,7 +357,7 @@ public class AbstractXYItemLabelGenerator implements Cloneable, Serializable {
      * @throws CloneNotSupportedException if cloning is not supported.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         AbstractXYItemLabelGenerator clone
                 = (AbstractXYItemLabelGenerator) super.clone();
         if (this.xFormat != null) {

@@ -47,9 +47,9 @@
 
 package org.jfree.data.xy;
 
-import java.io.Serializable;
-
 import org.jfree.data.general.Series;
+
+import java.io.Serializable;
 
 /**
  * Represents a dense matrix M[i,j] where each Mij item of the matrix has a
@@ -128,7 +128,7 @@ public class MatrixSeries extends Series implements Serializable {
      * @return The item count.
      */
     @Override
-	public int getItemCount() {
+    public int getItemCount() {
         return getRowCount() * getColumnsCount();
     }
 
@@ -212,7 +212,7 @@ public class MatrixSeries extends Series implements Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

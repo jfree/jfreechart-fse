@@ -50,25 +50,14 @@ import org.jfree.data.xy.DefaultTableXYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link XYStepRenderer} class.
  */
-public class XYStepRendererTest  {
-
+public class XYStepRendererTest {
 
 
     /**
@@ -144,7 +133,7 @@ public class XYStepRendererTest  {
         ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray()));
         XYStepRenderer r2 = (XYStepRenderer) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(r1, r2);
     }
@@ -155,27 +144,28 @@ public class XYStepRendererTest  {
      */
     @Test
     public void testDrawWithNullInfo() {
-            DefaultTableXYDataset dataset = new DefaultTableXYDataset();
+        DefaultTableXYDataset dataset = new DefaultTableXYDataset();
 
-            XYSeries s1 = new XYSeries("Series 1", true, false);
-            s1.add(5.0, 5.0);
-            s1.add(10.0, 15.5);
-            s1.add(15.0, 9.5);
-            s1.add(20.0, 7.5);
-            dataset.addSeries(s1);
+        XYSeries s1 = new XYSeries("Series 1", true, false);
+        s1.add(5.0, 5.0);
+        s1.add(10.0, 15.5);
+        s1.add(15.0, 9.5);
+        s1.add(20.0, 7.5);
+        dataset.addSeries(s1);
 
-            XYSeries s2 = new XYSeries("Series 2", true, false);
-            s2.add(5.0, 5.0);
-            s2.add(10.0, 15.5);
-            s2.add(15.0, 9.5);
-            s2.add(20.0, 3.5);
-            dataset.addSeries(s2);
-            XYPlot plot = new XYPlot(dataset,
-                    new NumberAxis("X"), new NumberAxis("Y"),
-                    new XYStepRenderer());
-            JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+        XYSeries s2 = new XYSeries("Series 2", true, false);
+        s2.add(5.0, 5.0);
+        s2.add(10.0, 15.5);
+        s2.add(15.0, 9.5);
+        s2.add(20.0, 3.5);
+        dataset.addSeries(s2);
+        XYPlot plot = new XYPlot(dataset,
+                new NumberAxis("X"), new NumberAxis("Y"),
+                new XYStepRenderer());
+        JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */
+        chart.createBufferedImage(300, 200,
+                null);
         //FIXME we should be asserting a value here
     }
 
@@ -185,27 +175,28 @@ public class XYStepRendererTest  {
      */
     @Test
     public void testDrawWithNullValue() {
-            DefaultTableXYDataset dataset = new DefaultTableXYDataset();
+        DefaultTableXYDataset dataset = new DefaultTableXYDataset();
 
-            XYSeries s1 = new XYSeries("Series 1", true, false);
-            s1.add(5.0, 5.0);
-            s1.add(10.0, null);
-            s1.add(15.0, 9.5);
-            s1.add(20.0, 7.5);
-            dataset.addSeries(s1);
+        XYSeries s1 = new XYSeries("Series 1", true, false);
+        s1.add(5.0, 5.0);
+        s1.add(10.0, null);
+        s1.add(15.0, 9.5);
+        s1.add(20.0, 7.5);
+        dataset.addSeries(s1);
 
-            XYSeries s2 = new XYSeries("Series 2", true, false);
-            s2.add(5.0, 5.0);
-            s2.add(10.0, 15.5);
-            s2.add(15.0, null);
-            s2.add(20.0, null);
-            dataset.addSeries(s2);
-            XYPlot plot = new XYPlot(dataset,
-                    new NumberAxis("X"), new NumberAxis("Y"),
-                    new XYStepRenderer());
-            JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
-                    null);
+        XYSeries s2 = new XYSeries("Series 2", true, false);
+        s2.add(5.0, 5.0);
+        s2.add(10.0, 15.5);
+        s2.add(15.0, null);
+        s2.add(20.0, null);
+        dataset.addSeries(s2);
+        XYPlot plot = new XYPlot(dataset,
+                new NumberAxis("X"), new NumberAxis("Y"),
+                new XYStepRenderer());
+        JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */
+        chart.createBufferedImage(300, 200,
+                null);
 
         //FIXME we should be asserting a value here
     }

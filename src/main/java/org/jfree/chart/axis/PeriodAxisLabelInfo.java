@@ -46,11 +46,11 @@
 
 package org.jfree.chart.axis;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Paint;
-import java.awt.Stroke;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.util.SerialUtilities;
+import org.jfree.data.time.RegularTimePeriod;
+
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -61,10 +61,6 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.data.time.RegularTimePeriod;
 
 /**
  * A record that contains information for one "band" of date labels in
@@ -130,9 +126,9 @@ public class PeriodAxisLabelInfo implements Cloneable, Serializable {
      */
     public PeriodAxisLabelInfo(Class<? extends RegularTimePeriod> periodClass, DateFormat dateFormat) {
         this(
-            periodClass, dateFormat, DEFAULT_INSETS, DEFAULT_FONT,
-            DEFAULT_LABEL_PAINT, true, DEFAULT_DIVIDER_STROKE,
-            DEFAULT_DIVIDER_PAINT
+                periodClass, dateFormat, DEFAULT_INSETS, DEFAULT_FONT,
+                DEFAULT_LABEL_PAINT, true, DEFAULT_DIVIDER_STROKE,
+                DEFAULT_DIVIDER_PAINT
         );
     }
 
@@ -275,23 +271,19 @@ public class PeriodAxisLabelInfo implements Cloneable, Serializable {
      * @since 1.0.13.
      */
     public RegularTimePeriod createInstance(Date millisecond, TimeZone zone,
-            Locale locale) {
+                                            Locale locale) {
         RegularTimePeriod result = null;
         try {
             Constructor<? extends RegularTimePeriod> c = this.periodClass.getDeclaredConstructor(
-                    new Class[] {Date.class, TimeZone.class, Locale.class});
+                    new Class[]{Date.class, TimeZone.class, Locale.class});
             result = c.newInstance(millisecond, zone, locale);
-        }
-        catch (InvocationTargetException e) {
+        } catch (InvocationTargetException e) {
             //ignore
-        }
-        catch (IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             //ignore
-        }
-        catch (NoSuchMethodException e) {
+        } catch (NoSuchMethodException e) {
             //ignore
-        }
-        catch (InstantiationException e) {
+        } catch (InstantiationException e) {
             //ignore
         }
 
@@ -306,7 +298,7 @@ public class PeriodAxisLabelInfo implements Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -347,7 +339,7 @@ public class PeriodAxisLabelInfo implements Cloneable, Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 41;
         result += 37 * this.periodClass.hashCode();
         result += 37 * this.dateFormat.hashCode();
@@ -362,7 +354,7 @@ public class PeriodAxisLabelInfo implements Cloneable, Serializable {
      * @throws CloneNotSupportedException if cloning is not supported.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         PeriodAxisLabelInfo clone = (PeriodAxisLabelInfo) super.clone();
         return clone;
     }
@@ -390,7 +382,7 @@ public class PeriodAxisLabelInfo implements Cloneable, Serializable {
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+            throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.labelPaint = SerialUtilities.readPaint(stream);
         this.dividerStroke = SerialUtilities.readStroke(stream);

@@ -42,15 +42,15 @@
 
 package org.jfree.chart.block;
 
-import java.awt.Graphics2D;
+import org.jfree.chart.ui.HorizontalAlignment;
+import org.jfree.chart.ui.Size2D;
+import org.jfree.chart.ui.VerticalAlignment;
+
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.jfree.chart.ui.HorizontalAlignment;
-import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.ui.VerticalAlignment;
 
 /**
  * Arranges blocks in a column layout.  This class is immutable.
@@ -104,7 +104,7 @@ public class ColumnArrangement implements Arrangement, Serializable {
      * @param key  a key that controls the position of the block.
      */
     @Override
-	public void add(Block block, Object key) {
+    public void add(Block block, Object key) {
         // since the flow layout is relatively straightforward, no information
         // needs to be recorded here
     }
@@ -122,7 +122,7 @@ public class ColumnArrangement implements Arrangement, Serializable {
      * @return The size of the container after arrangement of the contents.
      */
     @Override
-	public Size2D arrange(BlockContainer container, Graphics2D g2,
+    public Size2D arrange(BlockContainer container, Graphics2D g2,
                           RectangleConstraint constraint) {
 
         LengthConstraintType w = constraint.getWidthConstraintType();
@@ -130,33 +130,25 @@ public class ColumnArrangement implements Arrangement, Serializable {
         if (w == LengthConstraintType.NONE) {
             if (h == LengthConstraintType.NONE) {
                 return arrangeNN(container, g2);
-            }
-            else if (h == LengthConstraintType.FIXED) {
+            } else if (h == LengthConstraintType.FIXED) {
+                throw new RuntimeException("Not implemented.");
+            } else if (h == LengthConstraintType.RANGE) {
                 throw new RuntimeException("Not implemented.");
             }
-            else if (h == LengthConstraintType.RANGE) {
-                throw new RuntimeException("Not implemented.");
-            }
-        }
-        else if (w == LengthConstraintType.FIXED) {
+        } else if (w == LengthConstraintType.FIXED) {
             if (h == LengthConstraintType.NONE) {
                 throw new RuntimeException("Not implemented.");
-            }
-            else if (h == LengthConstraintType.FIXED) {
+            } else if (h == LengthConstraintType.FIXED) {
                 return arrangeFF(container, g2, constraint);
-            }
-            else if (h == LengthConstraintType.RANGE) {
+            } else if (h == LengthConstraintType.RANGE) {
                 throw new RuntimeException("Not implemented.");
             }
-        }
-        else if (w == LengthConstraintType.RANGE) {
+        } else if (w == LengthConstraintType.RANGE) {
             if (h == LengthConstraintType.NONE) {
                 throw new RuntimeException("Not implemented.");
-            }
-            else if (h == LengthConstraintType.FIXED) {
+            } else if (h == LengthConstraintType.FIXED) {
                 return arrangeRF(container, g2, constraint);
-            }
-            else if (h == LengthConstraintType.RANGE) {
+            } else if (h == LengthConstraintType.RANGE) {
                 return arrangeRR(container, g2, constraint);
             }
         }
@@ -264,10 +256,9 @@ public class ColumnArrangement implements Arrangement, Serializable {
         Size2D s1 = arrangeNN(container, g2);
         if (constraint.getHeightRange().contains(s1.height)) {
             return s1;  // TODO: we didn't check the width yet
-        }
-        else {
+        } else {
             RectangleConstraint c = constraint.toFixedHeight(
-                constraint.getHeightRange().getUpperBound()
+                    constraint.getHeightRange().getUpperBound()
             );
             return arrangeRF(container, g2, c);
         }
@@ -289,10 +280,9 @@ public class ColumnArrangement implements Arrangement, Serializable {
         Size2D s = arrangeNF(container, g2, constraint);
         if (constraint.getWidthRange().contains(s.width)) {
             return s;
-        }
-        else {
+        } else {
             RectangleConstraint c = constraint.toFixedWidth(
-                constraint.getWidthRange().constrain(s.getWidth())
+                    constraint.getWidthRange().constrain(s.getWidth())
             );
             return arrangeFF(container, g2, c);
         }
@@ -321,9 +311,9 @@ public class ColumnArrangement implements Arrangement, Serializable {
                 height = height + sizes[i].getHeight();
                 maxWidth = Math.max(sizes[i].width, maxWidth);
                 block.setBounds(
-                    new Rectangle2D.Double(
-                        0.0, y, sizes[i].width, sizes[i].height
-                    )
+                        new Rectangle2D.Double(
+                                0.0, y, sizes[i].width, sizes[i].height
+                        )
                 );
                 y = y + sizes[i].height + this.verticalGap;
             }
@@ -350,7 +340,7 @@ public class ColumnArrangement implements Arrangement, Serializable {
      * Clears any cached information.
      */
     @Override
-	public void clear() {
+    public void clear() {
         // no action required.
     }
 
@@ -362,7 +352,7 @@ public class ColumnArrangement implements Arrangement, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

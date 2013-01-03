@@ -42,13 +42,7 @@ package org.jfree.chart.plot;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -57,10 +51,7 @@ import static org.junit.Assert.assertFalse;
  * Tests for the {@link PlotOrientation} class.
  *
  */
-public class PlotOrientationTest  {
-
-
-
+public class PlotOrientationTest {
 
 
     /**
@@ -71,10 +62,10 @@ public class PlotOrientationTest  {
         assertEquals(PlotOrientation.HORIZONTAL, PlotOrientation.HORIZONTAL);
         assertEquals(PlotOrientation.VERTICAL, PlotOrientation.VERTICAL);
         assertFalse(
-            PlotOrientation.HORIZONTAL.equals(PlotOrientation.VERTICAL)
+                PlotOrientation.HORIZONTAL.equals(PlotOrientation.VERTICAL)
         );
         assertFalse(
-            PlotOrientation.VERTICAL.equals(PlotOrientation.HORIZONTAL)
+                PlotOrientation.VERTICAL.equals(PlotOrientation.HORIZONTAL)
         );
     }
 
@@ -86,16 +77,16 @@ public class PlotOrientationTest  {
 
         PlotOrientation orientation1 = PlotOrientation.HORIZONTAL;
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(orientation1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(orientation1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
+        ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-            );
+        );
         PlotOrientation orientation2 = (PlotOrientation) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(orientation1, orientation2);
         boolean same = orientation1 == orientation2;

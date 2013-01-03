@@ -48,17 +48,17 @@
 
 package org.jfree.chart.block;
 
-import java.awt.Graphics2D;
+import org.jfree.chart.entity.EntityCollection;
+import org.jfree.chart.entity.StandardEntityCollection;
+import org.jfree.chart.ui.Size2D;
+import org.jfree.chart.util.PublicCloneable;
+
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.entity.EntityCollection;
-import org.jfree.chart.entity.StandardEntityCollection;
 
 /**
  * A container for a collection of {@link Block} objects.  The container uses
@@ -176,7 +176,7 @@ public class BlockContainer extends AbstractBlock
      * @return The block size (in Java2D units, never <code>null</code>).
      */
     @Override
-	public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
+    public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
         return this.arrangement.arrange(this, g2, constraint);
     }
 
@@ -187,7 +187,7 @@ public class BlockContainer extends AbstractBlock
      * @param area  the area.
      */
     @Override
-	public void draw(Graphics2D g2, Rectangle2D area) {
+    public void draw(Graphics2D g2, Rectangle2D area) {
         draw(g2, area, null);
     }
 
@@ -202,7 +202,7 @@ public class BlockContainer extends AbstractBlock
      * @return An instance of {@link EntityBlockResult}, or <code>null</code>.
      */
     @Override
-	public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
+    public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
         // check if we need to collect chart entities from the container
         EntityBlockParams ebp;
         StandardEntityCollection sec = null;
@@ -247,7 +247,7 @@ public class BlockContainer extends AbstractBlock
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -275,7 +275,7 @@ public class BlockContainer extends AbstractBlock
      * @throws CloneNotSupportedException if there is a problem cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         BlockContainer clone = (BlockContainer) super.clone();
         // TODO : complete this
         return clone;

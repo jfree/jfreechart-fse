@@ -46,26 +46,23 @@
  * 15-Jun-2012 : Moved from JCommon to JFreeChart (DG);
  *
  */
- 
-package org.jfree.chart.text;
 
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.geom.Rectangle2D;
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
+package org.jfree.chart.text;
 
 import org.jfree.chart.ui.HorizontalAlignment;
 import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.ShapeUtilities;
 
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * A list of {@link TextLine} objects that form a block of text.
- * 
+ *
  * @see TextUtilities#createTextBlock(String, Font, Paint)
  *
  * @author David Gilbert
@@ -74,10 +71,10 @@ public class TextBlock implements Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -4333175719424385526L;
-    
+
     /** Storage for the lines of text. */
     private List<TextLine> lines;
-    
+
     /** The alignment of the lines. */
     private HorizontalAlignment lineAlignment;
 
@@ -88,31 +85,31 @@ public class TextBlock implements Serializable {
         this.lines = new java.util.ArrayList<TextLine>();
         this.lineAlignment = HorizontalAlignment.CENTER;
     }
-    
+
     /**
      * Returns the alignment of the lines of text within the block.
-     * 
+     *
      * @return The alignment (never <code>null</code>).
      */
     public HorizontalAlignment getLineAlignment() {
-        return this.lineAlignment;   
+        return this.lineAlignment;
     }
-    
+
     /**
      * Sets the alignment of the lines of text within the block.
-     * 
+     *
      * @param alignment  the alignment (<code>null</code> not permitted).
      */
     public void setLineAlignment(HorizontalAlignment alignment) {
         if (alignment == null) {
             throw new IllegalArgumentException("Null 'alignment' argument.");
         }
-        this.lineAlignment = alignment;   
+        this.lineAlignment = alignment;
     }
-    
+
     /**
      * Adds a line of text that will be displayed using the specified font.
-     * 
+     *
      * @param text  the text.
      * @param font  the font.
      * @param paint  the paint.
@@ -120,19 +117,19 @@ public class TextBlock implements Serializable {
     public void addLine(final String text, final Font font, final Paint paint) {
         addLine(new TextLine(text, font, paint));
     }
-    
+
     /**
      * Adds a {@link TextLine} to the block.
-     * 
+     *
      * @param line  the line.
      */
     public void addLine(final TextLine line) {
-        this.lines.add(line);    
+        this.lines.add(line);
     }
-    
+
     /**
      * Returns the last line in the block.
-     * 
+     *
      * @return The last line in the block.
      */
     public TextLine getLastLine() {
@@ -143,7 +140,7 @@ public class TextBlock implements Serializable {
         }
         return last;
     }
-    
+
     /**
      * Returns an unmodifiable list containing the lines for the text block.
      *
@@ -152,12 +149,12 @@ public class TextBlock implements Serializable {
     public List<TextLine> getLines() {
         return Collections.unmodifiableList(this.lines);
     }
-    
+
     /**
      * Returns the width and height of the text block.
-     * 
+     *
      * @param g2  the graphics device.
-     * 
+     *
      * @return The width and height.
      */
     public Size2D calculateDimensions(final Graphics2D g2) {
@@ -170,10 +167,10 @@ public class TextBlock implements Serializable {
         }
         return new Size2D(width, height);
     }
-    
+
     /**
      * Returns the bounds of the text block.
-     * 
+     *
      * @param g2  the graphics device (<code>null</code> not permitted).
      * @param anchorX  the x-coordinate for the anchor point.
      * @param anchorY  the y-coordinate for the anchor point.
@@ -181,47 +178,47 @@ public class TextBlock implements Serializable {
      * @param rotateX  the x-coordinate for the rotation point.
      * @param rotateY  the y-coordinate for the rotation point.
      * @param angle  the rotation angle.
-     * 
+     *
      * @return The bounds.
      */
     public Shape calculateBounds(final Graphics2D g2,
-                                 final float anchorX, final float anchorY, 
+                                 final float anchorX, final float anchorY,
                                  final TextBlockAnchor anchor,
-                                 final float rotateX, final float rotateY, 
+                                 final float rotateX, final float rotateY,
                                  final double angle) {
-        
+
         final Size2D d = calculateDimensions(g2);
         final float[] offsets = calculateOffsets(
-            anchor, d.getWidth(), d.getHeight()
+                anchor, d.getWidth(), d.getHeight()
         );
         final Rectangle2D bounds = new Rectangle2D.Double(
-            anchorX + offsets[0], anchorY + offsets[1], 
-            d.getWidth(), d.getHeight()
+                anchorX + offsets[0], anchorY + offsets[1],
+                d.getWidth(), d.getHeight()
         );
         final Shape rotatedBounds = ShapeUtilities.rotateShape(
-            bounds, angle, rotateX, rotateY
+                bounds, angle, rotateX, rotateY
         );
-        return rotatedBounds;   
-        
+        return rotatedBounds;
+
     }
-    
+
     /**
      * Draws the text block at a specific location.
-     * 
+     *
      * @param g2  the graphics device.
      * @param x  the x-coordinate for the anchor point.
      * @param y  the y-coordinate for the anchor point.
      * @param anchor  the anchor point.
      */
-    public void draw(final Graphics2D g2, final float x, final float y, 
+    public void draw(final Graphics2D g2, final float x, final float y,
                      final TextBlockAnchor anchor) {
         draw(g2, x, y, anchor, 0.0f, 0.0f, 0.0);
     }
-    
+
     /**
      * Draws the text block, aligning it with the specified anchor point and 
      * rotating it about the specified rotation point.
-     * 
+     *
      * @param g2  the graphics device.
      * @param anchorX  the x-coordinate for the anchor point.
      * @param anchorY  the y-coordinate for the anchor point.
@@ -232,11 +229,11 @@ public class TextBlock implements Serializable {
      * @param angle  the rotation (in radians).
      */
     public void draw(final Graphics2D g2,
-                     final float anchorX, final float anchorY, 
+                     final float anchorX, final float anchorY,
                      final TextBlockAnchor anchor,
-                     final float rotateX, final float rotateY, 
+                     final float rotateX, final float rotateY,
                      final double angle) {
-    
+
         final Size2D d = calculateDimensions(g2);
         final float[] offsets = calculateOffsets(anchor, d.getWidth(),
                 d.getHeight());
@@ -256,21 +253,21 @@ public class TextBlock implements Serializable {
             );
             yCursor = yCursor + (float) dimension.getHeight();
         }
-        
+
     }
- 
+
     /**
      * Calculates the x and y offsets required to align the text block with the
      * specified anchor point.  This assumes that the top left of the text 
      * block is at (0.0, 0.0).
-     * 
+     *
      * @param anchor  the anchor position.
      * @param width  the width of the text block.
      * @param height  the height of the text block.
-     * 
+     *
      * @return The offsets (float[0] = x offset, float[1] = y offset).
      */
-    private float[] calculateOffsets(final TextBlockAnchor anchor, 
+    private float[] calculateOffsets(final TextBlockAnchor anchor,
                                      final double width, final double height) {
         final float[] result = new float[2];
         float xAdj = 0.0f;
@@ -279,55 +276,52 @@ public class TextBlock implements Serializable {
         if (anchor == TextBlockAnchor.TOP_CENTER
                 || anchor == TextBlockAnchor.CENTER
                 || anchor == TextBlockAnchor.BOTTOM_CENTER) {
-                    
+
             xAdj = (float) -width / 2.0f;
-            
-        }
-        else if (anchor == TextBlockAnchor.TOP_RIGHT
+
+        } else if (anchor == TextBlockAnchor.TOP_RIGHT
                 || anchor == TextBlockAnchor.CENTER_RIGHT
                 || anchor == TextBlockAnchor.BOTTOM_RIGHT) {
-                    
+
             xAdj = (float) -width;
-            
+
         }
 
         if (anchor == TextBlockAnchor.TOP_LEFT
                 || anchor == TextBlockAnchor.TOP_CENTER
                 || anchor == TextBlockAnchor.TOP_RIGHT) {
-                    
+
             yAdj = 0.0f;
-            
-        }
-        else if (anchor == TextBlockAnchor.CENTER_LEFT
+
+        } else if (anchor == TextBlockAnchor.CENTER_LEFT
                 || anchor == TextBlockAnchor.CENTER
                 || anchor == TextBlockAnchor.CENTER_RIGHT) {
-                    
+
             yAdj = (float) -height / 2.0f;
-            
-        }
-        else if (anchor == TextBlockAnchor.BOTTOM_LEFT
+
+        } else if (anchor == TextBlockAnchor.BOTTOM_LEFT
                 || anchor == TextBlockAnchor.BOTTOM_CENTER
                 || anchor == TextBlockAnchor.BOTTOM_RIGHT) {
-                    
+
             yAdj = (float) -height;
-            
+
         }
         result[0] = xAdj;
         result[1] = yAdj;
         return result;
-    }   
-    
+    }
+
     /**
      * Tests this object for equality with an arbitrary object.
-     * 
+     *
      * @param obj  the object to test against (<code>null</code> permitted).
-     * 
+     *
      * @return A boolean.
      */
     @Override
-	public boolean equals(final Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == this) {
-            return true;   
+            return true;
         }
         if (obj instanceof TextBlock) {
             final TextBlock block = (TextBlock) obj;
@@ -338,11 +332,11 @@ public class TextBlock implements Serializable {
 
     /**
      * Returns a hash code for this object.
-     * 
+     *
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return (this.lines != null ? this.lines.hashCode() : 0);
     }
 }

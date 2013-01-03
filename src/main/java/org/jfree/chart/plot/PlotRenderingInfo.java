@@ -47,6 +47,10 @@
 
 package org.jfree.chart.plot;
 
+import org.jfree.chart.ChartRenderingInfo;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.SerialUtilities;
+
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -54,10 +58,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
-
-import org.jfree.chart.ChartRenderingInfo;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.SerialUtilities;
 
 /**
  * Stores information about the dimensions of a plot and its subplots.
@@ -216,7 +216,7 @@ public class PlotRenderingInfo implements Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -244,7 +244,7 @@ public class PlotRenderingInfo implements Cloneable, Serializable {
      * @throws CloneNotSupportedException if there is a problem cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         PlotRenderingInfo clone = (PlotRenderingInfo) super.clone();
         if (this.plotArea != null) {
             clone.plotArea = (Rectangle2D) this.plotArea.clone();
@@ -256,7 +256,7 @@ public class PlotRenderingInfo implements Cloneable, Serializable {
         for (int i = 0; i < this.subplotInfo.size(); i++) {
             PlotRenderingInfo info
                     = this.subplotInfo.get(i);
-            clone.subplotInfo.add((PlotRenderingInfo)info.clone());
+            clone.subplotInfo.add((PlotRenderingInfo) info.clone());
         }
         return clone;
     }
