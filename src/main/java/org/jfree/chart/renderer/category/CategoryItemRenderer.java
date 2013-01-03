@@ -107,7 +107,7 @@ public interface CategoryItemRenderer
      *
      * @see #setPlot(CategoryPlot)
      */
-    public CategoryPlot getPlot();
+    public CategoryPlot<RowKey, ColumnKey> getPlot();
 
     /**
      * Sets the plot that the renderer has been assigned to.  This method is
@@ -118,7 +118,7 @@ public interface CategoryItemRenderer
      *
      * @see #getPlot()
      */
-    public void setPlot(CategoryPlot plot);
+    public void setPlot(CategoryPlot<RowKey, ColumnKey> plot);
 
     /**
      * Returns the range of values the renderer requires to display all the
@@ -342,7 +342,8 @@ public interface CategoryItemRenderer
      *         chart drawing).
      */
     public CategoryItemRendererState initialise(Graphics2D g2,
-                                                Rectangle2D dataArea, CategoryPlot plot, int rendererIndex,
+                                                Rectangle2D dataArea,
+                                                CategoryPlot<RowKey, ColumnKey> plot, int rendererIndex,
                                                 PlotRenderingInfo info);
 
     /**
@@ -352,7 +353,8 @@ public interface CategoryItemRenderer
      * @param plot  the plot.
      * @param dataArea  the data area.
      */
-    public void drawBackground(Graphics2D g2, CategoryPlot plot,
+    public void drawBackground(Graphics2D g2,
+                               CategoryPlot<RowKey, ColumnKey> plot,
                                Rectangle2D dataArea);
 
     /**
@@ -362,7 +364,7 @@ public interface CategoryItemRenderer
      * @param plot  the plot.
      * @param dataArea  the data area.
      */
-    public void drawOutline(Graphics2D g2, CategoryPlot plot,
+    public void drawOutline(Graphics2D g2, CategoryPlot<RowKey, ColumnKey> plot,
                             Rectangle2D dataArea);
 
     /**
@@ -379,9 +381,11 @@ public interface CategoryItemRenderer
      * @param column  the column index (zero-based).
      * @param pass  the pass index.
      */
-    public void drawItem(Graphics2D g2, CategoryItemRendererState state,
-                         Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
-                         ValueAxis rangeAxis, CategoryDataset<RowKey, ColumnKey> dataset, int row, int column,
+    public void drawItem(Graphics2D g2, CategoryItemRendererState<RowKey, ColumnKey> state,
+                         Rectangle2D dataArea, CategoryPlot<RowKey, ColumnKey> plot,
+                         CategoryAxis<ColumnKey> domainAxis,
+                         ValueAxis rangeAxis,
+                         CategoryDataset<RowKey, ColumnKey> dataset, int row, int column,
                          int pass);
 
     /**
@@ -396,7 +400,7 @@ public interface CategoryItemRenderer
      * @see #drawRangeGridline(Graphics2D, CategoryPlot, ValueAxis,
      *   Rectangle2D, double)
      */
-    public void drawDomainGridline(Graphics2D g2, CategoryPlot plot,
+    public void drawDomainGridline(Graphics2D g2, CategoryPlot<RowKey, ColumnKey> plot,
                                    Rectangle2D dataArea, double value);
 
     /**
@@ -411,7 +415,7 @@ public interface CategoryItemRenderer
      *
      * @see #drawDomainGridline(Graphics2D, CategoryPlot, Rectangle2D, double)
      */
-    public void drawRangeGridline(Graphics2D g2, CategoryPlot plot,
+    public void drawRangeGridline(Graphics2D g2, CategoryPlot<RowKey, ColumnKey> plot,
                                   ValueAxis axis, Rectangle2D dataArea, double value);
 
     /**
@@ -427,8 +431,9 @@ public interface CategoryItemRenderer
      * @see #drawRangeMarker(Graphics2D, CategoryPlot, ValueAxis, Marker,
      *   Rectangle2D)
      */
-    public void drawDomainMarker(Graphics2D g2, CategoryPlot plot,
-                                 CategoryAxis axis, CategoryMarker marker,
+    public void drawDomainMarker(Graphics2D g2, CategoryPlot<RowKey, ColumnKey> plot,
+                                 CategoryAxis<ColumnKey> axis,
+                                 CategoryMarker<ColumnKey> marker,
                                  Rectangle2D dataArea);
 
     /**
@@ -444,7 +449,7 @@ public interface CategoryItemRenderer
      * @see #drawDomainMarker(Graphics2D, CategoryPlot, CategoryAxis,
      *   CategoryMarker, Rectangle2D)
      */
-    public void drawRangeMarker(Graphics2D g2, CategoryPlot plot,
+    public void drawRangeMarker(Graphics2D g2, CategoryPlot<RowKey, ColumnKey> plot,
                                 ValueAxis axis, Marker marker,
                                 Rectangle2D dataArea);
 
@@ -464,7 +469,7 @@ public interface CategoryItemRenderer
      */
     public double getItemMiddle(RowKey rowKey, ColumnKey columnKey,
                                 CategoryDataset<RowKey, ColumnKey> dataset,
-                                CategoryAxis axis, Rectangle2D area,
+                                CategoryAxis<ColumnKey> axis, Rectangle2D area,
                                 RectangleEdge edge);
 
 }

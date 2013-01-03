@@ -58,10 +58,10 @@ import java.io.Serializable;
  *
  * @see CategoryPlot#addDomainMarker(CategoryMarker)
  */
-public class CategoryMarker extends Marker implements Cloneable, Serializable {
+public class CategoryMarker<ColumnKey extends Comparable> extends Marker implements Cloneable, Serializable {
 
     /** The category key. */
-    private Comparable key;
+    private ColumnKey key;
 
     /** A hint that the marker should be drawn as a line rather than a region. */
     private boolean drawAsLine = false;
@@ -74,7 +74,7 @@ public class CategoryMarker extends Marker implements Cloneable, Serializable {
      *
      * @param key the category key.
      */
-    public CategoryMarker(Comparable key) {
+    public CategoryMarker(ColumnKey key) {
         this(key, Color.gray, new BasicStroke(1.0f));
     }
 
@@ -85,7 +85,7 @@ public class CategoryMarker extends Marker implements Cloneable, Serializable {
      * @param paint  the paint (<code>null</code> not permitted).
      * @param stroke the stroke (<code>null</code> not permitted).
      */
-    public CategoryMarker(Comparable key, Paint paint, Stroke stroke) {
+    public CategoryMarker(ColumnKey key, Paint paint, Stroke stroke) {
         this(key, paint, stroke, paint, stroke, 1.0f);
     }
 
@@ -100,7 +100,7 @@ public class CategoryMarker extends Marker implements Cloneable, Serializable {
      * @param alpha         the alpha transparency.
      */
     public CategoryMarker(
-            Comparable key, Paint paint, Stroke stroke,
+            ColumnKey key, Paint paint, Stroke stroke,
             Paint outlinePaint, Stroke outlineStroke,
             float alpha) {
         super(paint, stroke, outlinePaint, outlineStroke, alpha);
@@ -113,7 +113,7 @@ public class CategoryMarker extends Marker implements Cloneable, Serializable {
      *
      * @return The key.
      */
-    public Comparable getKey() {
+    public ColumnKey getKey() {
         return this.key;
     }
 
@@ -125,7 +125,7 @@ public class CategoryMarker extends Marker implements Cloneable, Serializable {
      *
      * @since 1.0.3
      */
-    public void setKey(Comparable key) {
+    public void setKey(ColumnKey key) {
         if (key == null) {
             throw new IllegalArgumentException("Null 'key' argument.");
         }
@@ -192,7 +192,7 @@ public class CategoryMarker extends Marker implements Cloneable, Serializable {
             return that.markerType == null;
         }
 
-        return this.markerType.equals(that.markerType);
+        return this.markerType == that.markerType;
     }
 
 }

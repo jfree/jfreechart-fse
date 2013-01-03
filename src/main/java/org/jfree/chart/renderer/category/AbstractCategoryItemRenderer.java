@@ -151,7 +151,7 @@ public abstract class AbstractCategoryItemRenderer
     private static final long serialVersionUID = 1247553218442497391L;
 
     /** The plot that the renderer is assigned to. */
-    private CategoryPlot plot;
+    private CategoryPlot<RowKey, ColumnKey> plot;
 
     /** A list of item label generators (one per series). */
     private ObjectList<CategoryItemLabelGenerator<RowKey, ColumnKey>> itemLabelGeneratorList;
@@ -172,13 +172,13 @@ public abstract class AbstractCategoryItemRenderer
     private CategoryURLGenerator<RowKey, ColumnKey> defaultItemURLGenerator;
 
     /** The legend item label generator. */
-    private CategorySeriesLabelGenerator legendItemLabelGenerator;
+    private CategorySeriesLabelGenerator<RowKey, ColumnKey> legendItemLabelGenerator;
 
     /** The legend item tool tip generator. */
-    private CategorySeriesLabelGenerator legendItemToolTipGenerator;
+    private CategorySeriesLabelGenerator<RowKey, ColumnKey> legendItemToolTipGenerator;
 
     /** The legend item URL generator. */
-    private CategorySeriesLabelGenerator legendItemURLGenerator;
+    private CategorySeriesLabelGenerator<RowKey, ColumnKey> legendItemURLGenerator;
 
     /** The number of rows in the dataset (temporary record). */
     private transient int rowCount;
@@ -198,7 +198,7 @@ public abstract class AbstractCategoryItemRenderer
         this.toolTipGeneratorList = new ObjectList<CategoryToolTipGenerator<RowKey, ColumnKey>>();
         this.itemURLGeneratorList = new ObjectList<CategoryURLGenerator<RowKey, ColumnKey>>();
         this.legendItemLabelGenerator
-                = new StandardCategorySeriesLabelGenerator();
+                = new StandardCategorySeriesLabelGenerator<RowKey, ColumnKey>();
     }
 
     /**
@@ -223,7 +223,7 @@ public abstract class AbstractCategoryItemRenderer
      * @see #setPlot(CategoryPlot)
      */
     @Override
-    public CategoryPlot getPlot() {
+    public CategoryPlot<RowKey, ColumnKey> getPlot() {
         return this.plot;
     }
 
@@ -237,7 +237,7 @@ public abstract class AbstractCategoryItemRenderer
      * @see #getPlot()
      */
     @Override
-    public void setPlot(CategoryPlot plot) {
+    public void setPlot(CategoryPlot<RowKey, ColumnKey> plot) {
         ParamChecks.nullNotPermitted(plot, "plot");
         this.plot = plot;
     }
@@ -292,7 +292,7 @@ public abstract class AbstractCategoryItemRenderer
      */
     @Override
     public void setSeriesItemLabelGenerator(int series,
-                                            CategoryItemLabelGenerator generator) {
+                                            CategoryItemLabelGenerator<RowKey, ColumnKey> generator) {
         setSeriesItemLabelGenerator(series, generator, true);
     }
 
@@ -337,7 +337,7 @@ public abstract class AbstractCategoryItemRenderer
      */
     @Override
     public void setDefaultItemLabelGenerator(
-            CategoryItemLabelGenerator generator) {
+            CategoryItemLabelGenerator<RowKey, ColumnKey> generator) {
         setDefaultItemLabelGenerator(generator, true);
     }
 
@@ -375,7 +375,7 @@ public abstract class AbstractCategoryItemRenderer
     @Override
     public CategoryToolTipGenerator<RowKey, ColumnKey> getToolTipGenerator(int row, int column) {
 
-        CategoryToolTipGenerator result = getSeriesToolTipGenerator(row);
+        CategoryToolTipGenerator<RowKey, ColumnKey> result = getSeriesToolTipGenerator(row);
         if (result == null) {
             result = this.defaultToolTipGenerator;
         }
@@ -408,7 +408,7 @@ public abstract class AbstractCategoryItemRenderer
      */
     @Override
     public void setSeriesToolTipGenerator(int series,
-                                          CategoryToolTipGenerator generator) {
+                                          CategoryToolTipGenerator<RowKey, ColumnKey> generator) {
         setSeriesToolTipGenerator(series, generator, true);
     }
 
@@ -423,7 +423,7 @@ public abstract class AbstractCategoryItemRenderer
      */
     @Override
     public void setSeriesToolTipGenerator(int series,
-                                          CategoryToolTipGenerator generator, boolean notify) {
+                                          CategoryToolTipGenerator<RowKey, ColumnKey> generator, boolean notify) {
         this.toolTipGeneratorList.set(series, generator);
         if (notify) {
             fireChangeEvent();
@@ -451,7 +451,7 @@ public abstract class AbstractCategoryItemRenderer
      * @see #getDefaultToolTipGenerator()
      */
     @Override
-    public void setDefaultToolTipGenerator(CategoryToolTipGenerator generator) {
+    public void setDefaultToolTipGenerator(CategoryToolTipGenerator<RowKey, ColumnKey> generator) {
         setDefaultToolTipGenerator(generator, true);
     }
 
@@ -635,8 +635,9 @@ public abstract class AbstractCategoryItemRenderer
      * @return The renderer state.
      */
     @Override
-    public CategoryItemRendererState initialise(Graphics2D g2,
-                                                Rectangle2D dataArea, CategoryPlot plot, int rendererIndex,
+    public CategoryItemRendererState<RowKey, ColumnKey> initialise(Graphics2D g2,
+                                                Rectangle2D dataArea,
+                                                CategoryPlot<RowKey, ColumnKey> plot, int rendererIndex,
                                                 PlotRenderingInfo info) {
 
         setPlot(plot);
@@ -726,9 +727,10 @@ public abstract class AbstractCategoryItemRenderer
     @SuppressWarnings("unchecked")
     @Override
     public double getItemMiddle(RowKey rowKey, ColumnKey columnKey,
-                                CategoryDataset<RowKey, ColumnKey> dataset, CategoryAxis axis, Rectangle2D area,
+                                CategoryDataset<RowKey, ColumnKey> dataset,
+                                CategoryAxis<ColumnKey> axis, Rectangle2D area,
                                 RectangleEdge edge) {
-        List<Comparable> columnKeys = (List<Comparable>) dataset.getColumnKeys();
+        List<ColumnKey> columnKeys = dataset.getColumnKeys();
         return axis.getCategoryMiddle(columnKey, columnKeys, area, edge);
     }
 
@@ -742,7 +744,7 @@ public abstract class AbstractCategoryItemRenderer
      * @param dataArea  the data area.
      */
     @Override
-    public void drawBackground(Graphics2D g2, CategoryPlot plot,
+    public void drawBackground(Graphics2D g2, CategoryPlot<RowKey, ColumnKey> plot,
                                Rectangle2D dataArea) {
 
         plot.drawBackground(g2, dataArea);
@@ -759,7 +761,7 @@ public abstract class AbstractCategoryItemRenderer
      * @param dataArea  the data area.
      */
     @Override
-    public void drawOutline(Graphics2D g2, CategoryPlot plot,
+    public void drawOutline(Graphics2D g2, CategoryPlot<RowKey, ColumnKey> plot,
                             Rectangle2D dataArea) {
 
         plot.drawOutline(g2, dataArea);
@@ -783,7 +785,7 @@ public abstract class AbstractCategoryItemRenderer
      *     Rectangle2D, double)
      */
     @Override
-    public void drawDomainGridline(Graphics2D g2, CategoryPlot plot,
+    public void drawDomainGridline(Graphics2D g2, CategoryPlot<RowKey, ColumnKey> plot,
                                    Rectangle2D dataArea, double value) {
 
         Line2D line = null;
@@ -826,7 +828,7 @@ public abstract class AbstractCategoryItemRenderer
      * @see #drawDomainGridline(Graphics2D, CategoryPlot, Rectangle2D, double)
      */
     @Override
-    public void drawRangeGridline(Graphics2D g2, CategoryPlot plot,
+    public void drawRangeGridline(Graphics2D g2, CategoryPlot<RowKey, ColumnKey> plot,
                                   ValueAxis axis, Rectangle2D dataArea, double value) {
 
         Range range = axis.getRange();
@@ -877,7 +879,7 @@ public abstract class AbstractCategoryItemRenderer
      *
      * @since 1.0.13
      */
-    public void drawRangeGridline(Graphics2D g2, CategoryPlot plot, ValueAxis axis,
+    public void drawRangeGridline(Graphics2D g2, CategoryPlot<RowKey, ColumnKey> plot, ValueAxis axis,
                                   Rectangle2D dataArea, double value, Paint paint, Stroke stroke) {
 
         // TODO: In JFreeChart 1.2.0, put this method in the
@@ -917,11 +919,11 @@ public abstract class AbstractCategoryItemRenderer
      *     Rectangle2D)
      */
     @Override
-    public void drawDomainMarker(Graphics2D g2, CategoryPlot plot,
-                                 CategoryAxis axis, CategoryMarker marker, Rectangle2D dataArea) {
+    public void drawDomainMarker(Graphics2D g2, CategoryPlot<RowKey, ColumnKey> plot,
+                                 CategoryAxis<ColumnKey> axis, CategoryMarker<ColumnKey> marker, Rectangle2D dataArea) {
 
-        Comparable category = marker.getKey();
-        CategoryDataset dataset = plot.getDataset(plot.getIndexOf(this));
+        ColumnKey category = marker.getKey();
+        CategoryDataset<RowKey, ColumnKey> dataset = plot.getDataset(plot.getIndexOf(this));
         int columnIndex = dataset.getColumnIndex(category);
         if (columnIndex < 0) {
             return;
@@ -944,6 +946,9 @@ public abstract class AbstractCategoryItemRenderer
             } else if (orientation == PlotOrientation.VERTICAL) {
                 line = new Line2D.Double(v, dataArea.getMinY(), v,
                         dataArea.getMaxY());
+            }
+            if (line == null) {
+                throw new IllegalArgumentException("Null plot orientation");
             }
             g2.setPaint(marker.getPaint());
             g2.setStroke(marker.getStroke());
@@ -998,7 +1003,7 @@ public abstract class AbstractCategoryItemRenderer
      *     CategoryMarker, Rectangle2D)
      */
     @Override
-    public void drawRangeMarker(Graphics2D g2, CategoryPlot plot,
+    public void drawRangeMarker(Graphics2D g2, CategoryPlot<RowKey, ColumnKey> plot,
                                 ValueAxis axis, Marker marker, Rectangle2D dataArea) {
 
         if (marker instanceof ValueMarker) {
@@ -1025,7 +1030,9 @@ public abstract class AbstractCategoryItemRenderer
                 line = new Line2D.Double(dataArea.getMinX(), v,
                         dataArea.getMaxX(), v);
             }
-
+            if (line == null) {
+                throw new IllegalArgumentException("Null plot orientation");
+            }
             g2.setPaint(marker.getPaint());
             g2.setStroke(marker.getStroke());
             g2.draw(line);
@@ -1228,7 +1235,7 @@ public abstract class AbstractCategoryItemRenderer
     @Override
     public LegendItem getLegendItem(int datasetIndex, int series) {
 
-        CategoryPlot p = getPlot();
+        CategoryPlot<RowKey, ColumnKey> p = getPlot();
         if (p == null) {
             return null;
         }
@@ -1238,10 +1245,9 @@ public abstract class AbstractCategoryItemRenderer
             return null;
         }
 
-        CategoryDataset dataset = p.getDataset(datasetIndex);
+        CategoryDataset<RowKey, ColumnKey> dataset = p.getDataset(datasetIndex);
         String label = this.legendItemLabelGenerator.generateLabel(dataset,
                 series);
-        String description = label;
         String toolTipText = null;
         if (this.legendItemToolTipGenerator != null) {
             toolTipText = this.legendItemToolTipGenerator.generateLabel(
@@ -1257,7 +1263,7 @@ public abstract class AbstractCategoryItemRenderer
         Paint outlinePaint = lookupSeriesOutlinePaint(series);
         Stroke outlineStroke = lookupSeriesOutlineStroke(series);
 
-        LegendItem item = new LegendItem(label, description, toolTipText,
+        LegendItem item = new LegendItem(label, label, toolTipText,
                 urlText, shape, paint, outlineStroke, outlinePaint);
         item.setLabelFont(lookupLegendTextFont(series));
         Paint labelPaint = lookupLegendTextPaint(series);
@@ -1328,16 +1334,6 @@ public abstract class AbstractCategoryItemRenderer
         return super.equals(obj);
     }
 
-    /**
-     * Returns a hash code for the renderer.
-     *
-     * @return The hash code.
-     */
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        return result;
-    }
 
     /**
      * Returns the drawing supplier from the plot.
@@ -1372,8 +1368,8 @@ public abstract class AbstractCategoryItemRenderer
      *
      * @since 1.0.11
      */
-    protected void updateCrosshairValues(CategoryCrosshairState crosshairState,
-                                         Comparable rowKey, Comparable columnKey, double value,
+    protected void updateCrosshairValues(CategoryCrosshairState<RowKey, ColumnKey> crosshairState,
+                                         RowKey rowKey, ColumnKey columnKey, double value,
                                          int datasetIndex,
                                          double transX, double transY, PlotOrientation orientation) {
 
@@ -1407,10 +1403,10 @@ public abstract class AbstractCategoryItemRenderer
      *                  label position).
      */
     protected void drawItemLabel(Graphics2D g2, PlotOrientation orientation,
-                                 CategoryDataset dataset, int row, int column,
+                                 CategoryDataset<RowKey, ColumnKey> dataset, int row, int column,
                                  double x, double y, boolean negative) {
 
-        CategoryItemLabelGenerator generator = getItemLabelGenerator(row,
+        CategoryItemLabelGenerator<RowKey, ColumnKey> generator = getItemLabelGenerator(row,
                 column);
         if (generator != null) {
             Font labelFont = getItemLabelFont(row, column);
@@ -1566,7 +1562,7 @@ public abstract class AbstractCategoryItemRenderer
             return result;
         }
         int seriesCount = dataset.getRowCount();
-        if (plot.getRowRenderingOrder().equals(SortOrder.ASCENDING)) {
+        if (plot.getRowRenderingOrder() == SortOrder.ASCENDING) {
             for (int i = 0; i < seriesCount; i++) {
                 if (isSeriesVisibleInLegend(i)) {
                     LegendItem item = getLegendItem(index, i);
@@ -1595,7 +1591,7 @@ public abstract class AbstractCategoryItemRenderer
      *
      * @see #setLegendItemLabelGenerator(CategorySeriesLabelGenerator)
      */
-    public CategorySeriesLabelGenerator getLegendItemLabelGenerator() {
+    public CategorySeriesLabelGenerator<RowKey, ColumnKey> getLegendItemLabelGenerator() {
         return this.legendItemLabelGenerator;
     }
 
@@ -1608,7 +1604,7 @@ public abstract class AbstractCategoryItemRenderer
      * @see #getLegendItemLabelGenerator()
      */
     public void setLegendItemLabelGenerator(
-            CategorySeriesLabelGenerator generator) {
+            CategorySeriesLabelGenerator<RowKey, ColumnKey> generator) {
         ParamChecks.nullNotPermitted(generator, "generator");
         this.legendItemLabelGenerator = generator;
         fireChangeEvent();
@@ -1621,7 +1617,7 @@ public abstract class AbstractCategoryItemRenderer
      *
      * @see #setLegendItemToolTipGenerator(CategorySeriesLabelGenerator)
      */
-    public CategorySeriesLabelGenerator getLegendItemToolTipGenerator() {
+    public CategorySeriesLabelGenerator<RowKey, ColumnKey> getLegendItemToolTipGenerator() {
         return this.legendItemToolTipGenerator;
     }
 
@@ -1634,7 +1630,7 @@ public abstract class AbstractCategoryItemRenderer
      * @see #setLegendItemToolTipGenerator(CategorySeriesLabelGenerator)
      */
     public void setLegendItemToolTipGenerator(
-            CategorySeriesLabelGenerator generator) {
+            CategorySeriesLabelGenerator<RowKey, ColumnKey> generator) {
         this.legendItemToolTipGenerator = generator;
         fireChangeEvent();
     }
@@ -1646,7 +1642,7 @@ public abstract class AbstractCategoryItemRenderer
      *
      * @see #setLegendItemURLGenerator(CategorySeriesLabelGenerator)
      */
-    public CategorySeriesLabelGenerator getLegendItemURLGenerator() {
+    public CategorySeriesLabelGenerator<RowKey, ColumnKey> getLegendItemURLGenerator() {
         return this.legendItemURLGenerator;
     }
 
@@ -1659,7 +1655,7 @@ public abstract class AbstractCategoryItemRenderer
      * @see #getLegendItemURLGenerator()
      */
     public void setLegendItemURLGenerator(
-            CategorySeriesLabelGenerator generator) {
+            CategorySeriesLabelGenerator<RowKey, ColumnKey> generator) {
         this.legendItemURLGenerator = generator;
         fireChangeEvent();
     }
@@ -1674,19 +1670,19 @@ public abstract class AbstractCategoryItemRenderer
      * @param hotspot  the hotspot (<code>null</code> not permitted).
      */
     protected void addItemEntity(EntityCollection entities,
-                                 CategoryDataset dataset, int row, int column,
+                                 CategoryDataset<RowKey, ColumnKey> dataset, int row, int column,
                                  Shape hotspot) {
         ParamChecks.nullNotPermitted(hotspot, "hotspot");
         if (!getItemCreateEntity(row, column)) {
             return;
         }
         String tip = null;
-        CategoryToolTipGenerator tipster = getToolTipGenerator(row, column);
+        CategoryToolTipGenerator<RowKey, ColumnKey> tipster = getToolTipGenerator(row, column);
         if (tipster != null) {
             tip = tipster.generateToolTip(dataset, row, column);
         }
         String url = null;
-        CategoryURLGenerator urlster = getItemURLGenerator(row, column);
+        CategoryURLGenerator<RowKey, ColumnKey> urlster = getItemURLGenerator(row, column);
         if (urlster != null) {
             url = urlster.generateURL(dataset, row, column);
         }
@@ -1712,7 +1708,7 @@ public abstract class AbstractCategoryItemRenderer
      * @since 1.0.13
      */
     protected void addEntity(EntityCollection entities, Shape hotspot,
-                             CategoryDataset dataset, int row, int column,
+                             CategoryDataset<RowKey, ColumnKey> dataset, int row, int column,
                              double entityX, double entityY) {
         if (!getItemCreateEntity(row, column)) {
             return;
@@ -1728,12 +1724,12 @@ public abstract class AbstractCategoryItemRenderer
             }
         }
         String tip = null;
-        CategoryToolTipGenerator generator = getToolTipGenerator(row, column);
+        CategoryToolTipGenerator<RowKey, ColumnKey> generator = getToolTipGenerator(row, column);
         if (generator != null) {
             tip = generator.generateToolTip(dataset, row, column);
         }
         String url = null;
-        CategoryURLGenerator urlster = getItemURLGenerator(row, column);
+        CategoryURLGenerator<RowKey, ColumnKey> urlster = getItemURLGenerator(row, column);
         if (urlster != null) {
             url = urlster.generateURL(dataset, row, column);
         }

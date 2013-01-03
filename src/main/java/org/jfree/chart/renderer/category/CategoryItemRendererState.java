@@ -53,7 +53,8 @@ import org.jfree.chart.renderer.RendererState;
  * An object that retains temporary state information for a
  * {@link CategoryItemRenderer}.
  */
-public class CategoryItemRendererState extends RendererState {
+public class CategoryItemRendererState
+        <RowKey extends Comparable, ColumnKey extends Comparable> extends RendererState {
 
     /** The bar width. */
     private double barWidth;
@@ -70,7 +71,7 @@ public class CategoryItemRendererState extends RendererState {
      *
      * @since 1.0.11
      */
-    private CategoryCrosshairState crosshairState;
+    private CategoryCrosshairState<RowKey, ColumnKey> crosshairState;
 
     /**
      * Creates a new object for recording temporary state information for a
@@ -139,7 +140,7 @@ public class CategoryItemRendererState extends RendererState {
      *
      * @see #setCrosshairState(CategoryCrosshairState)
      */
-    public CategoryCrosshairState getCrosshairState() {
+    public CategoryCrosshairState<RowKey, ColumnKey> getCrosshairState() {
         return this.crosshairState;
     }
 
@@ -152,7 +153,7 @@ public class CategoryItemRendererState extends RendererState {
      *
      * @see #getCrosshairState()
      */
-    public void setCrosshairState(CategoryCrosshairState state) {
+    public void setCrosshairState(CategoryCrosshairState<RowKey, ColumnKey> state) {
         this.crosshairState = state;
     }
 
@@ -172,14 +173,12 @@ public class CategoryItemRendererState extends RendererState {
         if (this.visibleSeries == null) {
             return rowIndex;
         }
-        int index = -1;
-        for (int vRow = 0; vRow < this.visibleSeries.length; vRow++) {
-            if (this.visibleSeries[vRow] == rowIndex) {
-                index = vRow;
-                break;
+        for (int index = 0; index < this.visibleSeries.length; index++) {
+            if (this.visibleSeries[index] == rowIndex) {
+                return index;
             }
         }
-        return index;
+        return -1;
     }
 
     /**
