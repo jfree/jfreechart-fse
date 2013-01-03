@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------------
@@ -92,7 +92,7 @@ public class NormalDistributionFunction2D implements Function2D, Serializable {
     public double getMean() {
         return this.mean;
     }
-    
+
     /**
      * Returns the standard deviation for the function.
      *
@@ -110,7 +110,7 @@ public class NormalDistributionFunction2D implements Function2D, Serializable {
      * @return The value.
      */
     @Override
-	public double getValue(double x) {
+    public double getValue(double x) {
         double z = x - this.mean;
         return this.factor * Math.exp(-z * z / this.denominator);
     }
@@ -123,7 +123,7 @@ public class NormalDistributionFunction2D implements Function2D, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (!(obj instanceof NormalDistributionFunction2D)) {
             return false;
         }
@@ -143,7 +143,7 @@ public class NormalDistributionFunction2D implements Function2D, Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 29;
         result = HashUtilities.hashCode(result, this.mean);
         result = HashUtilities.hashCode(result, this.std);

@@ -230,7 +230,7 @@ public class PiePlot3D extends PiePlot implements Serializable {
      *              (<code>null</code> permitted).
      */
     @Override
-	public void draw(Graphics2D g2, Rectangle2D plotArea, Point2D anchor,
+    public void draw(Graphics2D g2, Rectangle2D plotArea, Point2D anchor,
                      PlotState parentState,
                      PlotRenderingInfo info) {
 
@@ -994,7 +994,7 @@ public class PiePlot3D extends PiePlot implements Serializable {
      * @return <i>Pie 3D Plot</i>.
      */
     @Override
-	public String getPlotType() {
+    public String getPlotType() {
         return localizationResources.getString("Pie_3D_Plot");
     }
 
@@ -1032,7 +1032,7 @@ public class PiePlot3D extends PiePlot implements Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

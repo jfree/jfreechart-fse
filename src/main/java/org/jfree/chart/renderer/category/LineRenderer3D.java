@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
@@ -138,7 +138,7 @@ public class LineRenderer3D extends LineAndShapeRenderer
      * @see #getYOffset()
      */
     @Override
-	public double getXOffset() {
+    public double getXOffset() {
         return this.xOffset;
     }
 
@@ -151,7 +151,7 @@ public class LineRenderer3D extends LineAndShapeRenderer
      * @see #getXOffset()
      */
     @Override
-	public double getYOffset() {
+    public double getYOffset() {
         return this.yOffset;
     }
 

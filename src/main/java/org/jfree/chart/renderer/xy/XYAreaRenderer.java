@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
@@ -80,7 +80,7 @@
  *               the paint under the series (DG);
  * 06-Oct-2011 : Avoid GeneralPath methods requiring Java 1.5 (MK);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.renderer.xy;
@@ -198,7 +198,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
     /**
      * A flag that can be set to specify that the fill paint should be used
      * to fill the area under the renderer.
-     * 
+     *
      * @since 1.0.14
      */
     private boolean useFillPaint;
@@ -417,7 +417,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      * @return A state object for use by the renderer.
      */
     @Override
-	public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
+    public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
             XYPlot plot, XYDataset data, PlotRenderingInfo info) {
         XYAreaRendererState state = new XYAreaRendererState(info);
 
@@ -437,7 +437,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      * @return A legend item for the series.
      */
     @Override
-	public LegendItem getLegendItem(int datasetIndex, int series) {
+    public LegendItem getLegendItem(int datasetIndex, int series) {
         LegendItem result = null;
         XYPlot xyplot = getPlot();
         if (xyplot != null) {
@@ -492,7 +492,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2, XYItemRendererState state,
+    public void drawItem(Graphics2D g2, XYItemRendererState state,
             Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
             ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
             int series, int item, CrosshairState crosshairState, int pass) {
@@ -543,10 +543,10 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
         GeneralPath hotspot = new GeneralPath();
         if (plot.getOrientation() == PlotOrientation.HORIZONTAL) {
             moveTo(hotspot, transZero, ((transX0 + transX1) / 2.0));
-            lineTo(hotspot, ((transY0 + transY1) / 2.0), 
+            lineTo(hotspot, ((transY0 + transY1) / 2.0),
                             ((transX0 + transX1) / 2.0));
             lineTo(hotspot, transY1, transX1);
-            lineTo(hotspot, ((transY1 + transY2) / 2.0), 
+            lineTo(hotspot, ((transY1 + transY2) / 2.0),
                             ((transX1 + transX2) / 2.0));
             lineTo(hotspot, transZero, ((transX1 + transX2) / 2.0));
         }
@@ -693,7 +693,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         XYAreaRenderer clone = (XYAreaRenderer) super.clone();
         clone.legendArea = ShapeUtilities.clone(this.legendArea);
         return clone;
@@ -707,7 +707,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -745,7 +745,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = super.hashCode();
         result = HashUtilities.hashCode(result, this.plotArea);
         result = HashUtilities.hashCode(result, this.plotLines);

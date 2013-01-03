@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------
@@ -36,8 +36,8 @@
  * ---------------------------
  * 27-Jun-2002 : Added logo, updated source header and Javadocs (DG);
  * 08-Oct-2002 : Added set methods for most attributes. Fixed errors reported by Checkstyle (DG);
- * 17-Jun-2012 : Moved from JCommon to JFreeChart (DG); 
- * 
+ * 17-Jun-2012 : Moved from JCommon to JFreeChart (DG);
+ *
  */
 
 package org.jfree.chart.ui.about;
@@ -151,7 +151,7 @@ public class ProjectInfo extends BasicProjectInfo {
      * @return a string describing the project.
      */
     @Override
-	public String toString() {
+    public String toString() {
 
         final StringBuilder result = new StringBuilder();
         result.append(getName());

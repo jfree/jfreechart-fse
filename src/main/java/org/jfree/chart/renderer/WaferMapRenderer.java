@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -140,7 +140,7 @@ public class WaferMapRenderer extends AbstractRenderer {
      * @return The drawing supplier.
      */
     @Override
-	public DrawingSupplier getDrawingSupplier() {
+    public DrawingSupplier getDrawingSupplier() {
         DrawingSupplier result = null;
         WaferMapPlot p = getPlot();
         if (p != null) {

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -85,7 +85,7 @@ public class StrokeChooserPanel extends JPanel {
         // Changes due to focus problems!! DZ
         this.selector.addActionListener(new ActionListener() {
             @Override
-			public void actionPerformed(final ActionEvent evt) {
+            public void actionPerformed(final ActionEvent evt) {
                 getSelector().transferFocus();
             }
         });

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
@@ -85,7 +85,7 @@ public class DefaultCategoryDataset extends AbstractDataset
      * @see #getColumnCount()
      */
     @Override
-	public int getRowCount() {
+    public int getRowCount() {
         return this.data.getRowCount();
     }
 
@@ -97,7 +97,7 @@ public class DefaultCategoryDataset extends AbstractDataset
      * @see #getRowCount()
      */
     @Override
-	public int getColumnCount() {
+    public int getColumnCount() {
         return this.data.getColumnCount();
     }
 
@@ -113,7 +113,7 @@ public class DefaultCategoryDataset extends AbstractDataset
      * @see #removeValue(Comparable, Comparable)
      */
     @Override
-	public Number getValue(int row, int column) {
+    public Number getValue(int row, int column) {
         return this.data.getValue(row, column);
     }
 
@@ -129,7 +129,7 @@ public class DefaultCategoryDataset extends AbstractDataset
      * @see #getColumnKey(int)
      */
     @Override
-	public Comparable getRowKey(int row) {
+    public Comparable getRowKey(int row) {
         return this.data.getRowKey(row);
     }
 
@@ -143,7 +143,7 @@ public class DefaultCategoryDataset extends AbstractDataset
      * @see #getRowKey(int)
      */
     @Override
-	public int getRowIndex(Comparable key) {
+    public int getRowIndex(Comparable key) {
         // defer null argument check
         return this.data.getRowIndex(key);
     }
@@ -156,7 +156,7 @@ public class DefaultCategoryDataset extends AbstractDataset
      * @see #getRowKey(int)
      */
     @Override
-	public List<Comparable> getRowKeys() {
+    public List<Comparable> getRowKeys() {
         return this.data.getRowKeys();
     }
 
@@ -170,7 +170,7 @@ public class DefaultCategoryDataset extends AbstractDataset
      * @see #getColumnIndex(Comparable)
      */
     @Override
-	public Comparable getColumnKey(int column) {
+    public Comparable getColumnKey(int column) {
         return this.data.getColumnKey(column);
     }
 
@@ -184,7 +184,7 @@ public class DefaultCategoryDataset extends AbstractDataset
      * @see #getColumnKey(int)
      */
     @Override
-	public int getColumnIndex(Comparable key) {
+    public int getColumnIndex(Comparable key) {
         // defer null argument check
         return this.data.getColumnIndex(key);
     }
@@ -197,7 +197,7 @@ public class DefaultCategoryDataset extends AbstractDataset
      * @see #getColumnKey(int)
      */
     @Override
-	public List<Comparable> getColumnKeys() {
+    public List<Comparable> getColumnKeys() {
         return this.data.getColumnKeys();
     }
 
@@ -214,7 +214,7 @@ public class DefaultCategoryDataset extends AbstractDataset
      * @see #addValue(Number, Comparable, Comparable)
      */
     @Override
-	public Number getValue(Comparable rowKey, Comparable columnKey) {
+    public Number getValue(Comparable rowKey, Comparable columnKey) {
         return this.data.getValue(rowKey, columnKey);
     }
 

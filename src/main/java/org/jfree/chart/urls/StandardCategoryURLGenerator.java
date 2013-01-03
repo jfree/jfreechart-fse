@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------------
@@ -138,7 +138,7 @@ public class StandardCategoryURLGenerator implements CategoryURLGenerator,
      * @return The generated URL.
      */
     @Override
-	public String generateURL(CategoryDataset dataset, int series,
+    public String generateURL(CategoryDataset dataset, int series,
                               int category) {
         String url = this.prefix;
         Comparable seriesKey = dataset.getRowKey(series);
@@ -161,7 +161,7 @@ public class StandardCategoryURLGenerator implements CategoryURLGenerator,
      *         subclasses (if any) might.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         // all attributes are immutable, so we can just return the super.clone()
         // FIXME: in fact, the generator itself is immutable, so cloning is
         // not necessary
@@ -176,7 +176,7 @@ public class StandardCategoryURLGenerator implements CategoryURLGenerator,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -205,7 +205,7 @@ public class StandardCategoryURLGenerator implements CategoryURLGenerator,
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result;
         result = (this.prefix != null ? this.prefix.hashCode() : 0);
         result = 29 * result

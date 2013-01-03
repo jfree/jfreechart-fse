@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -639,7 +639,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
      * @return The legend item.
      */
     @Override
-	public LegendItem getLegendItem(int datasetIndex, int series) {
+    public LegendItem getLegendItem(int datasetIndex, int series) {
 
         CategoryPlot cp = getPlot();
         if (cp == null) {
@@ -697,7 +697,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
      * @return The pass count (<code>2</code> for this renderer).
      */
     @Override
-	public int getPassCount() {
+    public int getPassCount() {
         return 2;
     }
 
@@ -716,7 +716,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2, CategoryItemRendererState state,
+    public void drawItem(Graphics2D g2, CategoryItemRendererState state,
             Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
             ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
             int pass) {
@@ -863,7 +863,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
 
         if (obj == this) {
             return true;
@@ -914,7 +914,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
      * @throws CloneNotSupportedException  should not happen.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         LineAndShapeRenderer clone = (LineAndShapeRenderer) super.clone();
         clone.seriesLinesVisible
                 = (BooleanList) this.seriesLinesVisible.clone();

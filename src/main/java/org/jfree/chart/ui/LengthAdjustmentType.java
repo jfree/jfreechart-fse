@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -38,7 +38,7 @@
  * --------
  * 21-Jan-2005 : Version 1 (DG);
  * 16-Jun-2012 : Moved from JCommon to JFreeChart (DG);
- * 
+ *
  */
 
 package org.jfree.chart.ui;
@@ -76,7 +76,7 @@ public enum LengthAdjustmentType {
      * @return The string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return this.name;
     }
 

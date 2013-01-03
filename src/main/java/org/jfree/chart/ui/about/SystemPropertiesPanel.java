@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------
@@ -116,7 +116,7 @@ public class SystemPropertiesPanel extends JPanel {
                 label);
         this.copyMenuItem.addActionListener(new ActionListener() {
             @Override
-			public void actionPerformed(final ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 copySystemPropertiesToClipboard();
             }
         });
@@ -192,7 +192,7 @@ public class SystemPropertiesPanel extends JPanel {
          * @param e  the event.
          */
         @Override
-		public void mousePressed(final MouseEvent e) {
+        public void mousePressed(final MouseEvent e) {
             maybeShowPopup(e);
         }
 
@@ -202,7 +202,7 @@ public class SystemPropertiesPanel extends JPanel {
          * @param e  the event.
          */
         @Override
-		public void mouseReleased(final MouseEvent e) {
+        public void mouseReleased(final MouseEvent e) {
             maybeShowPopup(e);
         }
 

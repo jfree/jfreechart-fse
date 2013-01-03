@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------
@@ -84,7 +84,7 @@
  *               Becker (DG);
  * 11-Oct-2011 : applied patch #3421088 from Martin Krauskopf to fix bug (MH);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.renderer.category;
@@ -158,7 +158,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
 
     /**
      * A flag that controls whether or not the median indicator is drawn.
-     * 
+     *
      * @since 1.0.13
      */
     private boolean medianVisible;
@@ -449,7 +449,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      * @return The legend item (possibly <code>null</code>).
      */
     @Override
-	public LegendItem getLegendItem(int datasetIndex, int series) {
+    public LegendItem getLegendItem(int datasetIndex, int series) {
 
         CategoryPlot cp = getPlot();
         if (cp == null) {
@@ -503,7 +503,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      * @return The range.
      */
     @Override
-	public Range findRangeBounds(CategoryDataset dataset) {
+    public Range findRangeBounds(CategoryDataset dataset) {
         return super.findRangeBounds(dataset, true);
     }
 
@@ -520,7 +520,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      * @return The renderer state.
      */
     @Override
-	public CategoryItemRendererState initialise(Graphics2D g2,
+    public CategoryItemRendererState initialise(Graphics2D g2,
                                                 Rectangle2D dataArea,
                                                 CategoryPlot plot,
                                                 int rendererIndex,
@@ -582,7 +582,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2, CategoryItemRendererState state,
+    public void drawItem(Graphics2D g2, CategoryItemRendererState state,
         Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
         ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
         int pass) {
@@ -627,7 +627,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      * @param row  the row index (zero-based).
      * @param column  the column index (zero-based).
      */
-    public void drawHorizontalItem(Graphics2D g2, 
+    public void drawHorizontalItem(Graphics2D g2,
             CategoryItemRendererState state, Rectangle2D dataArea,
             CategoryPlot plot, CategoryAxis domainAxis, ValueAxis rangeAxis,
             CategoryDataset dataset, int row, int column) {
@@ -887,7 +887,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
             if (yMedian != null) {
                 double yyMedian = rangeAxis.valueToJava2D(
                         yMedian.doubleValue(), dataArea, location);
-                g2.draw(new Line2D.Double(xx, yyMedian, 
+                g2.draw(new Line2D.Double(xx, yyMedian,
                         xx + state.getBarWidth(), yyMedian));
             }
         }
@@ -1046,7 +1046,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

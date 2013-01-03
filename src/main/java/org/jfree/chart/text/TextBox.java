@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------
@@ -41,7 +41,7 @@
  * 22-Feb-2005 : Replaced Spacer with RectangleInsets (DG);
  * 14-Feb-2008 : Fixed alignment of text content with respect to insets (DG);
  * 16-Jun-2012 : Moved from JCommon to JFreeChart (DG);
- * 
+ *
  */
 
 package org.jfree.chart.text;
@@ -344,7 +344,7 @@ public class TextBox implements Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(final Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == this) {
             return true;
         }
@@ -387,7 +387,7 @@ public class TextBox implements Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result;
         long temp;
         result = (this.outlinePaint != null ? this.outlinePaint.hashCode() : 0);

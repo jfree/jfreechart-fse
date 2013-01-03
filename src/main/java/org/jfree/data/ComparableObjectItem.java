@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -118,7 +118,7 @@ public class ComparableObjectItem implements Cloneable, Comparable<ComparableObj
      *      relative to another object.
      */
     @Override
-	public int compareTo(ComparableObjectItem that) {
+    public int compareTo(ComparableObjectItem that) {
        return this.x.compareTo(that.x);
     }
 
@@ -131,7 +131,7 @@ public class ComparableObjectItem implements Cloneable, Comparable<ComparableObj
      *         subclasses may differ.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -144,7 +144,7 @@ public class ComparableObjectItem implements Cloneable, Comparable<ComparableObj
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -167,7 +167,7 @@ public class ComparableObjectItem implements Cloneable, Comparable<ComparableObj
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result;
         result = this.x.hashCode();
         result = 29 * result + (this.obj != null ? this.obj.hashCode() : 0);

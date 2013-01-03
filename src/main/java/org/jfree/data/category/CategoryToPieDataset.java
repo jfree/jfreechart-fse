@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -144,7 +144,7 @@ public class CategoryToPieDataset extends AbstractDataset
      * @return The item count.
      */
     @Override
-	public int getItemCount() {
+    public int getItemCount() {
         int result = 0;
         if (this.source != null) {
             if (this.extract == TableOrder.BY_ROW) {
@@ -168,7 +168,7 @@ public class CategoryToPieDataset extends AbstractDataset
      *     range <code>0</code> to <code>getItemCount() - 1</code>.
      */
     @Override
-	public Number getValue(int item) {
+    public Number getValue(int item) {
         Number result = null;
         if (item < 0 || item >= getItemCount()) {
             // this will include the case where the underlying dataset is null
@@ -196,7 +196,7 @@ public class CategoryToPieDataset extends AbstractDataset
      *     specified range.
      */
     @Override
-	public Comparable getKey(int index) {
+    public Comparable getKey(int index) {
         Comparable result = null;
         if (index < 0 || index >= getItemCount()) {
             // this includes the case where the underlying dataset is null
@@ -220,7 +220,7 @@ public class CategoryToPieDataset extends AbstractDataset
      * @return The index for the key, or <code>-1</code>.
      */
     @Override
-	public int getIndex(Comparable key) {
+    public int getIndex(Comparable key) {
         int result = -1;
         if (this.source != null) {
             if (this.extract == TableOrder.BY_ROW) {
@@ -242,7 +242,7 @@ public class CategoryToPieDataset extends AbstractDataset
      * @return The keys.
      */
     @Override
-	public List<Comparable> getKeys() {
+    public List<Comparable> getKeys() {
         List<Comparable> result = new ArrayList<Comparable>();// = Collections.EMPTY_LIST;
         if (this.source != null) {
             if (this.extract == TableOrder.BY_ROW) {
@@ -265,7 +265,7 @@ public class CategoryToPieDataset extends AbstractDataset
      * @return The value (possibly <code>null</code>).
      */
     @Override
-	public Number getValue(Comparable key) {
+    public Number getValue(Comparable key) {
         Number result = null;
         int keyIndex = getIndex(key);
         if (keyIndex != -1) {
@@ -287,7 +287,7 @@ public class CategoryToPieDataset extends AbstractDataset
      *     source is sent to the listeners).
      */
     @Override
-	public void datasetChanged(DatasetChangeEvent event) {
+    public void datasetChanged(DatasetChangeEvent event) {
         fireDatasetChanged();
     }
 
@@ -301,7 +301,7 @@ public class CategoryToPieDataset extends AbstractDataset
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

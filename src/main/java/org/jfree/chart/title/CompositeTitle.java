@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
@@ -158,7 +158,7 @@ public class CompositeTitle extends Title implements Cloneable, Serializable {
      * @return The block size (in Java2D units, never <code>null</code>).
      */
     @Override
-	public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
+    public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
         RectangleConstraint contentConstraint = toContentConstraint(constraint);
         Size2D contentSize = this.container.arrange(g2, contentConstraint);
         return new Size2D(calculateTotalWidth(contentSize.getWidth()),
@@ -173,7 +173,7 @@ public class CompositeTitle extends Title implements Cloneable, Serializable {
      * @param area  the area allocated for the title.
      */
     @Override
-	public void draw(Graphics2D g2, Rectangle2D area) {
+    public void draw(Graphics2D g2, Rectangle2D area) {
         draw(g2, area, null);
     }
 
@@ -187,7 +187,7 @@ public class CompositeTitle extends Title implements Cloneable, Serializable {
      * @return Always <code>null</code>.
      */
     @Override
-	public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
+    public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
         area = trimMargin(area);
         drawBorder(g2, area);
         area = trimBorder(area);
@@ -207,7 +207,7 @@ public class CompositeTitle extends Title implements Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

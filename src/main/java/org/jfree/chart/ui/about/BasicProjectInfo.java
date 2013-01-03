@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -185,7 +185,7 @@ public class BasicProjectInfo extends Library {
      * @param info  the info string.
      */
     @Override
-	public void setInfo(final String info) {
+    public void setInfo(final String info) {
         super.setInfo(info);
     }
 
@@ -195,7 +195,7 @@ public class BasicProjectInfo extends Library {
      * @param licence  the license name.
      */
     @Override
-	public void setLicenceName(final String licence) {
+    public void setLicenceName(final String licence) {
         super.setLicenceName(licence);
     }
 
@@ -205,7 +205,7 @@ public class BasicProjectInfo extends Library {
      * @param name  the project name.
      */
     @Override
-	public void setName(final String name) {
+    public void setName(final String name) {
         super.setName(name);
     }
 
@@ -215,7 +215,7 @@ public class BasicProjectInfo extends Library {
      * @param version  the version number.
      */
     @Override
-	public void setVersion(final String version) {
+    public void setVersion(final String version) {
         super.setVersion(version);
     }
 

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -35,11 +35,11 @@
  * Changes:
  * --------
  * 31-Oct-2003 (DG);
- * 01-Apr-2004 : Changed java.awt.geom.Dimension2D to org.jfree.ui.Size2D 
+ * 01-Apr-2004 : Changed java.awt.geom.Dimension2D to org.jfree.ui.Size2D
  *               because of JDK bug 4976448 which persists on JDK 1.3.1 (DG);
  * 21-Jan-2005 : Changed return type of coordinates() method (DG);
  * 16-Jun-2012 : Moved from JCommon to JFreeChart (DG);
- * 
+ *
  */
 
 package org.jfree.chart.ui;
@@ -97,19 +97,19 @@ public enum RectangleAnchor {
      * @return The string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return this.name;
     }
 
     /**
      * Returns the (x, y) coordinates of the specified anchor.
-     * 
+     *
      * @param rectangle  the rectangle.
      * @param anchor  the anchor.
-     * 
+     *
      * @return The (x, y) coordinates.
      */
-    public static Point2D coordinates(final Rectangle2D rectangle, 
+    public static Point2D coordinates(final Rectangle2D rectangle,
                                       final RectangleAnchor anchor) {
         Point2D result = new Point2D.Double();
         if (anchor == RectangleAnchor.CENTER) {
@@ -141,16 +141,16 @@ public enum RectangleAnchor {
         }
         return result;
     }
-    
+
     /**
      * Creates a new rectangle with the specified dimensions that is aligned to
      * the given anchor point <code>(anchorX, anchorY)</code>.
-     * 
+     *
      * @param dimensions  the dimensions (<code>null</code> not permitted).
      * @param anchorX  the x-anchor.
      * @param anchorY  the y-anchor.
      * @param anchor  the anchor (<code>null</code> not permitted).
-     * 
+     *
      * @return A rectangle.
      */
     public static Rectangle2D createRectangle(final Size2D dimensions,

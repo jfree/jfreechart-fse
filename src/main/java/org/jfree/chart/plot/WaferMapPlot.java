@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
@@ -168,7 +168,7 @@ public class WaferMapPlot extends Plot implements RendererChangeListener,
      * @return A short string describing the type of plot.
      */
     @Override
-	public String getPlotType() {
+    public String getPlotType() {
         return ("WMAP_Plot");
     }
 
@@ -233,7 +233,7 @@ public class WaferMapPlot extends Plot implements RendererChangeListener,
      * @param info  the plot rendering info.
      */
     @Override
-	public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
                      PlotState state,
                      PlotRenderingInfo info) {
 
@@ -420,7 +420,7 @@ public class WaferMapPlot extends Plot implements RendererChangeListener,
      * @return The legend items.
      */
     @Override
-	public LegendItemCollection getLegendItems() {
+    public LegendItemCollection getLegendItems() {
         return this.renderer.getLegendCollection();
     }
 
@@ -430,7 +430,7 @@ public class WaferMapPlot extends Plot implements RendererChangeListener,
      * @param event  the event.
      */
     @Override
-	public void rendererChanged(RendererChangeEvent event) {
+    public void rendererChanged(RendererChangeEvent event) {
         fireChangeEvent();
     }
 

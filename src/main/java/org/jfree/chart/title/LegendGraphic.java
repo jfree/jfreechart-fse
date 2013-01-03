@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------
@@ -510,7 +510,7 @@ public class LegendGraphic extends AbstractBlock
      * @return The block size (in Java2D units, never <code>null</code>).
      */
     @Override
-	public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
+    public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
         RectangleConstraint contentConstraint = toContentConstraint(constraint);
         LengthConstraintType w = contentConstraint.getWidthConstraintType();
         LengthConstraintType h = contentConstraint.getHeightConstraintType();
@@ -584,7 +584,7 @@ public class LegendGraphic extends AbstractBlock
      * @param area  the area.
      */
     @Override
-	public void draw(Graphics2D g2, Rectangle2D area) {
+    public void draw(Graphics2D g2, Rectangle2D area) {
 
         area = trimMargin(area);
         drawBorder(g2, area);
@@ -635,7 +635,7 @@ public class LegendGraphic extends AbstractBlock
      * @return Always <code>null</code>.
      */
     @Override
-	public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
+    public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
         draw(g2, area);
         return null;
     }
@@ -649,7 +649,7 @@ public class LegendGraphic extends AbstractBlock
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (!(obj instanceof LegendGraphic)) {
             return false;
         }
@@ -706,7 +706,7 @@ public class LegendGraphic extends AbstractBlock
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 193;
         result = 37 * result + ObjectUtilities.hashCode(this.fillPaint);
         // FIXME: use other fields too
@@ -721,7 +721,7 @@ public class LegendGraphic extends AbstractBlock
      * @throws CloneNotSupportedException if there is a problem cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         LegendGraphic clone = (LegendGraphic) super.clone();
         clone.shape = ShapeUtilities.clone(this.shape);
         clone.line = ShapeUtilities.clone(this.line);

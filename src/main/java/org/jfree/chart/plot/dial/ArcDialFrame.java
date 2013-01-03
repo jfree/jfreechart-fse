@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
@@ -328,7 +328,7 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame,
      * @return The shape of the dial's window.
      */
     @Override
-	public Shape getWindow(Rectangle2D frame) {
+    public Shape getWindow(Rectangle2D frame) {
 
         Rectangle2D innerFrame = DialPlot.rectangleByRadius(frame,
                 this.innerRadius, this.innerRadius);
@@ -387,7 +387,7 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame,
      * @param view  the dial's view rectangle.
      */
     @Override
-	public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
+    public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
             Rectangle2D view) {
 
         Shape window = getWindow(frame);
@@ -413,7 +413,7 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame,
      * @return <code>false</code>.
      */
     @Override
-	public boolean isClippedToWindow() {
+    public boolean isClippedToWindow() {
         return false;
     }
 
@@ -425,7 +425,7 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -463,7 +463,7 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame,
      * @return The hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 193;
         long temp = Double.doubleToLongBits(this.startAngle);
         result = 37 * result + (int) (temp ^ (temp >>> 32));
@@ -490,7 +490,7 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame,
      *     cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

@@ -330,7 +330,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * @return The plot type.
      */
     @Override
-	public String getPlotType() {
+    public String getPlotType() {
         // return localizationResources.getString("Radar_Plot");
         return ("Spider Web Plot");
     }
@@ -1078,7 +1078,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * @return The legend items (never <code>null</code>).
      */
     @Override
-	public LegendItemCollection getLegendItems() {
+    public LegendItemCollection getLegendItems() {
         LegendItemCollection result = new LegendItemCollection();
         if (getDataset() == null) {
             return result;
@@ -1144,7 +1144,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * @param info  collects info about the drawing.
      */
     @Override
-	public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
             PlotState parentState, PlotRenderingInfo info) {
 
         // adjust for insets...
@@ -1501,7 +1501,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -1606,7 +1606,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      *         any reason.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         SpiderWebPlot clone = (SpiderWebPlot) super.clone();
         clone.legendItemShape = ShapeUtilities.clone(this.legendItemShape);
         clone.seriesPaintList = (PaintList) this.seriesPaintList.clone();

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------
@@ -47,7 +47,7 @@
  * 13-Jul-2009 : Added support for shadow generator (DG);
  * 11-Oct-2011 : Check sectionOutlineVisible - bug 3237879 (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.plot;
@@ -320,7 +320,7 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
      *         chart drawing).
      */
     @Override
-	public PiePlotState initialise(Graphics2D g2, Rectangle2D plotArea,
+    public PiePlotState initialise(Graphics2D g2, Rectangle2D plotArea,
             PiePlot plot, Integer index, PlotRenderingInfo info) {
 
         PiePlotState state = super.initialise(g2, plotArea, plot, index, info);
@@ -339,7 +339,7 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
      * @param currentPass  the current pass index.
      */
     @Override
-	protected void drawItem(Graphics2D g2,
+    protected void drawItem(Graphics2D g2,
                             int section,
                             Rectangle2D dataArea,
                             PiePlotState state,
@@ -418,7 +418,7 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
                 g2.fill(path);
                 Paint outlinePaint = lookupSectionOutlinePaint(key);
                 Stroke outlineStroke = lookupSectionOutlineStroke(key);
-                if (getSectionOutlinesVisible() && outlinePaint != null 
+                if (getSectionOutlinesVisible() && outlinePaint != null
                         && outlineStroke != null) {
                     g2.setPaint(outlinePaint);
                     g2.setStroke(outlineStroke);
@@ -470,7 +470,7 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
      * @return The label link depth, as a percentage of the plot's radius.
      */
     @Override
-	protected double getLabelLinkDepth() {
+    protected double getLabelLinkDepth() {
         return Math.min(super.getLabelLinkDepth(), getSectionDepth() / 2);
     }
 
@@ -482,7 +482,7 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------
@@ -128,7 +128,7 @@ public class DefaultHeatMapDataset extends AbstractDataset
      * @return The number of x-values (always > 0).
      */
     @Override
-	public int getXSampleCount() {
+    public int getXSampleCount() {
         return this.xSamples;
     }
 
@@ -140,7 +140,7 @@ public class DefaultHeatMapDataset extends AbstractDataset
      * @return The number of y-values (always > 0).
      */
     @Override
-	public int getYSampleCount() {
+    public int getYSampleCount() {
         return this.ySamples;
     }
 
@@ -152,7 +152,7 @@ public class DefaultHeatMapDataset extends AbstractDataset
      * @return The lowest x-value represented in this dataset.
      */
     @Override
-	public double getMinimumXValue() {
+    public double getMinimumXValue() {
         return this.minX;
     }
 
@@ -164,7 +164,7 @@ public class DefaultHeatMapDataset extends AbstractDataset
      * @return The highest x-value represented in this dataset.
      */
     @Override
-	public double getMaximumXValue() {
+    public double getMaximumXValue() {
         return this.maxX;
     }
 
@@ -176,7 +176,7 @@ public class DefaultHeatMapDataset extends AbstractDataset
      * @return The lowest y-value represented in this dataset.
      */
     @Override
-	public double getMinimumYValue() {
+    public double getMinimumYValue() {
         return this.minY;
     }
 
@@ -188,7 +188,7 @@ public class DefaultHeatMapDataset extends AbstractDataset
      * @return The highest y-value represented in this dataset.
      */
     @Override
-	public double getMaximumYValue() {
+    public double getMaximumYValue() {
         return this.maxY;
     }
 
@@ -200,7 +200,7 @@ public class DefaultHeatMapDataset extends AbstractDataset
      * @return The x-value.
      */
     @Override
-	public double getXValue(int xIndex) {
+    public double getXValue(int xIndex) {
         double x = this.minX
                 + (this.maxX - this.minX) * (xIndex / (double) this.xSamples);
         return x;
@@ -214,7 +214,7 @@ public class DefaultHeatMapDataset extends AbstractDataset
      * @return The y-value.
      */
     @Override
-	public double getYValue(int yIndex) {
+    public double getYValue(int yIndex) {
         double y = this.minY
                 + (this.maxY - this.minY) * (yIndex / (double) this.ySamples);
         return y;
@@ -230,7 +230,7 @@ public class DefaultHeatMapDataset extends AbstractDataset
      * @return The z-value.
      */
     @Override
-	public double getZValue(int xIndex, int yIndex) {
+    public double getZValue(int xIndex, int yIndex) {
         return this.zValues[xIndex][yIndex];
     }
 
@@ -246,7 +246,7 @@ public class DefaultHeatMapDataset extends AbstractDataset
      * @return The z-value.
      */
     @Override
-	public Number getZ(int xIndex, int yIndex) {
+    public Number getZ(int xIndex, int yIndex) {
         return getZValue(xIndex, yIndex);
     }
 
@@ -286,7 +286,7 @@ public class DefaultHeatMapDataset extends AbstractDataset
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -327,7 +327,7 @@ public class DefaultHeatMapDataset extends AbstractDataset
      * @throws java.lang.CloneNotSupportedException
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         DefaultHeatMapDataset clone = (DefaultHeatMapDataset) super.clone();
         clone.zValues = DataUtilities.clone(this.zValues);
         return clone;

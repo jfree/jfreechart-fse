@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------
@@ -218,7 +218,7 @@ public class Task implements Cloneable, PublicCloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object object) {
+    public boolean equals(Object object) {
         if (object == this) {
             return true;
         }
@@ -251,7 +251,7 @@ public class Task implements Cloneable, PublicCloneable, Serializable {
      *         subclasses may not support cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         Task clone = (Task) super.clone();
         return clone;
     }

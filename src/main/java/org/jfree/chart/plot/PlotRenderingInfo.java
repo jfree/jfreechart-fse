@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
@@ -216,7 +216,7 @@ public class PlotRenderingInfo implements Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -244,7 +244,7 @@ public class PlotRenderingInfo implements Cloneable, Serializable {
      * @throws CloneNotSupportedException if there is a problem cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         PlotRenderingInfo clone = (PlotRenderingInfo) super.clone();
         if (this.plotArea != null) {
             clone.plotArea = (Rectangle2D) this.plotArea.clone();

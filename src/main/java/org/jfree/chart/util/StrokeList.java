@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -36,7 +36,7 @@
  * -------
  * 19-Aug-2003 : Version 1 (DG);
  * 17-Jun-2012 : Moved from JCommon to JFreeChart (DG);
- * 
+ *
  */
 
 package org.jfree.chart.util;
@@ -81,16 +81,16 @@ public class StrokeList extends AbstractObjectList<Stroke> {
 
     /**
      * Returns an independent copy of the list.
-     * 
+     *
      * @return A clone.
-     * 
+     *
      * @throws CloneNotSupportedException if an item in the list cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
-    
+
     /**
      * Tests the list for equality with another object (typically also a list).
      *
@@ -99,16 +99,16 @@ public class StrokeList extends AbstractObjectList<Stroke> {
      * @return A boolean.
      */
     @Override
-	public boolean equals(final Object o) {
+    public boolean equals(final Object o) {
 
         if (o == null) {
             return false;
         }
-        
+
         if (o == this) {
             return true;
         }
-        
+
         if (o instanceof StrokeList) {
             return super.equals(o);
         }
@@ -116,14 +116,14 @@ public class StrokeList extends AbstractObjectList<Stroke> {
         return false;
 
     }
-    
+
     /**
      * Returns a hash code value for the object.
      *
      * @return the hashcode
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return super.hashCode();
     }
 
@@ -151,7 +151,7 @@ public class StrokeList extends AbstractObjectList<Stroke> {
         }
 
     }
-    
+
     /**
      * Provides serialization support.
      *
@@ -170,7 +170,7 @@ public class StrokeList extends AbstractObjectList<Stroke> {
                 setStroke(index, SerialUtilities.readStroke(stream));
             }
         }
-        
+
     }
 
 }

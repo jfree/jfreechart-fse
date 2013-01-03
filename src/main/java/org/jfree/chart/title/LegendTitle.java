@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------
@@ -57,7 +57,7 @@
  * 19-Mar-2009 : Added entity support - see patch 2603321 by Peter Kolb (DG);
  * 11-Mar-2012 : Added sort-order support - patch 3500621 by Simon Kaczor (MH);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.title;
@@ -407,7 +407,7 @@ public class LegendTitle extends Title
 
     /**
      * Gets the order used to display legend items.
-     * 
+     *
      * @return The order (never <code>null</code>).
      * @since 1.0.15
      */
@@ -417,7 +417,7 @@ public class LegendTitle extends Title
 
     /**
      * Sets the order used to display legend items.
-     * 
+     *
      * @param order Specifies ascending or descending order (<code>null</code>
      *              not permitted).
      * @since 1.0.15
@@ -541,7 +541,7 @@ public class LegendTitle extends Title
      * @return The block size (in Java2D units, never <code>null</code>).
      */
     @Override
-	public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
+    public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
         Size2D result = new Size2D();
         fetchLegendItems();
         if (this.items.isEmpty()) {
@@ -566,7 +566,7 @@ public class LegendTitle extends Title
      * @param area  the available area for the title.
      */
     @Override
-	public void draw(Graphics2D g2, Rectangle2D area) {
+    public void draw(Graphics2D g2, Rectangle2D area) {
         draw(g2, area, null);
     }
 
@@ -581,7 +581,7 @@ public class LegendTitle extends Title
      *         <code>null</code>.
      */
     @Override
-	public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
+    public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
         Rectangle2D target = (Rectangle2D) area.clone();
         Rectangle2D hotspot = (Rectangle2D) area.clone();
         StandardEntityCollection sec = null;
@@ -642,7 +642,7 @@ public class LegendTitle extends Title
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

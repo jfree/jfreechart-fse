@@ -570,7 +570,7 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
      *         or empty).
      */
     @Override
-	public Range findRangeBounds(XYDataset dataset) {
+    public Range findRangeBounds(XYDataset dataset) {
         return findRangeBounds(dataset, true);
     }
 
@@ -591,7 +591,7 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
      * @return The number of passes the renderer requires.
      */
     @Override
-	public XYItemRendererState initialise(Graphics2D g2,
+    public XYItemRendererState initialise(Graphics2D g2,
                                           Rectangle2D dataArea,
                                           XYPlot plot,
                                           XYDataset dataset,
@@ -647,7 +647,7 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
                          PlotRenderingInfo info,
@@ -887,7 +887,7 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -937,7 +937,7 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

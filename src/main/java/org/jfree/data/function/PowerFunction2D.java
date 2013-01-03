@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -97,7 +97,7 @@ public class PowerFunction2D implements Function2D, Serializable {
      * @return The value.
      */
     @Override
-	public double getValue(double x) {
+    public double getValue(double x) {
         return this.a * Math.pow(x, this.b);
     }
 
@@ -109,7 +109,7 @@ public class PowerFunction2D implements Function2D, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (!(obj instanceof PowerFunction2D)) {
             return false;
         }
@@ -129,7 +129,7 @@ public class PowerFunction2D implements Function2D, Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 29;
         result = HashUtilities.hashCode(result, this.a);
         result = HashUtilities.hashCode(result, this.b);

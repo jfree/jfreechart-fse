@@ -104,7 +104,7 @@ public class KeyedValueComparator implements Comparator<KeyedValue>, Serializabl
      * @return An int indicating the relative order of the objects.
      */
     @Override
-	public int compare(KeyedValue kv1, KeyedValue kv2) {
+    public int compare(KeyedValue kv1, KeyedValue kv2) {
 
         if (kv2 == null) {
             if (kv1 ==null) {

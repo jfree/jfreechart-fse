@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -116,7 +116,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * @see #getColumnCount()
      */
     @Override
-	public int getRowCount() {
+    public int getRowCount() {
         return this.rowKeys.size();
     }
 
@@ -128,7 +128,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * @see #getRowCount()
      */
     @Override
-	public int getColumnCount() {
+    public int getColumnCount() {
         return this.columnKeys.size();
     }
 
@@ -143,7 +143,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * @see #getValue(Comparable, Comparable)
      */
     @Override
-	public Number getValue(int row, int column) {
+    public Number getValue(int row, int column) {
         Number result = null;
         DefaultKeyedValues rowData = this.rows.get(row);
         if (rowData != null) {
@@ -169,7 +169,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * @see #getColumnKey(int)
      */
     @Override
-	public Comparable getRowKey(int row) {
+    public Comparable getRowKey(int row) {
         return this.rowKeys.get(row);
     }
 
@@ -184,7 +184,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * @see #getColumnIndex(Comparable)
      */
     @Override
-	public int getRowIndex(Comparable key) {
+    public int getRowIndex(Comparable key) {
         if (key == null) {
             throw new IllegalArgumentException("Null 'key' argument.");
         }
@@ -209,7 +209,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * @see #getColumnKeys()
      */
     @Override
-	public List<Comparable> getRowKeys() {
+    public List<Comparable> getRowKeys() {
         return Collections.unmodifiableList(this.rowKeys);
     }
 
@@ -225,7 +225,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * @see #getRowKey(int)
      */
     @Override
-	public Comparable getColumnKey(int column) {
+    public Comparable getColumnKey(int column) {
         return this.columnKeys.get(column);
     }
 
@@ -240,7 +240,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * @see #getRowIndex(Comparable)
      */
     @Override
-	public int getColumnIndex(Comparable key) {
+    public int getColumnIndex(Comparable key) {
         if (key == null) {
             throw new IllegalArgumentException("Null 'key' argument.");
         }
@@ -255,7 +255,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * @see #getRowKeys()
      */
     @Override
-	public List<Comparable> getColumnKeys() {
+    public List<Comparable> getColumnKeys() {
         return Collections.unmodifiableList(this.columnKeys);
     }
 
@@ -273,7 +273,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * @see #removeValue(Comparable, Comparable)
      */
     @Override
-	public Number getValue(Comparable rowKey, Comparable columnKey) {
+    public Number getValue(Comparable rowKey, Comparable columnKey) {
         if (rowKey == null) {
             throw new IllegalArgumentException("Null 'rowKey' argument.");
         }
@@ -508,7 +508,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object o) {
+    public boolean equals(Object o) {
 
         if (o == null) {
             return false;
@@ -562,7 +562,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result;
         result = this.rowKeys.hashCode();
         result = 29 * result + this.columnKeys.hashCode();
@@ -579,7 +579,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
      *         exception, but subclasses (if any) might.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         DefaultKeyedValues2D clone = (DefaultKeyedValues2D) super.clone();
         // for the keys, a shallow copy should be fine because keys
         // should be immutable...

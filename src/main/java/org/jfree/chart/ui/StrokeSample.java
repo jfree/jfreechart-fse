@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
@@ -106,7 +106,7 @@ public class StrokeSample extends JComponent implements ListCellRenderer {
      * @return the preferred size of the component.
      */
     @Override
-	public Dimension getPreferredSize() {
+    public Dimension getPreferredSize() {
         return this.preferredSize;
     }
 
@@ -116,7 +116,7 @@ public class StrokeSample extends JComponent implements ListCellRenderer {
      * @param g  the graphics device.
      */
     @Override
-	public void paintComponent(final Graphics g) {
+    public void paintComponent(final Graphics g) {
 
         final Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -166,7 +166,7 @@ public class StrokeSample extends JComponent implements ListCellRenderer {
      * @return the component for rendering.
      */
     @Override
-	public Component getListCellRendererComponent(JList list, Object value,
+    public Component getListCellRendererComponent(JList list, Object value,
             int index, boolean isSelected, boolean cellHasFocus) {
         if (value instanceof Stroke) {
             setStroke((Stroke) value);

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
@@ -198,7 +198,7 @@ public class StatisticalBarRenderer extends BarRenderer
      *         <code>null</code> or empty).
      */
     @Override
-	public Range findRangeBounds(CategoryDataset dataset) {
+    public Range findRangeBounds(CategoryDataset dataset) {
          return findRangeBounds(dataset, true);
     }
 
@@ -218,7 +218,7 @@ public class StatisticalBarRenderer extends BarRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          CategoryItemRendererState state,
                          Rectangle2D dataArea,
                          CategoryPlot plot,
@@ -277,7 +277,7 @@ public class StatisticalBarRenderer extends BarRenderer
                                       int column) {
 
         // BAR Y
-        double rectY = calculateBarW0(plot, PlotOrientation.HORIZONTAL, 
+        double rectY = calculateBarW0(plot, PlotOrientation.HORIZONTAL,
                 dataArea, domainAxis, state, visibleRow, column);
 
         // BAR X
@@ -553,7 +553,7 @@ public class StatisticalBarRenderer extends BarRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

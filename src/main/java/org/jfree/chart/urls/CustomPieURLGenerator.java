@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------
@@ -87,7 +87,7 @@ public class CustomPieURLGenerator implements PieURLGenerator,
      * @see #getURL(Comparable, int)
      */
     @Override
-	public String generateURL(PieDataset dataset, Comparable key,
+    public String generateURL(PieDataset dataset, Comparable key,
                               int pieIndex) {
         return getURL(key, pieIndex);
     }
@@ -164,7 +164,7 @@ public class CustomPieURLGenerator implements PieURLGenerator,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object o) {
+    public boolean equals(Object o) {
 
         if (o == this) {
             return true;
@@ -200,7 +200,7 @@ public class CustomPieURLGenerator implements PieURLGenerator,
      * @throws CloneNotSupportedException if cloning is not supported.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         CustomPieURLGenerator urlGen = (CustomPieURLGenerator) super.clone();
         urlGen.urls = new ArrayList<Map<Comparable, String>>();
 

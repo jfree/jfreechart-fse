@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------------
@@ -71,7 +71,7 @@ public class SortableTableHeaderListener implements MouseListener, MouseMotionLi
      * @param model  the model.
      * @param renderer  the renderer.
      */
-    public SortableTableHeaderListener(final SortableTableModel model, 
+    public SortableTableHeaderListener(final SortableTableModel model,
                                        final SortButtonRenderer renderer) {
         this.model = model;
         this.renderer = renderer;
@@ -93,14 +93,14 @@ public class SortableTableHeaderListener implements MouseListener, MouseMotionLi
      * @param e  the mouse event.
      */
     @Override
-	public void mousePressed(final MouseEvent e) {
+    public void mousePressed(final MouseEvent e) {
 
         final JTableHeader header = (JTableHeader) e.getComponent();
 
         if (header.getResizingColumn() == null) {  // resizing takes precedence over sorting
             if (header.getDraggedDistance() < 1) {   // dragging also takes precedence over sorting
                 final int columnIndex = header.columnAtPoint(e.getPoint());
-                final int modelColumnIndex 
+                final int modelColumnIndex
                     = header.getTable().convertColumnIndexToModel(columnIndex);
                 if (this.model.isSortable(modelColumnIndex)) {
                     this.sortColumnIndex = header.getTable().convertColumnIndexToModel(columnIndex);
@@ -124,7 +124,7 @@ public class SortableTableHeaderListener implements MouseListener, MouseMotionLi
      * @param e  the mouse event.
      */
     @Override
-	public void mouseDragged(final MouseEvent e) {
+    public void mouseDragged(final MouseEvent e) {
 
         final JTableHeader header = (JTableHeader) e.getComponent();
 
@@ -140,7 +140,7 @@ public class SortableTableHeaderListener implements MouseListener, MouseMotionLi
      * @param e  the mouse event.
      */
     @Override
-	public void mouseEntered(final MouseEvent e) {
+    public void mouseEntered(final MouseEvent e) {
         // not required
     }
 
@@ -150,7 +150,7 @@ public class SortableTableHeaderListener implements MouseListener, MouseMotionLi
      * @param e  the mouse event.
      */
     @Override
-	public void mouseClicked(final MouseEvent e) {
+    public void mouseClicked(final MouseEvent e) {
         // not required
     }
 
@@ -160,7 +160,7 @@ public class SortableTableHeaderListener implements MouseListener, MouseMotionLi
      * @param e  the mouse event.
      */
     @Override
-	public void mouseMoved(final MouseEvent e) {
+    public void mouseMoved(final MouseEvent e) {
         // not required
     }
 
@@ -170,7 +170,7 @@ public class SortableTableHeaderListener implements MouseListener, MouseMotionLi
      * @param e  the mouse event.
      */
     @Override
-	public void mouseExited(final MouseEvent e) {
+    public void mouseExited(final MouseEvent e) {
         // not required
     }
 
@@ -180,7 +180,7 @@ public class SortableTableHeaderListener implements MouseListener, MouseMotionLi
      * @param e  the mouse event.
      */
     @Override
-	public void mouseReleased(final MouseEvent e) {
+    public void mouseReleased(final MouseEvent e) {
 
         final JTableHeader header = (JTableHeader) e.getComponent();
 

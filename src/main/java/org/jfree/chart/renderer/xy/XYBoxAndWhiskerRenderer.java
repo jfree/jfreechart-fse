@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------------
@@ -288,7 +288,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
      * @see #findDomainBounds(XYDataset)
      */
     @Override
-	public Range findRangeBounds(XYDataset dataset) {
+    public Range findRangeBounds(XYDataset dataset) {
         return findRangeBounds(dataset, true);
     }
 
@@ -336,7 +336,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2, XYItemRendererState state,
+    public void drawItem(Graphics2D g2, XYItemRendererState state,
             Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
             ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
             int series, int item, CrosshairState crosshairState, int pass) {
@@ -777,7 +777,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -841,7 +841,7 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

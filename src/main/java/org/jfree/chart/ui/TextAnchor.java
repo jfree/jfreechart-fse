@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -36,7 +36,7 @@
  * --------
  * 10-Jun-2003 : Version 1 (DG);
  * 11-Jan-2005 : Removed deprecated code (DG);
- * 
+ *
  */
 
 package org.jfree.chart.ui;
@@ -110,7 +110,7 @@ public enum TextAnchor {
      * @return The string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return this.name;
     }
 

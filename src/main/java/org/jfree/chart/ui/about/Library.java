@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------
@@ -166,7 +166,7 @@ public class Library {
      * @return A boolean.
      */
     @Override
-	public boolean equals(final Object o)
+    public boolean equals(final Object o)
     {
       if (this == o)
       {
@@ -193,8 +193,7 @@ public class Library {
      * @return A hash code.
      */
     @Override
-	public int hashCode()
-    {
+    public int hashCode() {
       return (this.name != null ? this.name.hashCode() : 0);
     }
 }

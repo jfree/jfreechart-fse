@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
@@ -41,15 +41,15 @@
  * 22-Dec-2003 : Added workaround for Java bug 4245442 (DG);
  * 29-Jan-2004 : Added paint attribute (DG);
  * 22-Mar-2004 : Added equals() method and implemented Serializable (DG);
- * 01-Apr-2004 : Changed java.awt.geom.Dimension2D to org.jfree.ui.Size2D 
+ * 01-Apr-2004 : Changed java.awt.geom.Dimension2D to org.jfree.ui.Size2D
  *               because of JDK bug 4976448 which persists on JDK 1.3.1 (DG);
- * 30-Sep-2004 : Moved drawRotatedString() from RefineryUtilities 
+ * 30-Sep-2004 : Moved drawRotatedString() from RefineryUtilities
  *               --> TextUtilities (DG);
  * 16-Mar-2007 : Fixed serialization for GradientPaint (DG);
  * 17-Jun-2012 : Moved from JCommon to JFreeChart (DG);
  *
  */
- 
+
 package org.jfree.chart.text;
 
 import java.awt.Color;
@@ -69,47 +69,47 @@ import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
- * A text item, with an associated font, that fits on a single line (see 
+ * A text item, with an associated font, that fits on a single line (see
  * {@link TextLine}).  Instances of the class are immutable.
  */
 public class TextFragment implements Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 4465945952903143262L;
-    
+
     /** The default font. */
     public static final Font DEFAULT_FONT = new Font("Serif", Font.PLAIN, 12);
-    
+
     /** The default text color. */
     public static final Paint DEFAULT_PAINT = Color.BLACK;
-    
+
     /** The text. */
     private String text;
-    
+
     /** The font. */
     private Font font;
-    
+
     /** The text color. */
     private transient Paint paint;
-    
-    /** 
-     * The baseline offset (can be used to simulate subscripts and 
-     * superscripts). 
+
+    /**
+     * The baseline offset (can be used to simulate subscripts and
+     * superscripts).
      */
     private float baselineOffset;
-    
+
     /**
      * Creates a new text fragment.
-     * 
+     *
      * @param text  the text (<code>null</code> not permitted).
      */
     public TextFragment(final String text) {
         this(text, DEFAULT_FONT, DEFAULT_PAINT);
     }
-    
+
     /**
      * Creates a new text fragment.
-     * 
+     *
      * @param text  the text (<code>null</code> not permitted).
      * @param font  the font (<code>null</code> not permitted).
      */
@@ -119,7 +119,7 @@ public class TextFragment implements Serializable {
 
     /**
      * Creates a new text fragment.
-     * 
+     *
      * @param text  the text (<code>null</code> not permitted).
      * @param font  the font (<code>null</code> not permitted).
      * @param paint  the text color (<code>null</code> not permitted).
@@ -130,7 +130,7 @@ public class TextFragment implements Serializable {
 
     /**
      * Creates a new text fragment.
-     * 
+     *
      * @param text  the text (<code>null</code> not permitted).
      * @param font  the font (<code>null</code> not permitted).
      * @param paint  the text color (<code>null</code> not permitted).
@@ -139,7 +139,7 @@ public class TextFragment implements Serializable {
     public TextFragment(final String text, final Font font, final Paint paint,
                         final float baselineOffset) {
         if (text == null) {
-            throw new IllegalArgumentException("Null 'text' argument.");  
+            throw new IllegalArgumentException("Null 'text' argument.");
         }
         if (font == null) {
             throw new IllegalArgumentException("Null 'font' argument.");
@@ -155,89 +155,89 @@ public class TextFragment implements Serializable {
 
     /**
      * Returns the text.
-     * 
+     *
      * @return The text (possibly <code>null</code>).
      */
     public String getText() {
         return this.text;
     }
-    
+
     /**
      * Returns the font.
-     * 
+     *
      * @return The font (never <code>null</code>).
      */
     public Font getFont() {
         return this.font;
     }
-    
+
     /**
      * Returns the text paint.
-     * 
+     *
      * @return The text paint (never <code>null</code>).
      */
     public Paint getPaint() {
         return this.paint;
     }
-    
+
     /**
      * Returns the baseline offset.
-     * 
+     *
      * @return The baseline offset.
      */
     public float getBaselineOffset() {
-        return this.baselineOffset;   
+        return this.baselineOffset;
     }
-    
+
     /**
      * Draws the text fragment.
-     * 
+     *
      * @param g2  the graphics device.
      * @param anchorX  the x-coordinate of the anchor point.
      * @param anchorY  the y-coordinate of the anchor point.
-     * @param anchor  the location of the text that is aligned to the anchor 
+     * @param anchor  the location of the text that is aligned to the anchor
      *                point.
      * @param rotateX  the x-coordinate of the rotation point.
      * @param rotateY  the y-coordinate of the rotation point.
      * @param angle  the angle.
      */
-    public void draw(final Graphics2D g2, final float anchorX, 
+    public void draw(final Graphics2D g2, final float anchorX,
                      final float anchorY, final TextAnchor anchor,
-                     final float rotateX, final float rotateY, 
+                     final float rotateX, final float rotateY,
                      final double angle) {
-    
+
         g2.setFont(this.font);
         g2.setPaint(this.paint);
-        TextUtilities.drawRotatedString(this.text, g2, anchorX, anchorY 
+        TextUtilities.drawRotatedString(this.text, g2, anchorX, anchorY
                 + this.baselineOffset, anchor, angle, rotateX, rotateY);
-    
+
     }
-    
+
     /**
      * Calculates the dimensions of the text fragment.
-     * 
+     *
      * @param g2  the graphics device.
-     * 
+     *
      * @return The width and height of the text.
      */
     public Size2D calculateDimensions(final Graphics2D g2) {
         final FontMetrics fm = g2.getFontMetrics(this.font);
-        final Rectangle2D bounds = TextUtilities.getTextBounds(this.text, g2, 
+        final Rectangle2D bounds = TextUtilities.getTextBounds(this.text, g2,
                 fm);
         final Size2D result = new Size2D(bounds.getWidth(), bounds.getHeight());
         return result;
     }
-    
+
     /**
-     * Calculates the vertical offset between the baseline and the specified 
+     * Calculates the vertical offset between the baseline and the specified
      * text anchor.
-     * 
+     *
      * @param g2  the graphics device.
      * @param anchor  the anchor.
-     * 
+     *
      * @return the offset.
      */
-    public float calculateBaselineOffset(final Graphics2D g2, 
+    public float calculateBaselineOffset(final Graphics2D g2,
                                          final TextAnchor anchor) {
         float result = 0.0f;
         final FontMetrics fm = g2.getFontMetrics(this.font);
@@ -246,39 +246,39 @@ public class TextFragment implements Serializable {
                                           || anchor == TextAnchor.TOP_RIGHT) {
             result = lm.getAscent();
         }
-        else if (anchor == TextAnchor.BOTTOM_LEFT 
+        else if (anchor == TextAnchor.BOTTOM_LEFT
                 || anchor == TextAnchor.BOTTOM_CENTER
                 || anchor == TextAnchor.BOTTOM_RIGHT) {
             result = -lm.getDescent() - lm.getLeading();
         }
-        return result;                                             
+        return result;
     }
-    
+
     /**
      * Tests this instance for equality with an arbitrary object.
-     * 
+     *
      * @param obj  the object to test against (<code>null</code> permitted).
-     * 
+     *
      * @return A boolean.
      */
     @Override
-	public boolean equals(final Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null) {
-            return false;   
+            return false;
         }
         if (obj == this) {
-            return true;   
+            return true;
         }
         if (obj instanceof TextFragment) {
             final TextFragment tf = (TextFragment) obj;
             if (!this.text.equals(tf.text)) {
-                return false;   
+                return false;
             }
             if (!this.font.equals(tf.font)) {
-                return false;   
+                return false;
             }
             if (!this.paint.equals(tf.paint)) {
-                return false;   
+                return false;
             }
             return true;
         }
@@ -287,11 +287,11 @@ public class TextFragment implements Serializable {
 
     /**
      * Returns a hash code for this object.
-     * 
+     *
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result;
         result = (this.text != null ? this.text.hashCode() : 0);
         result = 29 * result + (this.font != null ? this.font.hashCode() : 0);
@@ -306,7 +306,7 @@ public class TextFragment implements Serializable {
      *
      * @throws IOException  if there is an I/O error.
      */
-    private void writeObject(final ObjectOutputStream stream) 
+    private void writeObject(final ObjectOutputStream stream)
         throws IOException {
         stream.defaultWriteObject();
         SerialUtilities.writePaint(this.paint, stream);
@@ -320,10 +320,10 @@ public class TextFragment implements Serializable {
      * @throws IOException  if there is an I/O error.
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
-    private void readObject(final ObjectInputStream stream) 
+    private void readObject(final ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.paint = SerialUtilities.readPaint(stream);
     }
-   
+
 }

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -97,7 +97,7 @@ public class PolynomialFunction2D implements Function2D, Serializable {
      * @return The value.
      */
     @Override
-	public double getValue(double x) {
+    public double getValue(double x) {
         double y = 0;
         for(int i = 0; i < this.coefficients.length; i++){
             y += coefficients[i] * Math.pow(x, i);
@@ -113,7 +113,7 @@ public class PolynomialFunction2D implements Function2D, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (!(obj instanceof PolynomialFunction2D)) {
             return false;
         }
@@ -127,7 +127,7 @@ public class PolynomialFunction2D implements Function2D, Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return HashUtilities.hashCodeForDoubleArray(this.coefficients);
     }
 

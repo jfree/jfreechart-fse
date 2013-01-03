@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------------
@@ -136,7 +136,7 @@ public class SystemPropertiesTableModel extends SortableTableModel {
          * @return an integer that indicates the relative order of the objects.
          */
         @Override
-		public int compare(final SystemProperty sp1, final SystemProperty sp2) {
+        public int compare(final SystemProperty sp1, final SystemProperty sp2) {
 
                 if (this.ascending) {
                     return sp1.getName().compareTo(sp2.getName());
@@ -156,7 +156,7 @@ public class SystemPropertiesTableModel extends SortableTableModel {
          * @return A boolean.
          */
         @Override
-		public boolean equals(final Object o) {
+        public boolean equals(final Object o) {
             if (this == o) {
                 return true;
             }
@@ -180,7 +180,7 @@ public class SystemPropertiesTableModel extends SortableTableModel {
          * @return the hashcode
          */
         @Override
-		public int hashCode() {
+        public int hashCode() {
             return (this.ascending ? 1 : 0);
         }
     }
@@ -236,7 +236,7 @@ public class SystemPropertiesTableModel extends SortableTableModel {
      * @return true for column 0, and false for all other columns.
      */
     @Override
-	public boolean isSortable(final int column) {
+    public boolean isSortable(final int column) {
 
         if (column == 0) {
             return true;
@@ -254,7 +254,7 @@ public class SystemPropertiesTableModel extends SortableTableModel {
      * @return the row count.
      */
     @Override
-	public int getRowCount() {
+    public int getRowCount() {
         return this.properties.size();
     }
 
@@ -266,7 +266,7 @@ public class SystemPropertiesTableModel extends SortableTableModel {
      * @return the column count (always 2 in this case).
      */
     @Override
-	public int getColumnCount() {
+    public int getColumnCount() {
         return 2;
     }
 
@@ -278,7 +278,7 @@ public class SystemPropertiesTableModel extends SortableTableModel {
      * @return the column name.
      */
     @Override
-	public String getColumnName(final int column) {
+    public String getColumnName(final int column) {
 
         if (column == 0) {
             return this.nameColumnLabel;
@@ -299,7 +299,7 @@ public class SystemPropertiesTableModel extends SortableTableModel {
      * @return the value.
      */
     @Override
-	public Object getValueAt(final int row, final int column) {
+    public Object getValueAt(final int row, final int column) {
 
         final SystemProperty sp = this.properties.get(row);
         if (column == 0) {
@@ -324,7 +324,7 @@ public class SystemPropertiesTableModel extends SortableTableModel {
      *
      */
     @Override
-	public void sortByColumn(final int column, final boolean ascending) {
+    public void sortByColumn(final int column, final boolean ascending) {
 
         if (isSortable(column)) {
             super.sortByColumn(column, ascending);

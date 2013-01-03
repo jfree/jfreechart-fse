@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
@@ -90,7 +90,7 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      * @return The key (never <code>null</code>).
      */
     @Override
-	public Comparable getKey() {
+    public Comparable getKey() {
         return this.key;
     }
 
@@ -100,7 +100,7 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      * @return The value (possibly <code>null</code>).
      */
     @Override
-	public Number getValue() {
+    public Number getValue() {
         return this.value;
     }
 
@@ -121,7 +121,7 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -146,7 +146,7 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result;
         result = (this.key != null ? this.key.hashCode() : 0);
         result = 29 * result + (this.value != null ? this.value.hashCode() : 0);
@@ -164,7 +164,7 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      *         subclasses (if any) might.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         DefaultKeyedValue clone = (DefaultKeyedValue) super.clone();
         return clone;
     }
@@ -176,7 +176,7 @@ public class DefaultKeyedValue implements KeyedValue, Cloneable,
      * @return A string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return "(" + this.key.toString() + ", " + this.value.toString() + ")";
     }
 

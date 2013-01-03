@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -34,9 +34,9 @@
  * Contributor(s):   Mark Watson (www.markwatson.com);
  *
  * Changes:
- * For history prior to the release of JFreeChart 1.0.0 in December 2005, 
+ * For history prior to the release of JFreeChart 1.0.0 in December 2005,
  * please refer to the source files in the JFreeChart 1.0.x release.
- * 
+ *
  * ------------- JFREECHART 1.0.x ---------------------------------------------
  * 20-Feb-2007 : Updated API docs (DG);
  * 19-Apr-2007 : Deprecated seriesVisible and seriesVisibleInLegend flags (DG);
@@ -48,7 +48,7 @@
  * 26-Jun-2008 : Added new method required for crosshair support - THIS CHANGES
  *               THE API as of version 1.0.11 (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  * ------------- JFREECHART Future State Edition (1.2.0?) ---------------------
  *               < under development >
  *
@@ -131,7 +131,7 @@ public interface CategoryItemRenderer extends Renderer {
 
   // FIXME: LegendItemGenerator?
 
-  
+
   // TOOL TIP GENERATOR
 
   /**
@@ -171,7 +171,7 @@ public interface CategoryItemRenderer extends Renderer {
   public void setSeriesToolTipGenerator(int series,
                       CategoryToolTipGenerator generator);
 
-  public void setSeriesToolTipGenerator(int series, 
+  public void setSeriesToolTipGenerator(int series,
       CategoryToolTipGenerator generator, boolean notify);
 
   /**
@@ -194,10 +194,10 @@ public interface CategoryItemRenderer extends Renderer {
    */
   public void setDefaultToolTipGenerator(CategoryToolTipGenerator generator);
 
-  public void setDefaultToolTipGenerator(CategoryToolTipGenerator generator, 
+  public void setDefaultToolTipGenerator(CategoryToolTipGenerator generator,
       boolean notify);
 
-  
+
   // ITEM LABEL GENERATOR
 
   /**
@@ -234,8 +234,8 @@ public interface CategoryItemRenderer extends Renderer {
   public void setSeriesItemLabelGenerator(int series,
       CategoryItemLabelGenerator generator);
 
-  public void setSeriesItemLabelGenerator(int series, 
-  		CategoryItemLabelGenerator generator, boolean notify);
+  public void setSeriesItemLabelGenerator(int series,
+      CategoryItemLabelGenerator generator, boolean notify);
 
   /**
    * Returns the default item label generator.
@@ -293,7 +293,7 @@ public interface CategoryItemRenderer extends Renderer {
   public void setSeriesItemURLGenerator(int series,
                       CategoryURLGenerator generator);
 
-  public void setSeriesItemURLGenerator(int series, 
+  public void setSeriesItemURLGenerator(int series,
       CategoryURLGenerator generator, boolean notify);
 
   /**
@@ -315,15 +315,15 @@ public interface CategoryItemRenderer extends Renderer {
    */
   public void setDefaultItemURLGenerator(CategoryURLGenerator generator);
 
-  public void setDefaultItemURLGenerator(CategoryURLGenerator generator, 
+  public void setDefaultItemURLGenerator(CategoryURLGenerator generator,
       boolean notify);
 
-  
+
   // FIXME: ANNOTATIONS
 
 
   //// DRAWING //////////////////////////////////////////////////////////////
-  
+
   /**
    * Initialises the renderer.  This method will be called before the first
    * item is rendered, giving the renderer an opportunity to initialise any
@@ -339,7 +339,7 @@ public interface CategoryItemRenderer extends Renderer {
    * @return A state object (maintains state information relevant to one
    *         chart drawing).
    */
-  public CategoryItemRendererState initialise(Graphics2D g2, 
+  public CategoryItemRendererState initialise(Graphics2D g2,
       Rectangle2D dataArea, CategoryPlot plot, int rendererIndex,
       PlotRenderingInfo info);
 

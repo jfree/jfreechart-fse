@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------
@@ -64,7 +64,7 @@
  * 19-May-2009 : Fixed FindBugs warnings, patch by Michal Wozniak (DG);
  * 30-Oct-2011 : Fixed alignment when setMaximumBarWidth is applied (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.renderer.category;
@@ -116,7 +116,7 @@ public class IntervalBarRenderer extends BarRenderer {
      *         <code>null</code> or empty).
      */
     @Override
-	public Range findRangeBounds(CategoryDataset dataset) {
+    public Range findRangeBounds(CategoryDataset dataset) {
         return findRangeBounds(dataset, true);
     }
 
@@ -135,7 +135,7 @@ public class IntervalBarRenderer extends BarRenderer {
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          CategoryItemRendererState state,
                          Rectangle2D dataArea,
                          CategoryPlot plot,
@@ -224,7 +224,7 @@ public class IntervalBarRenderer extends BarRenderer {
         if (orientation == PlotOrientation.HORIZONTAL) {
             // BAR Y
             rectX = java2dValue0;
-            rectY = calculateBarW0(getPlot(), orientation, dataArea, 
+            rectY = calculateBarW0(getPlot(), orientation, dataArea,
                     domainAxis, state, visibleRow, column);
             rectHeight = state.getBarWidth();
             rectWidth = Math.abs(java2dValue1 - java2dValue0);
@@ -232,7 +232,7 @@ public class IntervalBarRenderer extends BarRenderer {
         }
         else if (orientation == PlotOrientation.VERTICAL) {
             // BAR X
-            rectX = calculateBarW0(getPlot(), orientation, dataArea, 
+            rectX = calculateBarW0(getPlot(), orientation, dataArea,
                     domainAxis, state, visibleRow, column);
             rectY = java2dValue0;
             barBase = RectangleEdge.BOTTOM;
@@ -268,7 +268,7 @@ public class IntervalBarRenderer extends BarRenderer {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

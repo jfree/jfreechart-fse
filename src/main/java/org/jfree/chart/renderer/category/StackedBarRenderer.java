@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -201,7 +201,7 @@ public class StackedBarRenderer extends BarRenderer
      * @return The number of passes required by the renderer.
      */
     @Override
-	public int getPassCount() {
+    public int getPassCount() {
         return 3;
     }
 
@@ -214,7 +214,7 @@ public class StackedBarRenderer extends BarRenderer
      * @return The range (or <code>null</code> if the dataset is empty).
      */
     @Override
-	public Range findRangeBounds(CategoryDataset dataset) {
+    public Range findRangeBounds(CategoryDataset dataset) {
         if (dataset == null) {
             return null;
         }
@@ -235,7 +235,7 @@ public class StackedBarRenderer extends BarRenderer
      * @param state  the renderer state.
      */
     @Override
-	protected void calculateBarWidth(CategoryPlot plot,
+    protected void calculateBarWidth(CategoryPlot plot,
                                      Rectangle2D dataArea,
                                      int rendererIndex,
                                      CategoryItemRendererState state) {
@@ -287,7 +287,7 @@ public class StackedBarRenderer extends BarRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          CategoryItemRendererState state,
                          Rectangle2D dataArea,
                          CategoryPlot plot,
@@ -423,7 +423,7 @@ public class StackedBarRenderer extends BarRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

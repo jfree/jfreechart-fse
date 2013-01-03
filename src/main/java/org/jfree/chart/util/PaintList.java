@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------
@@ -36,7 +36,7 @@
  * -------
  * 13-Aug-2003 : Version 1 (DG);
  * 27-Jun-2005 : Fixed equals() method to handle GradientPaint (DG);
- * 
+ *
  */
 
 package org.jfree.chart.util;
@@ -87,7 +87,7 @@ public class PaintList extends AbstractObjectList<Paint> {
      * @return A boolean.
      */
     @Override
-	public boolean equals(final Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
@@ -112,7 +112,7 @@ public class PaintList extends AbstractObjectList<Paint> {
      * @return the hashcode
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return super.hashCode();
     }
 
@@ -140,7 +140,7 @@ public class PaintList extends AbstractObjectList<Paint> {
         }
 
     }
-    
+
     /**
      * Provides serialization support.
      *
@@ -159,7 +159,7 @@ public class PaintList extends AbstractObjectList<Paint> {
                 setPaint(index, SerialUtilities.readPaint(stream));
             }
         }
-        
+
     }
 
 }

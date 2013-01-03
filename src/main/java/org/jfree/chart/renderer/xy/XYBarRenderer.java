@@ -673,7 +673,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @return A state object.
      */
     @Override
-	public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
+    public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
             XYPlot plot, XYDataset dataset, PlotRenderingInfo info) {
 
         XYBarRendererState state = new XYBarRendererState(info);
@@ -695,7 +695,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @return A legend item for the series.
      */
     @Override
-	public LegendItem getLegendItem(int datasetIndex, int series) {
+    public LegendItem getLegendItem(int datasetIndex, int series) {
         XYPlot xyplot = getPlot();
         if (xyplot == null) {
             return null;
@@ -764,7 +764,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
                          PlotRenderingInfo info,
@@ -1145,7 +1145,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      *         <code>null</code> or empty).
      */
     @Override
-	public Range findDomainBounds(XYDataset dataset) {
+    public Range findDomainBounds(XYDataset dataset) {
         return findDomainBounds(dataset, true);
     }
 
@@ -1160,7 +1160,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      *         <code>null</code> or empty).
      */
     @Override
-	public Range findRangeBounds(XYDataset dataset) {
+    public Range findRangeBounds(XYDataset dataset) {
         return findRangeBounds(dataset, this.useYInterval);
     }
 
@@ -1172,7 +1172,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         XYBarRenderer result = (XYBarRenderer) super.clone();
         if (this.gradientPaintTransformer != null) {
             result.gradientPaintTransformer = ObjectUtilities.clone(this.gradientPaintTransformer);
@@ -1188,7 +1188,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

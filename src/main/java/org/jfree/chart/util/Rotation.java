@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------
@@ -37,13 +37,13 @@
  * 19-Aug-2003 : Version 1 (DG);
  * 20-Feb-2004 : Updated Javadocs (DG);
  * 17-Jun-2012 : Moved from JCommon to JFreeChart (DG);
- * 
+ *
  */
 
 package org.jfree.chart.util;
 
 /**
- * Represents a direction of rotation (<code>CLOCKWISE</code> or 
+ * Represents a direction of rotation (<code>CLOCKWISE</code> or
  * <code>ANTICLOCKWISE</code>).
  */
 public enum Rotation {
@@ -56,10 +56,10 @@ public enum Rotation {
 
     /** The name. */
     private String name;
-    
-    /** 
-     * The factor (-1.0 for <code>CLOCKWISE</code> and 1.0 for 
-     * <code>ANTICLOCKWISE</code>). 
+
+    /**
+     * The factor (-1.0 for <code>CLOCKWISE</code> and 1.0 for
+     * <code>ANTICLOCKWISE</code>).
      */
     private double factor;
 
@@ -80,14 +80,14 @@ public enum Rotation {
      * @return the string (never <code>null</code>).
      */
     @Override
-	public String toString() {
+    public String toString() {
         return this.name;
     }
 
     /**
-     * Returns the rotation factor, which is -1.0 for <code>CLOCKWISE</code> 
+     * Returns the rotation factor, which is -1.0 for <code>CLOCKWISE</code>
      * and 1.0 for <code>ANTICLOCKWISE</code>.
-     * 
+     *
      * @return the rotation factor.
      */
     public double getFactor() {

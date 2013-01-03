@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------------------
@@ -55,7 +55,7 @@
  * 01-Apr-2009 : Added override for findRangeBounds(), and fixed NPE in
  *               creating item entities (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.renderer.category;
@@ -107,10 +107,10 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
     /** The paint used to show the error indicator. */
     private transient Paint errorIndicatorPaint;
 
-    /** 
+    /**
      * The stroke used to draw the error indicators.  If null, the renderer
      * will use the itemOutlineStroke.
-     * 
+     *
      * @since 1.0.13
      */
     private transient Stroke errorIndicatorStroke;
@@ -201,7 +201,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
      *         <code>null</code> or empty).
      */
     @Override
-	public Range findRangeBounds(CategoryDataset dataset) {
+    public Range findRangeBounds(CategoryDataset dataset) {
         return findRangeBounds(dataset, true);
     }
 
@@ -221,7 +221,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
      * @param pass  the pass.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          CategoryItemRendererState state,
                          Rectangle2D dataArea,
                          CategoryPlot plot,
@@ -347,7 +347,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
                 shape = ShapeUtilities.createTranslatedShape(shape, x1, y1);
             }
             hotspot = shape;
-            
+
             if (getItemShapeFilled(row, column)) {
                 if (getUseFillPaint()) {
                     g2.setPaint(getItemFillPaint(row, column));
@@ -436,7 +436,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -462,7 +462,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int hash = super.hashCode();
         hash = HashUtilities.hashCode(hash, this.errorIndicatorPaint);
         return hash;

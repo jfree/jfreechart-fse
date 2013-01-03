@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
@@ -173,7 +173,7 @@ public class TimeSeriesURLGenerator implements XYURLGenerator, Serializable {
      * @return The generated URL.
      */
     @Override
-	public String generateURL(XYDataset dataset, int series, int item) {
+    public String generateURL(XYDataset dataset, int series, int item) {
         String result = this.prefix;
         boolean firstParameter = result.indexOf("?") == -1;
         Comparable seriesKey = dataset.getSeriesKey(series);
@@ -201,7 +201,7 @@ public class TimeSeriesURLGenerator implements XYURLGenerator, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

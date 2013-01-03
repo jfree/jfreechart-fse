@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
@@ -753,7 +753,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
      * @return <code>true</code>.
      */
     @Override
-	public boolean isClippedToWindow() {
+    public boolean isClippedToWindow() {
         return true;
     }
 
@@ -768,7 +768,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
      *     permitted).
      */
     @Override
-	public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
+    public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
             Rectangle2D view) {
 
         Rectangle2D arcRect = DialPlot.rectangleByRadius(frame,
@@ -856,7 +856,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
      * @see #angleToValue(double)
      */
     @Override
-	public double valueToAngle(double value) {
+    public double valueToAngle(double value) {
         double range = this.upperBound - this.lowerBound;
         double unit = this.extent / range;
         return this.startAngle + unit * (value - this.lowerBound);
@@ -872,7 +872,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
      * @see #valueToAngle(double)
      */
     @Override
-	public double angleToValue(double angle) {
+    public double angleToValue(double angle) {
         double range = this.upperBound - this.lowerBound;
         double unit = range / this.extent;
         return (angle - this.startAngle) * unit;
@@ -887,7 +887,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -955,7 +955,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 193;
         // lowerBound
         long temp = Double.doubleToLongBits(this.lowerBound);
@@ -996,7 +996,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
      * @throws CloneNotSupportedException if this instance is not cloneable.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

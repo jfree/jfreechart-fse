@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------
@@ -38,7 +38,7 @@
  * 27-Jan-2003 : Implemented Cloneable and Serializable, and added an equals()
  *               method (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.data;
@@ -111,7 +111,7 @@ public class KeyedObject implements Cloneable, PublicCloneable, Serializable {
      * @throws CloneNotSupportedException if there is a problem cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         KeyedObject clone = (KeyedObject) super.clone();
         if (this.object instanceof PublicCloneable) {
             PublicCloneable pc = (PublicCloneable) this.object;
@@ -128,7 +128,7 @@ public class KeyedObject implements Cloneable, PublicCloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
 
         if (obj == this) {
             return true;

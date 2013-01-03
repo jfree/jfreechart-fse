@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -102,7 +102,7 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      * @see #setGroup(DatasetGroup)
      */
     @Override
-	public DatasetGroup getGroup() {
+    public DatasetGroup getGroup() {
         return this.group;
     }
 
@@ -114,7 +114,7 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      * @see #getGroup()
      */
     @Override
-	public void setGroup(DatasetGroup group) {
+    public void setGroup(DatasetGroup group) {
         if (group == null) {
             throw new IllegalArgumentException("Null 'group' argument.");
         }
@@ -129,7 +129,7 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      * @see #removeChangeListener(DatasetChangeListener)
      */
     @Override
-	public void addChangeListener(DatasetChangeListener listener) {
+    public void addChangeListener(DatasetChangeListener listener) {
         this.listenerList.add(DatasetChangeListener.class, listener);
     }
 
@@ -142,7 +142,7 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      * @see #addChangeListener(DatasetChangeListener)
      */
     @Override
-	public void removeChangeListener(DatasetChangeListener listener) {
+    public void removeChangeListener(DatasetChangeListener listener) {
         this.listenerList.remove(DatasetChangeListener.class, listener);
     }
 
@@ -204,7 +204,7 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      *                                     cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         AbstractDataset clone = (AbstractDataset) super.clone();
         clone.listenerList = new EventListenerList();
         return clone;
@@ -255,7 +255,7 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      * @exception InvalidObjectException If the object cannot validate itself.
      */
     @Override
-	public void validateObject() throws InvalidObjectException {
+    public void validateObject() throws InvalidObjectException {
         fireDatasetChanged();
     }
 

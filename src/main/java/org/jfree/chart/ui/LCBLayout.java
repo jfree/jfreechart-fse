@@ -3,27 +3,27 @@
  * ========================================================================
  *
  * (C) Copyright 2000-2005, by Object Refinery Limited and Contributors.
- * 
+ *
  * Project Info:  http://www.jfree.org/jcommon/index.html
  *
- * This library is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Lesser General Public License as published by 
- * the Free Software Foundation; either version 2.1 of the License, or 
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public 
+ * This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, 
- * USA.  
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc. 
+ * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
  * in the United States and other countries.]
- * 
+ *
  * --------------
  * LCBLayout.java
  * --------------
@@ -58,7 +58,7 @@ public class LCBLayout implements LayoutManager, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -2531780832406163833L;
-    
+
     /** A constant for the number of columns in the layout. */
     private static final int COLUMNS = 3;
 
@@ -98,7 +98,7 @@ public class LCBLayout implements LayoutManager, Serializable {
      * @return the preferred size using this layout manager.
     */
     @Override
-	public Dimension preferredLayoutSize(final Container parent) {
+    public Dimension preferredLayoutSize(final Container parent) {
 
         synchronized (parent.getTreeLock()) {
             final Insets insets = parent.getInsets();
@@ -106,7 +106,7 @@ public class LCBLayout implements LayoutManager, Serializable {
             final int nrows = ncomponents / COLUMNS;
             for (int c = 0; c < COLUMNS; c++) {
                 for (int r = 0; r < nrows; r++) {
-                    final Component component 
+                    final Component component
                         = parent.getComponent(r * COLUMNS + c);
                     final Dimension d = component.getPreferredSize();
                     if (this.colWidth[c] < d.width) {
@@ -121,10 +121,10 @@ public class LCBLayout implements LayoutManager, Serializable {
             for (int r = 0; r < nrows; r++) {
                 totalHeight = totalHeight + this.rowHeight[r];
             }
-            final int totalWidth = this.colWidth[0] + this.labelGap 
+            final int totalWidth = this.colWidth[0] + this.labelGap
                 + this.colWidth[1] + this.buttonGap + this.colWidth[2];
             return new Dimension(
-                insets.left + insets.right + totalWidth + this.labelGap 
+                insets.left + insets.right + totalWidth + this.labelGap
                     + this.buttonGap,
                 insets.top + insets.bottom + totalHeight + this.vGap
             );
@@ -140,7 +140,7 @@ public class LCBLayout implements LayoutManager, Serializable {
      * @return the minimum size using this layout manager.
      */
     @Override
-	public Dimension minimumLayoutSize(final Container parent) {
+    public Dimension minimumLayoutSize(final Container parent) {
 
         synchronized (parent.getTreeLock()) {
             final Insets insets = parent.getInsets();
@@ -148,7 +148,7 @@ public class LCBLayout implements LayoutManager, Serializable {
             final int nrows = ncomponents / COLUMNS;
             for (int c = 0; c < COLUMNS; c++) {
                 for (int r = 0; r < nrows; r++) {
-                    final Component component 
+                    final Component component
                         = parent.getComponent(r * COLUMNS + c);
                     final Dimension d = component.getMinimumSize();
                     if (this.colWidth[c] < d.width) {
@@ -163,10 +163,10 @@ public class LCBLayout implements LayoutManager, Serializable {
             for (int r = 0; r < nrows; r++) {
                 totalHeight = totalHeight + this.rowHeight[r];
             }
-            final int totalWidth = this.colWidth[0] + this.labelGap 
+            final int totalWidth = this.colWidth[0] + this.labelGap
                 + this.colWidth[1] + this.buttonGap + this.colWidth[2];
             return new Dimension(
-                insets.left + insets.right + totalWidth + this.labelGap 
+                insets.left + insets.right + totalWidth + this.labelGap
                 + this.buttonGap,
                 insets.top + insets.bottom + totalHeight + this.vGap
             );
@@ -180,7 +180,7 @@ public class LCBLayout implements LayoutManager, Serializable {
      * @param parent  the parent.
      */
     @Override
-	public void layoutContainer(final Container parent) {
+    public void layoutContainer(final Container parent) {
 
         synchronized (parent.getTreeLock()) {
             final Insets insets = parent.getInsets();
@@ -188,7 +188,7 @@ public class LCBLayout implements LayoutManager, Serializable {
             final int nrows = ncomponents / COLUMNS;
             for (int c = 0; c < COLUMNS; c++) {
                 for (int r = 0; r < nrows; r++) {
-                    final Component component 
+                    final Component component
                         = parent.getComponent(r * COLUMNS + c);
                     final Dimension d = component.getPreferredSize();
                     if (this.colWidth[c] < d.width) {
@@ -203,11 +203,11 @@ public class LCBLayout implements LayoutManager, Serializable {
             for (int r = 0; r < nrows; r++) {
                 totalHeight = totalHeight + this.rowHeight[r];
             }
-            final int totalWidth = this.colWidth[0] + this.colWidth[1] 
+            final int totalWidth = this.colWidth[0] + this.colWidth[1]
                                                     + this.colWidth[2];
 
             // adjust the width of the second column to use up all of parent
-            final int available = parent.getWidth() - insets.left 
+            final int available = parent.getWidth() - insets.left
                 - insets.right - this.labelGap - this.buttonGap;
             this.colWidth[1] = this.colWidth[1] + (available - totalWidth);
 
@@ -222,7 +222,7 @@ public class LCBLayout implements LayoutManager, Serializable {
                         final Dimension d = component.getPreferredSize();
                         final int h = d.height;
                         final int adjust = (this.rowHeight[r] - h) / 2;
-                        parent.getComponent(i).setBounds(x, y + adjust, 
+                        parent.getComponent(i).setBounds(x, y + adjust,
                                 this.colWidth[c], h);
                     }
                     y = y + this.rowHeight[r] + this.vGap;
@@ -255,7 +255,7 @@ public class LCBLayout implements LayoutManager, Serializable {
      * @param comp  the component.
      */
     @Override
-	public void removeLayoutComponent(final Component comp) {
+    public void removeLayoutComponent(final Component comp) {
         // not used
     }
 
@@ -266,7 +266,7 @@ public class LCBLayout implements LayoutManager, Serializable {
      * @param comp  the component.
      */
     @Override
-	public void addLayoutComponent(final String name, final Component comp) {
+    public void addLayoutComponent(final String name, final Component comp) {
         // not used
     }
 

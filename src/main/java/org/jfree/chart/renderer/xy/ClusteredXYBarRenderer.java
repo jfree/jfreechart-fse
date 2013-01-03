@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
@@ -135,7 +135,7 @@ public class ClusteredXYBarRenderer extends XYBarRenderer
      * @return <code>2</code>.
      */
     @Override
-	public int getPassCount() {
+    public int getPassCount() {
         return 2;
     }
 
@@ -147,7 +147,7 @@ public class ClusteredXYBarRenderer extends XYBarRenderer
      * @return The bounds (possibly <code>null</code>).
      */
     @Override
-	public Range findDomainBounds(XYDataset dataset) {
+    public Range findDomainBounds(XYDataset dataset) {
         if (dataset == null) {
             return null;
         }
@@ -223,7 +223,7 @@ public class ClusteredXYBarRenderer extends XYBarRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
                          PlotRenderingInfo info,
@@ -357,7 +357,7 @@ public class ClusteredXYBarRenderer extends XYBarRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -379,7 +379,7 @@ public class ClusteredXYBarRenderer extends XYBarRenderer
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

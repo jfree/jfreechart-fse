@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
@@ -39,7 +39,7 @@
  * 07-Jan-2004 : Version 1 (DG);
  *
  */
- 
+
 package org.jfree.chart.text;
 
 import java.awt.FontMetrics;
@@ -55,10 +55,10 @@ public class G2TextMeasurer implements TextMeasurer {
 
     /** The graphics device. */
     private Graphics2D g2;
-    
+
     /**
      * Creates a new text measurer.
-     * 
+     *
      * @param g2  the graphics device.
      */
     public G2TextMeasurer(final Graphics2D g2) {
@@ -67,15 +67,15 @@ public class G2TextMeasurer implements TextMeasurer {
 
     /**
      * Returns the string width.
-     * 
+     *
      * @param text  the text.
      * @param start  the index of the first character to measure.
      * @param end  the index of the last character to measure.
-     * 
+     *
      * @return The string width.
      */
     @Override
-	public float getStringWidth(final String text, 
+    public float getStringWidth(final String text,
                                 final int start, final int end) {
         final FontMetrics fm = this.g2.getFontMetrics();
         final Rectangle2D bounds = TextUtilities.getTextBounds(
@@ -84,6 +84,6 @@ public class G2TextMeasurer implements TextMeasurer {
         final float result = (float) bounds.getWidth();
         return result;
     }
-    
+
 }
 

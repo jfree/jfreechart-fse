@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------
@@ -329,7 +329,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      *         drawItem() method.
      */
     @Override
-	public XYItemRendererState initialise(Graphics2D g2,
+    public XYItemRendererState initialise(Graphics2D g2,
                                           Rectangle2D dataArea,
                                           XYPlot plot,
                                           XYDataset data,
@@ -348,7 +348,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      * @return 2.
      */
     @Override
-	public int getPassCount() {
+    public int getPassCount() {
         return 2;
     }
 
@@ -365,7 +365,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      *         of {@link TableXYDataset}.
      */
     @Override
-	public Range findRangeBounds(XYDataset dataset) {
+    public Range findRangeBounds(XYDataset dataset) {
         if (dataset != null) {
             return DatasetUtilities.findStackedRangeBounds(
                 (TableXYDataset) dataset);
@@ -397,7 +397,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      *         is not an instance of {@link TableXYDataset}.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
                          PlotRenderingInfo info,
@@ -644,7 +644,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -669,7 +669,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      * @throws CloneNotSupportedException if the renderer cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

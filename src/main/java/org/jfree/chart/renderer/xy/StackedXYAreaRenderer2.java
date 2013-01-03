@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
@@ -165,7 +165,7 @@ public class StackedXYAreaRenderer2 extends XYAreaRenderer2
      *         <code>null</code> or empty).
      */
     @Override
-	public Range findRangeBounds(XYDataset dataset) {
+    public Range findRangeBounds(XYDataset dataset) {
         if (dataset == null) {
             return null;
         }
@@ -191,7 +191,7 @@ public class StackedXYAreaRenderer2 extends XYAreaRenderer2
      * @return 1.
      */
     @Override
-	public int getPassCount() {
+    public int getPassCount() {
         return 1;
     }
 
@@ -213,7 +213,7 @@ public class StackedXYAreaRenderer2 extends XYAreaRenderer2
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
                          PlotRenderingInfo info,
@@ -544,7 +544,7 @@ public class StackedXYAreaRenderer2 extends XYAreaRenderer2
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -566,7 +566,7 @@ public class StackedXYAreaRenderer2 extends XYAreaRenderer2
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

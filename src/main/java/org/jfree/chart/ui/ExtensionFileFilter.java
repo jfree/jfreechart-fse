@@ -21,9 +21,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
- * 
+ *
  * ------------------------
  * ExtensionFileFilter.java
  * ------------------------
@@ -40,7 +40,7 @@
  * 26-Jun-2002 : Updated imports (DG);
  * 14-Oct-2002 : Fixed errors reported by Checkstyle (DG);
  * 14-Jun-2012 : Moved from JCommon to JFreeChart (DG);
- * 
+ *
  */
 package org.jfree.chart.ui;
 
@@ -97,7 +97,7 @@ public class ExtensionFileFilter extends FileFilter {
      * @return a description of the filter.
      */
     @Override
-	public String getDescription() {
+    public String getDescription() {
         return this.description;
     }
 

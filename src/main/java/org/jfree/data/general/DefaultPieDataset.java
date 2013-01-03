@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
@@ -108,7 +108,7 @@ public class DefaultPieDataset extends AbstractDataset
      * @return The item count.
      */
     @Override
-	public int getItemCount() {
+    public int getItemCount() {
         return this.data.getItemCount();
     }
 
@@ -119,7 +119,7 @@ public class DefaultPieDataset extends AbstractDataset
      * @return The categories in the dataset.
      */
     @Override
-	public List<Comparable> getKeys() {
+    public List<Comparable> getKeys() {
         return Collections.unmodifiableList(this.data.getKeys());
     }
 
@@ -135,7 +135,7 @@ public class DefaultPieDataset extends AbstractDataset
      *     specified range.
      */
     @Override
-	public Comparable getKey(int item) {
+    public Comparable getKey(int item) {
         return this.data.getKey(item);
     }
 
@@ -150,7 +150,7 @@ public class DefaultPieDataset extends AbstractDataset
      *     <code>null</code>.
      */
     @Override
-	public int getIndex(Comparable key) {
+    public int getIndex(Comparable key) {
         return this.data.getIndex(key);
     }
 
@@ -162,7 +162,7 @@ public class DefaultPieDataset extends AbstractDataset
      * @return The value (possibly <code>null</code>).
      */
     @Override
-	public Number getValue(int item) {
+    public Number getValue(int item) {
 
         Number result = null;
         if (getItemCount() > item) {
@@ -182,7 +182,7 @@ public class DefaultPieDataset extends AbstractDataset
      * @throws UnknownKeyException if the key is not recognised.
      */
     @Override
-	public Number getValue(Comparable key) {
+    public Number getValue(Comparable key) {
         if (key == null) {
             throw new IllegalArgumentException("Null 'key' argument.");
         }
@@ -314,7 +314,7 @@ public class DefaultPieDataset extends AbstractDataset
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -358,7 +358,7 @@ public class DefaultPieDataset extends AbstractDataset
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return this.data.hashCode();
     }
 
@@ -371,7 +371,7 @@ public class DefaultPieDataset extends AbstractDataset
      *         exception, but subclasses (if any) might.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         DefaultPieDataset clone = (DefaultPieDataset) super.clone();
         clone.data = (DefaultKeyedValues) this.data.clone();
         return clone;

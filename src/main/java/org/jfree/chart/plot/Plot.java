@@ -900,7 +900,7 @@ public abstract class Plot implements AxisChangeListener,
      * @return The legend items for the plot (possibly <code>null</code>).
      */
     @Override
-	public LegendItemCollection getLegendItems() {
+    public LegendItemCollection getLegendItems() {
         return null;
     }
 
@@ -1212,7 +1212,7 @@ public abstract class Plot implements AxisChangeListener,
      * @since 1.0.14
      */
     @Override
-	public void annotationChanged(AnnotationChangeEvent event) {
+    public void annotationChanged(AnnotationChangeEvent event) {
         fireChangeEvent();
     }
 
@@ -1222,7 +1222,7 @@ public abstract class Plot implements AxisChangeListener,
      * @param event  information about the event (not used here).
      */
     @Override
-	public void axisChanged(AxisChangeEvent event) {
+    public void axisChanged(AxisChangeEvent event) {
         fireChangeEvent();
     }
 
@@ -1235,7 +1235,7 @@ public abstract class Plot implements AxisChangeListener,
      * @param event  information about the event (not used here).
      */
     @Override
-	public void datasetChanged(DatasetChangeEvent event) {
+    public void datasetChanged(DatasetChangeEvent event) {
         PlotChangeEvent newEvent = new PlotChangeEvent(this);
         newEvent.setType(ChartChangeEventType.DATASET_UPDATED);
         notifyListeners(newEvent);
@@ -1250,7 +1250,7 @@ public abstract class Plot implements AxisChangeListener,
      * @since 1.0.3
      */
     @Override
-	public void markerChanged(MarkerChangeEvent event) {
+    public void markerChanged(MarkerChangeEvent event) {
         fireChangeEvent();
     }
 
@@ -1310,7 +1310,7 @@ public abstract class Plot implements AxisChangeListener,
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -1379,7 +1379,7 @@ public abstract class Plot implements AxisChangeListener,
      *         support cloning.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
 
         Plot clone = (Plot) super.clone();
         // private Plot parent <-- don't clone the parent plot, but take care

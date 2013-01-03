@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------------------
@@ -223,7 +223,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @see #getCategoryCount()
      */
     @Override
-	public int getSeriesCount() {
+    public int getSeriesCount() {
         int result = 0;
         if (this.startData != null) {
             result = this.startData.length;
@@ -262,7 +262,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @see #getSeriesIndex(Comparable)
      */
     @Override
-	public Comparable getSeriesKey(int series) {
+    public Comparable getSeriesKey(int series) {
         if ((series >= getSeriesCount()) || (series < 0)) {
             throw new IllegalArgumentException("No such series : " + series);
         }
@@ -316,7 +316,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @see #getRowKeys()
      */
     @Override
-	public List<Comparable> getColumnKeys() {
+    public List<Comparable> getColumnKeys() {
         // the CategoryDataset interface expects a list of categories, but
         // we've stored them in an array...
         if (this.categoryKeys == null) {
@@ -370,7 +370,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @see #getEndValue(Comparable, Comparable)
      */
     @Override
-	public Number getValue(Comparable series, Comparable category) {
+    public Number getValue(Comparable series, Comparable category) {
         int seriesIndex = getSeriesIndex(series);
         if (seriesIndex < 0) {
             throw new UnknownKeyException("Unknown 'series' key.");
@@ -396,7 +396,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @see #getEndValue(int, int)
      */
     @Override
-	public Number getValue(int series, int category) {
+    public Number getValue(int series, int category) {
         return getEndValue(series, category);
     }
 
@@ -412,7 +412,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @see #getStartValue(int, int)
      */
     @Override
-	public Number getStartValue(Comparable series, Comparable category) {
+    public Number getStartValue(Comparable series, Comparable category) {
         int seriesIndex = getSeriesIndex(series);
         if (seriesIndex < 0) {
             throw new UnknownKeyException("Unknown 'series' key.");
@@ -436,7 +436,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @see #getStartValue(Comparable, Comparable)
      */
     @Override
-	public Number getStartValue(int series, int category) {
+    public Number getStartValue(int series, int category) {
 
         // check arguments...
         if ((series < 0) || (series >= getSeriesCount())) {
@@ -467,7 +467,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @see #getEndValue(int, int)
      */
     @Override
-	public Number getEndValue(Comparable series, Comparable category) {
+    public Number getEndValue(Comparable series, Comparable category) {
         int seriesIndex = getSeriesIndex(series);
         if (seriesIndex < 0) {
             throw new UnknownKeyException("Unknown 'series' key.");
@@ -490,7 +490,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @see #getEndValue(Comparable, Comparable)
      */
     @Override
-	public Number getEndValue(int series, int category) {
+    public Number getEndValue(int series, int category) {
         if ((series < 0) || (series >= getSeriesCount())) {
             throw new IllegalArgumentException(
                 "DefaultIntervalCategoryDataset.getValue(): "
@@ -621,7 +621,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @see #getRowKey(int)
      */
     @Override
-	public Comparable getColumnKey(int column) {
+    public Comparable getColumnKey(int column) {
         return this.categoryKeys[column];
     }
 
@@ -635,7 +635,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @see #getCategoryIndex(Comparable)
      */
     @Override
-	public int getColumnIndex(Comparable columnKey) {
+    public int getColumnIndex(Comparable columnKey) {
         if (columnKey == null) {
             throw new IllegalArgumentException("Null 'columnKey' argument.");
         }
@@ -652,7 +652,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @see #getSeriesIndex(Comparable)
      */
     @Override
-	public int getRowIndex(Comparable rowKey) {
+    public int getRowIndex(Comparable rowKey) {
         return getSeriesIndex(rowKey);
     }
 
@@ -665,7 +665,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @see #getColumnKeys()
      */
     @Override
-	public List<Comparable> getRowKeys() {
+    public List<Comparable> getRowKeys() {
         // the CategoryDataset interface expects a list of series, but
         // we've stored them in an array...
         if (this.seriesKeys == null) {
@@ -686,7 +686,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @see #getColumnKey(int)
      */
     @Override
-	public Comparable getRowKey(int row) {
+    public Comparable getRowKey(int row) {
         if ((row >= getRowCount()) || (row < 0)) {
             throw new IllegalArgumentException(
                     "The 'row' argument is out of bounds.");
@@ -704,7 +704,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @see #getRowCount()
      */
     @Override
-	public int getColumnCount() {
+    public int getColumnCount() {
         return this.categoryKeys.length;
     }
 
@@ -717,7 +717,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @see #getColumnCount()
      */
     @Override
-	public int getRowCount() {
+    public int getRowCount() {
         return this.seriesKeys.length;
     }
 
@@ -729,7 +729,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -763,7 +763,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
      *         dataset.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         DefaultIntervalCategoryDataset clone
                 = (DefaultIntervalCategoryDataset) super.clone();
         clone.categoryKeys = this.categoryKeys.clone();

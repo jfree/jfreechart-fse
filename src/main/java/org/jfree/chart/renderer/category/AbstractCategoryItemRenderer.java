@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------------
@@ -104,7 +104,7 @@
  * 01-Apr-2009 : Added new addEntity() method (DG);
  * 09-Feb-2010 : Fixed bug 2947660 (DG);
  * 15-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.renderer.category;
@@ -235,7 +235,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @return The pass count.
      */
     @Override
-	public int getPassCount() {
+    public int getPassCount() {
         return 1;
     }
 
@@ -249,7 +249,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @see #setPlot(CategoryPlot)
      */
     @Override
-	public CategoryPlot getPlot() {
+    public CategoryPlot getPlot() {
         return this.plot;
     }
 
@@ -263,7 +263,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @see #getPlot()
      */
     @Override
-	public void setPlot(CategoryPlot plot) {
+    public void setPlot(CategoryPlot plot) {
         ParamChecks.nullNotPermitted(plot, "plot");
         this.plot = plot;
     }
@@ -282,7 +282,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @return The generator (possibly <code>null</code>).
      */
     @Override
-	public CategoryItemLabelGenerator getItemLabelGenerator(int row,
+    public CategoryItemLabelGenerator getItemLabelGenerator(int row,
             int column) {
         return getSeriesItemLabelGenerator(row);
     }
@@ -362,7 +362,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public void setDefaultItemLabelGenerator(
-	        CategoryItemLabelGenerator generator) {
+            CategoryItemLabelGenerator generator) {
         setDefaultItemLabelGenerator(generator, true);
     }
 
@@ -376,7 +376,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public void setDefaultItemLabelGenerator(
-	        CategoryItemLabelGenerator generator, boolean notify) {
+            CategoryItemLabelGenerator generator, boolean notify) {
         this.defaultItemLabelGenerator = generator;
         if (notify) {
             fireChangeEvent();
@@ -490,7 +490,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public void setDefaultToolTipGenerator(CategoryToolTipGenerator generator,
-	        boolean notify) {
+            boolean notify) {
         this.defaultToolTipGenerator = generator;
         if (notify) {
             fireChangeEvent();
@@ -601,8 +601,8 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @see #getDefaultItemURLGenerator()
      */
     @Override
-    public void setDefaultItemURLGenerator(CategoryURLGenerator generator, 
-	        boolean notify) {
+    public void setDefaultItemURLGenerator(CategoryURLGenerator generator,
+            boolean notify) {
         this.defaultItemURLGenerator = generator;
         if (notify) {
             fireChangeEvent();
@@ -661,7 +661,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @return The renderer state.
      */
     @Override
-    public CategoryItemRendererState initialise(Graphics2D g2, 
+    public CategoryItemRendererState initialise(Graphics2D g2,
             Rectangle2D dataArea, CategoryPlot plot, int rendererIndex,
             PlotRenderingInfo info) {
 
@@ -855,7 +855,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @see #drawDomainGridline(Graphics2D, CategoryPlot, Rectangle2D, double)
      */
     @Override
-    public void drawRangeGridline(Graphics2D g2, CategoryPlot plot, 
+    public void drawRangeGridline(Graphics2D g2, CategoryPlot plot,
             ValueAxis axis, Rectangle2D dataArea, double value) {
 
         Range range = axis.getRange();
@@ -948,7 +948,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      *     Rectangle2D)
      */
     @Override
-    public void drawDomainMarker(Graphics2D g2, CategoryPlot plot, 
+    public void drawDomainMarker(Graphics2D g2, CategoryPlot plot,
             CategoryAxis axis, CategoryMarker marker, Rectangle2D dataArea) {
 
         Comparable category = marker.getKey();
@@ -1032,7 +1032,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      *     CategoryMarker, Rectangle2D)
      */
     @Override
-    public void drawRangeMarker(Graphics2D g2, CategoryPlot plot, 
+    public void drawRangeMarker(Graphics2D g2, CategoryPlot plot,
             ValueAxis axis, Marker marker, Rectangle2D dataArea) {
 
         if (marker instanceof ValueMarker) {
@@ -1386,7 +1386,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @return The drawing supplier (possibly <code>null</code>).
      */
     @Override
-	public DrawingSupplier getDrawingSupplier() {
+    public DrawingSupplier getDrawingSupplier() {
         DrawingSupplier result = null;
         CategoryPlot cp = getPlot();
         if (cp != null) {

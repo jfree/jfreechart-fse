@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
@@ -106,7 +106,7 @@ public class LibraryTableModel extends AbstractTableModel {
      * @return the number of rows.
      */
     @Override
-	public int getRowCount() {
+    public int getRowCount() {
         return this.libraries.length;
     }
 
@@ -117,7 +117,7 @@ public class LibraryTableModel extends AbstractTableModel {
      * @return the number of columns in the table model.
      */
     @Override
-	public int getColumnCount() {
+    public int getColumnCount() {
         return 4;
     }
 
@@ -129,7 +129,7 @@ public class LibraryTableModel extends AbstractTableModel {
      * @return the name of the specified column.
      */
     @Override
-	public String getColumnName(final int column) {
+    public String getColumnName(final int column) {
 
         String result = null;
 
@@ -162,7 +162,7 @@ public class LibraryTableModel extends AbstractTableModel {
      * @return the value.
      */
     @Override
-	public Object getValueAt(final int row, final int column) {
+    public Object getValueAt(final int row, final int column) {
 
         Object result = null;
         final Library library = this.libraries[row];

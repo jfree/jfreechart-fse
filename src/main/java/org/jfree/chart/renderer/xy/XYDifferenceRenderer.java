@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -338,7 +338,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * @return A state object.
      */
     @Override
-	public XYItemRendererState initialise(Graphics2D g2,
+    public XYItemRendererState initialise(Graphics2D g2,
                                           Rectangle2D dataArea,
                                           XYPlot plot,
                                           XYDataset data,
@@ -358,7 +358,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * @return The number of passes required by the renderer.
      */
     @Override
-	public int getPassCount() {
+    public int getPassCount() {
         return 2;
     }
 
@@ -381,7 +381,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
                          PlotRenderingInfo info,
@@ -703,18 +703,18 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
                                 : l_subtrahendCurY);
                     }
                 }
-                
+
                 // compute slope components
                 double l_slopeA = l_numeratorA / l_denominator;
                 double l_slopeB = l_numeratorB / l_denominator;
-                
+
                 // test if both grahphs have a vertical rise at the same x-value
                 boolean b_vertical = (l_x1 == l_x2) && (l_x3 == l_x4) && (l_x2 == l_x4);
-                
+
                 // check if the line segments intersect
                 if (((0 < l_slopeA) && (l_slopeA <= 1) && (0 < l_slopeB)
                         && (l_slopeB <= 1))|| b_vertical) {
-                    
+
                     // compute the point of intersection
                     double l_xi;
                     double l_yi;
@@ -725,7 +725,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
                     }
                     else{
                         l_xi = l_x1 + (l_slopeA * (l_x2 - l_x1));
-                        l_yi = l_y1 + (l_slopeA * (l_y2 - l_y1));                            
+                        l_yi = l_y1 + (l_slopeA * (l_y2 - l_y1));
                     }
 
                     l_intersectX            = l_xi;
@@ -1131,7 +1131,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * @return A legend item for the series.
      */
     @Override
-	public LegendItem getLegendItem(int datasetIndex, int series) {
+    public LegendItem getLegendItem(int datasetIndex, int series) {
         LegendItem result = null;
         XYPlot p = getPlot();
         if (p != null) {
@@ -1183,7 +1183,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -1220,7 +1220,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         XYDifferenceRenderer clone = (XYDifferenceRenderer) super.clone();
         clone.legendLine = ShapeUtilities.clone(this.legendLine);
         return clone;

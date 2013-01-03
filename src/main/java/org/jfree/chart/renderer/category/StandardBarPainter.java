@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -83,7 +83,7 @@ public class StandardBarPainter implements BarPainter, Serializable {
      *              bar.
      */
     @Override
-	public void paintBar(Graphics2D g2, BarRenderer renderer, int row,
+    public void paintBar(Graphics2D g2, BarRenderer renderer, int row,
             int column, RectangularShape bar, RectangleEdge base) {
 
         Paint itemPaint = renderer.getItemPaint(row, column);
@@ -121,7 +121,7 @@ public class StandardBarPainter implements BarPainter, Serializable {
      * @param pegShadow  peg the shadow to the base of the bar?
      */
     @Override
-	public void paintBarShadow(Graphics2D g2, BarRenderer renderer, int row,
+    public void paintBarShadow(Graphics2D g2, BarRenderer renderer, int row,
             int column, RectangularShape bar, RectangleEdge base,
             boolean pegShadow) {
 
@@ -202,7 +202,7 @@ public class StandardBarPainter implements BarPainter, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -218,7 +218,7 @@ public class StandardBarPainter implements BarPainter, Serializable {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int hash = 37;
         // no fields to compute...
         return hash;

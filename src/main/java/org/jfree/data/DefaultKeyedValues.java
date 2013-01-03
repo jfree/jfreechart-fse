@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -109,7 +109,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @return The item count.
      */
     @Override
-	public int getItemCount() {
+    public int getItemCount() {
         return this.indexMap.size();
     }
 
@@ -123,7 +123,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @throws IndexOutOfBoundsException if <code>item</code> is out of bounds.
      */
     @Override
-	public Number getValue(int item) {
+    public Number getValue(int item) {
         return this.values.get(item);
     }
 
@@ -137,7 +137,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @throws IndexOutOfBoundsException if <code>item</code> is out of bounds.
      */
     @Override
-	public Comparable getKey(int index) {
+    public Comparable getKey(int index) {
         return this.keys.get(index);
     }
 
@@ -152,7 +152,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      *     <code>null</code>.
      */
     @Override
-	public int getIndex(Comparable key) {
+    public int getIndex(Comparable key) {
         if (key == null) {
             throw new IllegalArgumentException("Null 'key' argument.");
         }
@@ -169,7 +169,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @return The keys (never <code>null</code>).
      */
     @Override
-	public List<Comparable> getKeys() {
+    public List<Comparable> getKeys() {
         return new ArrayList<Comparable>(this.keys);
     }
 
@@ -185,7 +185,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @see #getValue(int)
      */
     @Override
-	public Number getValue(Comparable key) {
+    public Number getValue(Comparable key) {
         int index = getIndex(key);
         if (index < 0) {
             throw new UnknownKeyException("Key not found: " + key);
@@ -412,7 +412,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -455,7 +455,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return (this.keys != null ? this.keys.hashCode() : 0);
     }
 
@@ -468,7 +468,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
      *         exception, but subclasses might.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         DefaultKeyedValues clone = (DefaultKeyedValues) super.clone();
         clone.keys = ObjectUtilities.clone(this.keys);
         clone.values = ObjectUtilities.clone(this.values);

@@ -21,9 +21,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
- * 
+ *
  * -------------
  * RectangleEdge
  * -------------
@@ -36,7 +36,7 @@
  * --------
  * 14-Jul-2003 (DG);
  * 15-Jun-2012 : Moved from JCommon to JFreeChart (DG);
- * 
+ *
  */
 
 package org.jfree.chart.ui;
@@ -78,39 +78,39 @@ public enum RectangleEdge {
      * @return The string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return this.name;
     }
 
     /**
-     * Returns <code>true</code> if the edge is <code>TOP</code> or 
+     * Returns <code>true</code> if the edge is <code>TOP</code> or
      * <code>BOTTOM</code>, and <code>false</code> otherwise.
-     * 
+     *
      * @param edge  the edge.
-     * 
+     *
      * @return A boolean.
      */
     public static boolean isTopOrBottom(final RectangleEdge edge) {
-        return (edge == RectangleEdge.TOP || edge == RectangleEdge.BOTTOM);    
+        return (edge == RectangleEdge.TOP || edge == RectangleEdge.BOTTOM);
     }
-    
+
     /**
-     * Returns <code>true</code> if the edge is <code>LEFT</code> or 
+     * Returns <code>true</code> if the edge is <code>LEFT</code> or
      * <code>RIGHT</code>, and <code>false</code> otherwise.
-     * 
+     *
      * @param edge  the edge.
-     * 
+     *
      * @return A boolean.
      */
     public static boolean isLeftOrRight(final RectangleEdge edge) {
-        return (edge == RectangleEdge.LEFT || edge == RectangleEdge.RIGHT);    
+        return (edge == RectangleEdge.LEFT || edge == RectangleEdge.RIGHT);
     }
 
     /**
      * Returns the opposite edge.
-     * 
+     *
      * @param edge  an edge.
-     * 
+     *
      * @return The opposite edge.
      */
     public static RectangleEdge opposite(final RectangleEdge edge) {
@@ -129,16 +129,16 @@ public enum RectangleEdge {
         }
         return result;
     }
-    
+
     /**
      * Returns the x or y coordinate of the specified edge.
-     * 
+     *
      * @param rectangle  the rectangle.
      * @param edge  the edge.
-     * 
+     *
      * @return The coordinate.
      */
-    public static double coordinate(final Rectangle2D rectangle, 
+    public static double coordinate(final Rectangle2D rectangle,
                                     final RectangleEdge edge) {
         double result = 0.0;
         if (edge == RectangleEdge.TOP) {

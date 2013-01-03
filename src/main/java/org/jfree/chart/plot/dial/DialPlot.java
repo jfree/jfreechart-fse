@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------
@@ -532,7 +532,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      *     permitted).
      */
     @Override
-	public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
             PlotState parentState, PlotRenderingInfo info) {
 
         Shape origClip = g2.getClip();
@@ -727,7 +727,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      * @param event  the event.
      */
     @Override
-	public void dialLayerChanged(DialLayerChangeEvent event) {
+    public void dialLayerChanged(DialLayerChangeEvent event) {
         fireChangeEvent();
     }
 
@@ -741,7 +741,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -785,7 +785,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      * @return The hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 193;
         result = 37 * result + ObjectUtilities.hashCode(this.background);
         result = 37 * result + ObjectUtilities.hashCode(this.cap);
@@ -807,7 +807,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      * @return <code>"DialPlot"</code>
      */
     @Override
-	public String getPlotType() {
+    public String getPlotType() {
         return "DialPlot";
     }
 
