@@ -4486,31 +4486,27 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         for (XYDataset d : mappedDatasets) {
             if (d != null) {
                 XYItemRenderer r = getRendererForDataset(d);
-                if (isDomainAxis) {
-                    if (r != null) {
+                if (r != null) {
+                    if (isDomainAxis) {
                         result = Range.combine(result, r.findDomainBounds(d));
                     } else {
-                        result = Range.combine(result,
-                                DatasetUtilities.findDomainBounds(d));
-                    }
-                } else {
-                    if (r != null) {
                         result = Range.combine(result, r.findRangeBounds(d));
-                    } else {
-                        result = Range.combine(result,
-                                DatasetUtilities.findRangeBounds(d));
                     }
-                }
-                // FIXME: the XYItemRenderer interface doesn't specify the
-                // getAnnotations() method but it should
-                if (r instanceof AbstractXYItemRenderer) {
-                    AbstractXYItemRenderer rr = (AbstractXYItemRenderer) r;
-                    Collection<XYAnnotation> c = rr.getAnnotations();
+                    Collection<XYAnnotation> c = r.getAnnotations();
                     for (XYAnnotation a : c) {
                         if (a instanceof XYAnnotationBoundsInfo) {
                             includedAnnotations.add(a);
                         }
                     }
+                } else { // renderer is null
+                    if (isDomainAxis) {
+                        result = Range.combine(result,
+                                DatasetUtilities.findDomainBounds(d));
+                    } else {
+                        result = Range.combine(result,
+                                DatasetUtilities.findRangeBounds(d));
+                    }
+
                 }
             }
         }

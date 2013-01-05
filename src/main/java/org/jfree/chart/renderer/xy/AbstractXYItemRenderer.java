@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
@@ -119,7 +119,7 @@
  *               annotations (DG);
  * 06-Oct-2011 : Add utility methods to work with 1.4 API in GeneralPath (MK);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.renderer.xy;
@@ -397,7 +397,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param generator  the generator (<code>null</code> permitted).
      */
     @Override
-    public void setDefaultItemLabelGenerator(XYItemLabelGenerator generator, 
+    public void setDefaultItemLabelGenerator(XYItemLabelGenerator generator,
             boolean notify) {
         this.baseItemLabelGenerator = generator;
         if (notify) {
@@ -447,7 +447,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param generator  the generator (<code>null</code> permitted).
      */
     @Override
-    public void setSeriesToolTipGenerator(int series, 
+    public void setSeriesToolTipGenerator(int series,
             XYToolTipGenerator generator) {
         setSeriesToolTipGenerator(series, generator, true);
     }
@@ -502,7 +502,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @see #getBaseToolTipGenerator()
      */
     @Override
-    public void setDefaultToolTipGenerator(XYToolTipGenerator generator, 
+    public void setDefaultToolTipGenerator(XYToolTipGenerator generator,
             boolean notify) {
         this.baseToolTipGenerator = generator;
         if (notify) {
@@ -643,9 +643,10 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @return A collection of annotations (possibly empty but never
      *     <code>null</code>).
-     * 
+     *
      * @since 1.0.13
      */
+    @Override
     public Collection<XYAnnotation> getAnnotations() {
         List<XYAnnotation> result = new java.util.ArrayList<XYAnnotation>(
                 this.foregroundAnnotations);
@@ -1152,7 +1153,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param dataArea  the axis data area.
      */
     @Override
-    public void drawDomainMarker(Graphics2D g2, XYPlot plot, 
+    public void drawDomainMarker(Graphics2D g2, XYPlot plot,
             ValueAxis domainAxis, Marker marker, Rectangle2D dataArea) {
 
         if (marker instanceof ValueMarker) {
@@ -1857,7 +1858,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * Utility method delegating to {@link GeneralPath#moveTo} taking double as
      * parameters.
      *
-     * @param hotspot  the region under construction (<code>null</code> not 
+     * @param hotspot  the region under construction (<code>null</code> not
      *           permitted);
      * @param x  the x coordinate;
      * @param y  the y coordinate;
@@ -1872,7 +1873,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * Utility method delegating to {@link GeneralPath#lineTo} taking double as
      * parameters.
      *
-     * @param hotspot  the region under construction (<code>null</code> not 
+     * @param hotspot  the region under construction (<code>null</code> not
      *           permitted);
      * @param x  the x coordinate;
      * @param y  the y coordinate;
