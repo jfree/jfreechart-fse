@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -1464,7 +1464,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
         }
         CategoryAxis axis;
         List<Integer> axisIndices = this.datasetToDomainAxesMap.get(
-                new Integer(index));
+                Integer.valueOf(index));
         if (axisIndices != null) {
             // the first axis in the list is used for data <--> Java2D
             Integer axisIndex = axisIndices.get(0);
@@ -1527,7 +1527,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
         }
         ValueAxis axis;
         List<Integer> axisIndices = this.datasetToRangeAxesMap.get(
-                new Integer(index));
+                Integer.valueOf(index));
         if (axisIndices != null) {
             // the first axis in the list is used for data <--> Java2D
             Integer axisIndex = axisIndices.get(0);
@@ -4286,7 +4286,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
         List<CategoryDataset> result = new ArrayList<CategoryDataset>();
         for (int i = 0; i < this.datasets.size(); i++) {
             List<Integer> mappedAxes = this.datasetToDomainAxesMap.get(
-                    new Integer(i));
+                    Integer.valueOf(i));
             CategoryDataset dataset = this.datasets.get(i);
             if (mappedAxes == null) {
                 if (key.equals(ZERO)) {
@@ -4319,7 +4319,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
         List<CategoryDataset> result = new ArrayList<CategoryDataset>();
         for (int i = 0; i < this.datasets.size(); i++) {
             List<Integer> mappedAxes = this.datasetToRangeAxesMap.get(
-                    new Integer(i));
+                    Integer.valueOf(i));
             if (mappedAxes == null) {
                 if (key.equals(ZERO)) {
                     result.add(this.datasets.get(i));
