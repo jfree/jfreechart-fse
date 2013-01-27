@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------------
  * CombinedRangeXYPlot.java
  * ------------------------
- * (C) Copyright 2001-2012, by Bill Kelemen and Contributors.
+ * (C) Copyright 2001-2013, by Bill Kelemen and Contributors.
  *
  * Original Author:  Bill Kelemen;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -103,7 +103,9 @@ package org.jfree.chart.plot;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.LegendItemCollection;
@@ -521,17 +523,24 @@ public class CombinedRangeXYPlot extends XYPlot
     public void panDomainAxes(double panRange, PlotRenderingInfo info,
             Point2D source) {
 
-        XYPlot subplot = findSubplot(info, source);
-        if (subplot != null) {
-            PlotRenderingInfo subplotInfo = info.getSubplotInfo(
-                    info.getSubplotIndex(source));
-            if (subplotInfo == null) {
-                return;
+        // if the isDomainPannable flag is set for the combined plot, we should
+        // pan for all the subplots, otherwise just the one under the mouse
+        // pointer
+        List<XYPlot> plotsToPan = new ArrayList<XYPlot>();
+        if (isDomainPannable()) {
+            plotsToPan.addAll(this.subplots);
+        } else {
+            plotsToPan.add(findSubplot(info, source));
+        }
+        for (XYPlot subplot : plotsToPan) {
+            if (subplot == null) {
+                continue;
             }
-
-            for (int i = 0; i < subplot.getDomainAxisCount(); i++) {
-                ValueAxis domainAxis = subplot.getDomainAxis(i);
-                domainAxis.pan(panRange);
+            if (isDomainPannable() || subplot.isDomainPannable()) {
+                for (int i = 0; i < subplot.getDomainAxisCount(); i++) {
+                    ValueAxis domainAxis = subplot.getDomainAxis(i);
+                    domainAxis.pan(panRange);
+                }
             }
         }
     }
