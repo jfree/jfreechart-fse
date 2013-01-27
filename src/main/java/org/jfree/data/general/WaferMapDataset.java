@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -188,7 +188,7 @@ public class WaferMapDataset extends AbstractDataset {
      * @return The data value.
      */
     public Number getChipValue(int chipx, int chipy) {
-        return getChipValue(new Integer(chipx), new Integer(chipy));
+        return getChipValue(Integer.valueOf(chipx), Integer.valueOf(chipy));
     }
 
     /**
