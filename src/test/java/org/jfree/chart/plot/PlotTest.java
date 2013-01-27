@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------
  * PlotTests.java
  * --------------
- * (C) Copyright 2005-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -52,10 +52,13 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GradientPaint;
+import java.awt.Image;
 import java.awt.Paint;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.Stroke;
+import java.net.URL;
+import javax.swing.ImageIcon;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -65,9 +68,20 @@ import static org.junit.Assert.assertFalse;
  */
 public class PlotTest  {
 
+    private Image testImage;
 
-
-
+    private Image getTestImage() {
+        if (testImage == null) {
+            URL imageURL = getClass().getClassLoader().getResource(
+                    "org/jfree/chart/gorilla.jpg");
+            if (imageURL != null) {
+                ImageIcon temp = new ImageIcon(imageURL);
+                // use ImageIcon because it waits for the image to load...
+                testImage = temp.getImage();
+            }
+        }
+        return testImage;
+    }
 
     /**
      * Check that the equals() method can distinguish all fields (note that
@@ -136,9 +150,9 @@ public class PlotTest  {
         assertEquals(plot1, plot2);
 
         // backgroundImage
-        plot1.setBackgroundImage(JFreeChart.INFO.getLogo());
+        plot1.setBackgroundImage(getTestImage());
         assertFalse(plot1.equals(plot2));
-        plot2.setBackgroundImage(JFreeChart.INFO.getLogo());
+        plot2.setBackgroundImage(getTestImage());
         assertEquals(plot1, plot2);
 
         // backgroundImageAlignment

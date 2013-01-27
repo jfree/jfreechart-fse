@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * JFreeChartTests.java
  * --------------------
- * (C) Copyright 2002-2012, by Object Refinery Limited.
+ * (C) Copyright 2002-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -69,6 +69,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GradientPaint;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -77,7 +78,9 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.net.URL;
 import java.util.List;
+import javax.swing.ImageIcon;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -95,9 +98,20 @@ public class JFreeChartTest  implements ChartChangeListener {
     /** A pie chart. */
     private JFreeChart pieChart;
 
+    private Image testImage;
 
-
-
+    private Image getTestImage() {
+        if (testImage == null) {
+            URL imageURL = getClass().getClassLoader().getResource(
+                    "org/jfree/chart/gorilla.jpg");
+            if (imageURL != null) {
+                ImageIcon temp = new ImageIcon(imageURL);
+                // use ImageIcon because it waits for the image to load...
+                testImage = temp.getImage();
+            }
+        }
+        return testImage;
+    }
 
     /**
      * Common test setup.
@@ -189,9 +203,9 @@ public class JFreeChartTest  implements ChartChangeListener {
         assertEquals(chart1, chart2);
 
         // backgroundImage
-        chart1.setBackgroundImage(JFreeChart.INFO.getLogo());
+        chart1.setBackgroundImage(getTestImage());
         assertFalse(chart1.equals(chart2));
-        chart2.setBackgroundImage(JFreeChart.INFO.getLogo());
+        chart2.setBackgroundImage(getTestImage());
         assertEquals(chart1, chart2);
 
         // backgroundImageAlignment

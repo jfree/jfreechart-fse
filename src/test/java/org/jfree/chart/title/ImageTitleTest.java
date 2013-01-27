@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
  * ImageTitleTests.java
  * --------------------
- * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -46,8 +46,11 @@ import org.jfree.chart.ui.Size2D;
 import org.junit.Test;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URL;
+import javax.swing.ImageIcon;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -59,17 +62,28 @@ import static org.junit.Assert.assertSame;
  */
 public class ImageTitleTest  {
 
+    private Image testImage;
 
-
-
+    private Image getTestImage() {
+        if (testImage == null) {
+            URL imageURL = getClass().getClassLoader().getResource(
+                    "org/jfree/chart/gorilla.jpg");
+            if (imageURL != null) {
+                ImageIcon temp = new ImageIcon(imageURL);
+                // use ImageIcon because it waits for the image to load...
+                testImage = temp.getImage();
+            }
+        }
+        return testImage;
+    }
 
     /**
      * Check that the equals() method distinguishes all fields.
      */
     @Test
     public void testEquals() {
-        ImageTitle t1 = new ImageTitle(JFreeChart.INFO.getLogo());
-        ImageTitle t2 = new ImageTitle(JFreeChart.INFO.getLogo());
+        ImageTitle t1 = new ImageTitle(getTestImage());
+        ImageTitle t2 = new ImageTitle(getTestImage());
         assertEquals(t1, t2);
 
         t1.setImage(new BufferedImage(2, 1, BufferedImage.TYPE_INT_RGB));
@@ -85,8 +99,8 @@ public class ImageTitleTest  {
      */
     @Test
     public void testHashcode() {
-        ImageTitle t1 = new ImageTitle(JFreeChart.INFO.getLogo());
-        ImageTitle t2 = new ImageTitle(JFreeChart.INFO.getLogo());
+        ImageTitle t1 = new ImageTitle(getTestImage());
+        ImageTitle t2 = new ImageTitle(getTestImage());
         assertEquals(t1, t2);
         int h1 = t1.hashCode();
         int h2 = t2.hashCode();
@@ -98,7 +112,7 @@ public class ImageTitleTest  {
      */
     @Test
     public void testCloning() throws CloneNotSupportedException {
-        ImageTitle t1 = new ImageTitle(JFreeChart.INFO.getLogo());
+        ImageTitle t1 = new ImageTitle(getTestImage());
         ImageTitle t2 = (ImageTitle) t1.clone();
         assertNotSame(t1, t2);
         assertSame(t1.getClass(), t2.getClass());
@@ -120,7 +134,7 @@ public class ImageTitleTest  {
      */
     @Test
     public void testWidthAndHeight() {
-        ImageTitle t1 = new ImageTitle(JFreeChart.INFO.getLogo());
+        ImageTitle t1 = new ImageTitle(getTestImage());
         assertEquals(100, t1.getWidth(), EPSILON);
         assertEquals(100, t1.getHeight(), EPSILON);
     }
@@ -133,7 +147,7 @@ public class ImageTitleTest  {
         BufferedImage image = new BufferedImage(100, 100,
                 BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = image.createGraphics();
-        ImageTitle t = new ImageTitle(JFreeChart.INFO.getLogo());
+        ImageTitle t = new ImageTitle(getTestImage());
         Size2D s = t.arrange(g2);
         assertEquals(102.0, s.getWidth(), EPSILON);
         assertEquals(102.0, s.getHeight(), EPSILON);

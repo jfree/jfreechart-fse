@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
@@ -57,6 +57,8 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.net.URL;
+import javax.swing.ImageIcon;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -69,16 +71,27 @@ import static org.junit.Assert.assertTrue;
  */
 public class XYImageAnnotationTest  {
 
+    private Image testImage;
 
-
-
+    private Image getTestImage() {
+        if (testImage == null) {
+            URL imageURL = getClass().getClassLoader().getResource(
+                    "org/jfree/chart/gorilla.jpg");
+            if (imageURL != null) {
+                ImageIcon temp = new ImageIcon(imageURL);
+                // use ImageIcon because it waits for the image to load...
+                testImage = temp.getImage();
+            }
+        }
+        return testImage;
+    }
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
     @Test
     public void testEquals() {
-        Image image = JFreeChart.INFO.getLogo();
+        Image image = getTestImage();
         XYImageAnnotation a1 = new XYImageAnnotation(10.0, 20.0, image);
         XYImageAnnotation a2 = new XYImageAnnotation(10.0, 20.0, image);
         assertEquals(a1, a2);
@@ -94,7 +107,7 @@ public class XYImageAnnotationTest  {
      */
     @Test
     public void testHashCode() {
-        Image image = JFreeChart.INFO.getLogo();
+        Image image = getTestImage();
         XYImageAnnotation a1 = new XYImageAnnotation(10.0, 20.0, image);
         XYImageAnnotation a2 = new XYImageAnnotation(10.0, 20.0, image);
         assertEquals(a1, a2);
@@ -109,7 +122,7 @@ public class XYImageAnnotationTest  {
     @Test
     public void testCloning() throws CloneNotSupportedException {
         XYImageAnnotation a1 = new XYImageAnnotation(10.0, 20.0,
-                JFreeChart.INFO.getLogo());
+                getTestImage());
         XYImageAnnotation a2 = (XYImageAnnotation) a1.clone();
 
         assertNotSame(a1, a2);
@@ -123,7 +136,7 @@ public class XYImageAnnotationTest  {
     @Test
     public void testPublicCloneable() {
         XYImageAnnotation a1 = new XYImageAnnotation(10.0, 20.0,
-                JFreeChart.INFO.getLogo());
+                getTestImage());
         assertTrue(a1 instanceof PublicCloneable);
     }
 
@@ -134,7 +147,7 @@ public class XYImageAnnotationTest  {
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
         XYImageAnnotation a1 = new XYImageAnnotation(10.0, 20.0,
-                JFreeChart.INFO.getLogo());
+                getTestImage());
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         ObjectOutput out = new ObjectOutputStream(buffer);
         out.writeObject(a1);

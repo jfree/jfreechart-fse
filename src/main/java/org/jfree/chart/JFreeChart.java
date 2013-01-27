@@ -172,13 +172,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.ResourceBundle;
-
-import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.event.EventListenerList;
 
@@ -194,9 +189,6 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.ui.VerticalAlignment;
-import org.jfree.chart.ui.about.Contributor;
-import org.jfree.chart.ui.about.Licences;
-import org.jfree.chart.ui.about.ProjectInfo;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.entity.EntityCollection;
@@ -209,15 +201,12 @@ import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.event.PlotChangeListener;
 import org.jfree.chart.event.TitleChangeEvent;
 import org.jfree.chart.event.TitleChangeListener;
-import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.chart.title.Title;
 import org.jfree.chart.util.ParamChecks;
-import org.jfree.chart.util.ResourceBundleWrapper;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
 
@@ -247,9 +236,6 @@ public class JFreeChart implements Drawable, TitleChangeListener,
 
     /** For serialization. */
     private static final long serialVersionUID = -3470703747817429120L;
-
-    /** Information about the project. */
-    public static final ProjectInfo INFO = new JFreeChartInfo();
 
     /** The default font for titles. */
     public static final Font DEFAULT_TITLE_FONT
@@ -1634,15 +1620,6 @@ public class JFreeChart implements Drawable, TitleChangeListener,
     }
 
     /**
-     * Prints information about JFreeChart to standard output.
-     *
-     * @param args  no arguments are honored.
-     */
-    public static void main(String[] args) {
-        System.out.println(JFreeChart.INFO.toString());
-    }
-
-    /**
      * Clones the object, and takes care of listeners.
      * Note: caller shall register its own listeners on cloned graph.
      *
@@ -1679,162 +1656,6 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         chart.progressListeners = new EventListenerList();
         chart.changeListeners = new EventListenerList();
         return chart;
-    }
-
-}
-
-/**
- * Information about the JFreeChart project.  One instance of this class is
- * assigned to <code>JFreeChart.INFO</code>.
- */
-class JFreeChartInfo extends ProjectInfo {
-
-    /**
-     * Default constructor.
-     */
-    public JFreeChartInfo() {
-
-        // get a locale-specific resource bundle...
-        String baseResourceClass
-                = "org.jfree.chart.resources.JFreeChartResources";
-        ResourceBundle resources = ResourceBundleWrapper.getBundle(
-                baseResourceClass);
-
-        setName(resources.getString("project.name"));
-        setVersion(resources.getString("project.version"));
-        setInfo(resources.getString("project.info"));
-        setCopyright(resources.getString("project.copyright"));
-        setLogo(null);  // load only when required
-        setLicenceName("LGPL");
-        setLicenceText(Licences.getInstance().getLGPL());
-
-        setContributors(Arrays.asList(
-                new Contributor("Eric Alexander", "-"),
-                new Contributor("Richard Atkinson",
-                        "richard_c_atkinson@ntlworld.com"),
-                new Contributor("David Basten", "-"),
-                new Contributor("David Berry", "-"),
-                new Contributor("Chris Boek", "-"),
-                new Contributor("Zoheb Borbora", "-"),
-                new Contributor("Anthony Boulestreau", "-"),
-                new Contributor("Jeremy Bowman", "-"),
-                new Contributor("Nicolas Brodu", "-"),
-                new Contributor("Jody Brownell", "-"),
-                new Contributor("David Browning", "-"),
-                new Contributor("Soren Caspersen", "-"),
-                new Contributor("Chuanhao Chiu", "-"),
-                new Contributor("Brian Cole", "-"),
-                new Contributor("Pascal Collet", "-"),
-                new Contributor("Martin Cordova", "-"),
-                new Contributor("Paolo Cova", "-"),
-                new Contributor("Greg Darke", "-"),
-                new Contributor("Mike Duffy", "-"),
-                new Contributor("Don Elliott", "-"),
-                new Contributor("David Forslund", "-"),
-                new Contributor("Jonathan Gabbai", "-"),
-                new Contributor("David Gilbert",
-                        "david.gilbert@object-refinery.com"),
-                new Contributor("Serge V. Grachov", "-"),
-                new Contributor("Daniel Gredler", "-"),
-                new Contributor("Hans-Jurgen Greiner", "-"),
-                new Contributor("Joao Guilherme Del Valle", "-"),
-                new Contributor("Aiman Han", "-"),
-                new Contributor("Cameron Hayne", "-"),
-                new Contributor("Martin Hoeller", "-"),
-                new Contributor("Jon Iles", "-"),
-                new Contributor("Wolfgang Irler", "-"),
-                new Contributor("Sergei Ivanov", "-"),
-                new Contributor("Adriaan Joubert", "-"),
-                new Contributor("Darren Jung", "-"),
-                new Contributor("Xun Kang", "-"),
-                new Contributor("Bill Kelemen", "-"),
-                new Contributor("Norbert Kiesel", "-"),
-                new Contributor("Peter Kolb", "-"),
-                new Contributor("Gideon Krause", "-"),
-                new Contributor("Pierre-Marie Le Biot", "-"),
-                new Contributor("Arnaud Lelievre", "-"),
-                new Contributor("Wolfgang Lenhard", "-"),
-                new Contributor("David Li", "-"),
-                new Contributor("Yan Liu", "-"),
-                new Contributor("Tin Luu", "-"),
-                new Contributor("Craig MacFarlane", "-"),
-                new Contributor("Achilleus Mantzios", "-"),
-                new Contributor("Thomas Meier", "-"),
-                new Contributor("Jim Moore", "-"),
-                new Contributor("Jonathan Nash", "-"),
-                new Contributor("Barak Naveh", "-"),
-                new Contributor("David M. O'Donnell", "-"),
-                new Contributor("Krzysztof Paz", "-"),
-                new Contributor("Eric Penfold", "-"),
-                new Contributor("Tomer Peretz", "-"),
-                new Contributor("Diego Pierangeli", "-"),
-                new Contributor("Xavier Poinsard", "-"),
-                new Contributor("Andrzej Porebski", "-"),
-                new Contributor("Viktor Rajewski", "-"),
-                new Contributor("Eduardo Ramalho", "-"),
-                new Contributor("Michael Rauch", "-"),
-                new Contributor("Cameron Riley", "-"),
-                new Contributor("Klaus Rheinwald", "-"),
-                new Contributor("Dan Rivett", "d.rivett@ukonline.co.uk"),
-                new Contributor("Scott Sams", "-"),
-                new Contributor("Michel Santos", "-"),
-                new Contributor("Thierry Saura", "-"),
-                new Contributor("Andreas Schneider", "-"),
-                new Contributor("Jean-Luc SCHWAB", "-"),
-                new Contributor("Bryan Scott", "-"),
-                new Contributor("Tobias Selb", "-"),
-                new Contributor("Darshan Shah", "-"),
-                new Contributor("Mofeed Shahin", "-"),
-                new Contributor("Michael Siemer", "-"),
-                new Contributor("Pady Srinivasan", "-"),
-                new Contributor("Greg Steckman", "-"),
-                new Contributor("Gerald Struck", "-"),
-                new Contributor("Roger Studner", "-"),
-                new Contributor("Irv Thomae", "-"),
-                new Contributor("Eric Thomas", "-"),
-                new Contributor("Rich Unger", "-"),
-                new Contributor("Daniel van Enckevort", "-"),
-                new Contributor("Laurence Vanhelsuwe", "-"),
-                new Contributor("Sylvain Vieujot", "-"),
-                new Contributor("Ulrich Voigt", "-"),
-                new Contributor("Jelai Wang", "-"),
-                new Contributor("Mark Watson", "www.markwatson.com"),
-                new Contributor("Alex Weber", "-"),
-                new Contributor("Matthew Wright", "-"),
-                new Contributor("Benoit Xhenseval", "-"),
-                new Contributor("Christian W. Zuckschwerdt",
-                        "Christian.Zuckschwerdt@Informatik.Uni-Oldenburg.de"),
-                new Contributor("Hari", "-"),
-                new Contributor("Sam (oldman)", "-"),
-                new Contributor("Patrick Schlott", "-"),
-                new Contributor("Christoph Schroeder", "-"),
-                new Contributor("Michael Clarke", "-")
-        ));
-
-
-    }
-
-    /**
-     * Returns the JFreeChart logo (a picture of a gorilla).
-     *
-     * @return The JFreeChart logo.
-     */
-    @Override
-    public Image getLogo() {
-
-        Image logo = super.getLogo();
-        if (logo == null) {
-            URL imageURL = this.getClass().getClassLoader().getResource(
-                    "org/jfree/chart/gorilla.jpg");
-            if (imageURL != null) {
-                ImageIcon temp = new ImageIcon(imageURL);
-                    // use ImageIcon because it waits for the image to load...
-                logo = temp.getImage();
-                setLogo(logo);
-            }
-        }
-        return logo;
-
     }
 
 }
