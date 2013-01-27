@@ -1,4 +1,3 @@
-package org.jfree.chart.axis;
 /* ===========================================================
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
@@ -31,9 +30,13 @@ package org.jfree.chart.axis;
  *
  */
 
+package org.jfree.chart.axis;
+
+import java.io.Serializable;
 import java.util.Comparator;
 
-public class NumberComparartor implements Comparator<Number> {
+public class NumberComparator implements Comparator<Number>, Serializable {
+
     @Override
     public int compare(Number o1, Number o2) {
         if (o1 == null) {
@@ -45,6 +48,6 @@ public class NumberComparartor implements Comparator<Number> {
         if (o2 == null) {
             return -1;
         }
-        return ((Double)o1.doubleValue()).compareTo(o2.doubleValue());
+        return ((Double) o1.doubleValue()).compareTo(o2.doubleValue());
     }
 }

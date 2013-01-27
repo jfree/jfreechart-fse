@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------------
@@ -46,7 +46,7 @@
 
 package org.jfree.data.statistics;
 
-import org.jfree.chart.axis.NumberComparartor;
+import org.jfree.chart.axis.NumberComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -110,7 +110,7 @@ public abstract class BoxAndWhiskerCalculator {
         else {
             vlist = values;
         }
-        Collections.sort(vlist, new NumberComparartor());
+        Collections.sort(vlist, new NumberComparator());
 
         double mean = Statistics.calculateMean(vlist, false);
         double median = Statistics.calculateMedian(vlist, false);
