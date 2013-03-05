@@ -17,7 +17,7 @@ import org.jfree.data.xy.XYDataset;
  *
  */
 public class XYDatasetSelectionExtension extends
-		AbstractDatasetSelectionExtension<XYCursor, XYDataset> implements IterableSelection {
+		AbstractDatasetSelectionExtension<XYCursor, XYDataset> implements IterableSelection<XYCursor> {
 
 	/** a generated serial id */
 	private static final long serialVersionUID = 4859712483757720877L;
@@ -50,7 +50,7 @@ public class XYDatasetSelectionExtension extends
 	 * @param initialListener
 	 */
 	public XYDatasetSelectionExtension(XYDataset dataset,
-			SelectionChangeListener initialListener) {
+			SelectionChangeListener<XYCursor> initialListener) {
 		super(dataset);
 		addChangeListener(initialListener);
 	}
@@ -109,14 +109,14 @@ public class XYDatasetSelectionExtension extends
 	/**
 	 * {@link IterableSelection#getIterator()}
 	 */
-	public DatasetIterator getIterator() {
+	public DatasetIterator<XYCursor> getIterator() {
 		return new XYDatasetSelectionIterator();
 	}
 
 	/**
 	 * {@link IterableSelection#getSelectionIterator(boolean)}
 	 */
-	public DatasetIterator getSelectionIterator(boolean selected) {
+	public DatasetIterator<XYCursor> getSelectionIterator(boolean selected) {
 		return new XYDatasetSelectionIterator(selected);
 	}
 	
@@ -128,7 +128,7 @@ public class XYDatasetSelectionExtension extends
 	 * 
 	 * @author zinsmaie
 	 */
-	private class XYDatasetSelectionIterator implements DatasetIterator {
+	private class XYDatasetSelectionIterator implements DatasetIterator<XYCursor> {
 		
 		//could be improved wtr speed by storing selected elements directly for faster access
 		//however storage efficiency would decrease
@@ -168,16 +168,11 @@ public class XYDatasetSelectionExtension extends
 		/**
 		 * {@link Iterator#next()}
 		 */
-		public Object next() {
+		public XYCursor next() {
 			int[] newPos = nextPosition();
 			this.series = newPos[0];
 			this.item = newPos[1];
 			return new XYCursor(this.series, this.item);
-		}
-
-		/** {@link DatasetIteratr#nextCursor()} */
-		public DatasetCursor nextCursor() {
-			return (DatasetCursor) next();
 		}
 
 		/**

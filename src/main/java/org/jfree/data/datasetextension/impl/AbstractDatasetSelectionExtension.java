@@ -52,7 +52,7 @@ public abstract class AbstractDatasetSelectionExtension<CURSOR extends DatasetCu
     /** 
      * {@link DatasetSelectionExtension#addChangeListener(org.jfree.data.general.SelectionChangeListener)
      */
-    public void addChangeListener(SelectionChangeListener listener) {
+    public void addChangeListener(SelectionChangeListener<CURSOR> listener) {
     	this.notify = true;
    		this.listenerList.add(SelectionChangeListener.class, listener);
     }
@@ -60,7 +60,7 @@ public abstract class AbstractDatasetSelectionExtension<CURSOR extends DatasetCu
     /**
 	 * {@link WithChangeListener#removeChangeListener(EventListener))
      */
-    public void removeChangeListener(SelectionChangeListener listener) {
+    public void removeChangeListener(SelectionChangeListener<CURSOR> listener) {
    		this.listenerList.remove(SelectionChangeListener.class, listener);
     }
 
@@ -106,11 +106,12 @@ public abstract class AbstractDatasetSelectionExtension<CURSOR extends DatasetCu
     * notifies all registered listeners 
     * @param event
     */
-   private void notifyListeners() {
+   @SuppressWarnings("unchecked") //add method accepts only SelctionChangeListeners<CURSOR>
+private void notifyListeners() {
         Object[] listeners = this.listenerList.getListenerList();
         for (int i = listeners.length - 2; i >= 0; i -= 2) {
             if (listeners[i] == SelectionChangeListener.class) {
-                ((SelectionChangeListener) listeners[i + 1]).selectionChanged(new SelectionChangeEvent<CURSOR>(this));
+                ((SelectionChangeListener<CURSOR>) listeners[i + 1]).selectionChanged(new SelectionChangeEvent<CURSOR>(this));
             }
         }
    }

@@ -52,7 +52,7 @@ import org.jfree.data.xy.IntervalXYDataset;
  * A demo of the {@link HistogramDataset} class.
  */
 public class SelectionDemo4 extends ApplicationFrame implements
-		SelectionChangeListener {
+		SelectionChangeListener<XYCursor> {
 
 	private SimpleHistogramDataset dataset;
 	private DefaultTableModel model;
@@ -92,17 +92,17 @@ public class SelectionDemo4 extends ApplicationFrame implements
 	 * 
 	 * @param event
 	 */
-	public void selectionChanged(SelectionChangeEvent event) {
+	public void selectionChanged(SelectionChangeEvent<XYCursor> event) {
 		while (this.model.getRowCount() > 0) {
 			this.model.removeRow(0);
 		}
 
 		XYDatasetSelectionExtension ext = (XYDatasetSelectionExtension) event
 				.getSelectionExtension();
-		DatasetIterator iter = ext.getSelectionIterator(true);
+		DatasetIterator<XYCursor> iter = ext.getSelectionIterator(true);
 
 		while (iter.hasNext()) {
-			XYCursor dc = (XYCursor) iter.nextCursor();
+			XYCursor dc = iter.next();
 			this.model.addRow(new Object[] { new Integer(dc.item),
 					dataset.getStartX(dc.series, dc.item),
 					this.dataset.getEndX(dc.series, dc.item),
@@ -142,7 +142,7 @@ public class SelectionDemo4 extends ApplicationFrame implements
 	 * 
 	 * @return The chart.
 	 */
-	private static JFreeChart createChart(IntervalXYDataset dataset, DatasetSelectionExtension ext) {
+	private static JFreeChart createChart(IntervalXYDataset dataset, DatasetSelectionExtension<XYCursor> ext) {
 		JFreeChart chart = ChartFactory.createHistogram("SelectionDemo4", null,
 				null, dataset);
 		XYPlot plot = (XYPlot) chart.getPlot();
@@ -174,7 +174,7 @@ public class SelectionDemo4 extends ApplicationFrame implements
 	public JPanel createDemoPanel() {
 		IntervalXYDataset dataset = createDataset();
 		//extend dataset and add selection change listener for the demo
-		DatasetSelectionExtension datasetExtension = new XYDatasetSelectionExtension(dataset);	
+		DatasetSelectionExtension<XYCursor> datasetExtension = new XYDatasetSelectionExtension(dataset);	
 		datasetExtension.addChangeListener(this);
 		
 		//standard setup

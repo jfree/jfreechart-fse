@@ -8,11 +8,6 @@ import java.util.Iterator;
  * 
  * @author zinsmaie
  */
-public interface DatasetIterator<E> extends Iterator<E>, Serializable {
-
-	/**
-	 * @return the same as {@link Iterator#next()} but already casted
-	 */
-	public DatasetCursor nextCursor();
+public interface DatasetIterator<CURSOR extends DatasetCursor> extends Iterator<CURSOR>, Serializable {
 	
 }

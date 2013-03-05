@@ -16,7 +16,9 @@ import org.jfree.data.general.SelectionChangeListener;
  * @author zinsmaie
  *
  */
-public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>> extends AbstractDatasetSelectionExtension<PieCursor<KEY>, PieDataset> implements IterableSelection {
+public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>>
+       extends AbstractDatasetSelectionExtension<PieCursor<KEY>, PieDataset>
+       implements IterableSelection<PieCursor<KEY>> {
 
 	/** a generated serial id */
 	private static final long serialVersionUID = -1735271052194147081L;
@@ -67,9 +69,9 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>> extends A
 	 * {@link DatasetSelectionExtension#setSelected(DatasetCursor, boolean)}
 	 */
 	public void setSelected(PieCursor<KEY> cursor, boolean selected) {
-		if (selected) {
-			this.selectionData.put(cursor.key, new Boolean(selected));
-		}
+		this.selectionData.put(cursor.key, new Boolean(selected));
+			
+		notifiyIfRequired();
 	}
 
 	/**
@@ -93,8 +95,7 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>> extends A
 	private void initSelection() {
 		this.selectionData = new HashMap<KEY, Boolean>();
 
-		//we have to assume that the dataset key type matches the cursor key type
-		//this could be improved by typing the dataset classes
+		//pie datasets are not yet typed therefore the cast is necessary (and may fail)
 		for (Comparable key : this.dataset.getKeys()) {
 			this.selectionData.put((KEY)key, new Boolean(false));
 		}
@@ -108,14 +109,14 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>> extends A
 	/**
 	 * {@link IterableSelection#getIterator()}
 	 */
-	public DatasetIterator getIterator() {
+	public DatasetIterator<PieCursor<KEY>> getIterator() {
 		return new PieDatasetSelectionIterator();
 	}
 
 	/**
 	 * {@link IterableSelection#getSelectionIterator(boolean)}
 	 */
-	public DatasetIterator getSelectionIterator(boolean selected) {
+	public DatasetIterator<PieCursor<KEY>> getSelectionIterator(boolean selected) {
 		return new PieDatasetSelectionIterator(selected);
 	}
 
@@ -126,7 +127,7 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>> extends A
 	 * 
 	 * @author zinsmaie
 	 */
-	private class PieDatasetSelectionIterator implements DatasetIterator {
+	private class PieDatasetSelectionIterator implements DatasetIterator<PieCursor<KEY>> {
 
 		//could be improved wtr speed by storing selected elements directly for faster access
 		//however storage efficiency would decrease
@@ -164,17 +165,12 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>> extends A
 		/**
 		 * {@link Iterator#next()}
 		 */
-		public Object next() {
+		public PieCursor<KEY> next() {
 			this.section = nextPosition();
-			Comparable key = dataset.getKey(this.section);
-			return new PieCursor(key);
-		}
-
-		/** {@link DatasetIteratr#nextCursor()} */
-		public DatasetCursor nextCursor() {
-			return (DatasetCursor)next();
-		}
-		
+			//pie datasets are not yet typed therefore the cast is necessary (and may fail)
+			KEY key = (KEY)dataset.getKey(this.section);
+			return new PieCursor<KEY>(key);
+		}		
 		/**
 		 * iterator remove operation is not supported
 		 */
@@ -191,7 +187,7 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>> extends A
 			int pSection = this.section;
 			while ((pSection+1) < dataset.getItemCount()) {
 				if (filter != null) {
-					Comparable key = dataset.getKey((pSection+1));
+					Comparable<?> key = dataset.getKey((pSection+1));
 					if (!(filter.equals(selectionData.get(key)))) {
 						pSection++;
 						continue;

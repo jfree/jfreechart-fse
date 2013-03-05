@@ -31,6 +31,7 @@ public class IRSUtilities {
 	//Reusable cursors for fast access
 	private static DatasetCursor cursor;
 	private final static XYCursor xyCursor = new XYCursor();
+	//TODO a type save solution would be nice
 	private final static CategoryCursor categoryCursor = new CategoryCursor();
 	
 	//Default methods for PaintIRS handling

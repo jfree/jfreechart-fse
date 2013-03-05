@@ -60,6 +60,8 @@ import java.io.Serializable;
 
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.data.datasetextension.DatasetCursor;
+import org.jfree.data.datasetextension.impl.PieCursor;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.PieDataset;
 
@@ -260,5 +262,11 @@ public class PieSectionEntity extends DataItemEntity
         return "PieSection: " + this.pieIndex + ", " + this.sectionIndex + "("
                               + this.sectionKey.toString() + ")";
     }
+
+	@Override
+	public DatasetCursor getItemCursor() {
+		//pie item entities are not yet typed
+		return new PieCursor(sectionKey);
+	}
 
 }

@@ -16,7 +16,9 @@ import org.jfree.data.general.SelectionChangeListener;
  * @author zinsmaie
  *
  */
-public class CategoryDatasetSelectionExtension<ROW_KEY extends Comparable<ROW_KEY>, COLUMN_KEY extends Comparable<COLUMN_KEY>> extends AbstractDatasetSelectionExtension<CategoryCursor<ROW_KEY, COLUMN_KEY>, CategoryDataset> implements IterableSelection {
+public class CategoryDatasetSelectionExtension<ROW_KEY extends Comparable<ROW_KEY>, COLUMN_KEY extends Comparable<COLUMN_KEY>>
+       extends AbstractDatasetSelectionExtension<CategoryCursor<ROW_KEY, COLUMN_KEY>, CategoryDataset>
+       implements IterableSelection<CategoryCursor<ROW_KEY, COLUMN_KEY>> {
 
 	/** a generated serial id */
 	private static final long serialVersionUID = 5138359490302459066L;
@@ -53,7 +55,7 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends Comparable<ROW_KE
 	 * @param dataset
 	 * @param initialListener
 	 */
-	public CategoryDatasetSelectionExtension(CategoryDataset dataset, SelectionChangeListener initialListener) {
+	public CategoryDatasetSelectionExtension(CategoryDataset dataset, SelectionChangeListener<CategoryCursor<ROW_KEY, COLUMN_KEY>> initialListener) {
 		super(dataset);
 		addChangeListener(initialListener);
 	}
@@ -117,14 +119,14 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends Comparable<ROW_KE
 	/**
 	 * {@link IterableSelection#getIterator()}
 	 */
-	public DatasetIterator getIterator() {
+	public DatasetIterator<CategoryCursor<ROW_KEY, COLUMN_KEY>> getIterator() {
 		return new CategoryDatasetSelectionIterator();
 	}
 
 	/**
 	 * {@link IterableSelection#getSelectionIterator(boolean)}
 	 */
-	public DatasetIterator getSelectionIterator(boolean selected) {
+	public DatasetIterator<CategoryCursor<ROW_KEY, COLUMN_KEY>> getSelectionIterator(boolean selected) {
 		return new CategoryDatasetSelectionIterator(selected);
 	}
 	
@@ -137,7 +139,7 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends Comparable<ROW_KE
 	 * 
 	 * @author zinsmaie
 	 */
-	private class CategoryDatasetSelectionIterator implements DatasetIterator {
+	private class CategoryDatasetSelectionIterator implements DatasetIterator<CategoryCursor<ROW_KEY, COLUMN_KEY>> {
 
 		//could be improved wtr speed by storing selected elements directly for faster access
 		//however storage efficiency would decrease
@@ -178,18 +180,14 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends Comparable<ROW_KE
 		/**
 		 * {@link Iterator#next()}
 		 */
-		public Object next() {
+		public CategoryCursor<ROW_KEY, COLUMN_KEY> next() {
 			int[] newPos = nextPosition();
 			row = newPos[0];
 			column = newPos[1];
-			return new CategoryCursor(dataset.getRowKey(row), dataset.getColumnKey(column));
+			//category datasets are not yet typed therefore the cast is necessary (and may fail)
+			return new CategoryCursor<ROW_KEY, COLUMN_KEY>((ROW_KEY)dataset.getRowKey(row), (COLUMN_KEY)dataset.getColumnKey(column));
 		}
 
-		/** {@link DatasetIteratr#nextCursor()} */
-		public DatasetCursor nextCursor() {
-			return (DatasetCursor)next();
-		}
-		
 		/**
 		 * iterator remove operation is not supported
 		 */

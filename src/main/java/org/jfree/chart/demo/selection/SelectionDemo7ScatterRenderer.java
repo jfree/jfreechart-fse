@@ -3,6 +3,7 @@ package org.jfree.chart.demo.selection;
 import java.awt.Color;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -48,8 +49,8 @@ public class SelectionDemo7ScatterRenderer extends ApplicationFrame {
 		setContentPane(chartPanel);
 	}
 
-	private static List listOfValues(double[] values) {
-		List result = new java.util.ArrayList();
+	private static List<Number> listOfValues(double[] values) {
+		List<Number> result = new ArrayList<Number>();
 		for (int i = 0; i < values.length; i++) {
 			result.add(new Double(values[i]));
 		}
@@ -98,7 +99,7 @@ public class SelectionDemo7ScatterRenderer extends ApplicationFrame {
 	 * 
 	 * @return A chart.
 	 */
-	private static JFreeChart createChart(final MultiValueCategoryDataset dataset, final DatasetSelectionExtension ext) {
+	private static JFreeChart createChart(final MultiValueCategoryDataset dataset, final DatasetSelectionExtension<CategoryCursor<String, String>> ext) {
 
 		ScatterRenderer r = new ScatterRenderer();
 		CategoryPlot plot = new CategoryPlot(dataset, new CategoryAxis(
@@ -115,10 +116,12 @@ public class SelectionDemo7ScatterRenderer extends ApplicationFrame {
 		ext.addChangeListener(plot);		
 		
 		//illustrates the usage of a shape item rendering strategy
-		final CategoryCursor cursor = new CategoryCursor();
+		final CategoryCursor<String, String> cursor = new CategoryCursor<String, String>();
 		r.setShapeIRS(new DefaultShapeIRS(r) {
+			private static final long serialVersionUID = 1L;
+
 			public Shape getItemShape(int row, int column) {
-				cursor.setPosition(dataset.getRowKey(row), dataset.getColumnKey(column));
+				cursor.setPosition((String)dataset.getRowKey(row), (String)dataset.getColumnKey(column));
 				if (ext.isSelected(cursor)) {
 					return new Rectangle2D.Double(-10.0, -10.0, 20.0, 20.0);
 				} else {
@@ -139,7 +142,7 @@ public class SelectionDemo7ScatterRenderer extends ApplicationFrame {
 	public static JPanel createDemoPanel() {
 		MultiValueCategoryDataset dataset = createDataset();
 		//extend dataset and add selection change listener for the demo
-		DatasetSelectionExtension datasetExtension = new CategoryDatasetSelectionExtension(dataset);
+		DatasetSelectionExtension<CategoryCursor<String, String>> datasetExtension = new CategoryDatasetSelectionExtension<String, String>(dataset);
 		
 		//standard setup
 		JFreeChart chart = createChart(dataset, datasetExtension);

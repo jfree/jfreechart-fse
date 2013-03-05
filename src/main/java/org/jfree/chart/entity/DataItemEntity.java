@@ -2,6 +2,7 @@ package org.jfree.chart.entity;
 
 import java.awt.Shape;
 
+import org.jfree.data.datasetextension.DatasetCursor;
 import org.jfree.data.general.Dataset;
 
 /**
@@ -57,4 +58,9 @@ public abstract class DataItemEntity extends ChartEntity {
      *
      */
 	public abstract Dataset getGeneralDataset();
+	
+	/**
+	 * @return a new instance of a {@link DatasetCursor} which points to the DataItem
+	 */
+	public abstract DatasetCursor getItemCursor();
 }

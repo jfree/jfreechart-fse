@@ -41,7 +41,7 @@ import org.jfree.data.general.SelectionChangeListener;
 /*
  * based on PieChartDemo2
  */
-public class SelectionDemo6Pie extends ApplicationFrame implements SelectionChangeListener {
+public class SelectionDemo6Pie extends ApplicationFrame implements SelectionChangeListener<PieCursor<String>> {
 
 	private JTable table;
 
@@ -81,7 +81,7 @@ public class SelectionDemo6Pie extends ApplicationFrame implements SelectionChan
 		return dataset;
 	}
 
-	private static JFreeChart createChart(final PieDataset dataset, DatasetSelectionExtension ext) {
+	private static JFreeChart createChart(final PieDataset dataset, DatasetSelectionExtension<PieCursor<String>> ext) {
 		JFreeChart chart = ChartFactory.createPieChart(
 				"Pie Chart Demo 2", // chart title
 				dataset);
@@ -106,12 +106,12 @@ public class SelectionDemo6Pie extends ApplicationFrame implements SelectionChan
 		plot.setInteriorGap(0.1);
 				
 		//pie plots done use abstract renderers need to react to selection on our own
-		final PieCursor cursor = new PieCursor();
+		final PieCursor<String> cursor = new PieCursor<String>();
 
-		ext.addChangeListener(new SelectionChangeListener() {
-			public void selectionChanged(SelectionChangeEvent event) {				
+		ext.addChangeListener(new SelectionChangeListener<PieCursor<String>>() {
+			public void selectionChanged(SelectionChangeEvent<PieCursor<String>> event) {				
 				for (int i = 0; i < dataset.getItemCount(); i++) {
-					cursor.setPosition(dataset.getKey(i));
+					cursor.setPosition((String)dataset.getKey(i));
 					if (event.getSelectionExtension().isSelected(cursor)) {
 						plot.setExplodePercent(cursor.key, 0.15);
 					} else {
@@ -128,7 +128,7 @@ public class SelectionDemo6Pie extends ApplicationFrame implements SelectionChan
 	public JPanel createDemoPanel() {
 		this.dataset = createDataset();
 		//extend dataset and add selection change listener for the demo
-		DatasetSelectionExtension datasetExtension = new PieDatasetSelectionExtension(this.dataset);
+		DatasetSelectionExtension<PieCursor<String>> datasetExtension = new PieDatasetSelectionExtension<String>(this.dataset);
 		datasetExtension.addChangeListener(this);
 		
 		//standard setup
@@ -151,16 +151,16 @@ public class SelectionDemo6Pie extends ApplicationFrame implements SelectionChan
 		return panel;
 	}
 	
-	public void selectionChanged(SelectionChangeEvent event) {
+	public void selectionChanged(SelectionChangeEvent<PieCursor<String>> event) {
     	while (this.model.getRowCount() > 0) {
             this.model.removeRow(0);
         }
 
-    	PieDatasetSelectionExtension ext = (PieDatasetSelectionExtension)event.getSelectionExtension(); 
-    	DatasetIterator iter = ext.getSelectionIterator(true);
+    	PieDatasetSelectionExtension<String> ext = (PieDatasetSelectionExtension<String>)event.getSelectionExtension(); 
+    	DatasetIterator<PieCursor<String>> iter = ext.getSelectionIterator(true);
     	
     	while (iter.hasNext()) {
-    		PieCursor dc = (PieCursor)iter.nextCursor();
+    		PieCursor<String> dc = iter.next();
     		this.model.addRow(new Object[] {dc.key, this.dataset.getValue(dc.key)});
     	}
 	}

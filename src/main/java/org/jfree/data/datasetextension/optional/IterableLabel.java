@@ -1,5 +1,6 @@
 package org.jfree.data.datasetextension.optional;
 
+import org.jfree.data.datasetextension.DatasetCursor;
 import org.jfree.data.datasetextension.DatasetIterator;
 import org.jfree.data.datasetextension.DatasetLabelExtension;
 
@@ -10,18 +11,18 @@ import org.jfree.data.datasetextension.DatasetLabelExtension;
  * @author zinsmaie
  *
  */
-public interface IterableLabel {
+public interface IterableLabel<CURSOR extends DatasetCursor> {
 
 	/**
 	 * @return an iterator over all data item positions
 	 */
-	public DatasetIterator getIterator();
+	public DatasetIterator<CURSOR> getIterator();
 	
 	/**
 	 * @param label
 	 * @return an iterator over all data item positions with a label 
 	 * attribute equal to the specified parameter
 	 */
-	public DatasetIterator getLabelIterator(int label);
+	public DatasetIterator<CURSOR> getLabelIterator(int label);
 	
 }

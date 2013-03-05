@@ -7,18 +7,12 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.entity.CategoryItemEntity;
 import org.jfree.chart.entity.ChartEntity;
 import org.jfree.chart.entity.DataItemEntity;
 import org.jfree.chart.entity.EntityCollection;
-import org.jfree.chart.entity.PieSectionEntity;
-import org.jfree.chart.entity.XYItemEntity;
 import org.jfree.data.datasetextension.DatasetCursor;
 import org.jfree.data.datasetextension.DatasetSelectionExtension;
-import org.jfree.data.datasetextension.impl.CategoryCursor;
 import org.jfree.data.datasetextension.impl.DatasetExtensionManager;
-import org.jfree.data.datasetextension.impl.PieCursor;
-import org.jfree.data.datasetextension.impl.XYCursor;
 import org.jfree.data.general.Dataset;
 
 /**
@@ -57,13 +51,6 @@ public class EntitySelectionManager implements SelectionManager {
 	private final DatasetExtensionManager extensionManager;
 	/** all datasets that are handled by the manager. */
 	private final Dataset[] datasets;
-
-	// instantiated only once to increase execution speed
-	private final XYCursor xyCursor = new XYCursor();
-
-	private final CategoryCursor categoryCursor = new CategoryCursor();
-
-	private final PieCursor pieCursor = new PieCursor();
 
 	/**
 	 * constructs a new selection manager. Use this constructor if all datasets
@@ -319,33 +306,14 @@ public class EntitySelectionManager implements SelectionManager {
 			if (this.extensionManager.supports(e.getGeneralDataset(),
 					DatasetSelectionExtension.class)) {
 
-				DatasetSelectionExtension selectionExtension = (DatasetSelectionExtension) this.extensionManager
+				//TODO a type save solution would be nice
+				DatasetCursor cursor = e.getItemCursor();
+				DatasetSelectionExtension selectionExtension = this.extensionManager
 						.getExtension(e.getGeneralDataset(),
 								DatasetSelectionExtension.class);
 
-				// set the position to the correct element
-				DatasetCursor cursor = null;
-
-				if (e instanceof XYItemEntity) {
-					this.xyCursor.setPosition(
-							((XYItemEntity) e).getSeriesIndex(),
-							((XYItemEntity) e).getItem());
-					cursor = this.xyCursor;
-				} else if (e instanceof CategoryItemEntity) {
-					this.categoryCursor.setPosition(
-							((CategoryItemEntity) e).getRowKey(),
-							((CategoryItemEntity) e).getColumnKey());
-					cursor = this.categoryCursor;
-				} else if (e instanceof PieSectionEntity) {
-					this.pieCursor.setPosition(((PieSectionEntity) e)
-							.getSectionKey());
-					cursor = this.pieCursor;
-				}
-
 				// work on the data
-				if (cursor != null) {
-					selectionExtension.setSelected(cursor, true);
-				}
+				selectionExtension.setSelected(cursor, true);
 			}
 		}
 	}

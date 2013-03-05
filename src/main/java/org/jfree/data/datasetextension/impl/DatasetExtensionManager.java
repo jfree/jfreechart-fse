@@ -58,7 +58,7 @@ public class DatasetExtensionManager implements Serializable {
 	 * supporting implementation could be found i.e. the dataset does not implement the interface itself
 	 * and there no separate implementation has been registered for the dataset
 	 */
-	public DatasetExtension getExtension(Dataset dataset, Class<? extends DatasetExtension> interfaceClass) {		
+	public <T extends DatasetExtension> T getExtension(Dataset dataset, Class<T> interfaceClass) {		
 		if (interfaceClass.isAssignableFrom(dataset.getClass())) {
 			//the dataset supports the interface
 			return interfaceClass.cast(dataset);
@@ -69,7 +69,7 @@ public class DatasetExtensionManager implements Serializable {
 					if (interfaceClass.isAssignableFrom(extension.getClass())) {
 						//the dataset does not support the extension but
 						//a matching helper object is registered for the dataset
-						return extension;
+						return interfaceClass.cast(extension);
 					}
 				}
 			}

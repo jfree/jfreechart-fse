@@ -58,6 +58,8 @@ import java.io.Serializable;
 
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.datasetextension.DatasetCursor;
+import org.jfree.data.datasetextension.impl.CategoryCursor;
 import org.jfree.data.general.Dataset;
 
 /**
@@ -235,5 +237,11 @@ public class CategoryItemEntity extends DataItemEntity
 
         return super.equals(obj);
     }
+
+	@Override
+	public DatasetCursor getItemCursor() {
+		//category item entities are not yet typed
+		return new CategoryCursor(rowKey, columnKey);
+	}
 
 }

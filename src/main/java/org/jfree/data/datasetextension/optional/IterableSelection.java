@@ -1,5 +1,6 @@
 package org.jfree.data.datasetextension.optional;
 
+import org.jfree.data.datasetextension.DatasetCursor;
 import org.jfree.data.datasetextension.DatasetIterator;
 import org.jfree.data.datasetextension.DatasetSelectionExtension;
 
@@ -10,17 +11,17 @@ import org.jfree.data.datasetextension.DatasetSelectionExtension;
  * @author zinsmaie
  *
  */
-public interface IterableSelection {
+public interface IterableSelection<CURSOR extends DatasetCursor> {
 
 	/**
 	 * @return an iterator over all data item positions
 	 */
-	public DatasetIterator getIterator();
+	public DatasetIterator<CURSOR> getIterator();
 	
 	/**
 	 * @param selected
 	 * @return an iterator over the data item positions of all (selected/unselected) items
 	 */
-	public DatasetIterator getSelectionIterator(boolean selected);
+	public DatasetIterator<CURSOR> getSelectionIterator(boolean selected);
 	
 }

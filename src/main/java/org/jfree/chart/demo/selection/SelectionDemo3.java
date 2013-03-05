@@ -51,7 +51,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 /**
  * A demo scatter plot.
  */
-public class SelectionDemo3 extends ApplicationFrame implements SelectionChangeListener {
+public class SelectionDemo3 extends ApplicationFrame implements SelectionChangeListener<XYCursor> {
 
     private JTable table;
 
@@ -90,7 +90,7 @@ public class SelectionDemo3 extends ApplicationFrame implements SelectionChangeL
         setContentPane(split);
     }
 
-    private static JFreeChart createChart(XYDataset dataset, DatasetSelectionExtension ext) {
+    private static JFreeChart createChart(XYDataset dataset, DatasetSelectionExtension<XYCursor> ext) {
         JFreeChart chart = ChartFactory.createScatterPlot("SelectionDemo3",
                 "X", "Y", dataset);
 
@@ -147,16 +147,16 @@ public class SelectionDemo3 extends ApplicationFrame implements SelectionChangeL
 	 * 
 	 * @param event
 	 */
-	public void selectionChanged(SelectionChangeEvent event) {
+	public void selectionChanged(SelectionChangeEvent<XYCursor> event) {
     	while (this.model.getRowCount() > 0) {
             this.model.removeRow(0);
         }
 
     	XYDatasetSelectionExtension ext = (XYDatasetSelectionExtension)event.getSelectionExtension(); 
-    	DatasetIterator iter = ext.getSelectionIterator(true);
+    	DatasetIterator<XYCursor> iter = ext.getSelectionIterator(true);
     	
     	while (iter.hasNext()) {
-    		XYCursor dc = (XYCursor)iter.nextCursor();
+    		XYCursor dc = iter.next();
 
     		Comparable seriesKey = this.dataset.getSeriesKey(dc.series);
             Number x = this.dataset.getX(dc.series, dc.item);
@@ -190,7 +190,7 @@ public class SelectionDemo3 extends ApplicationFrame implements SelectionChangeL
     public JPanel createDemoPanel() {
 		XYDataset dataset = createDataset();
 		//extend dataset and add selection change listener for the demo
-		DatasetSelectionExtension datasetExtension = new XYDatasetSelectionExtension(dataset);	
+		DatasetSelectionExtension<XYCursor> datasetExtension = new XYDatasetSelectionExtension(dataset);	
 		datasetExtension.addChangeListener(this);
 		
 		//standard setup

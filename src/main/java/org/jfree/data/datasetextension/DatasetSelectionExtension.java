@@ -9,7 +9,7 @@ import org.jfree.data.general.SelectionChangeListener;
  * @author zinsmaie
  *
  */
-public interface DatasetSelectionExtension<CURSOR extends DatasetCursor> extends DatasetExtension, WithChangeListener<SelectionChangeListener> {
+public interface DatasetSelectionExtension<CURSOR extends DatasetCursor> extends DatasetExtension, WithChangeListener<SelectionChangeListener<CURSOR>> {
 	
 	/**
 	 * @param cursor specifies the position of the data item

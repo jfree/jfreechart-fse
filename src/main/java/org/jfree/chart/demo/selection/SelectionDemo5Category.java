@@ -47,7 +47,7 @@ import org.jfree.data.general.SelectionChangeEvent;
 import org.jfree.data.general.SelectionChangeListener;
 
 
-public class SelectionDemo5Category extends ApplicationFrame implements SelectionChangeListener {
+public class SelectionDemo5Category extends ApplicationFrame implements SelectionChangeListener<CategoryCursor<String, String>> {
 
 	private JTable table;
 
@@ -122,7 +122,7 @@ public class SelectionDemo5Category extends ApplicationFrame implements Selectio
 	    }
 
 	    
-	    private static JFreeChart createChart(CategoryDataset dataset, DatasetSelectionExtension ext) {
+	    private static JFreeChart createChart(CategoryDataset dataset, DatasetSelectionExtension<CategoryCursor<String, String>> ext) {
 
 	        // create the chart...
 	        JFreeChart chart = ChartFactory.createBarChart(
@@ -179,7 +179,7 @@ public class SelectionDemo5Category extends ApplicationFrame implements Selectio
 	    public JPanel createDemoPanel() {
 			this.dataset = createDataset();
 			//extend dataset and add selection change listener for the demo
-			DatasetSelectionExtension datasetExtension = new CategoryDatasetSelectionExtension(this.dataset);	
+			DatasetSelectionExtension<CategoryCursor<String, String>> datasetExtension = new CategoryDatasetSelectionExtension<String, String>(this.dataset);	
 			datasetExtension.addChangeListener(this);
 			
 			//standard setup
@@ -213,16 +213,16 @@ public class SelectionDemo5Category extends ApplicationFrame implements Selectio
 
 	    }
 
-		public void selectionChanged(SelectionChangeEvent event) {
+		public void selectionChanged(SelectionChangeEvent<CategoryCursor<String, String>> event) {
 	    	while (this.model.getRowCount() > 0) {
 	            this.model.removeRow(0);
 	        }
 
-	    	CategoryDatasetSelectionExtension ext = (CategoryDatasetSelectionExtension)event.getSelectionExtension(); 
-	    	DatasetIterator iter = ext.getSelectionIterator(true);
+	    	CategoryDatasetSelectionExtension<String, String> ext = (CategoryDatasetSelectionExtension<String, String>)event.getSelectionExtension(); 
+	    	DatasetIterator<CategoryCursor<String, String>> iter = ext.getSelectionIterator(true);
 	    	
 	    	while (iter.hasNext()) {
-	    		CategoryCursor dc = (CategoryCursor)iter.nextCursor();
+	    		CategoryCursor<String, String> dc = iter.next();
 	    		this.model.addRow(new Object[] { dc.rowKey, dc.columnKey, dataset.getValue(dc.rowKey, dc.columnKey)});
 	    	}
 		}

@@ -52,6 +52,8 @@ package org.jfree.chart.entity;
 
 import java.awt.Shape;
 
+import org.jfree.data.datasetextension.DatasetCursor;
+import org.jfree.data.datasetextension.impl.XYCursor;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.xy.XYDataset;
 
@@ -189,5 +191,10 @@ public class XYItemEntity extends DataItemEntity {
         return "XYItemEntity: series = " + getSeriesIndex() + ", item = "
             + getItem() + ", dataset = " + getDataset();
     }
+
+	@Override
+	public DatasetCursor getItemCursor() {
+		return new XYCursor(series, item);
+	}
 
 }
