@@ -210,6 +210,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.Iterator;
 import java.util.List;
@@ -537,7 +538,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 	 * 
 	 * @since 1.0.14
 	 */
-	private List availableLiveMouseHandlers;
+	private List<AbstractMouseHandler> availableLiveMouseHandlers;
 
 	/**
 	 * The current "live" mouse handler. One of the handlers from the
@@ -552,7 +553,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 	 * A list of auxiliary mouse handlers that will be called after the live
 	 * handler has done it's work.
 	 */
-	private List auxiliaryMouseHandlers;
+	private List<AbstractMouseHandler> auxiliaryMouseHandlers;
 
 	/**
 	 * The zoom handler that is installed by default.
@@ -793,9 +794,9 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         this.zoomOutlinePaint = Color.BLUE;
         this.zoomFillPaint = new Color(0, 0, 255, 63);
 
-		this.overlays = new java.util.ArrayList();
+		this.overlays = new ArrayList<Overlay>();
 
-		this.availableLiveMouseHandlers = new java.util.ArrayList();
+		this.availableLiveMouseHandlers = new ArrayList<AbstractMouseHandler>();
 
 		this.zoomHandler = new ZoomHandler();
 		this.availableLiveMouseHandlers.add(zoomHandler);
@@ -810,7 +811,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         }
 		panHandler.setModifier(panMask);
 		this.availableLiveMouseHandlers.add(panHandler);
-		this.auxiliaryMouseHandlers = new java.util.ArrayList();
+		this.auxiliaryMouseHandlers = new ArrayList<AbstractMouseHandler>();
 	}
 
     /**
@@ -1848,10 +1849,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
 		//handel auxiliary handlers
 		int mods = e.getModifiers();
-		Iterator iterator = this.auxiliaryMouseHandlers.iterator();
-		while (iterator.hasNext()) {
-			AbstractMouseHandler handler = (AbstractMouseHandler) iterator
-					.next();
+		
+		for (AbstractMouseHandler handler : auxiliaryMouseHandlers) {
 			if (handler.getModifier() == 0 || 
 			   (mods & handler.getModifier()) == handler.getModifier()) {
 				handler.mouseEntered(e);
@@ -1884,10 +1883,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
 		//handel auxiliary handlers
 		int mods = e.getModifiers();
-		Iterator iterator = this.auxiliaryMouseHandlers.iterator();
-		while (iterator.hasNext()) {
-			AbstractMouseHandler handler = (AbstractMouseHandler) iterator
-					.next();
+		for (AbstractMouseHandler handler : auxiliaryMouseHandlers) {
 			if (handler.getModifier() == 0 || 
 			   (mods & handler.getModifier()) == handler.getModifier()) {
 				handler.mouseExited(e);
@@ -1919,7 +1915,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 		} else {
 			AbstractMouseHandler h = null;
 			boolean found = false;
-			Iterator iterator = this.availableLiveMouseHandlers.iterator();
+			Iterator<AbstractMouseHandler> iterator = this.availableLiveMouseHandlers.iterator();
 			AbstractMouseHandler nomod = null;
 			while (iterator.hasNext() && !found) {
 				h = (AbstractMouseHandler) iterator.next();
@@ -1940,10 +1936,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         }
 
 		//handel auxiliary handlers
-		Iterator iterator = this.auxiliaryMouseHandlers.iterator();
-		while (iterator.hasNext()) {
-			AbstractMouseHandler handler = (AbstractMouseHandler) iterator
-					.next();
+
+		for (AbstractMouseHandler handler : auxiliaryMouseHandlers) {
 			if (handler.getModifier() == 0 || 
 			   (mods & handler.getModifier()) == handler.getModifier()) {
 				handler.mousePressed(e);
@@ -1970,10 +1964,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
 		//handel auxiliary handlers
 		int mods = e.getModifiers();
-		Iterator iterator = this.auxiliaryMouseHandlers.iterator();
-		while (iterator.hasNext()) {
-			AbstractMouseHandler handler = (AbstractMouseHandler) iterator
-					.next();
+		for (AbstractMouseHandler handler : auxiliaryMouseHandlers) {
 			if (handler.getModifier() == 0 || 
 			   (mods & handler.getModifier()) == handler.getModifier()) {
 				handler.mouseDragged(e);
@@ -2004,10 +1995,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
 		//handel auxiliary handlers
 		int mods = e.getModifiers();
-		Iterator iterator = this.auxiliaryMouseHandlers.iterator();
-		while (iterator.hasNext()) {
-			AbstractMouseHandler handler = (AbstractMouseHandler) iterator
-					.next();
+		for (AbstractMouseHandler handler : auxiliaryMouseHandlers) {
 			if (handler.getModifier() == 0 || 
 			   (mods & handler.getModifier()) == handler.getModifier()) {
 				handler.mouseReleased(e);
@@ -2059,10 +2047,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
 		//handel auxiliary handlers
 		int mods = event.getModifiers();
-		Iterator iterator = this.auxiliaryMouseHandlers.iterator();
-		while (iterator.hasNext()) {
-			AbstractMouseHandler handler = (AbstractMouseHandler) iterator
-					.next();
+		for (AbstractMouseHandler handler : auxiliaryMouseHandlers) {
 			if (handler.getModifier() == 0 || 
 			   (mods & handler.getModifier()) == handler.getModifier()) {
 				handler.mouseClicked(event);
@@ -2119,10 +2104,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 			}
 			//handel auxiliary handlers
 			int mods = e.getModifiers();
-			Iterator iterator = this.auxiliaryMouseHandlers.iterator();
-			while (iterator.hasNext()) {
-				AbstractMouseHandler handler = (AbstractMouseHandler) iterator
-						.next();
+			for (AbstractMouseHandler handler : auxiliaryMouseHandlers) {
 				if (handler.getModifier() == 0 || 
 				   (mods & handler.getModifier()) == handler.getModifier()) {
 					handler.mouseMoved(e);
@@ -2802,7 +2784,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @return An array of listeners.
      */
     @Override
-    public EventListener[] getListeners(Class listenerType) {
+    public <T extends EventListener> T[] getListeners(Class<T> listenerType) {
         if (listenerType == ChartMouseListener.class) {
             // fetch listeners from local storage
             return this.chartMouseListeners.getListeners(listenerType);
