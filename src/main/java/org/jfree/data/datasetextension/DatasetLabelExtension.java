@@ -10,7 +10,7 @@ import org.jfree.data.general.LabelChangeListener;
  * @author zinsmaie
  *
  */
-public interface DatasetLabelExtension extends DatasetExtension, WithChangeListener {
+public interface DatasetLabelExtension extends DatasetExtension, WithChangeListener<LabelChangeListener> {
 	
 	/** default class for not labeled data items. */
 	public final int NO_LABEL = -1;
@@ -27,19 +27,4 @@ public interface DatasetLabelExtension extends DatasetExtension, WithChangeListe
 	 */
 	public void setLabel(DatasetCursor cursor, int label);
 	
-
-	//Listener
-
-	/**
-	 * adds a label change listener to the dataset extension<br>
-	 * <br>
-	 * the listener is triggered if a data item label changes except 
-	 * the notify flag is set to false (@link #setNotify(boolean)).
-	 * In the latter case a change event should be triggered as soon as the notify flag is set to true again.
-	 *  
-	 * @param listener
-	 */
-	public void addLabelChangeListener(LabelChangeListener listener);
-	
-
 }

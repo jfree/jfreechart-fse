@@ -8,7 +8,7 @@ import java.util.Iterator;
  * 
  * @author zinsmaie
  */
-public interface DatasetIterator extends Iterator, Serializable {
+public interface DatasetIterator<E> extends Iterator<E>, Serializable {
 
 	/**
 	 * @return the same as {@link Iterator#next()} but already casted

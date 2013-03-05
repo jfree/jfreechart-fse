@@ -112,7 +112,7 @@ public class SelectionDemo7ScatterRenderer extends ApplicationFrame {
 		
 		
 		//register the plot
-		ext.addSelectionChangeListener(plot);		
+		ext.addChangeListener(plot);		
 		
 		//illustrates the usage of a shape item rendering strategy
 		final CategoryCursor cursor = new CategoryCursor();

@@ -169,7 +169,7 @@ public class SelectionDemo5Category extends ApplicationFrame implements Selectio
 			IRSUtilities.setSelectedItemPaint(renderer, ext, Color.WHITE);
 			
 			//register plot as selection change listener
-			ext.addSelectionChangeListener(plot);
+			ext.addChangeListener(plot);
 	        
 	        return chart;
 
@@ -180,7 +180,7 @@ public class SelectionDemo5Category extends ApplicationFrame implements Selectio
 			this.dataset = createDataset();
 			//extend dataset and add selection change listener for the demo
 			DatasetSelectionExtension datasetExtension = new CategoryDatasetSelectionExtension(this.dataset);	
-			datasetExtension.addSelectionChangeListener(this);
+			datasetExtension.addChangeListener(this);
 			
 			//standard setup
 			JFreeChart chart = createChart(this.dataset, datasetExtension);

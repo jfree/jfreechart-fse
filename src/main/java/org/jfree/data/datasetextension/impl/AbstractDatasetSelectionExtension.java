@@ -1,7 +1,5 @@
 package org.jfree.data.datasetextension.impl;
 
-import java.util.EventListener;
-
 import javax.swing.event.EventListenerList;
 
 import org.jfree.data.datasetextension.DatasetExtension;
@@ -51,9 +49,9 @@ public abstract class AbstractDatasetSelectionExtension implements DatasetSelect
     }
     
     /** 
-     * {@link DatasetSelectionExtension#addSelectionChangeListener(org.jfree.data.event.LabelChangeListener)
+     * {@link DatasetSelectionExtension#addChangeListener(org.jfree.data.general.SelectionChangeListener)
      */
-    public void addSelectionChangeListener(SelectionChangeListener listener) {
+    public void addChangeListener(SelectionChangeListener listener) {
     	this.notify = true;
    		this.listenerList.add(SelectionChangeListener.class, listener);
     }
@@ -61,9 +59,8 @@ public abstract class AbstractDatasetSelectionExtension implements DatasetSelect
     /**
 	 * {@link WithChangeListener#removeChangeListener(EventListener))
      */
-    public void removeChangeListener(EventListener listener) {
-    	//TODO use generics for the listener system and clean this up when moving the code to 1.6
-   		this.listenerList.remove(SelectionChangeListener.class, (SelectionChangeListener)listener);
+    public void removeChangeListener(SelectionChangeListener listener) {
+   		this.listenerList.remove(SelectionChangeListener.class, listener);
     }
 
 

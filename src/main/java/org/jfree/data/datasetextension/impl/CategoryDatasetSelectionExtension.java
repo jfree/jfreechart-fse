@@ -55,7 +55,7 @@ public class CategoryDatasetSelectionExtension extends AbstractDatasetSelectionE
 	 */
 	public CategoryDatasetSelectionExtension(CategoryDataset dataset, SelectionChangeListener initialListener) {
 		super(dataset);
-		addSelectionChangeListener(initialListener);
+		addChangeListener(initialListener);
 	}
 
 	/**

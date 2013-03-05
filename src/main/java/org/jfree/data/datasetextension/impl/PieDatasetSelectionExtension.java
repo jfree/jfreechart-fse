@@ -48,7 +48,7 @@ public class PieDatasetSelectionExtension extends AbstractDatasetSelectionExtens
 	 */
 	public PieDatasetSelectionExtension(PieDataset dataset, SelectionChangeListener initialListener) {
 		super(dataset);
-		addSelectionChangeListener(initialListener);
+		addChangeListener(initialListener);
 	}
 	
 

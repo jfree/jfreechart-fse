@@ -108,7 +108,7 @@ public class SelectionDemo6Pie extends ApplicationFrame implements SelectionChan
 		//pie plots done use abstract renderers need to react to selection on our own
 		final PieCursor cursor = new PieCursor();
 
-		ext.addSelectionChangeListener(new SelectionChangeListener() {
+		ext.addChangeListener(new SelectionChangeListener() {
 			public void selectionChanged(SelectionChangeEvent event) {				
 				for (int i = 0; i < dataset.getItemCount(); i++) {
 					cursor.setPosition(dataset.getKey(i));
@@ -129,7 +129,7 @@ public class SelectionDemo6Pie extends ApplicationFrame implements SelectionChan
 		this.dataset = createDataset();
 		//extend dataset and add selection change listener for the demo
 		DatasetSelectionExtension datasetExtension = new PieDatasetSelectionExtension(this.dataset);
-		datasetExtension.addSelectionChangeListener(this);
+		datasetExtension.addChangeListener(this);
 		
 		//standard setup
 		JFreeChart chart = createChart(this.dataset, datasetExtension);

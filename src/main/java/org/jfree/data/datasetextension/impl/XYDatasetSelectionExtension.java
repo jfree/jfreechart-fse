@@ -52,7 +52,7 @@ public class XYDatasetSelectionExtension extends
 	public XYDatasetSelectionExtension(XYDataset dataset,
 			SelectionChangeListener initialListener) {
 		super(dataset);
-		addSelectionChangeListener(initialListener);
+		addChangeListener(initialListener);
 	}
 
 	
