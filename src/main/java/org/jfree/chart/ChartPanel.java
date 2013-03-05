@@ -560,6 +560,38 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 	 * @since 1.0.14
 	 */
 	private ZoomHandler zoomHandler;
+	
+
+
+	/**
+	 * The selection shape (may be <code>null</code>).
+	 * 
+	 * @since
+	 */
+	private Shape selectionShape;
+	
+	/**
+	 * The selection fill paint (may be <code>null</code>).
+	 * 
+	 * @since 
+	 */
+	private Paint selectionFillPaint;
+
+	/**
+	 * The selection outline paint
+	 * 
+	 * @since 
+	 */
+	private Paint selectionOutlinePaint = Color.darkGray;
+
+	/**
+	 * The selection outline stroke
+	 * 
+	 * @since 
+	 */
+	private transient Stroke selectionOutlineStroke = new BasicStroke(1.0f,
+			BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 4.0f, new float[] {
+					3.0f, 3.0f }, 0.0f);
 
     /**
      * Constructs a panel that displays the specified chart.
@@ -1920,22 +1952,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     }
 
     /**
-     * Returns a point based on (x, y) but constrained to be within the bounds
-     * of the given rectangle.  This method could be moved to JCommon.
-     *
-     * @param x  the x-coordinate.
-     * @param y  the y-coordinate.
-     * @param area  the rectangle (<code>null</code> not permitted).
-     *
-     * @return A point within the rectangle.
-     */
-    private Point2D getPointInRectangle(int x, int y, Rectangle2D area) {
-        double xx = Math.max(area.getMinX(), Math.min(x, area.getMaxX()));
-        double yy = Math.max(area.getMinY(), Math.min(y, area.getMaxY()));
-        return new Point2D.Double(xx, yy);
-    }
-
-    /**
      * Handles a 'mouse dragged' event.
      *
      * @param e  the mouse event.
@@ -3146,13 +3162,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 	}
 
 	/**
-	 * The selection shape (may be <code>null</code>).
-	 * 
-	 * @since
-	 */
-	private Shape selectionShape;
-
-	/**
 	 * Returns the selection shape.
 	 * 
 	 * @return The selection shape (possibly <code>null</code>).
@@ -3178,29 +3187,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 	public void setSelectionShape(Shape shape) {
 		this.selectionShape = shape;
 	}
-
-	/**
-	 * The selection fill paint (may be <code>null</code>).
-	 * 
-	 * @since 
-	 */
-	private Paint selectionFillPaint;
-
-	/**
-	 * The selection outline paint
-	 * 
-	 * @since 
-	 */
-	private Paint selectionOutlinePaint = Color.darkGray;
-
-	/**
-	 * The selection outline stroke
-	 * 
-	 * @since 
-	 */
-	private transient Stroke selectionOutlineStroke = new BasicStroke(1.0f,
-			BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 4.0f, new float[] {
-					3.0f, 3.0f }, 0.0f);
 
 	/**
 	 * Returns the selection fill paint.
@@ -3281,11 +3267,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 	public void setZoomRectangle(Rectangle2D rect) {
 		this.zoomRectangle = rect;
 	}
-
-	/**
-	 * A list of {@link DatasetAndSelection} objects.
-	 */
-	private List selectionStates = new java.util.ArrayList();
 
 	/**
 	 * @return the zoom handler that is installed per default on each chart panel
