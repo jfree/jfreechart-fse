@@ -5,10 +5,10 @@ import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.Iterator;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.entity.CategoryItemEntity;
+import org.jfree.chart.entity.ChartEntity;
 import org.jfree.chart.entity.DataItemEntity;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.PieSectionEntity;
@@ -60,7 +60,9 @@ public class EntitySelectionManager implements SelectionManager {
 
 	// instantiated only once to increase execution speed
 	private final XYCursor xyCursor = new XYCursor();
+
 	private final CategoryCursor categoryCursor = new CategoryCursor();
+
 	private final PieCursor pieCursor = new PieCursor();
 
 	/**
@@ -131,19 +133,15 @@ public class EntitySelectionManager implements SelectionManager {
 			EntityCollection entities = this.renderSourcePanel
 					.getChartRenderingInfo().getEntityCollection();
 
-			Iterator iter = entities.getEntities().iterator();
-
-			while (iter.hasNext()) {
-				Object o = iter.next();
-
-				if (o instanceof DataItemEntity) {
-					DataItemEntity e = (DataItemEntity) o;
+			for (ChartEntity ce : entities.getEntities()) {
+				if (ce instanceof DataItemEntity) {
+					DataItemEntity e = (DataItemEntity) ce;
 
 					// simple check if the entity shape area contains the point
 					if (e.getArea().contains(new Point2D.Double(x, y))) {
 						select(e);
 					}
-				}
+				}				
 			}
 		}
 	}
@@ -175,14 +173,11 @@ public class EntitySelectionManager implements SelectionManager {
 				EntityCollection entities = this.renderSourcePanel
 						.getChartRenderingInfo().getEntityCollection();
 
-				Iterator iter = entities.getEntities().iterator();
+				for (ChartEntity ce : entities.getEntities()) {
 
-				while (iter.hasNext()) {
-					Object o = iter.next();
+					if (ce instanceof DataItemEntity) {
 
-					if (o instanceof DataItemEntity) {
-
-						DataItemEntity e = (DataItemEntity) o;
+						DataItemEntity e = (DataItemEntity) ce;
 						boolean match = false;
 
 						if (e.getArea() instanceof Rectangle2D) {
@@ -251,13 +246,9 @@ public class EntitySelectionManager implements SelectionManager {
 				EntityCollection entities = this.renderSourcePanel
 						.getChartRenderingInfo().getEntityCollection();
 
-				Iterator iter = entities.getEntities().iterator();
-
-				while (iter.hasNext()) {
-					Object o = iter.next();
-
-					if (o instanceof DataItemEntity) {
-						DataItemEntity e = (DataItemEntity) o;
+				for (ChartEntity ce : entities.getEntities()) {
+					if (ce instanceof DataItemEntity) {
+						DataItemEntity e = (DataItemEntity) ce;
 						Area selectionShape = new Area(selection);
 						Area entityShape = new Area(e.getArea());
 
@@ -294,7 +285,7 @@ public class EntitySelectionManager implements SelectionManager {
 		for (int i = 0; i < this.datasets.length; i++) {
 			if (this.extensionManager.supports(this.datasets[i],
 					DatasetSelectionExtension.class)) {
-				DatasetSelectionExtension selectionExtension = (DatasetSelectionExtension) this.extensionManager
+				DatasetSelectionExtension<?> selectionExtension = (DatasetSelectionExtension<?>) this.extensionManager
 						.getExtension(this.datasets[i],
 								DatasetSelectionExtension.class);
 
@@ -394,7 +385,7 @@ public class EntitySelectionManager implements SelectionManager {
 		for (int i = 0; i < this.datasets.length; i++) {
 			if (this.extensionManager.supports(datasets[i],
 					DatasetSelectionExtension.class)) {
-				DatasetSelectionExtension selectionExtension = (DatasetSelectionExtension) this.extensionManager
+				DatasetSelectionExtension<?> selectionExtension = (DatasetSelectionExtension<?>) this.extensionManager
 						.getExtension(datasets[i],
 								DatasetSelectionExtension.class);
 

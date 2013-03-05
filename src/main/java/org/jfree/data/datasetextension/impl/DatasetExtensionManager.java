@@ -2,7 +2,6 @@ package org.jfree.data.datasetextension.impl;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class DatasetExtensionManager implements Serializable {
 	/**
 	 * all separate extensions have to be registered here
 	 */
-	private HashMap registeredExtensions = new HashMap(); 
+	private HashMap<Dataset, List<DatasetExtension>> registeredExtensions = new HashMap<Dataset, List<DatasetExtension>>(); 
 	
 	/**
 	 * Registers a separate dataset extension at the extension manager (the extension is automatically paired
@@ -32,11 +31,11 @@ public class DatasetExtensionManager implements Serializable {
 	 * @param extension 
 	 */
 	public void registerDatasetExtension(DatasetExtension extension) {
-		List extensionList = (List) registeredExtensions.get(extension.getDataset()); 
+		List<DatasetExtension> extensionList = registeredExtensions.get(extension.getDataset()); 
 		if (extensionList != null) {
 			extensionList.add(extension);
 		} else {
-			extensionList = new LinkedList();
+			extensionList = new LinkedList<DatasetExtension>();
 			extensionList.add(extension);
 			registeredExtensions.put(extension.getDataset(), extensionList);
 		}
@@ -46,9 +45,9 @@ public class DatasetExtensionManager implements Serializable {
 	 * @param dataset 
 	 * @param interfaceClass
 	 * @return true if a.) the dataset implements the interface class or b.) a separate object that
-	 * implements the interface for the dataset has been registered. a is allways checked before b
+	 * implements the interface for the dataset has been registered. a is always checked before b
 	 */
-	public boolean supports(Dataset dataset, Class interfaceClass) {
+	public boolean supports(Dataset dataset, Class<? extends DatasetExtension> interfaceClass) {
 		return getExtension(dataset, interfaceClass) != null;
 	}
 	
@@ -59,17 +58,14 @@ public class DatasetExtensionManager implements Serializable {
 	 * supporting implementation could be found i.e. the dataset does not implement the interface itself
 	 * and there no separate implementation has been registered for the dataset
 	 */
-	public Object getExtension(Dataset dataset, Class interfaceClass) {		
+	public DatasetExtension getExtension(Dataset dataset, Class<? extends DatasetExtension> interfaceClass) {		
 		if (interfaceClass.isAssignableFrom(dataset.getClass())) {
 			//the dataset supports the interface
-			return dataset;
+			return interfaceClass.cast(dataset);
 		} else {
-			List extensionList = (List) registeredExtensions.get(dataset);
+			List<DatasetExtension> extensionList = registeredExtensions.get(dataset);
 			if (extensionList != null) {
-				Iterator iter = extensionList.iterator();
-				Object extension;
-				while (iter.hasNext()) {
-					extension = iter.next();
+				for (DatasetExtension extension : extensionList) {
 					if (interfaceClass.isAssignableFrom(extension.getClass())) {
 						//the dataset does not support the extension but
 						//a matching helper object is registered for the dataset

@@ -16,7 +16,7 @@ import org.jfree.data.general.SelectionChangeListener;
  * @author zinsmaie
  *
  */
-public class CategoryDatasetSelectionExtension extends AbstractDatasetSelectionExtension implements IterableSelection {
+public class CategoryDatasetSelectionExtension<ROW_KEY extends Comparable<ROW_KEY>, COLUMN_KEY extends Comparable<COLUMN_KEY>> extends AbstractDatasetSelectionExtension<CategoryCursor<ROW_KEY, COLUMN_KEY>, CategoryDataset> implements IterableSelection {
 
 	/** a generated serial id */
 	private static final long serialVersionUID = 5138359490302459066L;
@@ -61,35 +61,24 @@ public class CategoryDatasetSelectionExtension extends AbstractDatasetSelectionE
 	/**
 	 * {@link DatasetSelectionExtension#isSelected(DatasetCursor)}
 	 */
-	public boolean isSelected(DatasetCursor cursor) {
-		if (cursor instanceof CategoryCursor) {
-			//anything else is an implementation error
-			CategoryCursor c = (CategoryCursor) cursor;
-			if (TRUE == this.selectionData.getValue(c.rowKey, c.columnKey)) {
-				return true;
-			} else {
-				return false;
-			}
-		} 
-		
-		//implementation error
-		return false;
+	public boolean isSelected(CategoryCursor<ROW_KEY, COLUMN_KEY> cursor) {
+		if (TRUE == this.selectionData.getValue(cursor.rowKey, cursor.columnKey)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
 	 * {@link DatasetSelectionExtension#setSelected(DatasetCursor, boolean)}
 	 */
-	public void setSelected(DatasetCursor cursor, boolean selected) {
-		if (cursor instanceof CategoryCursor) {
-			//anything else is an implementation error
-			CategoryCursor c = (CategoryCursor) cursor;
-			if (selected) {
-				selectionData.setValue(TRUE, c.rowKey, c.columnKey);
-			} else {
-				selectionData.setValue(FALSE, c.rowKey, c.columnKey);
-			}
-			notifiyIfRequired();
-		} 
+	public void setSelected(CategoryCursor<ROW_KEY, COLUMN_KEY> cursor, boolean selected) {
+		if (selected) {
+			selectionData.setValue(TRUE, cursor.rowKey, cursor.columnKey);
+		} else {
+			selectionData.setValue(FALSE, cursor.rowKey, cursor.columnKey);
+		}
+		notifiyIfRequired();
 	}
 
 	/**
@@ -100,7 +89,7 @@ public class CategoryDatasetSelectionExtension extends AbstractDatasetSelectionE
 	}
 	
 	/**
-	 * a change of the underlying dataset clears the slection and reinitializes it
+	 * a change of the underlying dataset clears the selection and reinitializes it
 	 */
 	public void datasetChanged(DatasetChangeEvent event) {
 		initSelection();

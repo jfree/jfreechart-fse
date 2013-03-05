@@ -16,7 +16,7 @@ import org.jfree.data.general.SelectionChangeListener;
  * @author zinsmaie
  *
  */
-public class PieDatasetSelectionExtension extends AbstractDatasetSelectionExtension implements IterableSelection {
+public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>> extends AbstractDatasetSelectionExtension<PieCursor<KEY>, PieDataset> implements IterableSelection {
 
 	/** a generated serial id */
 	private static final long serialVersionUID = -1735271052194147081L;
@@ -26,7 +26,7 @@ public class PieDatasetSelectionExtension extends AbstractDatasetSelectionExtens
 	
 	
 	/** storage for the selection attributes of the data items. */
-	private HashMap selectionData;
+	private HashMap<KEY, Boolean> selectionData;
 	
 	
 	/**
@@ -55,34 +55,21 @@ public class PieDatasetSelectionExtension extends AbstractDatasetSelectionExtens
 	/**
 	 * {@link DatasetSelectionExtension#isSelected(DatasetCursor)}
 	 */
-	public boolean isSelected(DatasetCursor cursor) {
-		if (cursor instanceof PieCursor) {
-			//anything else is an implementation error
-			PieCursor c = (PieCursor) cursor;		
-			
-			if (Boolean.TRUE.equals(this.selectionData.get(c.key))) {
-				return true;
-			} else {
-				return false;
-			}
-		} 
-		
-		//implementation error
-		return false;
+	public boolean isSelected(PieCursor<KEY> cursor) {
+		if (Boolean.TRUE.equals(this.selectionData.get(cursor.key))) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
 	 * {@link DatasetSelectionExtension#setSelected(DatasetCursor, boolean)}
 	 */
-	public void setSelected(DatasetCursor cursor, boolean selected) {
-		if (cursor instanceof PieCursor) {
-			//anything else is an implementation error
-			PieCursor c = (PieCursor) cursor;
-			if (selected) {
-				this.selectionData.put(c.key, new Boolean(selected));
-			}
-			notifiyIfRequired();
-		} 
+	public void setSelected(PieCursor<KEY> cursor, boolean selected) {
+		if (selected) {
+			this.selectionData.put(cursor.key, new Boolean(selected));
+		}
 	}
 
 	/**
@@ -104,14 +91,14 @@ public class PieDatasetSelectionExtension extends AbstractDatasetSelectionExtens
 	 * inits the selection attribute storage and sets all data items to unselected
 	 */
 	private void initSelection() {
-		this.selectionData = new HashMap();
-		Iterator iter = this.dataset.getKeys().iterator();
-		
-		while (iter.hasNext()) {
-			//all keys are comparable
-			Comparable key = (Comparable) iter.next();
-			this.selectionData.put(key, new Boolean(false));
+		this.selectionData = new HashMap<KEY, Boolean>();
+
+		//we have to assume that the dataset key type matches the cursor key type
+		//this could be improved by typing the dataset classes
+		for (Comparable key : this.dataset.getKeys()) {
+			this.selectionData.put((KEY)key, new Boolean(false));
 		}
+
 		notifiyIfRequired();
 	}
 	

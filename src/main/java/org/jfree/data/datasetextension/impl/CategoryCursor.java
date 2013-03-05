@@ -6,16 +6,16 @@ import org.jfree.data.datasetextension.DatasetCursor;
  * A DatasetCursor implementation for category datasets.
  * @author zinsmaie
  */
-public class CategoryCursor implements DatasetCursor {
+public class CategoryCursor<ROW_KEY extends Comparable<ROW_KEY>, COLUMN_KEY extends Comparable<COLUMN_KEY>> implements DatasetCursor {
 
 	/** a generated serial id. */
 	private static final long serialVersionUID = 7086987028899208483L;
 	
 	/** stores the key of the row position */
-	public Comparable rowKey;
+	public ROW_KEY rowKey;
 	
 	/** stores the key of the column position */
-	public Comparable columnKey;
+	public COLUMN_KEY columnKey;
 
 	/**
 	 * creates a cursor without assigned position (the cursor will only
@@ -29,7 +29,7 @@ public class CategoryCursor implements DatasetCursor {
 	 * @param rowKey
 	 * @param columnKey
 	 */
-	public CategoryCursor(Comparable rowKey, Comparable columnKey) {
+	public CategoryCursor(ROW_KEY rowKey, COLUMN_KEY columnKey) {
 		this.rowKey = rowKey;
 		this.columnKey = columnKey;
 	}
@@ -39,7 +39,7 @@ public class CategoryCursor implements DatasetCursor {
 	 * @param rowKey
 	 * @param columnKey
 	 */
-	public void setPosition(Comparable rowKey, Comparable columnKey) {
+	public void setPosition(ROW_KEY rowKey, COLUMN_KEY columnKey) {
 		this.rowKey = rowKey;
 		this.columnKey = columnKey;
 	}
@@ -61,6 +61,8 @@ public class CategoryCursor implements DatasetCursor {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
+		
+		@SuppressWarnings("rawtypes")
 		CategoryCursor other = (CategoryCursor) obj;
 		if (columnKey == null) {
 			if (other.columnKey != null)

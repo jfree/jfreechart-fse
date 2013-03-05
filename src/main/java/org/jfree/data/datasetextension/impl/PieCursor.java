@@ -6,13 +6,13 @@ import org.jfree.data.datasetextension.DatasetCursor;
  * A DatasetCursor implementation for pie datasets.
  * @author zinsmaie
  */
-public class PieCursor implements DatasetCursor {
+public class PieCursor<KEY extends Comparable<KEY>> implements DatasetCursor {
 
 	/** a generated serial id	 */
 	private static final long serialVersionUID = -7031433882367850307L;
 	
 	/** stores the key of the section */
-	public Comparable key;
+	public KEY key;
 	
 	/**
 	 * creates a cursor without assigned position (the cursor will only
@@ -25,7 +25,7 @@ public class PieCursor implements DatasetCursor {
 	 * Default pie cursor constructor. Sets the cursor position to the specified value.
 	 * @param key
 	 */
-	public PieCursor(Comparable key) {
+	public PieCursor(KEY key) {
 		this.key = key;
 	}
 
@@ -33,7 +33,7 @@ public class PieCursor implements DatasetCursor {
 	 * sets the cursor position to the specified value
 	 * @param key
 	 */
-	public void setPosition(Comparable key) {
+	public void setPosition(KEY key) {
 		this.key = key;
 	}
 
@@ -53,6 +53,7 @@ public class PieCursor implements DatasetCursor {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
+		@SuppressWarnings("rawtypes")
 		PieCursor other = (PieCursor) obj;
 		if (key == null) {
 			if (other.key != null)

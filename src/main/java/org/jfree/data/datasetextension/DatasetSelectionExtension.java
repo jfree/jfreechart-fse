@@ -9,19 +9,19 @@ import org.jfree.data.general.SelectionChangeListener;
  * @author zinsmaie
  *
  */
-public interface DatasetSelectionExtension extends DatasetExtension, WithChangeListener<SelectionChangeListener> {
+public interface DatasetSelectionExtension<CURSOR extends DatasetCursor> extends DatasetExtension, WithChangeListener<SelectionChangeListener> {
 	
 	/**
 	 * @param cursor specifies the position of the data item
 	 * @return true if the data item is selected
 	 */
-	public boolean isSelected(DatasetCursor cursor);
+	public boolean isSelected(CURSOR cursor);
 	
 	/**
 	 * sets the selection state of a data item
 	 * @param cursor specifies the position of the data item
 	 */
-	public void setSelected(DatasetCursor cursor, boolean selected);
+	public void setSelected(CURSOR cursor, boolean selected);
 	
 	/**
 	 * sets all data items to unselected

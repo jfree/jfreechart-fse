@@ -2,7 +2,6 @@ package org.jfree.data.datasetextension.impl;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import org.jfree.data.datasetextension.DatasetCursor;
 import org.jfree.data.datasetextension.DatasetIterator;
@@ -18,7 +17,7 @@ import org.jfree.data.xy.XYDataset;
  *
  */
 public class XYDatasetSelectionExtension extends
-		AbstractDatasetSelectionExtension implements IterableSelection {
+		AbstractDatasetSelectionExtension<XYCursor, XYDataset> implements IterableSelection {
 
 	/** a generated serial id */
 	private static final long serialVersionUID = 4859712483757720877L;
@@ -27,13 +26,14 @@ public class XYDatasetSelectionExtension extends
 	private XYDataset dataset;
 	
 	/** storage for the selection attributes of the data items. */
-	private List[] selectionData;
+	private ArrayList<Boolean>[] selectionData;
 
 	
 	/**
 	 * Creates a separate selection extension for the specified dataset.
 	 * @param dataset
 	 */
+	@SuppressWarnings("unchecked") //can't instantiate selection data with correct type (array limits)
 	public XYDatasetSelectionExtension(XYDataset dataset) {
 		super(dataset);
 		this.dataset = dataset;
@@ -67,31 +67,21 @@ public class XYDatasetSelectionExtension extends
 	/**
 	 * {@link DatasetSelectionExtension#isSelected(DatasetCursor)}
 	 */
-	public boolean isSelected(DatasetCursor cursor) {
-		if (cursor instanceof XYCursor) {
-			// anything else is an implementation error
-			XYCursor c = (XYCursor) cursor;
-			if (((Boolean) selectionData[c.series].get(c.item)).booleanValue()) {
-				return true;
-			} else {
-				return false;
-			}
+	public boolean isSelected(XYCursor cursor) {
+		if (selectionData[cursor.series].get(cursor.item)) {
+			return true;
+		} else {
+			return false;
 		}
-
-		// implementation error
-		return false;
 	}
 
 	/**
 	 * {@link DatasetSelectionExtension#setSelected(DatasetCursor, boolean)}
 	 */
-	public void setSelected(DatasetCursor cursor, boolean selected) {
-		if (cursor instanceof XYCursor) {
-			// anything else is an implementation error
-			XYCursor c = (XYCursor) cursor;
-			selectionData[c.series].set(c.item, new Boolean(selected));
+	public void setSelected(XYCursor cursor, boolean selected) {
+			selectionData[cursor.series].set(cursor.item, new Boolean(selected));
+			
 			notifiyIfRequired();
-		}
 	}
 
 	/**
@@ -106,7 +96,7 @@ public class XYDatasetSelectionExtension extends
 	 */
 	private void initSelection() {
 		for (int i = 0; i < dataset.getSeriesCount(); i++) {
-			selectionData[i] = new ArrayList(dataset.getItemCount(i));
+			selectionData[i] = new ArrayList<Boolean>(dataset.getItemCount(i));
 			for (int j = 0; j < dataset.getItemCount(i); j++) {
 				selectionData[i].add(new Boolean(false));
 			}
