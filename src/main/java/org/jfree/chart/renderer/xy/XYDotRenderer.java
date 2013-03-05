@@ -56,6 +56,7 @@ package org.jfree.chart.renderer.xy;
 
 import java.awt.Graphics2D;
 import java.awt.Paint;
+import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -65,6 +66,7 @@ import java.io.ObjectOutputStream;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -271,6 +273,22 @@ public class XYDotRenderer extends AbstractXYItemRenderer
             int rangeAxisIndex = plot.getRangeAxisIndex(rangeAxis);
             updateCrosshairValues(crosshairState, x, y, domainAxisIndex,
                     rangeAxisIndex, transX, transY, orientation);
+
+			// collecting the entity info
+			if (info != null) {
+				EntityCollection entities = info.getOwner().getEntityCollection();
+
+				if (orientation == PlotOrientation.HORIZONTAL) {
+					Shape area = new Rectangle((int) transY, (int) transX,
+							this.dotHeight, this.dotWidth);
+					addEntity(entities, area, dataset, series, item, transY, transX);
+				} else if (orientation == PlotOrientation.VERTICAL) {
+					Shape area = new Rectangle((int) transX, (int) transY,
+							this.dotWidth, this.dotHeight);
+					addEntity(entities, area, dataset, series, item, transX, transY);
+				}
+			}
+
         }
 
     }

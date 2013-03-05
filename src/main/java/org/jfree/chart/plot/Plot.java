@@ -184,6 +184,10 @@ import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.general.DatasetGroup;
+import org.jfree.data.general.LabelChangeEvent;
+import org.jfree.data.general.LabelChangeListener;
+import org.jfree.data.general.SelectionChangeEvent;
+import org.jfree.data.general.SelectionChangeListener;
 
 /**
  * The base class for all plots in JFreeChart.  The {@link JFreeChart} class
@@ -191,7 +195,7 @@ import org.jfree.data.general.DatasetGroup;
  * provides facilities common to most plot types.
  */
 public abstract class Plot implements AxisChangeListener,
-        DatasetChangeListener, AnnotationChangeListener, MarkerChangeListener,
+        DatasetChangeListener, SelectionChangeListener, LabelChangeListener, AnnotationChangeListener, MarkerChangeListener,
         LegendItemSource, PublicCloneable, Cloneable, Serializable {
 
     /** For serialization. */
@@ -1239,6 +1243,34 @@ public abstract class Plot implements AxisChangeListener,
         PlotChangeEvent newEvent = new PlotChangeEvent(this);
         newEvent.setType(ChartChangeEventType.DATASET_UPDATED);
         notifyListeners(newEvent);
+    }
+
+    /**
+     * Receives notification of a change to the selection state of the plot's data
+     * <P>
+     * The plot reacts by passing on a plot change event to all registered
+     * listeners.
+     *
+     * @param event  information about the event (not used here).
+     */
+    public void selectionChanged(SelectionChangeEvent event) {
+        PlotChangeEvent newEvent = new PlotChangeEvent(this);
+        newEvent.setType(ChartChangeEventType.GENERAL);
+        notifyListeners(newEvent);    	
+    }
+    
+    /**
+     * Receives notification of a change to the label information of the plot's data
+     * <P>
+     * The plot reacts by passing on a plot change event to all registered
+     * listeners.
+     *
+     * @param event  information about the event (not used here).
+     */
+    public void labelChanged(LabelChangeEvent event) {
+        PlotChangeEvent newEvent = new PlotChangeEvent(this);
+        newEvent.setType(ChartChangeEventType.GENERAL);
+        notifyListeners(newEvent);    	
     }
 
     /**

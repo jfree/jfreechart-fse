@@ -60,12 +60,13 @@ import java.io.Serializable;
 
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.data.general.Dataset;
 import org.jfree.data.general.PieDataset;
 
 /**
  * A chart entity that represents one section within a pie plot.
  */
-public class PieSectionEntity extends ChartEntity
+public class PieSectionEntity extends DataItemEntity
                               implements Serializable {
 
     /** For serialization. */
@@ -117,6 +118,13 @@ public class PieSectionEntity extends ChartEntity
      */
     public PieDataset getDataset() {
         return this.dataset;
+    }
+
+    /**
+     * @see DataItemEntity#getGeneralDataset() 
+     */
+    public Dataset getGeneralDataset() {
+    	return this.dataset;
     }
 
     /**

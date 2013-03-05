@@ -173,9 +173,9 @@ package org.jfree.chart;
 
 import java.awt.AWTEvent;
 import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Composite;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -185,6 +185,8 @@ import java.awt.Insets;
 import java.awt.Paint;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.Toolkit;
 import java.awt.Transparency;
 import java.awt.datatransfer.Clipboard;
@@ -195,6 +197,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -208,6 +211,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.EventListener;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -221,7 +225,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.event.EventListenerList;
 
-import org.jfree.chart.ui.ExtensionFileFilter;
 import org.jfree.chart.editor.ChartEditor;
 import org.jfree.chart.editor.ChartEditorManager;
 import org.jfree.chart.entity.ChartEntity;
@@ -232,12 +235,16 @@ import org.jfree.chart.event.ChartProgressEvent;
 import org.jfree.chart.event.ChartProgressListener;
 import org.jfree.chart.event.OverlayChangeEvent;
 import org.jfree.chart.event.OverlayChangeListener;
+import org.jfree.chart.panel.AbstractMouseHandler;
 import org.jfree.chart.panel.Overlay;
-import org.jfree.chart.plot.Pannable;
+import org.jfree.chart.panel.PanHandler;
+import org.jfree.chart.panel.ZoomHandler;
+import org.jfree.chart.panel.selectionhandler.SelectionManager;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.Zoomable;
+import org.jfree.chart.ui.ExtensionFileFilter;
 import org.jfree.chart.util.ResourceBundleWrapper;
 import org.jfree.chart.util.SerialUtilities;
 
@@ -515,27 +522,44 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                     "org.jfree.chart.LocalizationBundle");
 
     /**
-     * Temporary storage for the width and height of the chart
-     * drawing area during panning.
-     */
-    private double panW, panH;
-
-    /** The last mouse position during panning. */
-    private Point panLast;
-
-    /**
-     * The mask for mouse events to trigger panning.
-     *
-     * @since 1.0.13
-     */
-    private int panMask = InputEvent.CTRL_MASK;
-
-    /**
      * A list of overlays for the panel.
      *
      * @since 1.0.13
      */
     private List<Overlay> overlays;
+
+    //adding mouse handlers to support selection ...
+    
+	private SelectionManager selectionManager;
+
+		/**
+	 * The mouse handlers that are available to deal with mouse events.
+	 * 
+	 * @since 1.0.14
+	 */
+	private List availableLiveMouseHandlers;
+
+	/**
+	 * The current "live" mouse handler. One of the handlers from the
+	 * 'availableMouseHandlers' list will be selected (typically in the
+	 * mousePressed() method) to be the live handler.
+	 * 
+	 * @since 1.0.14
+	 */
+	private AbstractMouseHandler liveMouseHandler;
+
+	/**
+	 * A list of auxiliary mouse handlers that will be called after the live
+	 * handler has done it's work.
+	 */
+	private List auxiliaryMouseHandlers;
+
+	/**
+	 * The zoom handler that is installed by default.
+	 * 
+	 * @since 1.0.14
+	 */
+	private ZoomHandler zoomHandler;
 
     /**
      * Constructs a panel that displays the specified chart.
@@ -737,16 +761,25 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         this.zoomOutlinePaint = Color.BLUE;
         this.zoomFillPaint = new Color(0, 0, 255, 63);
 
-        this.panMask = InputEvent.CTRL_MASK;
+		this.overlays = new java.util.ArrayList();
+
+		this.availableLiveMouseHandlers = new java.util.ArrayList();
+
+		this.zoomHandler = new ZoomHandler();
+		this.availableLiveMouseHandlers.add(zoomHandler);
+
+		PanHandler panHandler = new PanHandler();
+		int panMask = InputEvent.CTRL_MASK;
         // for MacOSX we can't use the CTRL key for mouse drags, see:
         // http://developer.apple.com/qa/qa2004/qa1362.html
         String osName = System.getProperty("os.name").toLowerCase();
         if (osName.startsWith("mac os x")) {
-            this.panMask = InputEvent.ALT_MASK;
+            panMask = InputEvent.ALT_MASK;
         }
-
-        this.overlays = new java.util.ArrayList<Overlay>();
-    }
+		panHandler.setModifier(panMask);
+		this.availableLiveMouseHandlers.add(panHandler);
+		this.auxiliaryMouseHandlers = new java.util.ArrayList();
+	}
 
     /**
      * Returns the chart contained in the panel.
@@ -1651,7 +1684,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         // we use XOR so we can XOR the rectangle away again without redrawing
         // the chart
         drawZoomRectangle(g2, !this.useBuffer);
-
+		drawSelectionShape(g2, !this.useBuffer);
         g2.dispose();
 
         this.anchor = null;
@@ -1776,6 +1809,23 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
             this.ownToolTipDelaysActive = true;
         }
+
+		if (this.liveMouseHandler != null) {
+			this.liveMouseHandler.mouseEntered(e);
+		}
+
+		//handel auxiliary handlers
+		int mods = e.getModifiers();
+		Iterator iterator = this.auxiliaryMouseHandlers.iterator();
+		while (iterator.hasNext()) {
+			AbstractMouseHandler handler = (AbstractMouseHandler) iterator
+					.next();
+			if (handler.getModifier() == 0 || 
+			   (mods & handler.getModifier()) == handler.getModifier()) {
+				handler.mouseEntered(e);
+			}
+		}
+
     }
 
     /**
@@ -1794,6 +1844,22 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             ttm.setReshowDelay(this.originalToolTipReshowDelay);
             ttm.setDismissDelay(this.originalToolTipDismissDelay);
             this.ownToolTipDelaysActive = false;
+		}
+
+		if (this.liveMouseHandler != null) {
+			this.liveMouseHandler.mouseExited(e);
+		}
+
+		//handel auxiliary handlers
+		int mods = e.getModifiers();
+		Iterator iterator = this.auxiliaryMouseHandlers.iterator();
+		while (iterator.hasNext()) {
+			AbstractMouseHandler handler = (AbstractMouseHandler) iterator
+					.next();
+			if (handler.getModifier() == 0 || 
+			   (mods & handler.getModifier()) == handler.getModifier()) {
+				handler.mouseExited(e);
+			}
         }
     }
 
@@ -1807,44 +1873,48 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        if (this.chart == null) {
-            return;
-        }
-        Plot plot = this.chart.getPlot();
         int mods = e.getModifiers();
-        if ((mods & this.panMask) == this.panMask) {
-            // can we pan this plot?
-            if (plot instanceof Pannable) {
-                Pannable pannable = (Pannable) plot;
-                if (pannable.isDomainPannable() || pannable.isRangePannable()) {
-                    Rectangle2D screenDataArea = getScreenDataArea(e.getX(),
-                            e.getY());
-                    if (screenDataArea != null && screenDataArea.contains(
-                            e.getPoint())) {
-                        this.panW = screenDataArea.getWidth();
-                        this.panH = screenDataArea.getHeight();
-                        this.panLast = e.getPoint();
-                        setCursor(Cursor.getPredefinedCursor(
-                                Cursor.MOVE_CURSOR));
-                    }
-                }
-                // the actual panning occurs later in the mouseDragged()
-                // method
+
+		if (e.isPopupTrigger()) {
+			if (this.popup != null) {
+				displayPopupMenu(e.getX(), e.getY());
             }
+			return;
         }
-        else if (this.zoomRectangle == null) {
-            Rectangle2D screenDataArea = getScreenDataArea(e.getX(), e.getY());
-            if (screenDataArea != null) {
-                this.zoomPoint = getPointInRectangle(e.getX(), e.getY(),
-                        screenDataArea);
-            }
-            else {
-                this.zoomPoint = null;
-            }
-            if (e.isPopupTrigger()) {
-                if (this.popup != null) {
-                    displayPopupMenu(e.getX(), e.getY());
-                }
+
+		if (this.liveMouseHandler != null) {
+			this.liveMouseHandler.mousePressed(e);
+		} else {
+			AbstractMouseHandler h = null;
+			boolean found = false;
+			Iterator iterator = this.availableLiveMouseHandlers.iterator();
+			AbstractMouseHandler nomod = null;
+			while (iterator.hasNext() && !found) {
+				h = (AbstractMouseHandler) iterator.next();
+				if (h.getModifier() == 0 && nomod == null) {
+					nomod = h;
+				} else {
+					found = (mods & h.getModifier()) == h.getModifier();
+				}
+			}
+			if (!found && nomod != null) {
+				h = nomod;
+				found = true;
+			}
+			if (found) {
+				this.liveMouseHandler = h;
+				this.liveMouseHandler.mousePressed(e);
+			}
+        }
+
+		//handel auxiliary handlers
+		Iterator iterator = this.auxiliaryMouseHandlers.iterator();
+		while (iterator.hasNext()) {
+			AbstractMouseHandler handler = (AbstractMouseHandler) iterator
+					.next();
+			if (handler.getModifier() == 0 || 
+			   (mods & handler.getModifier()) == handler.getModifier()) {
+				handler.mousePressed(e);
             }
         }
     }
@@ -1878,93 +1948,21 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             return;
         }
 
-        // handle panning if we have a start point
-        if (this.panLast != null) {
-            double dx = e.getX() - this.panLast.getX();
-            double dy = e.getY() - this.panLast.getY();
-            if (dx == 0.0 && dy == 0.0) {
-                return;
+		if (this.liveMouseHandler != null) {
+			this.liveMouseHandler.mouseDragged(e);
+		}
+
+		//handel auxiliary handlers
+		int mods = e.getModifiers();
+		Iterator iterator = this.auxiliaryMouseHandlers.iterator();
+		while (iterator.hasNext()) {
+			AbstractMouseHandler handler = (AbstractMouseHandler) iterator
+					.next();
+			if (handler.getModifier() == 0 || 
+			   (mods & handler.getModifier()) == handler.getModifier()) {
+				handler.mouseDragged(e);
             }
-            double wPercent = -dx / this.panW;
-            double hPercent = dy / this.panH;
-            boolean old = this.chart.getPlot().isNotify();
-            this.chart.getPlot().setNotify(false);
-            Pannable p = (Pannable) this.chart.getPlot();
-            if (p.getOrientation() == PlotOrientation.VERTICAL) {
-                p.panDomainAxes(wPercent, this.info.getPlotInfo(),
-                        this.panLast);
-                p.panRangeAxes(hPercent, this.info.getPlotInfo(),
-                        this.panLast);
-            }
-            else {
-                p.panDomainAxes(hPercent, this.info.getPlotInfo(),
-                        this.panLast);
-                p.panRangeAxes(wPercent, this.info.getPlotInfo(),
-                        this.panLast);
-            }
-            this.panLast = e.getPoint();
-            this.chart.getPlot().setNotify(old);
-            return;
         }
-
-        // if no initial zoom point was set, ignore dragging...
-        if (this.zoomPoint == null) {
-            return;
-        }
-        Graphics2D g2 = (Graphics2D) getGraphics();
-
-        // erase the previous zoom rectangle (if any).  We only need to do
-        // this is we are using XOR mode, which we do when we're not using
-        // the buffer (if there is a buffer, then at the end of this method we
-        // just trigger a repaint)
-        if (!this.useBuffer) {
-            drawZoomRectangle(g2, true);
-        }
-
-        boolean hZoom;
-        boolean vZoom;
-        if (this.orientation == PlotOrientation.HORIZONTAL) {
-            hZoom = this.rangeZoomable;
-            vZoom = this.domainZoomable;
-        }
-        else {
-            hZoom = this.domainZoomable;
-            vZoom = this.rangeZoomable;
-        }
-        Rectangle2D scaledDataArea = getScreenDataArea(
-                (int) this.zoomPoint.getX(), (int) this.zoomPoint.getY());
-        if (hZoom && vZoom) {
-            // selected rectangle shouldn't extend outside the data area...
-            double xmax = Math.min(e.getX(), scaledDataArea.getMaxX());
-            double ymax = Math.min(e.getY(), scaledDataArea.getMaxY());
-            this.zoomRectangle = new Rectangle2D.Double(
-                    this.zoomPoint.getX(), this.zoomPoint.getY(),
-                    xmax - this.zoomPoint.getX(), ymax - this.zoomPoint.getY());
-        }
-        else if (hZoom) {
-            double xmax = Math.min(e.getX(), scaledDataArea.getMaxX());
-            this.zoomRectangle = new Rectangle2D.Double(
-                    this.zoomPoint.getX(), scaledDataArea.getMinY(),
-                    xmax - this.zoomPoint.getX(), scaledDataArea.getHeight());
-        }
-        else if (vZoom) {
-            double ymax = Math.min(e.getY(), scaledDataArea.getMaxY());
-            this.zoomRectangle = new Rectangle2D.Double(
-                    scaledDataArea.getMinX(), this.zoomPoint.getY(),
-                    scaledDataArea.getWidth(), ymax - this.zoomPoint.getY());
-        }
-
-        // Draw the new zoom rectangle...
-        if (this.useBuffer) {
-            repaint();
-        }
-        else {
-            // with no buffer, we use XOR to draw the rectangle "over" the
-            // chart...
-            drawZoomRectangle(g2, true);
-        }
-        g2.dispose();
-
     }
 
     /**
@@ -1977,94 +1975,28 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     @Override
     public void mouseReleased(MouseEvent e) {
 
-        // if we've been panning, we need to reset now that the mouse is
-        // released...
-        if (this.panLast != null) {
-            this.panLast = null;
-            setCursor(Cursor.getDefaultCursor());
-        }
-
-        else if (this.zoomRectangle != null) {
-            boolean hZoom;
-            boolean vZoom;
-            if (this.orientation == PlotOrientation.HORIZONTAL) {
-                hZoom = this.rangeZoomable;
-                vZoom = this.domainZoomable;
-            }
-            else {
-                hZoom = this.domainZoomable;
-                vZoom = this.rangeZoomable;
-            }
-
-            boolean zoomTrigger1 = hZoom && Math.abs(e.getX()
-                - this.zoomPoint.getX()) >= this.zoomTriggerDistance;
-            boolean zoomTrigger2 = vZoom && Math.abs(e.getY()
-                - this.zoomPoint.getY()) >= this.zoomTriggerDistance;
-            if (zoomTrigger1 || zoomTrigger2) {
-                if ((hZoom && (e.getX() < this.zoomPoint.getX()))
-                    || (vZoom && (e.getY() < this.zoomPoint.getY()))) {
-                    restoreAutoBounds();
-                }
-                else {
-                    double x, y, w, h;
-                    Rectangle2D screenDataArea = getScreenDataArea(
-                            (int) this.zoomPoint.getX(),
-                            (int) this.zoomPoint.getY());
-                    double maxX = screenDataArea.getMaxX();
-                    double maxY = screenDataArea.getMaxY();
-                    // for mouseReleased event, (horizontalZoom || verticalZoom)
-                    // will be true, so we can just test for either being false;
-                    // otherwise both are true
-                    if (!vZoom) {
-                        x = this.zoomPoint.getX();
-                        y = screenDataArea.getMinY();
-                        w = Math.min(this.zoomRectangle.getWidth(),
-                                maxX - this.zoomPoint.getX());
-                        h = screenDataArea.getHeight();
-                    }
-                    else if (!hZoom) {
-                        x = screenDataArea.getMinX();
-                        y = this.zoomPoint.getY();
-                        w = screenDataArea.getWidth();
-                        h = Math.min(this.zoomRectangle.getHeight(),
-                                maxY - this.zoomPoint.getY());
-                    }
-                    else {
-                        x = this.zoomPoint.getX();
-                        y = this.zoomPoint.getY();
-                        w = Math.min(this.zoomRectangle.getWidth(),
-                                maxX - this.zoomPoint.getX());
-                        h = Math.min(this.zoomRectangle.getHeight(),
-                                maxY - this.zoomPoint.getY());
-                    }
-                    Rectangle2D zoomArea = new Rectangle2D.Double(x, y, w, h);
-                    zoom(zoomArea);
-                }
-                this.zoomPoint = null;
-                this.zoomRectangle = null;
-            }
-            else {
-                // erase the zoom rectangle
-                Graphics2D g2 = (Graphics2D) getGraphics();
-                if (this.useBuffer) {
-                    repaint();
-                }
-                else {
-                    drawZoomRectangle(g2, true);
-                }
-                g2.dispose();
-                this.zoomPoint = null;
-                this.zoomRectangle = null;
-            }
-
-        }
-
-        else if (e.isPopupTrigger()) {
+        if (e.isPopupTrigger()) {
             if (this.popup != null) {
-                displayPopupMenu(e.getX(), e.getY());
+				displayPopupMenu(e.getX(), e.getY());
             }
+			return;
         }
 
+		if (this.liveMouseHandler != null) {
+			this.liveMouseHandler.mouseReleased(e);
+        }
+
+		//handel auxiliary handlers
+		int mods = e.getModifiers();
+		Iterator iterator = this.auxiliaryMouseHandlers.iterator();
+		while (iterator.hasNext()) {
+			AbstractMouseHandler handler = (AbstractMouseHandler) iterator
+					.next();
+			if (handler.getModifier() == 0 || 
+			   (mods & handler.getModifier()) == handler.getModifier()) {
+				handler.mouseReleased(e);
+            }
+        }
     }
 
     /**
@@ -2088,23 +2020,38 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         // new entity code...
         Object[] listeners = this.chartMouseListeners.getListeners(
                 ChartMouseListener.class);
-        if (listeners.length == 0) {
-            return;
-        }
-
-        ChartEntity entity = null;
-        if (this.info != null) {
-            EntityCollection entities = this.info.getEntityCollection();
-            if (entities != null) {
-                entity = entities.getEntity(x, y);
+		if (listeners.length > 0) {
+			// handel old listeners
+            ChartEntity entity = null;
+            if (this.info != null) {
+                EntityCollection entities = this.info.getEntityCollection();
+                if (entities != null) {
+                    entity = entities.getEntity(x, y);
+                }
+            }
+            ChartMouseEvent chartEvent = new ChartMouseEvent(getChart(), event,
+                    entity);
+            for (int i = listeners.length - 1; i >= 0; i -= 1) {
+                ((ChartMouseListener) listeners[i]).chartMouseClicked(chartEvent);
             }
         }
-        ChartMouseEvent chartEvent = new ChartMouseEvent(getChart(), event,
-                entity);
-        for (int i = listeners.length - 1; i >= 0; i -= 1) {
-            ((ChartMouseListener) listeners[i]).chartMouseClicked(chartEvent);
+
+		// handle new mouse handler based listeners
+		if (this.liveMouseHandler != null) {
+			this.liveMouseHandler.mouseClicked(event);
         }
 
+		//handel auxiliary handlers
+		int mods = event.getModifiers();
+		Iterator iterator = this.auxiliaryMouseHandlers.iterator();
+		while (iterator.hasNext()) {
+			AbstractMouseHandler handler = (AbstractMouseHandler) iterator
+					.next();
+			if (handler.getModifier() == 0 || 
+			   (mods & handler.getModifier()) == handler.getModifier()) {
+				handler.mouseClicked(event);
+			}
+		}
     }
 
     /**
@@ -2125,30 +2072,47 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
         Object[] listeners = this.chartMouseListeners.getListeners(
                 ChartMouseListener.class);
-        if (listeners.length == 0) {
-            return;
-        }
-        Insets insets = getInsets();
-        int x = (int) ((e.getX() - insets.left) / this.scaleX);
-        int y = (int) ((e.getY() - insets.top) / this.scaleY);
+        if (listeners.length > 0) {
+            Insets insets = getInsets();
+            int x = (int) ((e.getX() - insets.left) / this.scaleX);
+            int y = (int) ((e.getY() - insets.top) / this.scaleY);
 
-        ChartEntity entity = null;
-        if (this.info != null) {
-            EntityCollection entities = this.info.getEntityCollection();
-            if (entities != null) {
-                entity = entities.getEntity(x, y);
+            ChartEntity entity = null;
+            if (this.info != null) {
+                EntityCollection entities = this.info.getEntityCollection();
+                if (entities != null) {
+                    entity = entities.getEntity(x, y);
+                }
+            }
+
+            // we can only generate events if the panel's chart is not null
+            // (see bug report 1556951)
+            if (this.chart != null) {
+                ChartMouseEvent event = new ChartMouseEvent(getChart(), e, entity);
+                for (int i = listeners.length - 1; i >= 0; i -= 1) {
+                    ((ChartMouseListener) listeners[i]).chartMouseMoved(event);
+                }
             }
         }
 
-        // we can only generate events if the panel's chart is not null
-        // (see bug report 1556951)
-        if (this.chart != null) {
-            ChartMouseEvent event = new ChartMouseEvent(getChart(), e, entity);
-            for (int i = listeners.length - 1; i >= 0; i -= 1) {
-                ((ChartMouseListener) listeners[i]).chartMouseMoved(event);
-            }
-        }
+		// handle new mouse handler based listeners
 
+		if (this.chart != null) {
+			if (this.liveMouseHandler != null) {
+				this.liveMouseHandler.mouseMoved(e);
+			}
+			//handel auxiliary handlers
+			int mods = e.getModifiers();
+			Iterator iterator = this.auxiliaryMouseHandlers.iterator();
+			while (iterator.hasNext()) {
+				AbstractMouseHandler handler = (AbstractMouseHandler) iterator
+						.next();
+				if (handler.getModifier() == 0 || 
+				   (mods & handler.getModifier()) == handler.getModifier()) {
+					handler.mouseMoved(e);
+				}
+			}
+		}
     }
 
     /**
@@ -2584,6 +2548,39 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             }
         }
     }
+
+	
+	/**
+	 * Draws zoom rectangle (if present). The drawing is performed in XOR mode,
+	 * therefore when this method is called twice in a row, the second call will
+	 * completely restore the state of the canvas.
+	 * 
+	 * @param g2
+	 *            the graphics device.
+	 * @param xor
+	 *            use XOR for drawing?
+	 */
+	private void drawSelectionShape(Graphics2D g2, boolean xor) {
+		if (this.selectionShape != null) {
+			if (xor) {
+				// Set XOR mode to draw the zoom rectangle
+				g2.setXORMode(Color.gray);
+			}
+			if (this.selectionFillPaint != null) {
+				g2.setPaint(this.selectionFillPaint);
+				g2.fill(this.selectionShape);
+			}
+			g2.setPaint(this.selectionOutlinePaint);
+			g2.setStroke(this.selectionOutlineStroke);
+			GeneralPath pp = new GeneralPath(this.selectionShape);
+			pp.closePath();
+			g2.draw(pp);
+			if (xor) {
+				// Reset to the default 'overwrite' mode
+				g2.setPaintMode();
+			}
+		}
+	}
 
     /**
      * Draws a vertical line used to trace the mouse position to the horizontal
@@ -3056,6 +3053,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         stream.defaultWriteObject();
         SerialUtilities.writePaint(this.zoomFillPaint, stream);
         SerialUtilities.writePaint(this.zoomOutlinePaint, stream);
+		SerialUtilities.writeStroke(this.selectionOutlineStroke, stream);
     }
 
     /**
@@ -3071,7 +3069,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         stream.defaultReadObject();
         this.zoomFillPaint = SerialUtilities.readPaint(stream);
         this.zoomOutlinePaint = SerialUtilities.readPaint(stream);
-
+		this.selectionOutlineStroke = SerialUtilities.readStroke(stream);
+		
         // we create a new but empty chartMouseListeners list
         this.chartMouseListeners = new EventListenerList();
 
@@ -3081,5 +3080,240 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         }
 
     }
+
+	/**
+	 * Returns the value of the <code>useBuffer</code> flag as set in the
+	 * constructor.
+	 * 
+	 * @return A boolean.
+	 * 
+	 * @since 1.0.14
+	 */
+	public boolean getUseBuffer() {
+		return this.useBuffer;
+	}
+
+	public PlotOrientation getOrientation() {
+		return this.orientation;
+	}
+
+	/**
+	 * Adds a mouse handler.
+	 * 
+	 * @param handler
+	 *            the handler (<code>null</code> not permitted).
+	 * 
+	 * @see #removeMouseHandler(org.jfree.chart.panel.AbstractMouseHandler)
+	 * 
+	 * @since 
+	 */
+	public void addMouseHandler(AbstractMouseHandler handler) {
+		if (handler.isLiveHandler()) {
+			this.availableLiveMouseHandlers.add(handler);
+		} else {
+			this.auxiliaryMouseHandlers.add(handler);
+		}
+	}
+
+	/**
+	 * Removes a mouse handler.
+	 * 
+	 * @param handler
+	 *            the handler (<code>null</code> not permitted).
+	 * 
+	 * @return A boolean.
+	 * 
+	 * @see #addMouseHandler(org.jfree.chart.panel.AbstractMouseHandler)
+	 * 
+	 * @since 
+	 */
+	public boolean removeMouseHandler(AbstractMouseHandler handler) {
+		if (handler.isLiveHandler()) {
+			return this.availableLiveMouseHandlers.remove(handler);
+		} else {
+			return this.auxiliaryMouseHandlers.remove(handler);
+		}		
+	}
+
+	/**
+	 * Clears the 'liveMouseHandler' field. Each handler is responsible for
+	 * calling this method when they have finished handling mouse events.
+	 * 
+	 * @since 
+	 */
+	public void clearLiveMouseHandler() {
+		this.liveMouseHandler = null;
+	}
+
+	/**
+	 * The selection shape (may be <code>null</code>).
+	 * 
+	 * @since
+	 */
+	private Shape selectionShape;
+
+	/**
+	 * Returns the selection shape.
+	 * 
+	 * @return The selection shape (possibly <code>null</code>).
+	 * 
+	 * @see #setSelectionShape(java.awt.Shape)
+	 * 
+	 * @since 
+	 */
+	public Shape getSelectionShape() {
+		return this.selectionShape;
+	}
+
+	/**
+	 * Sets the selection shape.
+	 * 
+	 * @param shape
+	 *            the selection shape (<code>null</code> permitted).
+	 * 
+	 * @see #getSelectionShape()
+	 * 
+	 * @since 
+	 */
+	public void setSelectionShape(Shape shape) {
+		this.selectionShape = shape;
+	}
+
+	/**
+	 * The selection fill paint (may be <code>null</code>).
+	 * 
+	 * @since 
+	 */
+	private Paint selectionFillPaint;
+
+	/**
+	 * The selection outline paint
+	 * 
+	 * @since 
+	 */
+	private Paint selectionOutlinePaint = Color.darkGray;
+
+	/**
+	 * The selection outline stroke
+	 * 
+	 * @since 
+	 */
+	private transient Stroke selectionOutlineStroke = new BasicStroke(1.0f,
+			BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 4.0f, new float[] {
+					3.0f, 3.0f }, 0.0f);
+
+	/**
+	 * Returns the selection fill paint.
+	 * 
+	 * @return The selection fill paint (possibly <code>null</code>).
+	 * 
+	 * @see #setSelectionFillPaint(java.awt.Paint)
+	 * 
+	 * @since 
+	 */
+	public Paint getSelectionFillPaint() {
+		return this.selectionFillPaint;
+	}
+
+	/**
+	 * Sets the selection fill paint.
+	 * 
+	 * @param paint
+	 *            the paint (<code>null</code> permitted).
+	 * 
+	 * @see #getSelectionFillPaint()
+	 * 
+	 * @since 
+	 */
+	public void setSelectionFillPaint(Paint paint) {
+		this.selectionFillPaint = paint;
+	}
+
+
+	/**
+	 * Sets the selection outline paint.
+	 * 
+	 * @param paint
+	 *            the paint (<code>null</code> permitted).
+	 * 
+	 * @see #getSelectionOutlinePaint()
+	 * 
+	 * @since 
+	 */
+	public void setSelectionOutlinePaint(Paint paint) {
+		this.selectionOutlinePaint = paint;
+	}
+
+
+	/**
+	 * Sets the selection outline stroke
+	 * 
+	 * @param stroke
+	 *            the paint (<code>null</code> permitted).
+	 * 
+	 * @see #getSelectionOutlineStroke()
+	 * 
+	 * @since 
+	 */
+	public void setSelectionOutlineStroke(Stroke stroke) {
+		this.selectionOutlineStroke = stroke;
+	}
+
+	/**
+	 * Returns the zoom rectangle.
+	 * 
+	 * @return The zoom rectangle (possibly <code>null</code>).
+	 * 
+	 * @since 1.0.14
+	 */
+	public Rectangle2D getZoomRectangle() {
+		return this.zoomRectangle;
+	}
+
+	/**
+	 * Sets the zoom rectangle for the panel.
+	 * 
+	 * @param rect
+	 *            the rectangle (<code>null</code> permitted).
+	 * 
+	 * @since 1.0.14
+	 */
+	public void setZoomRectangle(Rectangle2D rect) {
+		this.zoomRectangle = rect;
+	}
+
+	/**
+	 * A list of {@link DatasetAndSelection} objects.
+	 */
+	private List selectionStates = new java.util.ArrayList();
+
+	/**
+	 * @return the zoom handler that is installed per default on each chart panel
+	 */
+	public ZoomHandler getZoomHandler() {
+		return this.zoomHandler;
+	}
+
+	/**
+	 * Returns a selectin manager that can be used for point or area selection. 
+	 * (e.g. {@link org.jfree.chart.panel.selectionhandler.RegionSelectionHandler RegionSelectionHandlers})
+	 * 
+	 * @return the selection manager that has been set via setSelectionManager or null
+	 */
+	public SelectionManager getSelectionManager() {
+		return this.selectionManager;
+	}
+
+	/**
+	 * Sets the selection manager of the ChartPanel. The manager can be retrieved via
+	 * the getSelectionManager method to be used for point or area selection. 
+	 * 
+	 * (e.g. {@link org.jfree.chart.panel.selectionhandler.RegionSelectionHandler RegionSelectionHandlers})
+	 * 
+	 * @param manager
+	 */
+	public void setSelectionManager(SelectionManager manager) {
+		this.selectionManager = manager;
+	}
 
 }
