@@ -2,6 +2,7 @@ package org.jfree.data.general;
 
 import java.util.EventObject;
 
+import org.jfree.data.datasetextension.DatasetCursor;
 import org.jfree.data.datasetextension.DatasetLabelExtension;
 import org.jfree.data.datasetextension.DatasetSelectionExtension;
 
@@ -11,7 +12,7 @@ import org.jfree.data.datasetextension.DatasetSelectionExtension;
  * @author zinsmaie
  *
  */
-public class LabelChangeEvent extends EventObject {
+public class LabelChangeEvent<CURSOR extends DatasetCursor> extends EventObject {
 
 	/** a generated serial id */
 	private static final long serialVersionUID = 2289987249349231381L;
@@ -29,9 +30,9 @@ public class LabelChangeEvent extends EventObject {
 	/**
 	 * @return the label selection extension that triggered the event.
 	 */
-    public DatasetSelectionExtension getLabelExtension() {
+    public DatasetSelectionExtension<CURSOR> getLabelExtension() {
     	if (this.getSource() instanceof DatasetLabelExtension) {
-    		return (DatasetSelectionExtension)this.getSource();
+    		return (DatasetSelectionExtension<CURSOR>)this.getSource();
     	}
     	
     	//implementation error

@@ -69,7 +69,7 @@ public class FreePathSelectionHandler extends RegionSelectionHandler {
 	/**
 	 * temporary storage for points
 	 */
-	private List points; 
+	private List<Point> points; 
 	
 	/**
 	 * The selection path (in Java2D space).
@@ -88,7 +88,7 @@ public class FreePathSelectionHandler extends RegionSelectionHandler {
 	public FreePathSelectionHandler() {
 		this.selectionPath = new GeneralPath();
 		this.lastPoint = null;
-		this.points = new ArrayList();
+		this.points = new ArrayList<Point>();
 		setFillPaint(Color.GRAY);
 		setOutlinePaint(new Color(0,160,230));
 	}
@@ -101,7 +101,7 @@ public class FreePathSelectionHandler extends RegionSelectionHandler {
 		super(modifier);
 		this.selectionPath = new GeneralPath();
 		this.lastPoint = null;
-		this.points = new ArrayList();
+		this.points = new ArrayList<Point>();
 		setFillPaint(Color.GRAY);
 		setOutlinePaint(new Color(0,160,230));
 	}
@@ -121,7 +121,7 @@ public class FreePathSelectionHandler extends RegionSelectionHandler {
 		super(outlineStroke, outlinePaint, fillPaint);
 		this.selectionPath = new GeneralPath();
 		this.lastPoint = null;
-		this.points = new ArrayList();
+		this.points = new ArrayList<Point>();
 	}
 	
 	/**
@@ -211,22 +211,22 @@ public class FreePathSelectionHandler extends RegionSelectionHandler {
 	 * @param points
 	 * @return the line shape
 	 */
-	private GeneralPath createPathFromPoints(List points) {
+	private GeneralPath createPathFromPoints(List<Point> points) {
 		GeneralPath path = new GeneralPath();
 		
 		if (points.size() > 0) {
-			Point p = (Point)points.get(0);
+			Point p = points.get(0);
 			path.moveTo(p.getX(), p.getY());
 		}
 		
 		for (int i = 1; i < points.size(); i++) {
-			Point p = (Point)points.get(i);
+			Point p = points.get(i);
 			path.lineTo((p.getX() - 1), (p.getY() + 1));
 			path.lineTo((p.getX() + 1), (p.getY() + 1));
 		}
 
 		for (int i = (points.size() -1); i >= 0; i--) {
-			Point p = (Point)points.get(i);
+			Point p = points.get(i);
 			path.lineTo((p.getX() + 1), (p.getY() - 1));
 			path.lineTo((p.getX() - 1), (p.getY() - 1));
 		}

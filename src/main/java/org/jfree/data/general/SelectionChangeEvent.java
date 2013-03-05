@@ -2,6 +2,7 @@ package org.jfree.data.general;
 
 import java.util.EventObject;
 
+import org.jfree.data.datasetextension.DatasetCursor;
 import org.jfree.data.datasetextension.DatasetSelectionExtension;
 
 /**
@@ -10,7 +11,7 @@ import org.jfree.data.datasetextension.DatasetSelectionExtension;
  * @author zinsmaie
  *
  */
-public class SelectionChangeEvent extends EventObject {
+public class SelectionChangeEvent<CURSOR extends DatasetCursor> extends EventObject {
 
 	
     /** a generated serial id*/
@@ -29,9 +30,9 @@ public class SelectionChangeEvent extends EventObject {
 	/**
 	 * @return the selection selection extension that triggered the event.
 	 */
-    public DatasetSelectionExtension getSelectionExtension() {
+	public DatasetSelectionExtension<CURSOR> getSelectionExtension() {
         if (this.getSource() instanceof DatasetSelectionExtension) {
-        	return (DatasetSelectionExtension)this.getSource();
+        	return (DatasetSelectionExtension<CURSOR>)this.getSource();
         }
         
         //implementation error

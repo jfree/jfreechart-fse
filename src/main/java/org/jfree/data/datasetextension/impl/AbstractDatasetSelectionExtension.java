@@ -110,7 +110,7 @@ public abstract class AbstractDatasetSelectionExtension<CURSOR extends DatasetCu
         Object[] listeners = this.listenerList.getListenerList();
         for (int i = listeners.length - 2; i >= 0; i -= 2) {
             if (listeners[i] == SelectionChangeListener.class) {
-                ((SelectionChangeListener) listeners[i + 1]).selectionChanged(new SelectionChangeEvent(this));
+                ((SelectionChangeListener) listeners[i + 1]).selectionChanged(new SelectionChangeEvent<CURSOR>(this));
             }
         }
    }

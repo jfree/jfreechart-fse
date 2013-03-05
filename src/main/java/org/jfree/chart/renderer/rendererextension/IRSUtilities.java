@@ -155,7 +155,7 @@ public class IRSUtilities {
 	 * @param ext access to the selection state the dataset items
 	 * @param fillPaint defines a highlight color that should be used for the interior of selected items
 	 */
-	public static void setSelectedItemFillPaint(final AbstractRenderer renderer, final DatasetSelectionExtension ext, final Paint fillPaint) {
+	public static void setSelectedItemFillPaint(final AbstractRenderer renderer, final DatasetSelectionExtension<?> ext, final Paint fillPaint) {
 		setSelectedItemPaintIRS(renderer, ext, fillPaint, null, null);
 	}
 	
@@ -168,7 +168,7 @@ public class IRSUtilities {
 	 * @param ext access to the selection state the dataset items
 	 * @param itemPaint defines a highlight color that should be used for selected items
 	 */
-	public static void setSelectedItemPaint(final AbstractRenderer renderer, final DatasetSelectionExtension ext, final Paint itemPaint) {
+	public static void setSelectedItemPaint(final AbstractRenderer renderer, final DatasetSelectionExtension<?> ext, final Paint itemPaint) {
 		setSelectedItemPaintIRS(renderer, ext, null, itemPaint, null);
 	}
 	
@@ -181,7 +181,7 @@ public class IRSUtilities {
 	 * @param ext access to the selection state the dataset items
 	 * @param outlinePaint defines a highlight color that should be used for the outline of selected items
 	 */
-	public static void setSelectedItemOutlinePaint(final AbstractRenderer renderer, final DatasetSelectionExtension ext, final Paint outlinePaint) {
+	public static void setSelectedItemOutlinePaint(final AbstractRenderer renderer, final DatasetSelectionExtension<?> ext, final Paint outlinePaint) {
 		setSelectedItemPaintIRS(renderer, ext, null, null, outlinePaint);
 	}
 
