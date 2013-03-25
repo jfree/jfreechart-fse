@@ -46,6 +46,7 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemSource;
+import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.event.RendererChangeListener;
 import org.jfree.chart.labels.ItemLabelPosition;
 
@@ -684,7 +685,7 @@ public interface Renderer extends LegendItemSource {
    *
    * @return A flag.
    *
-   * @see #setDefaultItemLabelsVisible(Boolean)
+   * @see #setDefaultItemLabelsVisible(boolean)
    */
   public boolean getDefaultItemLabelsVisible();
 
