@@ -64,21 +64,8 @@
 
 package org.jfree.chart.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dialog;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Rectangle;
-import java.awt.Window;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * A collection of utility methods relating to user interfaces.
@@ -170,29 +157,6 @@ public class RefineryUtilities {
       final Rectangle s = parent.getGraphicsConfiguration().getBounds();
       final Rectangle r = new Rectangle(x, y, d.width, d.height);
       dialog.setBounds(r.intersection(s));
-    }
-
-    /**
-     * Creates a panel that contains a table based on the specified table model.
-     *
-     * @param model  the table model to use when constructing the table.
-     *
-     * @return The panel.
-     */
-    public static JPanel createTablePanel(final TableModel model) {
-
-        final JPanel panel = new JPanel(new BorderLayout());
-        final JTable table = new JTable(model);
-        for (int columnIndex = 0; columnIndex < model.getColumnCount(); columnIndex++) {
-            final TableColumn column = table.getColumnModel().getColumn(columnIndex);
-            final Class c = model.getColumnClass(columnIndex);
-            if (c.equals(Number.class)) {
-                column.setCellRenderer(new NumberCellRenderer());
-            }
-        }
-        panel.add(new JScrollPane(table));
-        return panel;
-
     }
 
     /**
