@@ -89,7 +89,7 @@ public class FontChooserPanel extends JPanel {
 
     /** The resourceBundle for the localization. */
     protected static ResourceBundle localizationResources =
-        ResourceBundleWrapper.getBundle("org.jfree.ui.LocalizationBundle");
+        ResourceBundleWrapper.getBundle("org.jfree.chart.editor.LocalizationBundle");
 
     /**
      * Standard constructor - builds a FontChooserPanel initialised with the
