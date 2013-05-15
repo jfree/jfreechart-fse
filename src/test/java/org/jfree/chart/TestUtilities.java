@@ -43,10 +43,20 @@ package org.jfree.chart;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.junit.Test;
+
 /**
  * Some utility methods for use by the testing code.
  */
 public class TestUtilities {
+
+
+    /** Dummy method to make older versions of maven happy.
+     */
+    @Test
+    public void testDataset() {
+        // All good
+    }
 
     /**
      * Returns <code>true</code> if the collections contains any object that
