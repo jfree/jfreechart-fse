@@ -14,6 +14,10 @@ JFreeChart 1.0.x series.  Here are some important notes:
 
 -  Maven is used to build this edition of JFreeChart;
 
+   mvn package
+   mvn javadoc:javadoc
+   Then look in the ./target directory.
+
 -  JCommon is no longer a dependency (the subset of classes from JCommon that
    are still used have been incorporated directly in the source tree);
 
