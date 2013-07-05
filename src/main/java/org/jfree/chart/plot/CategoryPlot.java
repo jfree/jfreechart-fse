@@ -4469,8 +4469,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
     public List<Comparable> getCategoriesForAxis(CategoryAxis axis) {
         List<Comparable> result = new ArrayList<Comparable>();
         int axisIndex = this.domainAxes.indexOf(axis);
-        List<CategoryDataset> datasets = datasetsMappedToDomainAxis(axisIndex);
-        for (CategoryDataset dataset : datasets) {
+        List<CategoryDataset> mappedDatasets = datasetsMappedToDomainAxis(axisIndex);
+        for (CategoryDataset dataset : mappedDatasets) {
             // add the unique categories from this dataset
             for (int i = 0; i < dataset.getColumnCount(); i++) {
                 Comparable category = dataset.getColumnKey(i);
