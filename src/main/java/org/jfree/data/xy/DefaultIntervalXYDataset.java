@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -49,6 +49,7 @@ package org.jfree.data.xy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.general.DatasetChangeEvent;
@@ -395,13 +396,8 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
      *     (y, yLow and yHigh)).
      */
     public void addSeries(Comparable seriesKey, double[][] data) {
-        if (seriesKey == null) {
-            throw new IllegalArgumentException(
-                    "The 'seriesKey' cannot be null.");
-        }
-        if (data == null) {
-            throw new IllegalArgumentException("The 'data' is null.");
-        }
+        ParamChecks.nullNotPermitted(seriesKey, "seriesKey");
+        ParamChecks.nullNotPermitted(seriesKey, "data");
         if (data.length != 6) {
             throw new IllegalArgumentException(
                     "The 'data' array must have length == 6.");
