@@ -116,6 +116,7 @@ import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.event.PlotChangeListener;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.Range;
 
 /**
@@ -259,9 +260,7 @@ public class CombinedDomainXYPlot extends XYPlot
      */
     public void add(XYPlot subplot, int weight) {
 
-        if (subplot == null) {
-            throw new IllegalArgumentException("Null 'subplot' argument.");
-        }
+        ParamChecks.nullNotPermitted(subplot, "subplot");
         if (weight <= 0) {
             throw new IllegalArgumentException("Require weight >= 1.");
         }
@@ -288,9 +287,7 @@ public class CombinedDomainXYPlot extends XYPlot
      * @param subplot  the subplot (<code>null</code> not permitted).
      */
     public void remove(XYPlot subplot) {
-        if (subplot == null) {
-            throw new IllegalArgumentException(" Null 'subplot' argument.");
-        }
+        ParamChecks.nullNotPermitted(subplot, "subplot");
         int position = -1;
         int size = this.subplots.size();
         int i = 0;
@@ -596,12 +593,8 @@ public class CombinedDomainXYPlot extends XYPlot
      * @return A subplot (possibly <code>null</code>).
      */
     public XYPlot findSubplot(PlotRenderingInfo info, Point2D source) {
-        if (info == null) {
-            throw new IllegalArgumentException("Null 'info' argument.");
-        }
-        if (source == null) {
-            throw new IllegalArgumentException("Null 'source' argument.");
-        }
+        ParamChecks.nullNotPermitted(info, "info");
+        ParamChecks.nullNotPermitted(source, "source");
         XYPlot result = null;
         int subplotIndex = info.getSubplotIndex(source);
         if (subplotIndex >= 0) {
@@ -721,10 +714,9 @@ public class CombinedDomainXYPlot extends XYPlot
     public Object clone() throws CloneNotSupportedException {
 
         CombinedDomainXYPlot result = (CombinedDomainXYPlot) super.clone();
-        result.subplots = (List) ObjectUtilities.deepClone(this.subplots);
-        for (XYPlot subplot : result.subplots) {
-            Plot child = subplot;
-            child.setParent(result);
+        result.subplots = (List<XYPlot>) ObjectUtilities.deepClone(this.subplots);
+        for (XYPlot p : result.subplots) {
+            p.setParent(result);
         }
 
         // after setting up all the subplots, the shared domain axis may need
