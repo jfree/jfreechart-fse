@@ -48,6 +48,7 @@ package org.jfree.data.xy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.DomainOrder;
@@ -293,13 +294,8 @@ public class DefaultXYZDataset extends AbstractXYZDataset
      *     z-values).
      */
     public void addSeries(Comparable seriesKey, double[][] data) {
-        if (seriesKey == null) {
-            throw new IllegalArgumentException(
-                    "The 'seriesKey' cannot be null.");
-        }
-        if (data == null) {
-            throw new IllegalArgumentException("The 'data' is null.");
-        }
+        ParamChecks.nullNotPermitted(seriesKey, "seriesKey");
+        ParamChecks.nullNotPermitted(data, "data");
         if (data.length != 3) {
             throw new IllegalArgumentException(
                     "The 'data' array must have length == 3.");
