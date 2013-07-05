@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -178,6 +178,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.AbstractRenderer;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.urls.XYURLGenerator;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.Range;
 import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.xy.XYDataset;
@@ -569,9 +570,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     @Override
     public void addAnnotation(XYAnnotation annotation, Layer layer) {
-        if (annotation == null) {
-            throw new IllegalArgumentException("Null 'annotation' argument.");
-        }
+        ParamChecks.nullNotPermitted(annotation, "annotation");
         if (layer.equals(Layer.FOREGROUND)) {
             this.foregroundAnnotations.add(annotation);
             annotation.addChangeListener(this);
@@ -690,9 +689,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     @Override
     public void setLegendItemLabelGenerator(XYSeriesLabelGenerator generator,
             boolean notify) {
-        if (generator == null) {
-            throw new IllegalArgumentException("Null 'generator' argument.");
-        }
+        ParamChecks.nullNotPermitted(generator, "generator");
         this.legendItemLabelGenerator = generator;
         if (notify) {
             fireChangeEvent();
@@ -1680,10 +1677,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             double x, double y, int domainAxisIndex, int rangeAxisIndex,
             double transX, double transY, PlotOrientation orientation) {
 
-        if (orientation == null) {
-            throw new IllegalArgumentException("Null 'orientation' argument.");
-        }
-
+        ParamChecks.nullNotPermitted(orientation, "orientation");
         if (crosshairState != null) {
             // do we need to update the crosshair values?
             if (this.plot.isDomainCrosshairLockedOnData()) {
