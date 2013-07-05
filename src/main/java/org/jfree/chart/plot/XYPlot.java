@@ -291,6 +291,7 @@ import org.jfree.chart.renderer.RendererUtilities;
 import org.jfree.chart.renderer.xy.AbstractXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYItemRendererState;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.ResourceBundleWrapper;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.chart.util.ShadowGenerator;
@@ -2928,9 +2929,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * @since 1.0.10
      */
     public void addAnnotation(XYAnnotation annotation, boolean notify) {
-        if (annotation == null) {
-            throw new IllegalArgumentException("Null 'annotation' argument.");
-        }
+        ParamChecks.nullNotPermitted(annotation, "annotation");
         this.annotations.add(annotation);
         annotation.addChangeListener(this);
         if (notify) {
@@ -2965,9 +2964,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * @since 1.0.10
      */
     public boolean removeAnnotation(XYAnnotation annotation, boolean notify) {
-        if (annotation == null) {
-            throw new IllegalArgumentException("Null 'annotation' argument.");
-        }
+        ParamChecks.nullNotPermitted(annotation, "annotation");
         boolean removed = this.annotations.remove(annotation);
         annotation.removeChangeListener(this);
         if (removed && notify) {
@@ -4017,16 +4014,13 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * @param dataArea  the data area.
      * @param info  the chart rendering info.
      */
-    public void drawAnnotations(Graphics2D g2,
-                                Rectangle2D dataArea,
+    public void drawAnnotations(Graphics2D g2, Rectangle2D dataArea,
                                 PlotRenderingInfo info) {
-
+        ValueAxis xAxis = getDomainAxis();
+        ValueAxis yAxis = getRangeAxis();
         for (XYAnnotation annotation : this.annotations) {
-            ValueAxis xAxis = getDomainAxis();
-            ValueAxis yAxis = getRangeAxis();
             annotation.draw(g2, this, dataArea, xAxis, yAxis, 0, info);
         }
-
     }
 
     /**
