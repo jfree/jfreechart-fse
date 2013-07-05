@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------
  * PolarPlot.java
  * --------------
- * (C) Copyright 2004-2012, by Solution Engineering, Inc. and Contributors.
+ * (C) Copyright 2004-2013, by Solution Engineering, Inc. and Contributors.
  *
  * Original Author:  Daniel Bridenbecker, Solution Engineering, Inc.;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -60,7 +60,6 @@
  */
 
 package org.jfree.chart.plot;
-
 
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
@@ -109,6 +108,7 @@ import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.event.RendererChangeListener;
 import org.jfree.chart.renderer.PolarItemRenderer;
 import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.ResourceBundleWrapper;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
@@ -507,9 +507,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      */
     public void setAxisLocation(int index, PolarAxisLocation location,
             boolean notify) {
-        if (location == null) {
-            throw new IllegalArgumentException("Null 'location' argument.");
-        }
+        ParamChecks.nullNotPermitted(location, "location");
         this.axisLocations.set(index, location);
         if (notify) {
             fireChangeEvent();
@@ -736,9 +734,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      * @since 1.0.10
      */
     public void setAngleTickUnit(TickUnit unit) {
-        if (unit == null) {
-            throw new IllegalArgumentException("Null 'unit' argument.");
-        }
+        ParamChecks.nullNotPermitted(unit, "unit");
         this.angleTickUnit = unit;
         fireChangeEvent();
     }
@@ -864,9 +860,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      * @param paint  the paint (<code>null</code> not permitted).
      */
     public void setAngleLabelPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.angleLabelPaint = paint;
         fireChangeEvent();
     }
@@ -1050,7 +1044,8 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
     }
 
     /**
-     * Set the flag that determines if radial minor grid-lines will be drawn.
+     * Set the flag that determines if radial minor grid-lines will be drawn,
+     * and sends a {@link PlotChangeEvent} to all registered listeners.
      *
      * @param flag <code>true</code> to draw the radial minor grid-lines,
      *             <code>false</code> to hide them.
@@ -1058,6 +1053,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      */
     public void setRadiusMinorGridlinesVisible(boolean flag) {
         this.radiusMinorGridlinesVisible = flag;
+        fireChangeEvent();
     }
 
     /**
@@ -1182,11 +1178,12 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
     /**
      * Calculate the text position for the given degrees.
      *
+     * @param angleDegrees  the angle in degrees.
+     * 
      * @return The optimal text anchor.
      * @since 1.0.14
      */
-    protected TextAnchor calculateTextAnchor(double angleDegrees)
-    {
+    protected TextAnchor calculateTextAnchor(double angleDegrees) {
         TextAnchor ta = TextAnchor.CENTER;
 
         // normalize angle
@@ -2115,6 +2112,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      *
      * @param angleDegrees  the angle in degrees.
      * @param radius  the radius.
+     * @param axis  the axis.
      * @param dataArea  the data area.
      *
      * @return A point in Java2D space.
