@@ -352,16 +352,13 @@ public class DefaultIntervalXYDatasetTest  {
         assertEquals(2.1, d.getYValue(0, 0), EPSILON);
 
         // check null key
-
-        try
-        {
+        try {
           d.addSeries(null, new double[][] {{1.1}, {0.6}, {1.6}, {2.1}, {2.6},
                   {1.6}});
-            fail("IllegalArgumentException should have been thrown on data not containing 6 items");
+            fail("IllegalArgumentException should have been thrown.");
         }
-        catch (IllegalArgumentException e)
-        {
-            assertEquals("The 'seriesKey' cannot be null.", e.getMessage());
+        catch (IllegalArgumentException e) {
+            assertEquals("Null 'seriesKey' argument.", e.getMessage());
         }
     }
 
