@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------
  * DefaultXYZDatasetTests.java
  * ---------------------------
- * (C) Copyright 2006-2008, by Object Refinery Limited.
+ * (C) Copyright 2006-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -233,14 +233,12 @@ public class DefaultXYZDatasetTest  {
         assertEquals(12.0, d.getYValue(0, 0), EPSILON);
 
         // check null key
-        try
-        {
+        try {
           d.addSeries(null, new double[][] {{1.0}, {2.0}, {3.0}});
             fail("IllegalArgumentException should have been thrown on null key");
         }
-        catch (IllegalArgumentException e)
-        {
-            assertEquals("The 'seriesKey' cannot be null.", e.getMessage());
+        catch (IllegalArgumentException e) {
+            assertEquals("Null 'seriesKey' argument.", e.getMessage());
         }
     }
 
