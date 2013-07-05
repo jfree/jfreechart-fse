@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * LegendItem.java
  * ---------------
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Andrzej Porebski;
@@ -1081,10 +1081,8 @@ public class LegendItem implements Cloneable, Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash
-                + (this.seriesKey != null ? this.seriesKey.hashCode() : 0);
-        hash = 29 * hash + this.datasetIndex;
-        hash = 29 * hash + this.series;
+        hash = 47 * hash + (this.seriesKey != null ? this.seriesKey.hashCode() : 0);
+        hash = 47 * hash + this.datasetIndex;
         return hash;
     }
 
