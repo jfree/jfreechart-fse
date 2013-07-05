@@ -119,6 +119,7 @@ import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.event.PlotChangeListener;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.Range;
 
 /**
@@ -240,9 +241,7 @@ public class CombinedRangeXYPlot extends XYPlot
      * @param subplot  the subplot (<code>null</code> not permitted).
      */
     public void remove(XYPlot subplot) {
-        if (subplot == null) {
-            throw new IllegalArgumentException(" Null 'subplot' argument.");
-        }
+        ParamChecks.nullNotPermitted(subplot, "subplot");
         int position = -1;
         int size = this.subplots.size();
         int i = 0;
@@ -374,12 +373,8 @@ public class CombinedRangeXYPlot extends XYPlot
      *              permitted).
      */
     @Override
-    public void draw(Graphics2D g2,
-                     Rectangle2D area,
-                     Point2D anchor,
-                     PlotState parentState,
-                     PlotRenderingInfo info) {
-
+    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+            PlotState parentState, PlotRenderingInfo info) {
         // set up info collection...
         if (info != null) {
             info.setPlotArea(area);
@@ -433,14 +428,15 @@ public class CombinedRangeXYPlot extends XYPlot
     @Override
     public LegendItemCollection getLegendItems() {
         LegendItemCollection result = getFixedLegendItems();
-        if (result == null) {
-            result = new LegendItemCollection();
+        if (result != null) {
+            return result;
+        }
+        result = new LegendItemCollection();
 
-            if (this.subplots != null) {
-                for (XYPlot plot : this.subplots) {
-                    LegendItemCollection more = plot.getLegendItems();
-                    result.addAll(more);
-                }
+        if (this.subplots != null) {
+            for (XYPlot subplot : subplots) {
+                LegendItemCollection more = subplot.getLegendItems();
+                result.addAll(more);                
             }
         }
         return result;
@@ -555,12 +551,8 @@ public class CombinedRangeXYPlot extends XYPlot
      * @return A subplot (possibly <code>null</code>).
      */
     public XYPlot findSubplot(PlotRenderingInfo info, Point2D source) {
-        if (info == null) {
-            throw new IllegalArgumentException("Null 'info' argument.");
-        }
-        if (source == null) {
-            throw new IllegalArgumentException("Null 'source' argument.");
-        }
+        ParamChecks.nullNotPermitted(info, "info");
+        ParamChecks.nullNotPermitted(source, "source");
         XYPlot result = null;
         int subplotIndex = info.getSubplotIndex(source);
         if (subplotIndex >= 0) {
@@ -580,31 +572,25 @@ public class CombinedRangeXYPlot extends XYPlot
      */
     @Override
     public void setRenderer(XYItemRenderer renderer) {
-
         super.setRenderer(renderer);  // not strictly necessary, since the
                                       // renderer set for the
                                       // parent plot is not used
-
-        for (XYPlot plot : this.subplots) {
-            plot.setRenderer(renderer);
+        for (XYPlot subplot : this.subplots) {
+            subplot.setRenderer(renderer);
         }
-
     }
 
     /**
      * Sets the orientation for the plot (and all its subplots).
      *
-     * @param orientation  the orientation.
+     * @param orientation  the orientation (<code>null</code> not permitted).
      */
     @Override
     public void setOrientation(PlotOrientation orientation) {
-
         super.setOrientation(orientation);
-
-        for (XYPlot plot : this.subplots) {
-            plot.setOrientation(orientation);
+        for (XYPlot subplot : this.subplots) {
+            subplot.setOrientation(orientation);
         }
-
     }
 
     /**
@@ -638,16 +624,16 @@ public class CombinedRangeXYPlot extends XYPlot
      * @param space  the space.
      */
     protected void setFixedDomainAxisSpaceForSubplots(AxisSpace space) {
-        for (XYPlot plot : this.subplots) {
-            plot.setFixedDomainAxisSpace(space, false);
+        for (XYPlot subplot : this.subplots) {
+            subplot.setFixedDomainAxisSpace(space, false);
         }
     }
 
     /**
      * Handles a 'click' on the plot by updating the anchor values...
      *
-     * @param x  x-coordinate, where the click occured.
-     * @param y  y-coordinate, where the click occured.
+     * @param x  x-coordinate, where the click occurred.
+     * @param y  y-coordinate, where the click occurred.
      * @param info  object containing information about the plot dimensions.
      */
     @Override
@@ -710,11 +696,10 @@ public class CombinedRangeXYPlot extends XYPlot
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
-
         CombinedRangeXYPlot result = (CombinedRangeXYPlot) super.clone();
-        result.subplots = ObjectUtilities.deepClone(this.subplots);
-        for (XYPlot child : result.subplots) {
-            child.setParent(result);
+        result.subplots = (List<XYPlot>) ObjectUtilities.deepClone(this.subplots);
+        for (XYPlot subplot : result.subplots) {
+            subplot.setParent(result);
         }
 
         // after setting up all the subplots, the shared range axis may need
