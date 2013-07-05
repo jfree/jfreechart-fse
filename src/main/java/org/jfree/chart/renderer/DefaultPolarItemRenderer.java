@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------------
  * DefaultPolarItemRenderer.java
  * -----------------------------
- * (C) Copyright 2004-2012, by Solution Engineering, Inc. and
+ * (C) Copyright 2004-2013, by Solution Engineering, Inc. and
  *     Contributors.
  *
  * Original Author:  Daniel Bridenbecker, Solution Engineering, Inc.;
@@ -99,6 +99,7 @@ import org.jfree.chart.plot.PolarPlot;
 import org.jfree.chart.renderer.xy.AbstractXYItemRenderer;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.urls.XYURLGenerator;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.xy.XYDataset;
 
@@ -196,7 +197,6 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      */
     private XYSeriesLabelGenerator legendItemURLGenerator;
 
-
     /**
      * Creates a new instance of DefaultPolarItemRenderer
      */
@@ -278,7 +278,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     }
 
     /**
-     * Set the composite which will be used for filling polygons and sends a
+     * Sets the composite which will be used for filling polygons and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param composite  the composite to use (<code>null</code> not
@@ -287,9 +287,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @since 1.0.14
      */
     public void setFillComposite(Composite composite) {
-        if (composite == null) {
-            throw new IllegalArgumentException("Null 'composite' argument.");
-        }
+        ParamChecks.nullNotPermitted(composite, "composite");
         this.fillComposite = composite;
         fireChangeEvent();
     }
@@ -437,9 +435,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @see #getLegendLine()
      */
     public void setLegendLine(Shape line) {
-        if (line == null) {
-            throw new IllegalArgumentException("Null 'line' argument.");
-        }
+        ParamChecks.nullNotPermitted(line, "line");
         this.legendLine = line;
         fireChangeEvent();
     }
@@ -458,7 +454,6 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @param entityY  the entity's center y-coordinate in user space (only
      *                 used if <code>area</code> is <code>null</code>).
      */
-    // this method was copied from AbstractXYItemRenderer on 03-Oct-2011
     protected void addEntity(EntityCollection entities, Shape area,
                              XYDataset dataset, int series, int item,
                              double entityX, double entityY) {
@@ -505,9 +500,12 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
             PlotRenderingInfo info, PolarPlot plot, XYDataset dataset,
             int seriesIndex) {
 
+        final int numPoints = dataset.getItemCount(seriesIndex);
+        if (numPoints == 0) {
+            return;
+        }
         GeneralPath poly = null;
         ValueAxis axis = plot.getAxisForDataset(plot.indexOf(dataset));
-        final int numPoints = dataset.getItemCount(seriesIndex);
         for (int i = 0; i < numPoints; i++) {
             double theta = dataset.getXValue(seriesIndex, i);
             double radius = dataset.getYValue(seriesIndex, i);
@@ -595,8 +593,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * Draw the angular gridlines - the spokes.
      *
      * @param g2  the drawing surface.
-     * @param plot  the plot.
-     * @param ticks  the ticks.
+     * @param plot  the plot (<code>null</code> not permitted).
+     * @param ticks  the ticks (<code>null</code> not permitted).
      * @param dataArea  the data area.
      */
     @Override
@@ -606,13 +604,19 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         g2.setStroke(plot.getAngleGridlineStroke());
         g2.setPaint(plot.getAngleGridlinePaint());
 
-        double axisMin = plot.getAxis().getLowerBound();
-        double maxRadius = plot.getAxis().getUpperBound();
-        Point center = plot.translateToJava2D(axisMin, axisMin, plot.getAxis(),
-                dataArea);
+        ValueAxis axis = plot.getAxis();
+        double centerValue, outerValue;
+        if (axis.isInverted()) {
+            outerValue = axis.getLowerBound();
+            centerValue = axis.getUpperBound();
+        } else {
+            outerValue = axis.getUpperBound();
+            centerValue = axis.getLowerBound();
+        }
+        Point center = plot.translateToJava2D(0, centerValue, axis, dataArea);
         for (ValueTick tick : ticks) {
             double tickVal = tick.getValue();
-            Point p = plot.translateToJava2D(tickVal, maxRadius, plot.getAxis(),
+            Point p = plot.translateToJava2D(tickVal, outerValue, plot.getAxis(),
                     dataArea);
             g2.setPaint(plot.getAngleGridlinePaint());
             g2.drawLine(center.x, center.y, p.x, p.y);
@@ -629,23 +633,28 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     /**
      * Draw the radial gridlines - the rings.
      *
-     * @param g2  the drawing surface.
-     * @param plot  the plot.
-     * @param radialAxis  the radial axis.
-     * @param ticks  the ticks.
+     * @param g2  the drawing surface (<code>null</code> not permitted).
+     * @param plot  the plot (<code>null</code> not permitted).
+     * @param radialAxis  the radial axis (<code>null</code> not permitted).
+     * @param ticks  the ticks (<code>null</code> not permitted).
      * @param dataArea  the data area.
      */
     @Override
     public void drawRadialGridLines(Graphics2D g2, PolarPlot plot,
             ValueAxis radialAxis, List<ValueTick> ticks, Rectangle2D dataArea) {
 
+        ParamChecks.nullNotPermitted(radialAxis, "radialAxis");
         g2.setFont(radialAxis.getTickLabelFont());
         g2.setPaint(plot.getRadiusGridlinePaint());
         g2.setStroke(plot.getRadiusGridlineStroke());
 
-        double axisMin = radialAxis.getLowerBound();
-        Point center = plot.translateToJava2D(axisMin, axisMin, radialAxis,
-                dataArea);
+        double centerValue;
+        if (radialAxis.isInverted()) {
+            centerValue = radialAxis.getUpperBound();
+        } else {
+            centerValue = radialAxis.getLowerBound();
+        }
+        Point center = plot.translateToJava2D(0, centerValue, radialAxis, dataArea);
 
         for (ValueTick tick : ticks) {
             double angleDegrees = plot.isCounterClockwise()
@@ -722,6 +731,13 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     }
 
     /**
+     * Returns the tooltip generator for the specified series and item.
+     * 
+     * @param series  the series index.
+     * @param item  the item index.
+     * 
+     * @return The tooltip generator (possibly <code>null</code>).
+     * 
      * @since 1.0.14
      */
     @Override
@@ -735,6 +751,10 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     }
 
     /**
+     * Returns the tool tip generator for the specified series.
+     * 
+     * @return The tooltip generator (possibly <code>null</code>).
+     *
      * @since 1.0.14
      */
     @Override
@@ -743,6 +763,11 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     }
 
     /**
+     * Sets the tooltip generator for the specified series.
+     * 
+     * @param series  the series index.
+     * @param generator  the tool tip generator (<code>null</code> permitted).
+     * 
      * @since 1.0.14
      */
     @Override
@@ -753,6 +778,10 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     }
 
     /**
+     * Returns the default tool tip generator.
+     * 
+     * @return The default tool tip generator (possibly <code>null</code>).
+     * 
      * @since 1.0.14
      */
     @Override
@@ -761,6 +790,11 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     }
 
     /**
+     * Sets the default tool tip generator and sends a 
+     * {@link RendererChangeEvent} to all registered listeners.
+     * 
+     * @param generator  the generator (<code>null</code> permitted).
+     * 
      * @since 1.0.14
      */
     @Override
@@ -770,6 +804,10 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     }
 
     /**
+     * Returns the URL generator.
+     * 
+     * @return The URL generator (possibly <code>null</code>).
+     * 
      * @since 1.0.14
      */
     @Override
@@ -778,6 +816,10 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     }
 
     /**
+     * Sets the URL generator.
+     * 
+     * @param urlGenerator  the generator (<code>null</code> permitted)
+     * 
      * @since 1.0.14
      */
     @Override
