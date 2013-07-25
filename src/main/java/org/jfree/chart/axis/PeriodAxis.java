@@ -175,7 +175,7 @@ public class PeriodAxis extends ValueAxis
     /** The paint used to draw tick marks. */
     private transient Paint minorTickMarkPaint = Color.BLACK;
 
-    /** Info for each labelling band. */
+    /** Info for each labeling band. */
     private PeriodAxisLabelInfo[] labelInfo;
 
     /**
@@ -233,10 +233,12 @@ public class PeriodAxis extends ValueAxis
                 this.majorTickTimePeriodClass);
         setAutoRange(true);
         this.labelInfo = new PeriodAxisLabelInfo[2];
-        this.labelInfo[0] = new PeriodAxisLabelInfo(Month.class,
-                new SimpleDateFormat("MMM", locale));
-        this.labelInfo[1] = new PeriodAxisLabelInfo(Year.class,
-                new SimpleDateFormat("yyyy", locale));
+        SimpleDateFormat df0 = new SimpleDateFormat("MMM", locale);
+        df0.setTimeZone(timeZone);
+        this.labelInfo[0] = new PeriodAxisLabelInfo(Month.class, df0);
+        SimpleDateFormat df1 = new SimpleDateFormat("yyyy", locale);
+        df1.setTimeZone(timeZone);
+        this.labelInfo[1] = new PeriodAxisLabelInfo(Year.class, df1);
     }
 
     /**
@@ -821,6 +823,7 @@ public class PeriodAxis extends ValueAxis
         RegularTimePeriod p2 = this.labelInfo[band].createInstance(
                 new Date(axisMax), this.timeZone, this.locale);
         DateFormat df = this.labelInfo[band].getDateFormat();
+        df.setTimeZone(this.timeZone);
         String label1 = df.format(new Date(p1.getMiddleMillisecond()));
         String label2 = df.format(new Date(p2.getMiddleMillisecond()));
         Rectangle2D b1 = TextUtilities.getTextBounds(label1, g2,
