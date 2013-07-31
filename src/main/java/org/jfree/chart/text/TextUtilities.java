@@ -72,7 +72,6 @@ import java.text.AttributedString;
 import java.text.BreakIterator;
 
 import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * Some utility methods for working with text.
@@ -83,25 +82,14 @@ public class TextUtilities {
      * A flag that controls whether or not the rotated string workaround is
      * used.
      */
-    private static boolean useDrawRotatedStringWorkaround;
+    private static boolean useDrawRotatedStringWorkaround = true;
 
     /**
      * A flag that controls whether the FontMetrics.getStringBounds() method
      * is used or a workaround is applied.
      */
-    private static boolean useFontMetricsGetStringBounds;
-
-    static {
-
-        final boolean isJava14 = ObjectUtilities.isJDK14();
-
-        useDrawRotatedStringWorkaround = (isJava14 == false);
-
-        useFontMetricsGetStringBounds = (isJava14 == true);
-
-
-    }
-
+    private static boolean useFontMetricsGetStringBounds = false;
+ 
     /**
      * Private constructor prevents object creation.
      */
