@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------
  * Axis.java
  * ---------
- * (C) Copyright 2000-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Bill Kelemen;
@@ -121,6 +121,7 @@ import org.jfree.chart.event.AxisChangeListener;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
@@ -409,9 +410,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getLabelFont()
      */
     public void setLabelFont(Font font) {
-        if (font == null) {
-            throw new IllegalArgumentException("Null 'font' argument.");
-        }
+        ParamChecks.nullNotPermitted(font, "font");
         if (!this.labelFont.equals(font)) {
             this.labelFont = font;
             fireChangeEvent();
@@ -438,9 +437,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getLabelPaint()
      */
     public void setLabelPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.labelPaint = paint;
         fireChangeEvent();
     }
@@ -479,9 +476,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @since 1.0.10
      */
     public void setLabelInsets(RectangleInsets insets, boolean notify) {
-        if (insets == null) {
-            throw new IllegalArgumentException("Null 'insets' argument.");
-        }
+        ParamChecks.nullNotPermitted(insets, "insets");
         if (!insets.equals(this.labelInsets)) {
             this.labelInsets = insets;
             if (notify) {
@@ -562,9 +557,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getAxisLinePaint()
      */
     public void setAxisLinePaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.axisLinePaint = paint;
         fireChangeEvent();
     }
@@ -589,9 +582,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getAxisLineStroke()
      */
     public void setAxisLineStroke(Stroke stroke) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         this.axisLineStroke = stroke;
         fireChangeEvent();
     }
@@ -621,12 +612,10 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #setTickLabelPaint(Paint)
      */
     public void setTickLabelsVisible(boolean flag) {
-
         if (flag != this.tickLabelsVisible) {
             this.tickLabelsVisible = flag;
             fireChangeEvent();
         }
-
     }
 
     /**
@@ -682,16 +671,11 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getTickLabelFont()
      */
     public void setTickLabelFont(Font font) {
-
-        if (font == null) {
-            throw new IllegalArgumentException("Null 'font' argument.");
-        }
-
+        ParamChecks.nullNotPermitted(font, "font");
         if (!this.tickLabelFont.equals(font)) {
             this.tickLabelFont = font;
             fireChangeEvent();
         }
-
     }
 
     /**
@@ -714,9 +698,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getTickLabelPaint()
      */
     public void setTickLabelPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.tickLabelPaint = paint;
         fireChangeEvent();
     }
@@ -741,9 +723,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getTickLabelInsets()
      */
     public void setTickLabelInsets(RectangleInsets insets) {
-        if (insets == null) {
-            throw new IllegalArgumentException("Null 'insets' argument.");
-        }
+        ParamChecks.nullNotPermitted(insets, "insets");
         if (!this.tickLabelInsets.equals(insets)) {
             this.tickLabelInsets = insets;
             fireChangeEvent();
@@ -848,9 +828,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getTickMarkStroke()
      */
     public void setTickMarkStroke(Stroke stroke) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         if (!this.tickMarkStroke.equals(stroke)) {
             this.tickMarkStroke = stroke;
             fireChangeEvent();
@@ -877,9 +855,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getTickMarkPaint()
      */
     public void setTickMarkPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.tickMarkPaint = paint;
         fireChangeEvent();
     }
@@ -1017,9 +993,7 @@ public abstract class Axis implements Cloneable, Serializable {
      *         space).
      */
     public abstract AxisSpace reserveSpace(Graphics2D g2, Plot plot,
-                                           Rectangle2D plotArea,
-                                           RectangleEdge edge,
-                                           AxisSpace space);
+            Rectangle2D plotArea, RectangleEdge edge, AxisSpace space);
 
     /**
      * Draws the axis on a Java 2D graphics device (such as the screen or a
@@ -1035,12 +1009,9 @@ public abstract class Axis implements Cloneable, Serializable {
      *
      * @return The axis state (never <code>null</code>).
      */
-    public abstract AxisState draw(Graphics2D g2,
-                                   double cursor,
-                                   Rectangle2D plotArea,
-                                   Rectangle2D dataArea,
-                                   RectangleEdge edge,
-                                   PlotRenderingInfo plotState);
+    public abstract AxisState draw(Graphics2D g2, double cursor,
+            Rectangle2D plotArea, Rectangle2D dataArea, RectangleEdge edge,
+            PlotRenderingInfo plotState);
 
     /**
      * Calculates the positions of the ticks for the axis, storing the results
@@ -1053,8 +1024,8 @@ public abstract class Axis implements Cloneable, Serializable {
      *
      * @return The list of ticks.
      */
-    public abstract List<? extends Tick> refreshTicks(Graphics2D g2, AxisState state,
-            Rectangle2D dataArea, RectangleEdge edge);
+    public abstract List<? extends Tick> refreshTicks(Graphics2D g2, 
+            AxisState state, Rectangle2D dataArea, RectangleEdge edge);
 
     /**
      * Created an entity for the axis.
@@ -1212,9 +1183,7 @@ public abstract class Axis implements Cloneable, Serializable {
             AxisState state) {
 
         // it is unlikely that 'state' will be null, but check anyway...
-        if (state == null) {
-            throw new IllegalArgumentException("Null 'state' argument.");
-        }
+        ParamChecks.nullNotPermitted(state, "state");
 
         if ((label == null) || (label.equals(""))) {
             return state;
