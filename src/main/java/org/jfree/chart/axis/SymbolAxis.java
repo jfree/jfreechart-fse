@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * SymbolAxis.java
  * ---------------
- * (C) Copyright 2002-2012, by Anthony Boulestreau and Contributors.
+ * (C) Copyright 2002-2013, by Anthony Boulestreau and Contributors.
  *
  * Original Author:  Anthony Boulestreau;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -105,6 +105,7 @@ import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.ValueAxisPlot;
 import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
 
@@ -198,7 +199,7 @@ public class SymbolAxis extends NumberAxis implements Serializable {
     public void setGridBandsVisible(boolean flag) {
         if (this.gridBandsVisible != flag) {
             this.gridBandsVisible = flag;
-            notifyListeners(new AxisChangeEvent(this));
+            fireChangeEvent();
         }
     }
 
@@ -223,11 +224,9 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      * @see #getGridBandPaint()
      */
     public void setGridBandPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.gridBandPaint = paint;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -256,11 +255,9 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      * @since 1.0.7
      */
     public void setGridBandAlternatePaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.gridBandAlternatePaint = paint;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -323,11 +320,8 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      * @param edge  the axis location.
      * @param ticks  the ticks.
      */
-    protected void drawGridBands(Graphics2D g2,
-                                 Rectangle2D plotArea,
-                                 Rectangle2D dataArea,
-                                 RectangleEdge edge,
-                                 List<ValueTick> ticks) {
+    protected void drawGridBands(Graphics2D g2, Rectangle2D plotArea,
+            Rectangle2D dataArea, RectangleEdge edge, List<ValueTick> ticks) {
 
         Shape savedClip = g2.getClip();
         g2.clip(dataArea);
@@ -355,11 +349,9 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      *                             color of <CODE>gridBandPaint</CODE>.
      * @param ticks  the ticks.
      */
-    protected void drawGridBandsHorizontal(Graphics2D g2,
-                                           Rectangle2D plotArea,
-                                           Rectangle2D dataArea,
-                                           boolean firstGridBandIsDark,
-                                           List<ValueTick> ticks) {
+    protected void drawGridBandsHorizontal(Graphics2D g2, Rectangle2D plotArea,
+            Rectangle2D dataArea, boolean firstGridBandIsDark, 
+            List<ValueTick> ticks) {
 
         boolean currentGridBandIsDark = firstGridBandIsDark;
         double yy = dataArea.getY();
@@ -407,11 +399,9 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      *                             color of <CODE>gridBandPaint</CODE>.
      * @param ticks  a list of ticks.
      */
-    protected void drawGridBandsVertical(Graphics2D g2,
-                                         Rectangle2D drawArea,
-                                         Rectangle2D plotArea,
-                                         boolean firstGridBandIsDark,
-                                         List<ValueTick> ticks) {
+    protected void drawGridBandsVertical(Graphics2D g2, Rectangle2D drawArea,
+            Rectangle2D plotArea, boolean firstGridBandIsDark, 
+            List<ValueTick> ticks) {
 
         boolean currentGridBandIsDark = firstGridBandIsDark;
         double xx = plotArea.getX();
@@ -533,10 +523,8 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      * @return A list of ticks.
      */
     @Override
-    public List<ValueTick> refreshTicks(Graphics2D g2,
-                             AxisState state,
-                             Rectangle2D dataArea,
-                             RectangleEdge edge) {
+    public List<ValueTick> refreshTicks(Graphics2D g2, AxisState state,
+            Rectangle2D dataArea, RectangleEdge edge) {
         List<ValueTick> ticks = null;
         if (RectangleEdge.isTopOrBottom(edge)) {
             ticks = refreshTicksHorizontal(g2, dataArea, edge);
@@ -559,8 +547,7 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      */
     @Override
     protected List<ValueTick> refreshTicksHorizontal(Graphics2D g2,
-                                          Rectangle2D dataArea,
-                                          RectangleEdge edge) {
+            Rectangle2D dataArea, RectangleEdge edge) {
 
         List<ValueTick> ticks = new java.util.ArrayList<ValueTick>();
 
@@ -654,8 +641,7 @@ public class SymbolAxis extends NumberAxis implements Serializable {
      */
     @Override
     protected List<ValueTick> refreshTicksVertical(Graphics2D g2,
-                                        Rectangle2D dataArea,
-                                        RectangleEdge edge) {
+            Rectangle2D dataArea, RectangleEdge edge) {
 
         List<ValueTick> ticks = new java.util.ArrayList<ValueTick>();
 
