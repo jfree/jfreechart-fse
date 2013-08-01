@@ -62,10 +62,6 @@ import static org.junit.Assert.assertSame;
  */
 public class SymbolAxisTest  {
 
-
-
-
-
     /**
      * Serialize an instance, restore it, and check for equality.
      */
