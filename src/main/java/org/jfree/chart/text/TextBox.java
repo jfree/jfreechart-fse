@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------
  * TextBox.java
  * ------------
- * (C) Copyright 2004-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -108,14 +108,12 @@ public class TextBox implements Serializable {
      *
      * @param text  the text.
      */
-    public TextBox(final String text) {
+    public TextBox(String text) {
         this((TextBlock) null);
         if (text != null) {
             this.textBlock = new TextBlock();
-            this.textBlock.addLine(
-                text, new Font("SansSerif", Font.PLAIN, 10),
-                Color.BLACK
-            );
+            this.textBlock.addLine(text, new Font("SansSerif", Font.PLAIN, 10),
+                    Color.BLACK);
         }
     }
 
@@ -124,7 +122,7 @@ public class TextBox implements Serializable {
      *
      * @param block  the text block.
      */
-    public TextBox(final TextBlock block) {
+    public TextBox(TextBlock block) {
         this.outlinePaint = Color.BLACK;
         this.outlineStroke = new BasicStroke(1.0f);
         this.interiorGap = new RectangleInsets(1.0, 3.0, 1.0, 3.0);
@@ -149,7 +147,7 @@ public class TextBox implements Serializable {
      *
      * @param paint  the paint.
      */
-    public void setOutlinePaint(final Paint paint) {
+    public void setOutlinePaint(Paint paint) {
         this.outlinePaint = paint;
     }
 
@@ -167,7 +165,7 @@ public class TextBox implements Serializable {
      *
      * @param stroke  the stroke.
      */
-    public void setOutlineStroke(final Stroke stroke) {
+    public void setOutlineStroke(Stroke stroke) {
         this.outlineStroke = stroke;
     }
 
@@ -185,7 +183,7 @@ public class TextBox implements Serializable {
      *
      * @param gap  the gap.
      */
-    public void setInteriorGap(final RectangleInsets gap) {
+    public void setInteriorGap(RectangleInsets gap) {
         this.interiorGap = gap;
     }
 
@@ -203,7 +201,7 @@ public class TextBox implements Serializable {
      *
      * @param paint  the paint.
      */
-    public void setBackgroundPaint(final Paint paint) {
+    public void setBackgroundPaint(Paint paint) {
         this.backgroundPaint = paint;
     }
 
@@ -221,7 +219,7 @@ public class TextBox implements Serializable {
      *
      * @param paint  the paint.
      */
-    public void setShadowPaint(final Paint paint) {
+    public void setShadowPaint(Paint paint) {
         this.shadowPaint = paint;
     }
 
@@ -239,7 +237,7 @@ public class TextBox implements Serializable {
      *
      * @param offset  the offset (in Java2D units).
      */
-    public void setShadowXOffset(final double offset) {
+    public void setShadowXOffset(double offset) {
         this.shadowXOffset = offset;
     }
 
@@ -257,7 +255,7 @@ public class TextBox implements Serializable {
      *
      * @param offset  the offset (in Java2D units).
      */
-    public void setShadowYOffset(final double offset) {
+    public void setShadowYOffset(double offset) {
         this.shadowYOffset = offset;
     }
 
@@ -275,7 +273,7 @@ public class TextBox implements Serializable {
      *
      * @param block  the block.
      */
-    public void setTextBlock(final TextBlock block) {
+    public void setTextBlock(TextBlock block) {
         this.textBlock = block;
     }
 
@@ -287,22 +285,19 @@ public class TextBox implements Serializable {
      * @param y  the y-coordinate.
      * @param anchor  the anchor point.
      */
-    public void draw(final Graphics2D g2,
-                     final float x, final float y,
-                     final RectangleAnchor anchor) {
-        final Size2D d1 = this.textBlock.calculateDimensions(g2);
-        final double w = this.interiorGap.extendWidth(d1.getWidth());
-        final double h = this.interiorGap.extendHeight(d1.getHeight());
-        final Size2D d2 = new Size2D(w, h);
-        final Rectangle2D bounds
-                = RectangleAnchor.createRectangle(d2, x, y, anchor);
+    public void draw(Graphics2D g2, float x, float y, RectangleAnchor anchor) {
+        Size2D d1 = this.textBlock.calculateDimensions(g2);
+        double w = this.interiorGap.extendWidth(d1.getWidth());
+        double h = this.interiorGap.extendHeight(d1.getHeight());
+        Size2D d2 = new Size2D(w, h);
+        Rectangle2D bounds = RectangleAnchor.createRectangle(d2, x, y, anchor);
         double xx = bounds.getX();
         double yy = bounds.getY();
 
         if (this.shadowPaint != null) {
-            final Rectangle2D shadow = new Rectangle2D.Double(
-                xx + this.shadowXOffset, yy + this.shadowYOffset,
-                bounds.getWidth(), bounds.getHeight());
+            Rectangle2D shadow = new Rectangle2D.Double(xx + this.shadowXOffset,
+                    yy + this.shadowYOffset, bounds.getWidth(), 
+                    bounds.getHeight());
             g2.setPaint(this.shadowPaint);
             g2.fill(shadow);
         }
@@ -331,8 +326,8 @@ public class TextBox implements Serializable {
      *
      * @return The height (in Java2D units).
      */
-    public double getHeight(final Graphics2D g2) {
-        final Size2D d = this.textBlock.calculateDimensions(g2);
+    public double getHeight(Graphics2D g2) {
+        Size2D d = this.textBlock.calculateDimensions(g2);
         return this.interiorGap.extendHeight(d.getHeight());
     }
 
@@ -344,14 +339,14 @@ public class TextBox implements Serializable {
      * @return A boolean.
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
         if (!(obj instanceof TextBox)) {
             return false;
         }
-        final TextBox that = (TextBox) obj;
+        TextBox that = (TextBox) obj;
         if (!ObjectUtilities.equal(this.outlinePaint, that.outlinePaint)) {
             return false;
         }
@@ -417,8 +412,7 @@ public class TextBox implements Serializable {
      *
      * @throws IOException  if there is an I/O error.
      */
-    private void writeObject(final ObjectOutputStream stream)
-            throws IOException {
+    private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
         SerialUtilities.writePaint(this.outlinePaint, stream);
         SerialUtilities.writeStroke(this.outlineStroke, stream);
@@ -434,14 +428,13 @@ public class TextBox implements Serializable {
      * @throws IOException  if there is an I/O error.
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
-    private void readObject(final ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+    private void readObject(ObjectInputStream stream) throws IOException, 
+            ClassNotFoundException {
         stream.defaultReadObject();
         this.outlinePaint = SerialUtilities.readPaint(stream);
         this.outlineStroke = SerialUtilities.readStroke(stream);
         this.backgroundPaint = SerialUtilities.readPaint(stream);
         this.shadowPaint = SerialUtilities.readPaint(stream);
     }
-
 
 }
