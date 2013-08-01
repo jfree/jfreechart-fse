@@ -61,10 +61,6 @@ import static org.junit.Assert.assertSame;
  */
 public class ModuloAxisTest  {
 
-
-
-
-
     /**
      * Confirm that cloning works.
      */
