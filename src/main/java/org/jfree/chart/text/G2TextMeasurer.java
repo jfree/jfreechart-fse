@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------
  * G2TextMeasurer.java
  * -------------------
- * (C) Copyright 2004-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -48,8 +48,6 @@ import java.awt.geom.Rectangle2D;
 
 /**
  * A {@link TextMeasurer} based on a {@link Graphics2D}.
- *
- * @author David Gilbert
  */
 public class G2TextMeasurer implements TextMeasurer {
 
@@ -61,7 +59,7 @@ public class G2TextMeasurer implements TextMeasurer {
      *
      * @param g2  the graphics device.
      */
-    public G2TextMeasurer(final Graphics2D g2) {
+    public G2TextMeasurer(Graphics2D g2) {
         this.g2 = g2;
     }
 
@@ -75,13 +73,11 @@ public class G2TextMeasurer implements TextMeasurer {
      * @return The string width.
      */
     @Override
-    public float getStringWidth(final String text,
-                                final int start, final int end) {
-        final FontMetrics fm = this.g2.getFontMetrics();
-        final Rectangle2D bounds = TextUtilities.getTextBounds(
-            text.substring(start, end), this.g2, fm
-        );
-        final float result = (float) bounds.getWidth();
+    public float getStringWidth(String text, int start, int end) {
+        FontMetrics fm = this.g2.getFontMetrics();
+        Rectangle2D bounds = TextUtilities.getTextBounds(
+                text.substring(start, end), this.g2, fm);
+        float result = (float) bounds.getWidth();
         return result;
     }
 
