@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * PeriodAxisTests.java
  * --------------------
- * (C) Copyright 2004-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -94,10 +94,6 @@ public class PeriodAxisTest  implements AxisChangeListener {
     public void axisChanged(AxisChangeEvent event) {
         this.lastEvent = event;
     }
-
-
-
-
 
     /**
      * Confirm that the equals() method can distinguish all the required fields.
@@ -188,7 +184,7 @@ public class PeriodAxisTest  implements AxisChangeListener {
         assertEquals(a1, a2);
     }
 
-        /**
+    /**
      * Two objects that are equal are required to return the same hashCode.
      */
     @Test
