@@ -70,10 +70,6 @@ import static org.junit.Assert.assertSame;
  */
 public class SubCategoryAxisTest  {
 
-
-
-
-
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
