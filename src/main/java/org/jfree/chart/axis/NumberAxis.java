@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -1406,19 +1406,9 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
         return super.equals(obj);
     }
 
-    /**
-     * Returns a hash code for this object.
-     *
-     * @return A hash code.
-     */
     @Override
     public int hashCode() {
-        if (getLabel() != null) {
-            return getLabel().hashCode();
-        }
-        else {
-            return 0;
-        }
+        return super.hashCode();
     }
-
+   
 }

@@ -1382,19 +1382,11 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         return true;
     }
 
-    /**
-     * Returns a hash code for this object.
-     *
-     * @return A hash code.
-     */
     @Override
     public int hashCode() {
-        if (getLabel() != null) {
-            return getLabel().hashCode();
-        }
-        return 0;
-    }
-
+        return super.hashCode();
+    }    
+    
     /**
      * Provides serialization support.
      *

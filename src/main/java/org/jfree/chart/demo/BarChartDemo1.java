@@ -42,7 +42,10 @@ package org.jfree.chart.demo;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GradientPaint;
+import java.awt.font.TextAttribute;
+import java.text.AttributedString;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -184,9 +187,14 @@ public class BarChartDemo1 extends ApplicationFrame {
         renderer.setSeriesPaint(2, gp2);
 
         CategoryAxis domainAxis = plot.getDomainAxis();
-        domainAxis.setCategoryLabelPositions(
-                CategoryLabelPositions.createUpRotationLabelPositions(
-                        Math.PI / 6.0));
+        domainAxis.setLabelPaint(Color.RED);
+        domainAxis.setLabel("Category (H20)");
+        domainAxis.getLabel().addAttribute(TextAttribute.SUPERSCRIPT, TextAttribute.SUPERSCRIPT_SUB, 11, 12);
+        
+        rangeAxis.setLabel("Value2");
+        rangeAxis.getLabel().addAttribute(TextAttribute.SUPERSCRIPT, TextAttribute.SUPERSCRIPT_SUPER, 5, 6);
+
+        
         // OPTIONAL CUSTOMISATION COMPLETED.
 
         return chart;

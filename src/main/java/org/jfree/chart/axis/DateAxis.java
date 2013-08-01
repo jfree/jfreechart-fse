@@ -347,7 +347,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
     public DateAxis() {
         this(null);
     }
-
+    
     /**
      * Creates a date axis with the specified label.
      *
@@ -1864,19 +1864,9 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
         return super.equals(obj);
     }
 
-    /**
-     * Returns a hash code for this object.
-     *
-     * @return A hash code.
-     */
     @Override
     public int hashCode() {
-        if (getLabel() != null) {
-            return getLabel().hashCode();
-        }
-        else {
-            return 0;
-        }
+        return super.hashCode();
     }
 
     /**

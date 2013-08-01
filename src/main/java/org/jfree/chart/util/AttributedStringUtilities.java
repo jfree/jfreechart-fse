@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------------------
  * AttributedStringUtilities.java
  * ------------------------------
- * (C)opyright 2005-2012, by Object Refinery Limited and Contributors.
+ * (C)opyright 2005-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -38,6 +38,7 @@
  * -------
  * 29-Jul-2005 : Version 1(DG);
  * 16-Jun-2012 : Moved from JCommon to JFreeChart (DG);
+ * 01-Aug-2013 : Added toString() method (DG);
  * 
  */
 
@@ -59,6 +60,25 @@ public class AttributedStringUtilities {
     private AttributedStringUtilities() {
     }
 
+    /**
+     * Returns a string containing the underlying character data for the
+     * supplied iterator.
+     * 
+     * @param aci  the iterator (<code>null</code> not permitted).
+     * 
+     * @return A string. 
+     */
+    public static String toString(AttributedCharacterIterator aci) {
+        StringBuilder builder = new StringBuilder();
+        int count = aci.getEndIndex() - aci.getBeginIndex();
+        char c = aci.first();
+        for (int i = 0; i < count; i++) {
+            builder.append(c);
+            c = aci.next();
+        }
+        return builder.toString();
+    }
+    
     /**
      * Tests two attributed strings for equality.
      * 

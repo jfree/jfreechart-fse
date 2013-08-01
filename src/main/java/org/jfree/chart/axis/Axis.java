@@ -91,11 +91,12 @@ package org.jfree.chart.axis;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.Stroke;
+import java.awt.font.TextAttribute;
+import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -103,6 +104,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.text.AttributedString;
 import java.util.Arrays;
 import java.util.EventListener;
 import java.util.List;
@@ -121,6 +123,7 @@ import org.jfree.chart.event.AxisChangeListener;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.util.AttributedStringUtilities;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 
@@ -187,7 +190,7 @@ public abstract class Axis implements Cloneable, Serializable {
     private boolean visible;
 
     /** The label for the axis. */
-    private String label;
+    private transient AttributedString label;
 
     /** The font for displaying the axis label. */
     private Font labelFont;
@@ -289,11 +292,14 @@ public abstract class Axis implements Cloneable, Serializable {
      * @param label  the axis label (<code>null</code> permitted).
      */
     protected Axis(String label) {
-
-        this.label = label;
         this.visible = DEFAULT_AXIS_VISIBLE;
         this.labelFont = DEFAULT_AXIS_LABEL_FONT;
         this.labelPaint = DEFAULT_AXIS_LABEL_PAINT;
+        if (label != null) {
+            AttributedString s = new AttributedString(label);
+            s.addAttributes(this.labelFont.getAttributes(), 0, label.length());
+            this.label = s;
+        }
         this.labelInsets = DEFAULT_AXIS_LABEL_INSETS;
         this.labelAngle = 0.0;
 
@@ -319,7 +325,6 @@ public abstract class Axis implements Cloneable, Serializable {
         this.plot = null;
 
         this.listenerList = new EventListenerList();
-
     }
 
     /**
@@ -358,7 +363,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getLabelPaint()
      * @see #setLabel(String)
      */
-    public String getLabel() {
+    public AttributedString getLabel() {
         return this.label;
     }
 
@@ -372,24 +377,43 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #setLabelFont(Font)
      * @see #setLabelPaint(Paint)
      */
-    public void setLabel(String label) {
-
-        String existing = this.label;
-        if (existing != null) {
-            if (!existing.equals(label)) {
-                this.label = label;
-                fireChangeEvent();
-            }
-        }
-        else {
-            if (label != null) {
-                this.label = label;
-                fireChangeEvent();
-            }
-        }
-
+    public void setLabel(AttributedString label) {
+        this.label = label;
+        fireChangeEvent();
     }
 
+    /**
+     * Sets the label for the axis and sends an {@link AxisChangeEvent} to
+     * all registered listeners.  Note that this is a convenience method that
+     * converts the <code>String</code> argument to an 
+     * <code>AttributedString</code> (which is the actual type for the label).
+     * 
+     * @param label  the label (<code>null</code> permitted).
+     * 
+     * @see #setLabel(java.text.AttributedString) 
+     */
+    public void setLabel(String label) {
+        this.label = createLabel(label);
+        fireChangeEvent();
+    }
+    
+    /**
+     * Creates and returns an <code>AttributedString</code> with the specified
+     * text and the labelFont and labelPaint applied as attributes.
+     * 
+     * @param label  the label (<code>null</code> permitted).
+     * 
+     * @return An attributed string or <code>null</code>.
+     */
+    private AttributedString createLabel(String label) {
+        if (label == null) {
+            return null;
+        }
+        AttributedString s = new AttributedString(label);
+        s.addAttributes(this.labelFont.getAttributes(), 0, label.length());
+        return s;
+    }
+    
     /**
      * Returns the font for the axis label.
      *
@@ -411,10 +435,12 @@ public abstract class Axis implements Cloneable, Serializable {
      */
     public void setLabelFont(Font font) {
         ParamChecks.nullNotPermitted(font, "font");
-        if (!this.labelFont.equals(font)) {
-            this.labelFont = font;
-            fireChangeEvent();
+        this.labelFont = font;
+        if (this.label != null) {
+            this.label.addAttributes(font.getAttributes(), 0, 
+                    this.label.getIterator().getEndIndex());
         }
+        fireChangeEvent();
     }
 
     /**
@@ -1144,10 +1170,11 @@ public abstract class Axis implements Cloneable, Serializable {
     protected Rectangle2D getLabelEnclosure(Graphics2D g2, RectangleEdge edge) {
 
         Rectangle2D result = new Rectangle2D.Double();
-        String axisLabel = getLabel();
-        if (axisLabel != null && !axisLabel.equals("")) {
-            FontMetrics fm = g2.getFontMetrics(getLabelFont());
-            Rectangle2D bounds = TextUtilities.getTextBounds(axisLabel, g2, fm);
+        AttributedString axisLabel = getLabel();
+        if (axisLabel != null) {
+            TextLayout layout = new TextLayout(axisLabel.getIterator(), 
+                    g2.getFontRenderContext());
+            Rectangle2D bounds = layout.getBounds();
             RectangleInsets insets = getLabelInsets();
             bounds = insets.createOutsetRectangle(bounds);
             double angle = getLabelAngle();
@@ -1178,23 +1205,23 @@ public abstract class Axis implements Cloneable, Serializable {
      *
      * @return Information about the axis.
      */
-    protected AxisState drawLabel(String label, Graphics2D g2,
+    protected AxisState drawLabel(AttributedString label, Graphics2D g2,
             Rectangle2D plotArea, Rectangle2D dataArea, RectangleEdge edge,
             AxisState state) {
 
         // it is unlikely that 'state' will be null, but check anyway...
         ParamChecks.nullNotPermitted(state, "state");
 
-        if ((label == null) || (label.equals(""))) {
+        if (label == null) {
             return state;
         }
 
-        Font font = getLabelFont();
         RectangleInsets insets = getLabelInsets();
-        g2.setFont(font);
+        g2.setFont(getLabelFont());
         g2.setPaint(getLabelPaint());
-        FontMetrics fm = g2.getFontMetrics();
-        Rectangle2D labelBounds = TextUtilities.getTextBounds(label, g2, fm);
+        TextLayout layout = new TextLayout(label.getIterator(), 
+                g2.getFontRenderContext());
+        Rectangle2D labelBounds = layout.getBounds();
 
         if (edge == RectangleEdge.TOP) {
             AffineTransform t = AffineTransform.getRotateInstance(
@@ -1333,7 +1360,7 @@ public abstract class Axis implements Cloneable, Serializable {
         if (this.visible != that.visible) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.label, that.label)) {
+        if (!AttributedStringUtilities.equal(this.label, that.label)) {
             return false;
         }
         if (!ObjectUtilities.equal(this.labelFont, that.labelFont)) {
@@ -1403,6 +1430,21 @@ public abstract class Axis implements Cloneable, Serializable {
     }
 
     /**
+     * Returns a hash code for this object.
+     *
+     * @return A hash code.
+     */
+    @Override
+    public int hashCode() {
+        if (getLabel() != null) {
+            String s = AttributedStringUtilities.toString(
+                    getLabel().getIterator());
+            return s.hashCode();
+        }
+        return 0;
+    }
+
+    /**
      * Provides serialization support.
      *
      * @param stream  the output stream.
@@ -1411,6 +1453,7 @@ public abstract class Axis implements Cloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
+        SerialUtilities.writeAttributedString(this.label, stream);
         SerialUtilities.writePaint(this.labelPaint, stream);
         SerialUtilities.writePaint(this.tickLabelPaint, stream);
         SerialUtilities.writeStroke(this.axisLineStroke, stream);
@@ -1430,6 +1473,7 @@ public abstract class Axis implements Cloneable, Serializable {
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
+        this.label = SerialUtilities.readAttributedString(stream);
         this.labelPaint = SerialUtilities.readPaint(stream);
         this.tickLabelPaint = SerialUtilities.readPaint(stream);
         this.axisLineStroke = SerialUtilities.readStroke(stream);

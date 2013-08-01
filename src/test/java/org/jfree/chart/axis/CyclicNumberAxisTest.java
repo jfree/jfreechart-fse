@@ -67,16 +67,12 @@ import static org.junit.Assert.assertSame;
  */
 public class CyclicNumberAxisTest  {
 
-
-
-
-
     /**
      * Confirm that cloning works.
      */
     @Test
     public void testCloning() throws CloneNotSupportedException {
-        CyclicNumberAxis a1 = new CyclicNumberAxis(10, 0, "Test");
+        CyclicNumberAxis a1 = new CyclicNumberAxis("Test", 10, 0);
         CyclicNumberAxis a2 = (CyclicNumberAxis) a1.clone();
 
         assertNotSame(a1, a2);
@@ -90,8 +86,8 @@ public class CyclicNumberAxisTest  {
     @Test
     public void testEquals() {
 
-        CyclicNumberAxis a1 = new CyclicNumberAxis(10, 0, "Test");
-        CyclicNumberAxis a2 = new CyclicNumberAxis(10, 0, "Test");
+        CyclicNumberAxis a1 = new CyclicNumberAxis("Test", 10, 0);
+        CyclicNumberAxis a2 = new CyclicNumberAxis("Test", 10, 0);
         assertEquals(a1, a2);
 
         // period
@@ -140,8 +136,8 @@ public class CyclicNumberAxisTest  {
      */
     @Test
     public void testHashCode() {
-        CyclicNumberAxis a1 = new CyclicNumberAxis(10, 0, "Test");
-        CyclicNumberAxis a2 = new CyclicNumberAxis(10, 0, "Test");
+        CyclicNumberAxis a1 = new CyclicNumberAxis("Test", 10, 0);
+        CyclicNumberAxis a2 = new CyclicNumberAxis("Test", 10, 0);
         assertEquals(a1, a2);
         int h1 = a1.hashCode();
         int h2 = a2.hashCode();
@@ -154,7 +150,7 @@ public class CyclicNumberAxisTest  {
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
 
-        CyclicNumberAxis a1 = new CyclicNumberAxis(10, 0, "Test Axis");
+        CyclicNumberAxis a1 = new CyclicNumberAxis("Test", 10, 0);
 
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         ObjectOutput out = new ObjectOutputStream(buffer);
