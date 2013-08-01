@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------
  * CategoryAxis.java
  * -----------------
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert;
  * Contributor(s):   Pady Srinivasan (patch 1217634);
@@ -111,6 +111,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.text.AttributedString;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -192,6 +193,9 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     /** Storage for the category label tooltips (if any). */
     private Map<Comparable, String> categoryLabelToolTips;
 
+    /** Storage for the category label URLs (if any). */
+    private Map<Comparable, String> categoryLabelURLs;
+    
     /**
      * Creates a new category axis with no label.
      */
@@ -216,6 +220,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         this.tickLabelFontMap = new HashMap<Comparable, Font>();
         this.tickLabelPaintMap = new HashMap<Comparable, Paint>();
         this.categoryLabelToolTips = new HashMap<Comparable, String>();
+        this.categoryLabelURLs = new HashMap<Comparable, String>();
     }
 
     /**
@@ -241,7 +246,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      */
     public void setLowerMargin(double margin) {
         this.lowerMargin = margin;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -267,7 +272,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      */
     public void setUpperMargin(double margin) {
         this.upperMargin = margin;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -293,7 +298,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      */
     public void setCategoryMargin(double margin) {
         this.categoryMargin = margin;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -317,7 +322,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      */
     public void setMaximumCategoryLabelLines(int lines) {
         this.maximumCategoryLabelLines = lines;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -341,7 +346,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      */
     public void setMaximumCategoryLabelWidthRatio(float ratio) {
         this.maximumCategoryLabelWidthRatio = ratio;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -358,7 +363,8 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
 
     /**
      * Sets the offset between the axis and the category labels (before label
-     * positioning is taken into account).
+     * positioning is taken into account) and sends a change event to all 
+     * registered listeners.
      *
      * @param offset  the offset (in Java2D units).
      *
@@ -366,7 +372,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      */
     public void setCategoryLabelPositionOffset(int offset) {
         this.categoryLabelPositionOffset = offset;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -392,7 +398,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     public void setCategoryLabelPositions(CategoryLabelPositions positions) {
         ParamChecks.nullNotPermitted(positions, "positions");
         this.categoryLabelPositions = positions;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -431,7 +437,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         else {
             this.tickLabelFontMap.put(category, font);
         }
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -470,7 +476,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         else {
             this.tickLabelPaintMap.put(category, paint);
         }
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -485,7 +491,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     public void addCategoryLabelToolTip(Comparable category, String tooltip) {
         ParamChecks.nullNotPermitted(category, "category");
         this.categoryLabelToolTips.put(category, tooltip);
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -505,8 +511,9 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     }
 
     /**
-     * Removes the tooltip for the specified category and sends an
-     * {@link AxisChangeEvent} to all registered listeners.
+     * Removes the tooltip for the specified category and, if there was a value
+     * associated with that category, sends an {@link AxisChangeEvent} to all 
+     * registered listeners.
      *
      * @param category  the category (<code>null</code> not permitted).
      *
@@ -515,8 +522,9 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      */
     public void removeCategoryLabelToolTip(Comparable category) {
         ParamChecks.nullNotPermitted(category, "category");
-        this.categoryLabelToolTips.remove(category);
-        notifyListeners(new AxisChangeEvent(this));
+        if (this.categoryLabelToolTips.remove(category) != null) {
+            fireChangeEvent();
+        }
     }
 
     /**
@@ -528,9 +536,76 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      */
     public void clearCategoryLabelToolTips() {
         this.categoryLabelToolTips.clear();
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
+    /**
+     * Adds a URL (to be used in image maps) to the specified category and 
+     * sends an {@link AxisChangeEvent} to all registered listeners.
+     *
+     * @param category  the category (<code>null</code> not permitted).
+     * @param url  the URL text (<code>null</code> permitted).
+     *
+     * @see #removeCategoryLabelURL(Comparable)
+     * 
+     * @since 1.0.16
+     */
+    public void addCategoryLabelURL(Comparable category, String url) {
+        ParamChecks.nullNotPermitted(category, "category");
+        this.categoryLabelURLs.put(category, url);
+        fireChangeEvent();
+    }
+
+    /**
+     * Returns the URL for the label belonging to the specified category.
+     *
+     * @param category  the category (<code>null</code> not permitted).
+     *
+     * @return The URL text (possibly <code>null</code>).
+     * 
+     * @see #addCategoryLabelURL(Comparable, String)
+     * @see #removeCategoryLabelURL(Comparable)
+     * 
+     * @since 1.0.16
+     */
+    public String getCategoryLabelURL(Comparable category) {
+        ParamChecks.nullNotPermitted(category, "category");
+        return this.categoryLabelURLs.get(category);
+    }
+
+    /**
+     * Removes the URL for the specified category and, if there was a URL 
+     * associated with that category, sends an {@link AxisChangeEvent} to all 
+     * registered listeners.
+     *
+     * @param category  the category (<code>null</code> not permitted).
+     *
+     * @see #addCategoryLabelURL(Comparable, String)
+     * @see #clearCategoryLabelURLs()
+     * 
+     * @since 1.0.16
+     */
+    public void removeCategoryLabelURL(Comparable category) {
+        ParamChecks.nullNotPermitted(category, "category");
+        if (this.categoryLabelURLs.remove(category) != null) {
+            fireChangeEvent();
+        }
+    }
+
+    /**
+     * Clears the category label URLs and sends an {@link AxisChangeEvent}
+     * to all registered listeners.
+     *
+     * @see #addCategoryLabelURL(Comparable, String)
+     * @see #removeCategoryLabelURL(Comparable)
+     * 
+     * @since 1.0.16
+     */
+    public void clearCategoryLabelURLs() {
+        this.categoryLabelURLs.clear();
+        fireChangeEvent();
+    }
+    
     /**
      * Returns the Java 2D coordinate for a category.
      *
@@ -933,10 +1008,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
             Rectangle2D dataArea, RectangleEdge edge, AxisState state,
             PlotRenderingInfo plotState) {
 
-        if (state == null) {
-            throw new IllegalArgumentException("Null 'state' argument.");
-        }
-
+        ParamChecks.nullNotPermitted(state, "state");
         if (!isTickLabelsVisible()) {
             return state;
         }
@@ -1003,8 +1075,9 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
                 if (entities != null) {
                     String tooltip = getCategoryLabelToolTip(
                             tick.getCategory());
+                    String url = getCategoryLabelURL(tick.getCategory());
                     entities.add(new CategoryLabelEntity(tick.getCategory(),
-                            bounds, tooltip, null));
+                            bounds, tooltip, url));
                 }
             }
             categoryIndex++;
@@ -1247,6 +1320,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         clone.tickLabelFontMap = new HashMap<Comparable, Font>(this.tickLabelFontMap);
         clone.tickLabelPaintMap = new HashMap<Comparable, Paint>(this.tickLabelPaintMap);
         clone.categoryLabelToolTips = new HashMap<Comparable, String>(this.categoryLabelToolTips);
+        clone.categoryLabelURLs = new HashMap<Comparable, String>(this.categoryLabelToolTips);
         return clone;
     }
 
@@ -1292,6 +1366,10 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         }
         if (!ObjectUtilities.equal(that.categoryLabelToolTips,
                 this.categoryLabelToolTips)) {
+            return false;
+        }
+        if (!ObjectUtilities.equal(this.categoryLabelURLs, 
+                that.categoryLabelURLs)) {
             return false;
         }
         if (!ObjectUtilities.equal(this.tickLabelFontMap,
