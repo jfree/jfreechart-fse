@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -65,6 +65,7 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.category.CategoryDataset;
 
 /**
@@ -93,12 +94,10 @@ public class CategoryTextAnnotation extends TextAnnotation
      * @param category  the category (<code>null</code> not permitted).
      * @param value  the value.
      */
-    public CategoryTextAnnotation(String text, Comparable category,
-                                  double value) {
+    public CategoryTextAnnotation(String text, Comparable category, 
+            double value) {
         super(text);
-        if (category == null) {
-            throw new IllegalArgumentException("Null 'category' argument.");
-        }
+        ParamChecks.nullNotPermitted(category, "category");
         this.category = category;
         this.value = value;
         this.categoryAnchor = CategoryAnchor.MIDDLE;
@@ -151,9 +150,7 @@ public class CategoryTextAnnotation extends TextAnnotation
      * @see #getCategoryAnchor()
      */
     public void setCategoryAnchor(CategoryAnchor anchor) {
-        if (anchor == null) {
-            throw new IllegalArgumentException("Null 'anchor' argument.");
-        }
+        ParamChecks.nullNotPermitted(anchor, "anchor");
         this.categoryAnchor = anchor;
         fireAnnotationChanged();
     }

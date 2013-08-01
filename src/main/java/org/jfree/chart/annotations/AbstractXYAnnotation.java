@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * AbstractXYAnnotation.java
  * -------------------------
- * (C) Copyright 2004-2012, by Object Refinery Limited.
+ * (C) Copyright 2004-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Peter Kolb (patch 2809117);
@@ -99,6 +99,7 @@ public abstract class AbstractXYAnnotation extends AbstractAnnotation
      */
     public void setToolTipText(String text) {
         this.toolTipText = text;
+        fireAnnotationChanged();
     }
 
     /**
@@ -122,6 +123,7 @@ public abstract class AbstractXYAnnotation extends AbstractAnnotation
      */
     public void setURL(String url) {
         this.url = url;
+        fireAnnotationChanged();
     }
 
     /**
@@ -138,9 +140,8 @@ public abstract class AbstractXYAnnotation extends AbstractAnnotation
      */
     @Override
     public abstract void draw(Graphics2D g2, XYPlot plot, Rectangle2D dataArea,
-                              ValueAxis domainAxis, ValueAxis rangeAxis,
-                              int rendererIndex,
-                              PlotRenderingInfo info);
+            ValueAxis domainAxis, ValueAxis rangeAxis, int rendererIndex,
+            PlotRenderingInfo info);
 
     /**
      * A utility method for adding an {@link XYAnnotationEntity} to
@@ -152,9 +153,8 @@ public abstract class AbstractXYAnnotation extends AbstractAnnotation
      * @param toolTipText  the tool tip text.
      * @param urlText  the URL text.
      */
-    protected void addEntity(PlotRenderingInfo info,
-                             Shape hotspot, int rendererIndex,
-                             String toolTipText, String urlText) {
+    protected void addEntity(PlotRenderingInfo info, Shape hotspot, 
+            int rendererIndex, String toolTipText, String urlText) {
         if (info == null) {
             return;
         }
