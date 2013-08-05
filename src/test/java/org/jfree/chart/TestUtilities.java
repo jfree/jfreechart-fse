@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------
  * TestUtilities.java
  * ------------------
- * (C) Copyright 2007, 2008, by Object Refinery Limited.
+ * (C) Copyright 2007-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -40,6 +40,13 @@
 
 package org.jfree.chart;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -66,6 +73,26 @@ public class TestUtilities {
             }
         }
         return false;
+    }
+
+    public static Object serialised(Object original) {
+        Object result = null;
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out;
+        try {
+            out = new ObjectOutputStream(buffer);
+            out.writeObject(original);
+            out.close();
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
+            result = in.readObject();
+            in.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
     }
 
 }
