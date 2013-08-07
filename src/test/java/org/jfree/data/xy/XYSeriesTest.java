@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -46,16 +46,10 @@
 
 package org.jfree.data.xy;
 
+import org.jfree.chart.TestUtilities;
 import org.jfree.data.general.SeriesException;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -68,11 +62,7 @@ import static org.junit.Assert.fail;
 /**
  * Tests for the {@link XYSeries} class.
  */
-public class XYSeriesTest  {
-
-
-
-
+public class XYSeriesTest {
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
@@ -182,19 +172,10 @@ public class XYSeriesTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() throws IOException, ClassNotFoundException {
+    public void testSerialization() {
         XYSeries s1 = new XYSeries("Series");
         s1.add(1.0, 1.1);
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(s1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
-        XYSeries s2 = (XYSeries) in.readObject();
-        in.close();
-
+        XYSeries s2 = (XYSeries) TestUtilities.serialised(s1);
         assertEquals(s1, s2);
     }
 
@@ -669,6 +650,22 @@ public class XYSeriesTest  {
 
         s1.add(0.0, null);
         assertEquals(99.9, s1.getMaxY(), EPSILON);
+    }
+
+    /**
+     * A test for a bug reported in the forum:
+     * 
+     * http://www.jfree.org/forum/viewtopic.php?f=3&t=116601
+     */
+    @Test
+    public void testGetMaxY2() {
+        XYSeries series = new XYSeries(1, true, false);
+        series.addOrUpdate(1, 20);
+        series.addOrUpdate(2, 30);
+        series.addOrUpdate(3, 40);
+        assertEquals(40.0, series.getMaxY(), EPSILON);
+        series.addOrUpdate(2, 22);
+        assertEquals(40.0, series.getMaxY(), EPSILON);        
     }
 
     /**
