@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -85,6 +85,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.general.Series;
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesException;
@@ -135,7 +136,7 @@ public class XYSeries extends Series implements Cloneable, Serializable {
     /**
      * Creates a new empty series.  By default, items added to the series will
      * be sorted into ascending order by x-value, and duplicate x-values will
-     * be allowed (these defaults can be modified with another constructor.
+     * be allowed (these defaults can be modified with another constructor).
      *
      * @param key  the series key (<code>null</code> not permitted).
      */
@@ -500,9 +501,7 @@ public class XYSeries extends Series implements Cloneable, Serializable {
      *                listeners.
      */
     public void add(XYDataItem item, boolean notify) {
-        if (item == null) {
-            throw new IllegalArgumentException("Null 'item' argument.");
-        }
+        ParamChecks.nullNotPermitted(item, "item");
         item = item.copy();
         if (this.autoSort) {
             int index = Collections.binarySearch(this.data, item);
@@ -781,9 +780,7 @@ public class XYSeries extends Series implements Cloneable, Serializable {
      * @since 1.0.14
      */
     public XYDataItem addOrUpdate(XYDataItem item) {
-        if (item == null) {
-            throw new IllegalArgumentException("Null 'item' argument.");
-        }
+        ParamChecks.nullNotPermitted(item, "item");
         if (this.allowDuplicateXValues) {
             add(item);
             return null;
