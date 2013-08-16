@@ -27,7 +27,7 @@
  * ------------------------------
  * CombinedRangeCategoryPlot.java
  * ------------------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Nicolas Brodu;
@@ -81,6 +81,7 @@ import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.event.PlotChangeListener;
 import org.jfree.chart.util.ParamChecks;
+import org.jfree.chart.util.ShadowGenerator;
 import org.jfree.data.Range;
 
 /**
@@ -393,6 +394,22 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
         for (CategoryPlot plot : this.subplots) {
             plot.setOrientation(orientation);
         }
+    }
+
+    /**
+     * Sets the shadow generator for the plot (and all subplots) and sends
+     * a {@link PlotChangeEvent} to all registered listeners.
+     * 
+     * @param generator  the new generator (<code>null</code> permitted).
+     */
+    @Override
+    public void setShadowGenerator(ShadowGenerator generator) {
+        setNotify(false);
+        super.setShadowGenerator(generator);
+        for (CategoryPlot plot : this.subplots) {
+            plot.setShadowGenerator(generator);
+        }
+        setNotify(true);
     }
 
     /**

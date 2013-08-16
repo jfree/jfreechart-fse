@@ -105,7 +105,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.LegendItemCollection;
@@ -120,6 +119,7 @@ import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.event.PlotChangeListener;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.util.ParamChecks;
+import org.jfree.chart.util.ShadowGenerator;
 import org.jfree.data.Range;
 
 /**
@@ -177,7 +177,9 @@ public class CombinedRangeXYPlot extends XYPlot
     /**
      * Returns the space between subplots.
      *
-     * @return The gap
+     * @return The gap.
+     *
+     * @see #setGap(double)
      */
     public double getGap() {
         return this.gap;
@@ -186,7 +188,9 @@ public class CombinedRangeXYPlot extends XYPlot
     /**
      * Sets the amount of space between subplots.
      *
-     * @param gap  the gap between subplots
+     * @param gap  the gap between subplots.
+     *
+     * @see #getGap()
      */
     public void setGap(double gap) {
         this.gap = gap;
@@ -212,12 +216,11 @@ public class CombinedRangeXYPlot extends XYPlot
      * You must ensure that the subplot has a non-null domain axis.  The range
      * axis for the subplot will be set to <code>null</code>.
      *
-     * @param subplot  the subplot.
+     * @param subplot  the subplot (<code>null</code> not permitted).
      * @param weight  the weight (must be 1 or greater).
      */
     public void add(XYPlot subplot, int weight) {
-
-        // verify valid weight
+        ParamChecks.nullNotPermitted(subplot, "subplot");
         if (weight <= 0) {
             String msg = "The 'weight' must be positive.";
             throw new IllegalArgumentException(msg);
@@ -591,6 +594,22 @@ public class CombinedRangeXYPlot extends XYPlot
         for (XYPlot subplot : this.subplots) {
             subplot.setOrientation(orientation);
         }
+    }
+
+    /**
+     * Sets the shadow generator for the plot (and all subplots) and sends
+     * a {@link PlotChangeEvent} to all registered listeners.
+     * 
+     * @param generator  the new generator (<code>null</code> permitted).
+     */
+    @Override
+    public void setShadowGenerator(ShadowGenerator generator) {
+        setNotify(false);
+        super.setShadowGenerator(generator);
+        for (XYPlot subplot : this.subplots) {
+            subplot.setShadowGenerator(generator);
+        }
+        setNotify(true);
     }
 
     /**

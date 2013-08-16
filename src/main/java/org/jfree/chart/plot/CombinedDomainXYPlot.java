@@ -117,6 +117,7 @@ import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.event.PlotChangeListener;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.util.ParamChecks;
+import org.jfree.chart.util.ShadowGenerator;
 import org.jfree.data.Range;
 
 /**
@@ -189,6 +190,22 @@ public class CombinedDomainXYPlot extends XYPlot
     }
 
     /**
+     * Sets the shadow generator for the plot (and all subplots) and sends
+     * a {@link PlotChangeEvent} to all registered listeners.
+     * 
+     * @param generator  the new generator (<code>null</code> permitted).
+     */
+    @Override
+    public void setShadowGenerator(ShadowGenerator generator) {
+        setNotify(false);
+        super.setShadowGenerator(generator);
+        for (XYPlot plot : this.subplots) {
+            plot.setShadowGenerator(generator);
+        }
+        setNotify(true);
+    }
+
+    /**
      * Returns a range representing the extent of the data values in this plot
      * (obtained from the subplots) that will be rendered against the specified
      * axis.  NOTE: This method is intended for internal JFreeChart use, and
@@ -216,6 +233,8 @@ public class CombinedDomainXYPlot extends XYPlot
      * Returns the gap between subplots, measured in Java2D units.
      *
      * @return The gap (in Java2D units).
+     *
+     * @see #setGap(double)
      */
     public double getGap() {
         return this.gap;
@@ -226,6 +245,8 @@ public class CombinedDomainXYPlot extends XYPlot
      * {@link PlotChangeEvent} to all registered listeners.
      *
      * @param gap  the gap between subplots (in Java2D units).
+     *
+     * @see #getGap()
      */
     public void setGap(double gap) {
         this.gap = gap;
@@ -259,7 +280,6 @@ public class CombinedDomainXYPlot extends XYPlot
      * @param weight  the weight (must be >= 1).
      */
     public void add(XYPlot subplot, int weight) {
-
         ParamChecks.nullNotPermitted(subplot, "subplot");
         if (weight <= 0) {
             throw new IllegalArgumentException("Require weight >= 1.");
@@ -268,7 +288,7 @@ public class CombinedDomainXYPlot extends XYPlot
         // store the plot and its weight
         subplot.setParent(this);
         subplot.setWeight(weight);
-        subplot.setInsets(new RectangleInsets(0.0, 0.0, 0.0, 0.0), false);
+        subplot.setInsets(RectangleInsets.ZERO_INSETS, false);
         subplot.setDomainAxis(null);
         subplot.addChangeListener(this);
         this.subplots.add(subplot);
