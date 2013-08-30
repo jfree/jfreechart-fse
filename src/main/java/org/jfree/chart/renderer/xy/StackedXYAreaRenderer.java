@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -256,10 +256,8 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      *                        is none).
      * @param urlGenerator  the URL generator (<code>null</code> permitted).
      */
-    public StackedXYAreaRenderer(int type,
-                                 XYToolTipGenerator labelGenerator,
+    public StackedXYAreaRenderer(int type, XYToolTipGenerator labelGenerator,
                                  XYURLGenerator urlGenerator) {
-
         super(type, labelGenerator, urlGenerator);
     }
 
@@ -436,6 +434,10 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
 
         //  Get series Paint and Stroke
         Paint seriesPaint = getItemPaint(series, item);
+        Paint seriesFillPaint = seriesPaint;
+        if (getUseFillPaint()) {
+            seriesFillPaint = getItemFillPaint(series, item);
+        }
         Stroke seriesStroke = getItemStroke(series, item);
 
         if (pass == 0) {
@@ -494,6 +496,8 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
                         areaState.getLine().setLine(transY0, transX0, transY1,
                                 transX1);
                     }
+                    g2.setPaint(seriesPaint);
+                    g2.setStroke(seriesStroke);
                     g2.draw(areaState.getLine());
                 }
             }
@@ -528,7 +532,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
                 }
 
                 //  Fill the polygon
-                g2.setPaint(seriesPaint);
+                g2.setPaint(seriesFillPaint);
                 g2.setStroke(seriesStroke);
                 g2.fill(areaState.getSeriesArea());
 
