@@ -148,8 +148,15 @@ public class TextLine implements Serializable {
      */
     public void draw(Graphics2D g2, float anchorX, float anchorY, 
             TextAnchor anchor, float rotateX, float rotateY, double angle) {
-
-        float x = anchorX;
+        Size2D dim = calculateDimensions(g2);
+        float xAdj = 0.0f;
+        if (anchor.isHorizontalCenter()) {
+            xAdj = (float) -dim.getWidth() / 2.0f;
+        }
+        else if (anchor.isHorizontalRight()) {
+            xAdj = (float) -dim.getWidth();
+        }
+        float x = anchorX + xAdj;
         float yOffset = calculateBaselineOffset(g2, anchor);
         for (TextFragment fragment : this.fragments) {
             Size2D d = fragment.calculateDimensions(g2);

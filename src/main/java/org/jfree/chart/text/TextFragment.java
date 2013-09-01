@@ -233,6 +233,12 @@ public class TextFragment implements Serializable {
         if (anchor.isTop()) {
             result = lm.getAscent();
         }
+        else if (anchor.isHalfAscent()) {
+            result = lm.getAscent() / 2.0f;
+        }
+        else if (anchor.isHalfHeight()) {
+            result = lm.getAscent() / 2.0f - lm.getDescent() / 2.0f;
+        }
         else if (anchor.isBottom()) {
             result = -lm.getDescent() - lm.getLeading();
         }
