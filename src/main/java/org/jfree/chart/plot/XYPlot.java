@@ -27,7 +27,7 @@
  * -----------
  * XYPlot.java
  * -----------
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Craig MacFarlane;
@@ -2428,7 +2428,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * to all registered listeners.
      * <P>
      * Typically a marker will be drawn by the renderer as a line perpendicular
-     * to the range axis, however this is entirely up to the renderer.
+     * to the domain axis, however this is entirely up to the renderer.
      *
      * @param marker  the marker (<code>null</code> not permitted).
      *
@@ -2445,7 +2445,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * {@link PlotChangeEvent} to all registered listeners.
      * <P>
      * Typically a marker will be drawn by the renderer as a line perpendicular
-     * to the range axis, however this is entirely up to the renderer.
+     * to the domain axis, however this is entirely up to the renderer.
      *
      * @param marker  the marker (<code>null</code> not permitted).
      * @param layer  the layer (foreground or background).
@@ -2482,7 +2482,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
 
     /**
      * Clears the (foreground and background) domain markers for a particular
-     * renderer.
+     * renderer and sends a {@link PlotChangeEvent} to all registered listeners.
      *
      * @param key  the renderer index.
      *
