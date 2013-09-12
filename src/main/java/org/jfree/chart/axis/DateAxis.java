@@ -763,7 +763,6 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             }
         }
         return result;
-
     }
 
     /**
@@ -1794,14 +1793,15 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
 
         // draw the axis label (note that 'state' is passed in *and*
         // returned)...
-        state = drawLabel(getLabel(), g2, plotArea, dataArea, edge, state);
+            state = drawLabel(getLabel(), g2, plotArea, dataArea, edge, state);
         createAndAddEntity(cursor, state, dataArea, edge, plotState);
         return state;
 
     }
 
     /**
-     * Zooms in on the current range.
+     * Zooms in on the current range (zoom-in stops once the axis length 
+     * reaches the equivalent of one millisecond).  
      *
      * @param lowerPercent  the new lower bound.
      * @param upperPercent  the new upper bound.
@@ -1809,25 +1809,28 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
     @Override
     public void zoomRange(double lowerPercent, double upperPercent) {
         double start = this.timeline.toTimelineValue(
-            (long) getRange().getLowerBound()
-        );
-        double length = (this.timeline.toTimelineValue(
-                (long) getRange().getUpperBound())
-                - this.timeline.toTimelineValue(
-                    (long) getRange().getLowerBound()));
+                (long) getRange().getLowerBound());
+        double end = this.timeline.toTimelineValue(
+                (long) getRange().getUpperBound());
+        double length = end - start;
         Range adjusted;
+        long adjStart, adjEnd;
         if (isInverted()) {
-            adjusted = new DateRange(this.timeline.toMillisecond((long) (start
-                    + (length * (1 - upperPercent)))),
-                    this.timeline.toMillisecond((long) (start + (length
-                    * (1 - lowerPercent)))));
+            adjStart = (long) (start + (length * (1 - upperPercent)));
+            adjEnd = (long) (start + (length * (1 - lowerPercent)));
         }
         else {
-            adjusted = new DateRange(this.timeline.toMillisecond(
-                    (long) (start + length * lowerPercent)),
-                    this.timeline.toMillisecond((long) (start + length
-                    * upperPercent)));
+            adjStart = (long) (start + length * lowerPercent);
+            adjEnd = (long) (start + length * upperPercent);
         }
+        // when zooming to sub-millisecond ranges, it can be the case that
+        // adjEnd == adjStart...and we can't have an axis with zero length
+        // so we apply this instead:
+        if (adjEnd <= adjStart) {
+            adjEnd = adjStart + 1L;
+        }
+        adjusted = new DateRange(this.timeline.toMillisecond(adjStart),
+                this.timeline.toMillisecond(adjEnd));
         setRange(adjusted);
     }
 
