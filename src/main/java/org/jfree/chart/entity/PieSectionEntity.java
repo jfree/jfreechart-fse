@@ -60,8 +60,8 @@ import java.io.Serializable;
 
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.data.datasetextension.DatasetCursor;
-import org.jfree.data.datasetextension.impl.PieCursor;
+import org.jfree.data.extension.DatasetCursor;
+import org.jfree.data.extension.impl.PieCursor;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.PieDataset;
 

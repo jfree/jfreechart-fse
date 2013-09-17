@@ -1,6 +1,6 @@
-package org.jfree.data.datasetextension.impl;
+package org.jfree.data.extension.impl;
 
-import org.jfree.data.datasetextension.DatasetCursor;
+import org.jfree.data.extension.DatasetCursor;
 
 /**
  * A DatasetCursor implementation for pie datasets.

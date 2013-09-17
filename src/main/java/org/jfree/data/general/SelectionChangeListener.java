@@ -2,7 +2,7 @@ package org.jfree.data.general;
 
 import java.util.EventListener;
 
-import org.jfree.data.datasetextension.DatasetCursor;
+import org.jfree.data.extension.DatasetCursor;
 
 /**
  * A listener that wants to be informed about changes of the selection state of data items

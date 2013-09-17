@@ -1,8 +1,8 @@
-package org.jfree.data.datasetextension;
+package org.jfree.data.extension;
 
 import java.io.Serializable;
 
-import org.jfree.data.datasetextension.impl.DatasetExtensionManager;
+import org.jfree.data.extension.impl.DatasetExtensionManager;
 import org.jfree.data.general.Dataset;
 
 /**

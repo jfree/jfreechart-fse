@@ -2,9 +2,9 @@ package org.jfree.data.general;
 
 import java.util.EventObject;
 
-import org.jfree.data.datasetextension.DatasetCursor;
-import org.jfree.data.datasetextension.DatasetLabelExtension;
-import org.jfree.data.datasetextension.DatasetSelectionExtension;
+import org.jfree.data.extension.DatasetCursor;
+import org.jfree.data.extension.DatasetLabelExtension;
+import org.jfree.data.extension.DatasetSelectionExtension;
 
 /**
  * A change event that notifies about a change to the labeling of data items

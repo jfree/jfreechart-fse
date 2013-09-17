@@ -1,11 +1,11 @@
-package org.jfree.data.datasetextension.impl;
+package org.jfree.data.extension.impl;
 
 import javax.swing.event.EventListenerList;
 
-import org.jfree.data.datasetextension.DatasetCursor;
-import org.jfree.data.datasetextension.DatasetExtension;
-import org.jfree.data.datasetextension.DatasetSelectionExtension;
-import org.jfree.data.datasetextension.optional.WithChangeListener;
+import org.jfree.data.extension.DatasetCursor;
+import org.jfree.data.extension.DatasetExtension;
+import org.jfree.data.extension.DatasetSelectionExtension;
+import org.jfree.data.extension.WithChangeListener;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.general.SelectionChangeEvent;

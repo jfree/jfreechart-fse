@@ -2,7 +2,7 @@ package org.jfree.chart.entity;
 
 import java.awt.Shape;
 
-import org.jfree.data.datasetextension.DatasetCursor;
+import org.jfree.data.extension.DatasetCursor;
 import org.jfree.data.general.Dataset;
 
 /**

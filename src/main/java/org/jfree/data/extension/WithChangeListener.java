@@ -1,4 +1,4 @@
-package org.jfree.data.datasetextension.optional;
+package org.jfree.data.extension;
 
 import java.util.EventListener;
 

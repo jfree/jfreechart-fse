@@ -58,8 +58,8 @@ import java.io.Serializable;
 
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.datasetextension.DatasetCursor;
-import org.jfree.data.datasetextension.impl.CategoryCursor;
+import org.jfree.data.extension.DatasetCursor;
+import org.jfree.data.extension.impl.CategoryCursor;
 import org.jfree.data.general.Dataset;
 
 /**

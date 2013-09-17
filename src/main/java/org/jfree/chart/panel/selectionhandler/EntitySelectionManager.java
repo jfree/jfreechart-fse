@@ -10,9 +10,9 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.entity.ChartEntity;
 import org.jfree.chart.entity.DataItemEntity;
 import org.jfree.chart.entity.EntityCollection;
-import org.jfree.data.datasetextension.DatasetCursor;
-import org.jfree.data.datasetextension.DatasetSelectionExtension;
-import org.jfree.data.datasetextension.impl.DatasetExtensionManager;
+import org.jfree.data.extension.DatasetCursor;
+import org.jfree.data.extension.DatasetSelectionExtension;
+import org.jfree.data.extension.impl.DatasetExtensionManager;
 import org.jfree.data.general.Dataset;
 
 /**

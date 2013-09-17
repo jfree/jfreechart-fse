@@ -1,11 +1,11 @@
-package org.jfree.data.datasetextension.impl;
+package org.jfree.data.extension.impl;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jfree.data.datasetextension.DatasetExtension;
+import org.jfree.data.extension.DatasetExtension;
 import org.jfree.data.general.Dataset;
 
 /**

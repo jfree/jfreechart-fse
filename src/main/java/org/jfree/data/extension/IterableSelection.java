@@ -1,8 +1,8 @@
-package org.jfree.data.datasetextension.optional;
+package org.jfree.data.extension;
 
-import org.jfree.data.datasetextension.DatasetCursor;
-import org.jfree.data.datasetextension.DatasetIterator;
-import org.jfree.data.datasetextension.DatasetSelectionExtension;
+import org.jfree.data.extension.DatasetCursor;
+import org.jfree.data.extension.DatasetIterator;
+import org.jfree.data.extension.DatasetSelectionExtension;
 
 /**
  * Marks a {@link DatasetSelectionExtension} that provides iterators over all data item positions

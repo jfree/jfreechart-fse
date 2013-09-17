@@ -8,10 +8,10 @@ import java.io.ObjectOutputStream;
 import org.jfree.chart.renderer.AbstractRenderer;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.datasetextension.DatasetCursor;
-import org.jfree.data.datasetextension.DatasetSelectionExtension;
-import org.jfree.data.datasetextension.impl.CategoryCursor;
-import org.jfree.data.datasetextension.impl.XYCursor;
+import org.jfree.data.extension.DatasetCursor;
+import org.jfree.data.extension.DatasetSelectionExtension;
+import org.jfree.data.extension.impl.CategoryCursor;
+import org.jfree.data.extension.impl.XYCursor;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.xy.XYDataset;
 

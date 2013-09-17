@@ -1,4 +1,4 @@
-package org.jfree.data.datasetextension;
+package org.jfree.data.extension;
 
 import java.io.Serializable;
 

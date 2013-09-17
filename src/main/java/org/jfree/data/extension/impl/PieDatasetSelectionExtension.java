@@ -1,12 +1,12 @@
-package org.jfree.data.datasetextension.impl;
+package org.jfree.data.extension.impl;
 
 import java.util.HashMap;
 import java.util.Iterator;
 
-import org.jfree.data.datasetextension.DatasetCursor;
-import org.jfree.data.datasetextension.DatasetIterator;
-import org.jfree.data.datasetextension.DatasetSelectionExtension;
-import org.jfree.data.datasetextension.optional.IterableSelection;
+import org.jfree.data.extension.DatasetCursor;
+import org.jfree.data.extension.DatasetIterator;
+import org.jfree.data.extension.DatasetSelectionExtension;
+import org.jfree.data.extension.IterableSelection;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.PieDataset;
 import org.jfree.data.general.SelectionChangeListener;

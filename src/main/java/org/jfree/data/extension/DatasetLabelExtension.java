@@ -1,6 +1,5 @@
-package org.jfree.data.datasetextension;
+package org.jfree.data.extension;
 
-import org.jfree.data.datasetextension.optional.WithChangeListener;
 import org.jfree.data.general.SelectionChangeListener;
 
 /**
