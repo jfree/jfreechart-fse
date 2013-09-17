@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,10 +27,11 @@
  * ---------------------
  * AbstractRenderer.java
  * ---------------------
- * (C) Copyright 2002-2012, by Object Refinery Limited.
+ * (C) Copyright 2002-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Nicolas Brodu;
+ *                   Michael Zinsmaier;
  *
  * Changes:
  * --------
@@ -139,6 +140,7 @@ import org.jfree.chart.renderer.rendererextension.ShapeIRS;
 import org.jfree.chart.renderer.rendererextension.StrokeIRS;
 import org.jfree.chart.renderer.rendererextension.VisibilityIRS;
 import org.jfree.chart.title.LegendTitle;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
@@ -149,26 +151,6 @@ import org.jfree.chart.util.SerialUtilities;
  */
 public abstract class AbstractRenderer implements Cloneable, Serializable {
 
-	/** a hook that allows to control the rendering of 
-	 * individual item labels (if the renderer uses {@link #getItemLabelFont(int, int)} ... )*/
-	private LabelIRS labelIRS = new DefaultLabelIRS(this);
-	
-	/** a hook that allows to control the painting of 
-	 * individual items (if the renderer uses {@link #getItemPaint(int, int)} ... )*/
-	private PaintIRS paintIRS = new DefaultPaintIRS(this);
-	    
-	/** a hook that allows to control the shape of individual items
-	 *  (if the renderer uses {@link #getItemShape(int, int)} ... )*/
-	private ShapeIRS shapeIRS = new DefaultShapeIRS(this);
-	    
-	/** a hook that allows to use individual strokes for each item 
-	  * (if the renderer uses {@link #getItemStroke(int, int)} ... )*/
-	private StrokeIRS strokeIRS = new DefaultStrokeIRS(this);
-	    
-	/** a hook that allows to control the visibility of individual items
-	  *  (if the renderer uses {@link #getItemVisible(int, int)} ... )*/
-	private VisibilityIRS visibilityIRS = new DefaultVisibilityIRS(this);
-	
     /** For serialization. */
     private static final long serialVersionUID = -828267569428206075L;
 
@@ -197,6 +179,36 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
 
     /** The default value label paint. */
     public static final Paint DEFAULT_VALUE_LABEL_PAINT = Color.BLACK;
+
+    /** 
+     * A hook that allows to control the rendering of individual item labels 
+     * (if the renderer uses {@link #getItemLabelFont(int, int)} ... )
+     */
+    private LabelIRS labelIRS = new DefaultLabelIRS(this);
+
+    /** 
+     * A hook that allows to control the painting of individual items (if the 
+     * renderer uses {@link #getItemPaint(int, int)} ... )
+     */
+    private PaintIRS paintIRS = new DefaultPaintIRS(this);
+
+    /** 
+     * A hook that allows to control the shape of individual items
+     *  (if the renderer uses {@link #getItemShape(int, int)} ... )
+     */
+    private ShapeIRS shapeIRS = new DefaultShapeIRS(this);
+
+    /** 
+     * A hook that allows to use individual strokes for each item 
+     * (if the renderer uses {@link #getItemStroke(int, int)} ... )
+     */
+    private StrokeIRS strokeIRS = new DefaultStrokeIRS(this);
+
+    /** 
+     * A hook that allows to control the visibility of individual items
+     * (if the renderer uses {@link #getItemVisible(int, int)} ... )
+     */
+    private VisibilityIRS visibilityIRS = new DefaultVisibilityIRS(this);
 
     /** A list of flags that controls whether or not each series is visible. */
     private BooleanList seriesVisibleList;
@@ -475,7 +487,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         this.treatLegendShapeAsLine = false;
 
         this.legendTextFont = new ObjectList<Font>();
-        this.defaultLegendTextFont = null;
+        this.defaultLegendTextFont = new Font("Dialog", Font.PLAIN, 12);
 
         this.legendTextPaint = new PaintList();
         this.defaultLegendTextPaint = null;
@@ -490,48 +502,49 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @return The drawing supplier.
      */
     public abstract DrawingSupplier getDrawingSupplier();
-
-
-    
         
     // SETTER FOR ITEM RENDERING STRATEGIES
         
     /**
-      * @param labelIRS {@link #labelIRS}
-      */
+     * @param labelIRS {@link #labelIRS} (<code>null</code> not permitted)
+     */
     public void setLabelIRS(LabelIRS labelIRS) {
-       	this.labelIRS = labelIRS;
+        ParamChecks.nullNotPermitted(labelIRS, "labelIRS");
+        this.labelIRS = labelIRS;
     }
         
-     /**
-      * @param paintIRS {@link #paintIRS}
-      */
-     public void setPaintIRS(PaintIRS paintIRS) {
-     	this.paintIRS = paintIRS;
-     }
+    /**
+     * @param paintIRS {@link #paintIRS} (<code>null</code> not permitted)
+     */
+    public void setPaintIRS(PaintIRS paintIRS) {
+        ParamChecks.nullNotPermitted(paintIRS, "paintIRS");
+        this.paintIRS = paintIRS;
+    }
         
-     /**
-       * @param shapeIRS {@link #shapeIRS}
-       */
-     public void setShapeIRS(ShapeIRS shapeIRS) {
-      	this.shapeIRS = shapeIRS;
-     }
+    /**
+     * @param shapeIRS {@link #shapeIRS} (<code>null</code> not permitted)
+     */
+    public void setShapeIRS(ShapeIRS shapeIRS) {
+        ParamChecks.nullNotPermitted(shapeIRS, "shapeIRS");
+        this.shapeIRS = shapeIRS;
+    }
         
-     /**
-       * @param strokeIRS {@link #strokeIRS}
-       */
-     public void setStrokeIRS(StrokeIRS strokeIRS) {
-     	this.strokeIRS = strokeIRS;
-     }
+    /**
+     * @param strokeIRS {@link #strokeIRS} (<code>null</code> not permitted)
+     */
+    public void setStrokeIRS(StrokeIRS strokeIRS) {
+        ParamChecks.nullNotPermitted(strokeIRS, "strokeIRS");
+        this.strokeIRS = strokeIRS;
+    }
        
-     /**
-       * @param visibilityIRS {@link #visibilityIRS}
-       */
-     public void setVisibilityIRS(VisibilityIRS visibilityIRS) {
-      	this.visibilityIRS = visibilityIRS;
-     }
-        
-        
+    /**
+     * @param visibilityIRS {@link #visibilityIRS} (<code>null</code> not 
+     *     permitted)
+     */
+    public void setVisibilityIRS(VisibilityIRS visibilityIRS) {
+        ParamChecks.nullNotPermitted(visibilityIRS, null);
+        this.visibilityIRS = visibilityIRS;
+    }
     
     // SERIES VISIBLE (not yet respected by all renderers)
 
@@ -539,9 +552,11 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * Returns a boolean that indicates whether or not the specified item
      * should be drawn (this is typically used to hide an entire series).
      * <p>
-     * The default implementation passes control to the {@link DefaultVisibilityIRS}
-     * which uses the <code>isSeriesVisible(series)</code> method. You can implement your
-     * own {@link VisibilityIRS} or override this method if you require different behavior. 
+     * The default implementation passes control to the 
+     * {@link DefaultVisibilityIRS} which uses the 
+     * <code>isSeriesVisible(series)</code> method. You can implement your
+     * own {@link VisibilityIRS} or override this method if you require 
+     * different behavior. 
      *
      * @param series  the series index.
      * @param column  the column (or category) index (zero-based).
@@ -630,8 +645,8 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     }
 
     /**
-     * Sets the default series visibility and sends a {@link RendererChangeEvent}
-     * to all registered listeners.
+     * Sets the default series visibility and sends a 
+     * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param visible  the flag.
      *
@@ -763,7 +778,8 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      *
      * @see #getDefaultSeriesVisibleInLegend()
      */
-    public void setDefaultSeriesVisibleInLegend(boolean visible, boolean notify) {
+    public void setDefaultSeriesVisibleInLegend(boolean visible, 
+            boolean notify) {
         this.defaultSeriesVisibleInLegend = visible;
         if (notify) {
             fireChangeEvent();
@@ -777,8 +793,9 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * (this is typically the same for an entire series).
      * <p>
      * The default implementation passes control to the {@link DefaultPaintIRS}
-     * which uses the <code>lookupSeriesPaint(row)</code> method. You can implement your
-     * own {@link PaintIRS} or override this method if you require different behavior. 
+     * which uses the <code>lookupSeriesPaint(row)</code> method. You can 
+     * implement your own {@link PaintIRS} or override this method if you 
+     * require different behavior. 
      *
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
@@ -948,8 +965,9 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * (this is typically the same for an entire series).
      * <p>
      * The default implementation passes control to the {@link DefaultPaintIRS}
-     * which uses the <code>lookupSeriesFillPaint(row)</code> method. You can implement your
-     * own {@link PaintIRS} or override this method if you require different behavior. 
+     * which uses the <code>lookupSeriesFillPaint(row)</code> method. You can 
+     * implement your own {@link PaintIRS} or override this method if you 
+     * require different behavior. 
      *
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
@@ -1063,9 +1081,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @see #getDefaultFillPaint()
      */
     public void setDefaultFillPaint(Paint paint, boolean notify) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.defaultFillPaint = paint;
         if (notify) {
             fireChangeEvent();
@@ -1109,8 +1125,9 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * (this is typically the same for an entire series).
      * <p>
      * The default implementation passes control to the {@link DefaultPaintIRS}
-     * which uses the <code>return lookupSeriesOutlinePaint(row)</code> method. You can implement your
-     * own {@link PaintIRS} or override this method if you require different behavior. 
+     * which uses the <code>return lookupSeriesOutlinePaint(row)</code> method. 
+     * You can implement your own {@link PaintIRS} or override this method if 
+     * you require different behavior. 
      *
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
@@ -1224,9 +1241,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @see #getDefaultOutlinePaint()
      */
     public void setDefaultOutlinePaint(Paint paint, boolean notify) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.defaultOutlinePaint = paint;
         if (notify) {
             fireChangeEvent();
@@ -1270,8 +1285,9 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * (this is typically the same for an entire series).
      * <p>
      * The default implementation passes control to the {@link DefaultStrokeIRS}
-     * which uses the <code>lookupSeriesStroke(row)</code> method. You can implement your
-     * own {@link StrokeIRS} or override this method if you require different behavior. 
+     * which uses the <code>lookupSeriesStroke(row)</code> method. You can 
+     * implement your own {@link StrokeIRS} or override this method if you 
+     * require different behavior. 
      *
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
@@ -1400,9 +1416,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @see #getDefaultStroke()
      */
     public void setDefaultStroke(Stroke stroke, boolean notify) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         this.defaultStroke = stroke;
         if (notify) {
             fireChangeEvent();
@@ -1444,8 +1458,9 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * (this is typically the same for an entire series).
      * <p>
      * The default implementation passes control to the {@link DefaultStrokeIRS}
-     * which uses the <code>lookupSeriesOutlineStroke(row)</code> method. You can implement your
-     * own {@link StrokeIRS} or override this method if you require different behavior. 
+     * which uses the <code>lookupSeriesOutlineStroke(row)</code> method. You 
+     * can implement your own {@link StrokeIRS} or override this method if you
+     * require different behavior. 
      *
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
@@ -1538,8 +1553,8 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     }
 
     /**
-     * Sets the default outline stroke and sends a {@link RendererChangeEvent} to
-     * all registered listeners.
+     * Sets the default outline stroke and sends a {@link RendererChangeEvent} 
+     * to all registered listeners.
      *
      * @param stroke  the stroke (<code>null</code> not permitted).
      *
@@ -1560,9 +1575,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @see #getDefaultOutlineStroke()
      */
     public void setDefaultOutlineStroke(Stroke stroke, boolean notify) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         this.defaultOutlineStroke = stroke;
         if (notify) {
             fireChangeEvent();
@@ -1606,8 +1619,9 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * (this is typically the same for an entire series).
      * <p>
      * The default implementation passes control to the {@link DefaultShapeIRS}
-     * which uses the <code>lookupSeriesShape(row)</code> method. You can implement your
-     * own {@link ShapeIRS} or override this method if you require different behavior. 
+     * which uses the <code>lookupSeriesShape(row)</code> method. You can 
+     * implement your own {@link ShapeIRS} or override this method if you 
+     * require different behavior. 
      *
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
@@ -1721,9 +1735,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @see #getDefaultShape()
      */
     public void setDefaultShape(Shape shape, boolean notify) {
-        if (shape == null) {
-            throw new IllegalArgumentException("Null 'shape' argument.");
-        }
+        ParamChecks.nullNotPermitted(shape, "shape");
         this.defaultShape = shape;
         if (notify) {
             fireChangeEvent();
@@ -1762,11 +1774,14 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
 
     /**
      * Returns <code>true</code> if an item label is visible, and
-     * <code>false</code> otherwise. (this is typically the same for an entire series).
+     * <code>false</code> otherwise (this is typically the same for an entire 
+     * series).
      * <p>
-     * The default implementation passes control to the {@link DefaultVisibilityIRS}
-     * which uses the <code>isSeriesItemLabelsVisible(row)</code> method. You can implement your
-     * own {@link VisibilityIRS} or override this method if you require different behavior. 
+     * The default implementation passes control to the 
+     * {@link DefaultVisibilityIRS} which uses the 
+     * <code>isSeriesItemLabelsVisible(row)</code> method. You can implement 
+     * your own {@link VisibilityIRS} or override this method if you require 
+     * different behavior. 
      *
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
@@ -1774,7 +1789,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @return true if the item label is visible
      */
     public boolean isItemLabelVisible(int row, int column) {
-    	return labelIRS.isItemLabelVisible(row, column);
+        return labelIRS.isItemLabelVisible(row, column);
     }
 
     /**
@@ -1786,7 +1801,6 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @return A boolean.
      */
     public boolean isSeriesItemLabelsVisible(int series) {
-
         Boolean b = this.itemLabelsVisibleList.getBoolean(series);
         if (b == null) {
             b = this.defaultItemLabelsVisible;
@@ -1795,7 +1809,6 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
             b = Boolean.FALSE;
         }
         return b;
-
     }
 
     /**
@@ -1838,8 +1851,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     }
 
     /**
-     * Returns the default setting for item label visibility.  A <code>null</code>
-     * result should be interpreted as equivalent to <code>Boolean.FALSE</code>.
+     * Returns the default setting for item label visibility.
      *
      * @return A flag (possibly <code>null</code>).
      *
@@ -1850,8 +1862,9 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     }
 
     /**
-     * Sets the default flag that controls whether or not item labels are visible,
-     * and sends a {@link RendererChangeEvent} to all registered listeners.
+     * Sets the default flag that controls whether or not item labels are 
+     * visible, and sends a {@link RendererChangeEvent} to all registered 
+     * listeners.
      *
      * @param visible  the flag.
      *
@@ -1882,10 +1895,12 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     //// ITEM LABEL FONT //////////////////////////////////////////////////////
 
     /**
-     *Returns the font for an item label. (this is typically the same for an entire series).
+     * Returns the font for an item label (this is typically the same for an 
+     * entire series).
      * <p>
      * The default implementation passes control to the {@link DefaultLabelIRS}
-     * You can implement your own {@link LabelIRS} or override this method if you require different behavior. 
+     * You can implement your own {@link LabelIRS} or override this method if 
+     * you require different behavior. 
      *
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
@@ -1893,7 +1908,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @return The font (never <code>null</code>).
      */
     public Font getItemLabelFont(int row, int column) {
-    	return labelIRS.getItemLabelFont(row, column);
+        return labelIRS.getItemLabelFont(row, column);
     }
 
     /**
@@ -1953,17 +1968,15 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     }
 
     /**
-     * Sets the default item label font and sends a {@link RendererChangeEvent} to
-     * all registered listeners.
+     * Sets the default item label font and sends a {@link RendererChangeEvent} 
+     * to all registered listeners.
      *
      * @param font  the font (<code>null</code> not permitted).
      *
      * @see #getDefaultItemLabelFont()
      */
     public void setDefaultItemLabelFont(Font font) {
-        if (font == null) {
-            throw new IllegalArgumentException("Null 'font' argument.");
-        }
+        ParamChecks.nullNotPermitted(font, "font");
         setDefaultItemLabelFont(font, true);
     }
 
@@ -2082,9 +2095,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @see #getDefaultItemLabelPaint()
      */
     public void setDefaultItemLabelPaint(Paint paint, boolean notify) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.defaultItemLabelPaint = paint;
         if (notify) {
             fireChangeEvent();
@@ -2094,10 +2105,12 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     // POSITIVE ITEM LABEL POSITION...
 
     /**
-     * Returns the item label position for positive values. (this is typically the same for an entire series).
+     * Returns the item label position for positive values (this is typically 
+     * the same for an entire series).
      * <p>
      * The default implementation passes control to the {@link DefaultLabelIRS}
-     * You can implement your own {@link LabelIRS} or override this method if you require different behavior. 
+     * You can implement your own {@link LabelIRS} or override this method if 
+     * you require different behavior. 
      *
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
@@ -2121,7 +2134,8 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      */
     public ItemLabelPosition getSeriesPositiveItemLabelPosition(int series) {
 
-        ItemLabelPosition position = this.positiveItemLabelPositionList.get(series);
+        ItemLabelPosition position 
+                = this.positiveItemLabelPositionList.get(series);
         if (position == null) {
             position = this.defaultPositiveItemLabelPosition;
         }
@@ -2139,7 +2153,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @see #getSeriesPositiveItemLabelPosition(int)
      */
     public void setSeriesPositiveItemLabelPosition(int series,
-                                                   ItemLabelPosition position) {
+            ItemLabelPosition position) {
         setSeriesPositiveItemLabelPosition(series, position, true);
     }
 
@@ -2155,8 +2169,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @see #getSeriesPositiveItemLabelPosition(int)
      */
     public void setSeriesPositiveItemLabelPosition(int series,
-                                                   ItemLabelPosition position,
-                                                   boolean notify) {
+            ItemLabelPosition position, boolean notify) {
         this.positiveItemLabelPositionList.set(series, position);
         if (notify) {
             fireChangeEvent();
@@ -2181,7 +2194,8 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      *
      * @see #getDefaultPositiveItemLabelPosition()
      */
-    public void setDefaultPositiveItemLabelPosition(ItemLabelPosition position) {
+    public void setDefaultPositiveItemLabelPosition(
+            ItemLabelPosition position) {
         // defer argument checking...
         setDefaultPositiveItemLabelPosition(position, true);
     }
@@ -2196,10 +2210,8 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @see #getDefaultPositiveItemLabelPosition()
      */
     public void setDefaultPositiveItemLabelPosition(ItemLabelPosition position,
-                                                 boolean notify) {
-        if (position == null) {
-            throw new IllegalArgumentException("Null 'position' argument.");
-        }
+            boolean notify) {
+        ParamChecks.nullNotPermitted(position, "positions");
         this.defaultPositiveItemLabelPosition = position;
         if (notify) {
             fireChangeEvent();
@@ -2209,10 +2221,12 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     // NEGATIVE ITEM LABEL POSITION...
 
     /**
-     * Returns the item label position for negative values. (this is typically the same for an entire series).
+     * Returns the item label position for negative values (this is typically 
+     * the same for an entire series).
     * <p>
      * The default implementation passes control to the {@link DefaultLabelIRS}
-     * You can implement your own {@link LabelIRS} or override this method if you require different behavior. 
+     * You can implement your own {@link LabelIRS} or override this method if 
+     * you require different behavior. 
      *
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
@@ -2236,7 +2250,8 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      */
     public ItemLabelPosition getSeriesNegativeItemLabelPosition(int series) {
 
-        ItemLabelPosition position = this.negativeItemLabelPositionList.get(series);
+        ItemLabelPosition position = this.negativeItemLabelPositionList.get(
+                series);
         if (position == null) {
             position = this.defaultNegativeItemLabelPosition;
         }
@@ -2254,7 +2269,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @see #getSeriesNegativeItemLabelPosition(int)
      */
     public void setSeriesNegativeItemLabelPosition(int series,
-                                                   ItemLabelPosition position) {
+            ItemLabelPosition position) {
         setSeriesNegativeItemLabelPosition(series, position, true);
     }
 
@@ -2270,8 +2285,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @see #getSeriesNegativeItemLabelPosition(int)
      */
     public void setSeriesNegativeItemLabelPosition(int series,
-                                                   ItemLabelPosition position,
-                                                   boolean notify) {
+            ItemLabelPosition position, boolean notify) {
         this.negativeItemLabelPositionList.set(series, position);
         if (notify) {
             fireChangeEvent();
@@ -2297,7 +2311,8 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      *
      * @see #getDefaultNegativeItemLabelPosition()
      */
-    public void setDefaultNegativeItemLabelPosition(ItemLabelPosition position) {
+    public void setDefaultNegativeItemLabelPosition(
+            ItemLabelPosition position) {
         setDefaultNegativeItemLabelPosition(position, true);
     }
 
@@ -2311,10 +2326,8 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @see #getDefaultNegativeItemLabelPosition()
      */
     public void setDefaultNegativeItemLabelPosition(ItemLabelPosition position,
-                                                 boolean notify) {
-        if (position == null) {
-            throw new IllegalArgumentException("Null 'position' argument.");
-        }
+            boolean notify) {
+        ParamChecks.nullNotPermitted(position, "positions");
         this.defaultNegativeItemLabelPosition = position;
         if (notify) {
             fireChangeEvent();
@@ -2580,7 +2593,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      *
      * @param series  the series index.
      *
-     * @return The font (possibly <code>null</code>).
+     * @return The font.
      *
      * @since 1.0.11
      */
@@ -2623,7 +2636,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     }
 
     /**
-     * Returns the default legend text font, which may be <code>null</code>.
+     * Returns the default legend text font.
      *
      * @return The default legend text font.
      *
@@ -2637,11 +2650,12 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * Sets the default legend text font and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param font  the font (<code>null</code> permitted).  // TODO: Null really?
+     * @param font  the font (<code>null</code> not permitted).
      *
      * @since 1.0.11
      */
     public void setDefaultLegendTextFont(Font font) {
+        ParamChecks.nullNotPermitted(font, "font");
         this.defaultLegendTextFont = font;
         fireChangeEvent();
     }
@@ -2876,9 +2890,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @see #removeChangeListener(RendererChangeListener)
      */
     public void addChangeListener(RendererChangeListener listener) {
-        if (listener == null) {
-            throw new IllegalArgumentException("Null 'listener' argument.");
-        }
+        ParamChecks.nullNotPermitted(listener, "listener");
         this.listenerList.add(RendererChangeListener.class, listener);
     }
 
@@ -2891,9 +2903,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @see #addChangeListener(RendererChangeListener)
      */
     public void removeChangeListener(RendererChangeListener listener) {
-        if (listener == null) {
-            throw new IllegalArgumentException("Null 'listener' argument.");
-        }
+        ParamChecks.nullNotPermitted(listener, "listener");
         this.listenerList.remove(RendererChangeListener.class, listener);
     }
 
@@ -3284,8 +3294,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
-
+            throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.defaultPaint = SerialUtilities.readPaint(stream);
         this.defaultFillPaint = SerialUtilities.readPaint(stream);
@@ -3300,7 +3309,6 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         // listeners are not restored automatically, but storage must be
         // provided...
         this.listenerList = new EventListenerList();
-
     }
 
 }
