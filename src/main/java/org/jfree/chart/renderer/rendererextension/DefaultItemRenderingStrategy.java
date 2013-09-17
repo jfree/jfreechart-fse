@@ -17,19 +17,19 @@ import org.jfree.chart.renderer.AbstractRenderer;
  */
 public abstract class DefaultItemRenderingStrategy implements Serializable {
 
-	/** generated serial id	 */
-	private static final long serialVersionUID = -3637783770791118009L;
-	
-	/** the renderer that uses the strategy. This is necessary to get access to the
-	 *  get Property Series methods etc. */
-	protected final AbstractRenderer renderer;
+    /** generated serial id     */
+    private static final long serialVersionUID = -3637783770791118009L;
+    
+    /** the renderer that uses the strategy. This is necessary to get access to the
+     *  get Property Series methods etc. */
+    protected final AbstractRenderer renderer;
 
-	/**
-	 * creates a new Rendering strategy for the submitted renderer.
-	 * @param renderer
-	 */
-	public DefaultItemRenderingStrategy(AbstractRenderer renderer) {
-		this.renderer = renderer;
-	}
-	
+    /**
+     * creates a new Rendering strategy for the submitted renderer.
+     * @param renderer
+     */
+    public DefaultItemRenderingStrategy(AbstractRenderer renderer) {
+        this.renderer = renderer;
+    }
+    
 }
