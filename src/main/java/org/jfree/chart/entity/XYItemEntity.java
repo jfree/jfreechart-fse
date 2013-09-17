@@ -52,13 +52,16 @@ package org.jfree.chart.entity;
 
 import java.awt.Shape;
 
+import org.jfree.data.datasetextension.DatasetCursor;
+import org.jfree.data.datasetextension.impl.XYCursor;
+import org.jfree.data.general.Dataset;
 import org.jfree.data.xy.XYDataset;
 
 /**
  * A chart entity that represents one item within an
  * {@link org.jfree.chart.plot.XYPlot}.
  */
-public class XYItemEntity extends ChartEntity {
+public class XYItemEntity extends DataItemEntity {
 
     /** For serialization. */
     private static final long serialVersionUID = -3870862224880283771L;
@@ -98,6 +101,13 @@ public class XYItemEntity extends ChartEntity {
      */
     public XYDataset getDataset() {
         return this.dataset;
+    }
+
+    /**
+     * @see DataItemEntity#getGeneralDataset() 
+     */
+    public Dataset getGeneralDataset() {
+    	return this.dataset;
     }
 
     /**
@@ -181,5 +191,10 @@ public class XYItemEntity extends ChartEntity {
         return "XYItemEntity: series = " + getSeriesIndex() + ", item = "
             + getItem() + ", dataset = " + getDataset();
     }
+
+	@Override
+	public DatasetCursor getItemCursor() {
+		return new XYCursor(series, item);
+	}
 
 }

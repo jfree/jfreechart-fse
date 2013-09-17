@@ -41,22 +41,23 @@
 
 package org.jfree.chart;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.awt.geom.Rectangle2D;
+import java.util.EventListener;
+import java.util.List;
+
+import javax.swing.event.CaretListener;
+
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.event.ChartChangeEvent;
 import org.jfree.chart.event.ChartChangeListener;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.DefaultXYDataset;
 import org.junit.Test;
-
-import javax.swing.event.CaretListener;
-import java.awt.geom.Rectangle2D;
-import java.util.EventListener;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link ChartPanel} class.
@@ -125,15 +126,6 @@ public class ChartPanelTest
         }
         catch (NullPointerException e) {
             // we expect to go in here
-        }
-
-
-        try {
-            p.getListeners(Integer.class);
-            fail("Should have thrown a ClassCastException");
-        }
-        catch (ClassCastException e) {
-           //We expext to go in here
         }
     }
 
