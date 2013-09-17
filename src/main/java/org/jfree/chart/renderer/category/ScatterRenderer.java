@@ -61,6 +61,7 @@ import java.util.List;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.util.BooleanList;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
@@ -445,6 +446,16 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
                 g2.setStroke(getItemOutlineStroke(row, column));
                 g2.draw(shape);
             }
+            
+    		// collecting the entity info
+    		if (state != null) {
+    			EntityCollection entities = state.getEntityCollection();
+    			if (orientation == PlotOrientation.HORIZONTAL) {
+    				addEntity(entities, shape, dataset, row, column, y1, x1);
+    			} else {
+    				addEntity(entities, shape, dataset, row, column, x1, y1);
+    		    }
+    		}
         }
 
     }

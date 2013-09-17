@@ -207,15 +207,6 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.PaintMap;
 import org.jfree.chart.StrokeMap;
-import org.jfree.chart.ui.RectangleAnchor;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.Rotation;
-import org.jfree.chart.util.ShapeUtilities;
-import org.jfree.chart.util.UnitType;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.PieSectionEntity;
 import org.jfree.chart.event.PlotChangeEvent;
@@ -226,10 +217,19 @@ import org.jfree.chart.text.G2TextMeasurer;
 import org.jfree.chart.text.TextBlock;
 import org.jfree.chart.text.TextBox;
 import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.urls.PieURLGenerator;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ResourceBundleWrapper;
+import org.jfree.chart.util.Rotation;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.chart.util.ShadowGenerator;
+import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.UnitType;
 import org.jfree.data.DefaultKeyedValues;
 import org.jfree.data.KeyedValues;
 import org.jfree.data.general.DatasetChangeEvent;
@@ -1562,6 +1562,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         return result;
     }
 
+
     /**
      * Sets the amount that a pie section should be exploded and sends a
      * {@link PlotChangeEvent} to all registered listeners.
@@ -2596,7 +2597,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             double ep = 0.0;
             double mep = getMaximumExplodePercent();
             if (mep > 0.0) {
-                ep = getExplodePercent(section) / mep;
+                ep = getExplodePercent(this.getSectionKey(section)) / mep;
             }
             Rectangle2D arcBounds = getArcBounds(state.getPieArea(),
                     state.getExplodedPieArea(), angle1, angle, ep);

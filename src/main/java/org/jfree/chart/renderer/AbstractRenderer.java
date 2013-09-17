@@ -128,6 +128,16 @@ import org.jfree.chart.labels.ItemLabelAnchor;
 import org.jfree.chart.labels.ItemLabelPosition;
 import org.jfree.chart.plot.DrawingSupplier;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.rendererextension.DefaultLabelIRS;
+import org.jfree.chart.renderer.rendererextension.DefaultPaintIRS;
+import org.jfree.chart.renderer.rendererextension.DefaultShapeIRS;
+import org.jfree.chart.renderer.rendererextension.DefaultStrokeIRS;
+import org.jfree.chart.renderer.rendererextension.DefaultVisibilityIRS;
+import org.jfree.chart.renderer.rendererextension.LabelIRS;
+import org.jfree.chart.renderer.rendererextension.PaintIRS;
+import org.jfree.chart.renderer.rendererextension.ShapeIRS;
+import org.jfree.chart.renderer.rendererextension.StrokeIRS;
+import org.jfree.chart.renderer.rendererextension.VisibilityIRS;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.util.SerialUtilities;
 
@@ -139,6 +149,26 @@ import org.jfree.chart.util.SerialUtilities;
  */
 public abstract class AbstractRenderer implements Cloneable, Serializable {
 
+	/** a hook that allows to control the rendering of 
+	 * individual item labels (if the renderer uses {@link #getItemLabelFont(int, int)} ... )*/
+	private LabelIRS labelIRS = new DefaultLabelIRS(this);
+	
+	/** a hook that allows to control the painting of 
+	 * individual items (if the renderer uses {@link #getItemPaint(int, int)} ... )*/
+	private PaintIRS paintIRS = new DefaultPaintIRS(this);
+	    
+	/** a hook that allows to control the shape of individual items
+	 *  (if the renderer uses {@link #getItemShape(int, int)} ... )*/
+	private ShapeIRS shapeIRS = new DefaultShapeIRS(this);
+	    
+	/** a hook that allows to use individual strokes for each item 
+	  * (if the renderer uses {@link #getItemStroke(int, int)} ... )*/
+	private StrokeIRS strokeIRS = new DefaultStrokeIRS(this);
+	    
+	/** a hook that allows to control the visibility of individual items
+	  *  (if the renderer uses {@link #getItemVisible(int, int)} ... )*/
+	private VisibilityIRS visibilityIRS = new DefaultVisibilityIRS(this);
+	
     /** For serialization. */
     private static final long serialVersionUID = -828267569428206075L;
 
@@ -462,19 +492,64 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     public abstract DrawingSupplier getDrawingSupplier();
 
 
+    
+        
+    // SETTER FOR ITEM RENDERING STRATEGIES
+        
+    /**
+      * @param labelIRS {@link #labelIRS}
+      */
+    public void setLabelIRS(LabelIRS labelIRS) {
+       	this.labelIRS = labelIRS;
+    }
+        
+     /**
+      * @param paintIRS {@link #paintIRS}
+      */
+     public void setPaintIRS(PaintIRS paintIRS) {
+     	this.paintIRS = paintIRS;
+     }
+        
+     /**
+       * @param shapeIRS {@link #shapeIRS}
+       */
+     public void setShapeIRS(ShapeIRS shapeIRS) {
+      	this.shapeIRS = shapeIRS;
+     }
+        
+     /**
+       * @param strokeIRS {@link #strokeIRS}
+       */
+     public void setStrokeIRS(StrokeIRS strokeIRS) {
+     	this.strokeIRS = strokeIRS;
+     }
+       
+     /**
+       * @param visibilityIRS {@link #visibilityIRS}
+       */
+     public void setVisibilityIRS(VisibilityIRS visibilityIRS) {
+      	this.visibilityIRS = visibilityIRS;
+     }
+        
+        
+    
     // SERIES VISIBLE (not yet respected by all renderers)
 
     /**
      * Returns a boolean that indicates whether or not the specified item
      * should be drawn (this is typically used to hide an entire series).
+     * <p>
+     * The default implementation passes control to the {@link DefaultVisibilityIRS}
+     * which uses the <code>isSeriesVisible(series)</code> method. You can implement your
+     * own {@link VisibilityIRS} or override this method if you require different behavior. 
      *
      * @param series  the series index.
-     * @param item  the item index.
+     * @param column  the column (or category) index (zero-based).
      *
-     * @return A boolean.
+     * @return The item visibility
      */
     public boolean getItemVisible(int series, int item) {
-        return isSeriesVisible(series);
+        return visibilityIRS.getItemVisible(series, item);
     }
 
     /**
@@ -699,10 +774,11 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
 
     /**
      * Returns the paint used to fill data items as they are drawn.
+     * (this is typically the same for an entire series).
      * <p>
-     * The default implementation passes control to the
-     * <code>lookupSeriesPaint()</code> method. You can override this method
-     * if you require different behaviour.
+     * The default implementation passes control to the {@link DefaultPaintIRS}
+     * which uses the <code>lookupSeriesPaint(row)</code> method. You can implement your
+     * own {@link PaintIRS} or override this method if you require different behavior. 
      *
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
@@ -710,7 +786,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @return The paint (never <code>null</code>).
      */
     public Paint getItemPaint(int row, int column) {
-        return lookupSeriesPaint(row);
+        return paintIRS.getItemPaint(row, column);
     }
 
     /**
@@ -868,10 +944,12 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     //// FILL PAINT //////////////////////////////////////////////////////////
 
     /**
-     * Returns the paint used to fill data items as they are drawn.  The
-     * default implementation passes control to the
-     * {@link #lookupSeriesFillPaint(int)} method - you can override this
-     * method if you require different behaviour.
+     * Returns the paint used to fill data items as they are drawn.
+     * (this is typically the same for an entire series).
+     * <p>
+     * The default implementation passes control to the {@link DefaultPaintIRS}
+     * which uses the <code>lookupSeriesFillPaint(row)</code> method. You can implement your
+     * own {@link PaintIRS} or override this method if you require different behavior. 
      *
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
@@ -879,7 +957,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @return The paint (never <code>null</code>).
      */
     public Paint getItemFillPaint(int row, int column) {
-        return lookupSeriesFillPaint(row);
+        return paintIRS.getItemFillPaint(row, column);
     }
 
     /**
@@ -1028,10 +1106,11 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
 
     /**
      * Returns the paint used to outline data items as they are drawn.
+     * (this is typically the same for an entire series).
      * <p>
-     * The default implementation passes control to the
-     * {@link #lookupSeriesOutlinePaint} method.  You can override this method
-     * if you require different behaviour.
+     * The default implementation passes control to the {@link DefaultPaintIRS}
+     * which uses the <code>return lookupSeriesOutlinePaint(row)</code> method. You can implement your
+     * own {@link PaintIRS} or override this method if you require different behavior. 
      *
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
@@ -1039,7 +1118,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @return The paint (never <code>null</code>).
      */
     public Paint getItemOutlinePaint(int row, int column) {
-        return lookupSeriesOutlinePaint(row);
+        return paintIRS.getItemOutlinePaint(row, column);
     }
 
     /**
@@ -1188,9 +1267,11 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
 
     /**
      * Returns the stroke used to draw data items.
+     * (this is typically the same for an entire series).
      * <p>
-     * The default implementation passes control to the getSeriesStroke method.
-     * You can override this method if you require different behaviour.
+     * The default implementation passes control to the {@link DefaultStrokeIRS}
+     * which uses the <code>lookupSeriesStroke(row)</code> method. You can implement your
+     * own {@link StrokeIRS} or override this method if you require different behavior. 
      *
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
@@ -1198,7 +1279,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @return The stroke (never <code>null</code>).
      */
     public Stroke getItemStroke(int row, int column) {
-        return lookupSeriesStroke(row);
+        return strokeIRS.getItemStroke(row, column);
     }
 
     /**
@@ -1359,10 +1440,12 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     // OUTLINE STROKE
 
     /**
-     * Returns the stroke used to outline data items.  The default
-     * implementation passes control to the
-     * {@link #lookupSeriesOutlineStroke(int)} method. You can override this
-     * method if you require different behaviour.
+     * Returns the stroke used to outline data items
+     * (this is typically the same for an entire series).
+     * <p>
+     * The default implementation passes control to the {@link DefaultStrokeIRS}
+     * which uses the <code>lookupSeriesOutlineStroke(row)</code> method. You can implement your
+     * own {@link StrokeIRS} or override this method if you require different behavior. 
      *
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
@@ -1370,7 +1453,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @return The stroke (never <code>null</code>).
      */
     public Stroke getItemOutlineStroke(int row, int column) {
-        return lookupSeriesOutlineStroke(row);
+        return strokeIRS.getItemOutlineStroke(row, column);
     }
 
     /**
@@ -1519,10 +1602,12 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     // SHAPE
 
     /**
-     * Returns a shape used to represent a data item.
+     *  Returns a shape used to represent a data item.
+     * (this is typically the same for an entire series).
      * <p>
-     * The default implementation passes control to the getSeriesShape method.
-     * You can override this method if you require different behaviour.
+     * The default implementation passes control to the {@link DefaultShapeIRS}
+     * which uses the <code>lookupSeriesShape(row)</code> method. You can implement your
+     * own {@link ShapeIRS} or override this method if you require different behavior. 
      *
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
@@ -1530,7 +1615,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @return The shape (never <code>null</code>).
      */
     public Shape getItemShape(int row, int column) {
-        return lookupSeriesShape(row);
+        return shapeIRS.getItemShape(row, column);
     }
 
     /**
@@ -1677,15 +1762,19 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
 
     /**
      * Returns <code>true</code> if an item label is visible, and
-     * <code>false</code> otherwise.
+     * <code>false</code> otherwise. (this is typically the same for an entire series).
+     * <p>
+     * The default implementation passes control to the {@link DefaultVisibilityIRS}
+     * which uses the <code>isSeriesItemLabelsVisible(row)</code> method. You can implement your
+     * own {@link VisibilityIRS} or override this method if you require different behavior. 
      *
-     * @param row  the row index (zero-based).
-     * @param column  the column index (zero-based).
+     * @param row  the row (or series) index (zero-based).
+     * @param column  the column (or category) index (zero-based).
      *
-     * @return A boolean.
+     * @return true if the item label is visible
      */
     public boolean isItemLabelVisible(int row, int column) {
-        return isSeriesItemLabelsVisible(row);
+    	return labelIRS.isItemLabelVisible(row, column);
     }
 
     /**
@@ -1793,19 +1882,18 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     //// ITEM LABEL FONT //////////////////////////////////////////////////////
 
     /**
-     * Returns the font for an item label.
+     *Returns the font for an item label. (this is typically the same for an entire series).
+     * <p>
+     * The default implementation passes control to the {@link DefaultLabelIRS}
+     * You can implement your own {@link LabelIRS} or override this method if you require different behavior. 
      *
-     * @param row  the row index (zero-based).
-     * @param column  the column index (zero-based).
+     * @param row  the row (or series) index (zero-based).
+     * @param column  the column (or category) index (zero-based).
      *
      * @return The font (never <code>null</code>).
      */
     public Font getItemLabelFont(int row, int column) {
-        Font result = getSeriesItemLabelFont(row);
-        if (result == null) {
-            result = this.defaultItemLabelFont;
-        }
-        return result;
+    	return labelIRS.getItemLabelFont(row, column);
     }
 
     /**
@@ -2006,17 +2094,20 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     // POSITIVE ITEM LABEL POSITION...
 
     /**
-     * Returns the item label position for positive values.
+     * Returns the item label position for positive values. (this is typically the same for an entire series).
+     * <p>
+     * The default implementation passes control to the {@link DefaultLabelIRS}
+     * You can implement your own {@link LabelIRS} or override this method if you require different behavior. 
      *
-     * @param row  the row index (zero-based).
-     * @param column  the column index (zero-based).
+     * @param row  the row (or series) index (zero-based).
+     * @param column  the column (or category) index (zero-based).
      *
      * @return The item label position (never <code>null</code>).
      *
      * @see #getNegativeItemLabelPosition(int, int)
      */
     public ItemLabelPosition getPositiveItemLabelPosition(int row, int column) {
-        return getSeriesPositiveItemLabelPosition(row);
+        return labelIRS.getPositiveItemLabelPosition(row, column);
     }
 
     /**
@@ -2118,19 +2209,20 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     // NEGATIVE ITEM LABEL POSITION...
 
     /**
-     * Returns the item label position for negative values.  This method can be
-     * overridden to provide customisation of the item label position for
-     * individual data items.
+     * Returns the item label position for negative values. (this is typically the same for an entire series).
+    * <p>
+     * The default implementation passes control to the {@link DefaultLabelIRS}
+     * You can implement your own {@link LabelIRS} or override this method if you require different behavior. 
      *
-     * @param row  the row index (zero-based).
-     * @param column  the column (zero-based).
+     * @param row  the row (or series) index (zero-based).
+     * @param column  the column (or category) index (zero-based).
      *
      * @return The item label position (never <code>null</code>).
      *
      * @see #getPositiveItemLabelPosition(int, int)
      */
     public ItemLabelPosition getNegativeItemLabelPosition(int row, int column) {
-        return getSeriesNegativeItemLabelPosition(row);
+        return labelIRS.getNegativeItemLabelPosition(row, column);
     }
 
     /**
