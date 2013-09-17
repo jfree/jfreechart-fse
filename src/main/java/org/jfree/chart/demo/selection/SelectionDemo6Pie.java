@@ -43,135 +43,135 @@ import org.jfree.data.general.SelectionChangeListener;
  */
 public class SelectionDemo6Pie extends ApplicationFrame implements SelectionChangeListener<PieCursor<String>> {
 
-	private JTable table;
+     private JTable table;
 
-	private DefaultTableModel model;
+     private DefaultTableModel model;
 
-	private PieDataset dataset;
+     private PieDataset dataset;
 
-	
-	public SelectionDemo6Pie(String title) {
-		super(title);
-		JPanel chartPanel = createDemoPanel();
-		chartPanel.setPreferredSize(new java.awt.Dimension(700, 500));
+     
+     public SelectionDemo6Pie(String title) {
+          super(title);
+          JPanel chartPanel = createDemoPanel();
+          chartPanel.setPreferredSize(new java.awt.Dimension(700, 500));
 
-		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-		split.add(chartPanel);
+          JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+          split.add(chartPanel);
 
-		this.model = new DefaultTableModel(new String[] { "section", "value:"}, 0);
-		this.table = new JTable(this.model);
-		TableColumnModel tcm = this.table.getColumnModel();
-		JPanel p = new JPanel(new BorderLayout());
-		JScrollPane scroller = new JScrollPane(this.table);
-		p.add(scroller);
-		p.setBorder(BorderFactory.createCompoundBorder(new TitledBorder(
-				"Selected Items: "), new EmptyBorder(4, 4, 4, 4)));
-		split.add(p);
-		setContentPane(split);
-	}
+          this.model = new DefaultTableModel(new String[] { "section", "value:"}, 0);
+          this.table = new JTable(this.model);
+          TableColumnModel tcm = this.table.getColumnModel();
+          JPanel p = new JPanel(new BorderLayout());
+          JScrollPane scroller = new JScrollPane(this.table);
+          p.add(scroller);
+          p.setBorder(BorderFactory.createCompoundBorder(new TitledBorder(
+                    "Selected Items: "), new EmptyBorder(4, 4, 4, 4)));
+          split.add(p);
+          setContentPane(split);
+     }
 
-	private static PieDataset createDataset() {
-		DefaultPieDataset dataset = new DefaultPieDataset();
-		dataset.setValue("One", 43.2);
-		dataset.setValue("Two", 10.0);
-		dataset.setValue("Three", 27.5);
-		dataset.setValue("Four", 17.5);
-		dataset.setValue("Five", 11.0);
-		dataset.setValue("Six", 19.4);
-		return dataset;
-	}
+     private static PieDataset createDataset() {
+          DefaultPieDataset dataset = new DefaultPieDataset();
+          dataset.setValue("One", 43.2);
+          dataset.setValue("Two", 10.0);
+          dataset.setValue("Three", 27.5);
+          dataset.setValue("Four", 17.5);
+          dataset.setValue("Five", 11.0);
+          dataset.setValue("Six", 19.4);
+          return dataset;
+     }
 
-	private static JFreeChart createChart(final PieDataset dataset, DatasetSelectionExtension<PieCursor<String>> ext) {
-		JFreeChart chart = ChartFactory.createPieChart(
-				"Pie Chart Demo 2", // chart title
-				dataset);
-		
-		final PiePlot plot = (PiePlot) chart.getPlot();
-		plot.setSectionPaint("One", new Color(160, 160, 255));
-		plot.setSectionPaint("Two", new Color(128, 128, 255 - 32));
-		plot.setSectionPaint("Three", new Color(96, 96, 255 - 64));
-		plot.setSectionPaint("Four", new Color(64, 64, 255 - 96));
-		plot.setSectionPaint("Five", new Color(32, 32, 255 - 128));
-		plot.setSectionPaint("Six", new Color(0, 0, 255 - 144));
+     private static JFreeChart createChart(final PieDataset dataset, DatasetSelectionExtension<PieCursor<String>> ext) {
+          JFreeChart chart = ChartFactory.createPieChart(
+                    "Pie Chart Demo 2", // chart title
+                    dataset);
+          
+          final PiePlot plot = (PiePlot) chart.getPlot();
+          plot.setSectionPaint("One", new Color(160, 160, 255));
+          plot.setSectionPaint("Two", new Color(128, 128, 255 - 32));
+          plot.setSectionPaint("Three", new Color(96, 96, 255 - 64));
+          plot.setSectionPaint("Four", new Color(64, 64, 255 - 96));
+          plot.setSectionPaint("Five", new Color(32, 32, 255 - 128));
+          plot.setSectionPaint("Six", new Color(0, 0, 255 - 144));
 
-		plot.setNoDataMessage("No data available");
+          plot.setNoDataMessage("No data available");
 
-		plot.setLabelGenerator(new StandardPieSectionLabelGenerator(
-				"{0} ({2} percent)"));
-		plot.setLabelBackgroundPaint(new Color(220, 220, 220));
+          plot.setLabelGenerator(new StandardPieSectionLabelGenerator(
+                    "{0} ({2} percent)"));
+          plot.setLabelBackgroundPaint(new Color(220, 220, 220));
 
-		plot.setLegendLabelToolTipGenerator(new StandardPieSectionLabelGenerator(
-				"Tooltip for legend item {0}"));
-		plot.setSimpleLabels(true);
-		plot.setInteriorGap(0.1);
-				
-		//pie plots done use abstract renderers need to react to selection on our own
-		final PieCursor<String> cursor = new PieCursor<String>();
+          plot.setLegendLabelToolTipGenerator(new StandardPieSectionLabelGenerator(
+                    "Tooltip for legend item {0}"));
+          plot.setSimpleLabels(true);
+          plot.setInteriorGap(0.1);
+                    
+          //pie plots done use abstract renderers need to react to selection on our own
+          final PieCursor<String> cursor = new PieCursor<String>();
 
-		ext.addChangeListener(new SelectionChangeListener<PieCursor<String>>() {
-			public void selectionChanged(SelectionChangeEvent<PieCursor<String>> event) {				
-				for (int i = 0; i < dataset.getItemCount(); i++) {
-					cursor.setPosition((String)dataset.getKey(i));
-					if (event.getSelectionExtension().isSelected(cursor)) {
-						plot.setExplodePercent(cursor.key, 0.15);
-					} else {
-						plot.setExplodePercent(cursor.key, 0.0);
-					}
-				}
-			}
-		});
+          ext.addChangeListener(new SelectionChangeListener<PieCursor<String>>() {
+               public void selectionChanged(SelectionChangeEvent<PieCursor<String>> event) {                    
+                    for (int i = 0; i < dataset.getItemCount(); i++) {
+                         cursor.setPosition((String)dataset.getKey(i));
+                         if (event.getSelectionExtension().isSelected(cursor)) {
+                              plot.setExplodePercent(cursor.key, 0.15);
+                         } else {
+                              plot.setExplodePercent(cursor.key, 0.0);
+                         }
+                    }
+               }
+          });
 
-		
-		return chart;
-	}
+          
+          return chart;
+     }
 
-	public JPanel createDemoPanel() {
-		this.dataset = createDataset();
-		//extend dataset and add selection change listener for the demo
-		DatasetSelectionExtension<PieCursor<String>> datasetExtension = new PieDatasetSelectionExtension<String>(this.dataset);
-		datasetExtension.addChangeListener(this);
-		
-		//standard setup
-		JFreeChart chart = createChart(this.dataset, datasetExtension);
-		ChartPanel panel = new ChartPanel(chart);
-		panel.setMouseWheelEnabled(true);
+     public JPanel createDemoPanel() {
+          this.dataset = createDataset();
+          //extend dataset and add selection change listener for the demo
+          DatasetSelectionExtension<PieCursor<String>> datasetExtension = new PieDatasetSelectionExtension<String>(this.dataset);
+          datasetExtension.addChangeListener(this);
+          
+          //standard setup
+          JFreeChart chart = createChart(this.dataset, datasetExtension);
+          ChartPanel panel = new ChartPanel(chart);
+          panel.setMouseWheelEnabled(true);
 
-		//add a selection handler with shift modifier for clicking
-		RegionSelectionHandler selectionHandler = new FreeRegionSelectionHandler();
-		AbstractMouseHandler clickHandler = new MouseClickSelectionHandler(InputEvent.SHIFT_MASK);
-		panel.addMouseHandler(selectionHandler);
-		panel.addMouseHandler(clickHandler);
-		panel.removeMouseHandler(panel.getZoomHandler());
+          //add a selection handler with shift modifier for clicking
+          RegionSelectionHandler selectionHandler = new FreeRegionSelectionHandler();
+          AbstractMouseHandler clickHandler = new MouseClickSelectionHandler(InputEvent.SHIFT_MASK);
+          panel.addMouseHandler(selectionHandler);
+          panel.addMouseHandler(clickHandler);
+          panel.removeMouseHandler(panel.getZoomHandler());
 
-		// add a selection manager
-		DatasetExtensionManager dExManager = new DatasetExtensionManager();
-		dExManager.registerDatasetExtension(datasetExtension);		
-		panel.setSelectionManager(new EntitySelectionManager(panel,	new Dataset[] { dataset }, dExManager));
-		
-		return panel;
-	}
-	
-	public void selectionChanged(SelectionChangeEvent<PieCursor<String>> event) {
-    	while (this.model.getRowCount() > 0) {
+          // add a selection manager
+          DatasetExtensionManager dExManager = new DatasetExtensionManager();
+          dExManager.registerDatasetExtension(datasetExtension);          
+          panel.setSelectionManager(new EntitySelectionManager(panel,     new Dataset[] { dataset }, dExManager));
+          
+          return panel;
+     }
+     
+     public void selectionChanged(SelectionChangeEvent<PieCursor<String>> event) {
+         while (this.model.getRowCount() > 0) {
             this.model.removeRow(0);
         }
 
-    	PieDatasetSelectionExtension<String> ext = (PieDatasetSelectionExtension<String>)event.getSelectionExtension(); 
-    	DatasetIterator<PieCursor<String>> iter = ext.getSelectionIterator(true);
-    	
-    	while (iter.hasNext()) {
-    		PieCursor<String> dc = iter.next();
-    		this.model.addRow(new Object[] {dc.key, this.dataset.getValue(dc.key)});
-    	}
-	}
+         PieDatasetSelectionExtension<String> ext = (PieDatasetSelectionExtension<String>)event.getSelectionExtension(); 
+         DatasetIterator<PieCursor<String>> iter = ext.getSelectionIterator(true);
+         
+         while (iter.hasNext()) {
+              PieCursor<String> dc = iter.next();
+              this.model.addRow(new Object[] {dc.key, this.dataset.getValue(dc.key)});
+         }
+     }
 
-	public static void main(String[] args) {
+     public static void main(String[] args) {
 
-		SelectionDemo6Pie demo = new SelectionDemo6Pie("SelectionDemo6Pie");
-		demo.pack();
-		RefineryUtilities.centerFrameOnScreen(demo);
-		demo.setVisible(true);
+          SelectionDemo6Pie demo = new SelectionDemo6Pie("SelectionDemo6Pie");
+          demo.pack();
+          RefineryUtilities.centerFrameOnScreen(demo);
+          demo.setVisible(true);
 
-	}
+     }
 
 }

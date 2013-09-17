@@ -36,147 +36,147 @@ import org.jfree.data.statistics.MultiValueCategoryDataset;
  */
 public class SelectionDemo7ScatterRenderer extends ApplicationFrame {
 
-	/**
-	 * Creates a new demo instance.
-	 * 
-	 * @param title
-	 *            the frame title.
-	 */
-	public SelectionDemo7ScatterRenderer(String title) {
-		super(title);
-		JPanel chartPanel = createDemoPanel();
-		chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
-		setContentPane(chartPanel);
-	}
+     /**
+      * Creates a new demo instance.
+      * 
+      * @param title
+      *            the frame title.
+      */
+     public SelectionDemo7ScatterRenderer(String title) {
+          super(title);
+          JPanel chartPanel = createDemoPanel();
+          chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
+          setContentPane(chartPanel);
+     }
 
-	private static List<Number> listOfValues(double[] values) {
-		List<Number> result = new ArrayList<Number>();
-		for (int i = 0; i < values.length; i++) {
-			result.add(new Double(values[i]));
-		}
-		return result;
-	}
+     private static List<Number> listOfValues(double[] values) {
+          List<Number> result = new ArrayList<Number>();
+          for (int i = 0; i < values.length; i++) {
+               result.add(new Double(values[i]));
+          }
+          return result;
+     }
 
-	/**
-	 * Creates a sample dataset.
-	 * 
-	 * @return A dataset.
-	 */
-	private static MultiValueCategoryDataset createDataset() {
-		DefaultMultiValueCategoryDataset dataset = new DefaultMultiValueCategoryDataset();
-		dataset.add(listOfValues(new double[] { 1.0, 2.0, 3.0 }), "Series 1",
-				"C1");
-		dataset.add(listOfValues(new double[] { 1.2, 2.2, 3.2 }), "Series 1",
-				"C2");
-		dataset.add(listOfValues(new double[] { 1.4, 2.4, 3.4 }), "Series 1",
-				"C3");
-		dataset.add(listOfValues(new double[] { 1.0, 2.1, 3.2 }), "Series 1",
-				"C1");
-		dataset.add(listOfValues(new double[] { 1.2, 2.15, 3.5 }), "Series 1",
-				"C2");
-		dataset.add(listOfValues(new double[] { 1.4, 2.5, 3.2 }), "Series 1",
-				"C3");
+     /**
+      * Creates a sample dataset.
+      * 
+      * @return A dataset.
+      */
+     private static MultiValueCategoryDataset createDataset() {
+          DefaultMultiValueCategoryDataset dataset = new DefaultMultiValueCategoryDataset();
+          dataset.add(listOfValues(new double[] { 1.0, 2.0, 3.0 }), "Series 1",
+                    "C1");
+          dataset.add(listOfValues(new double[] { 1.2, 2.2, 3.2 }), "Series 1",
+                    "C2");
+          dataset.add(listOfValues(new double[] { 1.4, 2.4, 3.4 }), "Series 1",
+                    "C3");
+          dataset.add(listOfValues(new double[] { 1.0, 2.1, 3.2 }), "Series 1",
+                    "C1");
+          dataset.add(listOfValues(new double[] { 1.2, 2.15, 3.5 }), "Series 1",
+                    "C2");
+          dataset.add(listOfValues(new double[] { 1.4, 2.5, 3.2 }), "Series 1",
+                    "C3");
 
-		dataset.add(listOfValues(new double[] { 1.4, 3.0, 3.2 }), "Series 1",
-				"C3");
-		dataset.add(listOfValues(new double[] { 1.4, 3.0 }), "Series 2", "C1");
+          dataset.add(listOfValues(new double[] { 1.4, 3.0, 3.2 }), "Series 1",
+                    "C3");
+          dataset.add(listOfValues(new double[] { 1.4, 3.0 }), "Series 2", "C1");
 
-		dataset.add(listOfValues(new double[] { 1.0, 3.0 }), "Series 2", "C1");
-		dataset.add(listOfValues(new double[] { 1.2, 3.2 }), "Series 2", "C2");
-		dataset.add(listOfValues(new double[] { 1.4, 3.6 }), "Series 2", "C3");
-		dataset.add(listOfValues(new double[] { 1.2, 3.1 }), "Series 2", "C1");
-		dataset.add(listOfValues(new double[] { 1.4, 3.4 }), "Series 2", "C2");
-		dataset.add(listOfValues(new double[] { 1.5, 3.6 }), "Series 2", "C3");
+          dataset.add(listOfValues(new double[] { 1.0, 3.0 }), "Series 2", "C1");
+          dataset.add(listOfValues(new double[] { 1.2, 3.2 }), "Series 2", "C2");
+          dataset.add(listOfValues(new double[] { 1.4, 3.6 }), "Series 2", "C3");
+          dataset.add(listOfValues(new double[] { 1.2, 3.1 }), "Series 2", "C1");
+          dataset.add(listOfValues(new double[] { 1.4, 3.4 }), "Series 2", "C2");
+          dataset.add(listOfValues(new double[] { 1.5, 3.6 }), "Series 2", "C3");
 
-		return dataset;
-	}
+          return dataset;
+     }
 
-	/**
-	 * Creates a chart.
-	 * 
-	 * @param dataset
-	 *            the dataset.
-	 * 
-	 * @return A chart.
-	 */
-	private static JFreeChart createChart(final MultiValueCategoryDataset dataset, final DatasetSelectionExtension<CategoryCursor<String, String>> ext) {
+     /**
+      * Creates a chart.
+      * 
+      * @param dataset
+      *            the dataset.
+      * 
+      * @return A chart.
+      */
+     private static JFreeChart createChart(final MultiValueCategoryDataset dataset, final DatasetSelectionExtension<CategoryCursor<String, String>> ext) {
 
-		ScatterRenderer r = new ScatterRenderer();
-		CategoryPlot plot = new CategoryPlot(dataset, new CategoryAxis(
-				"Category"), new NumberAxis("Value"), r);
-		plot.setBackgroundPaint(Color.lightGray);
-		plot.setDomainGridlinePaint(Color.white);
-		plot.setRangeGridlinePaint(Color.white);
-		plot.setAxisOffset(new RectangleInsets(4, 4, 4, 4));
-		JFreeChart chart = new JFreeChart("ScatterRendererDemo1", plot);
-		ChartUtilities.applyCurrentTheme(chart);
-		
-		
-		//register the plot
-		ext.addChangeListener(plot);		
-		
-		//illustrates the usage of a shape item rendering strategy
-		final CategoryCursor<String, String> cursor = new CategoryCursor<String, String>();
-		r.setShapeIRS(new DefaultShapeIRS(r) {
-			private static final long serialVersionUID = 1L;
+          ScatterRenderer r = new ScatterRenderer();
+          CategoryPlot plot = new CategoryPlot(dataset, new CategoryAxis(
+                    "Category"), new NumberAxis("Value"), r);
+          plot.setBackgroundPaint(Color.lightGray);
+          plot.setDomainGridlinePaint(Color.white);
+          plot.setRangeGridlinePaint(Color.white);
+          plot.setAxisOffset(new RectangleInsets(4, 4, 4, 4));
+          JFreeChart chart = new JFreeChart("ScatterRendererDemo1", plot);
+          ChartUtilities.applyCurrentTheme(chart);
+          
+          
+          //register the plot
+          ext.addChangeListener(plot);          
+          
+          //illustrates the usage of a shape item rendering strategy
+          final CategoryCursor<String, String> cursor = new CategoryCursor<String, String>();
+          r.setShapeIRS(new DefaultShapeIRS(r) {
+               private static final long serialVersionUID = 1L;
 
-			public Shape getItemShape(int row, int column) {
-				cursor.setPosition((String)dataset.getRowKey(row), (String)dataset.getColumnKey(column));
-				if (ext.isSelected(cursor)) {
-					return new Rectangle2D.Double(-10.0, -10.0, 20.0, 20.0);
-				} else {
-					return super.getItemShape(row, column);
-				}
-			}
-		});				
-		
-		return chart;
+               public Shape getItemShape(int row, int column) {
+                    cursor.setPosition((String)dataset.getRowKey(row), (String)dataset.getColumnKey(column));
+                    if (ext.isSelected(cursor)) {
+                         return new Rectangle2D.Double(-10.0, -10.0, 20.0, 20.0);
+                    } else {
+                         return super.getItemShape(row, column);
+                    }
+               }
+          });                    
+          
+          return chart;
 
-	}
+     }
 
-	/**
-	 * Creates a panel for the demo (used by SuperDemo.java).
-	 * 
-	 * @return A panel.
-	 */
-	public static JPanel createDemoPanel() {
-		MultiValueCategoryDataset dataset = createDataset();
-		//extend dataset and add selection change listener for the demo
-		DatasetSelectionExtension<CategoryCursor<String, String>> datasetExtension = new CategoryDatasetSelectionExtension<String, String>(dataset);
-		
-		//standard setup
-		JFreeChart chart = createChart(dataset, datasetExtension);
-		ChartPanel panel = new ChartPanel(chart);
-		panel.setMouseWheelEnabled(true);
+     /**
+      * Creates a panel for the demo (used by SuperDemo.java).
+      * 
+      * @return A panel.
+      */
+     public static JPanel createDemoPanel() {
+          MultiValueCategoryDataset dataset = createDataset();
+          //extend dataset and add selection change listener for the demo
+          DatasetSelectionExtension<CategoryCursor<String, String>> datasetExtension = new CategoryDatasetSelectionExtension<String, String>(dataset);
+          
+          //standard setup
+          JFreeChart chart = createChart(dataset, datasetExtension);
+          ChartPanel panel = new ChartPanel(chart);
+          panel.setMouseWheelEnabled(true);
 
-		//add a selection handler with shift modifier for clicking
-		RegionSelectionHandler selectionHandler = new FreeRegionSelectionHandler();
-		panel.addMouseHandler(selectionHandler);
-		panel.addMouseHandler(new MouseClickSelectionHandler());
-		panel.removeMouseHandler(panel.getZoomHandler());
+          //add a selection handler with shift modifier for clicking
+          RegionSelectionHandler selectionHandler = new FreeRegionSelectionHandler();
+          panel.addMouseHandler(selectionHandler);
+          panel.addMouseHandler(new MouseClickSelectionHandler());
+          panel.removeMouseHandler(panel.getZoomHandler());
 
-		// add a selection manager
-		DatasetExtensionManager dExManager = new DatasetExtensionManager();
-		dExManager.registerDatasetExtension(datasetExtension);		
-		panel.setSelectionManager(new EntitySelectionManager(panel,	new Dataset[] { dataset }, dExManager));
-		
-		return panel;
-	}
+          // add a selection manager
+          DatasetExtensionManager dExManager = new DatasetExtensionManager();
+          dExManager.registerDatasetExtension(datasetExtension);          
+          panel.setSelectionManager(new EntitySelectionManager(panel,     new Dataset[] { dataset }, dExManager));
+          
+          return panel;
+     }
 
-	/**
-	 * Starting point for the demonstration application.
-	 * 
-	 * @param args
-	 *            ignored.
-	 */
-	public static void main(String[] args) {
+     /**
+      * Starting point for the demonstration application.
+      * 
+      * @param args
+      *            ignored.
+      */
+     public static void main(String[] args) {
 
-		SelectionDemo7ScatterRenderer demo = new SelectionDemo7ScatterRenderer(
-				"JFreeChart: ScatterRendererDemo1.java");
-		demo.pack();
-		RefineryUtilities.centerFrameOnScreen(demo);
-		demo.setVisible(true);
+          SelectionDemo7ScatterRenderer demo = new SelectionDemo7ScatterRenderer(
+                    "JFreeChart: ScatterRendererDemo1.java");
+          demo.pack();
+          RefineryUtilities.centerFrameOnScreen(demo);
+          demo.setVisible(true);
 
-	}
+     }
 
 }

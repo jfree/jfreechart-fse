@@ -50,15 +50,14 @@ import org.jfree.chart.ChartPanel;
 /**
  * A handler for mouse events in a {@link ChartPanel}.  A handler can be
  * assigned a modifier and installed on the panel to be invoked by the user.
- *
  */
 public abstract class AbstractMouseHandler implements MouseListener,
         MouseMotionListener, Serializable {
 
     /** a generated serial id. */
-	private static final long serialVersionUID = -2717376020576340947L;
-	
-	/** The modifier used to invoke this handler. */
+    private static final long serialVersionUID = -2717376020576340947L;
+
+    /** The modifier used to invoke this handler. */
     private int modifier;
 
     /**
@@ -69,7 +68,7 @@ public abstract class AbstractMouseHandler implements MouseListener,
     }
     
     /**
-     * constructing with modifier
+     * Constructing with modifier.
      */
     public AbstractMouseHandler(int modifier) {
         this.modifier = modifier;
@@ -160,16 +159,17 @@ public abstract class AbstractMouseHandler implements MouseListener,
      * @param e  the mouse event.
      */
     public void mouseDragged(MouseEvent e) {
-    	// override if you need this method to do something
+        // override if you need this method to do something
     }
 
-
     /**
-     * A mouse handler is either an live handler or an auxiliary handler. While their can be
-     * only one active live handler at a time many auxiliary handlers can be used together.
-     * E.g. rectangle zooming and rectangle selection should be implemented as live handlers because
-     * they both draw on the panel and shouldn't be combined. In contrast a click selection does not
-     * interfere with e.g. a double click selection both handlers can be active at the same time. 
+     * A mouse handler is either an live handler or an auxiliary handler. While
+     * there can be only one active live handler at a time many auxiliary 
+     * handlers can be used together.  E.g. rectangle zooming and rectangle 
+     * selection should be implemented as live handlers because they both draw 
+     * on the panel and shouldn't be combined. In contrast a click selection 
+     * does not interfere with e.g. a double click selection both handlers can 
+     * be active at the same time. 
      * 
      * @return true if this is a live handler
      */

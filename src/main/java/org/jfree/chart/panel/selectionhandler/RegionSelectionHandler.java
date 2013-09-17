@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -24,13 +24,13 @@
  * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
  * in the United States and other countries.]
  *
- * ---------------------
- * SelectionHandler.java
- * ---------------------
- * (C) Copyright 2009, by Object Refinery Limited.
+ * ---------------------------
+ * RegionSelectionHandler.java
+ * ---------------------------
+ * (C) Copyright 2009-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
- * Contributor(s):   -;
+ * Contributor(s):   Michael Zinsmaier;
  *
  * Changes:
  * --------
@@ -53,23 +53,14 @@ import org.jfree.chart.panel.AbstractMouseHandler;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
- * A mouse handler that allows data items to be selected based on a selection region that is
- * created by the handler.
- *
+ * A mouse handler that allows data items to be selected based on a selection 
+ * region that is created by the handler.
  */
 public abstract class RegionSelectionHandler extends AbstractMouseHandler {
 
-	/** a generated serial id. */
-	private static final long serialVersionUID = -4671799719995583469L;
+    /** a generated serial id. */
+    private static final long serialVersionUID = -4671799719995583469L;
 
-	/**
-	 * Creates a new instance with a modifier restriction
-	 * @param modifier e.g. shift has to be pressed InputEvents.SHIFT_MASK
-	 */
-    public RegionSelectionHandler(int modifier) {
-		super(modifier);
-    }
-	
     /**
      * The outline stroke.
      */
@@ -92,16 +83,13 @@ public abstract class RegionSelectionHandler extends AbstractMouseHandler {
         this(new BasicStroke(1.0f), Color.darkGray, new Color(255, 0, 255, 50));
     }
 
-	/**
-	 * Creates a new selection handler with the specified attributes.
-	 * 
-	 * @param outlineStroke
-	 *            the outline stroke.
-	 * @param outlinePaint
-	 *            the outline paint.
-	 * @param fillPaint
-	 *            the fill paint.
-	 */
+    /**
+     * Creates a new selection handler with the specified attributes.
+     * 
+     * @param outlineStroke  the outline stroke.
+     * @param outlinePaint  the outline paint.
+     * @param fillPaint  the fill paint.
+     */
     public RegionSelectionHandler(Stroke outlineStroke, Paint outlinePaint,
             Paint fillPaint) {
         super();
@@ -110,6 +98,15 @@ public abstract class RegionSelectionHandler extends AbstractMouseHandler {
         this.fillPaint = new Color(255, 0, 255, 50);
     }
 
+    /**
+     * Creates a new instance with a modifier restriction.
+     * 
+     * @param modifier e.g. shift has to be pressed InputEvents.SHIFT_MASK
+     */
+    public RegionSelectionHandler(int modifier) {
+        super(modifier);
+    }
+    
     /**
      * Returns the fill paint.
      *
@@ -153,6 +150,7 @@ public abstract class RegionSelectionHandler extends AbstractMouseHandler {
      * 
      * @param e  the event.
      */
+    @Override
     public abstract void mousePressed(MouseEvent e);
 
     /**
@@ -160,48 +158,43 @@ public abstract class RegionSelectionHandler extends AbstractMouseHandler {
      *
      * @param e  the event.
      */
+    @Override
     public abstract void mouseDragged(MouseEvent e);
     
+    @Override
     public abstract void mouseReleased(MouseEvent e);
     
     public boolean isLiveHandler() {
-    	return true;
+        return true;
     }
     
-    
+    /**
+     * Provides serialization support.
+     * 
+     * @param stream  the output stream.
+     * 
+     * @throws IOException  if there is an I/O error.
+     */
+    private void writeObject(ObjectOutputStream stream) throws IOException {
+        stream.defaultWriteObject();
+        SerialUtilities.writePaint(this.outlinePaint, stream);
+        SerialUtilities.writePaint(this.fillPaint, stream);
+        SerialUtilities.writeStroke(this.outlineStroke, stream);
+    }
 
-	/**
-	 * Provides serialization support.
-	 * 
-	 * @param stream
-	 *            the output stream.
-	 * 
-	 * @throws IOException
-	 *             if there is an I/O error.
-	 */
-	private void writeObject(ObjectOutputStream stream) throws IOException {
-		stream.defaultWriteObject();
-		SerialUtilities.writePaint(this.outlinePaint, stream);
-		SerialUtilities.writePaint(this.fillPaint, stream);
-		SerialUtilities.writeStroke(this.outlineStroke, stream);
-	}
-
-	/**
-	 * Provides serialization support.
-	 * 
-	 * @param stream
-	 *            the input stream.
-	 * 
-	 * @throws IOException
-	 *             if there is an I/O error.
-	 * @throws ClassNotFoundException
-	 *             if there is a classpath problem.
-	 */
-	private void readObject(ObjectInputStream stream) throws IOException,
-			ClassNotFoundException {
-		stream.defaultReadObject();
-		this.outlinePaint = SerialUtilities.readPaint(stream);
-		this.fillPaint = SerialUtilities.readPaint(stream);
-		this.outlineStroke = SerialUtilities.readStroke(stream);
-	}
+    /**
+     * Provides serialization support.
+     * 
+     * @param stream  the input stream.
+     * 
+     * @throws IOException  if there is an I/O error.
+     * @throws ClassNotFoundException  if there is a classpath problem.
+     */
+    private void readObject(ObjectInputStream stream) throws IOException,
+            ClassNotFoundException {
+        stream.defaultReadObject();
+        this.outlinePaint = SerialUtilities.readPaint(stream);
+        this.fillPaint = SerialUtilities.readPaint(stream);
+        this.outlineStroke = SerialUtilities.readStroke(stream);
+    }
 }
