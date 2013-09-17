@@ -19,7 +19,7 @@ import org.jfree.chart.panel.selectionhandler.MouseClickSelectionHandler;
 import org.jfree.chart.panel.selectionhandler.RegionSelectionHandler;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.ScatterRenderer;
-import org.jfree.chart.renderer.rendererextension.DefaultShapeIRS;
+import org.jfree.chart.renderer.item.DefaultShapeIRS;
 import org.jfree.chart.ui.ApplicationFrame;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.RefineryUtilities;

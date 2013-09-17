@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ------------------
- * VisibilityIRS.java
- * ------------------
+ * --------------------
+ * DefaultShapeIRS.java
+ * --------------------
  * (C) Copyright 2013, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
@@ -38,32 +38,39 @@
  *
  */
 
-package org.jfree.chart.renderer.rendererextension;
+package org.jfree.chart.renderer.item;
 
-import java.io.Serializable;
+import java.awt.Shape;
 
 import org.jfree.chart.renderer.AbstractRenderer;
 
 /**
- * Defines an interface to control the visibility of individual items during 
- * rendering.  Implementing classes can be used together with subclasses of 
- * {@link AbstractRenderer} to control the rendering process.<br>
- * Works however only if the descendant of {@link AbstractRenderer} uses the 
- * per item method {@link AbstractRenderer#getItemVisible(int, int)}
+ * Implements a per series default item rendering strategy for the item shape. 
+ * {@link DefaultItemRenderingStrategy}
  * 
  * @author zinsmaie
  */
-public interface VisibilityIRS extends Serializable {
+public class DefaultShapeIRS extends DefaultItemRenderingStrategy 
+        implements ShapeIRS {
+
+    /** a generated serial id */
+    private static final long serialVersionUID = 7582378597877240617L;
 
     /**
-     * Specifies an individual item by row, column and returns true if it is 
-     * visible.
+     * Creates a new rendering strategy for the submitted renderer using its 
+     * per series properties.
      * 
-     * @param row  the row (or series) index (zero-based).
-     * @param column  the column (or category) index (zero-based).
-     * 
-     * @return true if the item is visible
+     * @param renderer
      */
-    public boolean getItemVisible(int row, int column);
+    public DefaultShapeIRS(AbstractRenderer renderer) {
+        super(renderer);
+    }
+
+    /**
+     * @return the item shape the renderer defines for the series
+     */
+    public Shape getItemShape(int row, int column) {
+        return renderer.lookupSeriesShape(row);
+    }
 
 }

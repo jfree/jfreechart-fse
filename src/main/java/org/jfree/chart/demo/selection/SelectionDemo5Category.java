@@ -32,7 +32,7 @@ import org.jfree.chart.panel.selectionhandler.RectangularRegionSelectionHandler;
 import org.jfree.chart.panel.selectionhandler.RegionSelectionHandler;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.chart.renderer.rendererextension.IRSUtilities;
+import org.jfree.chart.renderer.item.IRSUtilities;
 import org.jfree.chart.ui.ApplicationFrame;
 import org.jfree.chart.ui.RefineryUtilities;
 import org.jfree.data.category.CategoryDataset;

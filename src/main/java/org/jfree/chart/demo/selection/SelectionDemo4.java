@@ -30,7 +30,7 @@ import org.jfree.chart.panel.selectionhandler.FreePathSelectionHandler;
 import org.jfree.chart.panel.selectionhandler.MouseClickSelectionHandler;
 import org.jfree.chart.panel.selectionhandler.RegionSelectionHandler;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.rendererextension.IRSUtilities;
+import org.jfree.chart.renderer.item.IRSUtilities;
 import org.jfree.chart.renderer.xy.StandardXYBarPainter;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.ui.ApplicationFrame;

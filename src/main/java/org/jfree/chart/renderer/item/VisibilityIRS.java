@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -------------
- * ShapeIRS.java
- * -------------
+ * ------------------
+ * VisibilityIRS.java
+ * ------------------
  * (C) Copyright 2013, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
@@ -38,36 +38,32 @@
  *
  */
 
-package org.jfree.chart.renderer.rendererextension;
+package org.jfree.chart.renderer.item;
 
-import java.awt.Shape;
 import java.io.Serializable;
 
 import org.jfree.chart.renderer.AbstractRenderer;
 
 /**
- * Defines an interface to control the shape of individual items during 
+ * Defines an interface to control the visibility of individual items during 
  * rendering.  Implementing classes can be used together with subclasses of 
  * {@link AbstractRenderer} to control the rendering process.<br>
  * Works however only if the descendant of {@link AbstractRenderer} uses the 
- * per item method {@link AbstractRenderer#getItemShape(int, int)}
- * <br>
- * <br>
- * Important Shape is not serializable see {@link IRSUtilities}) for the 
- * correct implementation of the custom read and write method. 
+ * per item method {@link AbstractRenderer#getItemVisible(int, int)}
  * 
  * @author zinsmaie
  */
-public interface ShapeIRS extends Serializable {
+public interface VisibilityIRS extends Serializable {
 
     /**
-     * Specifies an individual item by row, column and returns its shape.
+     * Specifies an individual item by row, column and returns true if it is 
+     * visible.
      * 
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
      * 
-     * @return a shape (never <code>null<code>)
+     * @return true if the item is visible
      */
-    public Shape getItemShape(int row, int column);
+    public boolean getItemVisible(int row, int column);
 
 }

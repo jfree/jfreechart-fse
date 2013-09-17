@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ---------------------
- * DefaultStrokeIRS.java
- * ---------------------
+ * -------------
+ * ShapeIRS.java
+ * -------------
  * (C) Copyright 2013, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
@@ -38,46 +38,36 @@
  *
  */
 
-package org.jfree.chart.renderer.rendererextension;
+package org.jfree.chart.renderer.item;
 
-import java.awt.Stroke;
+import java.awt.Shape;
+import java.io.Serializable;
 
 import org.jfree.chart.renderer.AbstractRenderer;
 
 /**
- * Implements a per series default item rendering strategy for the item stroke. 
- * {@link DefaultItemRenderingStrategy}
+ * Defines an interface to control the shape of individual items during 
+ * rendering.  Implementing classes can be used together with subclasses of 
+ * {@link AbstractRenderer} to control the rendering process.<br>
+ * Works however only if the descendant of {@link AbstractRenderer} uses the 
+ * per item method {@link AbstractRenderer#getItemShape(int, int)}
+ * <br>
+ * <br>
+ * Important Shape is not serializable see {@link IRSUtilities}) for the 
+ * correct implementation of the custom read and write method. 
  * 
  * @author zinsmaie
  */
-public class DefaultStrokeIRS extends DefaultItemRenderingStrategy 
-        implements StrokeIRS {
-
-    /** a generated serial id */
-    private static final long serialVersionUID = -8486624082434186176L;
+public interface ShapeIRS extends Serializable {
 
     /**
-     * Creates a new rendering strategy for the submitted renderer using its 
-     * per series properties.
+     * Specifies an individual item by row, column and returns its shape.
      * 
-     * @param renderer
+     * @param row  the row (or series) index (zero-based).
+     * @param column  the column (or category) index (zero-based).
+     * 
+     * @return a shape (never <code>null<code>)
      */
-    public DefaultStrokeIRS(AbstractRenderer renderer) {
-        super(renderer);
-    }
-
-    /**
-     * @return the item stroke the renderer defines for the series
-     */
-    public Stroke getItemStroke(int row, int column) {
-        return renderer.lookupSeriesStroke(row);
-    }
-
-    /**
-     * @return the item outline stroke the renderer defines for the series
-     */
-    public Stroke getItemOutlineStroke(int row, int column) {
-        return renderer.lookupSeriesOutlineStroke(row);
-    }
+    public Shape getItemShape(int row, int column);
 
 }

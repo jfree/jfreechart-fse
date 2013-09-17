@@ -31,7 +31,7 @@ import org.jfree.chart.panel.selectionhandler.EntitySelectionManager;
 import org.jfree.chart.panel.selectionhandler.MouseClickSelectionHandler;
 import org.jfree.chart.panel.selectionhandler.RegionSelectionHandler;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.rendererextension.IRSUtilities;
+import org.jfree.chart.renderer.item.IRSUtilities;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.ui.ApplicationFrame;
 import org.jfree.chart.ui.NumberCellRenderer;

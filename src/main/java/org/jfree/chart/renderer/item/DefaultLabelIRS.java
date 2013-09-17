@@ -38,7 +38,7 @@
  *
  */
 
-package org.jfree.chart.renderer.rendererextension;
+package org.jfree.chart.renderer.item;
 
 import java.awt.Font;
 

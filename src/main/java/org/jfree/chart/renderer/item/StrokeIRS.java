@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * --------------------
- * DefaultPaintIRS.java
- * --------------------
+ * --------------
+ * StrokeIRS.java
+ * --------------
  * (C) Copyright 2013, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
@@ -38,53 +38,47 @@
  *
  */
 
-package org.jfree.chart.renderer.rendererextension;
+package org.jfree.chart.renderer.item;
 
-import java.awt.Paint;
+import java.awt.Stroke;
+import java.io.Serializable;
 
 import org.jfree.chart.renderer.AbstractRenderer;
 
 /**
- * Implements a per series default item rendering strategy for the item paint. 
- * {@link DefaultItemRenderingStrategy}
+ * Defines an interface to control the stroke for individual items during 
+ * rendering.  Implementing classes can be used together with subclasses of 
+ * {@link AbstractRenderer} to control the rendering process.<br>
+ * Works however only if the descendant of {@link AbstractRenderer} uses per 
+ * item methods like {@link AbstractRenderer#getItemStroke(int, int)}
+ * <br>
+ * <br>
+ * Important Stroke is not serializable see {@link IRSUtilities}) for the 
+ * correct implementation of the custom read and write method. 
  * 
  * @author zinsmaie
  */
-public class DefaultPaintIRS extends DefaultItemRenderingStrategy 
-        implements PaintIRS {
-
-    /** a generated serial id */
-    private static final long serialVersionUID = 2211937902401233033L;
+public interface StrokeIRS extends Serializable {
 
     /**
-     * Creates a new rendering strategy for the submitted renderer using its 
-     * per series properties.
+     * Specifies an individual item by row, column and returns the item stroke
      * 
-     * @param renderer
+     * @param row  the row (or series) index (zero-based).
+     * @param column  the column (or category) index (zero-based).
+     * 
+     * @return a stroke (never <code>null<code>)
      */
-    public DefaultPaintIRS(AbstractRenderer renderer) {
-        super(renderer);
-    }
+    public Stroke getItemStroke(int row, int column);
 
     /**
-     * @return the item paint the renderer defines for the series
+     * Specifies an individual item by row, column and returns the outline 
+     * stroke.
+     * 
+     * @param row  the row (or series) index (zero-based).
+     * @param column  the column (or category) index (zero-based).
+     * 
+     * @return a stroke (never <code>null<code>)
      */
-    public Paint getItemPaint(int row, int column) {
-        return renderer.lookupSeriesPaint(row);
-    }
-
-    /**
-     * @return the item fill paint the renderer defines for the series
-     */
-    public Paint getItemFillPaint(int row, int column) {
-        return renderer.lookupSeriesFillPaint(row);
-    }
-
-    /**
-     * @return the item outline paint the renderer defines for the series
-     */
-    public Paint getItemOutlinePaint(int row, int column) {
-        return renderer.lookupSeriesOutlinePaint(row);
-    }
+    public Stroke getItemOutlineStroke(int row, int column);
 
 }

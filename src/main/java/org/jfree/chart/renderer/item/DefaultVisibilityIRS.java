@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * --------------
- * StrokeIRS.java
- * --------------
+ * -------------------------
+ * DefaultVisibilityIRS.java
+ * -------------------------
  * (C) Copyright 2013, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
@@ -38,47 +38,34 @@
  *
  */
 
-package org.jfree.chart.renderer.rendererextension;
-
-import java.awt.Stroke;
-import java.io.Serializable;
+package org.jfree.chart.renderer.item;
 
 import org.jfree.chart.renderer.AbstractRenderer;
 
 /**
- * Defines an interface to control the stroke for individual items during 
- * rendering.  Implementing classes can be used together with subclasses of 
- * {@link AbstractRenderer} to control the rendering process.<br>
- * Works however only if the descendant of {@link AbstractRenderer} uses per 
- * item methods like {@link AbstractRenderer#getItemStroke(int, int)}
- * <br>
- * <br>
- * Important Stroke is not serializable see {@link IRSUtilities}) for the 
- * correct implementation of the custom read and write method. 
+ * Implements a per series default item rendering strategy for the item visibility. 
+ * {@link DefaultItemRenderingStrategy}
  * 
  * @author zinsmaie
  */
-public interface StrokeIRS extends Serializable {
+public class DefaultVisibilityIRS extends DefaultItemRenderingStrategy implements VisibilityIRS {
+
+    /** a generated serial id */
+    private static final long serialVersionUID = 559211600589929630L;
 
     /**
-     * Specifies an individual item by row, column and returns the item stroke
-     * 
-     * @param row  the row (or series) index (zero-based).
-     * @param column  the column (or category) index (zero-based).
-     * 
-     * @return a stroke (never <code>null<code>)
+     * creates a new rendering strategy for the submitted renderer using its per series properties
+     * @param renderer
      */
-    public Stroke getItemStroke(int row, int column);
+    public DefaultVisibilityIRS(AbstractRenderer renderer) {
+        super(renderer);
+    }
 
     /**
-     * Specifies an individual item by row, column and returns the outline 
-     * stroke.
-     * 
-     * @param row  the row (or series) index (zero-based).
-     * @param column  the column (or category) index (zero-based).
-     * 
-     * @return a stroke (never <code>null<code>)
+     * @return true if the renderer defines the series as visible 
      */
-    public Stroke getItemOutlineStroke(int row, int column);
+    public boolean getItemVisible(int row, int column) {
+        return renderer.isSeriesVisible(row);
+    }
 
 }

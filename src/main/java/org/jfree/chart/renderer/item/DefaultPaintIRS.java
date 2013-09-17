@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -------------------------
- * DefaultVisibilityIRS.java
- * -------------------------
+ * --------------------
+ * DefaultPaintIRS.java
+ * --------------------
  * (C) Copyright 2013, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
@@ -38,34 +38,53 @@
  *
  */
 
-package org.jfree.chart.renderer.rendererextension;
+package org.jfree.chart.renderer.item;
+
+import java.awt.Paint;
 
 import org.jfree.chart.renderer.AbstractRenderer;
 
 /**
- * Implements a per series default item rendering strategy for the item visibility. 
+ * Implements a per series default item rendering strategy for the item paint. 
  * {@link DefaultItemRenderingStrategy}
  * 
  * @author zinsmaie
  */
-public class DefaultVisibilityIRS extends DefaultItemRenderingStrategy implements VisibilityIRS {
+public class DefaultPaintIRS extends DefaultItemRenderingStrategy 
+        implements PaintIRS {
 
     /** a generated serial id */
-    private static final long serialVersionUID = 559211600589929630L;
+    private static final long serialVersionUID = 2211937902401233033L;
 
     /**
-     * creates a new rendering strategy for the submitted renderer using its per series properties
+     * Creates a new rendering strategy for the submitted renderer using its 
+     * per series properties.
+     * 
      * @param renderer
      */
-    public DefaultVisibilityIRS(AbstractRenderer renderer) {
+    public DefaultPaintIRS(AbstractRenderer renderer) {
         super(renderer);
     }
 
     /**
-     * @return true if the renderer defines the series as visible 
+     * @return the item paint the renderer defines for the series
      */
-    public boolean getItemVisible(int row, int column) {
-        return renderer.isSeriesVisible(row);
+    public Paint getItemPaint(int row, int column) {
+        return renderer.lookupSeriesPaint(row);
+    }
+
+    /**
+     * @return the item fill paint the renderer defines for the series
+     */
+    public Paint getItemFillPaint(int row, int column) {
+        return renderer.lookupSeriesFillPaint(row);
+    }
+
+    /**
+     * @return the item outline paint the renderer defines for the series
+     */
+    public Paint getItemOutlinePaint(int row, int column) {
+        return renderer.lookupSeriesOutlinePaint(row);
     }
 
 }

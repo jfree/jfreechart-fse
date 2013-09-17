@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * --------------------
- * DefaultShapeIRS.java
- * --------------------
+ * ---------------------
+ * DefaultStrokeIRS.java
+ * ---------------------
  * (C) Copyright 2013, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
@@ -38,23 +38,23 @@
  *
  */
 
-package org.jfree.chart.renderer.rendererextension;
+package org.jfree.chart.renderer.item;
 
-import java.awt.Shape;
+import java.awt.Stroke;
 
 import org.jfree.chart.renderer.AbstractRenderer;
 
 /**
- * Implements a per series default item rendering strategy for the item shape. 
+ * Implements a per series default item rendering strategy for the item stroke. 
  * {@link DefaultItemRenderingStrategy}
  * 
  * @author zinsmaie
  */
-public class DefaultShapeIRS extends DefaultItemRenderingStrategy 
-        implements ShapeIRS {
+public class DefaultStrokeIRS extends DefaultItemRenderingStrategy 
+        implements StrokeIRS {
 
     /** a generated serial id */
-    private static final long serialVersionUID = 7582378597877240617L;
+    private static final long serialVersionUID = -8486624082434186176L;
 
     /**
      * Creates a new rendering strategy for the submitted renderer using its 
@@ -62,15 +62,22 @@ public class DefaultShapeIRS extends DefaultItemRenderingStrategy
      * 
      * @param renderer
      */
-    public DefaultShapeIRS(AbstractRenderer renderer) {
+    public DefaultStrokeIRS(AbstractRenderer renderer) {
         super(renderer);
     }
 
     /**
-     * @return the item shape the renderer defines for the series
+     * @return the item stroke the renderer defines for the series
      */
-    public Shape getItemShape(int row, int column) {
-        return renderer.lookupSeriesShape(row);
+    public Stroke getItemStroke(int row, int column) {
+        return renderer.lookupSeriesStroke(row);
+    }
+
+    /**
+     * @return the item outline stroke the renderer defines for the series
+     */
+    public Stroke getItemOutlineStroke(int row, int column) {
+        return renderer.lookupSeriesOutlineStroke(row);
     }
 
 }
