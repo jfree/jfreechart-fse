@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -1254,10 +1254,10 @@ public abstract class Plot implements AxisChangeListener,
      * @param event  information about the event (not used here).
      */
     public void selectionChanged(SelectionChangeEvent event) {
-    	//could be typed but would require typing Plot and its decendents with a DatasetCursor
+        //could be typed but would require typing Plot and its decendents with a DatasetCursor
         PlotChangeEvent newEvent = new PlotChangeEvent(this);
         newEvent.setType(ChartChangeEventType.GENERAL);
-        notifyListeners(newEvent);    	
+        notifyListeners(newEvent);
     }
     
     /**
@@ -1269,10 +1269,10 @@ public abstract class Plot implements AxisChangeListener,
      * @param event  information about the event (not used here).
      */
     public void labelChanged(LabelChangeEvent event) {
-    	//could be typed but would require typing Plot and its decendents with a DatasetCursor
+        //could be typed but would require typing Plot and its decendents with a DatasetCursor
         PlotChangeEvent newEvent = new PlotChangeEvent(this);
         newEvent.setType(ChartChangeEventType.GENERAL);
-        notifyListeners(newEvent);    	
+        notifyListeners(newEvent);
     }
 
     /**

@@ -65,5 +65,5 @@ public interface VisibilityIRS extends Serializable {
      * @return true if the item is visible
      */
     public boolean getItemVisible(int row, int column);
-	
+
 }

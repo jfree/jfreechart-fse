@@ -78,7 +78,7 @@ public interface LabelIRS extends Serializable {
      * @return true if the label should be rendered
      */
     public boolean isItemLabelVisible(int row, int column);
-	
+
     /**
      * Specifies an individual item by row, column and returns the label 
      * position. 

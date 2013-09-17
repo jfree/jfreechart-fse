@@ -69,5 +69,5 @@ public interface ShapeIRS extends Serializable {
      * @return a shape (never <code>null<code>)
      */
     public Shape getItemShape(int row, int column);
-	
+
 }

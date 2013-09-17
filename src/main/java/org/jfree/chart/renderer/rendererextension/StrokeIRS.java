@@ -80,5 +80,5 @@ public interface StrokeIRS extends Serializable {
      * @return a stroke (never <code>null<code>)
      */
     public Stroke getItemOutlineStroke(int row, int column);
-	
+
 }

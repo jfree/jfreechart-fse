@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * PanHandler.java
  * ---------------
- * (C) Copyright 2009, by Object Refinery Limited.
+ * (C) Copyright 2009-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -57,12 +57,11 @@ import org.jfree.chart.plot.PlotRenderingInfo;
  * them.
  */
 public class PanHandler extends AbstractMouseHandler {
-	
+    
     /** a generated serial id. */
-	private static final long serialVersionUID = -2454906267665359292L;
+    private static final long serialVersionUID = -2454906267665359292L;
 
-	
-	/**
+    /**
      * Temporary storage for the width and height of the chart
      * drawing area during panning.
      */
@@ -72,20 +71,21 @@ public class PanHandler extends AbstractMouseHandler {
     private Point panLast;
 
     public PanHandler(int modifier) {
-		super(modifier);
-		this.panLast = null;
+        super(modifier);
+        this.panLast = null;
     }
     
     public PanHandler() {
-    	super();
+        super();
         this.panLast = null;
     }
 
+    @Override
     public void mousePressed(MouseEvent e) {
         ChartPanel panel = (ChartPanel) e.getSource();
         Plot plot = panel.getChart().getPlot();
         if (!(plot instanceof Pannable)) {
-        	panel.clearLiveMouseHandler();
+            panel.clearLiveMouseHandler();
             return;  // there's nothing for us to do (except unregistering)
         }
         Pannable pannable = (Pannable) plot;
@@ -103,11 +103,12 @@ public class PanHandler extends AbstractMouseHandler {
         // the actual panning occurs later in the mouseDragged() method
     }
 
+    @Override
     public void mouseDragged(MouseEvent e) {
         ChartPanel panel = (ChartPanel) e.getSource();
 
         if (this.panLast == null) {
-        	//handle panning if we have a start point else unregister
+            //handle panning if we have a start point else unregister
             panel.clearLiveMouseHandler();
             return;
         }
@@ -134,9 +135,9 @@ public class PanHandler extends AbstractMouseHandler {
         }
         this.panLast = e.getPoint();
         chart.getPlot().setNotify(old);
-        return;
     }
 
+    @Override
     public void mouseReleased(MouseEvent e) {
         ChartPanel panel = (ChartPanel) e.getSource();
         //if we have been panning reset the cursor
@@ -151,8 +152,8 @@ public class PanHandler extends AbstractMouseHandler {
     /**
      * @see AbstractMouseHandler#isLiveHandler()
      */
-	public boolean isLiveHandler() {
-		return true;
-	}
+    public boolean isLiveHandler() {
+        return true;
+    }
 
 }

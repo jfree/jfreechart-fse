@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------
  * XYItemEntity.java
  * -----------------
- * (C) Copyright 2002-2008, by Object Refinery Limited.
+ * (C) Copyright 2002-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Richard Atkinson;
@@ -85,8 +85,7 @@ public class XYItemEntity extends DataItemEntity {
      * @param toolTipText  the tool tip text.
      * @param urlText  the URL text for HTML image maps.
      */
-    public XYItemEntity(Shape area,
-                        XYDataset dataset, int series, int item,
+    public XYItemEntity(Shape area, XYDataset dataset, int series, int item,
                         String toolTipText, String urlText) {
         super(area, toolTipText, urlText);
         this.dataset = dataset;
@@ -107,7 +106,7 @@ public class XYItemEntity extends DataItemEntity {
      * @see DataItemEntity#getGeneralDataset() 
      */
     public Dataset getGeneralDataset() {
-    	return this.dataset;
+        return this.dataset;
     }
 
     /**
@@ -192,9 +191,9 @@ public class XYItemEntity extends DataItemEntity {
             + getItem() + ", dataset = " + getDataset();
     }
 
-	@Override
-	public DatasetCursor getItemCursor() {
-		return new XYCursor(series, item);
-	}
+    @Override
+    public DatasetCursor getItemCursor() {
+        return new XYCursor(series, item);
+    }
 
 }

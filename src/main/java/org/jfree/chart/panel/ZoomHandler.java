@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,10 +27,10 @@
  * ----------------
  * ZoomHandler.java
  * ----------------
- * (C) Copyright 2009, by Object Refinery Limited.
+ * (C) Copyright 2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
- * Contributor(s):   -;
+ * Contributor(s):   Michael Zinsmaier;
  *
  * Changes:
  * --------
@@ -56,9 +56,9 @@ import org.jfree.chart.util.ShapeUtilities;
 public class ZoomHandler extends AbstractMouseHandler {
 
     /** a generated serial id. */
-	private static final long serialVersionUID = -3796063183854513802L;
+    private static final long serialVersionUID = -3796063183854513802L;
 
-	private Point2D zoomPoint;
+    private Point2D zoomPoint;
 
     private Rectangle2D zoomRectangle;
 
@@ -72,6 +72,7 @@ public class ZoomHandler extends AbstractMouseHandler {
         zoomPoint = null;
     }
 
+    @Override
     public void mousePressed(MouseEvent e) {
         ChartPanel chartPanel = (ChartPanel) e.getSource();
         Rectangle2D screenDataArea = chartPanel.getScreenDataArea(e.getX(),
@@ -86,13 +87,14 @@ public class ZoomHandler extends AbstractMouseHandler {
         }
     }
 
+    @Override
     public void mouseDragged(MouseEvent e) {
         ChartPanel panel = (ChartPanel) e.getSource();
 
         if (this.zoomPoint == null) {
-    		//no initial zoom rectangle exists but the handler is set
-    		//as life handler unregister
-    		panel.clearLiveMouseHandler();
+            //no initial zoom rectangle exists but the handler is set
+            //as life handler unregister
+            panel.clearLiveMouseHandler();
             return;
         }
 
@@ -106,8 +108,7 @@ public class ZoomHandler extends AbstractMouseHandler {
             drawZoomRectangle(panel, g2, true);
         }
 
-        boolean hZoom = false;
-        boolean vZoom = false;
+        boolean hZoom, vZoom;
         if (panel.getOrientation() == PlotOrientation.HORIZONTAL) {
             hZoom = panel.isRangeZoomable();
             vZoom = panel.isDomainZoomable();
@@ -151,18 +152,18 @@ public class ZoomHandler extends AbstractMouseHandler {
         g2.dispose();
     }
 
+    @Override
     public void mouseReleased(MouseEvent e) {
-    	ChartPanel panel = (ChartPanel) e.getSource();
+        ChartPanel panel = (ChartPanel) e.getSource();
         
-    	if (this.zoomRectangle == null) {
-    		//no initial zoom rectangle exists but the handler is set
-    		//as life handler unregister
-    		panel.clearLiveMouseHandler();
+        if (this.zoomRectangle == null) {
+            //no initial zoom rectangle exists but the handler is set
+            //as life handler unregister
+            panel.clearLiveMouseHandler();
             return;
         }
         
-        boolean hZoom = false;
-        boolean vZoom = false;
+        boolean hZoom, vZoom;
         if (panel.getOrientation() == PlotOrientation.HORIZONTAL) {
             hZoom = panel.isRangeZoomable();
             vZoom = panel.isDomainZoomable();
@@ -270,12 +271,11 @@ public class ZoomHandler extends AbstractMouseHandler {
         }
     }
 
-
     /**
      * @see AbstractMouseHandler#isLiveHandler()
      */
-	public boolean isLiveHandler() {
-		return true;
-	}
+    public boolean isLiveHandler() {
+        return true;
+    }
 
 }

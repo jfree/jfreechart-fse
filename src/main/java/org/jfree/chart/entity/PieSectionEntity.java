@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * PieSectionEntity.java
  * ---------------------
- * (C) Copyright 2002-2012, by Object Refinery Limited.
+ * (C) Copyright 2002-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Richard Atkinson;
@@ -97,11 +97,9 @@ public class PieSectionEntity extends DataItemEntity
      * @param toolTipText  the tool tip text.
      * @param urlText  the URL text for HTML image maps.
      */
-    public PieSectionEntity(Shape area,
-                            PieDataset dataset,
-                            int pieIndex, int sectionIndex,
-                            Comparable sectionKey,
-                            String toolTipText, String urlText) {
+    public PieSectionEntity(Shape area, PieDataset dataset,
+            int pieIndex, int sectionIndex, Comparable sectionKey,
+            String toolTipText, String urlText) {
 
         super(area, toolTipText, urlText);
         this.dataset = dataset;
@@ -126,7 +124,7 @@ public class PieSectionEntity extends DataItemEntity
      * @see DataItemEntity#getGeneralDataset() 
      */
     public Dataset getGeneralDataset() {
-    	return this.dataset;
+        return this.dataset;
     }
 
     /**
@@ -263,10 +261,10 @@ public class PieSectionEntity extends DataItemEntity
                               + this.sectionKey.toString() + ")";
     }
 
-	@Override
-	public DatasetCursor getItemCursor() {
-		//pie item entities are not yet typed
-		return new PieCursor(sectionKey);
-	}
+    @Override
+    public DatasetCursor getItemCursor() {
+        //pie item entities are not yet typed
+        return new PieCursor(sectionKey);
+    }
 
 }
