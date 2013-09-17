@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * ScatterRenderer.java
  * --------------------
- * (C) Copyright 2007-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2007-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   David Forslund;
@@ -447,15 +447,15 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
                 g2.draw(shape);
             }
             
-    		// collecting the entity info
-    		if (state != null) {
-    			EntityCollection entities = state.getEntityCollection();
-    			if (orientation == PlotOrientation.HORIZONTAL) {
-    				addEntity(entities, shape, dataset, row, column, y1, x1);
-    			} else {
-    				addEntity(entities, shape, dataset, row, column, x1, y1);
-    		    }
-    		}
+            // collecting the entity info
+            if (state != null) {
+                EntityCollection entities = state.getEntityCollection();
+                if (orientation == PlotOrientation.HORIZONTAL) {
+                    addEntity(entities, shape, dataset, row, column, y1, x1);
+                } else {
+                    addEntity(entities, shape, dataset, row, column, x1, y1);
+                }
+            }
         }
 
     }
