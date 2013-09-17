@@ -157,7 +157,7 @@ public class GradientBarPainter implements BarPainter, Serializable {
                     this.g3);
             GradientPaint gp = new GradientPaint(0.0f,
                     (float) regions[0].getMinY(), c0, 0.0f,
-                    (float) regions[0].getMaxX(), Color.WHITE);
+                    (float) regions[0].getMaxY(), Color.WHITE);
             g2.setPaint(gp);
             g2.fill(regions[0]);
 
