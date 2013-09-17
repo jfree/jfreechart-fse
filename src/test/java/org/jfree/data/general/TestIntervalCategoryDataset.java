@@ -45,6 +45,8 @@ import org.jfree.data.KeyedObjects2D;
 import org.jfree.data.UnknownKeyException;
 import org.jfree.data.category.IntervalCategoryDataset;
 
+import org.junit.Test;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -65,6 +67,13 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      */
     public TestIntervalCategoryDataset() {
         this.data = new KeyedObjects2D();
+    }
+
+    /** Dummy method to make older versions of maven happy.
+     */
+    @Test
+    public void testDataset() {
+        // All good
     }
 
     /**
