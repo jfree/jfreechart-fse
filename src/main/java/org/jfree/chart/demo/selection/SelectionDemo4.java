@@ -170,18 +170,20 @@ public class SelectionDemo4 extends ApplicationFrame implements
      * @return A panel.
      */
     public final JPanel createDemoPanel() {
-        IntervalXYDataset dataset = createDataset();
+        IntervalXYDataset xydataset = createDataset();
         //extend dataset and add selection change listener for the demo
-        DatasetSelectionExtension<XYCursor> datasetExtension = new XYDatasetSelectionExtension(dataset);     
+        DatasetSelectionExtension<XYCursor> datasetExtension 
+                = new XYDatasetSelectionExtension(xydataset);     
         datasetExtension.addChangeListener(this);
           
         //standard setup
-        JFreeChart chart = createChart(dataset, datasetExtension);
+        JFreeChart chart = createChart(xydataset, datasetExtension);
         ChartPanel panel = new ChartPanel(chart);
         panel.setMouseWheelEnabled(true);
 
         // add a selection handler
-        RegionSelectionHandler selectionHandler = new FreePathSelectionHandler();
+        RegionSelectionHandler selectionHandler 
+                = new FreePathSelectionHandler();
         panel.addMouseHandler(selectionHandler);
         panel.addMouseHandler(new MouseClickSelectionHandler());
         panel.removeMouseHandler(panel.getZoomHandler());
@@ -191,7 +193,7 @@ public class SelectionDemo4 extends ApplicationFrame implements
         dExManager.registerDatasetExtension(datasetExtension);
           
         EntitySelectionManager selectionManager = new EntitySelectionManager(
-                panel, new Dataset[] { dataset }, dExManager);
+                panel, new Dataset[] { xydataset }, dExManager);
         selectionManager.setIntersectionSelection(true);
         panel.setSelectionManager(selectionManager);
           
