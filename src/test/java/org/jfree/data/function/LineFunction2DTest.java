@@ -53,16 +53,10 @@ import java.io.ObjectOutputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-
-
 /**
  * Tests for the {@link LineFunction2D} class.
  */
 public class LineFunction2DTest  {
-
-
-
-
 
     private static final double EPSILON = 0.000000001;
 
@@ -75,8 +69,6 @@ public class LineFunction2DTest  {
         assertEquals(1.0, f.getIntercept(), EPSILON);
         assertEquals(2.0, f.getSlope(), EPSILON);
     }
-
-
 
     /**
      * For datasets, the equals() method just checks keys and values.
@@ -98,17 +90,14 @@ public class LineFunction2DTest  {
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
         LineFunction2D f1 = new LineFunction2D(1.0, 2.0);
-
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(f1);
-            out.close();
-
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(f1);
+        out.close();
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
         LineFunction2D f2 = (LineFunction2D) in.readObject();
-            in.close();
-
+        in.close();
         assertEquals(f1, f2);
     }
 
