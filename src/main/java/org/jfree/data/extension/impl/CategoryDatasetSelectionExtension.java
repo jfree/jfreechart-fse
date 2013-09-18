@@ -52,9 +52,9 @@ import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.SelectionChangeListener;
 
 /**
- * Extends a category dataset with a selection state for each data item. 
+ * Extends a category dataset with a selection state for each data item.
+ * 
  * @author zinsmaie
- *
  */
 public class CategoryDatasetSelectionExtension<ROW_KEY extends 
         Comparable<ROW_KEY>, COLUMN_KEY extends Comparable<COLUMN_KEY>>
@@ -85,7 +85,7 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends
     /**
      * Creates a separate selection extension for the specified dataset.
      * 
-     * @param dataset
+     * @param dataset  the underlying dataset (<code>null</code> not permitted).
      */
     public CategoryDatasetSelectionExtension(CategoryDataset dataset) {
         super(dataset);
@@ -109,15 +109,16 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends
     }
 
     /**
-     * {@link DatasetSelectionExtension#isSelected(DatasetCursor)}
+     * Returns the selection status of the data item referenced by the 
+     * supplied cursor.
+     * 
+     * @param cursor  the cursor (<code>null</code> not permitted).
+     * 
+     * @return The selection status.
      */
     public boolean isSelected(CategoryCursor<ROW_KEY, COLUMN_KEY> cursor) {
-        if (TRUE == this.selectionData.getValue(cursor.rowKey, 
-                cursor.columnKey)) {
-            return true;
-        } else {
-            return false;
-        }
+        return (TRUE == this.selectionData.getValue(cursor.rowKey, 
+                cursor.columnKey));
     }
 
     /**
@@ -141,20 +142,23 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends
     }
     
     /**
-     * a change of the underlying dataset clears the selection and 
-     * reinitializes it
+     * Receives notification of a change to the underlying dataset, this is
+     * handled by clearing the selection.
+     * 
+     * @param event  details of the change event.
      */
     public void datasetChanged(DatasetChangeEvent event) {
+        // TODO : we could in fact try to preserve the selection state of
+        // items that still remain in the dataset.
         initSelection();
     }
-    
-    
+ 
     /**
      * inits the selection attribute storage and sets all data items to 
      * unselected
      */
     private void initSelection() {
-        selectionData = new DefaultKeyedValues2D();
+        this.selectionData = new DefaultKeyedValues2D();
         for (int i = 0; i < dataset.getRowCount(); i++) {
             for (int j= 0; j < dataset.getColumnCount(); j++) {
                 if (dataset.getValue(i, j) != null) {
@@ -179,50 +183,61 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends
     /**
      * {@link IterableSelection#getSelectionIterator(boolean)}
      */
-    public DatasetIterator<CategoryCursor<ROW_KEY, COLUMN_KEY>> getSelectionIterator(boolean selected) {
+    public DatasetIterator<CategoryCursor<ROW_KEY, COLUMN_KEY>> 
+            getSelectionIterator(boolean selected) {
         return new CategoryDatasetSelectionIterator(selected);
     }
-    
-    
-    
-    
+
     /**
-     * Allows to iterate over all data items or the selected / unselected data items.
-     * Provides on each iteration step a DatasetCursor that defines the position of the data item.
+     * Allows to iterate over all data items or the selected / unselected data 
+     * items.  Provides on each iteration step a DatasetCursor that defines the
+     * position of the data item.
      * 
      * @author zinsmaie
      */
-    private class CategoryDatasetSelectionIterator implements DatasetIterator<CategoryCursor<ROW_KEY, COLUMN_KEY>> {
+    private class CategoryDatasetSelectionIterator implements 
+            DatasetIterator<CategoryCursor<ROW_KEY, COLUMN_KEY>> {
 
-        //could be improved wtr speed by storing selected elements directly for faster access
-        //however storage efficiency would decrease
+        // could be improved wtr speed by storing selected elements directly for 
+        // faster access however storage efficiency would decrease
 
         /** a generated serial id */
         private static final long serialVersionUID = -6861323401482698708L;
-        
-        
+
         /** current row position */
         private int row = 0;
-        /** current column position initialized before the start of the dataset */
+ 
+        /**
+         * current column position initialized before the start of the 
+         * dataset */
         private int column = -1;
-        /** return all data item positions (null), only the selected (true) or only the unselected (false) */
+
+        /** 
+         * return all data item positions (null), only the selected (true) or 
+         * only the unselected (false) 
+         */
         private Boolean filter = null;
         
         /**
-         * creates an iterator over all data item positions
+         * Creates an iterator over all data item positions
          */
         public CategoryDatasetSelectionIterator() {
         }
         
-        /** creates an iterator that iterates either over all selected or all unselected data item positions.
+        /** 
+         * Creates an iterator that iterates either over all selected or all 
+         * unselected data item positions.
          * 
-         * @param selected if true the iterator will iterate over the selected data item positions
+         * @param selected if true the iterator will iterate over the selected 
+         *     data item positions
          */
         public CategoryDatasetSelectionIterator(boolean selected) {
-            filter = new Boolean(selected);
+            this.filter = Boolean.valueOf(selected);
         }
 
-        /** {@link Iterator#hasNext() */
+        /** 
+         * {@link Iterator#hasNext() 
+         */
         public boolean hasNext() {
             if (nextPosition()[0] != -1) {
                 return true;
@@ -237,20 +252,24 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends
             int[] newPos = nextPosition();
             row = newPos[0];
             column = newPos[1];
-            //category datasets are not yet typed therefore the cast is necessary (and may fail)
-            return new CategoryCursor<ROW_KEY, COLUMN_KEY>((ROW_KEY)dataset.getRowKey(row), (COLUMN_KEY)dataset.getColumnKey(column));
+            // category datasets are not yet typed therefore the cast is 
+            // necessary (and may fail)
+            return new CategoryCursor<ROW_KEY, COLUMN_KEY>(
+                    (ROW_KEY) dataset.getRowKey(row), 
+                    (COLUMN_KEY) dataset.getColumnKey(column));
         }
 
         /**
-         * iterator remove operation is not supported
+         * Iterator remove operation is not supported.
          */
         public void remove() {
             throw new UnsupportedOperationException();
         }
         
         /**
-         * calculates the next position based on the current position
+         * Calculates the next position based on the current position
          * and the filter status.
+         * 
          * @return an array holding the next position [row, column] 
          */
         private int[] nextPosition() {
@@ -263,9 +282,10 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends
                     continue; 
                 }
                 if (filter != null) {
-                    if (!(  (filter.equals(Boolean.TRUE) && TRUE.equals(selectionData.getValue(pRow, (pColumn+1)))) || 
-                              (filter.equals(Boolean.FALSE) && FALSE.equals(selectionData.getValue(pRow, (pColumn+1))))
-                    )) {
+                    if (!((filter.equals(Boolean.TRUE) && TRUE.equals(
+                            selectionData.getValue(pRow, (pColumn+1)))) 
+                            || (filter.equals(Boolean.FALSE) && FALSE.equals(
+                            selectionData.getValue(pRow, (pColumn+1)))))) {
                         pColumn++;
                         continue;
                     }
@@ -279,5 +299,4 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends
         }
     }
 
-    
 }

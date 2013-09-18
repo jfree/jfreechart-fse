@@ -27,10 +27,10 @@
  * ---------------------------------
  * PieDatasetSelectionExtension.java
  * ---------------------------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, by Michael Zinsmaier and Contributors.
  *
  * Original Author:  Michael Zinsmaier;
- * Contributor(s):   -;
+ * Contributor(s):   David Gilbert (for Object Refinery Limited);
  *
  * Changes
  * -------
@@ -41,7 +41,7 @@
 package org.jfree.data.extension.impl;
 
 import java.util.HashMap;
-import java.util.Iterator;
+import org.jfree.data.UnknownKeyException;
 
 import org.jfree.data.extension.DatasetCursor;
 import org.jfree.data.extension.DatasetIterator;
@@ -53,8 +53,8 @@ import org.jfree.data.general.SelectionChangeListener;
 
 /**
  * Extends a pie dataset with a selection state for each data item. 
+ * 
  * @author zinsmaie
- *
  */
 public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>>
        extends AbstractDatasetSelectionExtension<PieCursor<KEY>, PieDataset>
@@ -69,7 +69,7 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>>
      */
     private PieDataset dataset;
     
-    /** storage for the selection attributes of the data items. */
+    /** Storage for the selection attributes of the data items. */
     private HashMap<KEY, Boolean> selectionData;
 
     /**
@@ -100,11 +100,11 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>>
      * {@link DatasetSelectionExtension#isSelected(DatasetCursor)}
      */
     public boolean isSelected(PieCursor<KEY> cursor) {
-        if (Boolean.TRUE.equals(this.selectionData.get(cursor.key))) {
-            return true;
-        } else {
-            return false;
+        Boolean b = this.selectionData.get(cursor.key);
+        if (b == null) {
+            throw new UnknownKeyException("Unrecognised key " + cursor.key);
         }
+        return Boolean.TRUE.equals(b);
     }
 
     /**
@@ -140,7 +140,7 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>>
         // pie datasets are not yet typed therefore the cast is necessary 
         // (and may fail)
         for (Comparable key : this.dataset.getKeys()) {
-            this.selectionData.put((KEY)key, Boolean.FALSE);
+            this.selectionData.put((KEY) key, Boolean.FALSE);
         }
 
         notifyIfRequired();

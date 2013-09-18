@@ -27,10 +27,10 @@
  * --------------------------------------
  * AbstractDatasetSelectionExtension.java
  * --------------------------------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, by Michael Zinsmaier and Contributors.
  *
  * Original Author:  Michael Zinsmaier;
- * Contributor(s):   -;
+ * Contributor(s):   David Gilbert (for Object Refinery Limited);
  *
  * Changes
  * -------
@@ -41,6 +41,7 @@
 package org.jfree.data.extension.impl;
 
 import javax.swing.event.EventListenerList;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.data.extension.DatasetCursor;
 import org.jfree.data.extension.DatasetExtension;
@@ -79,7 +80,13 @@ public abstract class AbstractDatasetSelectionExtension<CURSOR extends
     /** reference to the extended dataset */
     private final DATASET dataset;
     
+    /**
+     * Creates a new instance.
+     * 
+     * @param dataset  the underlying dataset (<code>null</code> not permitted).
+     */
     public AbstractDatasetSelectionExtension(DATASET dataset) {
+        ParamChecks.nullNotPermitted(dataset, "dataset");
         this.dataset = dataset;
         this.dataset.addChangeListener(this);
     }

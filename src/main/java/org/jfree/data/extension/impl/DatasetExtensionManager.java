@@ -51,7 +51,8 @@ import org.jfree.data.general.Dataset;
 /**
  * Allows the handling of separate {@link DatasetExtension}. Pairs a dataset 
  * and a DatasetExtension together and provides unified access to 
- * DatasetExtensions regardless of their implementation (in a dataset or separate)
+ * DatasetExtensions regardless of their implementation (in a dataset or 
+ * separate).
  * 
  * @author zinsmaie
  */
