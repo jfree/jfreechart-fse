@@ -75,6 +75,15 @@ public class TestUtilities {
         return false;
     }
 
+    /**
+     * Returns an object that is the deserialised form of the supplied object.
+     * The original object is serialised to a byte array then deserialised
+     * and returned.
+     * 
+     * @param original  the original object (<code>null</code> not permitted).
+     * 
+     * @return A serialised and deserialised object.
+     */
     public static Object serialised(Object original) {
         Object result = null;
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
