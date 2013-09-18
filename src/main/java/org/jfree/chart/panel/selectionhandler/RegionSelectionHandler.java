@@ -27,7 +27,7 @@
  * ---------------------------
  * RegionSelectionHandler.java
  * ---------------------------
- * (C) Copyright 2009-2013, by Object Refinery Limited.
+ * (C) Copyright 2009-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Michael Zinsmaier;
@@ -76,26 +76,31 @@ public abstract class RegionSelectionHandler extends AbstractMouseHandler {
      */
     protected transient Paint fillPaint;
 
+    private static final Stroke DEFAULT_OUTLINE_STROKE = new BasicStroke(1.0f, 
+            BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 2.0f, 
+            new float[] {3f, 3f}, 0f);
+    
     /**
      * Creates a new default instance.
      */
     public RegionSelectionHandler() {
-        this(new BasicStroke(1.0f), Color.darkGray, new Color(255, 0, 255, 50));
+        this(DEFAULT_OUTLINE_STROKE, Color.ORANGE, 
+                new Color(255, 0, 255, 50));
     }
 
     /**
      * Creates a new selection handler with the specified attributes.
      * 
-     * @param outlineStroke  the outline stroke.
-     * @param outlinePaint  the outline paint.
-     * @param fillPaint  the fill paint.
+     * @param outlineStroke  the outline stroke (<code>null</code> permitted).
+     * @param outlinePaint  the outline paint (<code>null</code> permitted).
+     * @param fillPaint  the fill paint (<code>null</code> permitted).
      */
     public RegionSelectionHandler(Stroke outlineStroke, Paint outlinePaint,
             Paint fillPaint) {
         super();
-        this.outlineStroke = new BasicStroke(1.0f);
-        this.outlinePaint = Color.darkGray;
-        this.fillPaint = new Color(255, 0, 255, 50);
+        this.outlineStroke = outlineStroke;
+        this.outlinePaint = outlinePaint;
+        this.fillPaint = fillPaint;
     }
 
     /**
@@ -129,18 +134,38 @@ public abstract class RegionSelectionHandler extends AbstractMouseHandler {
         this.fillPaint = fillPaint;
     }
 
+    /**
+     * Returns the outline paint.
+     * 
+     * @return The outline paint (possibly <code>null</code>). 
+     */
     public Paint getOutlinePaint() {
         return outlinePaint;
     }
 
+    /**
+     * Sets the outline paint.
+     * 
+     * @param outlinePaint  the paint (<code>null</code> permitted).
+     */
     public void setOutlinePaint(Paint outlinePaint) {
         this.outlinePaint = outlinePaint;
     }
 
+    /**
+     * Returns the outline stroke.
+     * 
+     * @return The outline stroke (possibly <code>null</code>).
+     */
     public Stroke getOutlineStroke() {
         return outlineStroke;
     }
 
+    /**
+     * Sets the outline stroke.
+     * 
+     * @param outlineStroke  the outline stroke (<code>null</code> permitted).
+     */
     public void setOutlineStroke(Stroke outlineStroke) {
         this.outlineStroke = outlineStroke;
     }
@@ -161,10 +186,16 @@ public abstract class RegionSelectionHandler extends AbstractMouseHandler {
     @Override
     public abstract void mouseDragged(MouseEvent e);
     
+    /**
+     * Handles a mouse released event.
+     * 
+     * @param e  the event.
+     */
     @Override
     public abstract void mouseReleased(MouseEvent e);
     
     public boolean isLiveHandler() {
+        // FIXME: is this always true?
         return true;
     }
     

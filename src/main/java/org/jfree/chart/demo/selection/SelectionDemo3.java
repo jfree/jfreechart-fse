@@ -51,7 +51,8 @@ import org.jfree.data.xy.XYSeriesCollection;
 /**
  * A demo scatter plot.
  */
-public class SelectionDemo3 extends ApplicationFrame implements SelectionChangeListener<XYCursor> {
+public class SelectionDemo3 extends ApplicationFrame 
+        implements SelectionChangeListener<XYCursor> {
 
     private JTable table;
 
@@ -75,7 +76,8 @@ public class SelectionDemo3 extends ApplicationFrame implements SelectionChangeL
         JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         split.add(chartPanel);
 
-        this.model = new DefaultTableModel(new String[] {"Series:", "Item:", "X:", "Y:"}, 0);
+        this.model = new DefaultTableModel(new String[] {"Series:", "Item:", 
+            "X:", "Y:"}, 0);
         this.table = new JTable(this.model);
         TableColumnModel tcm = this.table.getColumnModel();
         tcm.getColumn(2).setCellRenderer(new NumberCellRenderer());
@@ -90,7 +92,8 @@ public class SelectionDemo3 extends ApplicationFrame implements SelectionChangeL
         setContentPane(split);
     }
 
-    private static JFreeChart createChart(XYDataset dataset, DatasetSelectionExtension<XYCursor> ext) {
+    private static JFreeChart createChart(XYDataset dataset, 
+            DatasetSelectionExtension<XYCursor> ext) {
         JFreeChart chart = ChartFactory.createScatterPlot("SelectionDemo3",
                 "X", "Y", dataset);
 
@@ -110,7 +113,7 @@ public class SelectionDemo3 extends ApplicationFrame implements SelectionChangeL
 
         //XYItemRenderer r = plot.getRenderer();
         XYDotRenderer r = new XYDotRenderer();
-       r.setDotHeight(2);
+        r.setDotHeight(2);
         r.setDotWidth(2);
 
         r.setSeriesPaint(0, Color.blue);
@@ -133,37 +136,39 @@ public class SelectionDemo3 extends ApplicationFrame implements SelectionChangeL
         rangeAxis.setMinorTickCount(2);
         rangeAxis.setMinorTickMarksVisible(true);
         
-          //add selection specific rendering
-          IRSUtilities.setSelectedItemPaint(r, ext, Color.red);
+        //add selection specific rendering
+        IRSUtilities.setSelectedItemPaint(r, ext, Color.red);
           
-          //register plot as selection change listener
-          ext.addChangeListener(plot);
+        //register plot as selection change listener
+        ext.addChangeListener(plot);
         
         return chart;
     }
 
-     /**
-      * The selection changed, so we change the table model
-      * 
-      * @param event
-      */
-     public void selectionChanged(SelectionChangeEvent<XYCursor> event) {
-         while (this.model.getRowCount() > 0) {
+    /**
+     * The selection changed, so we change the table model
+     * 
+     * @param event
+     */
+    public void selectionChanged(SelectionChangeEvent<XYCursor> event) {
+        while (this.model.getRowCount() > 0) {
             this.model.removeRow(0);
         }
 
-         XYDatasetSelectionExtension ext = (XYDatasetSelectionExtension)event.getSelectionExtension(); 
-         DatasetIterator<XYCursor> iter = ext.getSelectionIterator(true);
+        XYDatasetSelectionExtension ext = (XYDatasetSelectionExtension)
+                event.getSelectionExtension(); 
+        DatasetIterator<XYCursor> iter = ext.getSelectionIterator(true);
          
-         while (iter.hasNext()) {
-              XYCursor dc = iter.next();
+        while (iter.hasNext()) {
+            XYCursor dc = iter.next();
 
-              Comparable seriesKey = this.dataset.getSeriesKey(dc.series);
+            Comparable seriesKey = this.dataset.getSeriesKey(dc.series);
             Number x = this.dataset.getX(dc.series, dc.item);
             Number y = this.dataset.getX(dc.series, dc.item);
               
-              this.model.addRow(new Object[] { seriesKey, new Integer(dc.item), x,  y});
-         }
+            this.model.addRow(new Object[] { seriesKey, new Integer(dc.item), 
+                x, y});
+        }
     }
 
     public static XYDataset createDataset() {
@@ -187,29 +192,31 @@ public class SelectionDemo3 extends ApplicationFrame implements SelectionChangeL
      *
      * @return A panel.
      */
-    public JPanel createDemoPanel() {
-          XYDataset dataset = createDataset();
-          //extend dataset and add selection change listener for the demo
-          DatasetSelectionExtension<XYCursor> datasetExtension = new XYDatasetSelectionExtension(dataset);     
-          datasetExtension.addChangeListener(this);
+    public final JPanel createDemoPanel() {
+        XYDataset xydataset = createDataset();
+        //extend dataset and add selection change listener for the demo
+        DatasetSelectionExtension<XYCursor> datasetExtension 
+                = new XYDatasetSelectionExtension(xydataset);     
+        datasetExtension.addChangeListener(this);
           
-          //standard setup
-          JFreeChart chart = createChart(dataset, datasetExtension);
-          ChartPanel panel = new ChartPanel(chart);
-          panel.setMouseWheelEnabled(true);
+        //standard setup
+        JFreeChart chart = createChart(xydataset, datasetExtension);
+        ChartPanel panel = new ChartPanel(chart);
+        panel.setMouseWheelEnabled(true);
 
-          // add a selection handler
-          RegionSelectionHandler selectionHandler = new RectangularRegionSelectionHandler();
-          panel.addMouseHandler(selectionHandler);
-          panel.addMouseHandler(new MouseClickSelectionHandler());
-          panel.removeMouseHandler(panel.getZoomHandler());
+        // add a selection handler
+        RegionSelectionHandler selectionHandler 
+                = new RectangularRegionSelectionHandler();
+        panel.addMouseHandler(selectionHandler);
+        panel.addMouseHandler(new MouseClickSelectionHandler());
+        panel.removeMouseHandler(panel.getZoomHandler());
           
-          // add a selection manager
-          DatasetExtensionManager dExManager = new DatasetExtensionManager();
-          dExManager.registerDatasetExtension(datasetExtension);
-          panel.setSelectionManager(new EntitySelectionManager(panel,     new Dataset[] { dataset }, dExManager));
-          
-          return panel;
+        // add a selection manager
+        DatasetExtensionManager dExManager = new DatasetExtensionManager();
+        dExManager.registerDatasetExtension(datasetExtension);
+        panel.setSelectionManager(new EntitySelectionManager(panel,
+                new Dataset[] { xydataset }, dExManager));
+        return panel;
     }
 
     /**

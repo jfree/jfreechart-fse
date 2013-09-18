@@ -27,7 +27,7 @@
  * -------------------------------
  * MouseClickSelectionHandler.java
  * -------------------------------
- * (C) Copyright 2009, by Michael Zinsmaier and Contributors.
+ * (C) Copyright 2013, by Michael Zinsmaier and Contributors.
  *
  * Original Author:  Michael Zinsmaier;                 
  * Contributor(s):   David Gilbert (for Object Refinery Limited);

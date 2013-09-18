@@ -2556,11 +2556,14 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                     g2.setPaint(this.selectionFillPaint);
                     g2.fill(this.selectionShape);
                }
-               g2.setPaint(this.selectionOutlinePaint);
-               g2.setStroke(this.selectionOutlineStroke);
-               GeneralPath pp = new GeneralPath(this.selectionShape);
-               pp.closePath();
-               g2.draw(pp);
+               if (this.selectionOutlinePaint != null 
+                       && this.selectionOutlineStroke != null) {
+                   g2.setPaint(this.selectionOutlinePaint);
+                   g2.setStroke(this.selectionOutlineStroke);
+                   GeneralPath pp = new GeneralPath(this.selectionShape);
+                   pp.closePath();
+                   g2.draw(pp);
+               }
                if (xor) {
                     // Reset to the default 'overwrite' mode
                     g2.setPaintMode();
@@ -3080,7 +3083,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      }
 
      public PlotOrientation getOrientation() {
-          return this.orientation;
+         return this.orientation;
      }
 
      /**
@@ -3089,15 +3092,13 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
       * @param handler  the handler (<code>null</code> not permitted).
       * 
       * @see #removeMouseHandler(org.jfree.chart.panel.AbstractMouseHandler)
-      * 
-      * @since 
       */
      public void addMouseHandler(AbstractMouseHandler handler) {
-          if (handler.isLiveHandler()) {
-               this.availableLiveMouseHandlers.add(handler);
-          } else {
-               this.auxiliaryMouseHandlers.add(handler);
-          }
+         if (handler.isLiveHandler()) {
+             this.availableLiveMouseHandlers.add(handler);
+         } else {
+             this.auxiliaryMouseHandlers.add(handler);
+         }
      }
 
      /**
@@ -3108,25 +3109,21 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
       * @return A boolean.
       * 
       * @see #addMouseHandler(org.jfree.chart.panel.AbstractMouseHandler)
-      * 
-      * @since 
       */
      public boolean removeMouseHandler(AbstractMouseHandler handler) {
-          if (handler.isLiveHandler()) {
-               return this.availableLiveMouseHandlers.remove(handler);
-          } else {
-               return this.auxiliaryMouseHandlers.remove(handler);
-          }          
+         if (handler.isLiveHandler()) {
+             return this.availableLiveMouseHandlers.remove(handler);
+         } else {
+             return this.auxiliaryMouseHandlers.remove(handler);
+         }          
      }
 
      /**
-      * Clears the 'liveMouseHandler' field. Each handler is responsible for
+      * Clears the 'liveMouseHandler' field.  Each handler is responsible for
       * calling this method when they have finished handling mouse events.
-      * 
-      * @since 
       */
      public void clearLiveMouseHandler() {
-          this.liveMouseHandler = null;
+         this.liveMouseHandler = null;
      }
 
      /**
@@ -3135,25 +3132,20 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
       * @return The selection shape (possibly <code>null</code>).
       * 
       * @see #setSelectionShape(java.awt.Shape)
-      * 
-      * @since 
       */
      public Shape getSelectionShape() {
-          return this.selectionShape;
+         return this.selectionShape;
      }
 
      /**
       * Sets the selection shape.
       * 
-      * @param shape
-      *            the selection shape (<code>null</code> permitted).
+      * @param shape  the selection shape (<code>null</code> permitted).
       * 
       * @see #getSelectionShape()
-      * 
-      * @since 
       */
      public void setSelectionShape(Shape shape) {
-          this.selectionShape = shape;
+         this.selectionShape = shape;
      }
 
      /**
@@ -3162,55 +3154,43 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
       * @return The selection fill paint (possibly <code>null</code>).
       * 
       * @see #setSelectionFillPaint(java.awt.Paint)
-      * 
-      * @since 
       */
      public Paint getSelectionFillPaint() {
-          return this.selectionFillPaint;
+         return this.selectionFillPaint;
      }
 
      /**
       * Sets the selection fill paint.
       * 
-      * @param paint
-      *            the paint (<code>null</code> permitted).
+      * @param paint  the paint (<code>null</code> permitted).
       * 
       * @see #getSelectionFillPaint()
-      * 
-      * @since 
       */
      public void setSelectionFillPaint(Paint paint) {
-          this.selectionFillPaint = paint;
+         this.selectionFillPaint = paint;
      }
 
 
      /**
       * Sets the selection outline paint.
       * 
-      * @param paint
-      *            the paint (<code>null</code> permitted).
+      * @param paint  the paint (<code>null</code> permitted).
       * 
       * @see #getSelectionOutlinePaint()
-      * 
-      * @since 
       */
      public void setSelectionOutlinePaint(Paint paint) {
-          this.selectionOutlinePaint = paint;
+         this.selectionOutlinePaint = paint;
      }
-
 
      /**
       * Sets the selection outline stroke
       * 
-      * @param stroke
-      *            the paint (<code>null</code> permitted).
+      * @param stroke  the paint (<code>null</code> permitted).
       * 
       * @see #getSelectionOutlineStroke()
-      * 
-      * @since 
       */
      public void setSelectionOutlineStroke(Stroke stroke) {
-          this.selectionOutlineStroke = stroke;
+         this.selectionOutlineStroke = stroke;
      }
 
      /**
@@ -3221,43 +3201,49 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
       * @since 1.0.14
       */
      public Rectangle2D getZoomRectangle() {
-          return this.zoomRectangle;
+         return this.zoomRectangle;
      }
 
      /**
       * Sets the zoom rectangle for the panel.
       * 
-      * @param rect
-      *            the rectangle (<code>null</code> permitted).
+      * @param rect  the rectangle (<code>null</code> permitted).
       * 
       * @since 1.0.14
       */
      public void setZoomRectangle(Rectangle2D rect) {
-          this.zoomRectangle = rect;
+         this.zoomRectangle = rect;
      }
 
      /**
-      * @return the zoom handler that is installed per default on each chart panel
+      * @return the zoom handler that is installed per default on each chart 
+      *     panel
       */
      public ZoomHandler getZoomHandler() {
-          return this.zoomHandler;
+         return this.zoomHandler;
      }
 
      /**
       * Returns a selection manager that can be used for point or area selection. 
-      * (e.g. {@link org.jfree.chart.panel.selectionhandler.RegionSelectionHandler RegionSelectionHandlers})
+      * (e.g. 
+      * {@link org.jfree.chart.panel.selectionhandler.RegionSelectionHandler 
+      * RegionSelectionHandlers})
       * 
-      * @return the selection manager that has been set via setSelectionManager or null
+      * @return the selection manager that has been set via setSelectionManager 
+      *     or null
       */
      public SelectionManager getSelectionManager() {
          return this.selectionManager;
      }
 
      /**
-      * Sets the selection manager of the ChartPanel. The manager can be retrieved via
-      * the getSelectionManager method to be used for point or area selection. 
+      * Sets the selection manager of the ChartPanel. The manager can be 
+      * retrieved via the getSelectionManager method to be used for point or 
+      * area selection. 
       * 
-      * (e.g. {@link org.jfree.chart.panel.selectionhandler.RegionSelectionHandler RegionSelectionHandlers})
+      * (e.g. 
+      * {@link org.jfree.chart.panel.selectionhandler.RegionSelectionHandler 
+      * RegionSelectionHandlers})
       * 
       * @param manager
       */
