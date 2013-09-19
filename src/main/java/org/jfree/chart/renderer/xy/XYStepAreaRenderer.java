@@ -91,6 +91,14 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
 
     /** For serialization. */
     private static final long serialVersionUID = -7311560779702649635L;
+    
+    /**
+     * The factor (from 0.0 to 1.0) that determines the position of the
+     * step.
+     *
+     * @since 1.0.17.
+     */
+    private double stepPoint = 1.0d;
 
     /** Useful constant for specifying the type of rendering (shapes only). */
     public static final int SHAPES = 1;
@@ -437,11 +445,14 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
             }
             if (transY0 != transY1) {
                 // not just a horizontal bar but need to perform a 'step'.
+                double transXs = transX0 + (getStepPoint()
+                        * (transX1 - transX0));
+                double transYs = (transY1) - ((transY1 - transY0) * getStepPoint());
                 if (orientation == PlotOrientation.VERTICAL) {
-                    this.pArea.addPoint((int) transX1, (int) transY0);
+                    this.pArea.addPoint((int) transXs, (int) transYs);
                 }
                 else if (orientation == PlotOrientation.HORIZONTAL) {
-                    this.pArea.addPoint((int) transY0, (int) transX1);
+                    this.pArea.addPoint((int) transYs, (int) transXs);
                 }
             }
         }
@@ -536,6 +547,42 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
     }
 
     /**
+     * Returns the fraction of the domain position between two points on which
+     * the step is drawn.  The default is 1.0d, which means the step is drawn
+     * at the domain position of the second`point. If the stepPoint is 0.5d the
+     * step is drawn at half between the two points.
+     *
+     * @return The fraction of the domain position between two points where the
+     *         step is drawn.
+     *
+     * @see #setStepPoint(double)
+     *
+     * @since 1.0.17
+     */
+    private double getStepPoint() {
+		return stepPoint;
+	}
+    
+    /**
+     * Sets the step point and sends a {@link RendererChangeEvent} to all
+     * registered listeners.
+     *
+     * @param stepPoint  the step point (in the range 0.0 to 1.0)
+     *
+     * @see #getStepPoint()
+     *
+     * @since 1.0.17
+     */
+    public void setStepPoint(double stepPoint) {
+        if (stepPoint < 0.0d || stepPoint > 1.0d) {
+            throw new IllegalArgumentException(
+                    "Requires stepPoint in [0.0;1.0]");
+        }
+        this.stepPoint = stepPoint;
+        fireChangeEvent();
+    }
+
+	/**
      * Tests this renderer for equality with an arbitrary object.
      *
      * @param obj  the object (<code>null</code> permitted).
