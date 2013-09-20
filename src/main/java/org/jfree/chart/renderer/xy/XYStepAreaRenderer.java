@@ -447,12 +447,13 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
                 // not just a horizontal bar but need to perform a 'step'.
                 double transXs = transX0 + (getStepPoint()
                         * (transX1 - transX0));
-                double transYs = (transY1) - ((transY1 - transY0) * getStepPoint());
                 if (orientation == PlotOrientation.VERTICAL) {
-                    this.pArea.addPoint((int) transXs, (int) transYs);
+                    this.pArea.addPoint((int) transXs, (int) transY0);
+                    this.pArea.addPoint((int) transXs, (int) transY1);
                 }
                 else if (orientation == PlotOrientation.HORIZONTAL) {
-                    this.pArea.addPoint((int) transYs, (int) transXs);
+                    this.pArea.addPoint((int) transY0, (int) transXs);
+                    this.pArea.addPoint((int) transY1, (int) transXs);
                 }
             }
         }
