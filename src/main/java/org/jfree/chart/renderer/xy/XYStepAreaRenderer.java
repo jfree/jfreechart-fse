@@ -583,39 +583,49 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
         fireChangeEvent();
     }
 
-	/**
-     * Tests this renderer for equality with an arbitrary object.
-     *
-     * @param obj  the object (<code>null</code> permitted).
-     *
-     * @return A boolean.
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof XYStepAreaRenderer)) {
-            return false;
-        }
-        XYStepAreaRenderer that = (XYStepAreaRenderer) obj;
-        if (this.showOutline != that.showOutline) {
-            return false;
-        }
-        if (this.shapesVisible != that.shapesVisible) {
-            return false;
-        }
-        if (this.shapesFilled != that.shapesFilled) {
-            return false;
-        }
-        if (this.plotArea != that.plotArea) {
-            return false;
-        }
-        if (this.rangeBase != that.rangeBase) {
-            return false;
-        }
-        return super.equals(obj);
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (plotArea ? 1231 : 1237);
+		long temp;
+		temp = Double.doubleToLongBits(rangeBase);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + (shapesFilled ? 1231 : 1237);
+		result = prime * result + (shapesVisible ? 1231 : 1237);
+		result = prime * result + (showOutline ? 1231 : 1237);
+		temp = Double.doubleToLongBits(stepPoint);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		XYStepAreaRenderer other = (XYStepAreaRenderer) obj;
+		if (plotArea != other.plotArea)
+			return false;
+		if (Double.doubleToLongBits(rangeBase) != Double
+				.doubleToLongBits(other.rangeBase))
+			return false;
+		if (shapesFilled != other.shapesFilled)
+			return false;
+		if (shapesVisible != other.shapesVisible)
+			return false;
+		if (showOutline != other.showOutline)
+			return false;
+		if (Double.doubleToLongBits(stepPoint) != Double
+				.doubleToLongBits(other.stepPoint))
+			return false;
+		return true;
+	}
+    
+    
 
     /**
      * Returns a clone of the renderer.
