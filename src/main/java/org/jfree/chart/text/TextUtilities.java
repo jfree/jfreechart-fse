@@ -80,10 +80,20 @@ import org.jfree.chart.util.ParamChecks;
 public class TextUtilities {
 
     /**
+     * When this flag is set to <code>true</code>, strings will be drawn
+     * as attributed strings with the attributes taken from the current font.
+     * This allows for underlining, strike-out etc, but it means that
+     * TextLayout will be used to render the text:
+     * 
+     * http://www.jfree.org/phpBB2/viewtopic.php?p=45459&highlight=#45459
+     */
+    private static boolean drawStringsWithFontAttributes = false;
+    
+    /**
      * A flag that controls whether or not the rotated string workaround is
      * used.
      */
-    private static boolean useDrawRotatedStringWorkaround = true;
+    private static boolean useDrawRotatedStringWorkaround = false;
 
     /**
      * A flag that controls whether the FontMetrics.getStringBounds() method
@@ -324,7 +334,13 @@ public class TextUtilities {
         // adjust text bounds to match string position
         textBounds.setRect(x + adjust[0], y + adjust[1] + adjust[2],
             textBounds.getWidth(), textBounds.getHeight());
-        g2.drawString(text, x + adjust[0], y + adjust[1]);
+        if (!drawStringsWithFontAttributes) {
+            g2.drawString(text, x + adjust[0], y + adjust[1]);
+        } else {
+            AttributedString as = new AttributedString(text, 
+                    g2.getFont().getAttributes());
+            g2.drawString(as.getIterator(), x + adjust[0], y + adjust[1]);
+        }
         return textBounds;
     }
 
@@ -443,9 +459,13 @@ public class TextUtilities {
             tl.draw(g2, textX, textY);
         }
         else {
-            AttributedString as = new AttributedString(text,
-                    g2.getFont().getAttributes());
-            g2.drawString(as.getIterator(), textX, textY);
+            if (!drawStringsWithFontAttributes) {
+                g2.drawString(text, textX, textY);
+            } else {
+                AttributedString as = new AttributedString(text, 
+                        g2.getFont().getAttributes());
+                g2.drawString(as.getIterator(), textX, textY);
+            }
         }
         g2.setTransform(saved);
 
@@ -662,7 +682,7 @@ public class TextUtilities {
      *
      * @return A boolean.
      */
-    public static boolean isUseDrawRotatedStringWorkaround() {
+    public static boolean getUseDrawRotatedStringWorkaround() {
         return useDrawRotatedStringWorkaround;
     }
     
@@ -676,7 +696,7 @@ public class TextUtilities {
      * @param use  the new flag value.
      */
     public static void setUseDrawRotatedStringWorkaround(boolean use) {
-        useDrawRotatedStringWorkaround = use;
+        TextUtilities.useDrawRotatedStringWorkaround = use;
     }
     
     /**
@@ -866,6 +886,32 @@ public class TextUtilities {
         result[1] = yAdj;
         return result;
 
+    }
+    /**
+     * Returns the flag that controls whether or not strings are drawn using
+     * the current font attributes (such as underlining, strikethrough etc).
+     * The default value is <code>false</code>.
+     * 
+     * @return A boolean. 
+     * 
+     * @since 1.0.21
+     */
+    public static boolean getDrawStringsWithFontAttributes() {
+        return TextUtilities.drawStringsWithFontAttributes;
+    }
+    
+    /**
+     * Sets the flag that controls whether or not strings are drawn using the
+     * current font attributes.  This is a hack to allow underlining of titles
+     * without big changes to the API.  See:
+     * http://www.jfree.org/phpBB2/viewtopic.php?p=45459&highlight=#45459
+     * 
+     * @param b  the new flag value.
+     * 
+     * @since 1.0.21
+     */
+    public static void setDrawStringsWithFontAttributes(boolean b) {
+        TextUtilities.drawStringsWithFontAttributes = b;
     }
 
 }
