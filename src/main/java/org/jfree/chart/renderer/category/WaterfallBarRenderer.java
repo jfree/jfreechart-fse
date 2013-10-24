@@ -401,24 +401,9 @@ public class WaterfallBarRenderer extends BarRenderer {
         }
         Rectangle2D bar = new Rectangle2D.Double(rectX, rectY, rectWidth,
                 rectHeight);
-        Paint seriesPaint;
-        if (column == 0) {
-            seriesPaint = getFirstBarPaint();
-        }
-        else if (column == categoryCount - 1) {
-            seriesPaint = getLastBarPaint();
-        }
-        else {
-            if (valDiff < 0.0) {
-                seriesPaint = getNegativeBarPaint();
-            }
-            else if (valDiff > 0.0) {
-                seriesPaint = getPositiveBarPaint();
-            }
-            else {
-                seriesPaint = getLastBarPaint();
-            }
-        }
+        
+        Paint seriesPaint = getSeriesPaintObject(column, categoryCount, valDiff);
+       
         if (getGradientPaintTransformer() != null
                 && seriesPaint instanceof GradientPaint) {
             GradientPaint gp = (GradientPaint) seriesPaint;
@@ -453,6 +438,37 @@ public class WaterfallBarRenderer extends BarRenderer {
         }
 
     }
+    
+    /**
+     * Returns the appropriate paint object depending on three things: the current
+     * column, the category count, and the value difference. 
+     *
+     * @param column  the current column which is being evaluated (0 based)
+     * @param categoryCount  the category in the dataset, used to determine if we are 
+     *                       on the last column 
+     * @param valDiff  the numerical difference for that column. 
+     *                   
+     *
+     * @return <code>Paint</code> object corresponding to current column.
+     */
+	Paint getSeriesPaintObject(int column, int categoryCount, double valDiff) {
+		Paint seriesPaint;
+		if (column == 0) {
+            seriesPaint = getFirstBarPaint();
+        }
+        else if (column == categoryCount - 1) {
+            seriesPaint = getLastBarPaint();
+        }
+        else {
+            if (valDiff < 0.0) {
+                seriesPaint = getNegativeBarPaint();
+            }
+            else {
+                seriesPaint = getPositiveBarPaint();
+            }
+        }
+		return seriesPaint;
+	}    
 
     /**
      * Tests an object for equality with this instance.
