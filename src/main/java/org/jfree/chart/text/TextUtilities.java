@@ -30,7 +30,7 @@
  * (C) Copyright 2004-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
- * Contributor(s):   -;
+ * Contributor(s):   Brian Fischer;
  *
  * Changes
  * -------
@@ -112,14 +112,14 @@ public class TextUtilities {
         if (text == null) {
             throw new IllegalArgumentException("Null 'text' argument.");
         }
-        final TextBlock result = new TextBlock();
+        TextBlock result = new TextBlock();
         String input = text;
         boolean moreInputToProcess = (text.length() > 0);
-        final int start = 0;
+        int start = 0;
         while (moreInputToProcess) {
-            final int index = input.indexOf("\n");
+            int index = input.indexOf("\n");
             if (index > start) {
-                final String line = input.substring(start, index);
+                String line = input.substring(start, index);
                 if (index < input.length() - 1) {
                     result.addLine(line, font, paint);
                     input = input.substring(index + 1);
@@ -241,7 +241,7 @@ public class TextUtilities {
         if (newline < 0) {
             newline = Integer.MAX_VALUE;
         }
-        while (((end = iterator.next()) != BreakIterator.DONE)) {
+        while (((end = iterator.following(current)) != BreakIterator.DONE)) {
             x += measurer.getStringWidth(text, current, end);
             if (x > width) {
                 if (firstWord) {
@@ -427,7 +427,10 @@ public class TextUtilities {
             float rotateY) {
 
         ParamChecks.nullNotPermitted(text, "text");
-
+        if (angle == 0.0) {
+            drawAlignedString(text, g2, textY, textY, TextAnchor.BASELINE_LEFT);
+            return;
+        }
         AffineTransform saved = g2.getTransform();
         AffineTransform rotate = AffineTransform.getRotateInstance(angle, 
                 rotateX, rotateY);
@@ -462,10 +465,14 @@ public class TextUtilities {
      * @param rotationY  the y-coordinate for the rotation anchor point.
      */
     public static void drawRotatedString(String text, Graphics2D g2, float x, 
-            float y, TextAnchor textAnchor, final double angle,
+            float y, TextAnchor textAnchor, double angle,
             float rotationX, float rotationY) {
 
         ParamChecks.nullNotPermitted(text, "text");
+        if (angle == 0.0) {
+            drawAlignedString(text, g2, x, y, textAnchor);
+            return;
+        }
         float[] textAdj = deriveTextBoundsAnchorOffsets(g2, text, textAnchor, 
                 null);
         drawRotatedString(text, g2, x + textAdj[0], y + textAdj[1], angle,
@@ -490,6 +497,9 @@ public class TextUtilities {
 
         if (text == null || text.equals("")) {
             return;
+        }
+        if (angle == 0.0) {
+            drawAlignedString(text, g2, x, y, textAnchor);
         }
         float[] textAdj = deriveTextBoundsAnchorOffsets(g2, text, textAnchor, 
                 null);
@@ -536,13 +546,13 @@ public class TextUtilities {
     /**
      * A utility method that calculates the rotation anchor offsets for a
      * string.  These offsets are relative to the text starting coordinate
-     * (BASELINE_LEFT).
+     * (<code>BASELINE_LEFT</code>).
      *
      * @param g2  the graphics device.
      * @param text  the text.
      * @param anchor  the anchor point (<code>null</code> not permitted).
      *
-     * @return  The offsets.
+     * @return The offsets.
      */
     private static float[] deriveRotationAnchorOffsets(Graphics2D g2, 
             String text, TextAnchor anchor) {
