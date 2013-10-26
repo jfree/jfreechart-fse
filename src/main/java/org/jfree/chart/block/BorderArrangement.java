@@ -87,7 +87,9 @@ public class BorderArrangement implements Arrangement, Serializable {
     }
 
     /**
-     * Adds a block to the arrangement manager at the specified edge.
+     * Adds a block to the arrangement manager at the specified edge. If
+     * the specified object is not an edge (or null), the method throws an
+     * <tt>IllegalArgumentException</tt>
      *
      * @param block  the block (<code>null</code> permitted).
      * @param key  the edge (an instance of {@link RectangleEdge}) or
@@ -98,8 +100,10 @@ public class BorderArrangement implements Arrangement, Serializable {
 
         if (key == null) {
             this.centerBlock = block;
-        }
-        else {
+        } else if (!(key instanceof RectangleEdge)) {
+        	throw new IllegalArgumentException("The specified edge must be a " +
+        			"RectangleEdge object, or null");
+        } else {
             RectangleEdge edge = (RectangleEdge) key;
             if (edge == RectangleEdge.TOP) {
                 this.topBlock = block;
