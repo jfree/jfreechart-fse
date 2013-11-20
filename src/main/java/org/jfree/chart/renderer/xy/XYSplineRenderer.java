@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * XYSplineRenderer.java
  * ---------------------
- * (C) Copyright 2007-2012, by Klaus Rheinwald and Contributors.
+ * (C) Copyright 2007-2013, by Klaus Rheinwald and Contributors.
  *
  * Original Author:  Klaus Rheinwald;
  * Contributor(s):   Tobias von Petersdorff (tvp@math.umd.edu,
@@ -46,7 +46,11 @@
 
 package org.jfree.chart.renderer.xy;
 
+import java.awt.GradientPaint;
 import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +61,10 @@ import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.ui.GradientPaintTransformer;
+import org.jfree.chart.ui.StandardGradientPaintTransformer;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.xy.XYDataset;
 
 /**
@@ -74,38 +82,95 @@ import org.jfree.data.xy.XYDataset;
 public class XYSplineRenderer extends XYLineAndShapeRenderer {
 
     /**
-     * To collect data points for later splining.
+     * An enumeration of the fill types for the renderer.
+     * 
+     * @since 1.0.17
      */
-    private List<ControlPoint> points;
+    public static enum FillType {
+        NONE,
+        TO_ZERO,
+        TO_LOWER_BOUND,
+        TO_UPPER_BOUND
+    }
 
+    /**
+     * Represents state information that applies to a single rendering of
+     * a chart.
+     */
+    public static class XYSplineState extends State {
+        
+        /** The area to fill under the curve. */
+        public GeneralPath fillArea;
+        
+        /** The points. */
+        public List<Point2D> points;
+        
+        /**
+         * Creates a new state instance.
+         * 
+         * @param info  the plot rendering info. 
+         */
+        public XYSplineState(PlotRenderingInfo info) {
+            super(info);
+            this.fillArea = new GeneralPath();
+            this.points = new ArrayList<Point2D>();
+        }
+    }
+    
     /**
      * Resolution of splines (number of line segments between points)
      */
     private int precision;
 
     /**
-     * Creates a new instance with the 'precision' attribute defaulting to
-     * 5.
+     * A flag that can be set to specify 
+     * to fill the area under the spline.
+     */
+    private FillType fillType;
+
+    private GradientPaintTransformer gradientPaintTransformer;
+    
+    /**
+     * Creates a new instance with the precision attribute defaulting to 5 
+     * and no fill of the area 'under' the spline.
      */
     public XYSplineRenderer() {
-        this(5);
+        this(5, FillType.NONE);
     }
 
     /**
-     * Creates a new renderer with the specified precision.
+     * Creates a new renderer with the specified precision 
+     * and no fill of the area 'under' (between '0' and) the spline.
      *
      * @param precision  the number of points between data items.
      */
     public XYSplineRenderer(int precision) {
+        this(precision, FillType.NONE);
+    }
+
+    /**
+     * Creates a new renderer with the specified precision
+     * and specified fill of the area 'under' (between '0' and) the spline.
+     *
+     * @param precision  the number of points between data items.
+     * @param fillType  the type of fill beneath the curve (<code>null</code> 
+     *     not permitted).
+     * 
+     * @since 1.0.17
+     */
+    public XYSplineRenderer(int precision, FillType fillType) {
         super();
         if (precision <= 0) {
             throw new IllegalArgumentException("Requires precision > 0.");
         }
+        ParamChecks.nullNotPermitted(fillType, "fillType");
         this.precision = precision;
+        this.fillType = fillType;
+        this.gradientPaintTransformer = new StandardGradientPaintTransformer();
     }
 
     /**
-     * Get the resolution of splines.
+     * Returns the resolution of splines.
      *
      * @return Number of line segments between points.
      *
@@ -132,6 +197,58 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
     }
 
     /**
+     * Returns the type of fill that the renderer draws beneath the curve.
+     *
+     * @return The type of fill (never <code>null</code>).
+     *
+     * @see #setFillMode(FillType)
+     * 
+     * @since 1.0.17
+     */
+    public FillType getFillType() {
+        return this.fillType;
+    }
+
+    /**
+     * Set the fill type and sends a {@link RendererChangeEvent}
+     * to all registered listeners.
+     *
+     * @param fillType   the fill type (<code>null</code> not permitted).
+     *
+     * @see #getFillType()
+     * 
+     * @since 1.0.17
+     */
+    public void setFillType(FillType fillType) {
+        this.fillType = fillType;
+        fireChangeEvent();
+    }
+
+    /**
+     * Returns the gradient paint transformer, or <code>null</code>.
+     * 
+     * @return The gradient paint transformer (possibly <code>null</code>).
+     * 
+     * @since 1.0.17
+     */
+    public GradientPaintTransformer getGradientPaintTransformer() {
+        return this.gradientPaintTransformer;
+    }
+    
+    /**
+     * Sets the gradient paint transformer and sends a 
+     * {@link RendererChangeEvent} to all registered listeners.
+     * 
+     * @param gpt  the transformer (<code>null</code> permitted).
+     * 
+     * @since 1.0.17
+     */
+    public void setGradientPaintTransformer(GradientPaintTransformer gpt) {
+        this.gradientPaintTransformer = gpt;
+        fireChangeEvent();
+    }
+    
+    /**
      * Initialises the renderer.
      * <P>
      * This method will be called before the first item is rendered, giving the
@@ -151,10 +268,9 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
     public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
             XYPlot plot, XYDataset data, PlotRenderingInfo info) {
 
-        State state = (State) super.initialise(g2, dataArea, plot, data, info);
-        state.setProcessVisibleItemsOnly(false);
-        this.points = new ArrayList<ControlPoint>();
         setDrawSeriesLineAsPath(true);
+        XYSplineState state = new XYSplineState(info);
+        state.setProcessVisibleItemsOnly(false);
         return state;
     }
 
@@ -172,58 +288,92 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
      * @param pass  the pass.
      * @param series  the series index (zero-based).
      * @param item  the item index (zero-based).
-     * @param domainAxis  the domain axis.
-     * @param rangeAxis  the range axis.
+     * @param xAxis  the domain axis.
+     * @param yAxis  the range axis.
      * @param dataArea  the area within which the data is being drawn.
      */
     @Override
     protected void drawPrimaryLineAsPath(XYItemRendererState state,
             Graphics2D g2, XYPlot plot, XYDataset dataset, int pass,
-            int series, int item, ValueAxis domainAxis, ValueAxis rangeAxis,
+            int series, int item, ValueAxis xAxis, ValueAxis yAxis,
             Rectangle2D dataArea) {
 
+        XYSplineState s = (XYSplineState) state;
         RectangleEdge xAxisLocation = plot.getDomainAxisEdge();
         RectangleEdge yAxisLocation = plot.getRangeAxisEdge();
 
         // get the data points
         double x1 = dataset.getXValue(series, item);
         double y1 = dataset.getYValue(series, item);
-        double transX1 = domainAxis.valueToJava2D(x1, dataArea, xAxisLocation);
-        double transY1 = rangeAxis.valueToJava2D(y1, dataArea, yAxisLocation);
+        double transX1 = xAxis.valueToJava2D(x1, dataArea, xAxisLocation);
+        double transY1 = yAxis.valueToJava2D(y1, dataArea, yAxisLocation);
 
         // collect points
         if (!Double.isNaN(transX1) && !Double.isNaN(transY1)) {
-            ControlPoint p = new ControlPoint(plot.getOrientation()
-                                == PlotOrientation.HORIZONTAL ? (float) transY1
-                                : (float) transX1, plot.getOrientation()
-                                == PlotOrientation.HORIZONTAL ? (float) transX1
-                                        : (float) transY1);
-            if (!this.points.contains(p)) {
-                this.points.add(p);
+            Point2D p = plot.getOrientation() == PlotOrientation.HORIZONTAL 
+                ? new Point2D.Float((float) transY1, (float) transX1) 
+                : new Point2D.Float((float) transX1, (float) transY1);
+            if (!s.points.contains(p))
+                s.points.add(p);
             }
+        
+        if (item == dataset.getItemCount(series) - 1) {     // construct path
+            if (s.points.size() > 1) {
+                Point2D origin;
+                if (this.fillType == FillType.TO_ZERO) {
+                    float xz = (float) xAxis.valueToJava2D(0, dataArea, 
+                            yAxisLocation);
+                    float yz = (float) yAxis.valueToJava2D(0, dataArea, 
+                            yAxisLocation);
+                    origin = plot.getOrientation() == PlotOrientation.HORIZONTAL
+                            ? new Point2D.Float(yz, xz) 
+                            : new Point2D.Float(xz, yz);
+                } else if (this.fillType == FillType.TO_LOWER_BOUND) {
+                    float xlb = (float) xAxis.valueToJava2D(
+                            xAxis.getLowerBound(), dataArea, xAxisLocation);
+                    float ylb = (float) yAxis.valueToJava2D(
+                            yAxis.getLowerBound(), dataArea, yAxisLocation);
+                    origin = plot.getOrientation() == PlotOrientation.HORIZONTAL
+                            ? new Point2D.Float(ylb, xlb) 
+                            : new Point2D.Float(xlb, ylb);
+                } else {// fillType == TO_UPPER_BOUND
+                    float xub = (float) xAxis.valueToJava2D(
+                            xAxis.getUpperBound(), dataArea, xAxisLocation);
+                    float yub = (float) yAxis.valueToJava2D(
+                            yAxis.getUpperBound(), dataArea, yAxisLocation);
+                    origin = plot.getOrientation() == PlotOrientation.HORIZONTAL
+                            ? new Point2D.Float(yub, xub)
+                            : new Point2D.Float(xub, yub);
         }
-        if (item == dataset.getItemCount(series) - 1) {
-            State s = (State) state;
-            // construct path
-            if (this.points.size() > 1) {
+                
                 // we need at least two points to draw something
-                ControlPoint cp0 = this.points.get(0);
-                s.seriesPath.moveTo(cp0.x, cp0.y);
-                if (this.points.size() == 2) {
+                Point2D cp0 = s.points.get(0);
+                s.seriesPath.moveTo(cp0.getX(), cp0.getY());
+                if (this.fillType != FillType.NONE) {
+                    if (plot.getOrientation() == PlotOrientation.HORIZONTAL) {
+                        s.fillArea.moveTo(origin.getX(), cp0.getY());
+                    } else {
+                        s.fillArea.moveTo(cp0.getX(), origin.getY());
+                    }
+                    s.fillArea.lineTo(cp0.getX(), cp0.getY());
+                }
+                if (s.points.size() == 2) {
                     // we need at least 3 points to spline. Draw simple line
                     // for two points
-                    ControlPoint cp1 = this.points.get(1);
-                    s.seriesPath.lineTo(cp1.x, cp1.y);
-                }
-                else {
+                    Point2D cp1 = s.points.get(1);
+                    if (this.fillType != FillType.NONE) {
+                        s.fillArea.lineTo(cp1.getX(), cp1.getY());
+                        s.fillArea.lineTo(cp1.getX(), origin.getY());
+                        s.fillArea.closePath();
+                    }
+                    s.seriesPath.lineTo(cp1.getX(), cp1.getY());
+                } else {
                     // construct spline
-                    int np = this.points.size(); // number of points
+                    int np = s.points.size(); // number of points
                     float[] d = new float[np]; // Newton form coefficients
                     float[] x = new float[np]; // x-coordinates of nodes
-                    float y;
-                    float t;
-                    float oldy;
-                    float oldt;
+                    float y, oldy;
+                    float t, oldt;
 
                     float[] a = new float[np];
                     float t1;
@@ -231,14 +381,14 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
                     float[] h = new float[np];
 
                     for (int i = 0; i < np; i++) {
-                        ControlPoint cpi = this.points.get(i);
+                        Point2D.Float cpi = (Point2D.Float) s.points.get(i);
                         x[i] = cpi.x;
                         d[i] = cpi.y;
                     }
 
-                    for (int i = 1; i <= np - 1; i++) {
+                    for (int i = 1; i <= np - 1; i++)
                         h[i] = x[i] - x[i - 1];
-                    }
+
                     float[] sub = new float[np - 1];
                     float[] diag = new float[np - 1];
                     float[] sup = new float[np - 1];
@@ -253,10 +403,8 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
                     solveTridiag(sub, diag, sup, a, np - 2);
 
                     // note that a[0]=a[np-1]=0
-                    // draw
                     oldt = x[0];
                     oldy = d[0];
-                    s.seriesPath.moveTo(oldt, oldy);
                     for (int i = 1; i <= np - 1; i++) {
                         // loop over intervals between nodes
                         for (int j = 1; j <= this.precision; j++) {
@@ -267,15 +415,43 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
                                     + d[i]) * t1) / h[i];
                             t = x[i - 1] + t1;
                             s.seriesPath.lineTo(t, y);
+                            if (this.fillType != FillType.NONE) {
+                                s.fillArea.lineTo(t, y);
+                            }
                         }
                     }
                 }
-                // draw path
+                // Add last point @ y=0 for fillPath and close path
+                if (this.fillType != FillType.NONE) {
+                    if (plot.getOrientation() == PlotOrientation.HORIZONTAL) {
+                        s.fillArea.lineTo(origin.getX(), s.points.get(
+                                s.points.size() - 1).getY());
+                    } else {
+                        s.fillArea.lineTo(s.points.get(
+                                s.points.size() - 1).getX(), origin.getY());
+                    }
+                    s.fillArea.closePath();
+                }
+
+                // fill under the curve...
+                if (this.fillType != FillType.NONE) {
+                    Paint fp = getSeriesFillPaint(series);
+                    if (this.gradientPaintTransformer != null 
+                            && fp instanceof GradientPaint) {
+                        GradientPaint gp = this.gradientPaintTransformer
+                                .transform((GradientPaint) fp, s.fillArea);
+                        g2.setPaint(gp);
+                    } else {
+                        g2.setPaint(fp);                        
+                    }
+                    g2.fill(s.fillArea);
+                    s.fillArea.reset();
+                }
+                // then draw the line...
                 drawFirstPassShape(g2, pass, series, item, s.seriesPath);
             }
-
             // reset points vector
-            this.points = new ArrayList<ControlPoint>();
+            s.points = new ArrayList<Point2D>();
         }
     }
 
@@ -290,16 +466,15 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
         right hand side vector b[1:n] is overwritten with solution
         NOTE: 1...n is used in all arrays, 0 is unused */
         int i;
-/*                  factorization and forward substitution */
+/*      factorization and forward substitution */
         for (i = 2; i <= n; i++) {
-            sub[i] = sub[i] / diag[i - 1];
-            diag[i] = diag[i] - sub[i] * sup[i - 1];
-            b[i] = b[i] - sub[i] * b[i - 1];
+            sub[i] /= diag[i - 1];
+            diag[i] -= sub[i] * sup[i - 1];
+            b[i] -= sub[i] * b[i - 1];
         }
-        b[n] = b[n] / diag[n];
-        for (i = n - 1; i >= 1; i--) {
+        b[n] /= diag[n];
+        for (i = n - 1; i >= 1; i--)
             b[i] = (b[i] - sup[i] * b[i + 1]) / diag[i];
-        }
     }
 
     /**
@@ -321,53 +496,13 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
         if (this.precision != that.precision) {
             return false;
         }
+        if (this.fillType != that.fillType) {
+            return false;
+        }
+        if (!ObjectUtilities.equal(this.gradientPaintTransformer, 
+                that.gradientPaintTransformer)) {
+            return false;
+        }
         return super.equals(obj);
-    }
-
-    /**
-     * Represents a control point.
-     */
-    class ControlPoint {
-
-        /** The x-coordinate. */
-        public float x;
-
-        /** The y-coordinate. */
-        public float y;
-
-        /**
-         * Creates a new control point.
-         *
-         * @param x  the x-coordinate.
-         * @param y  the y-coordinate.
-         */
-        public ControlPoint(float x, float y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        /**
-         * Tests this point for equality with an arbitrary object.
-         *
-         * @param obj  the object (<code>null</code> permitted.
-         *
-         * @return A boolean.
-         */
-        @Override
-        public boolean equals(Object obj) {
-            if (obj == this) {
-                return true;
-            }
-            if (!(obj instanceof ControlPoint)) {
-                return false;
-            }
-            ControlPoint that = (ControlPoint) obj;
-            if (this.x != that.x) {
-                return false;
-            }
-            /*&& y == ((ControlPoint) obj).y;*/
-            return true;
-        }
-
     }
 }
