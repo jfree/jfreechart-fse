@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * BorderArrangement.java
  * ----------------------
- * (C) Copyright 2004-2012, by Object Refinery Limited.
+ * (C) Copyright 2004-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -88,6 +88,8 @@ public class BorderArrangement implements Arrangement, Serializable {
 
     /**
      * Adds a block to the arrangement manager at the specified edge.
+     * If the key is not an instance of {@link RectangleEdge} the block will
+     * be added in the center.
      *
      * @param block  the block (<code>null</code> permitted).
      * @param key  the edge (an instance of {@link RectangleEdge}) or
@@ -96,7 +98,7 @@ public class BorderArrangement implements Arrangement, Serializable {
     @Override
     public void add(Block block, Object key) {
 
-        if (key == null) {
+        if (!(key instanceof RectangleEdge)) { // catches null also
             this.centerBlock = block;
         }
         else {
@@ -127,8 +129,7 @@ public class BorderArrangement implements Arrangement, Serializable {
      * @return The block size.
      */
     @Override
-    public Size2D arrange(BlockContainer container,
-                          Graphics2D g2,
+    public Size2D arrange(BlockContainer container, Graphics2D g2,
                           RectangleConstraint constraint) {
         RectangleConstraint contentConstraint
                 = container.toContentConstraint(constraint);
