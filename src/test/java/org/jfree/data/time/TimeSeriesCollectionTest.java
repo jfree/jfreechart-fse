@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -24,10 +24,10 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ------------------------------
- * TimeSeriesCollectionTests.java
- * ------------------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * -----------------------------
+ * TimeSeriesCollectionTest.java
+ * -----------------------------
+ * (C) Copyright 2003-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -48,16 +48,11 @@ import org.jfree.data.Range;
 import org.jfree.data.general.DatasetUtilities;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
+import org.jfree.chart.TestUtilities;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -71,10 +66,6 @@ import static org.junit.Assert.fail;
  * A collection of test cases for the {@link TimeSeriesCollection} class.
  */
 public class TimeSeriesCollectionTest  {
-
-
-
-
 
     /**
      * Some tests for the equals() method.
@@ -239,17 +230,8 @@ public class TimeSeriesCollectionTest  {
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
         TimeSeriesCollection c1 = new TimeSeriesCollection(createSeries());
-
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(c1);
-            out.close();
-
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-        TimeSeriesCollection c2 = (TimeSeriesCollection) in.readObject();
-            in.close();
-
+        TimeSeriesCollection c2 = (TimeSeriesCollection) 
+                TestUtilities.serialised(c1);
         assertEquals(c1, c2);
     }
 
