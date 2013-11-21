@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * WaterfallBarRenderer.java
  * -------------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  Darshan Shah;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -82,6 +82,7 @@ import org.jfree.chart.labels.CategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.AbstractRenderer;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
@@ -147,25 +148,13 @@ public class WaterfallBarRenderer extends BarRenderer {
      * @param lastBarPaint  the color of the last bar (<code>null</code> not
      *                      permitted).
      */
-    public WaterfallBarRenderer(Paint firstBarPaint,
-                                Paint positiveBarPaint,
-                                Paint negativeBarPaint,
-                                Paint lastBarPaint) {
+    public WaterfallBarRenderer(Paint firstBarPaint, Paint positiveBarPaint,
+            Paint negativeBarPaint, Paint lastBarPaint) {
         super();
-        if (firstBarPaint == null) {
-            throw new IllegalArgumentException("Null 'firstBarPaint' argument");
-        }
-        if (positiveBarPaint == null) {
-            throw new IllegalArgumentException(
-                    "Null 'positiveBarPaint' argument");
-        }
-        if (negativeBarPaint == null) {
-            throw new IllegalArgumentException(
-                    "Null 'negativeBarPaint' argument");
-        }
-        if (lastBarPaint == null) {
-            throw new IllegalArgumentException("Null 'lastBarPaint' argument");
-        }
+        ParamChecks.nullNotPermitted(firstBarPaint, "firstBarPaint");
+        ParamChecks.nullNotPermitted(positiveBarPaint, "positiveBarPaint");
+        ParamChecks.nullNotPermitted(negativeBarPaint, "negativeBarPaint");
+        ParamChecks.nullNotPermitted(lastBarPaint, "lastBarPaint");
         this.firstBarPaint = firstBarPaint;
         this.lastBarPaint = lastBarPaint;
         this.positiveBarPaint = positiveBarPaint;
@@ -191,9 +180,7 @@ public class WaterfallBarRenderer extends BarRenderer {
      * @param paint  the paint (<code>null</code> not permitted).
      */
     public void setFirstBarPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.firstBarPaint = paint;
         fireChangeEvent();
     }
@@ -214,9 +201,7 @@ public class WaterfallBarRenderer extends BarRenderer {
      * @param paint  the paint (<code>null</code> not permitted).
      */
     public void setLastBarPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.lastBarPaint = paint;
         fireChangeEvent();
     }
@@ -236,9 +221,7 @@ public class WaterfallBarRenderer extends BarRenderer {
      * @param paint  the paint (<code>null</code> not permitted).
      */
     public void setPositiveBarPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.positiveBarPaint = paint;
         fireChangeEvent();
     }
@@ -259,9 +242,7 @@ public class WaterfallBarRenderer extends BarRenderer {
      * @param paint  the paint (<code>null</code> not permitted).
      */
     public void setNegativeBarPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.negativeBarPaint = paint;
         fireChangeEvent();
     }
@@ -328,16 +309,10 @@ public class WaterfallBarRenderer extends BarRenderer {
      * @param pass  the pass index.
      */
     @Override
-    public void drawItem(Graphics2D g2,
-                         CategoryItemRendererState state,
-                         Rectangle2D dataArea,
-                         CategoryPlot plot,
-                         CategoryAxis domainAxis,
-                         ValueAxis rangeAxis,
-                         CategoryDataset dataset,
-                         int row,
-                         int column,
-                         int pass) {
+    public void drawItem(Graphics2D g2, CategoryItemRendererState state,
+            Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
+            ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
+            int pass) {
 
         double previous = state.getSeriesRunningTotal();
         if (column == dataset.getColumnCount() - 1) {
@@ -409,14 +384,10 @@ public class WaterfallBarRenderer extends BarRenderer {
             seriesPaint = getLastBarPaint();
         }
         else {
-            if (valDiff < 0.0) {
-                seriesPaint = getNegativeBarPaint();
-            }
-            else if (valDiff > 0.0) {
+            if (valDiff >= 0.0) {
                 seriesPaint = getPositiveBarPaint();
-            }
-            else {
-                seriesPaint = getLastBarPaint();
+            } else {
+                seriesPaint = getNegativeBarPaint();
             }
         }
         if (getGradientPaintTransformer() != null
@@ -440,7 +411,7 @@ public class WaterfallBarRenderer extends BarRenderer {
         }
 
         CategoryItemLabelGenerator generator
-            = getItemLabelGenerator(row, column);
+                = getItemLabelGenerator(row, column);
         if (generator != null && isItemLabelVisible(row, column)) {
             drawItemLabel(g2, dataset, row, column, plot, generator, bar,
                     (valDiff < 0.0));
