@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -62,13 +62,8 @@ import org.jfree.data.general.SeriesException;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import org.jfree.chart.TestUtilities;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -81,7 +76,7 @@ import static org.junit.Assert.fail;
 /**
  * A collection of test cases for the {@link TimeSeries} class.
  */
-public class TimeSeriesTest  implements SeriesChangeListener {
+public class TimeSeriesTest implements SeriesChangeListener {
 
     /** A time series. */
     private TimeSeries seriesA;
@@ -95,16 +90,11 @@ public class TimeSeriesTest  implements SeriesChangeListener {
     /** A flag that indicates whether or not a change event was fired. */
     private boolean gotSeriesChangeEvent;
 
-
-
-
-
     /**
      * Common test setup.
      */
     @Before
     public void setUp() {
-
         this.seriesA = new TimeSeries("Series A");
         this.seriesA.add(new Year(2000), new Integer(102000));
         this.seriesA.add(new Year(2001), new Integer(102001));
@@ -122,7 +112,6 @@ public class TimeSeriesTest  implements SeriesChangeListener {
         this.seriesC.add(new Year(1999), new Integer(301999));
         this.seriesC.add(new Year(2000), new Integer(302000));
         this.seriesC.add(new Year(2002), new Integer(302002));
-
     }
 
     /**
@@ -143,14 +132,12 @@ public class TimeSeriesTest  implements SeriesChangeListener {
     public void testClone() throws CloneNotSupportedException {
 
         TimeSeries series = new TimeSeries("Test Series");
-
         RegularTimePeriod jan1st2002 = new Day(1, MonthConstants.JANUARY, 2002);
         series.add(jan1st2002, new Integer(42));
 
         TimeSeries clone = (TimeSeries) series.clone();
         clone.setKey("Clone Series");
         clone.update(jan1st2002, new Integer(10));
-
 
         int seriesValue = series.getValue(jan1st2002).intValue();
         int cloneValue = clone.getValue(jan1st2002).intValue();
@@ -159,7 +146,6 @@ public class TimeSeriesTest  implements SeriesChangeListener {
         assertEquals(10, cloneValue);
         assertEquals("Test Series", series.getKey());
         assertEquals("Clone Series", clone.getKey());
-
     }
 
     /**
@@ -187,10 +173,8 @@ public class TimeSeriesTest  implements SeriesChangeListener {
     @Test
     public void testAddValue() {
         this.seriesA.add(new Year(1999), new Integer(1));
-
         int value = this.seriesA.getValue(0).intValue();
         assertEquals(1, value);
-
     }
 
     /**
@@ -198,12 +182,10 @@ public class TimeSeriesTest  implements SeriesChangeListener {
      */
     @Test
     public void testGetValue() {
-
         Number value1 = this.seriesA.getValue(new Year(1999));
         assertNull(value1);
         int value2 = this.seriesA.getValue(new Year(2000)).intValue();
         assertEquals(102000, value2);
-
     }
 
     /**
@@ -296,16 +278,8 @@ public class TimeSeriesTest  implements SeriesChangeListener {
         s1.add(new Year(2002), null);
         s1.add(new Year(2005), 19.32);
         s1.add(new Year(2007), 16.89);
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(s1);
-        out.close();
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
-        TimeSeries s2 = (TimeSeries) in.readObject();
-        in.close();
-
-        assertEquals(s1, s2);
+        TimeSeries s2 = (TimeSeries) TestUtilities.serialised(s1);
+        assertTrue(s1.equals(s2));
     }
 
     /**
@@ -376,81 +350,79 @@ public class TimeSeriesTest  implements SeriesChangeListener {
         series.add(new Month(MonthConstants.NOVEMBER, 2003), 85.0);
         series.add(new Month(MonthConstants.DECEMBER, 2003), 75.0);
 
-            // copy a range before the start of the series data...
-            TimeSeries result1 = series.createCopy(
-                    new Month(MonthConstants.NOVEMBER, 2002),
-                    new Month(MonthConstants.DECEMBER, 2002));
-            assertEquals(0, result1.getItemCount());
+        // copy a range before the start of the series data...
+        TimeSeries result1 = series.createCopy(
+                new Month(MonthConstants.NOVEMBER, 2002),
+                new Month(MonthConstants.DECEMBER, 2002));
+        assertEquals(0, result1.getItemCount());
 
-            // copy a range that includes only the first item in the series...
-            TimeSeries result2 = series.createCopy(
-                    new Month(MonthConstants.NOVEMBER, 2002),
-                    new Month(MonthConstants.JANUARY, 2003));
-            assertEquals(1, result2.getItemCount());
+        // copy a range that includes only the first item in the series...
+        TimeSeries result2 = series.createCopy(
+                new Month(MonthConstants.NOVEMBER, 2002),
+                new Month(MonthConstants.JANUARY, 2003));
+        assertEquals(1, result2.getItemCount());
 
-            // copy a range that begins before and ends in the middle of the
-            // series...
-            TimeSeries result3 = series.createCopy(
-                    new Month(MonthConstants.NOVEMBER, 2002),
-                    new Month(MonthConstants.APRIL, 2003));
-            assertEquals(2, result3.getItemCount());
+        // copy a range that begins before and ends in the middle of the
+        // series...
+        TimeSeries result3 = series.createCopy(
+                new Month(MonthConstants.NOVEMBER, 2002),
+                new Month(MonthConstants.APRIL, 2003));
+        assertEquals(2, result3.getItemCount());
 
-            TimeSeries result4 = series.createCopy(
-                    new Month(MonthConstants.NOVEMBER, 2002),
-                    new Month(MonthConstants.DECEMBER, 2003));
-            assertEquals(5, result4.getItemCount());
+        TimeSeries result4 = series.createCopy(
+                new Month(MonthConstants.NOVEMBER, 2002),
+                new Month(MonthConstants.DECEMBER, 2003));
+        assertEquals(5, result4.getItemCount());
 
-            TimeSeries result5 = series.createCopy(
-                    new Month(MonthConstants.NOVEMBER, 2002),
-                    new Month(MonthConstants.MARCH, 2004));
-            assertEquals(5, result5.getItemCount());
+        TimeSeries result5 = series.createCopy(
+                new Month(MonthConstants.NOVEMBER, 2002),
+                new Month(MonthConstants.MARCH, 2004));
+        assertEquals(5, result5.getItemCount());
 
-            TimeSeries result6 = series.createCopy(
-                    new Month(MonthConstants.JANUARY, 2003),
-                    new Month(MonthConstants.JANUARY, 2003));
-            assertEquals(1, result6.getItemCount());
+        TimeSeries result6 = series.createCopy(
+                new Month(MonthConstants.JANUARY, 2003),
+                new Month(MonthConstants.JANUARY, 2003));
+        assertEquals(1, result6.getItemCount());
 
-            TimeSeries result7 = series.createCopy(
-                    new Month(MonthConstants.JANUARY, 2003),
-                    new Month(MonthConstants.APRIL, 2003));
-            assertEquals(2, result7.getItemCount());
+        TimeSeries result7 = series.createCopy(
+                new Month(MonthConstants.JANUARY, 2003),
+                new Month(MonthConstants.APRIL, 2003));
+        assertEquals(2, result7.getItemCount());
 
-            TimeSeries result8 = series.createCopy(
-                    new Month(MonthConstants.JANUARY, 2003),
-                    new Month(MonthConstants.DECEMBER, 2003));
-            assertEquals(5, result8.getItemCount());
+        TimeSeries result8 = series.createCopy(
+                new Month(MonthConstants.JANUARY, 2003),
+                new Month(MonthConstants.DECEMBER, 2003));
+        assertEquals(5, result8.getItemCount());
 
-            TimeSeries result9 = series.createCopy(
-                    new Month(MonthConstants.JANUARY, 2003),
-                    new Month(MonthConstants.MARCH, 2004));
-            assertEquals(5, result9.getItemCount());
+        TimeSeries result9 = series.createCopy(
+                new Month(MonthConstants.JANUARY, 2003),
+                new Month(MonthConstants.MARCH, 2004));
+        assertEquals(5, result9.getItemCount());
 
-            TimeSeries result10 = series.createCopy(
-                    new Month(MonthConstants.MAY, 2003),
-                    new Month(MonthConstants.DECEMBER, 2003));
-            assertEquals(3, result10.getItemCount());
+        TimeSeries result10 = series.createCopy(
+                new Month(MonthConstants.MAY, 2003),
+                new Month(MonthConstants.DECEMBER, 2003));
+        assertEquals(3, result10.getItemCount());
 
-            TimeSeries result11 = series.createCopy(
-                    new Month(MonthConstants.MAY, 2003),
-                    new Month(MonthConstants.MARCH, 2004));
-            assertEquals(3, result11.getItemCount());
+        TimeSeries result11 = series.createCopy(
+                new Month(MonthConstants.MAY, 2003),
+                new Month(MonthConstants.MARCH, 2004));
+        assertEquals(3, result11.getItemCount());
 
-            TimeSeries result12 = series.createCopy(
-                    new Month(MonthConstants.DECEMBER, 2003),
-                    new Month(MonthConstants.DECEMBER, 2003));
-            assertEquals(1, result12.getItemCount());
+        TimeSeries result12 = series.createCopy(
+                new Month(MonthConstants.DECEMBER, 2003),
+                new Month(MonthConstants.DECEMBER, 2003));
+        assertEquals(1, result12.getItemCount());
 
-            TimeSeries result13 = series.createCopy(
-                    new Month(MonthConstants.DECEMBER, 2003),
-                    new Month(MonthConstants.MARCH, 2004));
-            assertEquals(1, result13.getItemCount());
+        TimeSeries result13 = series.createCopy(
+                new Month(MonthConstants.DECEMBER, 2003),
+                new Month(MonthConstants.MARCH, 2004));
+        assertEquals(1, result13.getItemCount());
 
-            TimeSeries result14 = series.createCopy(
-                    new Month(MonthConstants.JANUARY, 2004),
-                    new Month(MonthConstants.MARCH, 2004));
-            assertEquals(0, result14.getItemCount());
-
-
+        TimeSeries result14 = series.createCopy(
+                new Month(MonthConstants.JANUARY, 2004),
+                new Month(MonthConstants.MARCH, 2004));
+        assertEquals(0, result14.getItemCount());
     }
 
     /**
@@ -467,31 +439,29 @@ public class TimeSeriesTest  implements SeriesChangeListener {
         series.add(new Month(MonthConstants.NOVEMBER, 2003), 85.0);
         series.add(new Month(MonthConstants.DECEMBER, 2003), 75.0);
 
+        // copy just the first item...
+        TimeSeries result1 = series.createCopy(0, 0);
+        assertEquals(new Month(1, 2003), result1.getTimePeriod(0));
 
-            // copy just the first item...
-            TimeSeries result1 = series.createCopy(0, 0);
-            assertEquals(new Month(1, 2003), result1.getTimePeriod(0));
+        // copy the first two items...
+        result1 = series.createCopy(0, 1);
+        assertEquals(new Month(2, 2003), result1.getTimePeriod(1));
 
-            // copy the first two items...
-            result1 = series.createCopy(0, 1);
-            assertEquals(new Month(2, 2003), result1.getTimePeriod(1));
+        // copy the middle three items...
+        result1 = series.createCopy(1, 3);
+        assertEquals(new Month(2, 2003), result1.getTimePeriod(0));
+        assertEquals(new Month(11, 2003), result1.getTimePeriod(2));
 
-            // copy the middle three items...
-            result1 = series.createCopy(1, 3);
-            assertEquals(new Month(2, 2003), result1.getTimePeriod(0));
-            assertEquals(new Month(11, 2003), result1.getTimePeriod(2));
+        // copy the last two items...
+        result1 = series.createCopy(3, 4);
+        assertEquals(new Month(11, 2003), result1.getTimePeriod(0));
+        assertEquals(new Month(12, 2003), result1.getTimePeriod(1));
 
-            // copy the last two items...
-            result1 = series.createCopy(3, 4);
-            assertEquals(new Month(11, 2003), result1.getTimePeriod(0));
-            assertEquals(new Month(12, 2003), result1.getTimePeriod(1));
-
-            // copy the last item...
-            result1 = series.createCopy(4, 4);
-            assertEquals(new Month(12, 2003), result1.getTimePeriod(0));
+        // copy the last item...
+        result1 = series.createCopy(4, 4);
+        assertEquals(new Month(12, 2003), result1.getTimePeriod(0));
 
         // check negative first argument
-
         try {
             /* TimeSeries result = */ series.createCopy(-1, 1);
             fail("IllegalArgumentException should have been thrown on negative key");
@@ -1050,6 +1020,40 @@ public class TimeSeriesTest  implements SeriesChangeListener {
         assertEquals(item, series.getDataItem(0));
         item.setValue(99.9);
         assertFalse(item.equals(series.getDataItem(0)));
+    }
+
+    @Test
+    public void testSetKey() {
+        TimeSeries s1 = new TimeSeries("S");
+        s1.setKey("S1");
+        assertEquals("S1", s1.getKey());
+        
+        TimeSeriesCollection c = new TimeSeriesCollection();
+        c.addSeries(s1);
+        TimeSeries s2 = new TimeSeries("S2");
+        c.addSeries(s2);
+        
+        // now we should be allowed to change s1's key to anything but "S2"
+        s1.setKey("OK");
+        assertEquals("OK", s1.getKey());
+        
+        try {
+            s1.setKey("S2");
+            fail("Expect an exception here.");
+        } catch (IllegalArgumentException e) {
+            // OK
+        }
+        
+        // after s1 is removed from the collection, we should be able to set
+        // the key to anything we want...
+        c.removeSeries(s1);
+        s1.setKey("S2");
+                
+        // check that removing by index also works
+        s1.setKey("S1");
+        c.addSeries(s1);
+        c.removeSeries(1);
+        s1.setKey("S2");
     }
 
 }
