@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * XYSeriesCollection.java
  * -----------------------
- * (C) Copyright 2001-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2001-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Aaron Metzger;
@@ -171,12 +171,10 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset
         if ((series < 0) || (series >= getSeriesCount())) {
             throw new IllegalArgumentException("Series index out of bounds.");
         }
-
-        // fetch the series, remove the change listener, then remove the series.
-        XYSeries ts = this.data.get(series);
-        ts.removeChangeListener(this);
-        this.data.remove(series);
-        fireDatasetChanged();
+        XYSeries s = this.data.get(series);
+        if (s != null) {
+            removeSeries(s);
+        }
     }
 
     /**
@@ -624,7 +622,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset
     }
 
     /**
-     * Sets the flag that indicates wether the interval width is automatically
+     * Sets the flag that indicates whether the interval width is automatically
      * calculated or not.
      *
      * @param b  a boolean.
