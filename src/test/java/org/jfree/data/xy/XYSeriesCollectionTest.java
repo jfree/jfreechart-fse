@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------
  * XYSeriesCollectionTest.java
  * ---------------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -53,13 +53,8 @@ import org.jfree.data.Range;
 import org.jfree.data.UnknownKeyException;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import org.jfree.chart.TestUtilities;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -73,10 +68,6 @@ import static org.junit.Assert.fail;
  * Tests for the {@link XYSeriesCollection} class.
  */
 public class XYSeriesCollectionTest  {
-
-
-
-
 
     private static final double EPSILON = 0.0000000001;
 
@@ -166,17 +157,8 @@ public class XYSeriesCollectionTest  {
         s1.add(1.0, 1.1);
         XYSeriesCollection c1 = new XYSeriesCollection();
         c1.addSeries(s1);
-
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(c1);
-            out.close();
-
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-        XYSeriesCollection c2 = (XYSeriesCollection) in.readObject();
-            in.close();
-
+        XYSeriesCollection c2 = (XYSeriesCollection) 
+                TestUtilities.serialised(c1);
         assertEquals(c1, c2);
     }
 
@@ -454,6 +436,7 @@ public class XYSeriesCollectionTest  {
         // next, check that setting a duplicate key fails
         try {
             series2.setKey("C");
+            fail("Expected an IllegalArgumentException.");
         }
         catch (IllegalArgumentException e) {
             // expected
@@ -462,5 +445,4 @@ public class XYSeriesCollectionTest  {
         // change because "C" is already the key for the other series in the
         // collection
     }
-
 }
