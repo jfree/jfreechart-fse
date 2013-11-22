@@ -520,6 +520,7 @@ public class TextUtilities {
         }
         if (angle == 0.0) {
             drawAlignedString(text, g2, x, y, textAnchor);
+            return;
         }
         float[] textAdj = deriveTextBoundsAnchorOffsets(g2, text, textAnchor, 
                 null);
