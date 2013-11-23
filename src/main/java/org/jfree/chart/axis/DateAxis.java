@@ -151,7 +151,6 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.event.AxisChangeEvent;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.ValueAxisPlot;
@@ -186,10 +185,6 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
     /** The default minimum auto range size. */
     public static final double
             DEFAULT_AUTO_RANGE_MINIMUM_SIZE_IN_MILLISECONDS = 2.0;
-
-    /** The default date tick unit. */
-    public static final DateTickUnit DEFAULT_DATE_TICK_UNIT
-            = new DateTickUnit(DateTickUnitType.DAY, 1, new SimpleDateFormat());
 
     /** The default anchor date. */
     public static final Date DEFAULT_ANCHOR_DATE = new Date();
@@ -372,7 +367,8 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      */
     public DateAxis(String label, TimeZone zone, Locale locale) {
         super(label, DateAxis.createStandardDateTickUnits(zone, locale));
-        setTickUnit(DateAxis.DEFAULT_DATE_TICK_UNIT, false, false);
+        this.tickUnit = new DateTickUnit(DateTickUnitType.DAY, 1, 
+                new SimpleDateFormat());
         setAutoRangeMinimumSize(
                 DEFAULT_AUTO_RANGE_MINIMUM_SIZE_IN_MILLISECONDS);
         setRange(DEFAULT_DATE_RANGE, false, false);
@@ -965,18 +961,12 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             months = calendar.get(Calendar.MONTH);
             if (this.tickMarkPosition == DateTickMarkPosition.START) {
                 hours = 0;
-                minutes = 0;
-                seconds = 0;
             }
             else if (this.tickMarkPosition == DateTickMarkPosition.MIDDLE) {
                 hours = 12;
-                minutes = 0;
-                seconds = 0;
             }
             else {
                 hours = 23;
-                minutes = 59;
-                seconds = 59;
             }
             calendar.clear(Calendar.MILLISECOND);
             calendar.set(years, months, value, hours, 0, 0);
