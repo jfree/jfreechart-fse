@@ -162,6 +162,7 @@ import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.ui.Align;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
@@ -251,6 +252,18 @@ public abstract class Plot implements AxisChangeListener,
 
     /** Amount of blank space around the plot area. */
     private RectangleInsets insets;
+
+    /** Fixed size of the data area. */
+    private Size2D fixedDataAreaSize = new Size2D(500, 500);
+
+    /** A flag that controls whether the fixed data area size should be used. */
+    private boolean useFixedDataAreaSize;
+
+    /** Preferred size of the plot area. */
+    private Size2D preferredPlotAreaSize;
+
+    /** A flag that controls whether the plot size has changed. */
+    private boolean plotSizeValid;
 
     /**
      * A flag that controls whether or not the plot outline is drawn.
@@ -541,8 +554,86 @@ public abstract class Plot implements AxisChangeListener,
             if (notify) {
                 fireChangeEvent();
             }
+            plotSizeValid = false;
+
         }
 
+    }
+
+    /**
+     * Returns a fixed data area size.
+     *
+     * @return The size (never <code>null</code>).
+     *
+     * @see #setFixedDataAreaSize(org.jfree.chart.ui.Size2D)
+     */
+    public Size2D getFixedDataAreaSize() {
+        return this.fixedDataAreaSize;
+    }
+
+    /**
+     * Sets a fixed data area size
+     *
+     * @param size the new size (<code>null</code> not permitted).
+     *
+     * @see #getFixedDataAreaSize()
+     */
+    public void setFixedDataAreaSize(Size2D size) {
+        if (size == null) {
+            throw new IllegalArgumentException("Null 'size' argument.");
+        }
+        if (!size.equals(fixedDataAreaSize)) {
+            this.fixedDataAreaSize = size;
+            plotSizeValid = false;
+            fireChangeEvent();
+        }
+    }
+
+    /**
+     * Returns a flag that controls whether the fixed data area size should be used.
+     *
+     * @return The flag.
+     *
+     * @see #setUseFixedDataAreaSize(boolean)
+     */
+    public boolean getUseFixedDataAreaSize() {
+        return this.useFixedDataAreaSize;
+    }
+
+    /**
+     * Sets a flag that controls whether the fixed data area size should be used.
+     *
+     * @param flag the flag.
+     *
+     * @see #getUseFixedDataAreaSize()
+     */
+    public void setUseFixedDataAreaSize(boolean flag) {
+        this.useFixedDataAreaSize = flag;
+    }
+
+    /**
+     * Returns the oreferred plot area size.
+     *
+     * @return The size (never <code>null</code>).
+     *
+     * @see #setFixedDataAreaSize(org.jfree.chart.ui.Size2D)
+     */
+    public Size2D getPreferredPlotAreaSize(Graphics2D g2) {
+        if (!plotSizeValid || this.preferredPlotAreaSize == null) {
+            //System.out.println("[Plot] Calculating new chart plot size");
+            preferredPlotAreaSize = calculatePreferredPlotAreaSize(g2);
+            //System.out.println("[Plot] new plot area "+preferredPlotAreaSize.toString());
+            plotSizeValid = true;
+        }
+        return this.preferredPlotAreaSize;
+    }
+
+    protected Size2D calculatePreferredPlotAreaSize(Graphics2D g2) {
+        return fixedDataAreaSize;
+    }
+
+    protected void setPlotSizeValid(boolean valid) {
+        plotSizeValid = valid;
     }
 
     /**
@@ -709,7 +800,7 @@ public abstract class Plot implements AxisChangeListener,
     /**
      * Sets the alignment for the background image and sends a
      * {@link PlotChangeEvent} to all registered listeners.  Alignment options
-     * are defined by the {@link org.jfree.ui.Align} class in the JCommon
+     * are defined by the {@link org.jfree.chart.ui.Align} class in the JCommon
      * class library.
      *
      * @param alignment  the alignment.
@@ -1223,6 +1314,7 @@ public abstract class Plot implements AxisChangeListener,
      */
     @Override
     public void axisChanged(AxisChangeEvent event) {
+        plotSizeValid = false;
         fireChangeEvent();
     }
 
