@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------
@@ -40,7 +40,7 @@
  * 22-Dec-2003 : Added workaround for Java bug 4245442 (DG);
  * 29-Jan-2004 : Added new constructor (DG);
  * 22-Mar-2004 : Added equals() method and implemented Serializable (DG);
- * 01-Apr-2004 : Changed java.awt.geom.Dimension2D to org.jfree.ui.Size2D 
+ * 01-Apr-2004 : Changed java.awt.geom.Dimension2D to org.jfree.ui.Size2D
  *               because of JDK bug 4976448 which persists on JDK 1.3.1 (DG);
  * 03-Sep-2004 : Added a method to remove a fragment (DG);
  * 08-Jul-2005 : Fixed bug in calculateBaselineOffset() (DG);
@@ -50,15 +50,17 @@
 
 package org.jfree.chart.text;
 
-import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.ui.TextAnchor;
-
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Paint;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jfree.chart.ui.Size2D;
+import org.jfree.chart.ui.TextAnchor;
+
 /**
- * A sequence of {@link TextFragment} objects that together form a line of 
+ * A sequence of {@link TextFragment} objects that together form a line of
  * text.  A sequence of text lines is managed by the {@link TextBlock} class.
  *
  * @author David Gilbert
@@ -145,7 +147,7 @@ public class TextLine implements Serializable {
      * @param g2  the graphics device.
      * @param anchorX  the x-coordinate for the anchor point.
      * @param anchorY  the y-coordinate for the anchor point.
-     * @param anchor  the point on the text line that is aligned to the anchor 
+     * @param anchor  the point on the text line that is aligned to the anchor
      *                point.
      * @param rotateX  the x-coordinate for the rotation point.
      * @param rotateY  the y-coordinate for the rotation point.
@@ -163,7 +165,8 @@ public class TextLine implements Serializable {
             final Size2D d = fragment.calculateDimensions(g2);
             fragment.draw(
                     g2, x, anchorY + yOffset, TextAnchor.BASELINE_LEFT,
-                    rotateX, rotateY, angle);
+                    rotateX, rotateY, angle
+            );
             x = x + (float) d.getWidth();
         }
 
@@ -194,7 +197,7 @@ public class TextLine implements Serializable {
      */
     public TextFragment getFirstTextFragment() {
         TextFragment result = null;
-        if (!this.fragments.isEmpty()) {
+        if (this.fragments.size() > 0) {
             result = this.fragments.get(0);
         }
         return result;
@@ -207,14 +210,15 @@ public class TextLine implements Serializable {
      */
     public TextFragment getLastTextFragment() {
         TextFragment result = null;
-        if (!this.fragments.isEmpty()) {
-            result = this.fragments.get(this.fragments.size() - 1);
+        if (this.fragments.size() > 0) {
+            result = this.fragments.get(this.fragments.size()
+                    - 1);
         }
         return result;
     }
 
     /**
-     * Calculate the offsets required to translate from the specified anchor 
+     * Calculate the offsets required to translate from the specified anchor
      * position to the left baseline position.
      *
      * @param g2  the graphics device.

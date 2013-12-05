@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------
@@ -36,7 +36,7 @@
  * -------
  * 13-Aug-2003 : Version 1 (DG);
  * 27-Jun-2005 : Fixed equals() method to handle GradientPaint (DG);
- * 
+ *
  */
 
 package org.jfree.chart.util;

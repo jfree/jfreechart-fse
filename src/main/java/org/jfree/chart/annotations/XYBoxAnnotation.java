@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -161,7 +161,7 @@ public class XYBoxAnnotation extends AbstractXYAnnotation
      * @param info  the plot rendering info.
      */
     @Override
-	public void draw(Graphics2D g2, XYPlot plot, Rectangle2D dataArea,
+    public void draw(Graphics2D g2, XYPlot plot, Rectangle2D dataArea,
                      ValueAxis domainAxis, ValueAxis rangeAxis,
                      int rendererIndex, PlotRenderingInfo info) {
 
@@ -210,7 +210,7 @@ public class XYBoxAnnotation extends AbstractXYAnnotation
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -253,7 +253,7 @@ public class XYBoxAnnotation extends AbstractXYAnnotation
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result;
         long temp;
         temp = Double.doubleToLongBits(this.x0);
@@ -276,7 +276,7 @@ public class XYBoxAnnotation extends AbstractXYAnnotation
      *                                    by subclasses.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

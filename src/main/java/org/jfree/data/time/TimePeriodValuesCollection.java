@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------------
@@ -50,14 +50,14 @@
 
 package org.jfree.data.time;
 
+import java.io.Serializable;
+import java.util.List;
+
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.DomainInfo;
 import org.jfree.data.Range;
 import org.jfree.data.xy.AbstractIntervalXYDataset;
 import org.jfree.data.xy.IntervalXYDataset;
-
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * A collection of {@link TimePeriodValues} objects.
@@ -254,12 +254,15 @@ public class TimePeriodValuesCollection extends AbstractIntervalXYDataset
 
         if (this.xPosition == TimePeriodAnchor.START) {
             return period.getStart().getTime();
-        } else if (this.xPosition == TimePeriodAnchor.MIDDLE) {
+        }
+        else if (this.xPosition == TimePeriodAnchor.MIDDLE) {
             return period.getStart().getTime()
-                    / 2 + period.getEnd().getTime() / 2;
-        } else if (this.xPosition == TimePeriodAnchor.END) {
+                / 2 + period.getEnd().getTime() / 2;
+        }
+        else if (this.xPosition == TimePeriodAnchor.END) {
             return period.getEnd().getTime();
-        } else {
+        }
+        else {
             throw new IllegalStateException("TimePeriodAnchor unknown.");
         }
 
@@ -382,6 +385,7 @@ public class TimePeriodValuesCollection extends AbstractIntervalXYDataset
      */
     @Override
     public Range getDomainBounds(boolean includeInterval) {
+        boolean interval = includeInterval;
         Range result = null;
         Range temp = null;
         for (TimePeriodValues series : this.data) {
@@ -390,7 +394,7 @@ public class TimePeriodValuesCollection extends AbstractIntervalXYDataset
                 TimePeriod start = series.getTimePeriod(
                         series.getMinStartIndex());
                 TimePeriod end = series.getTimePeriod(series.getMaxEndIndex());
-                if (!includeInterval) {
+                if (!interval) {
                     if (this.xPosition == TimePeriodAnchor.START) {
                         TimePeriod maxStart = series.getTimePeriod(
                                 series.getMaxStartIndex());
@@ -442,7 +446,10 @@ public class TimePeriodValuesCollection extends AbstractIntervalXYDataset
         if (this.xPosition != that.xPosition) {
             return false;
         }
-        return ObjectUtilities.equal(this.data, that.data);
+        if (!ObjectUtilities.equal(this.data, that.data)) {
+            return false;
+        }
+        return true;
     }
 
 }

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------------------
@@ -107,7 +107,7 @@ public class IntervalCategoryItemLabelGenerator
      * @return The items (never <code>null</code>).
      */
     @Override
-	protected Object[] createItemArray(CategoryDataset dataset,
+    protected Object[] createItemArray(CategoryDataset dataset,
                                        int row, int column) {
         Object[] result = new Object[5];
         result[0] = dataset.getRowKey(row).toString();

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -206,7 +206,7 @@ public class PieSectionEntity extends ChartEntity
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -235,7 +235,7 @@ public class PieSectionEntity extends ChartEntity
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = super.hashCode();
         result = HashUtilities.hashCode(result, this.pieIndex);
         result = HashUtilities.hashCode(result, this.sectionIndex);
@@ -248,7 +248,7 @@ public class PieSectionEntity extends ChartEntity
      * @return A string representing the entity.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return "PieSection: " + this.pieIndex + ", " + this.sectionIndex + "("
                               + this.sectionKey.toString() + ")";
     }

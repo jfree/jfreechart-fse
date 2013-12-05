@@ -21,9 +21,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
- * 
+ *
  * --------------
  * TextBlock.java
  * --------------
@@ -40,7 +40,7 @@
  * 25-Feb-2004 : Added getLines() method (DG);
  * 22-Mar-2004 : Added equals() method and implemented Serializable (DG);
  * 24-Mar-2004 : Added 'paint' argument to addLine() method (DG);
- * 01-Apr-2004 : Changed java.awt.geom.Dimension2D to org.jfree.ui.Size2D 
+ * 01-Apr-2004 : Changed java.awt.geom.Dimension2D to org.jfree.ui.Size2D
  *               because of JDK bug 4976448 which persists on JDK 1.3.1 (DG);
  * 04-Oct-2004 : Renamed ShapeUtils --> ShapeUtilities (DG);
  * 15-Jun-2012 : Moved from JCommon to JFreeChart (DG);
@@ -49,16 +49,19 @@
 
 package org.jfree.chart.text;
 
-import org.jfree.chart.ui.HorizontalAlignment;
-import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ShapeUtilities;
-
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+
+import org.jfree.chart.ui.HorizontalAlignment;
+import org.jfree.chart.ui.Size2D;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ShapeUtilities;
 
 /**
  * A list of {@link TextLine} objects that form a block of text.
@@ -189,14 +192,14 @@ public class TextBlock implements Serializable {
 
         final Size2D d = calculateDimensions(g2);
         final float[] offsets = calculateOffsets(
-                anchor, d.getWidth(), d.getHeight()
+            anchor, d.getWidth(), d.getHeight()
         );
         final Rectangle2D bounds = new Rectangle2D.Double(
-                anchorX + offsets[0], anchorY + offsets[1],
-                d.getWidth(), d.getHeight()
+            anchorX + offsets[0], anchorY + offsets[1],
+            d.getWidth(), d.getHeight()
         );
         final Shape rotatedBounds = ShapeUtilities.rotateShape(
-                bounds, angle, rotateX, rotateY
+            bounds, angle, rotateX, rotateY
         );
         return rotatedBounds;
 
@@ -216,13 +219,13 @@ public class TextBlock implements Serializable {
     }
 
     /**
-     * Draws the text block, aligning it with the specified anchor point and 
+     * Draws the text block, aligning it with the specified anchor point and
      * rotating it about the specified rotation point.
      *
      * @param g2  the graphics device.
      * @param anchorX  the x-coordinate for the anchor point.
      * @param anchorY  the y-coordinate for the anchor point.
-     * @param anchor  the point on the text block that is aligned to the 
+     * @param anchor  the point on the text block that is aligned to the
      *                anchor point.
      * @param rotateX  the x-coordinate for the rotation point.
      * @param rotateY  the x-coordinate for the rotation point.
@@ -258,7 +261,7 @@ public class TextBlock implements Serializable {
 
     /**
      * Calculates the x and y offsets required to align the text block with the
-     * specified anchor point.  This assumes that the top left of the text 
+     * specified anchor point.  This assumes that the top left of the text
      * block is at (0.0, 0.0).
      *
      * @param anchor  the anchor position.
@@ -279,7 +282,8 @@ public class TextBlock implements Serializable {
 
             xAdj = (float) -width / 2.0f;
 
-        } else if (anchor == TextBlockAnchor.TOP_RIGHT
+        }
+        else if (anchor == TextBlockAnchor.TOP_RIGHT
                 || anchor == TextBlockAnchor.CENTER_RIGHT
                 || anchor == TextBlockAnchor.BOTTOM_RIGHT) {
 
@@ -293,13 +297,15 @@ public class TextBlock implements Serializable {
 
             yAdj = 0.0f;
 
-        } else if (anchor == TextBlockAnchor.CENTER_LEFT
+        }
+        else if (anchor == TextBlockAnchor.CENTER_LEFT
                 || anchor == TextBlockAnchor.CENTER
                 || anchor == TextBlockAnchor.CENTER_RIGHT) {
 
             yAdj = (float) -height / 2.0f;
 
-        } else if (anchor == TextBlockAnchor.BOTTOM_LEFT
+        }
+        else if (anchor == TextBlockAnchor.BOTTOM_LEFT
                 || anchor == TextBlockAnchor.BOTTOM_CENTER
                 || anchor == TextBlockAnchor.BOTTOM_RIGHT) {
 

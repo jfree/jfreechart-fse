@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -124,7 +124,7 @@ public class LineBorder implements BlockFrame, Serializable {
      * @return The insets (never <code>null</code>).
      */
     @Override
-	public RectangleInsets getInsets() {
+    public RectangleInsets getInsets() {
         return this.insets;
     }
 
@@ -144,7 +144,7 @@ public class LineBorder implements BlockFrame, Serializable {
      * @param area  the area.
      */
     @Override
-	public void draw(Graphics2D g2, Rectangle2D area) {
+    public void draw(Graphics2D g2, Rectangle2D area) {
         double w = area.getWidth();
         double h = area.getHeight();
         // if the area has zero height or width, we shouldn't draw anything
@@ -190,7 +190,7 @@ public class LineBorder implements BlockFrame, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

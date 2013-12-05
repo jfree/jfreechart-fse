@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -41,9 +41,9 @@
 
 package org.jfree.data;
 
-import org.jfree.chart.util.ObjectUtilities;
-
 import java.io.Serializable;
+
+import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * Represents one (Comparable, Object) data item for use in a
@@ -51,17 +51,17 @@ import java.io.Serializable;
  *
  * @since 1.0.3
  */
-public class ComparableObjectItem<Key extends Comparable, Value>
-        implements Cloneable, Comparable, Serializable {
+public class ComparableObjectItem implements Cloneable, Comparable<ComparableObjectItem>,
+        Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 2751513470325494890L;
 
     /** The x-value. */
-    private Key x;
+    private Comparable x;
 
     /** The y-value. */
-    private Value obj;
+    private Object obj;
 
     /**
      * Constructs a new data item.
@@ -69,7 +69,7 @@ public class ComparableObjectItem<Key extends Comparable, Value>
      * @param x  the x-value (<code>null</code> NOT permitted).
      * @param y  the y-value (<code>null</code> permitted).
      */
-    public ComparableObjectItem(Key x, Value y) {
+    public ComparableObjectItem(Comparable x, Object y) {
         if (x == null) {
             throw new IllegalArgumentException("Null 'x' argument.");
         }
@@ -82,7 +82,7 @@ public class ComparableObjectItem<Key extends Comparable, Value>
      *
      * @return The x-value (never <code>null</code>).
      */
-    protected Key getComparable() {
+    protected Comparable getComparable() {
         return this.x;
     }
 
@@ -91,7 +91,7 @@ public class ComparableObjectItem<Key extends Comparable, Value>
      *
      * @return The y-value (possibly <code>null</code>).
      */
-    protected Value getObject() {
+    protected Object getObject() {
         return this.obj;
     }
 
@@ -101,7 +101,7 @@ public class ComparableObjectItem<Key extends Comparable, Value>
      *
      * @param y  the new y-value (<code>null</code> permitted).
      */
-    protected void setObject(Value y) {
+    protected void setObject(Object y) {
         this.obj = y;
     }
 
@@ -112,33 +112,14 @@ public class ComparableObjectItem<Key extends Comparable, Value>
      * For the order we consider only the x-value:
      * negative == "less-than", zero == "equal", positive == "greater-than".
      *
-     * @param o1  the object being compared to.
+     * @param that  the object being compared to.
      *
      * @return An integer indicating the order of this data pair object
      *      relative to another object.
      */
-    @SuppressWarnings("unchecked")
     @Override
-    public int compareTo(Object o1) {
-
-        int result;
-
-        // CASE 1 : Comparing to another ComparableObjectItem object
-        // ---------------------------------------------------------
-        if (o1 instanceof ComparableObjectItem) {
-            ComparableObjectItem that = (ComparableObjectItem) o1;
-            return this.x.compareTo(that.x);
-        }
-
-        // CASE 2 : Comparing to a general object
-        // ---------------------------------------------
-        else {
-            // consider these to be ordered after general objects
-            result = 1;
-        }
-
-        return result;
-
+    public int compareTo(ComparableObjectItem that) {
+       return this.x.compareTo(that.x);
     }
 
     /**
@@ -162,7 +143,6 @@ public class ComparableObjectItem<Key extends Comparable, Value>
      *
      * @return A boolean.
      */
-    @SuppressWarnings("SimplifiableIfStatement")
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
@@ -175,7 +155,10 @@ public class ComparableObjectItem<Key extends Comparable, Value>
         if (!this.x.equals(that.x)) {
             return false;
         }
-        return ObjectUtilities.equal(this.obj, that.obj);
+        if (!ObjectUtilities.equal(this.obj, that.obj)) {
+            return false;
+        }
+        return true;
     }
 
     /**

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -65,14 +65,14 @@
 
 package org.jfree.chart.plot;
 
-import org.jfree.chart.axis.*;
-import org.jfree.chart.event.PlotChangeEvent;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.*;
-import org.jfree.data.Range;
-
-import java.awt.*;
+import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Composite;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -82,6 +82,21 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import org.jfree.chart.axis.AxisSpace;
+import org.jfree.chart.axis.AxisState;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.axis.ValueTick;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.util.ArrayUtilities;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.event.PlotChangeEvent;
+import org.jfree.chart.util.ResourceBundleWrapper;
+import org.jfree.chart.util.SerialUtilities;
+import org.jfree.data.Range;
 
 /**
  * A fast scatter plot.
@@ -683,7 +698,8 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
         Range result = null;
         if (axis == this.domainAxis) {
             result = this.xDataRange;
-        } else if (axis == this.rangeAxis) {
+        }
+        else if (axis == this.rangeAxis) {
             result = this.yDataRange;
         }
         return result;
@@ -787,7 +803,8 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
             double anchorX = this.domainAxis.java2DToValue(sourceX,
                     info.getDataArea(), RectangleEdge.BOTTOM);
             this.domainAxis.resizeRange2(factor, anchorX);
-        } else {
+        }
+        else {
             this.domainAxis.resizeRange(factor);
         }
 
@@ -845,7 +862,8 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
             double anchorY = this.rangeAxis.java2DToValue(sourceY,
                     info.getDataArea(), RectangleEdge.LEFT);
             this.rangeAxis.resizeRange2(factor, anchorY);
-        } else {
+        }
+        else {
             this.rangeAxis.resizeRange(factor);
         }
 
@@ -948,7 +966,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      */
     @Override
     public void panDomainAxes(double percent, PlotRenderingInfo info,
-                              Point2D source) {
+            Point2D source) {
         if (!isDomainPannable() || this.domainAxis == null) {
             return;
         }
@@ -972,7 +990,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      */
     @Override
     public void panRangeAxes(double percent, PlotRenderingInfo info,
-                             Point2D source) {
+            Point2D source) {
         if (!isRangePannable() || this.rangeAxis == null) {
             return;
         }

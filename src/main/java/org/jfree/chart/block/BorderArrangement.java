@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
@@ -94,7 +94,7 @@ public class BorderArrangement implements Arrangement, Serializable {
      *             <code>null</code> for the center block.
      */
     @Override
-	public void add(Block block, Object key) {
+    public void add(Block block, Object key) {
 
         if (key == null) {
             this.centerBlock = block;
@@ -127,7 +127,7 @@ public class BorderArrangement implements Arrangement, Serializable {
      * @return The block size.
      */
     @Override
-	public Size2D arrange(BlockContainer container,
+    public Size2D arrange(BlockContainer container,
                           Graphics2D g2,
                           RectangleConstraint constraint) {
         RectangleConstraint contentConstraint
@@ -491,7 +491,7 @@ public class BorderArrangement implements Arrangement, Serializable {
      * Clears the layout.
      */
     @Override
-	public void clear() {
+    public void clear() {
         this.centerBlock = null;
         this.topBlock = null;
         this.bottomBlock = null;
@@ -507,7 +507,7 @@ public class BorderArrangement implements Arrangement, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

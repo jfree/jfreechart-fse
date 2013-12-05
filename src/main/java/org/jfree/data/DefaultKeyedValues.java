@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -60,44 +60,47 @@
 
 package org.jfree.data;
 
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SortOrder;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.SortOrder;
 
 /**
  * An ordered list of (key, value) items.  This class provides a default
  * implementation of the {@link KeyedValues} interface.
  */
-public class DefaultKeyedValues<Key extends Comparable>
-        implements KeyedValues<Key>, Cloneable, PublicCloneable, Serializable {
+public class DefaultKeyedValues implements KeyedValues, Cloneable,
+        PublicCloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 8468154364608194797L;
 
     /** Storage for the keys. */
-    private ArrayList<Key> keys;
+    private List<Comparable> keys;
 
     /** Storage for the values. */
-    private ArrayList<Number> values;
+    private List<Number> values;
 
     /**
      * Contains (key, Integer) mappings, where the Integer is the index for
      * the key in the list.
      */
-    private HashMap<Key, Integer> indexMap;
+    private Map<Comparable, Integer> indexMap;
 
-    /**
+  /**
      * Creates a new collection (initially empty).
      */
     public DefaultKeyedValues() {
-        this.keys = new ArrayList<Key>();
+        this.keys = new ArrayList<Comparable>();
         this.values = new ArrayList<Number>();
-        this.indexMap = new HashMap<Key, Integer>();
+        this.indexMap = new HashMap<Comparable, Integer>();
     }
 
     /**
@@ -134,7 +137,7 @@ public class DefaultKeyedValues<Key extends Comparable>
      * @throws IndexOutOfBoundsException if <code>item</code> is out of bounds.
      */
     @Override
-    public Key getKey(int index) {
+    public Comparable getKey(int index) {
         return this.keys.get(index);
     }
 
@@ -148,9 +151,8 @@ public class DefaultKeyedValues<Key extends Comparable>
      * @throws IllegalArgumentException if <code>key</code> is
      *     <code>null</code>.
      */
-    @SuppressWarnings("UnnecessaryUnboxing")
     @Override
-    public int getIndex(Key key) {
+    public int getIndex(Comparable key) {
         if (key == null) {
             throw new IllegalArgumentException("Null 'key' argument.");
         }
@@ -158,7 +160,7 @@ public class DefaultKeyedValues<Key extends Comparable>
         if (i == null) {
             return -1;  // key not found
         }
-        return i.intValue();
+        return i;
     }
 
     /**
@@ -167,8 +169,8 @@ public class DefaultKeyedValues<Key extends Comparable>
      * @return The keys (never <code>null</code>).
      */
     @Override
-    public List<Key> getKeys() {
-        return new ArrayList<Key>(keys);
+    public List<Comparable> getKeys() {
+        return new ArrayList<Comparable>(this.keys);
     }
 
     /**
@@ -183,7 +185,7 @@ public class DefaultKeyedValues<Key extends Comparable>
      * @see #getValue(int)
      */
     @Override
-    public Number getValue(Key key) {
+    public Number getValue(Comparable key) {
         int index = getIndex(key);
         if (index < 0) {
             throw new UnknownKeyException("Key not found: " + key);
@@ -199,7 +201,7 @@ public class DefaultKeyedValues<Key extends Comparable>
      *
      * @see #addValue(Comparable, Number)
      */
-    public void addValue(Key key, double value) {
+    public void addValue(Comparable key, double value) {
         addValue(key, new Double(value));
     }
 
@@ -211,7 +213,7 @@ public class DefaultKeyedValues<Key extends Comparable>
      * @param key  the key (<code>null</code> not permitted).
      * @param value  the value (<code>null</code> permitted).
      */
-    public void addValue(Key key, Number value) {
+    public void addValue(Comparable key, Number value) {
         setValue(key, value);
     }
 
@@ -221,7 +223,7 @@ public class DefaultKeyedValues<Key extends Comparable>
      * @param key  the key (<code>null</code> not permitted).
      * @param value  the value.
      */
-    public void setValue(Key key, double value) {
+    public void setValue(Comparable key, double value) {
         setValue(key, new Double(value));
     }
 
@@ -231,7 +233,7 @@ public class DefaultKeyedValues<Key extends Comparable>
      * @param key  the key (<code>null</code> not permitted).
      * @param value  the value (<code>null</code> permitted).
      */
-    public void setValue(Key key, Number value) {
+    public void setValue(Comparable key, Number value) {
         if (key == null) {
             throw new IllegalArgumentException("Null 'key' argument.");
         }
@@ -239,7 +241,8 @@ public class DefaultKeyedValues<Key extends Comparable>
         if (keyIndex >= 0) {
             this.keys.set(keyIndex, key);
             this.values.set(keyIndex, value);
-        } else {
+        }
+        else {
             this.keys.add(key);
             this.values.add(value);
             this.indexMap.put(key, this.keys.size() - 1);
@@ -257,7 +260,7 @@ public class DefaultKeyedValues<Key extends Comparable>
      *
      * @since 1.0.6
      */
-    public void insertValue(int position, Key key, double value) {
+    public void insertValue(int position, Comparable key, double value) {
         insertValue(position, key, new Double(value));
     }
 
@@ -272,7 +275,7 @@ public class DefaultKeyedValues<Key extends Comparable>
      *
      * @since 1.0.6
      */
-    public void insertValue(int position, Key key, Number value) {
+    public void insertValue(int position, Comparable key, Number value) {
         if (position < 0 || position > getItemCount()) {
             throw new IllegalArgumentException("'position' out of bounds.");
         }
@@ -283,7 +286,8 @@ public class DefaultKeyedValues<Key extends Comparable>
         if (pos == position) {
             this.keys.set(pos, key);
             this.values.set(pos, value);
-        } else {
+        }
+        else {
             if (pos >= 0) {
                 this.keys.remove(pos);
                 this.values.remove(pos);
@@ -299,10 +303,10 @@ public class DefaultKeyedValues<Key extends Comparable>
      * Rebuilds the key to indexed-position mapping after an positioned insert
      * or a remove operation.
      */
-    private void rebuildIndex() {
+    private void rebuildIndex () {
         this.indexMap.clear();
         for (int i = 0; i < this.keys.size(); i++) {
-            final Key key = this.keys.get(i);
+            final Comparable key = this.keys.get(i);
             this.indexMap.put(key, i);
         }
     }
@@ -331,7 +335,7 @@ public class DefaultKeyedValues<Key extends Comparable>
      *     <code>null</code>.
      * @throws UnknownKeyException if <code>key</code> is not recognised.
      */
-    public void removeValue(Key key) {
+    public void removeValue(Comparable key) {
         int index = getIndex(key);
         if (index < 0) {
             throw new UnknownKeyException("The key (" + key
@@ -358,19 +362,19 @@ public class DefaultKeyedValues<Key extends Comparable>
      */
     public void sortByKeys(SortOrder order) {
         final int size = this.keys.size();
-
-        final List<DefaultKeyedValue<Key>> data = new ArrayList<DefaultKeyedValue<Key>>(size);
+        final DefaultKeyedValue[] data = new DefaultKeyedValue[size];
 
         for (int i = 0; i < size; i++) {
-            data.add(new DefaultKeyedValue<Key>(this.keys.get(i), this.values.get(i)));
+            data[i] = new DefaultKeyedValue(this.keys.get(i),
+                    this.values.get(i));
         }
 
-        KeyedValueComparator<Key> comparator =
-                new KeyedValueComparator<Key>(KeyedValueComparatorType.BY_KEY, order);
-        Collections.sort(data, comparator);
+        Comparator<KeyedValue> comparator = new KeyedValueComparator(
+                KeyedValueComparatorType.BY_KEY, order);
+        Arrays.sort(data, comparator);
         clear();
 
-        for (final DefaultKeyedValue<Key> value : data) {
+        for (final DefaultKeyedValue value : data) {
             addValue(value.getKey(), value.getValue());
         }
     }
@@ -384,17 +388,18 @@ public class DefaultKeyedValues<Key extends Comparable>
      */
     public void sortByValues(SortOrder order) {
         final int size = this.keys.size();
-        final List<DefaultKeyedValue<Key>> data = new ArrayList<DefaultKeyedValue<Key>>(size);
+        final DefaultKeyedValue[] data = new DefaultKeyedValue[size];
         for (int i = 0; i < size; i++) {
-            data.add(new DefaultKeyedValue<Key>(this.keys.get(i), this.values.get(i)));
+            data[i] = new DefaultKeyedValue(this.keys.get(i),
+                    this.values.get(i));
         }
 
-        KeyedValueComparator<Key> comparator = new KeyedValueComparator<Key>(
+        Comparator<KeyedValue> comparator = new KeyedValueComparator(
                 KeyedValueComparatorType.BY_VALUE, order);
-        Collections.sort(data, comparator);
+        Arrays.sort(data, comparator);
 
         clear();
-        for (final DefaultKeyedValue<Key> value : data) {
+        for (final DefaultKeyedValue value : data) {
             addValue(value.getKey(), value.getValue());
         }
     }
@@ -434,7 +439,8 @@ public class DefaultKeyedValues<Key extends Comparable>
                 if (v2 != null) {
                     return false;
                 }
-            } else {
+            }
+            else {
                 if (!v1.equals(v2)) {
                     return false;
                 }
@@ -464,9 +470,9 @@ public class DefaultKeyedValues<Key extends Comparable>
     @Override
     public Object clone() throws CloneNotSupportedException {
         DefaultKeyedValues clone = (DefaultKeyedValues) super.clone();
-        clone.keys = (ArrayList) this.keys.clone();
-        clone.values = (ArrayList) this.values.clone();
-        clone.indexMap = (HashMap) this.indexMap.clone();
+        clone.keys = ObjectUtilities.clone(this.keys);
+        clone.values = ObjectUtilities.clone(this.values);
+        clone.indexMap = ObjectUtilities.clone(this.indexMap);
         return clone;
     }
 

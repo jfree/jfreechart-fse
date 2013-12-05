@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
@@ -69,7 +69,7 @@
  * 26-May-2009 : Support AreaRendererEndType.LEVEL (DG);
  * 27-May-2009 : Fixed item label anchor for horizontal orientation (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.renderer.category;
@@ -220,7 +220,7 @@ public class AreaRenderer extends AbstractCategoryItemRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2, CategoryItemRendererState state,
+    public void drawItem(Graphics2D g2, CategoryItemRendererState state,
             Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
             ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
             int pass) {
@@ -322,7 +322,7 @@ public class AreaRenderer extends AbstractCategoryItemRenderer
 
         // submit the current data point as a crosshair candidate
         int datasetIndex = plot.indexOf(dataset);
-        updateCrosshairValues(state.getCrosshairState(), 
+        updateCrosshairValues(state.getCrosshairState(),
                 dataset.getRowKey(row), dataset.getColumnKey(column), yy1,
                 datasetIndex, x1, y1, orientation);
 

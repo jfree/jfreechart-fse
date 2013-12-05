@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
@@ -47,9 +47,9 @@
 
 package org.jfree.data.xy;
 
-import org.jfree.chart.util.ObjectUtilities;
-
 import java.io.Serializable;
+
+import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * Represents one (x, y) data item for an {@link XYSeries}.  Note that
@@ -175,16 +175,18 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
      */
     @Override
     public int compareTo(XYDataItem dataItem) {
-        int result;
+       int result;
 
         double compare = this.x.doubleValue()
-                - dataItem.getX().doubleValue();
+                         - dataItem.getX().doubleValue();
         if (compare > 0.0) {
             result = 1;
-        } else {
+        }
+        else {
             if (compare < 0.0) {
                 result = -1;
-            } else {
+            }
+            else {
                 result = 0;
             }
         }

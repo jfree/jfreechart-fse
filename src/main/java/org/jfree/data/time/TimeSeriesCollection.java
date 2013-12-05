@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -83,20 +83,28 @@
  * 26-Jun-2009 : Fixed clone() (DG);
  * 08-Jan-2012 : Fixed getRangeBounds() method (bug 3445507) (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.data.time;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
+import java.util.TimeZone;
 
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.DomainInfo;
 import org.jfree.data.DomainOrder;
 import org.jfree.data.Range;
 import org.jfree.data.general.DatasetChangeEvent;
-import org.jfree.data.xy.*;
-
-import java.io.Serializable;
-import java.util.*;
+import org.jfree.data.xy.AbstractIntervalXYDataset;
+import org.jfree.data.xy.IntervalXYDataset;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYDomainInfo;
+import org.jfree.data.xy.XYRangeInfo;
 
 /**
  * A collection of time series objects.  This class implements the
@@ -258,7 +266,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
     public TimeSeries getSeries(int series) {
         if ((series < 0) || (series >= getSeriesCount())) {
             throw new IllegalArgumentException(
-                    "The 'series' argument is out of bounds (" + series + ").");
+                "The 'series' argument is out of bounds (" + series + ").");
         }
         return this.data.get(series);
     }
@@ -274,7 +282,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
     public TimeSeries getSeries(Comparable key) {
         TimeSeries result = null;
         for (TimeSeries series : this.data) {
-            Comparable k = series.getKey();
+           Comparable k = series.getKey();
             if (k != null && k.equals(key)) {
                 result = series;
             }
@@ -410,9 +418,11 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
         long result = 0L;
         if (this.xPosition == TimePeriodAnchor.START) {
             result = period.getFirstMillisecond(this.workingCalendar);
-        } else if (this.xPosition == TimePeriodAnchor.MIDDLE) {
+        }
+        else if (this.xPosition == TimePeriodAnchor.MIDDLE) {
             result = period.getMiddleMillisecond(this.workingCalendar);
-        } else if (this.xPosition == TimePeriodAnchor.END) {
+        }
+        else if (this.xPosition == TimePeriodAnchor.END) {
             result = period.getLastMillisecond(this.workingCalendar);
         }
         return result;
@@ -500,7 +510,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
      *         the time.
      */
     public int[] getSurroundingItems(int series, long milliseconds) {
-        int[] result = new int[]{-1, -1};
+        int[] result = new int[] {-1, -1};
         TimeSeries timeSeries = getSeries(series);
         for (int i = 0; i < timeSeries.getItemCount(); i++) {
             Number x = getX(series, i);
@@ -510,7 +520,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
             }
             if (m >= milliseconds) {
                 result[1] = i;
-                return result;
+                break;
             }
         }
         return result;
@@ -594,7 +604,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
      */
     @Override
     public Range getDomainBounds(List<Comparable> visibleSeriesKeys,
-                                 boolean includeInterval) {
+            boolean includeInterval) {
         Range result = null;
         for (Comparable seriesKey : visibleSeriesKeys) {
             TimeSeries series = getSeries(seriesKey);
@@ -647,7 +657,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
      */
     @Override
     public Range getRangeBounds(List<Comparable> visibleSeriesKeys, Range xRange,
-                                boolean includeInterval) {
+            boolean includeInterval) {
         Range result = null;
         for (Comparable seriesKey : visibleSeriesKeys) {
             TimeSeries series = getSeries(seriesKey);
@@ -677,7 +687,10 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
         if (this.xPosition != that.xPosition) {
             return false;
         }
-        return ObjectUtilities.equal(this.data, that.data);
+        if (!ObjectUtilities.equal(this.data, that.data)) {
+            return false;
+        }
+        return true;
     }
 
     /**

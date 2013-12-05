@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
@@ -103,7 +103,7 @@ public class VectorSeries extends ComparableObjectSeries {
      * @return The item removed.
      */
     @Override
-	public ComparableObjectItem remove(int index) {
+    public ComparableObjectItem remove(int index) {
         VectorDataItem result = (VectorDataItem) this.data.remove(index);
         fireSeriesChanged();
         return result;
@@ -165,7 +165,7 @@ public class VectorSeries extends ComparableObjectSeries {
      * @return The data item.
      */
     @Override
-	public ComparableObjectItem getDataItem(int index) {
+    public ComparableObjectItem getDataItem(int index) {
         // overridden to make public
         return super.getDataItem(index);
     }

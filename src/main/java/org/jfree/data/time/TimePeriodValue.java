@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -127,7 +127,7 @@ public class TimePeriodValue implements Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -155,7 +155,7 @@ public class TimePeriodValue implements Cloneable, Serializable {
      * @return The hashcode
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result;
         result = (this.period != null ? this.period.hashCode() : 0);
         result = 29 * result + (this.value != null ? this.value.hashCode() : 0);
@@ -171,7 +171,7 @@ public class TimePeriodValue implements Cloneable, Serializable {
      * @return A clone.
      */
     @Override
-	public Object clone() {
+    public Object clone() {
         Object clone = null;
         try {
             clone = super.clone();
@@ -189,7 +189,7 @@ public class TimePeriodValue implements Cloneable, Serializable {
      * @return A string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return "TimePeriodValue[" + getPeriod() + "," + getValue() + "]";
     }
 

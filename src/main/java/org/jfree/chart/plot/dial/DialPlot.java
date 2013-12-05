@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------
@@ -46,24 +46,25 @@
 
 package org.jfree.chart.plot.dial;
 
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.event.PlotChangeEvent;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.plot.PlotState;
-import org.jfree.chart.util.ObjectList;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.data.general.Dataset;
-import org.jfree.data.general.DatasetChangeEvent;
-import org.jfree.data.general.ValueDataset;
-
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
+
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.util.ObjectList;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.event.PlotChangeEvent;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.plot.PlotState;
+import org.jfree.data.general.Dataset;
+import org.jfree.data.general.DatasetChangeEvent;
+import org.jfree.data.general.ValueDataset;
 
 /**
  * A dial plot composed of user-definable layers.
@@ -532,7 +533,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      */
     @Override
     public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
-                     PlotState parentState, PlotRenderingInfo info) {
+            PlotState parentState, PlotRenderingInfo info) {
 
         Shape origClip = g2.getClip();
         g2.setClip(area);
@@ -547,7 +548,8 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
                 g2.clip(this.dialFrame.getWindow(frame));
                 this.background.draw(g2, this, frame, area);
                 g2.setClip(savedClip);
-            } else {
+            }
+            else {
                 this.background.draw(g2, this, frame, area);
             }
         }
@@ -586,7 +588,8 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
                 g2.clip(this.dialFrame.getWindow(frame));
                 this.cap.draw(g2, this, frame, area);
                 g2.setClip(savedClip);
-            } else {
+            }
+            else {
                 this.cap.draw(g2, this, frame, area);
             }
         }
@@ -706,7 +709,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      * @return A new rectangle.
      */
     public static Rectangle2D rectangleByRadius(Rectangle2D rect,
-                                                double radiusW, double radiusH) {
+            double radiusW, double radiusH) {
         if (rect == null) {
             throw new IllegalArgumentException("Null 'rect' argument.");
         }

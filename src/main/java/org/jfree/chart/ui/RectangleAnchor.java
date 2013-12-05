@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -35,11 +35,11 @@
  * Changes:
  * --------
  * 31-Oct-2003 (DG);
- * 01-Apr-2004 : Changed java.awt.geom.Dimension2D to org.jfree.ui.Size2D 
+ * 01-Apr-2004 : Changed java.awt.geom.Dimension2D to org.jfree.ui.Size2D
  *               because of JDK bug 4976448 which persists on JDK 1.3.1 (DG);
  * 21-Jan-2005 : Changed return type of coordinates() method (DG);
  * 16-Jun-2012 : Moved from JCommon to JFreeChart (DG);
- * 
+ *
  */
 
 package org.jfree.chart.ui;

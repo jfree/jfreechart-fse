@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -46,21 +46,10 @@
 
 package org.jfree.chart.renderer.category;
 
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.event.RendererChangeEvent;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.util.BooleanList;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
-import org.jfree.data.Range;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.statistics.MultiValueCategoryDataset;
-
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -68,6 +57,20 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
+
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.util.BooleanList;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.event.RendererChangeEvent;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.Range;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.statistics.MultiValueCategoryDataset;
 
 /**
  * A renderer that handles the multiple values from a
@@ -278,7 +281,8 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
         Boolean flag = this.seriesShapesFilled.getBoolean(series);
         if (flag != null) {
             return flag;
-        } else {
+        }
+        else {
             return this.baseShapesFilled;
         }
 
@@ -363,7 +367,7 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      */
     @Override
     public Range findRangeBounds(CategoryDataset dataset) {
-        return findRangeBounds(dataset, true);
+         return findRangeBounds(dataset, true);
     }
 
     /**
@@ -382,9 +386,9 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      */
     @Override
     public void drawItem(Graphics2D g2, CategoryItemRendererState state,
-                         Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
-                         ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
-                         int pass) {
+            Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
+            ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
+            int pass) {
 
         // do nothing if item is not visible
         if (!getItemVisible(row, column)) {

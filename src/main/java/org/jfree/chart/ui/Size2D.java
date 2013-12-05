@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------
@@ -36,8 +36,8 @@
  * --------------------------
  * 26-Oct-2001 : Changed package to com.jrefinery.ui.*;
  * 14-Oct-2002 : Fixed errors reported by Checkstyle (DG);
- * 10-Nov-2004 : Added default constructor, added setWidth() and setHeight() 
- *               methods, added equals() method, implemented Cloneable, 
+ * 10-Nov-2004 : Added default constructor, added setWidth() and setHeight()
+ *               methods, added equals() method, implemented Cloneable,
  *               PublicCloneable and Serializable (DG);
  * 02-Feb-2005 : Added toString() method (DG);
  * 16-Jun-2012 : Moved from JCommon to JFreeChart (DG);
@@ -53,14 +53,14 @@ import org.jfree.chart.util.PublicCloneable;
 /**
  * A simple class for representing the dimensions of an object.  It would be
  * better to use <code>Dimension2D</code>, but this class is broken on various
- * JDK releases (particularly JDK 1.3.1, refer to bugs 4189446 and 4976448 on 
+ * JDK releases (particularly JDK 1.3.1, refer to bugs 4189446 and 4976448 on
  * the Java bug parade).
  */
 public class Size2D implements Cloneable, PublicCloneable, Serializable {
 
-    /** For serialization. */ 
+    /** For serialization. */
     private static final long serialVersionUID = 2558191683786418168L;
-    
+
     /** The width. */
     public double width;
 
@@ -73,7 +73,7 @@ public class Size2D implements Cloneable, PublicCloneable, Serializable {
     public Size2D() {
         this(0.0, 0.0);
     }
-    
+
     /**
      * Creates a new instance with the specified width and height.
      *
@@ -93,10 +93,10 @@ public class Size2D implements Cloneable, PublicCloneable, Serializable {
     public double getWidth() {
         return this.width;
     }
-    
+
     /**
      * Sets the width.
-     * 
+     *
      * @param width  the width.
      */
     public void setWidth(final double width) {
@@ -111,36 +111,36 @@ public class Size2D implements Cloneable, PublicCloneable, Serializable {
     public double getHeight() {
         return this.height;
     }
-    
+
     /**
      * Sets the height.
-     * 
+     *
      * @param height  the height.
      */
     public void setHeight(final double height) {
         this.height = height;
     }
-    
+
     /**
-     * Returns a string representation of this instance, mostly used for 
+     * Returns a string representation of this instance, mostly used for
      * debugging purposes.
-     * 
+     *
      * @return A string.
      */
     @Override
-	public String toString() {
-        return "Size2D[width=" + this.width + ", height=" + this.height + "]";   
+    public String toString() {
+        return "Size2D[width=" + this.width + ", height=" + this.height + "]";
     }
 
     /**
      * Compares this instance for equality with an arbitrary object.
-     * 
+     *
      * @param obj  the object (<code>null</code> permitted).
-     * 
+     *
      * @return A boolean.
      */
     @Override
-	public boolean equals(final Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -156,17 +156,17 @@ public class Size2D implements Cloneable, PublicCloneable, Serializable {
         }
         return true;
     }
-    
+
     /**
      * Returns a clone of this object.
-     * 
+     *
      * @return A clone.
-     * 
+     *
      * @throws CloneNotSupportedException if the object cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
-    
+
 }

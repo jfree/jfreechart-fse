@@ -6,22 +6,22 @@
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
- * This library is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Lesser General Public License as published by 
- * the Free Software Foundation; either version 2.1 of the License, or 
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public 
+ * This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, 
- * USA.  
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -36,10 +36,10 @@
  * -------
  * 22-Apr-2003 : Version 1 (DG);
  * 30-Jul-2003 : Added clone and equals methods while testing (DG);
- * 11-Mar-2005 : Fixed bug in bounds recalculation - see bug report 
+ * 11-Mar-2005 : Fixed bug in bounds recalculation - see bug report
  *               1161329 (DG);
  * ------------- JFREECHART 1.0.x ---------------------------------------------
- * 03-Oct-2006 : Fixed NullPointerException in equals(), fire change event in 
+ * 03-Oct-2006 : Fixed NullPointerException in equals(), fire change event in
  *               add() method, updated API docs (DG);
  * 07-Apr-2008 : Fixed bug with maxMiddleIndex in updateBounds() (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
@@ -48,24 +48,24 @@
 
 package org.jfree.data.time;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.general.Series;
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesException;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * A structure containing zero, one or many {@link TimePeriodValue} instances.  
- * The time periods can overlap, and are maintained in the order that they are 
+ * A structure containing zero, one or many {@link TimePeriodValue} instances.
+ * The time periods can overlap, and are maintained in the order that they are
  * added to the collection.
  * <p>
- * This is similar to the {@link TimeSeries} class, except that the time 
+ * This is similar to the {@link TimeSeries} class, except that the time
  * periods can have irregular lengths.
  */
-public class TimePeriodValues extends Series<Comparable> implements Serializable {
+public class TimePeriodValues extends Series implements Serializable {
 
     /** For serialization. */
     static final long serialVersionUID = -2210593619794989709L;
@@ -195,7 +195,7 @@ public class TimePeriodValues extends Series<Comparable> implements Serializable
     /**
      * Returns one data item for the series.
      *
-     * @param index  the item index (in the range <code>0</code> to 
+     * @param index  the item index (in the range <code>0</code> to
      *     <code>getItemCount() - 1</code>).
      *
      * @return One data item for the series.
@@ -207,7 +207,7 @@ public class TimePeriodValues extends Series<Comparable> implements Serializable
     /**
      * Returns the time period at the specified index.
      *
-     * @param index  the item index (in the range <code>0</code> to 
+     * @param index  the item index (in the range <code>0</code> to
      *     <code>getItemCount() - 1</code>).
      *
      * @return The time period at the specified index.
@@ -221,7 +221,7 @@ public class TimePeriodValues extends Series<Comparable> implements Serializable
     /**
      * Returns the value at the specified index.
      *
-     * @param index  the item index (in the range <code>0</code> to 
+     * @param index  the item index (in the range <code>0</code> to
      *     <code>getItemCount() - 1</code>).
      *
      * @return The value at the specified index (possibly <code>null</code>).
@@ -261,67 +261,73 @@ public class TimePeriodValues extends Series<Comparable> implements Serializable
 
         if (this.minStartIndex >= 0) {
             long minStart = getDataItem(this.minStartIndex).getPeriod()
-                    .getStart().getTime();
+                .getStart().getTime();
             if (start < minStart) {
                 this.minStartIndex = index;
             }
-        } else {
+        }
+        else {
             this.minStartIndex = index;
         }
 
         if (this.maxStartIndex >= 0) {
             long maxStart = getDataItem(this.maxStartIndex).getPeriod()
-                    .getStart().getTime();
+                .getStart().getTime();
             if (start > maxStart) {
                 this.maxStartIndex = index;
             }
-        } else {
+        }
+        else {
             this.maxStartIndex = index;
         }
 
         if (this.minMiddleIndex >= 0) {
             long s = getDataItem(this.minMiddleIndex).getPeriod().getStart()
-                    .getTime();
+                .getTime();
             long e = getDataItem(this.minMiddleIndex).getPeriod().getEnd()
-                    .getTime();
+                .getTime();
             long minMiddle = s + (e - s) / 2;
             if (middle < minMiddle) {
                 this.minMiddleIndex = index;
             }
-        } else {
+        }
+        else {
             this.minMiddleIndex = index;
         }
 
         if (this.maxMiddleIndex >= 0) {
             long s = getDataItem(this.maxMiddleIndex).getPeriod().getStart()
-                    .getTime();
+                .getTime();
             long e = getDataItem(this.maxMiddleIndex).getPeriod().getEnd()
-                    .getTime();
+                .getTime();
             long maxMiddle = s + (e - s) / 2;
             if (middle > maxMiddle) {
                 this.maxMiddleIndex = index;
             }
-        } else {
+        }
+        else {
             this.maxMiddleIndex = index;
         }
 
         if (this.minEndIndex >= 0) {
             long minEnd = getDataItem(this.minEndIndex).getPeriod().getEnd()
-                    .getTime();
+                .getTime();
             if (end < minEnd) {
                 this.minEndIndex = index;
             }
-        } else {
+        }
+        else {
             this.minEndIndex = index;
         }
 
         if (this.maxEndIndex >= 0) {
             long maxEnd = getDataItem(this.maxEndIndex).getPeriod().getEnd()
-                    .getTime();
+                .getTime();
             if (end > maxEnd) {
                 this.maxEndIndex = index;
             }
-        } else {
+        }
+        else {
             this.maxEndIndex = index;
         }
 
@@ -370,7 +376,7 @@ public class TimePeriodValues extends Series<Comparable> implements Serializable
     }
 
     /**
-     * Updates (changes) the value of a data item and sends a 
+     * Updates (changes) the value of a data item and sends a
      * {@link SeriesChangeEvent} to all registered listeners.
      *
      * @param index  the index of the data item to update.
@@ -461,7 +467,7 @@ public class TimePeriodValues extends Series<Comparable> implements Serializable
      * <P>
      * Notes:
      * <ul>
-     *   <li>no need to clone the domain and range descriptions, since String 
+     *   <li>no need to clone the domain and range descriptions, since String
      *       object is immutable;</li>
      *   <li>we pass over to the more general method createCopy(start, end).
      *   </li>
@@ -478,7 +484,7 @@ public class TimePeriodValues extends Series<Comparable> implements Serializable
     }
 
     /**
-     * Creates a new instance by copying a subset of the data in this 
+     * Creates a new instance by copying a subset of the data in this
      * collection.
      *
      * @param start  the index of the first item to copy.
@@ -489,18 +495,19 @@ public class TimePeriodValues extends Series<Comparable> implements Serializable
      * @throws CloneNotSupportedException if there is a cloning problem.
      */
     public TimePeriodValues createCopy(int start, int end)
-            throws CloneNotSupportedException {
+        throws CloneNotSupportedException {
 
         TimePeriodValues copy = (TimePeriodValues) super.clone();
 
         copy.data = new ArrayList<TimePeriodValue>();
-        if (!this.data.isEmpty()) {
+        if (this.data.size() > 0) {
             for (int index = start; index <= end; index++) {
                 TimePeriodValue item = this.data.get(index);
                 TimePeriodValue clone = (TimePeriodValue) item.clone();
                 try {
                     copy.add(clone);
-                } catch (SeriesException e) {
+                }
+                catch (SeriesException e) {
                     throw new RuntimeException("Could not add cloned item", e);
                 }
             }
@@ -528,7 +535,7 @@ public class TimePeriodValues extends Series<Comparable> implements Serializable
     }
 
     /**
-     * Returns the index of the time period with the minimum middle 
+     * Returns the index of the time period with the minimum middle
      * milliseconds.
      *
      * @return The index.
@@ -538,7 +545,7 @@ public class TimePeriodValues extends Series<Comparable> implements Serializable
     }
 
     /**
-     * Returns the index of the time period with the maximum middle 
+     * Returns the index of the time period with the maximum middle
      * milliseconds.
      *
      * @return The index.

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
@@ -44,11 +44,14 @@
 
 package org.jfree.chart.plot;
 
-import org.jfree.chart.event.MarkerChangeEvent;
-import org.jfree.chart.ui.LengthAdjustmentType;
-
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Paint;
+import java.awt.Stroke;
 import java.io.Serializable;
+
+import org.jfree.chart.ui.LengthAdjustmentType;
+import org.jfree.chart.event.MarkerChangeEvent;
 
 /**
  * A marker for a category.
@@ -58,51 +61,49 @@ import java.io.Serializable;
  *
  * @see CategoryPlot#addDomainMarker(CategoryMarker)
  */
-public class CategoryMarker<ColumnKey extends Comparable> extends Marker implements Cloneable, Serializable {
+public class CategoryMarker extends Marker implements Cloneable, Serializable {
 
     /** The category key. */
-    private ColumnKey key;
+    private Comparable key;
 
-    /** A hint that the marker should be drawn as a line rather than a region. */
+    /**
+     * A hint that the marker should be drawn as a line rather than a region.
+     */
     private boolean drawAsLine = false;
-
-    /** The marker type in case of drawAsLine=true */
-    private MarkerRenderType markerType;
 
     /**
      * Creates a new category marker for the specified category.
      *
-     * @param key the category key.
+     * @param key  the category key.
      */
-    public CategoryMarker(ColumnKey key) {
-        this(key, Color.gray, new BasicStroke(1.0f));
+    public CategoryMarker(Comparable key) {
+        this(key, Color.GRAY, new BasicStroke(1.0f));
     }
 
     /**
      * Creates a new category marker.
      *
-     * @param key    the key.
+     * @param key  the key.
      * @param paint  the paint (<code>null</code> not permitted).
-     * @param stroke the stroke (<code>null</code> not permitted).
+     * @param stroke  the stroke (<code>null</code> not permitted).
      */
-    public CategoryMarker(ColumnKey key, Paint paint, Stroke stroke) {
+    public CategoryMarker(Comparable key, Paint paint, Stroke stroke) {
         this(key, paint, stroke, paint, stroke, 1.0f);
     }
 
     /**
      * Creates a new category marker.
      *
-     * @param key           the key.
-     * @param paint         the paint (<code>null</code> not permitted).
-     * @param stroke        the stroke (<code>null</code> not permitted).
+     * @param key  the key.
+     * @param paint  the paint (<code>null</code> not permitted).
+     * @param stroke  the stroke (<code>null</code> not permitted).
      * @param outlinePaint  the outline paint (<code>null</code> permitted).
-     * @param outlineStroke the outline stroke (<code>null</code> permitted).
-     * @param alpha         the alpha transparency.
+     * @param outlineStroke  the outline stroke (<code>null</code> permitted).
+     * @param alpha  the alpha transparency.
      */
-    public CategoryMarker(
-            ColumnKey key, Paint paint, Stroke stroke,
-            Paint outlinePaint, Stroke outlineStroke,
-            float alpha) {
+    public CategoryMarker(Comparable key, Paint paint, Stroke stroke,
+                          Paint outlinePaint, Stroke outlineStroke,
+                          float alpha) {
         super(paint, stroke, outlinePaint, outlineStroke, alpha);
         this.key = key;
         setLabelOffsetType(LengthAdjustmentType.EXPAND);
@@ -113,7 +114,7 @@ public class CategoryMarker<ColumnKey extends Comparable> extends Marker impleme
      *
      * @return The key.
      */
-    public ColumnKey getKey() {
+    public Comparable getKey() {
         return this.key;
     }
 
@@ -121,11 +122,11 @@ public class CategoryMarker<ColumnKey extends Comparable> extends Marker impleme
      * Sets the key and sends a {@link MarkerChangeEvent} to all registered
      * listeners.
      *
-     * @param key the key (<code>null</code> not permitted).
+     * @param key  the key (<code>null</code> not permitted).
      *
      * @since 1.0.3
      */
-    public void setKey(ColumnKey key) {
+    public void setKey(Comparable key) {
         if (key == null) {
             throw new IllegalArgumentException("Null 'key' argument.");
         }
@@ -148,29 +149,21 @@ public class CategoryMarker<ColumnKey extends Comparable> extends Marker impleme
      * as a line, and sends a {@link MarkerChangeEvent} to all registered
      * listeners.
      *
-     * @param drawAsLine the flag.
+     * @param drawAsLine  the flag.
      */
     public void setDrawAsLine(boolean drawAsLine) {
         this.drawAsLine = drawAsLine;
         notifyListeners(new MarkerChangeEvent(this));
     }
 
-
-    public MarkerRenderType getMarkerType() {
-        return markerType;
-    }
-
-    public void setMarkerType(MarkerRenderType markerType) {
-        this.markerType = markerType;
-    }
-
     /**
      * Tests the marker for equality with an arbitrary object.
      *
-     * @param obj the object (<code>null</code> permitted).
+     * @param obj  the object (<code>null</code> permitted).
      *
      * @return A boolean.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -188,11 +181,7 @@ public class CategoryMarker<ColumnKey extends Comparable> extends Marker impleme
         if (this.drawAsLine != that.drawAsLine) {
             return false;
         }
-        if (this.markerType == null) {
-            return that.markerType == null;
-        }
-
-        return this.markerType == that.markerType;
+        return true;
     }
 
 }

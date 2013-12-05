@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
@@ -70,17 +70,17 @@
 
 package org.jfree.chart.axis;
 
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
+import java.util.List;
+
 import org.jfree.chart.Effect3D;
+import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
-import org.jfree.chart.ui.RectangleEdge;
-
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * A standard linear value axis with a 3D effect corresponding to the
@@ -124,8 +124,8 @@ public class NumberAxis3D extends NumberAxis implements Serializable {
      */
     @Override
     public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
-                          Rectangle2D dataArea, RectangleEdge edge,
-                          PlotRenderingInfo plotState) {
+            Rectangle2D dataArea, RectangleEdge edge,
+            PlotRenderingInfo plotState) {
 
         // if the axis is not visible, don't draw it...
         if (!isVisible()) {
@@ -158,7 +158,8 @@ public class NumberAxis3D extends NumberAxis implements Serializable {
 
         if (edge == RectangleEdge.LEFT || edge == RectangleEdge.BOTTOM) {
             adjustedY += yOffset;
-        } else if (edge == RectangleEdge.RIGHT || edge == RectangleEdge.TOP) {
+        }
+        else if (edge == RectangleEdge.RIGHT || edge == RectangleEdge.TOP) {
             adjustedX += xOffset;
         }
         Rectangle2D adjustedDataArea = new Rectangle2D.Double(adjustedX,

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------
@@ -103,7 +103,7 @@ public class XYDatasetTableModel extends AbstractTableModel
      * @return The row count.
      */
     @Override
-	public int getRowCount() {
+    public int getRowCount() {
         if (this.model == null) {
             return 0;
         }
@@ -116,7 +116,7 @@ public class XYDatasetTableModel extends AbstractTableModel
      * @return The number of columns in the model.
      */
     @Override
-	public int getColumnCount() {
+    public int getColumnCount() {
         if (this.model == null) {
             return 0;
         }
@@ -131,7 +131,7 @@ public class XYDatasetTableModel extends AbstractTableModel
      * @return The column name.
      */
     @Override
-	public String getColumnName(int column) {
+    public String getColumnName(int column) {
         if (this.model == null) {
             return super.getColumnName(column);
         }
@@ -153,7 +153,7 @@ public class XYDatasetTableModel extends AbstractTableModel
      * @return The value of the specified cell.
      */
     @Override
-	public Object getValueAt(int row, int column) {
+    public Object getValueAt(int row, int column) {
         if (this.model == null) {
             return null;
         }
@@ -173,7 +173,7 @@ public class XYDatasetTableModel extends AbstractTableModel
      * @see DatasetChangeListener
      */
     @Override
-	public void datasetChanged(DatasetChangeEvent event) {
+    public void datasetChanged(DatasetChangeEvent event) {
         fireTableDataChanged();
     }
 
@@ -186,9 +186,9 @@ public class XYDatasetTableModel extends AbstractTableModel
      * @return <code>true</code> if the specified cell is editable.
      */
     @Override
-	public boolean isCellEditable(int row, int column) {
+    public boolean isCellEditable(int row, int column) {
         return false;
-   }
+    }
 
     /**
      * Updates the {@link XYDataset} if allowed.
@@ -198,7 +198,7 @@ public class XYDatasetTableModel extends AbstractTableModel
      * @param column  the column.
      */
     @Override
-	public void setValueAt(Object value, int row, int column) {
+    public void setValueAt(Object value, int row, int column) {
         if (isCellEditable(row, column)) {
             // XYDataset only provides methods for reading a dataset...
         }

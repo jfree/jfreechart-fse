@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
@@ -91,7 +91,7 @@ public class PieDatasetHandler extends RootHandler implements DatasetTags {
      * @throws SAXException for errors.
      */
     @Override
-	public void startElement(String namespaceURI,
+    public void startElement(String namespaceURI,
                              String localName,
                              String qName,
                              Attributes atts) throws SAXException {
@@ -121,7 +121,7 @@ public class PieDatasetHandler extends RootHandler implements DatasetTags {
      * @throws SAXException for errors.
      */
     @Override
-	public void endElement(String namespaceURI,
+    public void endElement(String namespaceURI,
                            String localName,
                            String qName) throws SAXException {
 

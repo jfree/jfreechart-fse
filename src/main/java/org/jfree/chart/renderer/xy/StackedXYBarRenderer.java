@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -52,7 +52,7 @@
  * 28-May-2009 : Fixed bar positioning with inverted domain axis (DG);
  * 07-Act-2011 : Fix for Bug #3035289: Patch #3035325 (MH);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.renderer.xy;
@@ -168,7 +168,7 @@ public class StackedXYBarRenderer extends XYBarRenderer {
      * @return <code>2</code>.
      */
     @Override
-	public int getPassCount() {
+    public int getPassCount() {
         return 3;
     }
 
@@ -187,7 +187,7 @@ public class StackedXYBarRenderer extends XYBarRenderer {
      * @return A state object.
      */
     @Override
-	public XYItemRendererState initialise(Graphics2D g2,
+    public XYItemRendererState initialise(Graphics2D g2,
                                           Rectangle2D dataArea,
                                           XYPlot plot,
                                           XYDataset data,
@@ -205,7 +205,7 @@ public class StackedXYBarRenderer extends XYBarRenderer {
      *         or empty).
      */
     @Override
-	public Range findRangeBounds(XYDataset dataset) {
+    public Range findRangeBounds(XYDataset dataset) {
         if (dataset != null) {
             if (this.renderAsPercentages) {
                 return new Range(0.0, 1.0);
@@ -239,7 +239,7 @@ public class StackedXYBarRenderer extends XYBarRenderer {
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
                          PlotRenderingInfo info,
@@ -424,7 +424,7 @@ public class StackedXYBarRenderer extends XYBarRenderer {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -444,7 +444,7 @@ public class StackedXYBarRenderer extends XYBarRenderer {
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = super.hashCode();
         result = result * 37 + (this.renderAsPercentages ? 1 : 0);
         return result;

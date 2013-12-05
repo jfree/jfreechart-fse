@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------
@@ -39,7 +39,7 @@
  * 27-Aug-2003 : Moved from JFreeChart --> JCommon (DG);
  * 29-Jul-2004 : Fixed error in readResolve() method (DG);
  * 16-Jun-2012 : Moved from JCommon to JFreeChart (DG);
- * 
+ *
  */
 
 package org.jfree.chart.util;

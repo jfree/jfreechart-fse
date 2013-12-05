@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------------------
@@ -123,7 +123,7 @@ public class BoxAndWhiskerXYToolTipGenerator extends StandardXYToolTipGenerator
      * @return The items (never <code>null</code>).
      */
     @Override
-	protected Object[] createItemArray(XYDataset dataset, int series,
+    protected Object[] createItemArray(XYDataset dataset, int series,
                                        int item) {
         Object[] result = new Object[8];
         result[0] = dataset.getSeriesKey(series).toString();
@@ -156,7 +156,7 @@ public class BoxAndWhiskerXYToolTipGenerator extends StandardXYToolTipGenerator
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

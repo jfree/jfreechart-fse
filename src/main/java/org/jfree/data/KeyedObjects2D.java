@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------
@@ -45,7 +45,6 @@
 package org.jfree.data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -53,29 +52,27 @@ import java.util.List;
  * A data structure that stores zero, one or many objects, where each object is
  * associated with two keys (a 'row' key and a 'column' key).
  */
-public class KeyedObjects2D
-        <RowKey extends Comparable, ColumnKey extends Comparable, Value>
-        implements Cloneable, Serializable {
+public class KeyedObjects2D implements Cloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -1015873563138522374L;
 
     /** The row keys. */
-    private List<RowKey> rowKeys;
+    private List<Comparable> rowKeys;
 
     /** The column keys. */
-    private List<ColumnKey> columnKeys;
+    private List<Comparable> columnKeys;
 
     /** The row data. */
-    private List<KeyedObjects<ColumnKey, Value>> rows;
+    private List<KeyedObjects> rows;
 
     /**
      * Creates a new instance (initially empty).
      */
     public KeyedObjects2D() {
-        this.rowKeys = new ArrayList<RowKey>();
-        this.columnKeys = new ArrayList<ColumnKey>();
-        this.rows = new ArrayList<KeyedObjects<ColumnKey, Value>>();
+        this.rowKeys = new java.util.ArrayList<Comparable>();
+        this.columnKeys = new java.util.ArrayList<Comparable>();
+        this.rows = new java.util.ArrayList<KeyedObjects>();
     }
 
     /**
@@ -110,11 +107,11 @@ public class KeyedObjects2D
      *
      * @see #getObject(Comparable, Comparable)
      */
-    public Value getObject(int row, int column) {
-        Value result = null;
-        KeyedObjects<ColumnKey, Value> rowData = this.rows.get(row);
+    public Object getObject(int row, int column) {
+        Object result = null;
+        KeyedObjects rowData = this.rows.get(row);
         if (rowData != null) {
-            ColumnKey columnKey = this.columnKeys.get(column);
+            Comparable columnKey = this.columnKeys.get(column);
             if (columnKey != null) {
                 int index = rowData.getIndex(columnKey);
                 if (index >= 0) {
@@ -134,7 +131,7 @@ public class KeyedObjects2D
      *
      * @see #getRowIndex(Comparable)
      */
-    public RowKey getRowKey(int row) {
+    public Comparable getRowKey(int row) {
         return this.rowKeys.get(row);
     }
 
@@ -148,7 +145,7 @@ public class KeyedObjects2D
      *
      * @see #getRowKey(int)
      */
-    public int getRowIndex(RowKey key) {
+    public int getRowIndex(Comparable key) {
         if (key == null) {
             throw new IllegalArgumentException("Null 'key' argument.");
         }
@@ -162,7 +159,7 @@ public class KeyedObjects2D
      *
      * @see #getRowKeys()
      */
-    public List<RowKey> getRowKeys() {
+    public List<Comparable> getRowKeys() {
         return Collections.unmodifiableList(this.rowKeys);
     }
 
@@ -175,7 +172,7 @@ public class KeyedObjects2D
      *
      * @see #getColumnIndex(Comparable)
      */
-    public ColumnKey getColumnKey(int column) {
+    public Comparable getColumnKey(int column) {
         return this.columnKeys.get(column);
     }
 
@@ -189,7 +186,7 @@ public class KeyedObjects2D
      *
      * @see #getColumnKey(int)
      */
-    public int getColumnIndex(ColumnKey key) {
+    public int getColumnIndex(Comparable key) {
         if (key == null) {
             throw new IllegalArgumentException("Null 'key' argument.");
         }
@@ -203,7 +200,7 @@ public class KeyedObjects2D
      *
      * @see #getRowKeys()
      */
-    public List<ColumnKey> getColumnKeys() {
+    public List<Comparable> getColumnKeys() {
         return Collections.unmodifiableList(this.columnKeys);
     }
 
@@ -220,7 +217,7 @@ public class KeyedObjects2D
      * @throws UnknownKeyException if <code>rowKey</code> or
      *         <code>columnKey</code> is not recognised.
      */
-    public Value getObject(RowKey rowKey, ColumnKey columnKey) {
+    public Object getObject(Comparable rowKey, Comparable columnKey) {
         if (rowKey == null) {
             throw new IllegalArgumentException("Null 'rowKey' argument.");
         }
@@ -237,11 +234,12 @@ public class KeyedObjects2D
             throw new UnknownKeyException("Column key (" + columnKey
                     + ") not recognised.");
         }
-        KeyedObjects<ColumnKey, Value> rowData = this.rows.get(row);
+        KeyedObjects rowData = this.rows.get(row);
         int index = rowData.getIndex(columnKey);
         if (index >= 0) {
             return rowData.getObject(index);
-        } else {
+        }
+        else {
             return null;
         }
     }
@@ -253,7 +251,8 @@ public class KeyedObjects2D
      * @param rowKey  the row key (<code>null</code> not permitted).
      * @param columnKey  the column key (<code>null</code> not permitted).
      */
-    public void addObject(Value object, RowKey rowKey, ColumnKey columnKey) {
+    public void addObject(Object object, Comparable rowKey,
+            Comparable columnKey) {
         setObject(object, rowKey, columnKey);
     }
 
@@ -264,7 +263,8 @@ public class KeyedObjects2D
      * @param rowKey  the row key (<code>null</code> not permitted).
      * @param columnKey  the column key (<code>null</code> not permitted).
      */
-    public void setObject(Value object, RowKey rowKey, ColumnKey columnKey) {
+    public void setObject(Object object, Comparable rowKey,
+            Comparable columnKey) {
 
         if (rowKey == null) {
             throw new IllegalArgumentException("Null 'rowKey' argument.");
@@ -272,13 +272,14 @@ public class KeyedObjects2D
         if (columnKey == null) {
             throw new IllegalArgumentException("Null 'columnKey' argument.");
         }
-        KeyedObjects<ColumnKey, Value> row;
+        KeyedObjects row;
         int rowIndex = this.rowKeys.indexOf(rowKey);
         if (rowIndex >= 0) {
             row = this.rows.get(rowIndex);
-        } else {
+        }
+        else {
             this.rowKeys.add(rowKey);
-            row = new KeyedObjects<ColumnKey, Value>();
+            row = new KeyedObjects();
             this.rows.add(row);
         }
         row.setObject(columnKey, object);
@@ -299,7 +300,7 @@ public class KeyedObjects2D
      *
      * @see #addObject(Object, Comparable, Comparable)
      */
-    public void removeObject(RowKey rowKey, ColumnKey columnKey) {
+    public void removeObject(Comparable rowKey, Comparable columnKey) {
         int rowIndex = getRowIndex(rowKey);
         if (rowIndex < 0) {
             throw new UnknownKeyException("Row key (" + rowKey
@@ -314,9 +315,15 @@ public class KeyedObjects2D
 
         // 1. check whether the row is now empty.
         boolean allNull = true;
-        KeyedObjects<ColumnKey, Value> row = this.rows.get(rowIndex);
+        KeyedObjects row = this.rows.get(rowIndex);
 
-        allNull = isRowEmpty(row);
+        for (int item = 0, itemCount = row.getItemCount(); item < itemCount;
+             item++) {
+            if (row.getObject(item) != null) {
+                allNull = false;
+                break;
+            }
+        }
 
         if (allNull) {
             this.rowKeys.remove(rowIndex);
@@ -324,38 +331,25 @@ public class KeyedObjects2D
         }
 
         // 2. check whether the column is now empty.
-        allNull = isColumnEmpty(columnKey);
+        allNull = true;
 
+        for (KeyedObjects innerRow : this.rows) {
+            int colIndex = innerRow.getIndex(columnKey);
+            if (colIndex >= 0 && innerRow.getObject(colIndex) != null) {
+                allNull = false;
+                break;
+            }
+        }
 
         if (allNull) {
-            for (KeyedObjects<ColumnKey, Value> currentRow : this.rows) {
-                int colIndex = currentRow.getIndex(columnKey);
+            for (KeyedObjects innerRow : this.rows) {
+                int colIndex = innerRow.getIndex(columnKey);
                 if (colIndex >= 0) {
-                    row.removeValue(colIndex);
+                    innerRow.removeValue(colIndex);
                 }
             }
             this.columnKeys.remove(columnKey);
         }
-    }
-
-    private boolean isColumnEmpty(ColumnKey columnKey) {
-        for (KeyedObjects<ColumnKey, Value> currentRow : this.rows) {
-            int colIndex = currentRow.getIndex(columnKey);
-            if (colIndex >= 0 && currentRow.getObject(colIndex) != null) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean isRowEmpty(KeyedObjects<ColumnKey, Value> row) {
-        int itemCount = row.getItemCount();
-        for (int item = 0; item < itemCount; item++) {
-            if (row.getObject(item) != null) {
-                return false;
-            }
-        }
-        return true;
     }
 
     /**
@@ -379,7 +373,7 @@ public class KeyedObjects2D
      *
      * @see #removeColumn(Comparable)
      */
-    public void removeRow(RowKey rowKey) {
+    public void removeRow(Comparable rowKey) {
         int index = getRowIndex(rowKey);
         if (index < 0) {
             throw new UnknownKeyException("Row key (" + rowKey
@@ -396,7 +390,7 @@ public class KeyedObjects2D
      * @see #removeRow(int)
      */
     public void removeColumn(int columnIndex) {
-        ColumnKey columnKey = getColumnKey(columnIndex);
+        Comparable columnKey = getColumnKey(columnIndex);
         removeColumn(columnKey);
     }
 
@@ -409,13 +403,13 @@ public class KeyedObjects2D
      *
      * @see #removeRow(Comparable)
      */
-    public void removeColumn(ColumnKey columnKey) {
+    public void removeColumn(Comparable columnKey) {
         int index = getColumnIndex(columnKey);
         if (index < 0) {
             throw new UnknownKeyException("Column key (" + columnKey
                     + ") not recognised.");
         }
-        for (KeyedObjects<ColumnKey, Value> rowData : this.rows) {
+        for (KeyedObjects rowData : this.rows) {
             int i = rowData.getIndex(columnKey);
             if (i >= 0) {
                 rowData.removeValue(i);
@@ -474,7 +468,8 @@ public class KeyedObjects2D
                     if (v2 != null) {
                         return false;
                     }
-                } else {
+                }
+                else {
                     if (!v1.equals(v2)) {
                         return false;
                     }
@@ -506,15 +501,14 @@ public class KeyedObjects2D
      * @throws CloneNotSupportedException  this class will not throw this
      *         exception, but subclasses (if any) might.
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Object clone() throws CloneNotSupportedException {
-        KeyedObjects2D<RowKey, ColumnKey, Value> clone = (KeyedObjects2D<RowKey, ColumnKey, Value>) super.clone();
-        clone.columnKeys = new ArrayList<ColumnKey>(this.columnKeys);
-        clone.rowKeys = new ArrayList(this.rowKeys);
-        clone.rows = new ArrayList(this.rows.size());
-        for (KeyedObjects<ColumnKey, Value> row : this.rows) {
-            clone.rows.add((KeyedObjects<ColumnKey, Value>) row.clone());
+        KeyedObjects2D clone = (KeyedObjects2D) super.clone();
+        clone.columnKeys = new java.util.ArrayList<Comparable>(this.columnKeys);
+        clone.rowKeys = new java.util.ArrayList<Comparable>(this.rowKeys);
+        clone.rows = new java.util.ArrayList<KeyedObjects>(this.rows.size());
+        for (KeyedObjects row : this.rows) {
+            clone.rows.add((KeyedObjects) row.clone());
         }
         return clone;
     }

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -113,7 +113,7 @@ public class HexNumberFormat extends NumberFormat {
      * @return The string buffer.
      */
     @Override
-	public StringBuffer format(double number, StringBuffer toAppendTo,
+    public StringBuffer format(double number, StringBuffer toAppendTo,
             FieldPosition pos) {
         return format((long) number, toAppendTo, pos);
     }
@@ -129,7 +129,7 @@ public class HexNumberFormat extends NumberFormat {
      * @return The string buffer.
      */
     @Override
-	public StringBuffer format(long number, StringBuffer toAppendTo,
+    public StringBuffer format(long number, StringBuffer toAppendTo,
             FieldPosition pos) {
         String l_hex = Long.toHexString(number).toUpperCase();
 
@@ -155,7 +155,7 @@ public class HexNumberFormat extends NumberFormat {
      * @return Always <code>null</code>.
      */
     @Override
-	public Number parse (String source, ParsePosition parsePosition) {
+    public Number parse (String source, ParsePosition parsePosition) {
         return null; // don't bother with parsing
     }
 

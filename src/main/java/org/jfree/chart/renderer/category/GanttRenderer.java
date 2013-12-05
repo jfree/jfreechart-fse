@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------
@@ -50,7 +50,7 @@
  * 26-Jun-2008 : Added crosshair support (DG);
  * 19-May-2009 : Fixed FindBugs warnings, patch by Michal Wozniak (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.renderer.category;
@@ -243,7 +243,7 @@ public class GanttRenderer extends IntervalBarRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          CategoryItemRendererState state,
                          Rectangle2D dataArea,
                          CategoryPlot plot,
@@ -574,7 +574,7 @@ public class GanttRenderer extends IntervalBarRenderer
      * @since 1.0.11
      */
     @Override
-	public double getItemMiddle(Comparable rowKey, Comparable columnKey,
+    public double getItemMiddle(Comparable rowKey, Comparable columnKey,
             CategoryDataset dataset, CategoryAxis axis, Rectangle2D area,
             RectangleEdge edge) {
         return axis.getCategorySeriesMiddle(columnKey, rowKey, dataset,
@@ -589,7 +589,7 @@ public class GanttRenderer extends IntervalBarRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

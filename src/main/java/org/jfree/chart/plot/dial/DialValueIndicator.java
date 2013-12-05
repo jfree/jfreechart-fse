@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -44,18 +44,14 @@
 
 package org.jfree.chart.plot.dial;
 
-import org.jfree.chart.HashUtilities;
-import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.ui.RectangleAnchor;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtilities;
-
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -65,6 +61,17 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+
+import org.jfree.chart.HashUtilities;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.Size2D;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.util.SerialUtilities;
 
 /**
  * A value indicator for a {@link DialPlot}.
@@ -579,7 +586,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      */
     @Override
     public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
-                     Rectangle2D view) {
+            Rectangle2D view) {
 
         // work out the anchor point
         Rectangle2D f = DialPlot.rectangleByRadius(frame, this.radius,
@@ -642,7 +649,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
     }
 
     /**
-     * A utility method that adjusts a value, if necessary, to be within a 
+     * A utility method that adjusts a value, if necessary, to be within a
      * specified range.
      *
      * @param x  the value.
@@ -657,9 +664,11 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
         }
         if (x < minX) {
             return minX;
-        } else if (x > maxX) {
+        }
+        else if (x > maxX) {
             return maxX;
-        } else {
+        }
+        else {
             return x;
         }
     }

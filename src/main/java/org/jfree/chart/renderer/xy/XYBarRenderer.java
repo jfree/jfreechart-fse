@@ -104,8 +104,22 @@
 
 package org.jfree.chart.renderer.xy;
 
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
+
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.ui.GradientPaintTransformer;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.StandardGradientPaintTransformer;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.ItemLabelAnchor;
@@ -117,19 +131,9 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.ui.GradientPaintTransformer;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.StandardGradientPaintTransformer;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.Range;
 import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.XYDataset;
-
-import java.awt.*;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.io.Serializable;
 
 /**
  * A renderer that draws bars on an {@link XYPlot} (requires an
@@ -670,7 +674,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      */
     @Override
     public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
-                                          XYPlot plot, XYDataset dataset, PlotRenderingInfo info) {
+            XYPlot plot, XYDataset dataset, PlotRenderingInfo info) {
 
         XYBarRendererState state = new XYBarRendererState(info);
         ValueAxis rangeAxis = plot.getRangeAxisForDataset(plot.indexOf(
@@ -721,7 +725,8 @@ public class XYBarRenderer extends AbstractXYItemRenderer
         if (this.drawBarOutline) {
             result = new LegendItem(label, description, toolTipText,
                     urlText, shape, paint, outlineStroke, outlinePaint);
-        } else {
+        }
+        else {
             result = new LegendItem(label, description, toolTipText, urlText,
                     shape, paint);
         }
@@ -782,7 +787,8 @@ public class XYBarRenderer extends AbstractXYItemRenderer
         if (this.useYInterval) {
             value0 = intervalDataset.getStartYValue(series, item);
             value1 = intervalDataset.getEndYValue(series, item);
-        } else {
+        }
+        else {
             value0 = this.base;
             value1 = intervalDataset.getYValue(series, item);
         }
@@ -793,7 +799,8 @@ public class XYBarRenderer extends AbstractXYItemRenderer
             if (!rangeAxis.getRange().intersects(value0, value1)) {
                 return;
             }
-        } else {
+        }
+        else {
             if (!rangeAxis.getRange().intersects(value1, value0)) {
                 return;
             }
@@ -818,7 +825,8 @@ public class XYBarRenderer extends AbstractXYItemRenderer
             if (!domainAxis.getRange().intersects(startX, endX)) {
                 return;
             }
-        } else {
+        }
+        else {
             if (!domainAxis.getRange().intersects(endX, startX)) {
                 return;
             }
@@ -855,8 +863,9 @@ public class XYBarRenderer extends AbstractXYItemRenderer
             bottom = Math.max(bottom, dataArea.getMinX());
             top = Math.min(top, dataArea.getMaxX());
             bar = new Rectangle2D.Double(
-                    bottom, left, top - bottom, translatedWidth);
-        } else if (orientation == PlotOrientation.VERTICAL) {
+                bottom, left, top - bottom, translatedWidth);
+        }
+        else if (orientation == PlotOrientation.VERTICAL) {
             // clip top and bottom bounds to data area
             bottom = Math.max(bottom, dataArea.getMinY());
             top = Math.min(top, dataArea.getMaxY());
@@ -870,19 +879,22 @@ public class XYBarRenderer extends AbstractXYItemRenderer
         if (orientation == PlotOrientation.HORIZONTAL) {
             if (positive && inverted || !positive && !inverted) {
                 barBase = RectangleEdge.RIGHT;
-            } else {
+            }
+            else {
                 barBase = RectangleEdge.LEFT;
             }
-        } else {
+        }
+        else {
             if (positive && !inverted || !positive && inverted) {
                 barBase = RectangleEdge.BOTTOM;
-            } else {
+            }
+            else {
                 barBase = RectangleEdge.TOP;
             }
         }
         if (getShadowsVisible()) {
             this.barPainter.paintBarShadow(g2, this, series, item, bar, barBase,
-                    !this.useYInterval);
+                !this.useYInterval);
         }
         this.barPainter.paintBar(g2, this, series, item, bar, barBase);
 
@@ -928,8 +940,8 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @param negative  a flag indicating a negative value.
      */
     protected void drawItemLabel(Graphics2D g2, XYDataset dataset,
-                                 int series, int item, XYPlot plot, XYItemLabelGenerator generator,
-                                 Rectangle2D bar, boolean negative) {
+            int series, int item, XYPlot plot, XYItemLabelGenerator generator,
+            Rectangle2D bar, boolean negative) {
 
         if (generator == null) {
             return;  // nothing to do
@@ -948,7 +960,8 @@ public class XYBarRenderer extends AbstractXYItemRenderer
         ItemLabelPosition position = null;
         if (!negative) {
             position = getPositiveItemLabelPosition(series, item);
-        } else {
+        }
+        else {
             position = getNegativeItemLabelPosition(series, item);
         }
 
@@ -966,7 +979,8 @@ public class XYBarRenderer extends AbstractXYItemRenderer
                 if (!bar.contains(bounds.getBounds2D())) {
                     if (!negative) {
                         position = getPositiveItemLabelPositionFallback();
-                    } else {
+                    }
+                    else {
                         position = getNegativeItemLabelPositionFallback();
                     }
                     if (position != null) {
@@ -997,7 +1011,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @return The anchor point.
      */
     private Point2D calculateLabelAnchorPoint(ItemLabelAnchor anchor,
-                                              Rectangle2D bar, PlotOrientation orientation) {
+            Rectangle2D bar, PlotOrientation orientation) {
 
         Point2D result = null;
         double offset = getItemLabelAnchorOffset();
@@ -1019,53 +1033,77 @@ public class XYBarRenderer extends AbstractXYItemRenderer
 
         if (anchor == ItemLabelAnchor.CENTER) {
             result = new Point2D.Double(x3, y3);
-        } else if (anchor == ItemLabelAnchor.INSIDE1) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE1) {
             result = new Point2D.Double(x4, y4);
-        } else if (anchor == ItemLabelAnchor.INSIDE2) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE2) {
             result = new Point2D.Double(x4, y4);
-        } else if (anchor == ItemLabelAnchor.INSIDE3) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE3) {
             result = new Point2D.Double(x4, y3);
-        } else if (anchor == ItemLabelAnchor.INSIDE4) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE4) {
             result = new Point2D.Double(x4, y2);
-        } else if (anchor == ItemLabelAnchor.INSIDE5) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE5) {
             result = new Point2D.Double(x4, y2);
-        } else if (anchor == ItemLabelAnchor.INSIDE6) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE6) {
             result = new Point2D.Double(x3, y2);
-        } else if (anchor == ItemLabelAnchor.INSIDE7) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE7) {
             result = new Point2D.Double(x2, y2);
-        } else if (anchor == ItemLabelAnchor.INSIDE8) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE8) {
             result = new Point2D.Double(x2, y2);
-        } else if (anchor == ItemLabelAnchor.INSIDE9) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE9) {
             result = new Point2D.Double(x2, y3);
-        } else if (anchor == ItemLabelAnchor.INSIDE10) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE10) {
             result = new Point2D.Double(x2, y4);
-        } else if (anchor == ItemLabelAnchor.INSIDE11) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE11) {
             result = new Point2D.Double(x2, y4);
-        } else if (anchor == ItemLabelAnchor.INSIDE12) {
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE12) {
             result = new Point2D.Double(x3, y4);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE1) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE1) {
             result = new Point2D.Double(x5, y6);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE2) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE2) {
             result = new Point2D.Double(x6, y5);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE3) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE3) {
             result = new Point2D.Double(x6, y3);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE4) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE4) {
             result = new Point2D.Double(x6, y1);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE5) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE5) {
             result = new Point2D.Double(x5, y0);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE6) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE6) {
             result = new Point2D.Double(x3, y0);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE7) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE7) {
             result = new Point2D.Double(x1, y0);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE8) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE8) {
             result = new Point2D.Double(x0, y1);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE9) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE9) {
             result = new Point2D.Double(x0, y3);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE10) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE10) {
             result = new Point2D.Double(x0, y5);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE11) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE11) {
             result = new Point2D.Double(x1, y6);
-        } else if (anchor == ItemLabelAnchor.OUTSIDE12) {
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE12) {
             result = new Point2D.Double(x3, y6);
         }
 
@@ -1082,18 +1120,18 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      */
     private boolean isInternalAnchor(ItemLabelAnchor anchor) {
         return anchor == ItemLabelAnchor.CENTER
-                || anchor == ItemLabelAnchor.INSIDE1
-                || anchor == ItemLabelAnchor.INSIDE2
-                || anchor == ItemLabelAnchor.INSIDE3
-                || anchor == ItemLabelAnchor.INSIDE4
-                || anchor == ItemLabelAnchor.INSIDE5
-                || anchor == ItemLabelAnchor.INSIDE6
-                || anchor == ItemLabelAnchor.INSIDE7
-                || anchor == ItemLabelAnchor.INSIDE8
-                || anchor == ItemLabelAnchor.INSIDE9
-                || anchor == ItemLabelAnchor.INSIDE10
-                || anchor == ItemLabelAnchor.INSIDE11
-                || anchor == ItemLabelAnchor.INSIDE12;
+               || anchor == ItemLabelAnchor.INSIDE1
+               || anchor == ItemLabelAnchor.INSIDE2
+               || anchor == ItemLabelAnchor.INSIDE3
+               || anchor == ItemLabelAnchor.INSIDE4
+               || anchor == ItemLabelAnchor.INSIDE5
+               || anchor == ItemLabelAnchor.INSIDE6
+               || anchor == ItemLabelAnchor.INSIDE7
+               || anchor == ItemLabelAnchor.INSIDE8
+               || anchor == ItemLabelAnchor.INSIDE9
+               || anchor == ItemLabelAnchor.INSIDE10
+               || anchor == ItemLabelAnchor.INSIDE11
+               || anchor == ItemLabelAnchor.INSIDE12;
     }
 
     /**

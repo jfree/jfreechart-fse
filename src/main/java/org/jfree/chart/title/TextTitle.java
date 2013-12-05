@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------
@@ -479,7 +479,7 @@ public class TextTitle extends Title
      * @return The block size (in Java2D units, never <code>null</code>).
      */
     @Override
-	public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
+    public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
         RectangleConstraint cc = toContentConstraint(constraint);
         LengthConstraintType w = cc.getWidthConstraintType();
         LengthConstraintType h = cc.getHeightConstraintType();
@@ -674,7 +674,7 @@ public class TextTitle extends Title
      * @param area  the area allocated for the title.
      */
     @Override
-	public void draw(Graphics2D g2, Rectangle2D area) {
+    public void draw(Graphics2D g2, Rectangle2D area) {
         draw(g2, area, null);
     }
 
@@ -691,7 +691,7 @@ public class TextTitle extends Title
      *         title, or <code>null</code>.
      */
     @Override
-	public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
+    public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
         if (this.content == null) {
             return null;
         }
@@ -833,7 +833,7 @@ public class TextTitle extends Title
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -877,7 +877,7 @@ public class TextTitle extends Title
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = super.hashCode();
         result = 29 * result + (this.text != null ? this.text.hashCode() : 0);
         result = 29 * result + (this.font != null ? this.font.hashCode() : 0);
@@ -895,7 +895,7 @@ public class TextTitle extends Title
      * @throws CloneNotSupportedException never.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

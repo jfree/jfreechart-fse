@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
@@ -49,34 +49,32 @@
 
 package org.jfree.data.category;
 
+import java.io.Serializable;
+import java.util.List;
+
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.DefaultKeyedValues2D;
 import org.jfree.data.UnknownKeyException;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DatasetChangeEvent;
 
-import java.io.Serializable;
-import java.util.List;
-
 /**
  * A default implementation of the {@link CategoryDataset} interface.
  */
-public class DefaultCategoryDataset<RowKey extends Comparable,
-        ColumnKey extends Comparable>
-        extends AbstractDataset
-        implements CategoryDataset<RowKey, ColumnKey>, PublicCloneable, Serializable {
+public class DefaultCategoryDataset extends AbstractDataset
+        implements CategoryDataset, PublicCloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -8168173757291644622L;
 
     /** A storage structure for the data. */
-    private DefaultKeyedValues2D<RowKey, ColumnKey> data;
+    private DefaultKeyedValues2D data;
 
     /**
      * Creates a new (empty) dataset.
      */
     public DefaultCategoryDataset() {
-        this.data = new DefaultKeyedValues2D<RowKey, ColumnKey>();
+        this.data = new DefaultKeyedValues2D();
     }
 
     /**
@@ -131,7 +129,7 @@ public class DefaultCategoryDataset<RowKey extends Comparable,
      * @see #getColumnKey(int)
      */
     @Override
-    public RowKey getRowKey(int row) {
+    public Comparable getRowKey(int row) {
         return this.data.getRowKey(row);
     }
 
@@ -145,7 +143,7 @@ public class DefaultCategoryDataset<RowKey extends Comparable,
      * @see #getRowKey(int)
      */
     @Override
-    public int getRowIndex(RowKey key) {
+    public int getRowIndex(Comparable key) {
         // defer null argument check
         return this.data.getRowIndex(key);
     }
@@ -158,7 +156,7 @@ public class DefaultCategoryDataset<RowKey extends Comparable,
      * @see #getRowKey(int)
      */
     @Override
-    public List<RowKey> getRowKeys() {
+    public List<Comparable> getRowKeys() {
         return this.data.getRowKeys();
     }
 
@@ -172,7 +170,7 @@ public class DefaultCategoryDataset<RowKey extends Comparable,
      * @see #getColumnIndex(Comparable)
      */
     @Override
-    public ColumnKey getColumnKey(int column) {
+    public Comparable getColumnKey(int column) {
         return this.data.getColumnKey(column);
     }
 
@@ -186,7 +184,7 @@ public class DefaultCategoryDataset<RowKey extends Comparable,
      * @see #getColumnKey(int)
      */
     @Override
-    public int getColumnIndex(ColumnKey key) {
+    public int getColumnIndex(Comparable key) {
         // defer null argument check
         return this.data.getColumnIndex(key);
     }
@@ -199,7 +197,7 @@ public class DefaultCategoryDataset<RowKey extends Comparable,
      * @see #getColumnKey(int)
      */
     @Override
-    public List<ColumnKey> getColumnKeys() {
+    public List<Comparable> getColumnKeys() {
         return this.data.getColumnKeys();
     }
 
@@ -216,7 +214,7 @@ public class DefaultCategoryDataset<RowKey extends Comparable,
      * @see #addValue(Number, Comparable, Comparable)
      */
     @Override
-    public Number getValue(RowKey rowKey, ColumnKey columnKey) {
+    public Number getValue(Comparable rowKey, Comparable columnKey) {
         return this.data.getValue(rowKey, columnKey);
     }
 
@@ -230,9 +228,24 @@ public class DefaultCategoryDataset<RowKey extends Comparable,
      * @see #getValue(Comparable, Comparable)
      * @see #removeValue(Comparable, Comparable)
      */
-    public void addValue(Number value, RowKey rowKey, ColumnKey columnKey) {
+    public void addValue(Number value, Comparable rowKey,
+                         Comparable columnKey) {
         this.data.addValue(value, rowKey, columnKey);
         fireDatasetChanged();
+    }
+
+    /**
+     * Adds a value to the table.
+     *
+     * @param value  the value.
+     * @param rowKey  the row key.
+     * @param columnKey  the column key.
+     *
+     * @see #getValue(Comparable, Comparable)
+     */
+    public void addValue(double value, Comparable rowKey,
+                         Comparable columnKey) {
+        addValue(new Double(value), rowKey, columnKey);
     }
 
     /**
@@ -245,7 +258,8 @@ public class DefaultCategoryDataset<RowKey extends Comparable,
      *
      * @see #getValue(Comparable, Comparable)
      */
-    public void setValue(Number value, RowKey rowKey, ColumnKey columnKey) {
+    public void setValue(Number value, Comparable rowKey,
+                         Comparable columnKey) {
         this.data.setValue(value, rowKey, columnKey);
         fireDatasetChanged();
     }
@@ -260,7 +274,8 @@ public class DefaultCategoryDataset<RowKey extends Comparable,
      *
      * @see #getValue(Comparable, Comparable)
      */
-    public void setValue(double value, RowKey rowKey, ColumnKey columnKey) {
+    public void setValue(double value, Comparable rowKey,
+                         Comparable columnKey) {
         setValue(new Double(value), rowKey, columnKey);
     }
 
@@ -275,8 +290,8 @@ public class DefaultCategoryDataset<RowKey extends Comparable,
      * @throws UnknownKeyException if either key is not defined in the dataset.
      */
     public void incrementValue(double value,
-                               RowKey rowKey,
-                               ColumnKey columnKey) {
+                               Comparable rowKey,
+                               Comparable columnKey) {
         double existing = 0.0;
         Number n = getValue(rowKey, columnKey);
         if (n != null) {
@@ -294,7 +309,7 @@ public class DefaultCategoryDataset<RowKey extends Comparable,
      *
      * @see #addValue(Number, Comparable, Comparable)
      */
-    public void removeValue(RowKey rowKey, ColumnKey columnKey) {
+    public void removeValue(Comparable rowKey, Comparable columnKey) {
         this.data.removeValue(rowKey, columnKey);
         fireDatasetChanged();
     }
@@ -320,7 +335,7 @@ public class DefaultCategoryDataset<RowKey extends Comparable,
      *
      * @see #removeColumn(Comparable)
      */
-    public void removeRow(RowKey rowKey) {
+    public void removeRow(Comparable rowKey) {
         this.data.removeRow(rowKey);
         fireDatasetChanged();
     }
@@ -349,7 +364,7 @@ public class DefaultCategoryDataset<RowKey extends Comparable,
      * @throws UnknownKeyException if <code>columnKey</code> is not defined
      *         in the dataset.
      */
-    public void removeColumn(ColumnKey columnKey) {
+    public void removeColumn(Comparable columnKey) {
         this.data.removeColumn(columnKey);
         fireDatasetChanged();
     }
@@ -395,7 +410,8 @@ public class DefaultCategoryDataset<RowKey extends Comparable,
                     if (v2 != null) {
                         return false;
                     }
-                } else if (!v1.equals(v2)) {
+                }
+                else if (!v1.equals(v2)) {
                     return false;
                 }
             }

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------
@@ -84,31 +84,16 @@
  *               Becker (DG);
  * 11-Oct-2011 : applied patch #3421088 from Martin Krauskopf to fix bug (MH);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.chart.renderer.category;
 
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.entity.EntityCollection;
-import org.jfree.chart.event.RendererChangeEvent;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.renderer.Outlier;
-import org.jfree.chart.renderer.OutlierList;
-import org.jfree.chart.renderer.OutlierListCollection;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.data.Range;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.statistics.BoxAndWhiskerCategoryDataset;
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -120,6 +105,25 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.entity.EntityCollection;
+import org.jfree.chart.event.RendererChangeEvent;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.renderer.Outlier;
+import org.jfree.chart.renderer.OutlierList;
+import org.jfree.chart.renderer.OutlierListCollection;
+import org.jfree.chart.util.SerialUtilities;
+import org.jfree.data.Range;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.statistics.BoxAndWhiskerCategoryDataset;
 
 /**
  * A box-and-whisker renderer.  This renderer requires a
@@ -534,7 +538,8 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
             PlotOrientation orientation = plot.getOrientation();
             if (orientation == PlotOrientation.HORIZONTAL) {
                 space = dataArea.getHeight();
-            } else if (orientation == PlotOrientation.VERTICAL) {
+            }
+            else if (orientation == PlotOrientation.VERTICAL) {
                 space = dataArea.getWidth();
             }
             double maxWidth = space * getMaximumBarWidth();
@@ -547,12 +552,13 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
                 currentItemMargin = getItemMargin();
             }
             double used = space * (1 - domainAxis.getLowerMargin()
-                    - domainAxis.getUpperMargin()
-                    - categoryMargin - currentItemMargin);
+                                     - domainAxis.getUpperMargin()
+                                     - categoryMargin - currentItemMargin);
             if ((rows * columns) > 0) {
                 state.setBarWidth(Math.min(used / (dataset.getColumnCount()
                         * dataset.getRowCount()), maxWidth));
-            } else {
+            }
+            else {
                 state.setBarWidth(Math.min(used, maxWidth));
             }
         }
@@ -577,9 +583,9 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      */
     @Override
     public void drawItem(Graphics2D g2, CategoryItemRendererState state,
-                         Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
-                         ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
-                         int pass) {
+        Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
+        ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
+        int pass) {
 
         // do nothing if item is not visible
         if (!getItemVisible(row, column)) {
@@ -589,7 +595,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
         if (!(dataset instanceof BoxAndWhiskerCategoryDataset)) {
             throw new IllegalArgumentException(
                     "BoxAndWhiskerRenderer.drawItem() : the data should be "
-                            + "of type BoxAndWhiskerCategoryDataset only.");
+                    + "of type BoxAndWhiskerCategoryDataset only.");
         }
 
         PlotOrientation orientation = plot.getOrientation();
@@ -597,7 +603,8 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
         if (orientation == PlotOrientation.HORIZONTAL) {
             drawHorizontalItem(g2, state, dataArea, plot, domainAxis,
                     rangeAxis, dataset, row, column);
-        } else if (orientation == PlotOrientation.VERTICAL) {
+        }
+        else if (orientation == PlotOrientation.VERTICAL) {
             drawVerticalItem(g2, state, dataArea, plot, domainAxis,
                     rangeAxis, dataset, row, column);
         }
@@ -621,9 +628,9 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      * @param column  the column index (zero-based).
      */
     public void drawHorizontalItem(Graphics2D g2,
-                                   CategoryItemRendererState state, Rectangle2D dataArea,
-                                   CategoryPlot plot, CategoryAxis domainAxis, ValueAxis rangeAxis,
-                                   CategoryDataset dataset, int row, int column) {
+            CategoryItemRendererState state, Rectangle2D dataArea,
+            CategoryPlot plot, CategoryAxis domainAxis, ValueAxis rangeAxis,
+            CategoryDataset dataset, int row, int column) {
 
         BoxAndWhiskerCategoryDataset bawDataset
                 = (BoxAndWhiskerCategoryDataset) dataset;
@@ -640,14 +647,15 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
 
         if (seriesCount > 1) {
             double seriesGap = dataArea.getHeight() * getItemMargin()
-                    / (categoryCount * (seriesCount - 1));
+                               / (categoryCount * (seriesCount - 1));
             double usedWidth = (state.getBarWidth() * seriesCount)
-                    + (seriesGap * (seriesCount - 1));
+                               + (seriesGap * (seriesCount - 1));
             // offset the start of the boxes if the total width used is smaller
             // than the category width
             double offset = (categoryWidth - usedWidth) / 2;
             yy = yy + offset + (row * (state.getBarWidth() + seriesGap));
-        } else {
+        }
+        else {
             // offset the start of the box if the box width is smaller than
             // the category width
             double offset = (categoryWidth - state.getBarWidth()) / 2;
@@ -764,8 +772,8 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      * @param column  the column index (zero-based).
      */
     public void drawVerticalItem(Graphics2D g2, CategoryItemRendererState state,
-                                 Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
-                                 ValueAxis rangeAxis, CategoryDataset dataset, int row, int column) {
+        Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
+        ValueAxis rangeAxis, CategoryDataset dataset, int row, int column) {
 
         BoxAndWhiskerCategoryDataset bawDataset
                 = (BoxAndWhiskerCategoryDataset) dataset;
@@ -782,14 +790,15 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
 
         if (seriesCount > 1) {
             double seriesGap = dataArea.getWidth() * getItemMargin()
-                    / (categoryCount * (seriesCount - 1));
+                               / (categoryCount * (seriesCount - 1));
             double usedWidth = (state.getBarWidth() * seriesCount)
-                    + (seriesGap * (seriesCount - 1));
+                               + (seriesGap * (seriesCount - 1));
             // offset the start of the boxes if the total width used is smaller
             // than the category width
             double offset = (categoryWidth - usedWidth) / 2;
             xx = xx + offset + (row * (state.getBarWidth() + seriesGap));
-        } else {
+        }
+        else {
             // offset the start of the box if the box width is smaller than the
             // category width
             double offset = (categoryWidth - state.getBarWidth()) / 2;
@@ -987,7 +996,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      * @param g2  the graphics device.
      */
     private void drawMultipleEllipse(Point2D point, double boxWidth,
-                                     double oRadius, Graphics2D g2) {
+                                     double oRadius, Graphics2D g2)  {
 
         Ellipse2D dot1 = new Ellipse2D.Double(point.getX() - (boxWidth / 2)
                 + oRadius, point.getY(), oRadius, oRadius);

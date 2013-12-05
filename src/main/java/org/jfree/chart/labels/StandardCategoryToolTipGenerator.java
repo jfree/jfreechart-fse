@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------------------
@@ -106,7 +106,7 @@ public class StandardCategoryToolTipGenerator
      * @return The tooltip text (possibly <code>null</code>).
      */
     @Override
-	public String generateToolTip(CategoryDataset dataset,
+    public String generateToolTip(CategoryDataset dataset,
                                   int row, int column) {
         return generateLabelString(dataset, row, column);
     }
@@ -119,7 +119,7 @@ public class StandardCategoryToolTipGenerator
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

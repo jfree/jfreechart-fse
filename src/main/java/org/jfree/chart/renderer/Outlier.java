@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------
@@ -143,7 +143,7 @@ public class Outlier implements Comparable {
      *
      */
     @Override
-	public int compareTo(Object o) {
+    public int compareTo(Object o) {
         Outlier outlier = (Outlier) o;
         Point2D p1 = getPoint();
         Point2D p2 = outlier.getPoint();
@@ -183,7 +183,7 @@ public class Outlier implements Comparable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -206,7 +206,7 @@ public class Outlier implements Comparable {
      * @return A <code>String</code> representing the outlier.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return "{" + getX() + "," + getY() + "}";
     }
 

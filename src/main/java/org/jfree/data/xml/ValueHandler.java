@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
@@ -82,7 +82,7 @@ public class ValueHandler extends DefaultHandler implements DatasetTags {
      * @throws SAXException for errors.
      */
     @Override
-	public void startElement(String namespaceURI,
+    public void startElement(String namespaceURI,
                              String localName,
                              String qName,
                              Attributes atts) throws SAXException {
@@ -107,7 +107,7 @@ public class ValueHandler extends DefaultHandler implements DatasetTags {
      * @throws SAXException for errors.
      */
     @Override
-	public void endElement(String namespaceURI,
+    public void endElement(String namespaceURI,
                            String localName,
                            String qName) throws SAXException {
 
@@ -139,7 +139,7 @@ public class ValueHandler extends DefaultHandler implements DatasetTags {
      * @param length  the length of the valid character data.
      */
     @Override
-	public void characters(char[] ch, int start, int length) {
+    public void characters(char[] ch, int start, int length) {
         if (this.currentText != null) {
             this.currentText.append(String.copyValueOf(ch, start, length));
         }

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -43,10 +43,10 @@
 
 package org.jfree.data.time;
 
+import javax.swing.table.AbstractTableModel;
+
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesChangeListener;
-
-import javax.swing.table.AbstractTableModel;
 
 /**
  * Wrapper around a time series to convert it to a table model for use in
@@ -102,7 +102,7 @@ public class TimeSeriesTableModel extends AbstractTableModel
      * @return The column count.
      */
     @Override
-	public int getColumnCount() {
+    public int getColumnCount() {
         return 2;
     }
 
@@ -114,7 +114,7 @@ public class TimeSeriesTableModel extends AbstractTableModel
      * @return The column class in the table model.
      */
     @Override
-	public Class getColumnClass(int column) {
+    public Class getColumnClass(int column) {
         if (column == 0) {
             return String.class;
         }
@@ -136,7 +136,7 @@ public class TimeSeriesTableModel extends AbstractTableModel
      * @return The name of a column.
      */
     @Override
-	public String getColumnName(int column) {
+    public String getColumnName(int column) {
 
         if (column == 0) {
             return "Period:";
@@ -158,7 +158,7 @@ public class TimeSeriesTableModel extends AbstractTableModel
      * @return The row count.
      */
     @Override
-	public int getRowCount() {
+    public int getRowCount() {
         return this.series.getItemCount();
     }
 
@@ -171,7 +171,7 @@ public class TimeSeriesTableModel extends AbstractTableModel
      * @return The data value for a cell in the table model.
      */
     @Override
-	public Object getValueAt(int row, int column) {
+    public Object getValueAt(int row, int column) {
 
         if (row < this.series.getItemCount()) {
             if (column == 0) {
@@ -211,8 +211,18 @@ public class TimeSeriesTableModel extends AbstractTableModel
      * @return <code>true</code> if the specified cell is editable.
      */
     @Override
-	public boolean isCellEditable(int row, int column) {
-        return this.editable && (column == 0 || column == 1);
+    public boolean isCellEditable(int row, int column) {
+        if (this.editable) {
+            if ((column == 0) || (column == 1)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
     }
 
     /**
@@ -223,7 +233,7 @@ public class TimeSeriesTableModel extends AbstractTableModel
      * @param column  the column.
      */
     @Override
-	public void setValueAt(Object value, int row, int column) {
+    public void setValueAt(Object value, int row, int column) {
 
         if (row < this.series.getItemCount()) {
 
@@ -257,7 +267,7 @@ public class TimeSeriesTableModel extends AbstractTableModel
      * @param event  the event.
      */
     @Override
-	public void seriesChanged(SeriesChangeEvent event) {
+    public void seriesChanged(SeriesChangeEvent event) {
         fireTableDataChanged();
     }
 

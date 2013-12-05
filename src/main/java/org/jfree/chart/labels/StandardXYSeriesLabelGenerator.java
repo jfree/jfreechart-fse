@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------------------
@@ -100,7 +100,7 @@ public class StandardXYSeriesLabelGenerator implements XYSeriesLabelGenerator,
      * @return A series label.
      */
     @Override
-	public String generateLabel(XYDataset dataset, int series) {
+    public String generateLabel(XYDataset dataset, int series) {
         if (dataset == null) {
             throw new IllegalArgumentException("Null 'dataset' argument.");
         }
@@ -135,7 +135,7 @@ public class StandardXYSeriesLabelGenerator implements XYSeriesLabelGenerator,
      * @throws CloneNotSupportedException if cloning is not supported.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -147,7 +147,7 @@ public class StandardXYSeriesLabelGenerator implements XYSeriesLabelGenerator,
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -168,7 +168,7 @@ public class StandardXYSeriesLabelGenerator implements XYSeriesLabelGenerator,
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 127;
         result = HashUtilities.hashCode(result, this.formatPattern);
         return result;

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -116,7 +116,7 @@ public class WindItemRenderer extends AbstractXYItemRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D plotArea,
                          PlotRenderingInfo info,
@@ -210,7 +210,7 @@ public class WindItemRenderer extends AbstractXYItemRenderer
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

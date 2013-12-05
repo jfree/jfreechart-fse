@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------------
@@ -149,7 +149,7 @@ public class StandardPieToolTipGenerator extends AbstractPieItemLabelGenerator
      * @return The tool tip text (possibly <code>null</code>).
      */
     @Override
-	public String generateToolTip(PieDataset dataset, Comparable key) {
+    public String generateToolTip(PieDataset dataset, Comparable key) {
         return generateSectionLabel(dataset, key);
     }
 
@@ -161,7 +161,7 @@ public class StandardPieToolTipGenerator extends AbstractPieItemLabelGenerator
      * @throws CloneNotSupportedException  should not happen.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

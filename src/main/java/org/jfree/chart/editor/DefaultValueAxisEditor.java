@@ -200,7 +200,7 @@ class DefaultValueAxisEditor extends DefaultAxisEditor
 
     /**
      * Getter for the {@link #autoTickUnitSelection} flag.
-     * 
+     *
      * @return The value of the flag for enabling auto-tickunit-selection.
      */
     protected boolean isAutoTickUnitSelection() {
@@ -217,7 +217,7 @@ class DefaultValueAxisEditor extends DefaultAxisEditor
 
     /**
      * Get the checkbox that enables/disables auto-tickunit-selection.
-     * 
+     *
      * @return The checkbox.
      */
     protected JCheckBox getAutoTickUnitSelectionCheckBox() {
@@ -266,7 +266,7 @@ class DefaultValueAxisEditor extends DefaultAxisEditor
      * @param event an event.
      */
     @Override
-	public void actionPerformed(ActionEvent event) {
+    public void actionPerformed(ActionEvent event) {
         String command = event.getActionCommand();
         if (command.equals("GridStroke")) {
             attemptGridStrokeSelection();
@@ -325,7 +325,7 @@ class DefaultValueAxisEditor extends DefaultAxisEditor
      * @param event  the event.
      */
     @Override
-	public void focusGained(FocusEvent event) {
+    public void focusGained(FocusEvent event) {
         // don't need to do anything
     }
 
@@ -335,7 +335,7 @@ class DefaultValueAxisEditor extends DefaultAxisEditor
      *  @param event  the event.
      */
     @Override
-	public void focusLost(FocusEvent event) {
+    public void focusLost(FocusEvent event) {
         if (event.getSource() == this.minimumRangeValue) {
             validateMinimum();
         }
@@ -410,7 +410,7 @@ class DefaultValueAxisEditor extends DefaultAxisEditor
      * @param axis  the axis.
      */
     @Override
-	public void setAxisProperties(Axis axis) {
+    public void setAxisProperties(Axis axis) {
         super.setAxisProperties(axis);
         ValueAxis valueAxis = (ValueAxis) axis;
         valueAxis.setAutoRange(this.autoRange);

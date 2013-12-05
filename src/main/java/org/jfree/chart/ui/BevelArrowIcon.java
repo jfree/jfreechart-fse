@@ -21,9 +21,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
- * 
+ *
  * -------------------
  * BevelArrowIcon.java
  * -------------------
@@ -37,7 +37,7 @@
  * 26-Oct-2001 : Changed package to com.jrefinery.ui.*;
  * 13-Oct-2002 : Fixed errors reported by Checkstyle (DG);
  * 14-Jun-2012 : Moved from JCommon to JFreeChart (DG);
- * 
+ *
  */
 
 package org.jfree.chart.ui;
@@ -89,8 +89,8 @@ public class BevelArrowIcon implements Icon {
      * @param isRaisedView .
      * @param isPressedView .
      */
-    public BevelArrowIcon(final int direction, 
-                          final boolean isRaisedView, 
+    public BevelArrowIcon(final int direction,
+                          final boolean isRaisedView,
                           final boolean isPressedView) {
         if (isRaisedView) {
             if (isPressedView) {
@@ -131,10 +131,10 @@ public class BevelArrowIcon implements Icon {
      * @param size  the size of the arrow icon.
      * @param direction  the direction that the arrow points.
      */
-    public BevelArrowIcon(final Color edge1, 
-                          final Color edge2, 
-                          final Color fill, 
-                          final int size, 
+    public BevelArrowIcon(final Color edge1,
+                          final Color edge2,
+                          final Color fill,
+                          final int size,
                           final int direction) {
         init(edge1, edge2, fill, size, direction);
     }
@@ -148,9 +148,9 @@ public class BevelArrowIcon implements Icon {
      * @param y .
      */
     @Override
-	public void paintIcon(final Component c, 
-                          final Graphics g, 
-                          final int x, 
+    public void paintIcon(final Component c,
+                          final Graphics g,
+                          final int x,
                           final int y) {
         switch (this.direction) {
             case DOWN: drawDownArrow(g, x, y); break;
@@ -164,7 +164,7 @@ public class BevelArrowIcon implements Icon {
      * @return the icon width.
      */
     @Override
-	public int getIconWidth() {
+    public int getIconWidth() {
         return this.size;
     }
 
@@ -173,7 +173,7 @@ public class BevelArrowIcon implements Icon {
      * @return the icon height.
      */
     @Override
-	public int getIconHeight() {
+    public int getIconHeight() {
         return this.size;
     }
 
@@ -186,10 +186,10 @@ public class BevelArrowIcon implements Icon {
      * @param size  the size of the arrow icon.
      * @param direction  the direction that the arrow points.
      */
-    private void init(final Color edge1, 
-                      final Color edge2, 
-                      final Color fill, 
-                      final int size, 
+    private void init(final Color edge1,
+                      final Color edge2,
+                      final Color fill,
+                      final int size,
                       final int direction) {
         this.edge1 = edge1;
         this.edge2 = edge2;

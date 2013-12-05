@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------------
@@ -117,7 +117,7 @@ public class GroupedStackedBarRenderer extends StackedBarRenderer
      *         <code>null</code> or empty).
      */
     @Override
-	public Range findRangeBounds(CategoryDataset dataset) {
+    public Range findRangeBounds(CategoryDataset dataset) {
         if (dataset == null) {
             return null;
         }
@@ -137,7 +137,7 @@ public class GroupedStackedBarRenderer extends StackedBarRenderer
      * @param state  the renderer state.
      */
     @Override
-	protected void calculateBarWidth(CategoryPlot plot,
+    protected void calculateBarWidth(CategoryPlot plot,
                                      Rectangle2D dataArea,
                                      int rendererIndex,
                                      CategoryItemRendererState state) {
@@ -196,7 +196,7 @@ public class GroupedStackedBarRenderer extends StackedBarRenderer
      * @return The coordinate.
      */
     @Override
-	protected double calculateBarW0(CategoryPlot plot,
+    protected double calculateBarW0(CategoryPlot plot,
                                     PlotOrientation orientation,
                                     Rectangle2D dataArea,
                                     CategoryAxis domainAxis,
@@ -249,7 +249,7 @@ public class GroupedStackedBarRenderer extends StackedBarRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          CategoryItemRendererState state,
                          Rectangle2D dataArea,
                          CategoryPlot plot,
@@ -366,7 +366,7 @@ public class GroupedStackedBarRenderer extends StackedBarRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

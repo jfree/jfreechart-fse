@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
@@ -74,7 +74,7 @@ import org.jfree.data.category.CategoryDataset;
 /**
  * A line annotation that can be placed on a {@link CategoryPlot}.
  */
-public class CategoryLineAnnotation extends AbstractAnnotation 
+public class CategoryLineAnnotation extends AbstractAnnotation
         implements CategoryAnnotation, Cloneable, PublicCloneable,
         Serializable {
 
@@ -300,7 +300,7 @@ public class CategoryLineAnnotation extends AbstractAnnotation
      * @param rangeAxis  the range axis.
      */
     @Override
-	public void draw(Graphics2D g2, CategoryPlot plot, Rectangle2D dataArea,
+    public void draw(Graphics2D g2, CategoryPlot plot, Rectangle2D dataArea,
                      CategoryAxis domainAxis, ValueAxis rangeAxis) {
 
         CategoryDataset dataset = plot.getDataset();
@@ -351,7 +351,7 @@ public class CategoryLineAnnotation extends AbstractAnnotation
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -386,7 +386,7 @@ public class CategoryLineAnnotation extends AbstractAnnotation
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 193;
         result = 37 * result + this.category1.hashCode();
         long temp = Double.doubleToLongBits(this.value1);
@@ -408,7 +408,7 @@ public class CategoryLineAnnotation extends AbstractAnnotation
      *         exception, but subclasses (if any) might.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

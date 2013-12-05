@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------
@@ -172,7 +172,7 @@ public class LogFormat extends NumberFormat {
      * @return A string buffer containing the formatted value.
      */
     @Override
-	public StringBuffer format(double number, StringBuffer toAppendTo,
+    public StringBuffer format(double number, StringBuffer toAppendTo,
             FieldPosition pos) {
         StringBuffer result = new StringBuffer();
         if (this.showBase) {
@@ -194,7 +194,7 @@ public class LogFormat extends NumberFormat {
      * @return The string buffer.
      */
     @Override
-	public StringBuffer format(long number, StringBuffer toAppendTo,
+    public StringBuffer format(long number, StringBuffer toAppendTo,
             FieldPosition pos) {
         StringBuffer result = new StringBuffer();
         if (this.showBase) {
@@ -215,7 +215,7 @@ public class LogFormat extends NumberFormat {
      * @return Always <code>null</code>.
      */
     @Override
-	public Number parse (String source, ParsePosition parsePosition) {
+    public Number parse (String source, ParsePosition parsePosition) {
         return null; // don't bother with parsing
     }
 
@@ -227,7 +227,7 @@ public class LogFormat extends NumberFormat {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -259,7 +259,7 @@ public class LogFormat extends NumberFormat {
      * @return A clone.
      */
     @Override
-	public Object clone() {
+    public Object clone() {
         LogFormat clone = (LogFormat) super.clone();
         clone.formatter = (NumberFormat) this.formatter.clone();
         return clone;

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------
@@ -572,7 +572,7 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
      * @param info  collects info about the drawing.
      */
     @Override
-	public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
+    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
                      PlotState parentState,
                      PlotRenderingInfo info) {
 
@@ -708,7 +708,7 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
      * @return A string describing the plot.
      */
     @Override
-	public String getPlotType() {
+    public String getPlotType() {
         return localizationResources.getString("Compass_Plot");
     }
 
@@ -719,7 +719,7 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
      * @return The legend items.
      */
     @Override
-	public LegendItemCollection getLegendItems() {
+    public LegendItemCollection getLegendItems() {
         return null;
     }
 
@@ -729,7 +729,7 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
      * @param percent  the zoom amount.
      */
     @Override
-	public void zoom(double percent) {
+    public void zoom(double percent) {
         // no zooming possible
     }
 
@@ -757,7 +757,7 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -810,7 +810,7 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
      *         exception, but subclasses (if any) might.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
 
         CompassPlot clone = (CompassPlot) super.clone();
         if (this.circle1 != null) {

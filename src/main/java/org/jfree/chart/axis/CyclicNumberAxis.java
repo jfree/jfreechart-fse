@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -50,17 +50,13 @@
 
 package org.jfree.chart.axis;
 
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.data.Range;
-
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -69,53 +65,63 @@ import java.io.ObjectOutputStream;
 import java.text.NumberFormat;
 import java.util.List;
 
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.util.SerialUtilities;
+import org.jfree.data.Range;
+
 /**
- This class extends NumberAxis and handles cycling.
+This class extends NumberAxis and handles cycling.
 
- Traditional representation of data in the range x0..x1
- <pre>
- |-------------------------|
- x0                       x1
- </pre>
+Traditional representation of data in the range x0..x1
+<pre>
+|-------------------------|
+x0                       x1
+</pre>
 
- Here, the range bounds are at the axis extremities.
- With cyclic axis, however, the time is split in
- "cycles", or "time frames", or the same duration : the period.
+Here, the range bounds are at the axis extremities.
+With cyclic axis, however, the time is split in
+"cycles", or "time frames", or the same duration : the period.
 
- A cycle axis cannot by definition handle a larger interval
- than the period : <pre>x1 - x0 >= period</pre>. Thus, at most a full
- period can be represented with such an axis.
+A cycle axis cannot by definition handle a larger interval
+than the period : <pre>x1 - x0 >= period</pre>. Thus, at most a full
+period can be represented with such an axis.
 
- The cycle bound is the number between x0 and x1 which marks
- the beginning of new time frame:
- <pre>
- |---------------------|----------------------------|
- x0                   cb                           x1
- <---previous cycle---><-------current cycle-------->
- </pre>
+The cycle bound is the number between x0 and x1 which marks
+the beginning of new time frame:
+<pre>
+|---------------------|----------------------------|
+x0                   cb                           x1
+<---previous cycle---><-------current cycle-------->
+</pre>
 
- It is actually a multiple of the period, plus optionally
- a start offset: <pre>cb = n * period + offset</pre>
+It is actually a multiple of the period, plus optionally
+a start offset: <pre>cb = n * period + offset</pre>
 
- Thus, by definition, two consecutive cycle bounds
- period apart, which is precisely why it is called a
- period.
+Thus, by definition, two consecutive cycle bounds
+period apart, which is precisely why it is called a
+period.
 
- The visual representation of a cyclic axis is like that:
- <pre>
- |----------------------------|---------------------|
- cb                         x1|x0                  cb
- <-------current cycle--------><---previous cycle--->
- </pre>
+The visual representation of a cyclic axis is like that:
+<pre>
+|----------------------------|---------------------|
+cb                         x1|x0                  cb
+<-------current cycle--------><---previous cycle--->
+</pre>
 
- The cycle bound is at the axis ends, then current
- cycle is shown, then the last cycle. When using
- dynamic data, the visual effect is the current cycle
- erases the last cycle as x grows. Then, the next cycle
- bound is reached, and the process starts over, erasing
- the previous cycle.
+The cycle bound is at the axis ends, then current
+cycle is shown, then the last cycle. When using
+dynamic data, the visual effect is the current cycle
+erases the last cycle as x grows. Then, the next cycle
+bound is reached, and the process starts over, erasing
+the previous cycle.
 
- A Cyclic item renderer is provided to do exactly this.
+A Cyclic item renderer is provided to do exactly this.
 
  */
 public class CyclicNumberAxis extends NumberAxis {
@@ -247,7 +253,6 @@ public class CyclicNumberAxis extends NumberAxis {
     public Stroke getAdvanceLineStroke() {
         return this.advanceLineStroke;
     }
-
     /**
      * The advance line is the line drawn at the limit of the current cycle,
      * when erasing the previous cycle.
@@ -310,18 +315,18 @@ public class CyclicNumberAxis extends NumberAxis {
                                                 RectangleEdge edge) {
 
         double tickLabelWidth
-                = estimateMaximumTickLabelWidth(g2, getTickUnit());
+            = estimateMaximumTickLabelWidth(g2, getTickUnit());
 
         // Compute number of labels
         double n = getRange().getLength()
-                * tickLabelWidth / dataArea.getWidth();
+                   * tickLabelWidth / dataArea.getWidth();
 
         setTickUnit(
-                (NumberTickUnit) getStandardTickUnits().getCeilingTickUnit(n),
-                false, false
+            (NumberTickUnit) getStandardTickUnits().getCeilingTickUnit(n),
+            false, false
         );
 
-    }
+     }
 
     /**
      * Selects a tick unit when the axis is displayed vertically.
@@ -332,23 +337,23 @@ public class CyclicNumberAxis extends NumberAxis {
      * @param edge  the side of the rectangle on which the axis is displayed.
      */
     protected void selectVerticalAutoTickUnit(Graphics2D g2,
-                                              Rectangle2D drawArea,
-                                              Rectangle2D dataArea,
-                                              RectangleEdge edge) {
+                                                Rectangle2D drawArea,
+                                                Rectangle2D dataArea,
+                                                RectangleEdge edge) {
 
         double tickLabelWidth
-                = estimateMaximumTickLabelWidth(g2, getTickUnit());
+            = estimateMaximumTickLabelWidth(g2, getTickUnit());
 
         // Compute number of labels
         double n = getRange().getLength()
-                * tickLabelWidth / dataArea.getHeight();
+                   * tickLabelWidth / dataArea.getHeight();
 
         setTickUnit(
-                (NumberTickUnit) getStandardTickUnits().getCeilingTickUnit(n),
-                false, false
+            (NumberTickUnit) getStandardTickUnits().getCeilingTickUnit(n),
+            false, false
         );
 
-    }
+     }
 
     /**
      * A special Number tick that also hold information about the cycle bound
@@ -396,15 +401,16 @@ public class CyclicNumberAxis extends NumberAxis {
         if (tick instanceof CycleBoundTick) {
             boolean mapsav = this.boundMappedToLastCycle;
             this.boundMappedToLastCycle
-                    = ((CycleBoundTick) tick).mapToLastCycle;
+                = ((CycleBoundTick) tick).mapToLastCycle;
             float[] ret = super.calculateAnchorPoint(
-                    tick, cursor, dataArea, edge
+                tick, cursor, dataArea, edge
             );
             this.boundMappedToLastCycle = mapsav;
             return ret;
         }
         return super.calculateAnchorPoint(tick, cursor, dataArea, edge);
     }
+
 
 
     /**
@@ -419,8 +425,8 @@ public class CyclicNumberAxis extends NumberAxis {
      */
     @Override
     protected List<ValueTick> refreshTicksHorizontal(Graphics2D g2,
-                                                     Rectangle2D dataArea,
-                                                     RectangleEdge edge) {
+                                          Rectangle2D dataArea,
+                                          RectangleEdge edge) {
 
         List<ValueTick> result = new java.util.ArrayList<ValueTick>();
 
@@ -462,7 +468,8 @@ public class CyclicNumberAxis extends NumberAxis {
             NumberFormat formatter = getNumberFormatOverride();
             if (formatter != null) {
                 tickLabel = formatter.format(currentTickValue);
-            } else {
+            }
+            else {
                 tickLabel = getTickUnit().valueToString(currentTickValue);
             }
             float x = (float) xx;
@@ -472,7 +479,8 @@ public class CyclicNumberAxis extends NumberAxis {
             if (isVerticalTickLabels()) {
                 if (edge == RectangleEdge.TOP) {
                     angle = Math.PI / 2.0;
-                } else {
+                }
+                else {
                     angle = -Math.PI / 2.0;
                 }
                 anchor = TextAnchor.CENTER_RIGHT;
@@ -480,60 +488,62 @@ public class CyclicNumberAxis extends NumberAxis {
                 if ((lastTick != null) && (lastX == x)
                         && (currentTickValue != cycleBound)) {
                     anchor = isInverted()
-                            ? TextAnchor.TOP_RIGHT : TextAnchor.BOTTOM_RIGHT;
+                        ? TextAnchor.TOP_RIGHT : TextAnchor.BOTTOM_RIGHT;
                     result.remove(result.size() - 1);
                     result.add(new CycleBoundTick(
-                            this.boundMappedToLastCycle, lastTick.getNumber(),
-                            lastTick.getText(), anchor, anchor,
-                            lastTick.getAngle())
+                        this.boundMappedToLastCycle, lastTick.getNumber(),
+                        lastTick.getText(), anchor, anchor,
+                        lastTick.getAngle())
                     );
                     this.internalMarkerWhenTicksOverlap = true;
                     anchor = isInverted()
-                            ? TextAnchor.BOTTOM_RIGHT : TextAnchor.TOP_RIGHT;
+                        ? TextAnchor.BOTTOM_RIGHT : TextAnchor.TOP_RIGHT;
                 }
                 rotationAnchor = anchor;
-            } else {
+            }
+            else {
                 if (edge == RectangleEdge.TOP) {
                     anchor = TextAnchor.BOTTOM_CENTER;
                     if ((lastTick != null) && (lastX == x)
                             && (currentTickValue != cycleBound)) {
                         anchor = isInverted()
-                                ? TextAnchor.BOTTOM_LEFT : TextAnchor.BOTTOM_RIGHT;
+                            ? TextAnchor.BOTTOM_LEFT : TextAnchor.BOTTOM_RIGHT;
                         result.remove(result.size() - 1);
                         result.add(new CycleBoundTick(
-                                this.boundMappedToLastCycle, lastTick.getNumber(),
-                                lastTick.getText(), anchor, anchor,
-                                lastTick.getAngle())
+                            this.boundMappedToLastCycle, lastTick.getNumber(),
+                            lastTick.getText(), anchor, anchor,
+                            lastTick.getAngle())
                         );
                         this.internalMarkerWhenTicksOverlap = true;
                         anchor = isInverted()
-                                ? TextAnchor.BOTTOM_RIGHT : TextAnchor.BOTTOM_LEFT;
+                            ? TextAnchor.BOTTOM_RIGHT : TextAnchor.BOTTOM_LEFT;
                     }
                     rotationAnchor = anchor;
-                } else {
+                }
+                else {
                     anchor = TextAnchor.TOP_CENTER;
                     if ((lastTick != null) && (lastX == x)
                             && (currentTickValue != cycleBound)) {
                         anchor = isInverted()
-                                ? TextAnchor.TOP_LEFT : TextAnchor.TOP_RIGHT;
+                            ? TextAnchor.TOP_LEFT : TextAnchor.TOP_RIGHT;
                         result.remove(result.size() - 1);
                         result.add(new CycleBoundTick(
-                                this.boundMappedToLastCycle, lastTick.getNumber(),
-                                lastTick.getText(), anchor, anchor,
-                                lastTick.getAngle())
+                            this.boundMappedToLastCycle, lastTick.getNumber(),
+                            lastTick.getText(), anchor, anchor,
+                            lastTick.getAngle())
                         );
                         this.internalMarkerWhenTicksOverlap = true;
                         anchor = isInverted()
-                                ? TextAnchor.TOP_RIGHT : TextAnchor.TOP_LEFT;
+                            ? TextAnchor.TOP_RIGHT : TextAnchor.TOP_LEFT;
                     }
                     rotationAnchor = anchor;
                 }
             }
 
             CycleBoundTick tick = new CycleBoundTick(
-                    this.boundMappedToLastCycle,
+                this.boundMappedToLastCycle,
                     currentTickValue, tickLabel, anchor,
-                    rotationAnchor, angle
+                rotationAnchor, angle
             );
             if (currentTickValue == cycleBound) {
                 this.internalMarkerCycleBoundTick = tick;
@@ -568,8 +578,8 @@ public class CyclicNumberAxis extends NumberAxis {
      * @return A list of ticks.
      */
     protected List<ValueTick> refreshVerticalTicks(Graphics2D g2,
-                                                   Rectangle2D dataArea,
-                                                   RectangleEdge edge) {
+                                        Rectangle2D dataArea,
+                                        RectangleEdge edge) {
 
         List<ValueTick> result = new java.util.ArrayList<ValueTick>();
         result.clear();
@@ -611,7 +621,8 @@ public class CyclicNumberAxis extends NumberAxis {
             NumberFormat formatter = getNumberFormatOverride();
             if (formatter != null) {
                 tickLabel = formatter.format(currentTickValue);
-            } else {
+            }
+            else {
                 tickLabel = getTickUnit().valueToString(currentTickValue);
             }
 
@@ -626,79 +637,82 @@ public class CyclicNumberAxis extends NumberAxis {
                     if ((lastTick != null) && (lastY == y)
                             && (currentTickValue != cycleBound)) {
                         anchor = isInverted()
-                                ? TextAnchor.BOTTOM_LEFT : TextAnchor.BOTTOM_RIGHT;
+                            ? TextAnchor.BOTTOM_LEFT : TextAnchor.BOTTOM_RIGHT;
                         result.remove(result.size() - 1);
                         result.add(new CycleBoundTick(
-                                this.boundMappedToLastCycle, lastTick.getNumber(),
-                                lastTick.getText(), anchor, anchor,
-                                lastTick.getAngle())
+                            this.boundMappedToLastCycle, lastTick.getNumber(),
+                            lastTick.getText(), anchor, anchor,
+                            lastTick.getAngle())
                         );
                         this.internalMarkerWhenTicksOverlap = true;
                         anchor = isInverted()
-                                ? TextAnchor.BOTTOM_RIGHT : TextAnchor.BOTTOM_LEFT;
+                            ? TextAnchor.BOTTOM_RIGHT : TextAnchor.BOTTOM_LEFT;
                     }
                     rotationAnchor = anchor;
                     angle = -Math.PI / 2.0;
-                } else {
+                }
+                else {
                     anchor = TextAnchor.BOTTOM_CENTER;
                     if ((lastTick != null) && (lastY == y)
                             && (currentTickValue != cycleBound)) {
                         anchor = isInverted()
-                                ? TextAnchor.BOTTOM_RIGHT : TextAnchor.BOTTOM_LEFT;
+                            ? TextAnchor.BOTTOM_RIGHT : TextAnchor.BOTTOM_LEFT;
                         result.remove(result.size() - 1);
                         result.add(new CycleBoundTick(
-                                this.boundMappedToLastCycle, lastTick.getNumber(),
-                                lastTick.getText(), anchor, anchor,
-                                lastTick.getAngle())
+                            this.boundMappedToLastCycle, lastTick.getNumber(),
+                            lastTick.getText(), anchor, anchor,
+                            lastTick.getAngle())
                         );
                         this.internalMarkerWhenTicksOverlap = true;
                         anchor = isInverted()
-                                ? TextAnchor.BOTTOM_LEFT : TextAnchor.BOTTOM_RIGHT;
+                            ? TextAnchor.BOTTOM_LEFT : TextAnchor.BOTTOM_RIGHT;
                     }
                     rotationAnchor = anchor;
                     angle = Math.PI / 2.0;
                 }
-            } else {
+            }
+            else {
                 if (edge == RectangleEdge.LEFT) {
                     anchor = TextAnchor.CENTER_RIGHT;
                     if ((lastTick != null) && (lastY == y)
                             && (currentTickValue != cycleBound)) {
                         anchor = isInverted()
-                                ? TextAnchor.BOTTOM_RIGHT : TextAnchor.TOP_RIGHT;
+                            ? TextAnchor.BOTTOM_RIGHT : TextAnchor.TOP_RIGHT;
                         result.remove(result.size() - 1);
                         result.add(new CycleBoundTick(
-                                this.boundMappedToLastCycle, lastTick.getNumber(),
-                                lastTick.getText(), anchor, anchor,
-                                lastTick.getAngle())
+                            this.boundMappedToLastCycle, lastTick.getNumber(),
+                            lastTick.getText(), anchor, anchor,
+                            lastTick.getAngle())
                         );
                         this.internalMarkerWhenTicksOverlap = true;
                         anchor = isInverted()
-                                ? TextAnchor.TOP_RIGHT : TextAnchor.BOTTOM_RIGHT;
+                            ? TextAnchor.TOP_RIGHT : TextAnchor.BOTTOM_RIGHT;
                     }
                     rotationAnchor = anchor;
-                } else {
+                }
+                else {
                     anchor = TextAnchor.CENTER_LEFT;
                     if ((lastTick != null) && (lastY == y)
                             && (currentTickValue != cycleBound)) {
                         anchor = isInverted()
-                                ? TextAnchor.BOTTOM_LEFT : TextAnchor.TOP_LEFT;
+                            ? TextAnchor.BOTTOM_LEFT : TextAnchor.TOP_LEFT;
                         result.remove(result.size() - 1);
                         result.add(new CycleBoundTick(
-                                this.boundMappedToLastCycle, lastTick.getNumber(),
-                                lastTick.getText(), anchor, anchor,
-                                lastTick.getAngle())
+                            this.boundMappedToLastCycle, lastTick.getNumber(),
+                            lastTick.getText(), anchor, anchor,
+                            lastTick.getAngle())
                         );
                         this.internalMarkerWhenTicksOverlap = true;
                         anchor = isInverted()
-                                ? TextAnchor.TOP_LEFT : TextAnchor.BOTTOM_LEFT;
+                            ? TextAnchor.TOP_LEFT : TextAnchor.BOTTOM_LEFT;
                     }
                     rotationAnchor = anchor;
                 }
             }
 
             CycleBoundTick tick = new CycleBoundTick(
-                    this.boundMappedToLastCycle, currentTickValue,
-                    tickLabel, anchor, rotationAnchor, angle
+                this.boundMappedToLastCycle, currentTickValue,
+                tickLabel, anchor, rotationAnchor, angle
             );
             if (currentTickValue == cycleBound) {
                 this.internalMarkerCycleBoundTick = tick;
@@ -747,7 +761,8 @@ public class CyclicNumberAxis extends NumberAxis {
         if (RectangleEdge.isTopOrBottom(edge)) {
             jmin = dataArea.getMinX();
             jmax = dataArea.getMaxX();
-        } else if (RectangleEdge.isLeftOrRight(edge)) {
+        }
+        else if (RectangleEdge.isLeftOrRight(edge)) {
             jmin = dataArea.getMaxY();
             jmax = dataArea.getMinY();
         }
@@ -756,14 +771,17 @@ public class CyclicNumberAxis extends NumberAxis {
             double jbreak = jmax - (vmax - vp) * (jmax - jmin) / this.period;
             if (java2DValue >= jbreak) {
                 return vp + (jmax - java2DValue) * this.period / (jmax - jmin);
-            } else {
+            }
+            else {
                 return vp - (java2DValue - jmin) * this.period / (jmax - jmin);
             }
-        } else {
+        }
+        else {
             double jbreak = (vmax - vp) * (jmax - jmin) / this.period + jmin;
             if (java2DValue <= jbreak) {
                 return vp + (java2DValue - jmin) * this.period / (jmax - jmin);
-            } else {
+            }
+            else {
                 return vp - (jmax - java2DValue) * this.period / (jmax - jmin);
             }
         }
@@ -797,7 +815,8 @@ public class CyclicNumberAxis extends NumberAxis {
         if (RectangleEdge.isTopOrBottom(edge)) {
             jmin = dataArea.getMinX();
             jmax = dataArea.getMaxX();
-        } else if (RectangleEdge.isLeftOrRight(edge)) {
+        }
+        else if (RectangleEdge.isLeftOrRight(edge)) {
             jmax = dataArea.getMinY();
             jmin = dataArea.getMaxY();
         }
@@ -805,17 +824,22 @@ public class CyclicNumberAxis extends NumberAxis {
         if (isInverted()) {
             if (value == vp) {
                 return this.boundMappedToLastCycle ? jmin : jmax;
-            } else if (value > vp) {
+            }
+            else if (value > vp) {
                 return jmax - (value - vp) * (jmax - jmin) / this.period;
-            } else {
+            }
+            else {
                 return jmin + (vp - value) * (jmax - jmin) / this.period;
             }
-        } else {
+        }
+        else {
             if (value == vp) {
                 return this.boundMappedToLastCycle ? jmax : jmin;
-            } else if (value >= vp) {
+            }
+            else if (value >= vp) {
                 return jmin + (value - vp) * (jmax - jmin) / this.period;
-            } else {
+            }
+            else {
                 return jmax - (vp - value) * (jmax - jmin) / this.period;
             }
         }
@@ -896,7 +920,7 @@ public class CyclicNumberAxis extends NumberAxis {
      */
     public double getCycleBound() {
         return Math.floor(
-                (getRange().getUpperBound() - this.offset) / this.period
+            (getRange().getUpperBound() - this.offset) / this.period
         ) * this.period + this.offset;
     }
 
@@ -969,7 +993,7 @@ public class CyclicNumberAxis extends NumberAxis {
      */
     @Override
     protected AxisState drawTickMarksAndLabels(Graphics2D g2, double cursor,
-                                               Rectangle2D plotArea, Rectangle2D dataArea, RectangleEdge edge) {
+            Rectangle2D plotArea, Rectangle2D dataArea, RectangleEdge edge) {
         this.internalMarkerWhenTicksOverlap = false;
         AxisState ret = super.drawTickMarksAndLabels(g2, cursor, plotArea,
                 dataArea, edge);
@@ -983,7 +1007,8 @@ public class CyclicNumberAxis extends NumberAxis {
         FontMetrics fm = g2.getFontMetrics(getTickLabelFont());
         if (isVerticalTickLabels()) {
             ol = fm.getMaxAdvance();
-        } else {
+        }
+        else {
             ol = fm.getHeight();
         }
 
@@ -996,11 +1021,14 @@ public class CyclicNumberAxis extends NumberAxis {
             g2.setPaint(getTickMarkPaint());
             if (edge == RectangleEdge.LEFT) {
                 mark = new Line2D.Double(cursor - ol, xx, cursor + il, xx);
-            } else if (edge == RectangleEdge.RIGHT) {
+            }
+            else if (edge == RectangleEdge.RIGHT) {
                 mark = new Line2D.Double(cursor + ol, xx, cursor - il, xx);
-            } else if (edge == RectangleEdge.TOP) {
+            }
+            else if (edge == RectangleEdge.TOP) {
                 mark = new Line2D.Double(xx, cursor - ol, xx, cursor + il);
-            } else if (edge == RectangleEdge.BOTTOM) {
+            }
+            else if (edge == RectangleEdge.BOTTOM) {
                 mark = new Line2D.Double(xx, cursor + ol, xx, cursor - il);
             }
             g2.draw(mark);
@@ -1030,30 +1058,33 @@ public class CyclicNumberAxis extends NumberAxis {
                           PlotRenderingInfo plotState) {
 
         AxisState ret = super.draw(
-                g2, cursor, plotArea, dataArea, edge, plotState
+            g2, cursor, plotArea, dataArea, edge, plotState
         );
         if (isAdvanceLineVisible()) {
             double xx = valueToJava2D(
-                    getRange().getUpperBound(), dataArea, edge
+                getRange().getUpperBound(), dataArea, edge
             );
             Line2D mark = null;
             g2.setStroke(getAdvanceLineStroke());
             g2.setPaint(getAdvanceLinePaint());
             if (edge == RectangleEdge.LEFT) {
                 mark = new Line2D.Double(
-                        cursor, xx, cursor + dataArea.getWidth(), xx
+                    cursor, xx, cursor + dataArea.getWidth(), xx
                 );
-            } else if (edge == RectangleEdge.RIGHT) {
+            }
+            else if (edge == RectangleEdge.RIGHT) {
                 mark = new Line2D.Double(
-                        cursor - dataArea.getWidth(), xx, cursor, xx
+                    cursor - dataArea.getWidth(), xx, cursor, xx
                 );
-            } else if (edge == RectangleEdge.TOP) {
+            }
+            else if (edge == RectangleEdge.TOP) {
                 mark = new Line2D.Double(
-                        xx, cursor + dataArea.getHeight(), xx, cursor
+                    xx, cursor + dataArea.getHeight(), xx, cursor
                 );
-            } else if (edge == RectangleEdge.BOTTOM) {
+            }
+            else if (edge == RectangleEdge.BOTTOM) {
                 mark = new Line2D.Double(
-                        xx, cursor, xx, cursor - dataArea.getHeight()
+                    xx, cursor, xx, cursor - dataArea.getHeight()
                 );
             }
             g2.draw(mark);
@@ -1088,19 +1119,22 @@ public class CyclicNumberAxis extends NumberAxis {
 
         FontMetrics fm = g2.getFontMetrics(getTickLabelFont());
         Rectangle2D r = TextUtilities.getTextBounds(
-                this.internalMarkerCycleBoundTick.getText(), g2, fm
+            this.internalMarkerCycleBoundTick.getText(), g2, fm
         );
 
         if (RectangleEdge.isTopOrBottom(edge)) {
             if (isVerticalTickLabels()) {
                 space.add(r.getHeight() / 2, RectangleEdge.RIGHT);
-            } else {
+            }
+            else {
                 space.add(r.getWidth() / 2, RectangleEdge.RIGHT);
             }
-        } else if (RectangleEdge.isLeftOrRight(edge)) {
+        }
+        else if (RectangleEdge.isLeftOrRight(edge)) {
             if (isVerticalTickLabels()) {
                 space.add(r.getWidth() / 2, RectangleEdge.TOP);
-            } else {
+            }
+            else {
                 space.add(r.getHeight() / 2, RectangleEdge.TOP);
             }
         }
@@ -1133,7 +1167,7 @@ public class CyclicNumberAxis extends NumberAxis {
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-            throws IOException, ClassNotFoundException {
+        throws IOException, ClassNotFoundException {
 
         stream.defaultReadObject();
         this.advanceLinePaint = SerialUtilities.readPaint(stream);

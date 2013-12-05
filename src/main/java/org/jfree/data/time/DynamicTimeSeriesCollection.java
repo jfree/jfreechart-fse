@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------------
@@ -59,15 +59,15 @@
 
 package org.jfree.data.time;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 import org.jfree.data.DomainInfo;
 import org.jfree.data.Range;
 import org.jfree.data.RangeInfo;
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.xy.AbstractIntervalXYDataset;
 import org.jfree.data.xy.IntervalXYDataset;
-
-import java.util.Calendar;
-import java.util.TimeZone;
 
 /**
  * A dynamic dataset.
@@ -82,9 +82,9 @@ import java.util.TimeZone;
  * embodied only in methods associated with interface RangeInfo.
  */
 public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
-        implements IntervalXYDataset,
-        DomainInfo,
-        RangeInfo {
+                                         implements IntervalXYDataset,
+                                                    DomainInfo,
+                                                    RangeInfo {
 
     /**
      * Useful constant for controlling the x-value returned for a time
@@ -288,9 +288,11 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
         /// Expand the following for all defined TimePeriods:
         if (this.timePeriodClass == Second.class) {
             this.pointsInTime = new Second[nMoments];
-        } else if (this.timePeriodClass == Minute.class) {
+        }
+        else if (this.timePeriodClass == Minute.class) {
             this.pointsInTime = new Minute[nMoments];
-        } else if (this.timePeriodClass == Hour.class) {
+        }
+        else if (this.timePeriodClass == Hour.class) {
             this.pointsInTime = new Hour[nMoments];
         }
         ///  .. etc....
@@ -319,10 +321,10 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
             }
         }
         long oldestL = this.pointsInTime[0].getFirstMillisecond(
-                this.workingCalendar
+            this.workingCalendar
         );
         long nextL = this.pointsInTime[1].getFirstMillisecond(
-                this.workingCalendar
+            this.workingCalendar
         );
         this.deltaTime = nextL - oldestL;
         this.oldestAt = 0;
@@ -342,7 +344,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
         long endL;
         if (this.domainIsPointsInTime) {
             endL = getNewestTime().getFirstMillisecond(this.workingCalendar);
-        } else {
+        }
+        else {
             endL = getNewestTime().getLastMillisecond(this.workingCalendar);
         }
         this.domainStart = startL;
@@ -387,15 +390,15 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
         int i;
         if (values == null) {
             throw new IllegalArgumentException("TimeSeriesDataset.addSeries(): "
-                    + "cannot add null array of values.");
+                + "cannot add null array of values.");
         }
         if (seriesNumber >= this.valueHistory.length) {
             throw new IllegalArgumentException("TimeSeriesDataset.addSeries(): "
-                    + "cannot add more series than specified in c'tor");
+                + "cannot add more series than specified in c'tor");
         }
         if (this.valueHistory[seriesNumber] == null) {
             this.valueHistory[seriesNumber]
-                    = new ValueSequence(this.historyCount);
+                = new ValueSequence(this.historyCount);
             this.seriesCount++;
         }
         // But if that series array already exists, just overwrite its contents
@@ -410,7 +413,7 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
         }
         //{
         for (i = 0; i < copyLength; i++) { // deep copy from values[], caller
-            // can safely discard that array
+                                           // can safely discard that array
             this.valueHistory[seriesNumber].enterData(i, values[i]);
         }
         if (fillNeeded) {
@@ -418,7 +421,7 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
                 this.valueHistory[seriesNumber].enterData(i, 0.0f);
             }
         }
-        //}
+      //}
         if (seriesKey != null) {
             this.seriesKeys[seriesNumber] = seriesKey;
         }
@@ -448,19 +451,19 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
         invalidateRangeInfo();
         if (seriesNumber >= this.valueHistory.length) {
             throw new IllegalArgumentException(
-                    "TimeSeriesDataset.addValue(): series #"
-                            + seriesNumber + "unspecified in c'tor"
+                "TimeSeriesDataset.addValue(): series #"
+                + seriesNumber + "unspecified in c'tor"
             );
         }
         if (this.valueHistory[seriesNumber] == null) {
             this.valueHistory[seriesNumber]
-                    = new ValueSequence(this.historyCount);
+                = new ValueSequence(this.historyCount);
             this.seriesCount++;
         }
         // But if that series array already exists, just overwrite its contents
         //synchronized(this)
         //{
-        this.valueHistory[seriesNumber].enterData(index, value);
+            this.valueHistory[seriesNumber].enterData(index, value);
         //}
         fireSeriesChanged();
     }
@@ -486,7 +489,7 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      */
     @Override
     public int getItemCount(int series) {  // all arrays equal length,
-        // so ignore argument:
+                                           // so ignore argument:
         return this.historyCount;
     }
 
@@ -544,7 +547,8 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
         int tmp = protoIndex;
         if (tmp >= this.historyCount) {
             tmp -= this.historyCount;
-        } else if (tmp < 0) {
+        }
+        else if (tmp < 0) {
             tmp += this.historyCount;
         }
         return tmp;
@@ -560,7 +564,7 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
     public synchronized RegularTimePeriod advanceTime() {
         RegularTimePeriod nextInstant = this.pointsInTime[this.newestAt].next();
         this.newestAt = this.oldestAt;  // newestAt takes value previously held
-        // by oldestAT
+                                        // by oldestAT
         /***
          * The next 10 lines or so should be expanded if data can be negative
          ***/
@@ -654,7 +658,6 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
 
     // appendData() writes new data at the index position given by newestAt/
     // When adding new data dynamically, use advanceTime(), followed by this:
-
     /**
      * Appends new data.
      *
@@ -664,7 +667,7 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
         int nDataPoints = newData.length;
         if (nDataPoints > this.valueHistory.length) {
             throw new IllegalArgumentException(
-                    "More data than series to put them in"
+               "More data than series to put them in"
             );
         }
         int s;   // index to select the "series"
@@ -687,25 +690,25 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      * @param  refresh  value of n in "refresh the display on every nth call"
      *                 (ignored if <= 0 )
      */
-    public void appendData(float[] newData, int insertionIndex, int refresh) {
-        int nDataPoints = newData.length;
-        if (nDataPoints > this.valueHistory.length) {
-            throw new IllegalArgumentException(
-                    "More data than series to put them " + "in"
-            );
-        }
-        for (int s = 0; s < nDataPoints; s++) {
-            if (this.valueHistory[s] == null) {
+     public void appendData(float[] newData, int insertionIndex, int refresh) {
+         int nDataPoints = newData.length;
+         if (nDataPoints > this.valueHistory.length) {
+             throw new IllegalArgumentException(
+                 "More data than series to put them " + "in"
+             );
+         }
+         for (int s = 0; s < nDataPoints; s++) {
+             if (this.valueHistory[s] == null) {
                 this.valueHistory[s] = new ValueSequence(this.historyCount);
-            }
-            this.valueHistory[s].enterData(insertionIndex, newData[s]);
-        }
-        if (refresh > 0) {
-            insertionIndex++;
-            if (insertionIndex % refresh == 0) {
-                fireSeriesChanged();
-            }
-        }
+             }
+             this.valueHistory[s].enterData(insertionIndex, newData[s]);
+         }
+         if (refresh > 0) {
+             insertionIndex++;
+             if (insertionIndex % refresh == 0) {
+                 fireSeriesChanged();
+             }
+         }
     }
 
     /**
@@ -913,16 +916,16 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      */
     private long getX(RegularTimePeriod period) {
         switch (this.position) {
-            case (START):
+            case (START) :
                 return period.getFirstMillisecond(this.workingCalendar);
-            case (MIDDLE):
+            case (MIDDLE) :
                 return period.getMiddleMillisecond(this.workingCalendar);
-            case (END):
+            case (END) :
                 return period.getLastMillisecond(this.workingCalendar);
             default:
                 return period.getMiddleMillisecond(this.workingCalendar);
         }
-    }
+     }
 
     // The next 3 functions implement the RangeInfo interface.
     // Using saved limits (updated by each updateTime() call) significantly

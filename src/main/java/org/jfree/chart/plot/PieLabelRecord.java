@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
@@ -218,7 +218,7 @@ public class PieLabelRecord implements Comparable, Serializable {
      * @return An integer that specifies the relative order of the two objects.
      */
     @Override
-	public int compareTo(Object obj) {
+    public int compareTo(Object obj) {
         int result = 0;
         if (obj instanceof PieLabelRecord) {
             PieLabelRecord plr = (PieLabelRecord) obj;
@@ -240,7 +240,7 @@ public class PieLabelRecord implements Comparable, Serializable {
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -281,7 +281,7 @@ public class PieLabelRecord implements Comparable, Serializable {
      * @return A string.
      */
     @Override
-	public String toString() {
+    public String toString() {
         return this.baseY + ", " + this.key.toString();
     }
 }

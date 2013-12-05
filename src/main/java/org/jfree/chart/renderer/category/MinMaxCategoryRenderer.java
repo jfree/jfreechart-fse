@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
@@ -331,7 +331,7 @@ public class MinMaxCategoryRenderer extends AbstractCategoryItemRenderer {
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2, CategoryItemRendererState state,
+    public void drawItem(Graphics2D g2, CategoryItemRendererState state,
             Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
             ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
             int pass) {
@@ -438,7 +438,7 @@ public class MinMaxCategoryRenderer extends AbstractCategoryItemRenderer {
      * @since 1.0.7
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -475,7 +475,7 @@ public class MinMaxCategoryRenderer extends AbstractCategoryItemRenderer {
       final GeneralPath path = new GeneralPath(shape);
       return new Icon() {
           @Override
-		public void paintIcon(Component c, Graphics g, int x, int y) {
+          public void paintIcon(Component c, Graphics g, int x, int y) {
               Graphics2D g2 = (Graphics2D) g;
               path.transform(AffineTransform.getTranslateInstance(x, y));
               if (fillPaint != null) {
@@ -490,12 +490,12 @@ public class MinMaxCategoryRenderer extends AbstractCategoryItemRenderer {
         }
 
         @Override
-		public int getIconWidth() {
+        public int getIconWidth() {
             return width;
         }
 
         @Override
-		public int getIconHeight() {
+        public int getIconHeight() {
             return height;
         }
 
@@ -518,7 +518,7 @@ public class MinMaxCategoryRenderer extends AbstractCategoryItemRenderer {
         final GeneralPath path = new GeneralPath(shape);
         return new Icon() {
             @Override
-			public void paintIcon(Component c, Graphics g, int x, int y) {
+            public void paintIcon(Component c, Graphics g, int x, int y) {
                 Graphics2D g2 = (Graphics2D) g;
                 path.transform(AffineTransform.getTranslateInstance(x, y));
                 if (fill) {
@@ -531,12 +531,12 @@ public class MinMaxCategoryRenderer extends AbstractCategoryItemRenderer {
             }
 
             @Override
-			public int getIconWidth() {
+            public int getIconWidth() {
                 return width;
             }
 
             @Override
-			public int getIconHeight() {
+            public int getIconHeight() {
                 return height;
             }
         };

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------------
@@ -41,13 +41,13 @@
 
 package org.jfree.data.gantt;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.UnknownKeyException;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DatasetChangeEvent;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * A {@link GanttCategoryDataset} implementation that presents a subset of the
@@ -79,7 +79,7 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
      * @param maxColumns  the maximumColumnCount.
      */
     public SlidingGanttCategoryDataset(GanttCategoryDataset underlying,
-                                       int firstColumn, int maxColumns) {
+            int firstColumn, int maxColumns) {
         this.underlying = underlying;
         this.firstCategoryIndex = firstColumn;
         this.maximumCategoryCount = maxColumns;
@@ -261,7 +261,8 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
         int c = getColumnIndex(columnKey);
         if (c != -1) {
             return this.underlying.getValue(r, c + this.firstCategoryIndex);
-        } else {
+        }
+        else {
             throw new UnknownKeyException("Unknown columnKey: " + columnKey);
         }
     }
@@ -276,7 +277,8 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
         int last = lastCategoryIndex();
         if (last == -1) {
             return 0;
-        } else {
+        }
+        else {
             return Math.max(last - this.firstCategoryIndex + 1, 0);
         }
     }
@@ -319,7 +321,8 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
         if (c != -1) {
             return this.underlying.getPercentComplete(r,
                     c + this.firstCategoryIndex);
-        } else {
+        }
+        else {
             throw new UnknownKeyException("Unknown columnKey: " + columnKey);
         }
     }
@@ -337,13 +340,14 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
      */
     @Override
     public Number getPercentComplete(Comparable rowKey, Comparable columnKey,
-                                     int subinterval) {
+            int subinterval) {
         int r = getRowIndex(rowKey);
         int c = getColumnIndex(columnKey);
         if (c != -1) {
             return this.underlying.getPercentComplete(r,
                     c + this.firstCategoryIndex, subinterval);
-        } else {
+        }
+        else {
             throw new UnknownKeyException("Unknown columnKey: " + columnKey);
         }
     }
@@ -361,13 +365,14 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
      */
     @Override
     public Number getEndValue(Comparable rowKey, Comparable columnKey,
-                              int subinterval) {
+            int subinterval) {
         int r = getRowIndex(rowKey);
         int c = getColumnIndex(columnKey);
         if (c != -1) {
             return this.underlying.getEndValue(r,
                     c + this.firstCategoryIndex, subinterval);
-        } else {
+        }
+        else {
             throw new UnknownKeyException("Unknown columnKey: " + columnKey);
         }
     }
@@ -433,13 +438,14 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
      */
     @Override
     public Number getStartValue(Comparable rowKey, Comparable columnKey,
-                                int subinterval) {
+            int subinterval) {
         int r = getRowIndex(rowKey);
         int c = getColumnIndex(columnKey);
         if (c != -1) {
             return this.underlying.getStartValue(r,
                     c + this.firstCategoryIndex, subinterval);
-        } else {
+        }
+        else {
             throw new UnknownKeyException("Unknown columnKey: " + columnKey);
         }
     }
@@ -478,7 +484,8 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
         if (c != -1) {
             return this.underlying.getSubIntervalCount(r,
                     c + this.firstCategoryIndex);
-        } else {
+        }
+        else {
             throw new UnknownKeyException("Unknown columnKey: " + columnKey);
         }
     }
@@ -516,7 +523,8 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
         if (c != -1) {
             return this.underlying.getStartValue(r,
                     c + this.firstCategoryIndex);
-        } else {
+        }
+        else {
             throw new UnknownKeyException("Unknown columnKey: " + columnKey);
         }
     }
@@ -553,7 +561,8 @@ public class SlidingGanttCategoryDataset extends AbstractDataset
         int c = getColumnIndex(columnKey);
         if (c != -1) {
             return this.underlying.getEndValue(r, c + this.firstCategoryIndex);
-        } else {
+        }
+        else {
             throw new UnknownKeyException("Unknown columnKey: " + columnKey);
         }
     }

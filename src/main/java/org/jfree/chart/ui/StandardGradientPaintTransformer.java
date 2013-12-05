@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------------------
@@ -39,7 +39,7 @@
  * 28-Oct-2003 : Version 1 (DG);
  * 19-Mar-2004 : Added equals() method (DG);
  * 17-Jun-2012 : Moved from JCommon to JFreeChart (DG);
- * 
+ *
  */
 
 package org.jfree.chart.ui;
@@ -52,30 +52,30 @@ import java.io.Serializable;
 import org.jfree.chart.util.PublicCloneable;
 
 /**
- * Transforms a <code>GradientPaint</code> to range over the width of a target 
+ * Transforms a <code>GradientPaint</code> to range over the width of a target
  * shape.  Instances of this class are immutable.
  */
-public class StandardGradientPaintTransformer 
-    implements GradientPaintTransformer, Cloneable, PublicCloneable, 
+public class StandardGradientPaintTransformer
+    implements GradientPaintTransformer, Cloneable, PublicCloneable,
                Serializable {
-    
+
     /** For serialization. */
     private static final long serialVersionUID = -8155025776964678320L;
 
     /** The transform type. */
     private GradientPaintTransformType type;
-    
+
     /**
-     * Creates a new transformer with the type 
+     * Creates a new transformer with the type
      * {@link GradientPaintTransformType#VERTICAL}.
      */
     public StandardGradientPaintTransformer() {
         this(GradientPaintTransformType.VERTICAL);
     }
-    
+
     /**
      * Creates a new transformer with the specified type.
-     * 
+     *
      * @param type  the transform type (<code>null</code> not permitted).
      */
     public StandardGradientPaintTransformer(
@@ -85,108 +85,108 @@ public class StandardGradientPaintTransformer
         }
         this.type = type;
     }
-    
+
     /**
      * Returns the type of transform.
-     * 
+     *
      * @return The type of transform (never <code>null</code>).
-     * 
+     *
      * @since 1.0.10
      */
     public GradientPaintTransformType getType() {
         return this.type;
     }
-    
+
     /**
      * Transforms a <code>GradientPaint</code> instance to fit the specified
      * <code>target</code> shape.
-     * 
+     *
      * @param paint  the original paint (<code>null</code> not permitted).
      * @param target  the target shape (<code>null</code> not permitted).
-     * 
+     *
      * @return The transformed paint.
      */
     @Override
-	public GradientPaint transform(final GradientPaint paint, 
+    public GradientPaint transform(final GradientPaint paint,
                                    final Shape target) {
-        
+
         GradientPaint result = paint;
         final Rectangle2D bounds = target.getBounds2D();
-        
+
         if (this.type.equals(GradientPaintTransformType.VERTICAL)) {
-            result = new GradientPaint((float) bounds.getCenterX(), 
-                    (float) bounds.getMinY(), paint.getColor1(), 
-                    (float) bounds.getCenterX(), (float) bounds.getMaxY(), 
+            result = new GradientPaint((float) bounds.getCenterX(),
+                    (float) bounds.getMinY(), paint.getColor1(),
+                    (float) bounds.getCenterX(), (float) bounds.getMaxY(),
                     paint.getColor2());
         }
         else if (this.type.equals(GradientPaintTransformType.HORIZONTAL)) {
-            result = new GradientPaint((float) bounds.getMinX(), 
-                    (float) bounds.getCenterY(), paint.getColor1(), 
-                    (float) bounds.getMaxX(), (float) bounds.getCenterY(), 
-                    paint.getColor2());            
+            result = new GradientPaint((float) bounds.getMinX(),
+                    (float) bounds.getCenterY(), paint.getColor1(),
+                    (float) bounds.getMaxX(), (float) bounds.getCenterY(),
+                    paint.getColor2());
         }
         else if (this.type.equals(
                 GradientPaintTransformType.CENTER_HORIZONTAL)) {
-            result = new GradientPaint((float) bounds.getCenterX(), 
-                    (float) bounds.getCenterY(), paint.getColor2(), 
-                    (float) bounds.getMaxX(), (float) bounds.getCenterY(), 
-                    paint.getColor1(), true);            
+            result = new GradientPaint((float) bounds.getCenterX(),
+                    (float) bounds.getCenterY(), paint.getColor2(),
+                    (float) bounds.getMaxX(), (float) bounds.getCenterY(),
+                    paint.getColor1(), true);
         }
         else if (this.type.equals(GradientPaintTransformType.CENTER_VERTICAL)) {
-            result = new GradientPaint((float) bounds.getCenterX(), 
-                    (float) bounds.getMinY(), paint.getColor1(), 
-                    (float) bounds.getCenterX(), (float) bounds.getCenterY(), 
-                    paint.getColor2(), true);            
+            result = new GradientPaint((float) bounds.getCenterX(),
+                    (float) bounds.getMinY(), paint.getColor1(),
+                    (float) bounds.getCenterX(), (float) bounds.getCenterY(),
+                    paint.getColor2(), true);
         }
-        
+
         return result;
     }
-    
+
     /**
      * Tests this instance for equality with an arbitrary object.
-     * 
+     *
      * @param obj  the object (<code>null</code> permitted).
-     * 
+     *
      * @return A boolean.
      */
     @Override
-	public boolean equals(final Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == this) {
-            return true;   
+            return true;
         }
         if (!(obj instanceof StandardGradientPaintTransformer)) {
             return false;
         }
-        StandardGradientPaintTransformer that 
+        StandardGradientPaintTransformer that
                 = (StandardGradientPaintTransformer) obj;
         if (this.type != that.type) {
             return false;
         }
         return true;
     }
-    
+
     /**
      * Returns a clone of the transformer.  Note that instances of this class
      * are immutable, so cloning an instance isn't really necessary.
-     * 
+     *
      * @return A clone.
-     * 
-     * @throws CloneNotSupportedException not thrown by this class, but 
+     *
+     * @throws CloneNotSupportedException not thrown by this class, but
      *         subclasses (if any) might.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
     /**
      * Returns a hash code for this object.
-     * 
+     *
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         return (this.type != null ? this.type.hashCode() : 0);
     }
-    
+
 }

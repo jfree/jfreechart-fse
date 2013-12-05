@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------------
@@ -150,7 +150,7 @@ public class IntervalXYItemLabelGenerator extends AbstractXYItemLabelGenerator
      *         <code>String</code> objects (never <code>null</code>).
      */
     @Override
-	protected Object[] createItemArray(XYDataset dataset, int series,
+    protected Object[] createItemArray(XYDataset dataset, int series,
                                        int item) {
 
         IntervalXYDataset intervalDataset = null;
@@ -236,7 +236,7 @@ public class IntervalXYItemLabelGenerator extends AbstractXYItemLabelGenerator
      * @return The label text (possibly <code>null</code>).
      */
     @Override
-	public String generateLabel(XYDataset dataset, int series, int item) {
+    public String generateLabel(XYDataset dataset, int series, int item) {
         return generateLabelString(dataset, series, item);
     }
 
@@ -248,7 +248,7 @@ public class IntervalXYItemLabelGenerator extends AbstractXYItemLabelGenerator
      * @throws CloneNotSupportedException if cloning is not supported.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -260,7 +260,7 @@ public class IntervalXYItemLabelGenerator extends AbstractXYItemLabelGenerator
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

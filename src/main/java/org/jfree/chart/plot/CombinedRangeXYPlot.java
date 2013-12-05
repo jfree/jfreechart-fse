@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------
@@ -100,24 +100,24 @@
 
 package org.jfree.chart.plot;
 
+import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.Collections;
+import java.util.List;
+
 import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.AxisSpace;
 import org.jfree.chart.axis.AxisState;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.event.PlotChangeEvent;
-import org.jfree.chart.event.PlotChangeListener;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.event.PlotChangeEvent;
+import org.jfree.chart.event.PlotChangeListener;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.Range;
-
-import java.awt.*;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * An extension of {@link XYPlot} that contains multiple subplots that share a
@@ -153,9 +153,9 @@ public class CombinedRangeXYPlot extends XYPlot
     public CombinedRangeXYPlot(ValueAxis rangeAxis) {
 
         super(null, // no data in the parent plot
-                null,
-                rangeAxis,
-                null);
+              null,
+              rangeAxis,
+              null);
 
         this.subplots = new java.util.ArrayList<XYPlot>();
 
@@ -268,7 +268,8 @@ public class CombinedRangeXYPlot extends XYPlot
     public List<XYPlot> getSubplots() {
         if (this.subplots != null) {
             return Collections.unmodifiableList(this.subplots);
-        } else {
+        }
+        else {
             return Collections.EMPTY_LIST;
         }
     }
@@ -294,14 +295,16 @@ public class CombinedRangeXYPlot extends XYPlot
             if (orientation == PlotOrientation.VERTICAL) {
                 space.setLeft(fixed.getLeft());
                 space.setRight(fixed.getRight());
-            } else if (orientation == PlotOrientation.HORIZONTAL) {
+            }
+            else if (orientation == PlotOrientation.HORIZONTAL) {
                 space.setTop(fixed.getTop());
                 space.setBottom(fixed.getBottom());
             }
-        } else {
+        }
+        else {
             ValueAxis valueAxis = getRangeAxis();
             RectangleEdge valueEdge = Plot.resolveRangeAxisLocation(
-                    getRangeAxisLocation(), orientation
+                getRangeAxisLocation(), orientation
             );
             if (valueAxis != null) {
                 space = valueAxis.reserveSpace(g2, this, plotArea, valueEdge,
@@ -325,7 +328,8 @@ public class CombinedRangeXYPlot extends XYPlot
         double usableSize = 0.0;
         if (orientation == PlotOrientation.VERTICAL) {
             usableSize = adjustedPlotArea.getWidth() - this.gap * (n - 1);
-        } else if (orientation == PlotOrientation.HORIZONTAL) {
+        }
+        else if (orientation == PlotOrientation.HORIZONTAL) {
             usableSize = adjustedPlotArea.getHeight() - this.gap * (n - 1);
         }
 
@@ -338,7 +342,8 @@ public class CombinedRangeXYPlot extends XYPlot
                 this.subplotAreas[i] = new Rectangle2D.Double(x, y, w,
                         adjustedPlotArea.getHeight());
                 x = x + w + this.gap;
-            } else if (orientation == PlotOrientation.HORIZONTAL) {
+            }
+            else if (orientation == PlotOrientation.HORIZONTAL) {
                 double h = usableSize * plot.getWeight() / totalWeight;
                 this.subplotAreas[i] = new Rectangle2D.Double(x, y,
                         adjustedPlotArea.getWidth(), h);
@@ -467,7 +472,8 @@ public class CombinedRangeXYPlot extends XYPlot
         XYPlot subplot = findSubplot(info, source);
         if (subplot != null) {
             subplot.zoomDomainAxes(factor, info, source, useAnchor);
-        } else {
+        }
+        else {
             // if the source point doesn't fall within a subplot, we do the
             // zoom on all subplots...
             for (XYPlot innerSubplot : getSubplots()) {
@@ -491,7 +497,8 @@ public class CombinedRangeXYPlot extends XYPlot
         XYPlot subplot = findSubplot(info, source);
         if (subplot != null) {
             subplot.zoomDomainAxes(lowerPercent, upperPercent, info, source);
-        } else {
+        }
+        else {
             // if the source point doesn't fall within a subplot, we do the
             // zoom on all subplots...
             for (XYPlot innerSubplot : getSubplots()) {
@@ -512,7 +519,7 @@ public class CombinedRangeXYPlot extends XYPlot
      */
     @Override
     public void panDomainAxes(double panRange, PlotRenderingInfo info,
-                              Point2D source) {
+            Point2D source) {
 
         XYPlot subplot = findSubplot(info, source);
         if (subplot != null) {
@@ -566,8 +573,8 @@ public class CombinedRangeXYPlot extends XYPlot
     public void setRenderer(XYItemRenderer renderer) {
 
         super.setRenderer(renderer);  // not strictly necessary, since the
-        // renderer set for the
-        // parent plot is not used
+                                      // renderer set for the
+                                      // parent plot is not used
 
         for (XYPlot plot : this.subplots) {
             plot.setRenderer(renderer);

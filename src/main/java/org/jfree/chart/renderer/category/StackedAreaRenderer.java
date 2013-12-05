@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------------
@@ -159,7 +159,7 @@ public class StackedAreaRenderer extends AreaRenderer
      * @return The number of passes required by the renderer.
      */
     @Override
-	public int getPassCount() {
+    public int getPassCount() {
         return 2;
     }
 
@@ -172,7 +172,7 @@ public class StackedAreaRenderer extends AreaRenderer
      * @return The range (or <code>null</code> if the dataset is empty).
      */
     @Override
-	public Range findRangeBounds(CategoryDataset dataset) {
+    public Range findRangeBounds(CategoryDataset dataset) {
         if (dataset == null) {
             return null;
         }
@@ -199,7 +199,7 @@ public class StackedAreaRenderer extends AreaRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          CategoryItemRendererState state,
                          Rectangle2D dataArea,
                          CategoryPlot plot,
@@ -213,7 +213,7 @@ public class StackedAreaRenderer extends AreaRenderer
         if (!isSeriesVisible(row)) {
             return;
         }
-        
+
         // setup for collecting optional entity info...
         Shape entityArea = null;
         EntityCollection entities = state.getEntityCollection();
@@ -423,7 +423,7 @@ public class StackedAreaRenderer extends AreaRenderer
         double[] result = new double[2];
         double total = 0.0;
         if (this.renderAsPercentages) {
-            total = DataUtilities.calculateColumnTotal(dataset, index, 
+            total = DataUtilities.calculateColumnTotal(dataset, index,
                     validRows);
         }
         for (int i = 0; i < series; i++) {
@@ -500,7 +500,7 @@ public class StackedAreaRenderer extends AreaRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

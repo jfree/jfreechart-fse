@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
@@ -226,7 +226,7 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
      * @return A legend item for the series.
      */
     @Override
-	public LegendItem getLegendItem(int datasetIndex, int series) {
+    public LegendItem getLegendItem(int datasetIndex, int series) {
         LegendItem result = null;
         XYPlot xyplot = getPlot();
         if (xyplot != null) {
@@ -281,7 +281,7 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
                          PlotRenderingInfo info,
@@ -408,7 +408,7 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -433,7 +433,7 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
      * @throws CloneNotSupportedException  if the renderer cannot be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         XYAreaRenderer2 clone = (XYAreaRenderer2) super.clone();
         clone.legendArea = ShapeUtilities.clone(this.legendArea);
         return clone;

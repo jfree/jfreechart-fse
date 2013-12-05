@@ -21,9 +21,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
- * 
+ *
  * -------------
  * RectangleEdge
  * -------------
@@ -36,7 +36,7 @@
  * --------
  * 14-Jul-2003 (DG);
  * 15-Jun-2012 : Moved from JCommon to JFreeChart (DG);
- * 
+ *
  */
 
 package org.jfree.chart.ui;
@@ -83,7 +83,7 @@ public enum RectangleEdge {
     }
 
     /**
-     * Returns <code>true</code> if the edge is <code>TOP</code> or 
+     * Returns <code>true</code> if the edge is <code>TOP</code> or
      * <code>BOTTOM</code>, and <code>false</code> otherwise.
      *
      * @param edge  the edge.
@@ -95,7 +95,7 @@ public enum RectangleEdge {
     }
 
     /**
-     * Returns <code>true</code> if the edge is <code>LEFT</code> or 
+     * Returns <code>true</code> if the edge is <code>LEFT</code> or
      * <code>RIGHT</code>, and <code>false</code> otherwise.
      *
      * @param edge  the edge.

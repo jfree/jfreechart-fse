@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------
@@ -95,9 +95,30 @@
 
 package org.jfree.chart.renderer.category;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.ui.GradientPaintTransformer;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.StandardGradientPaintTransformer;
+import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.CategoryItemLabelGenerator;
@@ -107,24 +128,9 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.ui.GradientPaintTransformer;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.StandardGradientPaintTransformer;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
-
-import java.awt.*;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
 /**
  * A {@link CategoryItemRenderer} that draws individual data items as bars.
@@ -134,9 +140,7 @@ import java.io.Serializable;
  * <img src="../../../../../images/BarRendererSample.png"
  * alt="BarRendererSample.png" />
  */
-public class BarRenderer
-        <RowKey extends Comparable, ColumnKey extends Comparable>
-        extends AbstractCategoryItemRenderer<RowKey, ColumnKey>
+public class BarRenderer extends AbstractCategoryItemRenderer
         implements Cloneable, PublicCloneable, Serializable {
 
     /** For serialization. */
@@ -295,12 +299,6 @@ public class BarRenderer
      * @since 1.0.11
      */
     private double shadowYOffset;
-
-    /**
-     * The item label fallback paint.
-     * Used when the item cannot fit inside the bar.
-     */
-    private Paint baseItemFallbackLabelPaint;
 
     /**
      * Creates a new bar renderer with default settings.
@@ -734,40 +732,6 @@ public class BarRenderer
     }
 
     /**
-     * Sets the fallback item label paint.
-     *
-     * @param paint  the paint of the label during a fallback.
-     * @param notify whether or not to fire a change event.
-     */
-    public void setBaseItemFallbackLabelPaint(Paint paint, boolean notify) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
-        this.baseItemFallbackLabelPaint = paint;
-        if (notify) {
-            fireChangeEvent();
-        }
-    }
-
-    /**
-     * Sets the fallback item label paint.
-     *
-     * @param paint the paint of the label during a fallback.
-     */
-    public void setBaseItemFallbackLabelPaint(Paint paint) {
-        setBaseItemFallbackLabelPaint(paint, true);
-    }
-
-    /**
-     * Getter for the base item fallback label paint.
-     *
-     * @return the possibly null fallback label paint.
-     */
-    public Paint getBaseItemFallbackLabelPaint() {
-        return baseItemFallbackLabelPaint;
-    }
-
-    /**
      * Initialises the renderer and returns a state object that will be passed
      * to subsequent calls to the drawItem method.  This method gets called
      * once at the start of the process of drawing a chart.
@@ -781,14 +745,14 @@ public class BarRenderer
      * @return The renderer state.
      */
     @Override
-    public CategoryItemRendererState<RowKey, ColumnKey> initialise(Graphics2D g2,
+    public CategoryItemRendererState initialise(Graphics2D g2,
                                                 Rectangle2D dataArea,
-                                                CategoryPlot<RowKey, ColumnKey> plot,
+                                                CategoryPlot plot,
                                                 int rendererIndex,
                                                 PlotRenderingInfo info) {
 
-        CategoryItemRendererState<RowKey, ColumnKey> state
-                = super.initialise(g2, dataArea, plot, rendererIndex, info);
+        CategoryItemRendererState state = super.initialise(g2, dataArea, plot,
+                rendererIndex, info);
 
         // get the clipping values...
         ValueAxis rangeAxis = plot.getRangeAxisForDataset(rendererIndex);
@@ -810,10 +774,10 @@ public class BarRenderer
      * @param rendererIndex  the renderer index.
      * @param state  the renderer state.
      */
-    protected void calculateBarWidth(CategoryPlot<RowKey, ColumnKey> plot,
+    protected void calculateBarWidth(CategoryPlot plot,
                                      Rectangle2D dataArea,
                                      int rendererIndex,
-                                     CategoryItemRendererState<RowKey, ColumnKey> state) {
+                                     CategoryItemRendererState state) {
 
         CategoryAxis domainAxis = getDomainAxis(plot, rendererIndex);
         CategoryDataset dataset = plot.getDataset(rendererIndex);
@@ -865,11 +829,11 @@ public class BarRenderer
      *
      * @return The coordinate.
      */
-    protected double calculateBarW0(CategoryPlot<RowKey, ColumnKey> plot,
+    protected double calculateBarW0(CategoryPlot plot,
                                     PlotOrientation orientation,
                                     Rectangle2D dataArea,
-                                    CategoryAxis<ColumnKey> domainAxis,
-                                    CategoryItemRendererState<RowKey, ColumnKey> state,
+                                    CategoryAxis domainAxis,
+                                    CategoryItemRendererState state,
                                     int row,
                                     int column) {
         // calculate bar width...
@@ -938,7 +902,7 @@ public class BarRenderer
      *         <code>null</code> or empty).
      */
     @Override
-    public Range findRangeBounds(CategoryDataset<RowKey, ColumnKey> dataset,
+    public Range findRangeBounds(CategoryDataset dataset,
             boolean includeInterval) {
         if (dataset == null) {
             return null;
@@ -963,7 +927,7 @@ public class BarRenderer
     @Override
     public LegendItem getLegendItem(int datasetIndex, int series) {
 
-        CategoryPlot<RowKey, ColumnKey> cp = getPlot();
+        CategoryPlot cp = getPlot();
         if (cp == null) {
             return null;
         }
@@ -973,9 +937,10 @@ public class BarRenderer
             return null;
         }
 
-        CategoryDataset<RowKey, ColumnKey> dataset = cp.getDataset(datasetIndex);
+        CategoryDataset dataset = cp.getDataset(datasetIndex);
         String label = getLegendItemLabelGenerator().generateLabel(dataset,
                 series);
+        String description = label;
         String toolTipText = null;
         if (getLegendItemToolTipGenerator() != null) {
             toolTipText = getLegendItemToolTipGenerator().generateLabel(
@@ -991,7 +956,7 @@ public class BarRenderer
         Paint outlinePaint = lookupSeriesOutlinePaint(series);
         Stroke outlineStroke = lookupSeriesOutlineStroke(series);
 
-        LegendItem result = new LegendItem(label, label, toolTipText,
+        LegendItem result = new LegendItem(label, description, toolTipText,
                 urlText, true, shape, true, paint, isDrawBarOutline(),
                 outlinePaint, outlineStroke, false, new Line2D.Float(),
                 new BasicStroke(1.0f), Color.BLACK);
@@ -1025,13 +990,13 @@ public class BarRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
-                         CategoryItemRendererState<RowKey, ColumnKey> state,
+    public void drawItem(Graphics2D g2,
+                         CategoryItemRendererState state,
                          Rectangle2D dataArea,
-                         CategoryPlot<RowKey, ColumnKey> plot,
-                         CategoryAxis<ColumnKey> domainAxis,
+                         CategoryPlot plot,
+                         CategoryAxis domainAxis,
                          ValueAxis rangeAxis,
-                         CategoryDataset<RowKey, ColumnKey> dataset,
+                         CategoryDataset dataset,
                          int row,
                          int column,
                          int pass) {
@@ -1113,7 +1078,7 @@ public class BarRenderer
         }
         this.barPainter.paintBar(g2, this, row, column, bar, barBase);
 
-        CategoryItemLabelGenerator<RowKey, ColumnKey> generator = getItemLabelGenerator(row,
+        CategoryItemLabelGenerator generator = getItemLabelGenerator(row,
                 column);
         if (generator != null && isItemLabelVisible(row, column)) {
             drawItemLabel(g2, dataset, row, column, plot, generator, bar,
@@ -1144,7 +1109,7 @@ public class BarRenderer
      *
      * @return The width of one series.
      */
-    protected double calculateSeriesWidth(double space, CategoryAxis<ColumnKey> axis,
+    protected double calculateSeriesWidth(double space, CategoryAxis axis,
                                           int categories, int series) {
         double factor = 1.0 - getItemMargin() - axis.getLowerMargin()
                             - axis.getUpperMargin();
@@ -1168,11 +1133,11 @@ public class BarRenderer
      * @param negative  a flag indicating a negative value.
      */
     protected void drawItemLabel(Graphics2D g2,
-                                 CategoryDataset<RowKey, ColumnKey> data,
+                                 CategoryDataset data,
                                  int row,
                                  int column,
-                                 CategoryPlot<RowKey, ColumnKey> plot,
-                                 CategoryItemLabelGenerator<RowKey, ColumnKey> generator,
+                                 CategoryPlot plot,
+                                 CategoryItemLabelGenerator generator,
                                  Rectangle2D bar,
                                  boolean negative) {
 

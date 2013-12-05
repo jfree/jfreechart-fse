@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------
@@ -345,7 +345,7 @@ public abstract class Title extends AbstractBlock
      *              draw outside this area).
      */
     @Override
-	public abstract void draw(Graphics2D g2, Rectangle2D area);
+    public abstract void draw(Graphics2D g2, Rectangle2D area);
 
     /**
      * Returns a clone of the title.
@@ -360,7 +360,7 @@ public abstract class Title extends AbstractBlock
      *         be thrown by subclasses.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         Title duplicate = (Title) super.clone();
         duplicate.listenerList = new EventListenerList();
         // RectangleInsets is immutable => same reference in clone OK
@@ -412,7 +412,7 @@ public abstract class Title extends AbstractBlock
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -444,7 +444,7 @@ public abstract class Title extends AbstractBlock
      * @return The hashcode.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 193;
         result = 37 * result + ObjectUtilities.hashCode(this.position);
         result = 37 * result

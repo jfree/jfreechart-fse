@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -56,7 +56,7 @@ public class NumberCellRenderer extends DefaultTableCellRenderer {
     private static final long serialVersionUID = 6141158525258247290L;
 
     /**
-     * Default constructor - builds a renderer that right justifies the 
+     * Default constructor - builds a renderer that right justifies the
      * contents of a table cell.
      */
     public NumberCellRenderer() {
@@ -69,9 +69,9 @@ public class NumberCellRenderer extends DefaultTableCellRenderer {
      *
      * @param table  the table.
      * @param value  the data to be rendered.
-     * @param isSelected  a boolean that indicates whether or not the cell is 
+     * @param isSelected  a boolean that indicates whether or not the cell is
      *                    selected.
-     * @param hasFocus  a boolean that indicates whether or not the cell has 
+     * @param hasFocus  a boolean that indicates whether or not the cell has
      *                  the focus.
      * @param row  the (zero-based) row index.
      * @param column  the (zero-based) column index.
@@ -79,8 +79,8 @@ public class NumberCellRenderer extends DefaultTableCellRenderer {
      * @return the component that can render the contents of the cell.
      */
     @Override
-	public Component getTableCellRendererComponent(final JTable table, 
-            final Object value, final boolean isSelected, 
+    public Component getTableCellRendererComponent(final JTable table,
+            final Object value, final boolean isSelected,
             final boolean hasFocus, final int row, final int column) {
 
         setFont(null);

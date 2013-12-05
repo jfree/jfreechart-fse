@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------
@@ -98,7 +98,7 @@ public class PaintSample extends JComponent {
      * @return the preferred size.
      */
     @Override
-	public Dimension getPreferredSize() {
+    public Dimension getPreferredSize() {
         return this.preferredSize;
     }
 
@@ -108,7 +108,7 @@ public class PaintSample extends JComponent {
      * @param g  the graphics device.
      */
     @Override
-	public void paintComponent(final Graphics g) {
+    public void paintComponent(final Graphics g) {
 
         final Graphics2D g2 = (Graphics2D) g;
         final Dimension size = getSize();

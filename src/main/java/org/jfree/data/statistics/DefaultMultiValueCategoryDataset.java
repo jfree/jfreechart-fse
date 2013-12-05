@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------------------
@@ -37,10 +37,14 @@
  * 08-Oct-2007 : Version 1, see patch 1780779 (DG);
  * 06-Nov-2007 : Return EMPTY_LIST not null from getValues() (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.data.statistics;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.jfree.chart.axis.NumberComparartor;
 import org.jfree.chart.util.PublicCloneable;
@@ -50,24 +54,18 @@ import org.jfree.data.RangeInfo;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DatasetChangeEvent;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * A category dataset that defines multiple values for each item.
  *
  * @since 1.0.7
  */
-public class DefaultMultiValueCategoryDataset
-        <RowKey extends Comparable, ColumnKey extends Comparable>
-        extends AbstractDataset
-        implements MultiValueCategoryDataset<RowKey, ColumnKey>, RangeInfo, PublicCloneable {
+public class DefaultMultiValueCategoryDataset extends AbstractDataset
+        implements MultiValueCategoryDataset, RangeInfo, PublicCloneable {
 
     /**
      * Storage for the data.
      */
-    protected KeyedObjects2D<RowKey, ColumnKey, List<Number>> data;
+    protected KeyedObjects2D data;
 
     /**
      * The minimum range value.
@@ -88,7 +86,7 @@ public class DefaultMultiValueCategoryDataset
      * Creates a new dataset.
      */
     public DefaultMultiValueCategoryDataset() {
-        this.data = new KeyedObjects2D<RowKey, ColumnKey, List<Number>>();
+        this.data = new KeyedObjects2D();
         this.minimumRangeValue = null;
         this.maximumRangeValue = null;
         this.rangeBounds = new Range(0.0, 0.0);
@@ -103,7 +101,7 @@ public class DefaultMultiValueCategoryDataset
      * @param rowKey  the row key (<code>null</code> not permitted).
      * @param columnKey  the column key (<code>null</code> not permitted).
      */
-    public void add(List<Number> values, RowKey rowKey, ColumnKey columnKey) {
+    public void add(List<Number> values, Comparable rowKey, Comparable columnKey) {
 
         if (values == null) {
             throw new IllegalArgumentException("Null 'values' argument.");
@@ -124,7 +122,7 @@ public class DefaultMultiValueCategoryDataset
         Collections.sort(vlist, new NumberComparartor());
         this.data.addObject(vlist, rowKey, columnKey);
 
-        if (!vlist.isEmpty()) {
+        if (vlist.size() > 0) {
             double maxval = Double.NEGATIVE_INFINITY;
             double minval = Double.POSITIVE_INFINITY;
             for (Number n : vlist) {
@@ -136,13 +134,15 @@ public class DefaultMultiValueCategoryDataset
             // update the cached range values...
             if (this.maximumRangeValue == null) {
                 this.maximumRangeValue = maxval;
-            } else if (maxval > this.maximumRangeValue.doubleValue()) {
+            }
+            else if (maxval > this.maximumRangeValue.doubleValue()) {
                 this.maximumRangeValue = maxval;
             }
 
             if (this.minimumRangeValue == null) {
                 this.minimumRangeValue = minval;
-            } else if (minval < this.minimumRangeValue.doubleValue()) {
+            }
+            else if (minval < this.minimumRangeValue.doubleValue()) {
                 this.minimumRangeValue = minval;
             }
             this.rangeBounds = new Range(this.minimumRangeValue.doubleValue(),
@@ -163,11 +163,12 @@ public class DefaultMultiValueCategoryDataset
      */
     @Override
     public List<Number> getValues(int row, int column) {
-        List<Number> values = this.data.getObject(row, column);
+        List<Number> values = (List<Number>) this.data.getObject(row, column);
         if (values != null) {
             return Collections.unmodifiableList(values);
-        } else {
-            return Collections.emptyList();
+        }
+        else {
+            return Collections.EMPTY_LIST;
         }
     }
 
@@ -181,8 +182,9 @@ public class DefaultMultiValueCategoryDataset
      * @return The list of values.
      */
     @Override
-    public List<Number> getValues(RowKey rowKey, ColumnKey columnKey) {
-        return Collections.unmodifiableList(this.data.getObject(rowKey, columnKey));
+    public List<Number> getValues(Comparable rowKey, Comparable columnKey) {
+        return Collections.unmodifiableList((List<Number>) this.data.getObject(rowKey,
+                columnKey));
     }
 
     /**
@@ -194,12 +196,12 @@ public class DefaultMultiValueCategoryDataset
      * @return The average value.
      */
     @Override
-    public Number getValue(RowKey row, ColumnKey column) {
-        List<Number> list = this.data.getObject(row, column);
+    public Number getValue(Comparable row, Comparable column) {
+        List<Number> l = (List<Number>) this.data.getObject(row, column);
         double average = 0.0d;
         int count = 0;
-        if (list != null && !list.isEmpty()) {
-            for (Number n : list) {
+        if (l != null && l.size() > 0) {
+            for (Number n : l) {
                 average += n.doubleValue();
                 count += 1;
             }
@@ -223,11 +225,11 @@ public class DefaultMultiValueCategoryDataset
      */
     @Override
     public Number getValue(int row, int column) {
-        List<Number> list = this.data.getObject(row, column);
+        List<Number> l = (List<Number>) this.data.getObject(row, column);
         double average = 0.0d;
         int count = 0;
-        if (list != null && !list.isEmpty()) {
-            for (Number n : list) {
+        if (l != null && l.size() > 0) {
+            for (Number n : l) {
                 average += n.doubleValue();
                 count += 1;
             }
@@ -249,7 +251,7 @@ public class DefaultMultiValueCategoryDataset
      * @return The column index.
      */
     @Override
-    public int getColumnIndex(ColumnKey key) {
+    public int getColumnIndex(Comparable key) {
         return this.data.getColumnIndex(key);
     }
 
@@ -261,7 +263,7 @@ public class DefaultMultiValueCategoryDataset
      * @return The column key.
      */
     @Override
-    public ColumnKey getColumnKey(int column) {
+    public Comparable getColumnKey(int column) {
         return this.data.getColumnKey(column);
     }
 
@@ -271,7 +273,7 @@ public class DefaultMultiValueCategoryDataset
      * @return The keys.
      */
     @Override
-    public List<ColumnKey> getColumnKeys() {
+    public List<Comparable> getColumnKeys() {
         return this.data.getColumnKeys();
     }
 
@@ -283,7 +285,7 @@ public class DefaultMultiValueCategoryDataset
      * @return The row index.
      */
     @Override
-    public int getRowIndex(RowKey key) {
+    public int getRowIndex(Comparable key) {
         return this.data.getRowIndex(key);
     }
 
@@ -295,7 +297,7 @@ public class DefaultMultiValueCategoryDataset
      * @return The row key.
      */
     @Override
-    public RowKey getRowKey(int row) {
+    public Comparable getRowKey(int row) {
         return this.data.getRowKey(row);
     }
 
@@ -305,7 +307,7 @@ public class DefaultMultiValueCategoryDataset
      * @return The keys.
      */
     @Override
-    public List<RowKey> getRowKeys() {
+    public List<Comparable> getRowKeys() {
         return this.data.getRowKeys();
     }
 

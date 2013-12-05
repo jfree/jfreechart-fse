@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -95,23 +95,26 @@
 
 package org.jfree.chart.renderer.category;
 
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
+
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.entity.EntityCollection;
-import org.jfree.chart.event.RendererChangeEvent;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.util.BooleanList;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.entity.EntityCollection;
+import org.jfree.chart.event.RendererChangeEvent;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
-
-import java.awt.*;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.io.Serializable;
 
 /**
  * A renderer that draws shapes for each data item, and lines between data
@@ -232,7 +235,8 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
         Boolean flag = getSeriesLinesVisible(series);
         if (flag != null) {
             return flag;
-        } else {
+        }
+        else {
             return this.baseLinesVisible;
         }
     }
@@ -317,7 +321,8 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
         Boolean flag = getSeriesShapesVisible(series);
         if (flag != null) {
             return flag;
-        } else {
+        }
+        else {
             return this.baseShapesVisible;
         }
     }
@@ -472,7 +477,8 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
         Boolean flag = this.seriesShapesFilled.getBoolean(series);
         if (flag != null) {
             return flag;
-        } else {
+        }
+        else {
             return this.baseShapesFilled;
         }
 
@@ -711,9 +717,9 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
      */
     @Override
     public void drawItem(Graphics2D g2, CategoryItemRendererState state,
-                         Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
-                         ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
-                         int pass) {
+            Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
+            ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
+            int pass) {
 
         // do nothing if item is not visible
         if (!getItemVisible(row, column)) {
@@ -746,7 +752,8 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
             x1 = domainAxis.getCategorySeriesMiddle(column,
                     dataset.getColumnCount(), visibleRow, visibleRowCount,
                     this.itemMargin, dataArea, plot.getDomainAxisEdge());
-        } else {
+        }
+        else {
             x1 = domainAxis.getCategoryMiddle(column, getColumnCount(),
                     dataArea, plot.getDomainAxisEdge());
         }
@@ -767,7 +774,8 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
                                 visibleRow, visibleRowCount,
                                 this.itemMargin, dataArea,
                                 plot.getDomainAxisEdge());
-                    } else {
+                    }
+                    else {
                         x0 = domainAxis.getCategoryMiddle(column - 1,
                                 getColumnCount(), dataArea,
                                 plot.getDomainAxisEdge());
@@ -778,7 +786,8 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
                     Line2D line = null;
                     if (orientation == PlotOrientation.HORIZONTAL) {
                         line = new Line2D.Double(y0, x0, y1, x1);
-                    } else if (orientation == PlotOrientation.VERTICAL) {
+                    }
+                    else if (orientation == PlotOrientation.VERTICAL) {
                         line = new Line2D.Double(x0, y0, x1, y1);
                     }
                     g2.setPaint(getItemPaint(row, column));
@@ -792,7 +801,8 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
             Shape shape = getItemShape(row, column);
             if (orientation == PlotOrientation.HORIZONTAL) {
                 shape = ShapeUtilities.createTranslatedShape(shape, y1, x1);
-            } else if (orientation == PlotOrientation.VERTICAL) {
+            }
+            else if (orientation == PlotOrientation.VERTICAL) {
                 shape = ShapeUtilities.createTranslatedShape(shape, x1, y1);
             }
 
@@ -800,7 +810,8 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
                 if (getItemShapeFilled(row, column)) {
                     if (this.useFillPaint) {
                         g2.setPaint(getItemFillPaint(row, column));
-                    } else {
+                    }
+                    else {
                         g2.setPaint(getItemPaint(row, column));
                     }
                     g2.fill(shape);
@@ -808,7 +819,8 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
                 if (this.drawOutlines) {
                     if (this.useOutlinePaint) {
                         g2.setPaint(getItemOutlinePaint(row, column));
-                    } else {
+                    }
+                    else {
                         g2.setPaint(getItemPaint(row, column));
                     }
                     g2.setStroke(getItemOutlineStroke(row, column));
@@ -821,7 +833,8 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
                 if (orientation == PlotOrientation.HORIZONTAL) {
                     drawItemLabel(g2, orientation, dataset, row, column, y1,
                             x1, (value < 0.0));
-                } else if (orientation == PlotOrientation.VERTICAL) {
+                }
+                else if (orientation == PlotOrientation.VERTICAL) {
                     drawItemLabel(g2, orientation, dataset, row, column, x1,
                             y1, (value < 0.0));
                 }

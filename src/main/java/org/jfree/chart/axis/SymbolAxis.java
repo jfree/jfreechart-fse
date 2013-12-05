@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * Other names may be trademarks of their respective owners.]
  *
  * ---------------
  * SymbolAxis.java
  * ---------------
- * (C) Copyright 2002-2008, by Anthony Boulestreau and Contributors.
+ * (C) Copyright 2002-2012, by Anthony Boulestreau and Contributors.
  *
  * Original Author:  Anthony Boulestreau;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -75,36 +75,43 @@
  * 28-Feb-2007 : Fixed bug 1669302 (tick label overlap) (DG);
  * 25-Jul-2007 : Added new field for alternate grid band paint (DG);
  * 15-Aug-2008 : Use alternate grid band paint when drawing (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
 package org.jfree.chart.axis;
 
-import org.jfree.chart.event.AxisChangeEvent;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.plot.ValueAxisPlot;
-import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.data.Range;
-
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.List;
 
-/** A standard linear value axis that replaces integer values with symbols. */
-public class SymbolAxis<Value extends Comparable> extends NumberAxis implements Serializable {
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.event.AxisChangeEvent;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.plot.ValueAxisPlot;
+import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.util.SerialUtilities;
+import org.jfree.data.Range;
+
+/**
+ * A standard linear value axis that replaces integer values with symbols.
+ */
+public class SymbolAxis extends NumberAxis implements Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 7216330468770619716L;
@@ -122,7 +129,7 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
             = new Color(0, 0, 0, 0);  // transparent
 
     /** The list of symbols to display instead of the numeric values. */
-    private List<Value> symbols;
+    private List<String> symbols;
 
     /** Flag that indicates whether or not grid bands are visible. */
     private boolean gridBandsVisible;
@@ -142,27 +149,18 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
      * necessary.
      *
      * @param label  the axis label (<code>null</code> permitted).
-     * @param values the list of symbols to display instead of the numeric
-     *               values.
+     * @param sv  the list of symbols to display instead of the numeric
+     *            values.
      */
-    public SymbolAxis(String label, List<Value> values) {
+    public SymbolAxis(String label, String[] sv) {
         super(label);
-        this.symbols = values;
+        this.symbols = Arrays.asList(sv);
         this.gridBandsVisible = true;
         this.gridBandPaint = DEFAULT_GRID_BAND_PAINT;
         this.gridBandAlternatePaint = DEFAULT_GRID_BAND_ALTERNATE_PAINT;
         setAutoTickUnitSelection(false, false);
         setAutoRangeStickyZero(false);
-    }
 
-    public SymbolAxis(String label, Value... values) {
-        this(label, convertToList(values));
-    }
-
-    private static <Value> ArrayList<Value> convertToList(Value[] values) {
-        ArrayList<Value> list = new ArrayList<Value>(values.length);
-        Collections.addAll(list, values);
-        return list;
     }
 
     /**
@@ -170,23 +168,10 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
      *
      * @return The symbols.
      */
-    public List<String> getSymbols() {
-        List<String> result = new ArrayList<String>();
-        for (Value symbol : symbols) {
-            result.add(symbolValueToString(symbol));
-        }
+    public String[] getSymbols() {
+        String[] result = new String[this.symbols.size()];
+        result = this.symbols.toArray(result);
         return result;
-    }
-
-    /**
-     * Converts a given symbol value to a string representation.
-     *
-     * @param value the value to convert.
-     *
-     * @return the resulting string representation.
-     */
-    protected String symbolValueToString(Value value) {
-        return value.toString();
     }
 
     /**
@@ -206,7 +191,7 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
      * Sets the visibility of the grid bands and notifies registered
      * listeners that the axis has been modified.
      *
-     * @param flag the new setting.
+     * @param flag  the new setting.
      *
      * @see #isGridBandsVisible()
      */
@@ -233,7 +218,7 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
      * Sets the grid band paint and sends an {@link AxisChangeEvent} to
      * all registered listeners.
      *
-     * @param paint the paint (<code>null</code> not permitted).
+     * @param paint  the paint (<code>null</code> not permitted).
      *
      * @see #getGridBandPaint()
      */
@@ -252,6 +237,7 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
      *
      * @see #setGridBandAlternatePaint(Paint)
      * @see #getGridBandPaint()
+     *
      * @since 1.0.7
      */
     public Paint getGridBandAlternatePaint() {
@@ -262,10 +248,11 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
      * Sets the paint used for alternate grid bands and sends a
      * {@link AxisChangeEvent} to all registered listeners.
      *
-     * @param paint the paint (<code>null</code> not permitted).
+     * @param paint  the paint (<code>null</code> not permitted).
      *
      * @see #getGridBandAlternatePaint()
      * @see #setGridBandPaint(Paint)
+     *
      * @since 1.0.7
      */
     public void setGridBandAlternatePaint(Paint paint) {
@@ -279,13 +266,13 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
     /**
      * This operation is not supported by this axis.
      *
-     * @param g2       the graphics device.
-     * @param dataArea the area in which the plot and axes should be drawn.
-     * @param edge     the edge along which the axis is drawn.
+     * @param g2  the graphics device.
+     * @param dataArea  the area in which the plot and axes should be drawn.
+     * @param edge  the edge along which the axis is drawn.
      */
-    protected void selectAutoTickUnit(
-            Graphics2D g2, Rectangle2D dataArea,
-            RectangleEdge edge) {
+    @Override
+    protected void selectAutoTickUnit(Graphics2D g2, Rectangle2D dataArea,
+                                      RectangleEdge edge) {
         throw new UnsupportedOperationException();
     }
 
@@ -293,32 +280,32 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
      * Draws the axis on a Java 2D graphics device (such as the screen or a
      * printer).
      *
-     * @param g2        the graphics device (<code>null</code> not permitted).
-     * @param cursor    the cursor location.
+     * @param g2  the graphics device (<code>null</code> not permitted).
+     * @param cursor  the cursor location.
      * @param plotArea  the area within which the plot and axes should be drawn
      *                  (<code>null</code> not permitted).
      * @param dataArea  the area within which the data should be drawn
      *                  (<code>null</code> not permitted).
-     * @param edge      the axis location (<code>null</code> not permitted).
-     * @param plotState collects information about the plot
-     *                  (<code>null</code> permitted).
+     * @param edge  the axis location (<code>null</code> not permitted).
+     * @param plotState  collects information about the plot
+     *                   (<code>null</code> permitted).
      *
      * @return The axis state (never <code>null</code>).
      */
-    public AxisState draw(
-            Graphics2D g2,
-            double cursor,
-            Rectangle2D plotArea,
-            Rectangle2D dataArea,
-            RectangleEdge edge,
-            PlotRenderingInfo plotState) {
+    @Override
+    public AxisState draw(Graphics2D g2,
+                          double cursor,
+                          Rectangle2D plotArea,
+                          Rectangle2D dataArea,
+                          RectangleEdge edge,
+                          PlotRenderingInfo plotState) {
 
         AxisState info = new AxisState(cursor);
         if (isVisible()) {
             info = super.draw(g2, cursor, plotArea, dataArea, edge, plotState);
         }
         if (this.gridBandsVisible) {
-            drawGridBands(g2, dataArea, edge, info.getTicks());
+            drawGridBands(g2, plotArea, dataArea, edge, info.getTicks());
         }
         return info;
 
@@ -326,27 +313,29 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
 
     /**
      * Draws the grid bands.  Alternate bands are colored using
-     * <CODE>gridBandPaint<CODE> (<CODE>DEFAULT_GRID_BAND_PAINT</CODE> by
+     * <CODE>gridBandPaint</CODE> (<CODE>DEFAULT_GRID_BAND_PAINT</CODE> by
      * default).
      *
-     * @param g2       the graphics device.
-     * @param dataArea the area within which the plot should be drawn (a
-     *                 subset of the drawArea).
-     * @param edge     the axis location.
-     * @param ticks    the ticks.
+     * @param g2  the graphics device.
+     * @param plotArea  the area within which the chart should be drawn.
+     * @param dataArea  the area within which the plot should be drawn (a
+     *                  subset of the drawArea).
+     * @param edge  the axis location.
+     * @param ticks  the ticks.
      */
-    protected void drawGridBands(
-            Graphics2D g2,
-            Rectangle2D dataArea,
-            RectangleEdge edge,
-            List ticks) {
+    protected void drawGridBands(Graphics2D g2,
+                                 Rectangle2D plotArea,
+                                 Rectangle2D dataArea,
+                                 RectangleEdge edge,
+                                 List<ValueTick> ticks) {
 
         Shape savedClip = g2.getClip();
         g2.clip(dataArea);
         if (RectangleEdge.isTopOrBottom(edge)) {
-            drawGridBandsHorizontal(g2, dataArea, true, ticks);
-        } else if (RectangleEdge.isLeftOrRight(edge)) {
-            drawGridBandsVertical(g2, dataArea, true, ticks);
+            drawGridBandsHorizontal(g2, plotArea, dataArea, true, ticks);
+        }
+        else if (RectangleEdge.isLeftOrRight(edge)) {
+            drawGridBandsVertical(g2, plotArea, dataArea, true, ticks);
         }
         g2.setClip(savedClip);
 
@@ -356,20 +345,21 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
      * Draws the grid bands for the axis when it is at the top or bottom of
      * the plot.
      *
-     * @param g2                  the graphics device.
-     * @param dataArea            the area within which the plot should be drawn
-     *                            (a subset of the drawArea).
-     * @param firstGridBandIsDark True: the first grid band takes the
- *                            color of <CODE>gridBandPaint<CODE>.
- *                            False: the second grid band takes the
- *                            color of <CODE>gridBandPaint<CODE>.
-     * @param ticks               the ticks.
+     * @param g2  the graphics device.
+     * @param plotArea  the area within which the chart should be drawn.
+     * @param dataArea  the area within which the plot should be drawn
+     *                  (a subset of the drawArea).
+     * @param firstGridBandIsDark  True: the first grid band takes the
+     *                             color of <CODE>gridBandPaint</CODE>.
+     *                             False: the second grid band takes the
+     *                             color of <CODE>gridBandPaint</CODE>.
+     * @param ticks  the ticks.
      */
-    protected void drawGridBandsHorizontal(
-            Graphics2D g2,
-            Rectangle2D dataArea,
-            boolean firstGridBandIsDark,
-            List ticks) {
+    protected void drawGridBandsHorizontal(Graphics2D g2,
+                                           Rectangle2D plotArea,
+                                           Rectangle2D dataArea,
+                                           boolean firstGridBandIsDark,
+                                           List<ValueTick> ticks) {
 
         boolean currentGridBandIsDark = firstGridBandIsDark;
         double yy = dataArea.getY();
@@ -377,31 +367,25 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
 
         //gets the outline stroke width of the plot
         double outlineStrokeWidth;
-        if (getPlot().getOutlineStroke() != null) {
+        if (getPlot().getOutlineStroke() !=  null) {
             outlineStrokeWidth
-                    = ((BasicStroke) getPlot().getOutlineStroke()).getLineWidth();
-        } else {
+                = ((BasicStroke) getPlot().getOutlineStroke()).getLineWidth();
+        }
+        else {
             outlineStrokeWidth = 1d;
         }
 
-        Iterator iterator = ticks.iterator();
-        ValueTick tick;
-        Rectangle2D band;
-        while (iterator.hasNext()) {
-            tick = (ValueTick) iterator.next();
-            xx1 = valueToJava2D(
-                    tick.getValue() - 0.5d, dataArea,
+        for (ValueTick tick : ticks) {
+            xx1 = valueToJava2D(tick.getValue() - 0.5d, dataArea,
                     RectangleEdge.BOTTOM);
-            xx2 = valueToJava2D(
-                    tick.getValue() + 0.5d, dataArea,
+            xx2 = valueToJava2D(tick.getValue() + 0.5d, dataArea,
                     RectangleEdge.BOTTOM);
             if (currentGridBandIsDark) {
                 g2.setPaint(this.gridBandPaint);
             } else {
                 g2.setPaint(this.gridBandAlternatePaint);
             }
-            band = new Rectangle2D.Double(
-                    xx1, yy + outlineStrokeWidth,
+            Rectangle2D band = new Rectangle2D.Double(xx1, yy + outlineStrokeWidth,
                     xx2 - xx1, dataArea.getMaxY() - yy - outlineStrokeWidth);
             g2.fill(band);
             currentGridBandIsDark = !currentGridBandIsDark;
@@ -413,20 +397,21 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
      * Draws the grid bands for the axis when it is at the top or bottom of
      * the plot.
      *
-     * @param g2                  the graphics device.
-     * @param plotArea            the area within which the plot should be drawn (a
-     *                            subset of the drawArea).
-     * @param firstGridBandIsDark True: the first grid band takes the
- *                            color of <CODE>gridBandPaint<CODE>.
- *                            False: the second grid band takes the
- *                            color of <CODE>gridBandPaint<CODE>.
-     * @param ticks               a list of ticks.
+     * @param g2  the graphics device.
+     * @param drawArea  the area within which the chart should be drawn.
+     * @param plotArea  the area within which the plot should be drawn (a
+     *                  subset of the drawArea).
+     * @param firstGridBandIsDark  True: the first grid band takes the
+     *                             color of <CODE>gridBandPaint</CODE>.
+     *                             False: the second grid band takes the
+     *                             color of <CODE>gridBandPaint</CODE>.
+     * @param ticks  a list of ticks.
      */
-    protected void drawGridBandsVertical(
-            Graphics2D g2,
-            Rectangle2D plotArea,
-            boolean firstGridBandIsDark,
-            List ticks) {
+    protected void drawGridBandsVertical(Graphics2D g2,
+                                         Rectangle2D drawArea,
+                                         Rectangle2D plotArea,
+                                         boolean firstGridBandIsDark,
+                                         List<ValueTick> ticks) {
 
         boolean currentGridBandIsDark = firstGridBandIsDark;
         double xx = plotArea.getX();
@@ -437,28 +422,22 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
         Stroke outlineStroke = getPlot().getOutlineStroke();
         if (outlineStroke != null && outlineStroke instanceof BasicStroke) {
             outlineStrokeWidth = ((BasicStroke) outlineStroke).getLineWidth();
-        } else {
+        }
+        else {
             outlineStrokeWidth = 1d;
         }
 
-        Iterator iterator = ticks.iterator();
-        ValueTick tick;
-        Rectangle2D band;
-        while (iterator.hasNext()) {
-            tick = (ValueTick) iterator.next();
-            yy1 = valueToJava2D(
-                    tick.getValue() + 0.5d, plotArea,
+        for (ValueTick tick : ticks) {
+            yy1 = valueToJava2D(tick.getValue() + 0.5d, plotArea,
                     RectangleEdge.LEFT);
-            yy2 = valueToJava2D(
-                    tick.getValue() - 0.5d, plotArea,
+            yy2 = valueToJava2D(tick.getValue() - 0.5d, plotArea,
                     RectangleEdge.LEFT);
             if (currentGridBandIsDark) {
                 g2.setPaint(this.gridBandPaint);
             } else {
                 g2.setPaint(this.gridBandAlternatePaint);
             }
-            band = new Rectangle2D.Double(
-                    xx + outlineStrokeWidth, yy1,
+            Rectangle2D band = new Rectangle2D.Double(xx + outlineStrokeWidth, yy1,
                     plotArea.getMaxX() - xx - outlineStrokeWidth, yy2 - yy1);
             g2.fill(band);
             currentGridBandIsDark = !currentGridBandIsDark;
@@ -466,7 +445,10 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
         g2.setPaintMode();
     }
 
-    /** Rescales the axis to ensure that all data is visible. */
+    /**
+     * Rescales the axis to ensure that all data is visible.
+     */
+    @Override
     protected void autoAdjustRange() {
 
         Plot plot = getPlot();
@@ -496,31 +478,38 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
                 if (getAutoRangeStickyZero()) {
                     if (upper <= 0.0) {
                         upper = 0.0;
-                    } else {
+                    }
+                    else {
                         upper = upper + upperMargin;
                     }
                     if (lower >= 0.0) {
                         lower = 0.0;
-                    } else {
+                    }
+                    else {
                         lower = lower - lowerMargin;
                     }
-                } else {
+                }
+                else {
                     upper = Math.max(0.0, upper + upperMargin);
                     lower = Math.min(0.0, lower - lowerMargin);
                 }
-            } else {
+            }
+            else {
                 if (getAutoRangeStickyZero()) {
                     if (upper <= 0.0) {
                         upper = Math.min(0.0, upper + upperMargin);
-                    } else {
+                    }
+                    else {
                         upper = upper + upperMargin * range;
                     }
                     if (lower >= 0.0) {
                         lower = Math.max(0.0, lower - lowerMargin);
-                    } else {
+                    }
+                    else {
                         lower = lower - lowerMargin;
                     }
-                } else {
+                }
+                else {
                     upper = upper + upperMargin;
                     lower = lower - lowerMargin;
                 }
@@ -536,22 +525,23 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
      * Calculates the positions of the tick labels for the axis, storing the
      * results in the tick label list (ready for drawing).
      *
-     * @param g2       the graphics device.
-     * @param state    the axis state.
-     * @param dataArea the area in which the data should be drawn.
-     * @param edge     the location of the axis.
+     * @param g2  the graphics device.
+     * @param state  the axis state.
+     * @param dataArea  the area in which the data should be drawn.
+     * @param edge  the location of the axis.
      *
      * @return A list of ticks.
      */
-    public List<ValueTick> refreshTicks(
-            Graphics2D g2,
-            AxisState state,
-            Rectangle2D dataArea,
-            RectangleEdge edge) {
+    @Override
+    public List<ValueTick> refreshTicks(Graphics2D g2,
+                             AxisState state,
+                             Rectangle2D dataArea,
+                             RectangleEdge edge) {
         List<ValueTick> ticks = null;
         if (RectangleEdge.isTopOrBottom(edge)) {
             ticks = refreshTicksHorizontal(g2, dataArea, edge);
-        } else if (RectangleEdge.isLeftOrRight(edge)) {
+        }
+        else if (RectangleEdge.isLeftOrRight(edge)) {
             ticks = refreshTicksVertical(g2, dataArea, edge);
         }
         return ticks;
@@ -561,18 +551,18 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
      * Calculates the positions of the tick labels for the axis, storing the
      * results in the tick label list (ready for drawing).
      *
-     * @param g2       the graphics device.
-     * @param dataArea the area in which the data should be drawn.
-     * @param edge     the location of the axis.
+     * @param g2  the graphics device.
+     * @param dataArea  the area in which the data should be drawn.
+     * @param edge  the location of the axis.
      *
      * @return The ticks.
      */
-    protected List<ValueTick> refreshTicksHorizontal(
-            Graphics2D g2,
-            Rectangle2D dataArea,
-            RectangleEdge edge) {
+    @Override
+    protected List<ValueTick> refreshTicksHorizontal(Graphics2D g2,
+                                          Rectangle2D dataArea,
+                                          RectangleEdge edge) {
 
-        List<ValueTick> ticks = new ArrayList<ValueTick>();
+        List<ValueTick> ticks = new java.util.ArrayList<ValueTick>();
 
         Font tickLabelFont = getTickLabelFont();
         g2.setFont(tickLabelFont);
@@ -592,13 +582,13 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
                 NumberFormat formatter = getNumberFormatOverride();
                 if (formatter != null) {
                     tickLabel = formatter.format(currentTickValue);
-                } else {
+                }
+                else {
                     tickLabel = valueToString(currentTickValue);
                 }
 
                 // avoid to draw overlapping tick labels
-                Rectangle2D bounds = TextUtilities.getTextBounds(
-                        tickLabel, g2,
+                Rectangle2D bounds = TextUtilities.getTextBounds(tickLabel, g2,
                         g2.getFontMetrics());
                 double tickLabelLength = isVerticalTickLabels()
                         ? bounds.getHeight() : bounds.getWidth();
@@ -613,7 +603,8 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
                 }
                 if (tickLabelsOverlapping) {
                     tickLabel = ""; // don't draw this tick label
-                } else {
+                }
+                else {
                     // remember these values for next comparison
                     previousDrawnTickLabelPos = xx;
                     previousDrawnTickLabelLength = tickLabelLength;
@@ -627,22 +618,24 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
                     rotationAnchor = TextAnchor.CENTER_RIGHT;
                     if (edge == RectangleEdge.TOP) {
                         angle = Math.PI / 2.0;
-                    } else {
+                    }
+                    else {
                         angle = -Math.PI / 2.0;
                     }
-                } else {
+                }
+                else {
                     if (edge == RectangleEdge.TOP) {
                         anchor = TextAnchor.BOTTOM_CENTER;
                         rotationAnchor = TextAnchor.BOTTOM_CENTER;
-                    } else {
+                    }
+                    else {
                         anchor = TextAnchor.TOP_CENTER;
                         rotationAnchor = TextAnchor.TOP_CENTER;
                     }
                 }
-                ValueTick tick = new NumberTick(
-                        currentTickValue,
-                        tickLabel, anchor, rotationAnchor, angle);
-                ticks.add(tick);
+
+                ticks.add(new NumberTick(currentTickValue,
+                        tickLabel, anchor, rotationAnchor, angle));
             }
         }
         return ticks;
@@ -653,18 +646,18 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
      * Calculates the positions of the tick labels for the axis, storing the
      * results in the tick label list (ready for drawing).
      *
-     * @param g2       the graphics device.
-     * @param dataArea the area in which the plot should be drawn.
-     * @param edge     the location of the axis.
+     * @param g2  the graphics device.
+     * @param dataArea  the area in which the plot should be drawn.
+     * @param edge  the location of the axis.
      *
      * @return The ticks.
      */
-    protected List<ValueTick> refreshTicksVertical(
-            Graphics2D g2,
-            Rectangle2D dataArea,
-            RectangleEdge edge) {
+    @Override
+    protected List<ValueTick> refreshTicksVertical(Graphics2D g2,
+                                        Rectangle2D dataArea,
+                                        RectangleEdge edge) {
 
-        List<ValueTick> ticks = new ArrayList<ValueTick>();
+        List<ValueTick> ticks = new java.util.ArrayList<ValueTick>();
 
         Font tickLabelFont = getTickLabelFont();
         g2.setFont(tickLabelFont);
@@ -684,16 +677,16 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
                 NumberFormat formatter = getNumberFormatOverride();
                 if (formatter != null) {
                     tickLabel = formatter.format(currentTickValue);
-                } else {
+                }
+                else {
                     tickLabel = valueToString(currentTickValue);
                 }
 
                 // avoid to draw overlapping tick labels
-                Rectangle2D bounds = TextUtilities.getTextBounds(
-                        tickLabel, g2,
+                Rectangle2D bounds = TextUtilities.getTextBounds(tickLabel, g2,
                         g2.getFontMetrics());
                 double tickLabelLength = isVerticalTickLabels()
-                        ? bounds.getWidth() : bounds.getHeight();
+                    ? bounds.getWidth() : bounds.getHeight();
                 boolean tickLabelsOverlapping = false;
                 if (i > 0) {
                     double avgTickLabelLength = (previousDrawnTickLabelLength
@@ -705,36 +698,39 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
                 }
                 if (tickLabelsOverlapping) {
                     tickLabel = ""; // don't draw this tick label
-                } else {
+                }
+                else {
                     // remember these values for next comparison
                     previousDrawnTickLabelPos = yy;
                     previousDrawnTickLabelLength = tickLabelLength;
                 }
 
-                TextAnchor anchor;
-                TextAnchor rotationAnchor;
+                TextAnchor anchor = null;
+                TextAnchor rotationAnchor = null;
                 double angle = 0.0;
                 if (isVerticalTickLabels()) {
                     anchor = TextAnchor.BOTTOM_CENTER;
                     rotationAnchor = TextAnchor.BOTTOM_CENTER;
                     if (edge == RectangleEdge.LEFT) {
                         angle = -Math.PI / 2.0;
-                    } else {
+                    }
+                    else {
                         angle = Math.PI / 2.0;
                     }
-                } else {
+                }
+                else {
                     if (edge == RectangleEdge.LEFT) {
                         anchor = TextAnchor.CENTER_RIGHT;
                         rotationAnchor = TextAnchor.CENTER_RIGHT;
-                    } else {
+                    }
+                    else {
                         anchor = TextAnchor.CENTER_LEFT;
                         rotationAnchor = TextAnchor.CENTER_LEFT;
                     }
                 }
-                ValueTick tick = new NumberTick(
-                        currentTickValue,
-                        tickLabel, anchor, rotationAnchor, angle);
-                ticks.add(tick);
+
+                ticks.add(new NumberTick(currentTickValue,
+                        tickLabel, anchor, rotationAnchor, angle));
             }
         }
         return ticks;
@@ -744,26 +740,29 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
     /**
      * Converts a value to a string, using the list of symbols.
      *
-     * @param value value to convert.
+     * @param value  value to convert.
      *
      * @return The symbol.
      */
     public String valueToString(double value) {
+        String strToReturn;
         try {
-            return getSymbols().get((int) value);
-        } catch (IndexOutOfBoundsException ex) {
-            return "";
+            strToReturn = this.symbols.get((int) value);
         }
+        catch (IndexOutOfBoundsException  ex) {
+            strToReturn = "";
+        }
+        return strToReturn;
     }
 
     /**
      * Tests this axis for equality with an arbitrary object.
      *
-     * @param obj the object (<code>null</code> permitted).
+     * @param obj  the object (<code>null</code> permitted).
      *
      * @return A boolean.
      */
-    @SuppressWarnings("SimplifiableIfStatement")
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -781,8 +780,7 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
         if (!PaintUtilities.equal(this.gridBandPaint, that.gridBandPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(
-                this.gridBandAlternatePaint,
+        if (!PaintUtilities.equal(this.gridBandAlternatePaint,
                 that.gridBandAlternatePaint)) {
             return false;
         }
@@ -792,9 +790,9 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
     /**
      * Provides serialization support.
      *
-     * @param stream the output stream.
+     * @param stream  the output stream.
      *
-     * @throws IOException if there is an I/O error.
+     * @throws IOException  if there is an I/O error.
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
@@ -805,13 +803,13 @@ public class SymbolAxis<Value extends Comparable> extends NumberAxis implements 
     /**
      * Provides serialization support.
      *
-     * @param stream the input stream.
+     * @param stream  the input stream.
      *
-     * @throws IOException            if there is an I/O error.
-     * @throws ClassNotFoundException if there is a classpath problem.
+     * @throws IOException  if there is an I/O error.
+     * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-            throws IOException, ClassNotFoundException {
+        throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.gridBandPaint = SerialUtilities.readPaint(stream);
         this.gridBandAlternatePaint = SerialUtilities.readPaint(stream);

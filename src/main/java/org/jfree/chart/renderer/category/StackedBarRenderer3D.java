@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
@@ -91,27 +91,30 @@
 
 package org.jfree.chart.renderer.category;
 
-import org.jfree.chart.HashUtilities;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.entity.EntityCollection;
-import org.jfree.chart.event.RendererChangeEvent;
-import org.jfree.chart.labels.CategoryItemLabelGenerator;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.data.DataUtilities;
-import org.jfree.data.Range;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.general.DatasetUtilities;
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Shape;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jfree.chart.HashUtilities;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.entity.EntityCollection;
+import org.jfree.chart.event.RendererChangeEvent;
+import org.jfree.chart.labels.CategoryItemLabelGenerator;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.DataUtilities;
+import org.jfree.data.Range;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.general.DatasetUtilities;
 
 /**
  * Renders stacked bars with 3D-effect, for use with the {@link CategoryPlot}
@@ -185,7 +188,7 @@ public class StackedBarRenderer3D extends BarRenderer3D
      * @since 1.0.2
      */
     public StackedBarRenderer3D(double xOffset, double yOffset,
-                                boolean renderAsPercentages) {
+            boolean renderAsPercentages) {
         super(xOffset, yOffset);
         this.renderAsPercentages = renderAsPercentages;
     }
@@ -258,7 +261,8 @@ public class StackedBarRenderer3D extends BarRenderer3D
         }
         if (this.renderAsPercentages) {
             return new Range(0.0, 1.0);
-        } else {
+        }
+        else {
             return DatasetUtilities.findStackedRangeBounds(dataset);
         }
     }
@@ -285,7 +289,8 @@ public class StackedBarRenderer3D extends BarRenderer3D
             double space = 0.0;
             if (orientation == PlotOrientation.HORIZONTAL) {
                 space = dataArea.getHeight();
-            } else if (orientation == PlotOrientation.VERTICAL) {
+            }
+            else if (orientation == PlotOrientation.VERTICAL) {
                 space = dataArea.getWidth();
             }
             double maxWidth = space * getMaximumBarWidth();
@@ -296,11 +301,12 @@ public class StackedBarRenderer3D extends BarRenderer3D
             }
 
             double used = space * (1 - domainAxis.getLowerMargin()
-                    - domainAxis.getUpperMargin()
-                    - categoryMargin);
+                                     - domainAxis.getUpperMargin()
+                                     - categoryMargin);
             if (columns > 0) {
                 state.setBarWidth(Math.min(used / columns, maxWidth));
-            } else {
+            }
+            else {
                 state.setBarWidth(Math.min(used, maxWidth));
             }
         }
@@ -323,8 +329,8 @@ public class StackedBarRenderer3D extends BarRenderer3D
      * @since 1.0.13
      */
     protected List<Object[]> createStackedValueList(CategoryDataset dataset,
-                                                    Comparable category, int[] includedRows, double base,
-                                                    boolean asPercentages) {
+            Comparable category, int[] includedRows, double base,
+            boolean asPercentages) {
 
         List<Object[]> result = new ArrayList<Object[]>();
         double posBase = base;
@@ -385,9 +391,9 @@ public class StackedBarRenderer3D extends BarRenderer3D
      */
     @Override
     public void drawItem(Graphics2D g2, CategoryItemRendererState state,
-                         Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
-                         ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
-                         int pass) {
+            Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
+            ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
+            int pass) {
 
         // wait till we are at the last item for the row then draw the
         // whole stack at once
@@ -412,7 +418,8 @@ public class StackedBarRenderer3D extends BarRenderer3D
         if (orientation == PlotOrientation.HORIZONTAL) {
             drawStackHorizontal(values, category, g2, state, adjusted, plot,
                     domainAxis, rangeAxis, dataset);
-        } else {
+        }
+        else {
             drawStackVertical(values, category, g2, state, adjusted, plot,
                     domainAxis, rangeAxis, dataset);
         }
@@ -435,10 +442,10 @@ public class StackedBarRenderer3D extends BarRenderer3D
      * @since 1.0.4
      */
     protected void drawStackHorizontal(List values, Comparable category,
-                                       Graphics2D g2, CategoryItemRendererState state,
-                                       Rectangle2D dataArea, CategoryPlot plot,
-                                       CategoryAxis domainAxis, ValueAxis rangeAxis,
-                                       CategoryDataset dataset) {
+            Graphics2D g2, CategoryItemRendererState state,
+            Rectangle2D dataArea, CategoryPlot plot,
+            CategoryAxis domainAxis, ValueAxis rangeAxis,
+            CategoryDataset dataset) {
 
         int column = dataset.getColumnIndex(category);
         double barX0 = domainAxis.getCategoryMiddle(column,
@@ -460,7 +467,8 @@ public class StackedBarRenderer3D extends BarRenderer3D
             int series;
             if (curr[0] == null) {
                 series = -(Integer) prev[0] - 1;
-            } else {
+            }
+            else {
                 series = (Integer) curr[0];
                 if (series < 0) {
                     series = -(Integer) prev[0] - 1;
@@ -490,7 +498,8 @@ public class StackedBarRenderer3D extends BarRenderer3D
             for (int f = 0; f < 6; f++) {
                 if (f == 5) {
                     g2.setPaint(fillPaint);
-                } else {
+                }
+                else {
                     g2.setPaint(fillPaintDark);
                 }
                 g2.fill(faces[f]);
@@ -500,7 +509,7 @@ public class StackedBarRenderer3D extends BarRenderer3D
                 }
             }
 
-            itemLabelList.add(new Object[]{series,
+            itemLabelList.add(new Object[] {series,
                     faces[5].getBounds2D(), v0 < getBase()});
 
             // add an item entity, if this information is being collected
@@ -539,7 +548,7 @@ public class StackedBarRenderer3D extends BarRenderer3D
      * @return The sides of the block.
      */
     private Shape[] createHorizontalBlock(double x0, double width, double y0,
-                                          double y1, boolean inverted) {
+            double y1, boolean inverted) {
         Shape[] result = new Shape[6];
         Point2D p00 = new Point2D.Double(y0, x0);
         Point2D p01 = new Point2D.Double(y0, x0 + width);
@@ -601,7 +610,8 @@ public class StackedBarRenderer3D extends BarRenderer3D
         if (inverted) {
             result[2] = right;
             result[3] = left;
-        } else {
+        }
+        else {
             result[2] = left;
             result[3] = right;
         }
@@ -626,10 +636,10 @@ public class StackedBarRenderer3D extends BarRenderer3D
      * @since 1.0.4
      */
     protected void drawStackVertical(List values, Comparable category,
-                                     Graphics2D g2, CategoryItemRendererState state,
-                                     Rectangle2D dataArea, CategoryPlot plot,
-                                     CategoryAxis domainAxis, ValueAxis rangeAxis,
-                                     CategoryDataset dataset) {
+            Graphics2D g2, CategoryItemRendererState state,
+            Rectangle2D dataArea, CategoryPlot plot,
+            CategoryAxis domainAxis, ValueAxis rangeAxis,
+            CategoryDataset dataset) {
 
         int column = dataset.getColumnIndex(category);
         double barX0 = domainAxis.getCategoryMiddle(column,
@@ -651,7 +661,8 @@ public class StackedBarRenderer3D extends BarRenderer3D
             int series = 0;
             if (curr[0] == null) {
                 series = -(Integer) prev[0] - 1;
-            } else {
+            }
+            else {
                 series = (Integer) curr[0];
                 if (series < 0) {
                     series = -(Integer) prev[0] - 1;
@@ -682,7 +693,8 @@ public class StackedBarRenderer3D extends BarRenderer3D
             for (int f = 0; f < 6; f++) {
                 if (f == 5) {
                     g2.setPaint(fillPaint);
-                } else {
+                }
+                else {
                     g2.setPaint(fillPaintDark);
                 }
                 g2.fill(faces[f]);
@@ -692,7 +704,7 @@ public class StackedBarRenderer3D extends BarRenderer3D
                 }
             }
 
-            itemLabelList.add(new Object[]{series,
+            itemLabelList.add(new Object[] {series,
                     faces[5].getBounds2D(), v0 < getBase()});
 
             // add an item entity, if this information is being collected
@@ -731,7 +743,7 @@ public class StackedBarRenderer3D extends BarRenderer3D
      * @return The sides of the block.
      */
     private Shape[] createVerticalBlock(double x0, double width, double y0,
-                                        double y1, boolean inverted) {
+            double y1, boolean inverted) {
         Shape[] result = new Shape[6];
         Point2D p00 = new Point2D.Double(x0, y0);
         Point2D p01 = new Point2D.Double(x0 + width, y0);

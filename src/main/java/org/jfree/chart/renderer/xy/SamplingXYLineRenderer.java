@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
@@ -71,7 +71,7 @@ import org.jfree.data.xy.XYDataset;
 /**
  * A renderer that draws line charts.  The renderer doesn't necessarily plot
  * every data item - instead, it tries to plot only those data items that
- * make a difference to the visual output (the other data items are skipped).  
+ * make a difference to the visual output (the other data items are skipped).
  * This renderer is designed for use with the {@link XYPlot} class.
  *
  * @since 1.0.13
@@ -99,7 +99,7 @@ public class SamplingXYLineRenderer extends AbstractXYItemRenderer
      * @return The pass count.
      */
     @Override
-	public int getPassCount() {
+    public int getPassCount() {
         return 1;
     }
 
@@ -167,7 +167,7 @@ public class SamplingXYLineRenderer extends AbstractXYItemRenderer
          * @param passCount  the number of passes.
          */
         @Override
-		public void startSeriesPass(XYDataset dataset, int series,
+        public void startSeriesPass(XYDataset dataset, int series,
                 int firstItem, int lastItem, int pass, int passCount) {
             this.seriesPath.reset();
             this.intervalPath.reset();
@@ -195,7 +195,7 @@ public class SamplingXYLineRenderer extends AbstractXYItemRenderer
      * @return The renderer state.
      */
     @Override
-	public XYItemRendererState initialise(Graphics2D g2,
+    public XYItemRendererState initialise(Graphics2D g2,
             Rectangle2D dataArea, XYPlot plot, XYDataset data,
             PlotRenderingInfo info) {
 
@@ -230,7 +230,7 @@ public class SamplingXYLineRenderer extends AbstractXYItemRenderer
      * @param pass  the pass index.
      */
     @Override
-	public void drawItem(Graphics2D g2,
+    public void drawItem(Graphics2D g2,
                          XYItemRendererState state,
                          Rectangle2D dataArea,
                          PlotRenderingInfo info,
@@ -322,7 +322,7 @@ public class SamplingXYLineRenderer extends AbstractXYItemRenderer
      * @throws CloneNotSupportedException if the clone cannot be created.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         SamplingXYLineRenderer clone = (SamplingXYLineRenderer) super.clone();
         if (this.legendLine != null) {
             clone.legendLine = ShapeUtilities.clone(this.legendLine);
@@ -338,7 +338,7 @@ public class SamplingXYLineRenderer extends AbstractXYItemRenderer
      * @return <code>true</code> or <code>false</code>.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }

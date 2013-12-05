@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -284,7 +284,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * Creates a new default instance.
      *
      * @param name  the name of the theme (<code>null</code> not permitted).
-     * @param shadow  a flag that controls whether a shadow generator is 
+     * @param shadow  a flag that controls whether a shadow generator is
      *                included.
      *
      * @since 1.0.14

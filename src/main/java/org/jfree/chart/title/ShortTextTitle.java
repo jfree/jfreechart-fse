@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
@@ -84,7 +84,7 @@ public class ShortTextTitle extends TextTitle {
      * @return The dimensions for the title.
      */
     @Override
-	public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
+    public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
         RectangleConstraint cc = toContentConstraint(constraint);
         LengthConstraintType w = cc.getWidthConstraintType();
         LengthConstraintType h = cc.getHeightConstraintType();
@@ -141,7 +141,7 @@ public class ShortTextTitle extends TextTitle {
      * @return The content size.
      */
     @Override
-	protected Size2D arrangeNN(Graphics2D g2) {
+    protected Size2D arrangeNN(Graphics2D g2) {
         Range max = new Range(0.0, Float.MAX_VALUE);
         return arrangeRR(g2, max, max);
     }
@@ -156,7 +156,7 @@ public class ShortTextTitle extends TextTitle {
      * @return The content size.
      */
     @Override
-	protected Size2D arrangeRN(Graphics2D g2, Range widthRange) {
+    protected Size2D arrangeRN(Graphics2D g2, Range widthRange) {
         Size2D s = arrangeNN(g2);
         if (widthRange.contains(s.getWidth())) {
             return s;
@@ -177,7 +177,7 @@ public class ShortTextTitle extends TextTitle {
      * @return The content size.
      */
     @Override
-	protected Size2D arrangeFN(Graphics2D g2, double w) {
+    protected Size2D arrangeFN(Graphics2D g2, double w) {
         g2.setFont(getFont());
         FontMetrics fm = g2.getFontMetrics(getFont());
         Rectangle2D bounds = TextUtilities.getTextBounds(getText(), g2, fm);
@@ -199,7 +199,7 @@ public class ShortTextTitle extends TextTitle {
      * @return The content size.
      */
     @Override
-	protected Size2D arrangeRR(Graphics2D g2, Range widthRange,
+    protected Size2D arrangeRR(Graphics2D g2, Range widthRange,
             Range heightRange) {
 
         g2.setFont(getFont());
@@ -224,7 +224,7 @@ public class ShortTextTitle extends TextTitle {
      * @return <code>null</code>.
      */
     @Override
-	public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
+    public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
         if (area.isEmpty()) {
             return null;
         }

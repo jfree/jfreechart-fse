@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -44,14 +44,14 @@
  * ------------- JFREECHART 1.0.x ---------------------------------------------
  * 09-Jun-2009 : Tidied up equals() (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  */
 
 package org.jfree.data.time;
 
-import org.jfree.chart.util.ObjectUtilities;
-
 import java.io.Serializable;
+
+import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * Represents one data item in a time series.
@@ -163,7 +163,10 @@ public class TimeSeriesDataItem implements Cloneable, Comparable<TimeSeriesDataI
         if (!ObjectUtilities.equal(this.period, that.period)) {
             return false;
         }
-        return ObjectUtilities.equal(this.value, that.value);
+        if (!ObjectUtilities.equal(this.value, that.value)) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -193,9 +196,7 @@ public class TimeSeriesDataItem implements Cloneable, Comparable<TimeSeriesDataI
      */
     @Override
     public int compareTo(TimeSeriesDataItem o1) {
-
         return getPeriod().compareTo(o1.getPeriod());
-
     }
 
     /**
@@ -209,7 +210,8 @@ public class TimeSeriesDataItem implements Cloneable, Comparable<TimeSeriesDataI
         Object clone = null;
         try {
             clone = super.clone();
-        } catch (CloneNotSupportedException e) { // won't get here...
+        }
+        catch (CloneNotSupportedException e) { // won't get here...
             e.printStackTrace();
         }
         return clone;

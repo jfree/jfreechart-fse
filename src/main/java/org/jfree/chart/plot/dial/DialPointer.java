@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------
@@ -155,7 +155,7 @@ public abstract class DialPointer extends AbstractDialLayer
      * @return <code>true</code>.
      */
     @Override
-	public boolean isClippedToWindow() {
+    public boolean isClippedToWindow() {
         return true;
     }
 
@@ -167,7 +167,7 @@ public abstract class DialPointer extends AbstractDialLayer
      * @return A boolean.
      */
     @Override
-	public boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -190,7 +190,7 @@ public abstract class DialPointer extends AbstractDialLayer
      * @return A hash code.
      */
     @Override
-	public int hashCode() {
+    public int hashCode() {
         int result = 23;
         result = HashUtilities.hashCode(result, this.radius);
         return result;
@@ -205,7 +205,7 @@ public abstract class DialPointer extends AbstractDialLayer
      *     be cloned.
      */
     @Override
-	public Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -305,7 +305,7 @@ public abstract class DialPointer extends AbstractDialLayer
          * @param view  the dial's view.
          */
         @Override
-		public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
+        public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
             Rectangle2D view) {
 
             g2.setPaint(this.paint);
@@ -333,7 +333,7 @@ public abstract class DialPointer extends AbstractDialLayer
          * @return A boolean.
          */
         @Override
-		public boolean equals(Object obj) {
+        public boolean equals(Object obj) {
             if (obj == this) {
                 return true;
             }
@@ -356,7 +356,7 @@ public abstract class DialPointer extends AbstractDialLayer
          * @return A hash code.
          */
         @Override
-		public int hashCode() {
+        public int hashCode() {
             int result = super.hashCode();
             result = HashUtilities.hashCode(result, this.paint);
             result = HashUtilities.hashCode(result, this.stroke);
@@ -534,7 +534,7 @@ public abstract class DialPointer extends AbstractDialLayer
          * @param view  the dial's view.
          */
         @Override
-		public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
+        public void draw(Graphics2D g2, DialPlot plot, Rectangle2D frame,
                 Rectangle2D view) {
 
             g2.setPaint(Color.BLUE);
@@ -595,7 +595,7 @@ public abstract class DialPointer extends AbstractDialLayer
          * @return A boolean.
          */
         @Override
-		public boolean equals(Object obj) {
+        public boolean equals(Object obj) {
             if (obj == this) {
                 return true;
             }
@@ -622,7 +622,7 @@ public abstract class DialPointer extends AbstractDialLayer
          * @return A hash code.
          */
         @Override
-		public int hashCode() {
+        public int hashCode() {
             int result = super.hashCode();
             result = HashUtilities.hashCode(result, this.widthRadius);
             result = HashUtilities.hashCode(result, this.fillPaint);
