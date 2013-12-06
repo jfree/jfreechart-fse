@@ -91,6 +91,14 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
 
     /** For serialization. */
     private static final long serialVersionUID = -7311560779702649635L;
+    
+    /**
+     * The factor (from 0.0 to 1.0) that determines the position of the
+     * step.
+     *
+     * @since 1.0.17.
+     */
+    private double stepPoint = 1.0d;
 
     /** Useful constant for specifying the type of rendering (shapes only). */
     public static final int SHAPES = 1;
@@ -437,11 +445,15 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
             }
             if (transY0 != transY1) {
                 // not just a horizontal bar but need to perform a 'step'.
+                double transXs = transX0 + (getStepPoint()
+                        * (transX1 - transX0));
                 if (orientation == PlotOrientation.VERTICAL) {
-                    this.pArea.addPoint((int) transX1, (int) transY0);
+                    this.pArea.addPoint((int) transXs, (int) transY0);
+                    this.pArea.addPoint((int) transXs, (int) transY1);
                 }
                 else if (orientation == PlotOrientation.HORIZONTAL) {
-                    this.pArea.addPoint((int) transY0, (int) transX1);
+                    this.pArea.addPoint((int) transY0, (int) transXs);
+                    this.pArea.addPoint((int) transY1, (int) transXs);
                 }
             }
         }
@@ -536,38 +548,84 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
     }
 
     /**
-     * Tests this renderer for equality with an arbitrary object.
+     * Returns the fraction of the domain position between two points on which
+     * the step is drawn.  The default is 1.0d, which means the step is drawn
+     * at the domain position of the second`point. If the stepPoint is 0.5d the
+     * step is drawn at half between the two points.
      *
-     * @param obj  the object (<code>null</code> permitted).
+     * @return The fraction of the domain position between two points where the
+     *         step is drawn.
      *
-     * @return A boolean.
+     * @see #setStepPoint(double)
+     *
+     * @since 1.0.17
      */
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
+    private double getStepPoint() {
+		return stepPoint;
+	}
+    
+    /**
+     * Sets the step point and sends a {@link RendererChangeEvent} to all
+     * registered listeners.
+     *
+     * @param stepPoint  the step point (in the range 0.0 to 1.0)
+     *
+     * @see #getStepPoint()
+     *
+     * @since 1.0.17
+     */
+    public void setStepPoint(double stepPoint) {
+        if (stepPoint < 0.0d || stepPoint > 1.0d) {
+            throw new IllegalArgumentException(
+                    "Requires stepPoint in [0.0;1.0]");
         }
-        if (!(obj instanceof XYStepAreaRenderer)) {
-            return false;
-        }
-        XYStepAreaRenderer that = (XYStepAreaRenderer) obj;
-        if (this.showOutline != that.showOutline) {
-            return false;
-        }
-        if (this.shapesVisible != that.shapesVisible) {
-            return false;
-        }
-        if (this.shapesFilled != that.shapesFilled) {
-            return false;
-        }
-        if (this.plotArea != that.plotArea) {
-            return false;
-        }
-        if (this.rangeBase != that.rangeBase) {
-            return false;
-        }
-        return super.equals(obj);
+        this.stepPoint = stepPoint;
+        fireChangeEvent();
     }
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (plotArea ? 1231 : 1237);
+		long temp;
+		temp = Double.doubleToLongBits(rangeBase);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + (shapesFilled ? 1231 : 1237);
+		result = prime * result + (shapesVisible ? 1231 : 1237);
+		result = prime * result + (showOutline ? 1231 : 1237);
+		temp = Double.doubleToLongBits(stepPoint);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		XYStepAreaRenderer other = (XYStepAreaRenderer) obj;
+		if (plotArea != other.plotArea)
+			return false;
+		if (Double.doubleToLongBits(rangeBase) != Double
+				.doubleToLongBits(other.rangeBase))
+			return false;
+		if (shapesFilled != other.shapesFilled)
+			return false;
+		if (shapesVisible != other.shapesVisible)
+			return false;
+		if (showOutline != other.showOutline)
+			return false;
+		if (Double.doubleToLongBits(stepPoint) != Double
+				.doubleToLongBits(other.stepPoint))
+			return false;
+		return true;
+	}
+    
+    
 
     /**
      * Returns a clone of the renderer.
