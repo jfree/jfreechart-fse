@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,10 +27,11 @@
  * -----------------------
  * XYStepAreaRenderer.java
  * -----------------------
- * (C) Copyright 2003-2012, by Matthias Rose and Contributors.
+ * (C) Copyright 2003-2013, by Matthias Rose and Contributors.
  *
  * Original Author:  Matthias Rose (based on XYAreaRenderer.java);
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
+ *                   Lukasz Rzeszotarski;
  *
  * Changes:
  * --------
@@ -125,6 +126,14 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
     private double rangeBase;
 
     /**
+     * The factor (from 0.0 to 1.0) that determines the position of the
+     * step.
+     *
+     * @since 1.0.18.
+     */
+    private double stepPoint;
+
+    /**
      * Constructs a new renderer.
      */
     public XYStepAreaRenderer() {
@@ -170,6 +179,7 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
             this.shapesVisible = true;
         }
         this.showOutline = false;
+        this.stepPoint = 1.0;
     }
 
     /**
@@ -315,12 +325,8 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
      * @return The number of passes required by the renderer.
      */
     @Override
-    public XYItemRendererState initialise(Graphics2D g2,
-                                          Rectangle2D dataArea,
-                                          XYPlot plot,
-                                          XYDataset data,
-                                          PlotRenderingInfo info) {
-
+    public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
+            XYPlot plot, XYDataset data, PlotRenderingInfo info) {
 
         XYItemRendererState state = super.initialise(g2, dataArea, plot, data,
                 info);
@@ -330,7 +336,6 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
         return state;
 
     }
-
 
     /**
      * Draws the visual representation of a single data item.
@@ -409,7 +414,7 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
             }
         }
 
-        double transX0 = 0;
+        double transX0;
         double transY0;
 
         double x0;
@@ -437,11 +442,15 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
             }
             if (transY0 != transY1) {
                 // not just a horizontal bar but need to perform a 'step'.
+                double transXs = transX0 + (getStepPoint()
+                        * (transX1 - transX0));
                 if (orientation == PlotOrientation.VERTICAL) {
-                    this.pArea.addPoint((int) transX1, (int) transY0);
+                    this.pArea.addPoint((int) transXs, (int) transY0);
+                    this.pArea.addPoint((int) transXs, (int) transY1);
                 }
                 else if (orientation == PlotOrientation.HORIZONTAL) {
-                    this.pArea.addPoint((int) transY0, (int) transX1);
+                    this.pArea.addPoint((int) transY0, (int) transXs);
+                    this.pArea.addPoint((int) transY1, (int) transXs);
                 }
             }
         }
@@ -564,6 +573,9 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
             return false;
         }
         if (this.rangeBase != that.rangeBase) {
+            return false;
+        }
+        if (this.stepPoint != that.stepPoint) {
             return false;
         }
         return super.equals(obj);
