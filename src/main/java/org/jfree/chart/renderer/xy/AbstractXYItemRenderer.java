@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -300,10 +300,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     @Override
     public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
             XYPlot plot, XYDataset data, PlotRenderingInfo info) {
-
-        XYItemRendererState state = new XYItemRendererState(info);
-        return state;
-
+        return new XYItemRendererState(info);
     }
 
     // ITEM LABEL GENERATOR
@@ -969,7 +966,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         Rectangle2D band;
         if (plot.getOrientation() == PlotOrientation.VERTICAL) {
             band = new Rectangle2D.Double(Math.min(x1, x2), dataArea.getMinY(),
-                    Math.abs(x2 - x1), dataArea.getWidth());
+                    Math.abs(x2 - x1), dataArea.getHeight());
         }
         else {
             band = new Rectangle2D.Double(dataArea.getMinX(), Math.min(x1, x2),
@@ -1173,6 +1170,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             else if (orientation == PlotOrientation.VERTICAL) {
                 line = new Line2D.Double(v, dataArea.getMinY(), v,
                         dataArea.getMaxY());
+            } else {
+                throw new IllegalStateException();
             }
 
             final Composite originalComposite = g2.getComposite();
@@ -1348,11 +1347,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param dataArea  the axis data area.
      */
     @Override
-    public void drawRangeMarker(Graphics2D g2,
-                                XYPlot plot,
-                                ValueAxis rangeAxis,
-                                Marker marker,
-                                Rectangle2D dataArea) {
+    public void drawRangeMarker(Graphics2D g2, XYPlot plot, ValueAxis rangeAxis,
+            Marker marker, Rectangle2D dataArea) {
 
         if (marker instanceof ValueMarker) {
             ValueMarker vm = (ValueMarker) marker;
@@ -1757,11 +1753,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @param info  the plot rendering info.
      */
     @Override
-    public void drawAnnotations(Graphics2D g2,
-                                Rectangle2D dataArea,
-                                ValueAxis domainAxis,
-                                ValueAxis rangeAxis,
-                                Layer layer,
+    public void drawAnnotations(Graphics2D g2, Rectangle2D dataArea,
+            ValueAxis domainAxis, ValueAxis rangeAxis, Layer layer,
                                 PlotRenderingInfo info) {
 
         Iterator<XYAnnotation> iterator;
