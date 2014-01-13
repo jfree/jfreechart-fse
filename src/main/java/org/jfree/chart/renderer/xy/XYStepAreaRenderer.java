@@ -52,6 +52,7 @@
  * 14-May-2008 : Call addEntity() from within drawItem() (DG);
  * 19-May-2009 : Fixed FindBugs warnings, patch by Michal Wozniak (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 05-Dec-2013 : Added stepPoint attribute (LR);
  *
  */
 
@@ -312,6 +313,42 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
     }
 
     /**
+     * Returns the fraction of the domain position between two points on which
+     * the step is drawn.  The default is 1.0d, which means the step is drawn
+     * at the domain position of the second`point. If the stepPoint is 0.5d the
+     * step is drawn at half between the two points.
+     *
+     * @return The fraction of the domain position between two points where the
+     *         step is drawn.
+     *
+     * @see #setStepPoint(double)
+     *
+     * @since 1.0.18
+     */
+    public double getStepPoint() {
+        return stepPoint;
+    }
+     
+    /**
+     * Sets the step point and sends a {@link RendererChangeEvent} to all
+     * registered listeners.
+     *
+     * @param stepPoint  the step point (in the range 0.0 to 1.0)
+     *
+     * @see #getStepPoint()
+     *
+     * @since 1.0.18
+     */
+    public void setStepPoint(double stepPoint) {
+        if (stepPoint < 0.0d || stepPoint > 1.0d) {
+             throw new IllegalArgumentException(
+                     "Requires stepPoint in [0.0;1.0]");
+        }
+        this.stepPoint = stepPoint;
+        fireChangeEvent();
+    }
+
+    /**
      * Initialises the renderer.  Here we calculate the Java2D y-coordinate for
      * zero, since all the bars have their bases fixed at zero.
      *
@@ -356,18 +393,10 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
      * @param pass  the pass index.
      */
     @Override
-    public void drawItem(Graphics2D g2,
-                         XYItemRendererState state,
-                         Rectangle2D dataArea,
-                         PlotRenderingInfo info,
-                         XYPlot plot,
-                         ValueAxis domainAxis,
-                         ValueAxis rangeAxis,
-                         XYDataset dataset,
-                         int series,
-                         int item,
-                         CrosshairState crosshairState,
-                         int pass) {
+    public void drawItem(Graphics2D g2, XYItemRendererState state, 
+            Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
+            ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
+            int series, int item, CrosshairState crosshairState, int pass) {
 
         PlotOrientation orientation = plot.getOrientation();
 
