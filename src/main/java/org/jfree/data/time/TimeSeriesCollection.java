@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * TimeSeriesCollection.java
  * -------------------------
- * (C) Copyright 2001-2013, by Object Refinery Limited.
+ * (C) Copyright 2001-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -83,6 +83,8 @@
  * 26-Jun-2009 : Fixed clone() (DG);
  * 08-Jan-2012 : Fixed getRangeBounds() method (bug 3445507) (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
+ * 23-Feb-2014 : Improve implementation of getRangeBounds() (DG);
  *
  */
 
@@ -202,7 +204,8 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
     /**
      * Returns the position within each time period that is used for the X
      * value when the collection is used as an
-     * {@link org.jfree.data.xy.XYDataset}.
+     * {@link org.jfree.data.xy.XYDataset}.  The default value is 
+     * <code>TimePeriodAnchor.START</code>.
      *
      * @return The anchor position (never <code>null</code>).
      */
@@ -660,8 +663,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
     public Range getRangeBounds(boolean includeInterval) {
         Range result = null;
         for (TimeSeries series : this.data) {
-            Range r = new Range(series.getMinY(), series.getMaxY());
-            result = Range.combineIgnoringNaN(result, r);
+            result = Range.combineIgnoringNaN(result, series.findValueRange());
         }
         return result;
     }
@@ -678,13 +680,13 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
      * @since 1.0.14
      */
     @Override
-    public Range getRangeBounds(List<Comparable> visibleSeriesKeys, Range xRange,
-            boolean includeInterval) {
+    public Range getRangeBounds(List<Comparable> visibleSeriesKeys, 
+            Range xRange, boolean includeInterval) {
         Range result = null;
         for (Comparable seriesKey : visibleSeriesKeys) {
             TimeSeries series = getSeries(seriesKey);
-            Range r = new Range(series.getMinY(), series.getMaxY());
-            // FIXME: Here we are ignoring the xRange
+            Range r = series.findValueRange(xRange, this.xPosition, 
+                    this.workingCalendar.getTimeZone());
             result = Range.combineIgnoringNaN(result, r);
         }
         return result;
