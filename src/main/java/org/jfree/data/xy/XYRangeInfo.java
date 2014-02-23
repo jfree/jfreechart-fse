@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------
  * XYRangeInfo.java
  * ----------------
- * (C) Copyright 2009, by Object Refinery Limited.
+ * (C) Copyright 2009-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -62,7 +62,7 @@ public interface XYRangeInfo {
      * @return The range (or <code>null</code> if the dataset contains no
      *     values).
      */
-    public Range getRangeBounds(List<Comparable> visibleSeriesKeys, Range xRange,
-            boolean includeInterval);
+    public Range getRangeBounds(List<Comparable> visibleSeriesKeys, 
+            Range xRange, boolean includeInterval);
 
 }
