@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * TimeSeriesTests.java
  * --------------------
- * (C) Copyright 2001-2009, by Object Refinery Limited.
+ * (C) Copyright 2001-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -55,6 +55,10 @@
 
 package org.jfree.data.time;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
 import org.jfree.chart.date.MonthConstants;
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesChangeListener;
@@ -62,8 +66,8 @@ import org.jfree.data.general.SeriesException;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
 import org.jfree.chart.TestUtilities;
+import org.jfree.data.Range;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -130,12 +134,12 @@ public class TimeSeriesTest implements SeriesChangeListener {
      */
     @Test
     public void testClone() throws CloneNotSupportedException {
-
         TimeSeries series = new TimeSeries("Test Series");
         RegularTimePeriod jan1st2002 = new Day(1, MonthConstants.JANUARY, 2002);
         series.add(jan1st2002, new Integer(42));
 
-        TimeSeries clone = (TimeSeries) series.clone();
+        TimeSeries clone;
+        clone = (TimeSeries) series.clone();
         clone.setKey("Clone Series");
         clone.update(jan1st2002, new Integer(10));
 
@@ -271,7 +275,7 @@ public class TimeSeriesTest implements SeriesChangeListener {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() throws IOException, ClassNotFoundException {
+    public void testSerialization() {
         TimeSeries s1 = new TimeSeries("A test");
         s1.add(new Year(2000), 13.75);
         s1.add(new Year(2001), 11.90);
@@ -929,6 +933,24 @@ public class TimeSeriesTest implements SeriesChangeListener {
         assertEquals(1.1, s1.getMinY(), EPSILON);
    }
 
+    @Test
+    public void testGetMinY2() {
+        TimeSeries ts = new TimeSeries("Time Series");
+        assertTrue(Double.isNaN(ts.getMinY()));
+        
+        ts.add(new Year(2014), 1.0);
+        assertEquals(1.0, ts.getMinY(), EPSILON);
+        
+        ts.addOrUpdate(new Year(2014), null);
+        assertTrue(Double.isNaN(ts.getMinY()));
+        
+        ts.addOrUpdate(new Year(2014), 1.0);
+        assertEquals(1.0, ts.getMinY(), EPSILON);
+
+        ts.clear();
+        assertTrue(Double.isNaN(ts.getMinY()));
+    }
+    
     /**
      * Some checks for the getMaxY() method.
      */
@@ -954,6 +976,24 @@ public class TimeSeriesTest implements SeriesChangeListener {
 
         s1.addOrUpdate(new Year(2000), null);
         assertEquals(2.2, s1.getMaxY(), EPSILON);
+    }
+
+    @Test
+    public void testGetMaxY2() {
+        TimeSeries ts = new TimeSeries("Time Series");
+        assertTrue(Double.isNaN(ts.getMaxY()));
+        
+        ts.add(new Year(2014), 1.0);
+        assertEquals(1.0, ts.getMaxY(), EPSILON);
+        
+        ts.addOrUpdate(new Year(2014), null);
+        assertTrue(Double.isNaN(ts.getMaxY()));
+        
+        ts.addOrUpdate(new Year(2014), 1.0);
+        assertEquals(1.0, ts.getMaxY(), EPSILON);
+
+        ts.clear();
+        assertTrue(Double.isNaN(ts.getMaxY()));
     }
 
     /**
@@ -1056,4 +1096,67 @@ public class TimeSeriesTest implements SeriesChangeListener {
         s1.setKey("S2");
     }
 
+    @Test
+    public void testFindValueRange() {
+        TimeSeries ts = new TimeSeries("Time Series");
+        assertNull(ts.findValueRange());
+        
+        ts.add(new Year(2014), 1.0);
+        assertEquals(new Range(1.0, 1.0), ts.findValueRange());
+        
+        ts.add(new Year(2015), 2.0);
+        assertEquals(new Range(1.0, 2.0), ts.findValueRange());
+
+        // null items are ignored
+        ts.add(new Year(2016), null);
+        assertEquals(new Range(1.0, 2.0), ts.findValueRange());
+        
+        ts.clear();
+        assertNull(ts.findValueRange());
+        
+        // if there are only null items, we get a NaNRange
+        ts.add(new Year(2014), null);
+        assertTrue(ts.findValueRange().isNaNRange()); 
+    }
+    
+    @Test
+    public void testFindValueRange2() {
+        TimeZone tzone = TimeZone.getTimeZone("Europe/London");
+        Calendar calendar = new GregorianCalendar(tzone, Locale.UK);
+        calendar.clear();
+        calendar.set(2014, Calendar.FEBRUARY, 23, 6, 0);
+        System.out.println(calendar.getTime());
+        long start = calendar.getTimeInMillis();
+        calendar.clear();
+        calendar.set(2014, Calendar.FEBRUARY, 24, 18, 0);
+        System.out.println(calendar.getTime());
+        long end = calendar.getTimeInMillis();
+        Range range = new Range(start, end);
+        
+        TimeSeries ts = new TimeSeries("Time Series");
+        assertNull(ts.findValueRange(range, TimePeriodAnchor.START, tzone));
+        assertNull(ts.findValueRange(range, TimePeriodAnchor.MIDDLE, tzone));
+        assertNull(ts.findValueRange(range, TimePeriodAnchor.END, tzone));
+        
+        ts.add(new Day(23, 2, 2014), 5.0);
+        assertTrue(ts.findValueRange(range, TimePeriodAnchor.START, tzone).isNaNRange());
+        assertEquals(new Range(5.0, 5.0), 
+                ts.findValueRange(range, TimePeriodAnchor.MIDDLE, tzone));
+        assertEquals(new Range(5.0, 5.0), 
+                ts.findValueRange(range, TimePeriodAnchor.END, tzone));
+        
+        ts.add(new Day(24, 2, 2014), 6.0);
+        assertEquals(new Range(6.0, 6.0), 
+                ts.findValueRange(range, TimePeriodAnchor.START, tzone));
+        assertEquals(new Range(5.0, 6.0), 
+                ts.findValueRange(range, TimePeriodAnchor.MIDDLE, tzone));
+        assertEquals(new Range(5.0, 5.0), 
+                ts.findValueRange(range, TimePeriodAnchor.END, tzone));
+        
+        ts.clear();
+        ts.add(new Day(24, 2, 2014), null);
+        assertTrue(ts.findValueRange(range, TimePeriodAnchor.START, tzone).isNaNRange());
+        assertTrue(ts.findValueRange(range, TimePeriodAnchor.MIDDLE, tzone).isNaNRange());
+        assertTrue(ts.findValueRange(range, TimePeriodAnchor.END, tzone).isNaNRange());
+    }
 }
