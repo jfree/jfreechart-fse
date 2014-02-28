@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------
  * TextUtilities.java
  * ------------------
- * (C) Copyright 2004-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Brian Fischer;
@@ -724,18 +724,18 @@ public class TextUtilities {
      * the specified angle about <code>(rotateX, rotateY)</code>.
      * 
      * @param text  the attributed string (<code>null</code> not permitted).
-     * @param g2  the graphics output target.
-     * @param textX
-     * @param textY
-     * @param angle
-     * @param rotateX
-     * @param rotateY 
+     * @param g2  the graphics output target (<code>null</code> not permitted).
+     * @param textX  the x-coordinate for the text.
+     * @param textY  the y-coordinate for the text.
+     * @param angle  the rotation angle (in radians).
+     * @param rotateX  the x-coordinate for the rotation point.
+     * @param rotateY  the y-coordinate for the rotation point.
      */
     public static void drawRotatedString(AttributedString text, Graphics2D g2, 
             float textX, float textY, double angle, float rotateX, 
             float rotateY) {
+ 
         ParamChecks.nullNotPermitted(text, "text");
-
         AffineTransform saved = g2.getTransform();
         AffineTransform rotate = AffineTransform.getRotateInstance(angle, 
                 rotateX, rotateY);
@@ -746,37 +746,20 @@ public class TextUtilities {
         
         g2.setTransform(saved);        
     }
-    
-    /**
-     * 
-     * @param text
-     * @param g2
-     * @param x
-     * @param y
-     * @param textAnchor
-     * @param angle
-     * @param rotationX
-     * @param rotationY 
-     */
-    public static void drawRotatedString(AttributedString text, Graphics2D g2, 
-            float x, float y, TextAnchor textAnchor, 
-            final double angle, float rotationX, float rotationY) {
-        ParamChecks.nullNotPermitted(text, "text");
-        float[] textAdj = deriveTextBoundsAnchorOffsets(g2, text, textAnchor, 
-                null);
-        drawRotatedString(text, g2, x + textAdj[0], y + textAdj[1], angle,
-                rotationX, rotationY);        
-    }
 
     /**
+     * Draws an attributed string with the <code>textAnchor</code> point 
+     * aligned to <code>(x, y)</code> and rotated by <code>angle</code> radians
+     * about the <code>rotationAnchor</code>.
      * 
-     * @param text
-     * @param g2
-     * @param x
-     * @param y
-     * @param textAnchor
-     * @param angle
-     * @param rotationAnchor 
+     * @param text  the attributed string (<code>null</code> not permitted).
+     * @param g2  the graphics target (<code>null</code> not permitted).
+     * @param x  the x-coordinate.
+     * @param y  the y-coordinate.
+     * @param textAnchor  the text anchor (<code>null</code> not permitted).
+     * @param angle  the rotation angle (in radians).
+     * @param rotationAnchor  the rotation anchor point (<code>null</code> not 
+     *     permitted).
      */
     public static void drawRotatedString(AttributedString text, Graphics2D g2,
             float x, float y, TextAnchor textAnchor,
@@ -794,7 +777,8 @@ public class TextUtilities {
     private static float[] deriveTextBoundsAnchorOffsets(Graphics2D g2,
             AttributedString text, TextAnchor anchor, Rectangle2D textBounds) {
 
-        TextLayout layout = new TextLayout(text.getIterator(), g2.getFontRenderContext());
+        TextLayout layout = new TextLayout(text.getIterator(), 
+                g2.getFontRenderContext());
         Rectangle2D bounds = layout.getBounds();
 
         float[] result = new float[3];
@@ -851,7 +835,6 @@ public class TextUtilities {
             AttributedString text, TextAnchor anchor) {
 
         float[] result = new float[2];
-        
         TextLayout layout = new TextLayout(text.getIterator(), 
                 g2.getFontRenderContext());
         Rectangle2D bounds = layout.getBounds();
@@ -890,8 +873,8 @@ public class TextUtilities {
         result[0] = xAdj;
         result[1] = yAdj;
         return result;
-
     }
+
     /**
      * Returns the flag that controls whether or not strings are drawn using
      * the current font attributes (such as underlining, strikethrough etc).
