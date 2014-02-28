@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -24,10 +24,10 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ------------------
- * RingPlotTests.java
- * ------------------
- * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
+ * -----------------
+ * RingPlotTest.java
+ * -----------------
+ * (C) Copyright 2004-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -36,38 +36,33 @@
  * -------
  * 09-Nov-2004 : Version 1 (DG);
  * 12-Oct-2006 : Updated testEquals() (DG);
+ * 28-Feb-2014 : Add tests for new fields (DG);
  *
  */
 
 package org.jfree.chart.plot;
 
-import org.junit.Test;
-
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Stroke;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 
+import org.junit.Test;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Stroke;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import org.jfree.chart.TestUtilities;
+
 /**
  * Tests for the {@link RingPlot} class.
  */
-public class RingPlotTest  {
-
-
-
-
+public class RingPlotTest {
 
     /**
      * Some checks for the equals() method.
@@ -80,6 +75,31 @@ public class RingPlotTest  {
         assertEquals(plot1, plot2);
         assertEquals(plot2, plot1);
 
+        plot1.setCenterTextMode(CenterTextMode.FIXED);
+        assertFalse(plot1.equals(plot2));
+        plot2.setCenterTextMode(CenterTextMode.FIXED);
+        assertTrue(plot1.equals(plot2));
+
+        plot1.setCenterText("ABC");
+        assertFalse(plot1.equals(plot2));
+        plot2.setCenterText("ABC");
+        assertTrue(plot1.equals(plot2));
+        
+        plot1.setCenterTextColor(Color.RED);
+        assertFalse(plot1.equals(plot2));
+        plot2.setCenterTextColor(Color.RED);
+        assertTrue(plot1.equals(plot2));
+        
+        plot1.setCenterTextFont(new Font(Font.SERIF, Font.PLAIN, 7));
+        assertFalse(plot1.equals(plot2));
+        plot2.setCenterTextFont(new Font(Font.SERIF, Font.PLAIN, 7));
+        assertTrue(plot1.equals(plot2));
+
+        plot1.setCenterTextFormatter(new DecimalFormat("0.000"));
+        assertFalse(plot1.equals(plot2));
+        plot2.setCenterTextFormatter(new DecimalFormat("0.000"));
+        assertTrue(plot1.equals(plot2));
+        
         // separatorsVisible
         plot1.setSeparatorsVisible(false);
         assertFalse(plot1.equals(plot2));
@@ -141,22 +161,11 @@ public class RingPlotTest  {
      */
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
-
         RingPlot p1 = new RingPlot(null);
         GradientPaint gp = new GradientPaint(1.0f, 2.0f, Color.yellow,
                 3.0f, 4.0f, Color.RED);
         p1.setSeparatorPaint(gp);
-
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(p1);
-            out.close();
-
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-        RingPlot p2 = (RingPlot) in.readObject();
-            in.close();
-
+        RingPlot p2 = (RingPlot) TestUtilities.serialised(p1);
         assertEquals(p1, p2);
     }
 
