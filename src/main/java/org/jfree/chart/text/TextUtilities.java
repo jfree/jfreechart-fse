@@ -202,6 +202,8 @@ public class TextUtilities {
             if (next == BreakIterator.DONE) {
                 result.addLine(text.substring(current), font, paint);
                 return result;
+            } else if (next == current) {
+                next++; // we must take one more character or we'll loop forever
             }
             result.addLine(text.substring(current, next), font, paint);
             lines++;
@@ -228,7 +230,9 @@ public class TextUtilities {
     }
 
     /**
-     * Returns the character index of the next line break.
+     * Returns the character index of the next line break.  If the next
+     * character is wider than <code>width</code> this method will return
+     * <code>start</code> - the caller should check for this case.
      *
      * @param text  the text (<code>null</code> not permitted).
      * @param start  the start index.
