@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -751,8 +751,9 @@ public abstract class ValueAxis extends Axis
      *
      * @return The list of ticks.
      */
+    @Override
     public abstract List<ValueTick> refreshTicks(Graphics2D g2, AxisState state,
-                                                      Rectangle2D dataArea, RectangleEdge edge);
+            Rectangle2D dataArea, RectangleEdge edge);
 
     /**
      * Returns the space required to draw the axis.
@@ -792,7 +793,8 @@ public abstract class ValueAxis extends Axis
         double tickLabelWidth = 0.0;
         if (isTickLabelsVisible()) {
             g2.setFont(getTickLabelFont());
-            List<ValueTick> ticks = refreshTicks(g2, new AxisState(), plotArea, edge);
+            List<ValueTick> ticks = refreshTicks(g2, new AxisState(), plotArea,
+                    edge);
             if (RectangleEdge.isTopOrBottom(edge)) {
                 tickLabelHeight = findMaximumTickLabelHeight(ticks, g2,
                         plotArea, isVerticalTickLabels());
@@ -1212,8 +1214,8 @@ public abstract class ValueAxis extends Axis
     }
 
     /**
-     * Sets the range attribute and sends an {@link AxisChangeEvent} to all
-     * registered listeners.  As a side-effect, the auto-range flag is set to
+     * Sets the range for the axis and sends a change event to all registered 
+     * listeners.  As a side-effect, the auto-range flag is set to
      * <code>false</code>.
      *
      * @param range  the range (<code>null</code> not permitted).
@@ -1226,9 +1228,11 @@ public abstract class ValueAxis extends Axis
     }
 
     /**
-     * Sets the range for the axis, if requested, sends an
-     * {@link AxisChangeEvent} to all registered listeners.  As a side-effect,
-     * the auto-range flag is set to <code>false</code> (optional).
+     * Sets the range for the axis and, if requested, sends a change event to 
+     * all registered listeners.  Furthermore, if <code>turnOffAutoRange</code>
+     * is <code>true</code>, the auto-range flag is set to <code>false</code> 
+     * (normally when setting the axis range manually the caller expects that
+     * range to remain in force).
      *
      * @param range  the range (<code>null</code> not permitted).
      * @param turnOffAutoRange  a flag that controls whether or not the auto
@@ -1241,6 +1245,10 @@ public abstract class ValueAxis extends Axis
     public void setRange(Range range, boolean turnOffAutoRange,
                          boolean notify) {
         ParamChecks.nullNotPermitted(range, "range");
+        if (range.getLength() <= 0.0) {
+            throw new IllegalArgumentException(
+                    "A positive range length is required: " + range);
+        }
         if (turnOffAutoRange) {
             this.autoRange = false;
         }
@@ -1251,8 +1259,8 @@ public abstract class ValueAxis extends Axis
     }
 
     /**
-     * Sets the axis range and sends an {@link AxisChangeEvent} to all
-     * registered listeners.  As a side-effect, the auto-range flag is set to
+     * Sets the range for the axis and sends a change event to all registered 
+     * listeners.  As a side-effect, the auto-range flag is set to
      * <code>false</code>.
      *
      * @param lower  the lower axis limit.
