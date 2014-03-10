@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * SpiderWebPlotTests.java
  * -----------------------
- * (C) Copyright 2005-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -39,6 +39,7 @@
  * 05-Feb-2007 : Added more checks to testCloning (DG);
  * 01-Jun-2009 : Added test for getLegendItems() bug, series key is not
  *               set (DG);
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
  *
  */
 
@@ -46,7 +47,6 @@ package org.jfree.chart.plot;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
 import org.jfree.chart.urls.StandardCategoryURLGenerator;
@@ -71,6 +71,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -81,10 +82,6 @@ import static org.junit.Assert.assertSame;
  * Tests for the {@link SpiderWebPlot} class.
  */
 public class SpiderWebPlotTest  {
-
-
-
-
 
     /**
      * Some checks for the equals() method.
@@ -266,6 +263,7 @@ public class SpiderWebPlotTest  {
 
     /**
      * Confirm that cloning works.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning() throws CloneNotSupportedException {
@@ -300,29 +298,27 @@ public class SpiderWebPlotTest  {
         assertFalse(p1.equals(p2));
         p2.setSeriesOutlineStroke(0, new BasicStroke(1.1f));
         assertEquals(p1, p2);
-
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
+     * @throws IOException
+     * @throws ClassNotFoundException  
      */
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
-
         SpiderWebPlot p1 = new SpiderWebPlot(new DefaultCategoryDataset());
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(p1);
+        out.close();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(p1);
-            out.close();
-
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         SpiderWebPlot p2 = (SpiderWebPlot) in.readObject();
             in.close();
 
         assertEquals(p1, p2);
-
     }
 
     /**
@@ -342,10 +338,9 @@ public class SpiderWebPlotTest  {
 
         BufferedImage image = new BufferedImage(200 , 100,
                     BufferedImage.TYPE_INT_RGB);
-            Graphics2D g2 = image.createGraphics();
-            chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
-            g2.dispose();
-
+        Graphics2D g2 = image.createGraphics();
+        chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
+        g2.dispose();
     }
 
     /**
@@ -359,8 +354,8 @@ public class SpiderWebPlotTest  {
         dataset.addValue(55.0, "S2", "C1");
         dataset.addValue(15.0, "S2", "C2");
         SpiderWebPlot plot = new SpiderWebPlot(dataset);
-        LegendItemCollection legendItems = plot.getLegendItems();
-        assertEquals(2, legendItems.getItemCount());
+        List<LegendItem> legendItems = plot.getLegendItems();
+        assertEquals(2, legendItems.size());
         LegendItem item1 = legendItems.get(0);
         assertEquals("S1", item1.getLabel());
         assertEquals("S1", item1.getSeriesKey());

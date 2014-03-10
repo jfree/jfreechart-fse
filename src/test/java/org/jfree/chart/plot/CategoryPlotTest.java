@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * CategoryPlotTests.java
  * ----------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -47,6 +47,7 @@
  * 21-Jan-2009 : Updated testEquals() for new fields (DG);
  * 10-Jul-2009 : Updated testEquals() for new field (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
  *
  */
 
@@ -55,7 +56,6 @@ package org.jfree.chart.plot;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.annotations.CategoryLineAnnotation;
 import org.jfree.chart.annotations.CategoryTextAnnotation;
 import org.jfree.chart.axis.AxisLocation;
@@ -93,6 +93,7 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -107,11 +108,7 @@ import static org.junit.Assert.fail;
  * Tests for the {@link CategoryPlot} class.
  */
 public class CategoryPlotTest  {
-
-
-
-
-
+ 
     /**
      * Some checks for the constructor.
      */
@@ -404,9 +401,9 @@ public class CategoryPlotTest  {
         assertEquals(plot1, plot2);
 
         // fixed legend items
-        plot1.setFixedLegendItems(new LegendItemCollection());
+        plot1.setFixedLegendItems(new ArrayList<LegendItem>());
         assertFalse(plot1.equals(plot2));
-        plot2.setFixedLegendItems(new LegendItemCollection());
+        plot2.setFixedLegendItems(new ArrayList<LegendItem>());
         assertEquals(plot1, plot2);
 
         // crosshairDatasetIndex
@@ -497,6 +494,7 @@ public class CategoryPlotTest  {
 
     /**
      * Confirm that cloning works.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning() throws CloneNotSupportedException {
@@ -544,6 +542,7 @@ public class CategoryPlotTest  {
 
     /**
      * Some more cloning checks.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning2() throws CloneNotSupportedException {
@@ -571,10 +570,11 @@ public class CategoryPlotTest  {
 
     /**
      * Some more cloning checks.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning3() throws CloneNotSupportedException {
-        LegendItemCollection c1 = new LegendItemCollection();
+        List<LegendItem> c1 = new ArrayList<LegendItem>();
         CategoryPlot p1 = new CategoryPlot();
         p1.setFixedLegendItems(c1);
         CategoryPlot p2 = (CategoryPlot) p1.clone();
@@ -600,6 +600,7 @@ public class CategoryPlotTest  {
     /**
      * Renderers that belong to the plot are being cloned but they are
      * retaining a reference to the original plot.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testBug2817504() throws CloneNotSupportedException {
@@ -619,6 +620,8 @@ public class CategoryPlotTest  {
 
     /**
      * Serialize an instance, restore it, and check for equality.
+     * @throws IOException
+     * @throws ClassNotFoundException  
      */
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
@@ -630,20 +633,22 @@ public class CategoryPlotTest  {
                 renderer);
         p1.setOrientation(PlotOrientation.HORIZONTAL);
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(p1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(p1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-            CategoryPlot p2 = (CategoryPlot) in.readObject();
-            in.close();
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
+        CategoryPlot p2 = (CategoryPlot) in.readObject();
+        in.close();
         assertEquals(p1, p2);
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
+     * @throws IOException
+     * @throws ClassNotFoundException  
      */
     @Test
     public void testSerialization2() throws IOException, ClassNotFoundException {
@@ -670,6 +675,8 @@ public class CategoryPlotTest  {
 
     /**
      * Serialize an instance, restore it, and check for equality.
+     * @throws IOException
+     * @throws ClassNotFoundException  
      */
     @Test
     public void testSerialization3() throws IOException, ClassNotFoundException {
@@ -696,6 +703,8 @@ public class CategoryPlotTest  {
 
     /**
      * This test ensures that a plot with markers is serialized correctly.
+     * @throws IOException
+     * @throws ClassNotFoundException  
      */
     @Test
     public void testSerialization4() throws IOException, ClassNotFoundException {
@@ -726,6 +735,8 @@ public class CategoryPlotTest  {
      * Tests a bug where the plot is no longer registered as a listener
      * with the dataset(s) and axes after deserialization.  See patch 1209475
      * at SourceForge.
+     * @throws IOException
+     * @throws ClassNotFoundException  
      */
     @Test
     public void testSerialization5() throws IOException, ClassNotFoundException {

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------
  * XYPlotTests.java
  * ----------------
- * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -47,6 +47,7 @@
  * 10-May-2009 : Extended testEquals(), added testCloning3() (DG);
  * 06-Jul-2009 : Added testBug2817504() (DG);
  * 17-Jul-2012 : Removed JCommon dependencies (DG);
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
  *
  */
 
@@ -55,7 +56,6 @@ package org.jfree.chart.plot;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.annotations.XYTextAnnotation;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.DateAxis;
@@ -96,8 +96,10 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.jfree.chart.TestUtilities;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -331,9 +333,9 @@ public class XYPlotTest  {
         assertEquals(plot1, plot2);
 
         // fixed legend items
-        plot1.setFixedLegendItems(new LegendItemCollection());
+        plot1.setFixedLegendItems(new ArrayList<LegendItem>());
         assertFalse(plot1.equals(plot2));
-        plot2.setFixedLegendItems(new LegendItemCollection());
+        plot2.setFixedLegendItems(new ArrayList<LegendItem>());
         assertEquals(plot1, plot2);
 
         // weight
@@ -438,11 +440,11 @@ public class XYPlotTest  {
         plot2.setShadowGenerator(null);
         assertEquals(plot1, plot2);
 
-        LegendItemCollection lic1 = new LegendItemCollection();
+        List<LegendItem> lic1 = new ArrayList<LegendItem>();
         lic1.add(new LegendItem("XYZ", Color.RED));
         plot1.setFixedLegendItems(lic1);
         assertFalse(plot1.equals(plot2));
-        LegendItemCollection lic2 = new LegendItemCollection();
+        List<LegendItem> lic2 = new ArrayList<LegendItem>();
         lic2.add(new LegendItem("XYZ", Color.RED));
         plot2.setFixedLegendItems(lic2);
         assertEquals(plot1, plot2);
@@ -450,6 +452,7 @@ public class XYPlotTest  {
 
     /**
      * Confirm that basic cloning works.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning() throws CloneNotSupportedException {
@@ -463,6 +466,7 @@ public class XYPlotTest  {
 
     /**
      * Tests cloning for a more complex plot.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning2() throws CloneNotSupportedException {
@@ -488,7 +492,7 @@ public class XYPlotTest  {
     public void testCloning3() throws CloneNotSupportedException {
         XYPlot p1 = new XYPlot(null, new NumberAxis("Domain Axis"),
                 new NumberAxis("Range Axis"), new StandardXYItemRenderer());
-        LegendItemCollection c1 = new LegendItemCollection();
+        List<LegendItem> c1 = new ArrayList<LegendItem>();
         p1.setFixedLegendItems(c1);
         XYPlot p2 = (XYPlot) p1.clone();
 
@@ -504,6 +508,7 @@ public class XYPlotTest  {
     /**
      * Tests cloning to ensure that the cloned plot is registered as a listener
      * on the cloned renderer.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning4() throws CloneNotSupportedException {
@@ -522,6 +527,7 @@ public class XYPlotTest  {
 
     /**
      * Confirm that cloning captures the quadrantOrigin field.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning_QuadrantOrigin() throws CloneNotSupportedException {
@@ -538,6 +544,7 @@ public class XYPlotTest  {
 
     /**
      * Confirm that cloning captures the quadrantOrigin field.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning_QuadrantPaint() throws CloneNotSupportedException {
@@ -560,6 +567,7 @@ public class XYPlotTest  {
     /**
      * Renderers that belong to the plot are being cloned but they are
      * retaining a reference to the original plot.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testBug2817504() throws CloneNotSupportedException {
@@ -567,7 +575,6 @@ public class XYPlotTest  {
         XYLineAndShapeRenderer r1 = new XYLineAndShapeRenderer();
         p1.setRenderer(r1);
         XYPlot p2 = (XYPlot) p1.clone();
-
 
         assertNotSame(p1, p2);
         assertSame(p1.getClass(), p2.getClass());
@@ -580,6 +587,7 @@ public class XYPlotTest  {
 
     /**
      * Tests the independence of the clones.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloneIndependence() throws CloneNotSupportedException {
@@ -633,7 +641,6 @@ public class XYPlotTest  {
         assertFalse(p1.equals(p2));
         p2.mapDatasetToRangeAxis(2, 1);
         assertEquals(p1, p2);
-
     }
 
     /**
@@ -642,36 +649,25 @@ public class XYPlotTest  {
      */
     @Test
     public void testSetNullRenderer() {
-            XYPlot plot = new XYPlot(null, new NumberAxis("X"),
-                    new NumberAxis("Y"), null);
-            plot.setRenderer(null);
-
+        XYPlot plot = new XYPlot(null, new NumberAxis("X"),
+                new NumberAxis("Y"), null);
+        plot.setRenderer(null);
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
+     * @throws IOException
+     * @throws ClassNotFoundException  
      */
     @Test
     public void testSerialization1() throws IOException, ClassNotFoundException {
-
         XYDataset data = new XYSeriesCollection();
         NumberAxis domainAxis = new NumberAxis("Domain");
         NumberAxis rangeAxis = new NumberAxis("Range");
         StandardXYItemRenderer renderer = new StandardXYItemRenderer();
         XYPlot p1 = new XYPlot(data, domainAxis, rangeAxis, renderer);
-
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(p1);
-            out.close();
-
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-        XYPlot p2 = (XYPlot) in.readObject();
-            in.close();
-
+        XYPlot p2 = (XYPlot) TestUtilities.serialised(p1);
         assertEquals(p1, p2);
-
     }
 
     /**
@@ -862,8 +858,8 @@ public class XYPlotTest  {
         plot.setDataset(0, d0);
         plot.setDataset(1, d1);
         plot.setRenderer(0, r0);
-        LegendItemCollection items = plot.getLegendItems();
-        assertEquals(2, items.getItemCount());
+        List<LegendItem> items = plot.getLegendItems();
+        assertEquals(2, items.size());
     }
 
     /**

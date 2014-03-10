@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------
  * PiePlotTests.java
  * -----------------
- * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -41,6 +41,7 @@
  * 17-Apr-2007 : Added check for label generator that returns a null label (DG);
  * 31-Mar-2008 : Updated testEquals() (DG);
  * 10-Jul-2009 : Updated testEquals() (DG);
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
  *
  */
 
@@ -48,7 +49,6 @@ package org.jfree.chart.plot;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.labels.PieSectionLabelGenerator;
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.labels.StandardPieToolTipGenerator;
@@ -77,6 +77,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.text.AttributedString;
+import java.util.List;
+import org.jfree.chart.LegendItem;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -422,6 +424,7 @@ public class PiePlotTest  {
 
     /**
      * Some basic checks for the clone() method.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning() throws CloneNotSupportedException {
@@ -434,6 +437,7 @@ public class PiePlotTest  {
 
     /**
      * Check cloning of the urlGenerator field.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning_URLGenerator() throws CloneNotSupportedException {
@@ -451,6 +455,7 @@ public class PiePlotTest  {
 
     /**
      * Check cloning of the legendItemShape field.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning_LegendItemShape() throws CloneNotSupportedException {
@@ -469,9 +474,11 @@ public class PiePlotTest  {
 
     /**
      * Check cloning of the legendLabelGenerator field.
+     * @throws CloneNotSupportedException 
      */
     @Test
-    public void testCloning_LegendLabelGenerator() throws CloneNotSupportedException {
+    public void testCloning_LegendLabelGenerator() 
+            throws CloneNotSupportedException {
         StandardPieSectionLabelGenerator generator
                 = new StandardPieSectionLabelGenerator();
         PiePlot p1 = new PiePlot();
@@ -488,9 +495,11 @@ public class PiePlotTest  {
 
     /**
      * Check cloning of the legendLabelToolTipGenerator field.
+     * @throws CloneNotSupportedException 
      */
     @Test
-    public void testCloning_LegendLabelToolTipGenerator() throws CloneNotSupportedException {
+    public void testCloning_LegendLabelToolTipGenerator() 
+            throws CloneNotSupportedException {
         StandardPieSectionLabelGenerator generator
                 = new StandardPieSectionLabelGenerator();
         PiePlot p1 = new PiePlot();
@@ -507,9 +516,11 @@ public class PiePlotTest  {
 
     /**
      * Check cloning of the legendLabelURLGenerator field.
+     * @throws CloneNotSupportedException 
      */
     @Test
-    public void testCloning_LegendLabelURLGenerator() throws CloneNotSupportedException {
+    public void testCloning_LegendLabelURLGenerator() 
+            throws CloneNotSupportedException {
         CustomPieURLGenerator generator = new CustomPieURLGenerator();
         PiePlot p1 = new PiePlot();
         p1.setLegendLabelURLGenerator(generator);
@@ -519,23 +530,25 @@ public class PiePlotTest  {
         assertEquals(p1, p2);
 
         // check that the URL generator has been cloned
-        assertNotSame(p1.getLegendLabelURLGenerator(), p2.getLegendLabelURLGenerator());
+        assertNotSame(p1.getLegendLabelURLGenerator(), 
+                p2.getLegendLabelURLGenerator());
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
+     * @throws IOException
+     * @throws ClassNotFoundException  
      */
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
         PiePlot p1 = new PiePlot(null);
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(p1);
+        out.close();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(p1);
-            out.close();
-
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                buffer.toByteArray()));
         PiePlot p2 = (PiePlot) in.readObject();
             in.close();
 
@@ -556,23 +569,23 @@ public class PiePlotTest  {
         PiePlot plot = new PiePlot(dataset);
         plot.setIgnoreNullValues(false);
         plot.setIgnoreZeroValues(false);
-        LegendItemCollection items = plot.getLegendItems();
-        assertEquals(4, items.getItemCount());
+        List<LegendItem> items = plot.getLegendItems();
+        assertEquals(4, items.size());
 
         // check that null items are ignored if requested
         plot.setIgnoreNullValues(true);
         items = plot.getLegendItems();
-        assertEquals(3, items.getItemCount());
+        assertEquals(3, items.size());
 
         // check that zero items are ignored if requested
         plot.setIgnoreZeroValues(true);
         items = plot.getLegendItems();
-        assertEquals(2, items.getItemCount());
+        assertEquals(2, items.size());
 
         // check that negative items are always ignored
         dataset.setValue("Item 5", -1.0);
         items = plot.getLegendItems();
-        assertEquals(2, items.getItemCount());
+        assertEquals(2, items.size());
     }
 
     /**

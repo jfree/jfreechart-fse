@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------------------------
  * AbstractCategoryItemRendererTests.java
  * --------------------------------------
- * (C) Copyright 2004-2010, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -39,12 +39,12 @@
  * 07-Dec-2006 : Added testEquals() method (DG);
  * 25-Nov-2008 : Added testFindRangeBounds() (DG);
  * 09-Feb-2010 : Added test2947660() (DG);
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
  *
  */
 
 package org.jfree.chart.renderer.category;
 
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.labels.IntervalCategoryItemLabelGenerator;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.labels.StandardCategorySeriesLabelGenerator;
@@ -56,6 +56,8 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.junit.Test;
 
 import java.text.NumberFormat;
+import java.util.List;
+import org.jfree.chart.LegendItem;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -68,8 +70,6 @@ import static org.junit.Assert.assertSame;
  * Tests for the {@link AbstractCategoryItemRenderer} class.
  */
 public class AbstractCategoryItemRendererTest  {
-
-
 
     /**
      * Checks that all fields are distinguished.
@@ -154,6 +154,7 @@ public class AbstractCategoryItemRendererTest  {
 
     /**
      * Confirm that cloning works.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning1() throws CloneNotSupportedException {
@@ -178,6 +179,7 @@ public class AbstractCategoryItemRendererTest  {
 
     /**
      * Confirm that cloning works.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning2() throws CloneNotSupportedException {
@@ -201,9 +203,11 @@ public class AbstractCategoryItemRendererTest  {
 
     /**
      * Check that the legendItemLabelGenerator is cloned.
+     * @throws CloneNotSupportedException 
      */
     @Test
-    public void testCloning_LegendItemLabelGenerator() throws CloneNotSupportedException {
+    public void testCloning_LegendItemLabelGenerator() 
+            throws CloneNotSupportedException {
         StandardCategorySeriesLabelGenerator generator
                 = new StandardCategorySeriesLabelGenerator("Series {0}");
         BarRenderer r1 = new BarRenderer();
@@ -214,14 +218,17 @@ public class AbstractCategoryItemRendererTest  {
         assertEquals(r1, r2);
 
         // check that the generator has been cloned
-        assertNotSame(r1.getLegendItemLabelGenerator(), r2.getLegendItemLabelGenerator());
+        assertNotSame(r1.getLegendItemLabelGenerator(), 
+                r2.getLegendItemLabelGenerator());
     }
 
     /**
      * Check that the legendItemToolTipGenerator is cloned.
+     * @throws CloneNotSupportedException 
      */
     @Test
-    public void testCloning_LegendItemToolTipGenerator() throws CloneNotSupportedException {
+    public void testCloning_LegendItemToolTipGenerator() 
+            throws CloneNotSupportedException {
         StandardCategorySeriesLabelGenerator generator
                 = new StandardCategorySeriesLabelGenerator("Series {0}");
         BarRenderer r1 = new BarRenderer();
@@ -232,14 +239,17 @@ public class AbstractCategoryItemRendererTest  {
         assertEquals(r1, r2);
 
         // check that the generator has been cloned
-        assertNotSame(r1.getLegendItemToolTipGenerator(), r2.getLegendItemToolTipGenerator());
+        assertNotSame(r1.getLegendItemToolTipGenerator(), 
+                r2.getLegendItemToolTipGenerator());
     }
 
     /**
      * Check that the legendItemURLGenerator is cloned.
+     * @throws CloneNotSupportedException 
      */
     @Test
-    public void testCloning_LegendItemURLGenerator() throws CloneNotSupportedException {
+    public void testCloning_LegendItemURLGenerator() 
+            throws CloneNotSupportedException {
         StandardCategorySeriesLabelGenerator generator
                 = new StandardCategorySeriesLabelGenerator("Series {0}");
         BarRenderer r1 = new BarRenderer();
@@ -250,7 +260,8 @@ public class AbstractCategoryItemRendererTest  {
         assertEquals(r1, r2);
 
         // check that the generator has been cloned
-        assertNotSame(r1.getLegendItemURLGenerator(), r2.getLegendItemURLGenerator());
+        assertNotSame(r1.getLegendItemURLGenerator(), 
+                r2.getLegendItemURLGenerator());
     }
 
     /**
@@ -282,17 +293,17 @@ public class AbstractCategoryItemRendererTest  {
     public void test2947660() {
         AbstractCategoryItemRenderer r = new LineAndShapeRenderer();
         assertNotNull(r.getLegendItems());
-        assertEquals(0, r.getLegendItems().getItemCount());
+        assertEquals(0, r.getLegendItems().size());
 
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         CategoryPlot plot = new CategoryPlot();
         plot.setDataset(dataset);
         plot.setRenderer(r);
-        assertEquals(0, r.getLegendItems().getItemCount());
+        assertEquals(0, r.getLegendItems().size());
 
         dataset.addValue(1.0, "S1", "C1");
-        LegendItemCollection lic = r.getLegendItems();
-        assertEquals(1, lic.getItemCount());
+        List<LegendItem> lic = r.getLegendItems();
+        assertEquals(1, lic.size());
         assertEquals("S1", lic.get(0).getLabel());
     }
 

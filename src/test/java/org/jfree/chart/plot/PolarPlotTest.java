@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------
  * PolarPlotTests.java
  * -------------------
- * (C) Copyright 2005-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -47,7 +47,6 @@
 package org.jfree.chart.plot;
 
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.LogAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
@@ -72,6 +71,8 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -99,8 +100,8 @@ public class PolarPlotTest  {
         PolarPlot plot = new PolarPlot();
         plot.setDataset(d);
         plot.setRenderer(r);
-        LegendItemCollection items = plot.getLegendItems();
-        assertEquals(2, items.getItemCount());
+        List<LegendItem> items = plot.getLegendItems();
+        assertEquals(2, items.size());
         LegendItem item1 = items.get(0);
         assertEquals("A", item1.getLabel());
         LegendItem item2 = items.get(1);
@@ -124,8 +125,8 @@ public class PolarPlotTest  {
         plot.setDataset(1, d2);
         plot.setRenderer(r);
         plot.setRenderer(1, new DefaultPolarItemRenderer());
-        LegendItemCollection items = plot.getLegendItems();
-        assertEquals(4, items.getItemCount());
+        List<LegendItem> items = plot.getLegendItems();
+        assertEquals(4, items.size());
         LegendItem item1 = items.get(0);
         assertEquals("A", item1.getLabel());
         LegendItem item2 = items.get(1);
@@ -223,11 +224,11 @@ public class PolarPlotTest  {
         plot2.setMargin(6);
         assertEquals(plot1, plot2);
 
-        LegendItemCollection lic1 = new LegendItemCollection();
+        List<LegendItem> lic1 = new ArrayList<LegendItem>();
         lic1.add(new LegendItem("XYZ", Color.RED));
         plot1.setFixedLegendItems(lic1);
         assertFalse(plot1.equals(plot2));
-        LegendItemCollection lic2 = new LegendItemCollection();
+        List<LegendItem> lic2 = new ArrayList<LegendItem>();
         lic2.add(new LegendItem("XYZ", Color.RED));
         plot2.setFixedLegendItems(lic2);
         assertEquals(plot1, plot2);
@@ -235,6 +236,7 @@ public class PolarPlotTest  {
 
     /**
      * Some basic checks for the clone() method.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning() throws CloneNotSupportedException {
@@ -263,11 +265,12 @@ public class PolarPlotTest  {
         assertFalse(p1.equals(p2));
         p2.getAxis().setLabel("ABC");
         assertEquals(p1, p2);
-
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
+     * @throws IOException
+     * @throws ClassNotFoundException  
      */
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
@@ -280,22 +283,20 @@ public class PolarPlotTest  {
         p1.setRadiusGridlinePaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
                 4.0f, Color.BLUE));
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(p1);
-            out.close();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(p1);
+        out.close();
 
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         PolarPlot p2 = (PolarPlot) in.readObject();
             in.close();
 
         assertEquals(p1, p2);
-
     }
 
     @Test
-
     public void testTranslateToJava2D_NumberAxis() {
         
         Rectangle2D dataArea = new Rectangle2D.Double(0.0, 0.0, 100.0, 100.0);
@@ -341,9 +342,7 @@ public class PolarPlotTest  {
     }
 
     @Test
-
     public void testTranslateToJava2D_NumberAxisAndMargin() {
-        
         Rectangle2D dataArea = new Rectangle2D.Double(10.0, 10.0, 80.0, 80.0);
         ValueAxis axis = new NumberAxis();
         axis.setRange(-2.0, 2.0);
@@ -382,13 +381,10 @@ public class PolarPlotTest  {
         point = plot.translateToJava2D(162.0, 7.0, axis, dataArea );
         assertEquals(7.0, point.getX(), 0.5);
         assertEquals(64.0, point.getY(), 0.5);
-        
     }
 
     @Test
-
     public void testTranslateToJava2D_LogAxis() {
-        
         Rectangle2D dataArea = new Rectangle2D.Double(0.0, 0.0, 100.0, 100.0);
         ValueAxis axis = new LogAxis();
         axis.setRange(1.0, 100.0);
