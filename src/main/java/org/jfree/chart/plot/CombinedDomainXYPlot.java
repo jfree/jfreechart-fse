@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * CombinedDomainXYPlot.java
  * -------------------------
- * (C) Copyright 2001-2013, by Bill Kelemen and Contributors.
+ * (C) Copyright 2001-2014, by Bill Kelemen and Contributors.
  *
  * Original Author:  Bill Kelemen;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -93,6 +93,7 @@
  *               required (DG);
  * 21-Dec-2011 : Apply patch 3447161 by Ulrich Voigt and Martin Hoeller (MH);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
  *
  */
 
@@ -104,8 +105,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.jfree.chart.LegendItem;
 
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.AxisSpace;
 import org.jfree.chart.axis.AxisState;
 import org.jfree.chart.axis.NumberAxis;
@@ -491,13 +492,13 @@ public class CombinedDomainXYPlot extends XYPlot
      * @return The legend items.
      */
     @Override
-    public LegendItemCollection getLegendItems() {
-        LegendItemCollection result = getFixedLegendItems();
+    public List<LegendItem> getLegendItems() {
+        List<LegendItem> result = getFixedLegendItems();
         if (result == null) {
-            result = new LegendItemCollection();
+            result = new ArrayList<LegendItem>();
             if (this.subplots != null) {
                 for (XYPlot plot : this.subplots) {
-                    LegendItemCollection more = plot.getLegendItems();
+                    List<LegendItem> more = plot.getLegendItems();
                     result.addAll(more);
                 }
             }

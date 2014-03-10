@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------
  * CategoryPlot.java
  * -----------------
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Jeremy Bowman;
@@ -179,6 +179,7 @@
  * 18-Oct-2011 : Fixed tooltip offset with shadow generator (DG);
  * 20-Nov-2011 : Initialise shadow generator as null (DG);
  * 15-Jun-2012 : Removed JCommon dependencies (DG);
+ * 10-Mar-2014 : Removed LegendItemCollection class (DG);
  *
  */
 
@@ -212,8 +213,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
+import org.jfree.chart.LegendItem;
 
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.annotations.Annotation;
 import org.jfree.chart.annotations.CategoryAnnotation;
 import org.jfree.chart.axis.Axis;
@@ -537,7 +538,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      * An optional collection of legend items that can be returned by the
      * getLegendItems() method.
      */
-    private LegendItemCollection fixedLegendItems;
+    private List<LegendItem> fixedLegendItems;
 
     /**
      * A flag that controls whether or not panning is enabled for the
@@ -2185,7 +2186,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @see #setFixedLegendItems(LegendItemCollection)
      */
-    public LegendItemCollection getFixedLegendItems() {
+    public List<LegendItem> getFixedLegendItems() {
         return this.fixedLegendItems;
     }
 
@@ -2198,7 +2199,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @see #getFixedLegendItems()
      */
-    public void setFixedLegendItems(LegendItemCollection items) {
+    public void setFixedLegendItems(List<LegendItem> items) {
         this.fixedLegendItems = items;
         fireChangeEvent();
     }
@@ -2211,11 +2212,11 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      * @return The legend items.
      */
     @Override
-    public LegendItemCollection getLegendItems() {
+    public List<LegendItem> getLegendItems() {
         if (this.fixedLegendItems != null) {
             return this.fixedLegendItems;
         }
-        LegendItemCollection result = new LegendItemCollection();
+        List<LegendItem> result = new ArrayList<LegendItem>();
         // get the legend items for the datasets...
         int count = this.datasets.size();
         for (int datasetIndex = 0; datasetIndex < count; datasetIndex++) {
@@ -2272,7 +2273,6 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      */
     @Override
     public void zoom(double percent) {
-
         if (percent > 0.0) {
             double range = getRangeAxis().getRange().getLength();
             double scaledRange = range * percent;
@@ -2282,7 +2282,6 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
         else {
             getRangeAxis().setAutoRange(true);
         }
-
     }
 
     /**
@@ -5047,7 +5046,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
                 this.backgroundRangeMarkers);
         if (this.fixedLegendItems != null) {
             clone.fixedLegendItems
-                    = (LegendItemCollection) this.fixedLegendItems.clone();
+                    = ObjectUtilities.deepClone(this.fixedLegendItems);
         }
         return clone;
 

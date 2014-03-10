@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------
  * SpiderWebPlot.java
  * ------------------
- * (C) Copyright 2005-2012, by Heaps of Flavour Pty Ltd and Contributors.
+ * (C) Copyright 2005-2014, by Heaps of Flavour Pty Ltd and Contributors.
  *
  * Company Info:  http://www.i4-talent.com
  *
@@ -66,6 +66,7 @@
  * 02-Jun-2008 : Fixed bug with null dataset (DG);
  * 01-Jun-2009 : Set series key in getLegendItems() (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
  *
  */
 
@@ -93,10 +94,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PaintList;
@@ -1078,11 +1079,12 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * @return The legend items (never <code>null</code>).
      */
     @Override
-    public LegendItemCollection getLegendItems() {
-        LegendItemCollection result = new LegendItemCollection();
+    public List<LegendItem> getLegendItems() {
+        List<LegendItem> result = new ArrayList<LegendItem>();
         if (getDataset() == null) {
             return result;
         }
+        // TODO : support for fixed legend items
         List<Comparable> keys = null;
         if (this.dataExtractOrder == TableOrder.BY_ROW) {
             keys = this.dataset.getRowKeys();

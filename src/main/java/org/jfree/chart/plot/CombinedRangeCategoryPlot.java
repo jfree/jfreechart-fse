@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------------------
  * CombinedRangeCategoryPlot.java
  * ------------------------------
- * (C) Copyright 2003-2013, by Object Refinery Limited.
+ * (C) Copyright 2003-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Nicolas Brodu;
@@ -57,6 +57,7 @@
  * 11-Aug-2008 : Don't store totalWeight of subplots, calculate it as
  *               required (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
  *
  */
 
@@ -67,10 +68,11 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.jfree.chart.LegendItem;
 
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.AxisSpace;
 import org.jfree.chart.axis.AxisState;
 import org.jfree.chart.axis.NumberAxis;
@@ -442,13 +444,13 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
      * @return The legend items.
      */
     @Override
-    public LegendItemCollection getLegendItems() {
-        LegendItemCollection result = getFixedLegendItems();
+    public List<LegendItem> getLegendItems() {
+        List<LegendItem> result = getFixedLegendItems();
         if (result == null) {
-            result = new LegendItemCollection();
+            result = new ArrayList<LegendItem>();
             if (this.subplots != null) {
                 for (CategoryPlot plot : this.subplots) {
-                    LegendItemCollection more = plot.getLegendItems();
+                    List<LegendItem> more = plot.getLegendItems();
                     result.addAll(more);
                 }
             }
@@ -478,7 +480,6 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
      */
     @Override
     public void handleClick(int x, int y, PlotRenderingInfo info) {
-
         Rectangle2D dataArea = info.getDataArea();
         if (dataArea.contains(x, y)) {
             for (int i = 0; i < this.subplots.size(); i++) {
@@ -487,7 +488,6 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
                 subplot.handleClick(x, y, subplotInfo);
             }
         }
-
     }
 
     /**

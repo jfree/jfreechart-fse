@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * WaferMapRenderer.java
  * ---------------------
- * (C) Copyright 2003-2008, by Robert Redburn and Contributors.
+ * (C) Copyright 2003-2014, by Robert Redburn and Contributors.
  *
  * Original Author:  Robert Redburn;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -39,7 +39,8 @@
  * 20-Apr-2005 : Small update for changes to LegendItem class (DG);
  * ------------- JFREECHART 1.0.x ---------------------------------------------
  * 02-Feb-2007 : Removed author tags from all over JFreeChart sources (DG);
- *
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
+ * 
  */
 
 package org.jfree.chart.renderer;
@@ -49,19 +50,20 @@ import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.plot.DrawingSupplier;
 import org.jfree.chart.plot.WaferMapPlot;
 import org.jfree.data.general.WaferMapDataset;
 
 /**
- * A renderer for wafer map plots.  Provides color managment facilities.
+ * A renderer for wafer map plots.  Provides color management facilities.
  */
 public class WaferMapRenderer extends AbstractRenderer {
 
@@ -278,8 +280,8 @@ public class WaferMapRenderer extends AbstractRenderer {
      *
      * @return The legend items.
      */
-    public LegendItemCollection getLegendCollection() {
-        LegendItemCollection result = new LegendItemCollection();
+    public List<LegendItem> getLegendCollection() {
+        List<LegendItem> result = new ArrayList<LegendItem>();
         if (this.paintIndex != null && this.paintIndex.size() > 0) {
             if (this.paintIndex.size() <= this.paintLimit) {
                 for (Map.Entry<Number, Integer> entry : this.paintIndex.entrySet()) {

@@ -27,7 +27,7 @@
  * ---------------------------
  * AbstractXYItemRenderer.java
  * ---------------------------
- * (C) Copyright 2002-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2002-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Richard Atkinson;
@@ -119,7 +119,8 @@
  *               annotations (DG);
  * 06-Oct-2011 : Add utility methods to work with 1.4 API in GeneralPath (MK);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
- *
+ * 10-Mar-2014 : Remove LegendItemCollection (DG);
+ * 
  */
 
 package org.jfree.chart.renderer.xy;
@@ -144,7 +145,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.annotations.Annotation;
 import org.jfree.chart.annotations.XYAnnotation;
 import org.jfree.chart.axis.ValueAxis;
@@ -357,6 +357,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @param series  the series index (zero based).
      * @param generator  the generator (<code>null</code> permitted).
+     * @param notify  notify listeners?
      */
     @Override
     public void setSeriesItemLabelGenerator(int series,
@@ -393,6 +394,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param generator  the generator (<code>null</code> permitted).
+     * @param notify  notify listeners?
      */
     @Override
     public void setDefaultItemLabelGenerator(XYItemLabelGenerator generator,
@@ -456,6 +458,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      *
      * @param series  the series index (zero based).
      * @param generator  the generator (<code>null</code> permitted).
+     * @param notify  notify listeners?
      */
     @Override
     public void setSeriesToolTipGenerator(int series,
@@ -496,6 +499,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * to all registered listeners.
      *
      * @param generator  the generator (<code>null</code> permitted).
+     * @param notify  notify listeners?
      *
      * @see #getBaseToolTipGenerator()
      */
@@ -536,6 +540,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param urlGenerator  the URL generator (<code>null</code> permitted).
+     * @param notify  notify listeners?
      */
     @Override
     public void setURLGenerator(XYURLGenerator urlGenerator, boolean notify) {
@@ -680,6 +685,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param generator  the generator (<code>null</code> not permitted).
+     * @param notify  notify listeners?
      *
      * @see #getLegendItemLabelGenerator()
      */
@@ -861,11 +867,11 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @return The legend item collection (never <code>null</code>).
      */
     @Override
-    public LegendItemCollection getLegendItems() {
+    public List<LegendItem> getLegendItems() {
         if (this.plot == null) {
-            return new LegendItemCollection();
+            return new ArrayList<LegendItem>();
         }
-        LegendItemCollection result = new LegendItemCollection();
+        List<LegendItem> result = new ArrayList<LegendItem>();
         int index = this.plot.getIndexOf(this);
         XYDataset dataset = this.plot.getDataset(index);
         if (dataset != null) {

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------
  * PiePlot.java
  * ------------
- * (C) Copyright 2000-2012, by Andrzej Porebski and Contributors.
+ * (C) Copyright 2000-2014, by Andrzej Porebski and Contributors.
  *
  * Original Author:  Andrzej Porebski;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -169,7 +169,8 @@
  * 20-Nov-2011 : Initialise shadow generator as null (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
  * 01-Jul-2012 : Removed deprecated code (DG);
- *
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
+ * 
  */
 
 package org.jfree.chart.plot;
@@ -198,13 +199,13 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.PaintMap;
 import org.jfree.chart.StrokeMap;
 import org.jfree.chart.entity.EntityCollection;
@@ -2943,9 +2944,8 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @return The legend items (never <code>null</code>).
      */
     @Override
-    public LegendItemCollection getLegendItems() {
-
-        LegendItemCollection result = new LegendItemCollection();
+    public List<LegendItem> getLegendItems() {
+        List<LegendItem> result = new ArrayList<LegendItem>();
         if (this.dataset == null) {
             return result;
         }
@@ -3029,9 +3029,8 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @return A rectangle that can be used to create a pie section.
      */
     protected Rectangle2D getArcBounds(Rectangle2D unexploded,
-                                       Rectangle2D exploded,
-                                       double angle, double extent,
-                                       double explodePercent) {
+            Rectangle2D exploded, double angle, double extent, 
+            double explodePercent) {
 
         if (explodePercent == 0.0) {
             return unexploded;
@@ -3225,6 +3224,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         // If using JDK 1.6 or later the passed Paint Object can be a RadialGradientPaint
         // We need to adjust the radius and center for this object to match the Pie.
         try {
+            // FIXME : we are using JDK1.6 now, don't need reflection here
             Class c = Class.forName("java.awt.RadialGradientPaint");
             Constructor cc = c.getConstructor(new Class[] {
                     Point2D.class, float.class, float[].class, Color[].class});

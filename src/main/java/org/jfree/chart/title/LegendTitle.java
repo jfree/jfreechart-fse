@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------
  * LegendTitle.java
  * ----------------
- * (C) Copyright 2002-2012, by Object Refinery Limited.
+ * (C) Copyright 2002-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Pierre-Marie Le Biot;
@@ -57,6 +57,7 @@
  * 19-Mar-2009 : Added entity support - see patch 2603321 by Peter Kolb (DG);
  * 11-Mar-2012 : Added sort-order support - patch 3500621 by Simon Kaczor (MH);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
  *
  */
 
@@ -71,9 +72,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.List;
 
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.LegendItemSource;
 import org.jfree.chart.block.Arrangement;
 import org.jfree.chart.block.Block;
@@ -445,23 +446,17 @@ public class LegendTitle extends Title
 
         if (this.sortOrder.equals(SortOrder.ASCENDING)) {
             for (LegendItemSource source : this.sources) {
-                LegendItemCollection legendItems =
-                        source.getLegendItems();
-                if (legendItems != null) {
-                    for (int i = 0; i < legendItems.getItemCount(); i++) {
-                        addItemBlock(legendItems.get(i));
-                    }
+                List<LegendItem> legendItems = source.getLegendItems();
+                for (LegendItem item: legendItems) {
+                    addItemBlock(item);
                 }
             }
         }
         else {
             for (int s = this.sources.length - 1; s >= 0; s--) {
-                LegendItemCollection legendItems =
-                    this.sources[s].getLegendItems();
-                if (legendItems != null) {
-                    for (int i = legendItems.getItemCount()-1; i >= 0; i--) {
-                        addItemBlock(legendItems.get(i));
-                    }
+                List<LegendItem> legendItems = this.sources[s].getLegendItems();
+                for (int i = legendItems.size() - 1; i >= 0; i--) {
+                    addItemBlock(legendItems.get(i));
                 }
             }
         }
@@ -480,7 +475,7 @@ public class LegendTitle extends Title
      * @return The block.
      */
     protected Block createLegendItemBlock(LegendItem item) {
-        BlockContainer result = null;
+        BlockContainer result;
         LegendGraphic lg = new LegendGraphic(item.getShape(),
                 item.getFillPaint());
         lg.setFillPaintTransformer(item.getFillPaintTransformer());

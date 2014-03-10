@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------------
  * AbstractCategoryItemRenderer.java
  * ---------------------------------
- * (C) Copyright 2002-2012, by Object Refinery Limited.
+ * (C) Copyright 2002-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Richard Atkinson;
@@ -104,6 +104,7 @@
  * 01-Apr-2009 : Added new addEntity() method (DG);
  * 09-Feb-2010 : Fixed bug 2947660 (DG);
  * 15-Jun-2012 : Removed JCommon dependencies (DG);
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
  *
  */
 
@@ -126,7 +127,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.GradientPaintTransformer;
@@ -328,6 +328,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      *
      * @param series  the series index (zero based).
      * @param generator  the generator (<code>null</code> permitted).
+     * @param notify  notify listeners?
      *
      * @see #getSeriesItemLabelGenerator(int)
      */
@@ -371,6 +372,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param generator  the generator (<code>null</code> permitted).
+     * @param notify  notify listeners?
      *
      * @see #getDefaultItemLabelGenerator()
      */
@@ -443,6 +445,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      *
      * @param series  the series index (zero-based).
      * @param generator  the generator (<code>null</code> permitted).
+     * @param notify  notify listeners?
      *
      * @see #getSeriesToolTipGenerator(int)
      */
@@ -481,10 +484,11 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     }
 
     /**
-     * Sets the default tool tip generator and sends a {@link RendererChangeEvent}
-     * to all registered listeners.
+     * Sets the default tool tip generator and sends a change event to all 
+     * registered listeners.
      *
      * @param generator  the generator (<code>null</code> permitted).
+     * @param notify  notify listeners?
      *
      * @see #getDefaultToolTipGenerator()
      */
@@ -555,6 +559,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      *
      * @param series  the series index (zero based).
      * @param generator  the generator.
+     * @param notify  notify listeners?
      *
      * @see #getSeriesItemURLGenerator(int)
      */
@@ -597,6 +602,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param generator  the item URL generator (<code>null</code> permitted).
+     * @param notify  notify listeners?
      *
      * @see #getDefaultItemURLGenerator()
      */
@@ -968,7 +974,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             double v = axis.getCategoryMiddle(columnIndex,
                     dataset.getColumnCount(), dataArea,
                     plot.getDomainAxisEdge());
-            Line2D line = null;
+            Line2D line;
             if (orientation == PlotOrientation.HORIZONTAL) {
                 line = new Line2D.Double(dataArea.getMinX(), v,
                         dataArea.getMaxX(), v);
@@ -976,6 +982,9 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             else if (orientation == PlotOrientation.VERTICAL) {
                 line = new Line2D.Double(v, dataArea.getMinY(), v,
                         dataArea.getMaxY());
+            } else {
+                throw new IllegalStateException("Unrecognised orientation: " 
+                        + orientation);
             }
             g2.setPaint(marker.getPaint());
             g2.setStroke(marker.getStroke());
@@ -1059,6 +1068,9 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             else if (orientation == PlotOrientation.VERTICAL) {
                 line = new Line2D.Double(dataArea.getMinX(), v,
                         dataArea.getMaxX(), v);
+            } else {
+                throw new IllegalStateException("Unrecognised orientation: " 
+                        + orientation);
             }
 
             g2.setPaint(marker.getPaint());
@@ -1599,8 +1611,8 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @see #getLegendItem(int, int)
      */
     @Override
-    public LegendItemCollection getLegendItems() {
-        LegendItemCollection result = new LegendItemCollection();
+    public List<LegendItem> getLegendItems() {
+        List<LegendItem> result = new ArrayList<LegendItem>();
         if (this.plot == null) {
             return result;
         }

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------
  * Plot.java
  * ---------
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Sylvain Vieujot;
@@ -128,6 +128,7 @@
  * 24-Jun-2009 : Implemented AnnotationChangeListener (see patch 2809117 by
  *               PK) (DG);
  * 13-Jul-2009 : Plot background image should be clipped if necessary (DG);
+ * 10-Mar-2014 : Remove LegendItemCollection (DG);
  *
  */
 
@@ -151,13 +152,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.event.EventListenerList;
 
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemSource;
-import org.jfree.chart.annotations.Annotation;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.PlotEntity;
@@ -898,14 +900,15 @@ public abstract class Plot implements AxisChangeListener,
 
     /**
      * Returns the legend items for the plot.  By default, this method returns
-     * <code>null</code>.  Subclasses should override to return a
-     * {@link LegendItemCollection}.
+     * <code>null</code>.  Subclasses should override to return a list of 
+     * legend items for the plot.
      *
-     * @return The legend items for the plot (possibly <code>null</code>).
+     * @return The legend items for the plot (possibly empty, but never 
+     *     <code>null</code>).
      */
     @Override
-    public LegendItemCollection getLegendItems() {
-        return null;
+    public List<LegendItem> getLegendItems() {
+        return new ArrayList<LegendItem>();
     }
 
     /**
@@ -1253,6 +1256,7 @@ public abstract class Plot implements AxisChangeListener,
      *
      * @param event  information about the event (not used here).
      */
+    @Override
     public void selectionChanged(SelectionChangeEvent event) {
         //could be typed but would require typing Plot and its decendents with a DatasetCursor
         PlotChangeEvent newEvent = new PlotChangeEvent(this);
@@ -1268,6 +1272,7 @@ public abstract class Plot implements AxisChangeListener,
      *
      * @param event  information about the event (not used here).
      */
+    @Override
     public void labelChanged(LabelChangeEvent event) {
         //could be typed but would require typing Plot and its decendents with a DatasetCursor
         PlotChangeEvent newEvent = new PlotChangeEvent(this);
@@ -1300,7 +1305,6 @@ public abstract class Plot implements AxisChangeListener,
      */
     protected double getRectX(double x, double w1, double w2,
                               RectangleEdge edge) {
-
         double result = x;
         if (edge == RectangleEdge.LEFT) {
             result = result + w1;
@@ -1309,7 +1313,6 @@ public abstract class Plot implements AxisChangeListener,
             result = result + w2;
         }
         return result;
-
     }
 
     /**
@@ -1324,7 +1327,6 @@ public abstract class Plot implements AxisChangeListener,
      */
     protected double getRectY(double y, double h1, double h2,
                               RectangleEdge edge) {
-
         double result = y;
         if (edge == RectangleEdge.TOP) {
             result = result + h1;
@@ -1333,7 +1335,6 @@ public abstract class Plot implements AxisChangeListener,
             result = result + h2;
         }
         return result;
-
     }
 
     /**
@@ -1414,7 +1415,6 @@ public abstract class Plot implements AxisChangeListener,
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
-
         Plot clone = (Plot) super.clone();
         // private Plot parent <-- don't clone the parent plot, but take care
         // childs in combined plots instead
@@ -1426,7 +1426,6 @@ public abstract class Plot implements AxisChangeListener,
             = ObjectUtilities.clone(this.drawingSupplier);
         clone.listenerList = new EventListenerList();
         return clone;
-
     }
 
     /**

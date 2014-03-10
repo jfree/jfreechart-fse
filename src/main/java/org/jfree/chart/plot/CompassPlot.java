@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------
  * CompassPlot.java
  * ----------------
- * (C) Copyright 2002-2012, by the Australian Antarctic Division and
+ * (C) Copyright 2002-2014, by the Australian Antarctic Division and
  * Contributors.
  *
  * Original Author:  Bryan Scott (for the Australian Antarctic Division);
@@ -62,7 +62,8 @@
  *               Jess Thrysoee (DG);
  * 10-Oct-2011 : localization fix: bug #3353913 (MH);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
- *
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
+ * 
  */
 
 package org.jfree.chart.plot;
@@ -83,9 +84,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
+import org.jfree.chart.LegendItem;
 
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PaintUtilities;
@@ -719,7 +721,7 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
      * @return The legend items.
      */
     @Override
-    public LegendItemCollection getLegendItems() {
+    public List<LegendItem> getLegendItems() {
         return null;
     }
 

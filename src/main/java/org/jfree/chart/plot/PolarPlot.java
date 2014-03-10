@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------
  * PolarPlot.java
  * --------------
- * (C) Copyright 2004-2013, by Solution Engineering, Inc. and Contributors.
+ * (C) Copyright 2004-2014, by Solution Engineering, Inc. and Contributors.
  *
  * Original Author:  Daniel Bridenbecker, Solution Engineering, Inc.;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -87,7 +87,6 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.Axis;
 import org.jfree.chart.axis.AxisState;
 import org.jfree.chart.axis.NumberTick;
@@ -244,7 +243,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      * An optional collection of legend items that can be returned by the
      * getLegendItems() method.
      */
-    private LegendItemCollection fixedLegendItems;
+    private List<LegendItem> fixedLegendItems;
 
     /**
      * Storage for the mapping between datasets/renderers and range axes.  The
@@ -1081,30 +1080,27 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
     }
 
     /**
-     * Returns the fixed legend items, if any.
+     * Returns the fixed legend items, if any.  The default value is 
+     * <code>null</code>.
      *
      * @return The legend items (possibly <code>null</code>).
      *
      * @see #setFixedLegendItems(LegendItemCollection)
-     *
-     * @since 1.0.14
      */
-    public LegendItemCollection getFixedLegendItems() {
+    public List<LegendItem> getFixedLegendItems() {
         return this.fixedLegendItems;
     }
 
     /**
-     * Sets the fixed legend items for the plot.  Leave this set to
-     * <code>null</code> if you prefer the legend items to be created
-     * automatically.
+     * Sets the fixed legend items for the plot and sends a change event to all
+     * registered listeners.  Leave this set to <code>null</code> if you prefer
+     * the legend items to be created automatically.
      *
      * @param items  the legend items (<code>null</code> permitted).
      *
      * @see #getFixedLegendItems()
-     *
-     * @since 1.0.14
      */
-    public void setFixedLegendItems(LegendItemCollection items) {
+    public void setFixedLegendItems(List<LegendItem> items) {
         this.fixedLegendItems = items;
         fireChangeEvent();
     }
@@ -1756,11 +1752,11 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      * @return The legend items.
      */
     @Override
-    public LegendItemCollection getLegendItems() {
+    public List<LegendItem> getLegendItems() {
         if (this.fixedLegendItems != null) {
-            return this.fixedLegendItems;
+            return new ArrayList<LegendItem>(this.fixedLegendItems);
         }
-        LegendItemCollection result = new LegendItemCollection();
+        List<LegendItem> result = new ArrayList<LegendItem>();
         int count = this.datasets.size();
         for (int datasetIndex = 0; datasetIndex < count; datasetIndex++) {
             XYDataset dataset = getDataset(datasetIndex);

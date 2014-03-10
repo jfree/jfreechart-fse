@@ -262,7 +262,6 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.annotations.Annotation;
 import org.jfree.chart.annotations.XYAnnotation;
 import org.jfree.chart.annotations.XYAnnotationBoundsInfo;
@@ -576,7 +575,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * An optional collection of legend items that can be returned by the
      * getLegendItems() method.
      */
-    private LegendItemCollection fixedLegendItems;
+    private List<LegendItem> fixedLegendItems;
 
     /**
      * A flag that controls whether or not panning is enabled for the domain
@@ -5246,7 +5245,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @see #setFixedLegendItems(LegendItemCollection)
      */
-    public LegendItemCollection getFixedLegendItems() {
+    public List<LegendItem> getFixedLegendItems() {
         return this.fixedLegendItems;
     }
 
@@ -5259,7 +5258,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @see #getFixedLegendItems()
      */
-    public void setFixedLegendItems(LegendItemCollection items) {
+    public void setFixedLegendItems(List<LegendItem> items) {
         this.fixedLegendItems = items;
         fireChangeEvent();
     }
@@ -5272,11 +5271,11 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * @return The legend items.
      */
     @Override
-    public LegendItemCollection getLegendItems() {
+    public List<LegendItem> getLegendItems() {
         if (this.fixedLegendItems != null) {
             return this.fixedLegendItems;
         }
-        LegendItemCollection result = new LegendItemCollection();
+        List<LegendItem> result = new ArrayList<LegendItem>();
         int count = this.datasets.size();
         for (int datasetIndex = 0; datasetIndex < count; datasetIndex++) {
             XYDataset dataset = getDataset(datasetIndex);
@@ -5600,7 +5599,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         }
         if (this.fixedLegendItems != null) {
             clone.fixedLegendItems
-                    = (LegendItemCollection) this.fixedLegendItems.clone();
+                    = ObjectUtilities.deepClone(this.fixedLegendItems);
         }
         clone.quadrantOrigin = ObjectUtilities.clone(
                 this.quadrantOrigin);

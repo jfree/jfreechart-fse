@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -28,7 +28,7 @@
  * ThermometerPlot.java
  * --------------------
  *
- * (C) Copyright 2000-2012, by Bryan Scott and Contributors.
+ * (C) Copyright 2000-2014, by Bryan Scott and Contributors.
  *
  * Original Author:  Bryan Scott (based on MeterPlot by Hari).
  * Contributor(s):   David Gilbert (for Object Refinery Limited).
@@ -112,12 +112,15 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
+import org.jfree.chart.LegendItem;
 
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ObjectUtilities;
@@ -1335,13 +1338,14 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
     }
 
     /**
-     * Returns the legend items for the plot.
+     * Returns the legend items for the plot.  In this case, the method
+     * returns an empty list because the plot has no legend.
      *
-     * @return <code>null</code>.
+     * @return An empty list.
      */
     @Override
-    public LegendItemCollection getLegendItems() {
-        return null;
+    public List<LegendItem> getLegendItems() {
+        return new ArrayList<LegendItem>(0);
     }
 
     /**
