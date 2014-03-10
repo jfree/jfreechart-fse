@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -403,12 +403,34 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      */
     public void setTimeZone(TimeZone zone) {
         ParamChecks.nullNotPermitted(zone, "zone");
-        if (!this.timeZone.equals(zone)) {
-            this.timeZone = zone;
-            setStandardTickUnits(createStandardDateTickUnits(zone,
-                    this.locale));
-            fireChangeEvent();
-        }
+        this.timeZone = zone;
+        setStandardTickUnits(createStandardDateTickUnits(zone, this.locale));
+        fireChangeEvent();
+    }
+
+    /**
+     * Returns the locale for this axis.
+     * 
+     * @return The locale (never <code>null</code>).
+     * 
+     * @since 1.0.18
+     */
+    public Locale getLocale() {
+        return this.locale;
+    }
+    
+    /**
+     * Sets the locale for the axis and sends a change event to all registered 
+     * listeners.
+     * 
+     * @param locale  the new locale (<code>null</code> not permitted).
+     */
+    public void setLocale(Locale locale) {
+        ParamChecks.nullNotPermitted(locale, "locale");
+        this.locale = locale;
+        setStandardTickUnits(createStandardDateTickUnits(this.timeZone, 
+                this.locale));
+        fireChangeEvent();
     }
 
     /**
@@ -1777,13 +1799,12 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             return state;
         }
 
-        // draw the tick marks and labels...
         AxisState state = drawTickMarksAndLabels(g2, cursor, plotArea,
                 dataArea, edge);
 
         // draw the axis label (note that 'state' is passed in *and*
         // returned)...
-            state = drawLabel(getLabel(), g2, plotArea, dataArea, edge, state);
+        state = drawLabel(getLabel(), g2, plotArea, dataArea, edge, state);
         createAndAddEntity(cursor, state, dataArea, edge, plotState);
         return state;
 
@@ -1840,6 +1861,12 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             return false;
         }
         DateAxis that = (DateAxis) obj;
+        if (!ObjectUtilities.equal(this.timeZone, that.timeZone)) {
+            return false;
+        }
+        if (!ObjectUtilities.equal(this.locale, that.locale)) {
+            return false;
+        }
         if (!ObjectUtilities.equal(this.tickUnit, that.tickUnit)) {
             return false;
         }
@@ -1857,6 +1884,11 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
         return super.equals(obj);
     }
 
+    /**
+     * Returns a hash code for this object.
+     *
+     * @return A hash code.
+     */
     @Override
     public int hashCode() {
         return super.hashCode();
