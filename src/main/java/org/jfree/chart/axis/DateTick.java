@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -48,6 +48,7 @@ import java.util.Date;
 
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * A tick used by the {@link DateAxis} class.
@@ -70,15 +71,13 @@ public class DateTick extends ValueTick {
     public DateTick(Date date, String label,
                     TextAnchor textAnchor, TextAnchor rotationAnchor,
                     double angle) {
-
         this(TickType.MAJOR, date, label, textAnchor, rotationAnchor, angle);
-
     }
 
     /**
      * Creates a new date tick.
      *
-     * @param tickType the tick type.
+     * @param tickType the tick type (<code>null</code> not permitted).
      * @param date  the date.
      * @param label  the label.
      * @param textAnchor  the part of the label that is aligned to the anchor
@@ -91,11 +90,10 @@ public class DateTick extends ValueTick {
     public DateTick(TickType tickType, Date date, String label,
                     TextAnchor textAnchor, TextAnchor rotationAnchor,
                     double angle) {
-
         super(tickType, date.getTime(), label, textAnchor, rotationAnchor,
                 angle);
+        ParamChecks.nullNotPermitted(tickType, "tickType");
         this.date = date;
-
     }
 
     /**
