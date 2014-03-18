@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -81,7 +81,8 @@ public abstract class ValueTick extends Tick {
     /**
      * Creates a new value tick.
      *
-     * @param tickType  the tick type (major or minor).
+     * @param tickType  the tick type (major or minor, <code>null</code> not 
+     *     permitted).
      * @param value  the value.
      * @param label  the label.
      * @param textAnchor  the part of the label that is aligned to the anchor
