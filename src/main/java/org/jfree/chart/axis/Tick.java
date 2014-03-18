@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -48,11 +48,12 @@ package org.jfree.chart.axis;
 
 import java.io.Serializable;
 
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.ObjectUtilities;
 
 /**
- * The base class used to represent labelled ticks along an axis.
+ * The base class used to represent labeled ticks along an axis.
  */
 public abstract class Tick implements Serializable, Cloneable {
 
@@ -82,14 +83,8 @@ public abstract class Tick implements Serializable, Cloneable {
      */
     public Tick(String text, TextAnchor textAnchor, TextAnchor rotationAnchor,
                 double angle) {
-        if (textAnchor == null) {
-            throw new IllegalArgumentException("Null 'textAnchor' argument.");
-        }
-        if (rotationAnchor == null) {
-            throw new IllegalArgumentException(
-                "Null 'rotationAnchor' argument."
-            );
-        }
+        ParamChecks.nullNotPermitted(textAnchor, "textAnchor");
+        ParamChecks.nullNotPermitted(rotationAnchor, "rotationAnchor");
         this.text = text;
         this.textAnchor = textAnchor;
         this.rotationAnchor = rotationAnchor;
@@ -99,7 +94,7 @@ public abstract class Tick implements Serializable, Cloneable {
     /**
      * Returns the text version of the tick value.
      *
-     * @return A string (possibly <code>null</code>;
+     * @return A string (possibly <code>null</code>);
      */
     public String getText() {
         return this.text;
