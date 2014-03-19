@@ -63,15 +63,10 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
 import java.util.List;
+import org.jfree.chart.TestUtilities;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -135,14 +130,6 @@ public class SpiderWebPlotTest  {
         p2.setLegendItemShape(new Rectangle(1, 2, 3, 4));
         assertEquals(p1, p2);
 
-        // seriesPaint
-        p1.setSeriesPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
-                3.0f, 4.0f, Color.WHITE));
-        assertFalse(p1.equals(p2));
-        p2.setSeriesPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
-                3.0f, 4.0f, Color.WHITE));
-        assertEquals(p1, p2);
-
         // seriesPaintList
         p1.setSeriesPaint(1, new GradientPaint(1.0f, 2.0f, Color.yellow,
                 3.0f, 4.0f, Color.WHITE));
@@ -156,14 +143,6 @@ public class SpiderWebPlotTest  {
                 3.0f, 4.0f, Color.BLACK));
         assertFalse(p1.equals(p2));
         p2.setBaseSeriesPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
-                3.0f, 4.0f, Color.BLACK));
-        assertEquals(p1, p2);
-
-        // seriesOutlinePaint
-        p1.setSeriesOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.BLUE,
-                3.0f, 4.0f, Color.BLACK));
-        assertFalse(p1.equals(p2));
-        p2.setSeriesOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.BLUE,
                 3.0f, 4.0f, Color.BLACK));
         assertEquals(p1, p2);
 
@@ -185,10 +164,6 @@ public class SpiderWebPlotTest  {
 
         // seriesOutlineStroke
         BasicStroke s = new BasicStroke(1.23f);
-        p1.setSeriesOutlineStroke(s);
-        assertFalse(p1.equals(p2));
-        p2.setSeriesOutlineStroke(s);
-        assertEquals(p1, p2);
 
         // seriesOutlineStrokeList
         p1.setSeriesOutlineStroke(1, s);
@@ -308,16 +283,19 @@ public class SpiderWebPlotTest  {
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
         SpiderWebPlot p1 = new SpiderWebPlot(new DefaultCategoryDataset());
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(p1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
-        SpiderWebPlot p2 = (SpiderWebPlot) in.readObject();
-            in.close();
-
+        p1.setAxisLinePaint(new GradientPaint(1f, 2f, Color.BLUE, 3f, 4f, 
+                Color.RED));
+        p1.setBaseSeriesOutlinePaint(new GradientPaint(5f, 6f, Color.YELLOW,
+                7f, 8f, Color.BLACK));
+        p1.setBaseSeriesPaint(new GradientPaint(1f, 2f, Color.GRAY, 3f, 4f,
+                Color.PINK));
+        p1.setLabelPaint(new GradientPaint(4f, 3f, Color.WHITE, 2f, 1f, 
+                Color.BLUE));
+        p1.setSeriesOutlinePaint(0, new GradientPaint(1f, 2f, Color.MAGENTA,
+                3f, 4f, Color.GREEN));
+        p1.setSeriesPaint(0, new GradientPaint(1f, 2f, Color.PINK, 3f, 4f, 
+                Color.CYAN));
+        SpiderWebPlot p2 = (SpiderWebPlot) TestUtilities.serialised(p1);
         assertEquals(p1, p2);
     }
 
