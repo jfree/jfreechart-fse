@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -120,6 +120,7 @@
  *               bar painters (DG);
  * 20-Dec-2008 : In createStackedAreaChart(), set category margin to 0.0 (DG);
  * 15-Jun-2012 : Removed JCommon dependencies (DG);
+ * 19-Mar-2014 : Remove 3D effect charts (DG);
  *
  */
 
@@ -133,10 +134,8 @@ import java.util.List;
 import java.util.Locale;
 
 import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.CategoryAxis3D;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberAxis3D;
 import org.jfree.chart.axis.Timeline;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.Layer;
@@ -171,16 +170,13 @@ import org.jfree.chart.renderer.DefaultPolarItemRenderer;
 import org.jfree.chart.renderer.WaferMapRenderer;
 import org.jfree.chart.renderer.category.AreaRenderer;
 import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.chart.renderer.category.BarRenderer3D;
 import org.jfree.chart.renderer.category.BoxAndWhiskerRenderer;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.chart.renderer.category.GanttRenderer;
 import org.jfree.chart.renderer.category.GradientBarPainter;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
-import org.jfree.chart.renderer.category.LineRenderer3D;
 import org.jfree.chart.renderer.category.StackedAreaRenderer;
 import org.jfree.chart.renderer.category.StackedBarRenderer;
-import org.jfree.chart.renderer.category.StackedBarRenderer3D;
 import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.chart.renderer.category.WaterfallBarRenderer;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
@@ -782,96 +778,6 @@ public abstract class ChartFactory {
     }
 
     /**
-     * Creates a bar chart with a 3D effect. The chart object returned by this
-     * method uses a {@link CategoryPlot} instance as the plot, with a
-     * {@link CategoryAxis3D} for the domain axis, a {@link NumberAxis3D} as
-     * the range axis, and a {@link BarRenderer3D} as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param categoryAxisLabel  the label for the category axis
-     *                           (<code>null</code> permitted).
-     * @param valueAxisLabel  the label for the value axis (<code>null</code>
-     *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     *
-     * @return A bar chart with a 3D effect.
-     */
-    public static JFreeChart createBarChart3D(String title,
-            String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset) {
-
-        CategoryAxis categoryAxis = new CategoryAxis3D(categoryAxisLabel);
-        ValueAxis valueAxis = new NumberAxis3D(valueAxisLabel);
-
-        BarRenderer3D renderer = new BarRenderer3D();
-        renderer.setDefaultToolTipGenerator(
-                    new StandardCategoryToolTipGenerator());
-
-        CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
-                renderer);
-        // FIXME create a new method for the horizontal version
-//        plot.setOrientation(orientation);
-//        if (orientation == PlotOrientation.HORIZONTAL) {
-//            // change rendering order to ensure that bar overlapping is the
-//            // right way around
-//            plot.setRowRenderingOrder(SortOrder.DESCENDING);
-//            plot.setColumnRenderingOrder(SortOrder.DESCENDING);
-//        }
-        plot.setForegroundAlpha(0.75f);
-
-        JFreeChart chart = new JFreeChart(title, plot);
-        currentTheme.apply(chart);
-        return chart;
-
-    }
-
-    /**
-     * Creates a stacked bar chart with a 3D effect and default settings. The
-     * chart object returned by this method uses a {@link CategoryPlot}
-     * instance as the plot, with a {@link CategoryAxis3D} for the domain axis,
-     * a {@link NumberAxis3D} as the range axis, and a
-     * {@link StackedBarRenderer3D} as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param categoryAxisLabel  the label for the category axis
-     *                           (<code>null</code> permitted).
-     * @param valueAxisLabel  the label for the value axis (<code>null</code>
-     *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     *
-     * @return A stacked bar chart with a 3D effect.
-     */
-    public static JFreeChart createStackedBarChart3D(String title,
-            String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset) {
-
-        CategoryAxis categoryAxis = new CategoryAxis3D(categoryAxisLabel);
-        ValueAxis valueAxis = new NumberAxis3D(valueAxisLabel);
-
-        // create the renderer...
-        CategoryItemRenderer renderer = new StackedBarRenderer3D();
-        renderer.setDefaultToolTipGenerator(
-                new StandardCategoryToolTipGenerator());
-
-        // create the plot...
-        CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
-                renderer);
-        // FIXME create a new method for the horizontal version
-//        plot.setOrientation(orientation);
-//        if (orientation == PlotOrientation.HORIZONTAL) {
-            // change rendering order to ensure that bar overlapping is the
-            // right way around
-//            plot.setColumnRenderingOrder(SortOrder.DESCENDING);
-//        }
-
-        // create the chart...
-        JFreeChart chart = new JFreeChart(title, plot);
-        currentTheme.apply(chart);
-        return chart;
-
-    }
-
-    /**
      * Creates an area chart with default settings.  The chart object returned
      * by this method uses a {@link CategoryPlot} instance as the plot, with a
      * {@link CategoryAxis} for the domain axis, a {@link NumberAxis} as the
@@ -966,39 +872,6 @@ public abstract class ChartFactory {
         ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
 
         LineAndShapeRenderer renderer = new LineAndShapeRenderer(true, false);
-        renderer.setDefaultToolTipGenerator(
-                new StandardCategoryToolTipGenerator());
-        CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
-                renderer);
-        JFreeChart chart = new JFreeChart(title, plot);
-        currentTheme.apply(chart);
-        return chart;
-
-    }
-
-    /**
-     * Creates a line chart with default settings. The chart object returned by
-     * this method uses a {@link CategoryPlot} instance as the plot, with a
-     * {@link CategoryAxis3D} for the domain axis, a {@link NumberAxis3D} as
-     * the range axis, and a {@link LineRenderer3D} as the renderer.
-     *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param categoryAxisLabel  the label for the category axis
-     *                           (<code>null</code> permitted).
-     * @param valueAxisLabel  the label for the value axis (<code>null</code>
-     *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     *
-     * @return A line chart.
-     */
-    public static JFreeChart createLineChart3D(String title,
-            String categoryAxisLabel, String valueAxisLabel,
-            CategoryDataset dataset) {
-
-        CategoryAxis categoryAxis = new CategoryAxis3D(categoryAxisLabel);
-        ValueAxis valueAxis = new NumberAxis3D(valueAxisLabel);
-
-        LineRenderer3D renderer = new LineRenderer3D();
         renderer.setDefaultToolTipGenerator(
                 new StandardCategoryToolTipGenerator());
         CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis,
