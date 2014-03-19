@@ -296,7 +296,10 @@ public class JFreeChart implements Drawable, TitleChangeListener,
      */
     private List<Title> subtitles;
 
-    /** Draws the visual representation of the data. */
+    /** 
+     * Draws the visual representation of the data (cannot be null, it is
+     * required in the constructor). 
+     */
     private Plot plot;
 
     /** Paint used to draw the background of the chart. */
@@ -1059,9 +1062,8 @@ public class JFreeChart implements Drawable, TitleChangeListener,
 
     /**
      * Draws the chart on a Java 2D graphics device (such as the screen or a
-     * printer).
-     * <P>
-     * This method is the focus of the entire JFreeChart library.
+     * printer).  This method is the focal point of the entire JFreeChart 
+     * library.
      *
      * @param g2  the graphics device.
      * @param area  the area within which the chart should be drawn.
@@ -1073,7 +1075,8 @@ public class JFreeChart implements Drawable, TitleChangeListener,
 
     /**
      * Draws the chart on a Java 2D graphics device (such as the screen or a
-     * printer).  This method is the focus of the entire JFreeChart library.
+     * printer).  This method is the focal point of the entire JFreeChart 
+     * library.
      *
      * @param g2  the graphics device.
      * @param area  the area within which the chart should be drawn.
@@ -1085,9 +1088,8 @@ public class JFreeChart implements Drawable, TitleChangeListener,
 
     /**
      * Draws the chart on a Java 2D graphics device (such as the screen or a
-     * printer).
-     * <P>
-     * This method is the focus of the entire JFreeChart library.
+     * printer).  This method is the focal point of the entire JFreeChart 
+     * library.
      *
      * @param g2  the graphics device.
      * @param chartArea  the area within which the chart should be drawn.
@@ -1165,6 +1167,10 @@ public class JFreeChart implements Drawable, TitleChangeListener,
                 entities.addAll(e);
             }
         }
+
+        // the legend is the first item drawn that requires a lookup of 
+        // series or item colors for the chart, and it is drawn as a chart
+        // title...
 
         for (Title currentTitle : this.subtitles) {
             if (currentTitle.isVisible()) {
