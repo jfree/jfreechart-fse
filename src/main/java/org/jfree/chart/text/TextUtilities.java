@@ -316,6 +316,21 @@ public class TextUtilities {
         }
         return bounds;
     }
+    
+    /**
+     * Returns the bounds for the attributed string.
+     * 
+     * @param text  the attributed string (<code>null</code> not permitted).
+     * @param g2  the graphics target (<code>null</code> not permitted).
+     * 
+     * @return The bounds (never <code>null</code>).
+     */
+    public static Rectangle2D getTextBounds(AttributedString text, 
+            Graphics2D g2) {
+        TextLayout tl = new TextLayout(text.getIterator(), 
+                g2.getFontRenderContext());
+        return tl.getBounds();
+    }
 
     /**
      * Draws a string such that the specified anchor point is aligned to the
