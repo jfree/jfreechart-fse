@@ -2938,6 +2938,22 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
 
     }
 
+    private boolean includeForLegend(Comparable key) {
+        boolean result;
+        Number n = this.dataset.getValue(key);
+        if (n == null) {
+            result = !getIgnoreNullValues();
+        } else {
+            double v = n.doubleValue();
+            if (v == 0.0) {
+                result = !getIgnoreZeroValues();
+            } else {
+                result = v > 0.0;
+            }
+        }
+        return result;
+    }
+    
     /**
      * Returns a collection of legend items for the pie chart.
      *
@@ -2950,55 +2966,37 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             return result;
         }
         List<Comparable> keys = this.dataset.getKeys();
-        int section = 0;
         Shape shape = getLegendItemShape();
         for (Comparable key : keys) {
-            Number n = this.dataset.getValue(key);
-            boolean include;
-            if (n == null) {
-                include = !this.ignoreNullValues;
+            if (!includeForLegend(key)) {
+                continue;
             }
-            else {
-                double v = n.doubleValue();
-                if (v == 0.0) {
-                    include = !this.ignoreZeroValues;
+            String label = this.legendLabelGenerator.generateSectionLabel(
+                    this.dataset, key);
+            if (label != null) {
+                String description = label;
+                String toolTipText = null;
+                if (this.legendLabelToolTipGenerator != null) {
+                    toolTipText = this.legendLabelToolTipGenerator
+                            .generateSectionLabel(this.dataset, key);
                 }
-                else {
-                    include = v > 0.0;
+                String urlText = null;
+                if (this.legendLabelURLGenerator != null) {
+                    urlText = this.legendLabelURLGenerator.generateURL(
+                            this.dataset, key, this.pieIndex);
                 }
-            }
-            if (include) {
-                String label = this.legendLabelGenerator.generateSectionLabel(
-                        this.dataset, key);
-                if (label != null) {
-                    String description = label;
-                    String toolTipText = null;
-                    if (this.legendLabelToolTipGenerator != null) {
-                        toolTipText = this.legendLabelToolTipGenerator
-                                .generateSectionLabel(this.dataset, key);
-                    }
-                    String urlText = null;
-                    if (this.legendLabelURLGenerator != null) {
-                        urlText = this.legendLabelURLGenerator.generateURL(
-                                this.dataset, key, this.pieIndex);
-                    }
-                    Paint paint = lookupSectionPaint(key);
-                    Paint outlinePaint = lookupSectionOutlinePaint(key);
-                    Stroke outlineStroke = lookupSectionOutlineStroke(key);
-                    LegendItem item = new LegendItem(label, description,
-                            toolTipText, urlText, true, shape, true, paint,
-                            true, outlinePaint, outlineStroke,
-                            false,          // line not visible
-                            new Line2D.Float(), new BasicStroke(), Color.BLACK);
-                    item.setDataset(getDataset());
-                    item.setSeriesIndex(this.dataset.getIndex(key));
-                    item.setSeriesKey(key);
-                    result.add(item);
-                }
-                section++;
-            }
-            else {
-                section++;
+                Paint paint = lookupSectionPaint(key);
+                Paint outlinePaint = lookupSectionOutlinePaint(key);
+                Stroke outlineStroke = lookupSectionOutlineStroke(key);
+                LegendItem item = new LegendItem(label, description,
+                        toolTipText, urlText, true, shape, true, paint,
+                        true, outlinePaint, outlineStroke,
+                        false,          // line not visible
+                        new Line2D.Float(), new BasicStroke(), Color.BLACK);
+                item.setDataset(getDataset());
+                item.setSeriesIndex(this.dataset.getIndex(key));
+                item.setSeriesKey(key);
+                result.add(item);
             }
         }
         return result;
