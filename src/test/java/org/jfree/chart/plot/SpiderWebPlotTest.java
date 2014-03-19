@@ -66,7 +66,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.List;
-import org.jfree.chart.TestUtilities;
+import org.jfree.chart.TestUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -295,7 +295,7 @@ public class SpiderWebPlotTest  {
                 3f, 4f, Color.GREEN));
         p1.setSeriesPaint(0, new GradientPaint(1f, 2f, Color.PINK, 3f, 4f, 
                 Color.CYAN));
-        SpiderWebPlot p2 = (SpiderWebPlot) TestUtilities.serialised(p1);
+        SpiderWebPlot p2 = (SpiderWebPlot) TestUtils.serialised(p1);
         assertEquals(p1, p2);
     }
 

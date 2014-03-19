@@ -43,7 +43,7 @@
 
 package org.jfree.data;
 
-import org.jfree.chart.TestUtilities;
+import org.jfree.chart.TestUtils;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -294,7 +294,7 @@ public class RangeTest  {
     @Test
     public void testSerialization() {
         Range r1 = new Range(25.0, 133.42);
-        Range r2 = (Range) TestUtilities.serialised(r1);
+        Range r2 = (Range) TestUtils.serialised(r1);
         assertEquals(r1, r2);
     }
 

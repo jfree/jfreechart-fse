@@ -99,7 +99,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.jfree.chart.TestUtilities;
+import org.jfree.chart.TestUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -666,7 +666,7 @@ public class XYPlotTest  {
         NumberAxis rangeAxis = new NumberAxis("Range");
         StandardXYItemRenderer renderer = new StandardXYItemRenderer();
         XYPlot p1 = new XYPlot(data, domainAxis, rangeAxis, renderer);
-        XYPlot p2 = (XYPlot) TestUtilities.serialised(p1);
+        XYPlot p2 = (XYPlot) TestUtils.serialised(p1);
         assertEquals(p1, p2);
     }
 

@@ -63,7 +63,7 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.chart.TestUtilities;
+import org.jfree.chart.TestUtils;
 
 /**
  * Tests for the {@link LogAxis} class.
@@ -152,7 +152,7 @@ public class LogAxisTest  {
     @Test
     public void testSerialization() {
         LogAxis a1 = new LogAxis("Test Axis");
-        LogAxis a2 = (LogAxis) TestUtilities.serialised(a1);
+        LogAxis a2 = (LogAxis) TestUtils.serialised(a1);
         assertEquals(a1, a2);
     }
 

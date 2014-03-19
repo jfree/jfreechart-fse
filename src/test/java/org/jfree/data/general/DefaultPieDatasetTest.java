@@ -44,7 +44,7 @@ package org.jfree.data.general;
 
 import java.io.IOException;
 import org.junit.Test;
-import org.jfree.chart.TestUtilities;
+import org.jfree.chart.TestUtils;
 import org.jfree.data.UnknownKeyException;
 
 import static org.junit.Assert.assertEquals;
@@ -181,7 +181,7 @@ public class DefaultPieDatasetTest implements DatasetChangeListener {
         d1.setValue("C2", null);
         d1.setValue("C3", new Double(345.9));
         d1.setValue("C4", new Double(452.7));
-        DefaultPieDataset d2 = (DefaultPieDataset) TestUtilities.serialised(d1);
+        DefaultPieDataset d2 = (DefaultPieDataset) TestUtils.serialised(d1);
         assertEquals(d1, d2);
     }
 

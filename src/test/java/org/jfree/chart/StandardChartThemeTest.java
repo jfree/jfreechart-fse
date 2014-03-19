@@ -297,7 +297,7 @@ public class StandardChartThemeTest  {
     public void testSerialization() {
         StandardChartTheme t1 = new StandardChartTheme("Name");
         StandardChartTheme t2 
-                = (StandardChartTheme) TestUtilities.serialised(t1);
+                = (StandardChartTheme) TestUtils.serialised(t1);
         assertEquals(t1, t2);
     }
 
