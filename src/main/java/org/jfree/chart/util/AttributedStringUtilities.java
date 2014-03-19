@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,16 +27,14 @@
  * ------------------------------
  * AttributedStringUtilities.java
  * ------------------------------
- * (C)opyright 2005-2013, by Object Refinery Limited and Contributors.
+ * (C)opyright 2005-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
- * $Id: AttributedStringUtilities.java,v 1.2 2005/10/18 13:24:19 mungady Exp $
- *
  * Changes
  * -------
- * 29-Jul-2005 : Version 1(DG);
+ * 29-Jul-2005 : Version 1 (DG);
  * 16-Jun-2012 : Moved from JCommon to JFreeChart (DG);
  * 01-Aug-2013 : Added toString() method (DG);
  * 
@@ -108,8 +106,10 @@ public class AttributedStringUtilities {
                 return false;
             }
             // if maps aren't equivalent, return false
-            Map<AttributedCharacterIterator.Attribute, Object> m1 = it1.getAttributes();
-            Map<AttributedCharacterIterator.Attribute, Object> m2 = it2.getAttributes();
+            Map<AttributedCharacterIterator.Attribute, Object> m1 
+                    = it1.getAttributes();
+            Map<AttributedCharacterIterator.Attribute, Object> m2 
+                    = it2.getAttributes();
             if (!m1.equals(m2)) {
                 return false;
             }

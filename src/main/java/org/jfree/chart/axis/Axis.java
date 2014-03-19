@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------
  * Axis.java
  * ---------
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Bill Kelemen;
@@ -95,7 +95,6 @@ import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.Stroke;
-import java.awt.font.TextAttribute;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
@@ -1110,7 +1109,7 @@ public abstract class Axis implements Cloneable, Serializable {
             PlotRenderingInfo plotState) {
 
         if (plotState == null || plotState.getOwner() == null) {
-            return;  // no need to create entity if we can´t save it anyways...
+            return;  // no need to create entity if we can't save it anyways...
         }
         Rectangle2D hotspot = null;
         if (edge.equals(RectangleEdge.TOP)) {
@@ -1207,7 +1206,6 @@ public abstract class Axis implements Cloneable, Serializable {
      * @return The enclosing rectangle.
      */
     protected Rectangle2D getLabelEnclosure(Graphics2D g2, RectangleEdge edge) {
-
         Rectangle2D result = new Rectangle2D.Double();
         AttributedString axisLabel = getLabel();
         if (axisLabel != null) {
@@ -1227,7 +1225,6 @@ public abstract class Axis implements Cloneable, Serializable {
             Shape labelBounds = transformer.createTransformedShape(bounds);
             result = labelBounds.getBounds2D();
         }
-
         return result;
 
     }
@@ -1309,7 +1306,6 @@ public abstract class Axis implements Cloneable, Serializable {
                     + insets.getRight());
         }
         else if (edge == RectangleEdge.RIGHT) {
-
             AffineTransform t = AffineTransform.getRotateInstance(
                     getLabelAngle() + Math.PI / 2.0,
                     labelBounds.getCenterX(), labelBounds.getCenterY());
