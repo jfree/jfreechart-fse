@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------
  * LogAxisTests.java
  * -----------------
- * (C) Copyright 2007-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2007-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -43,6 +43,18 @@
 
 package org.jfree.chart.axis;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
@@ -51,36 +63,16 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.junit.Test;
-
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import org.jfree.chart.TestUtilities;
 
 /**
  * Tests for the {@link LogAxis} class.
  */
 public class LogAxisTest  {
-
-
-
-
-
+    
     /**
      * Confirm that cloning works.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning() throws CloneNotSupportedException {
@@ -109,11 +101,6 @@ public class LogAxisTest  {
         a1.setSmallestValue(0.1);
         assertFalse(a1.equals(a2));
         a2.setSmallestValue(0.1);
-        assertEquals(a1, a2);
-
-        a1.setMinorTickCount(8);
-        assertFalse(a1.equals(a2));
-        a2.setMinorTickCount(8);
         assertEquals(a1, a2);
     }
 
@@ -163,21 +150,10 @@ public class LogAxisTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() throws IOException, ClassNotFoundException {
-
+    public void testSerialization() {
         LogAxis a1 = new LogAxis("Test Axis");
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(a1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
-        LogAxis a2 = (LogAxis) in.readObject();
-        in.close();
+        LogAxis a2 = (LogAxis) TestUtilities.serialised(a1);
         assertEquals(a1, a2);
-
     }
 
     /**
