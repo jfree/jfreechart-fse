@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * ApplicationFrame.java
  * ---------------------
- * (C) Copyright 2000-2012, by Object Refinery Limited.
+ * (C) Copyright 2000-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -37,18 +37,19 @@
  * 30-May-2002 : Added title (DG);
  * 13-Oct-2002 : Fixed errors reported by Checkstyle (DG);
  * 14-Jun-2012 : Moved from JCommon to JFreeChart (DG);
+ * 19-Mar-2014 : Move to demo package (DG);
+ * 
  */
 
-package org.jfree.chart.ui;
+package org.jfree.chart.demo;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 
 /**
- * A base class for creating the main frame for simple applications.  The frame listens for
- * window closing events, and responds by shutting down the JVM.  This is OK for small demo
- * applications...for more serious applications, you'll want to use something more robust.
+ * A frame for simple demo applications (the frame shuts down the JVM when
+ * the window is closed).
  */
 public class ApplicationFrame extends JFrame implements WindowListener {
 
@@ -59,7 +60,7 @@ public class ApplicationFrame extends JFrame implements WindowListener {
      *
      * @param title  the frame title.
      */
-    public ApplicationFrame(final String title) {
+    public ApplicationFrame(String title) {
         super(title);
         addWindowListener(this);
     }
@@ -70,7 +71,7 @@ public class ApplicationFrame extends JFrame implements WindowListener {
      * @param event  information about the window event.
      */
     @Override
-    public void windowClosing(final WindowEvent event) {
+    public void windowClosing(WindowEvent event) {
         if (event.getWindow() == this) {
             dispose();
             System.exit(0);
@@ -83,7 +84,7 @@ public class ApplicationFrame extends JFrame implements WindowListener {
      * @param event  information about the window event.
      */
     @Override
-    public void windowClosed(final WindowEvent event) {
+    public void windowClosed(WindowEvent event) {
         // ignore
     }
 
@@ -93,7 +94,7 @@ public class ApplicationFrame extends JFrame implements WindowListener {
      * @param event  information about the window event.
      */
     @Override
-    public void windowActivated(final WindowEvent event) {
+    public void windowActivated(WindowEvent event) {
         // ignore
     }
 
@@ -103,7 +104,7 @@ public class ApplicationFrame extends JFrame implements WindowListener {
      * @param event  information about the window event.
      */
     @Override
-    public void windowDeactivated(final WindowEvent event) {
+    public void windowDeactivated(WindowEvent event) {
         // ignore
     }
 
@@ -113,7 +114,7 @@ public class ApplicationFrame extends JFrame implements WindowListener {
      * @param event  information about the window event.
      */
     @Override
-    public void windowDeiconified(final WindowEvent event) {
+    public void windowDeiconified(WindowEvent event) {
         // ignore
     }
 
@@ -123,7 +124,7 @@ public class ApplicationFrame extends JFrame implements WindowListener {
      * @param event  information about the window event.
      */
     @Override
-    public void windowIconified(final WindowEvent event) {
+    public void windowIconified(WindowEvent event) {
         // ignore
     }
 
@@ -133,7 +134,7 @@ public class ApplicationFrame extends JFrame implements WindowListener {
      * @param event  information about the window event.
      */
     @Override
-    public void windowOpened(final WindowEvent event) {
+    public void windowOpened(WindowEvent event) {
         // ignore
     }
 

@@ -30,9 +30,9 @@ import org.jfree.chart.panel.selectionhandler.RegionSelectionHandler;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.item.IRSUtilities;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.chart.ui.ApplicationFrame;
+import org.jfree.chart.demo.ApplicationFrame;
 import org.jfree.chart.ui.NumberCellRenderer;
-import org.jfree.chart.ui.RefineryUtilities;
+import org.jfree.chart.ui.WindowUtils;
 import org.jfree.data.extension.DatasetIterator;
 import org.jfree.data.extension.DatasetSelectionExtension;
 import org.jfree.data.extension.impl.DatasetExtensionManager;
@@ -236,7 +236,7 @@ public class SelectionDemo1 extends ApplicationFrame implements
     public static void main(String[] args) {
         SelectionDemo1 demo = new SelectionDemo1("JFreeChart: SelectionDemo1");
         demo.pack();
-        RefineryUtilities.centerFrameOnScreen(demo);
+        WindowUtils.centerFrameOnScreen(demo);
         demo.setVisible(true);
     }
 

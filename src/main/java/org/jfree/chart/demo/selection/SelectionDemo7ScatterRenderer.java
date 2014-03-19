@@ -27,9 +27,9 @@ import org.jfree.chart.panel.selectionhandler.RegionSelectionHandler;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.ScatterRenderer;
 import org.jfree.chart.renderer.item.DefaultShapeIRS;
-import org.jfree.chart.ui.ApplicationFrame;
+import org.jfree.chart.demo.ApplicationFrame;
 import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.RefineryUtilities;
+import org.jfree.chart.ui.WindowUtils;
 import org.jfree.data.extension.DatasetSelectionExtension;
 import org.jfree.data.extension.impl.CategoryCursor;
 import org.jfree.data.extension.impl.CategoryDatasetSelectionExtension;
@@ -183,7 +183,7 @@ public class SelectionDemo7ScatterRenderer extends ApplicationFrame {
         SelectionDemo7ScatterRenderer demo = new SelectionDemo7ScatterRenderer(
                 "JFreeChart: ScatterRendererDemo1.java");
         demo.pack();
-        RefineryUtilities.centerFrameOnScreen(demo);
+        WindowUtils.centerFrameOnScreen(demo);
         demo.setVisible(true);
     }
 

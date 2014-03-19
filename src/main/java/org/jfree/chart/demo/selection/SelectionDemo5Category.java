@@ -39,8 +39,8 @@ import org.jfree.chart.panel.selectionhandler.RegionSelectionHandler;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.item.IRSUtilities;
-import org.jfree.chart.ui.ApplicationFrame;
-import org.jfree.chart.ui.RefineryUtilities;
+import org.jfree.chart.demo.ApplicationFrame;
+import org.jfree.chart.ui.WindowUtils;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.extension.DatasetIterator;
@@ -222,7 +222,7 @@ public class SelectionDemo5Category extends ApplicationFrame
         SelectionDemo5Category demo = new SelectionDemo5Category(
                 "JFreeChart: SelectionDemo5.java");
         demo.pack();
-        RefineryUtilities.centerFrameOnScreen(demo);
+        WindowUtils.centerFrameOnScreen(demo);
         demo.setVisible(true);
     }
 

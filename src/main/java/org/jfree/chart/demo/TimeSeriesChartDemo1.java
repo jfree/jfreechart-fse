@@ -51,9 +51,8 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.StandardChartTheme;
 import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.ui.ApplicationFrame;
 import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.RefineryUtilities;
+import org.jfree.chart.ui.WindowUtils;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -216,7 +215,7 @@ public class TimeSeriesChartDemo1 extends ApplicationFrame {
         TimeSeriesChartDemo1 demo = new TimeSeriesChartDemo1(
                 "Time Series Chart Demo 1");
         demo.pack();
-        RefineryUtilities.centerFrameOnScreen(demo);
+        WindowUtils.centerFrameOnScreen(demo);
         demo.setVisible(true);
 
     }

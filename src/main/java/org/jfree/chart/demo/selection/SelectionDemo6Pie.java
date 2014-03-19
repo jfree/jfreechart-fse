@@ -31,8 +31,8 @@ import org.jfree.chart.panel.selectionhandler.FreeRegionSelectionHandler;
 import org.jfree.chart.panel.selectionhandler.MouseClickSelectionHandler;
 import org.jfree.chart.panel.selectionhandler.RegionSelectionHandler;
 import org.jfree.chart.plot.PiePlot;
-import org.jfree.chart.ui.ApplicationFrame;
-import org.jfree.chart.ui.RefineryUtilities;
+import org.jfree.chart.demo.ApplicationFrame;
+import org.jfree.chart.ui.WindowUtils;
 import org.jfree.data.extension.DatasetIterator;
 import org.jfree.data.extension.DatasetSelectionExtension;
 import org.jfree.data.extension.impl.DatasetExtensionManager;
@@ -183,7 +183,7 @@ public class SelectionDemo6Pie extends ApplicationFrame
         SelectionDemo6Pie demo = new SelectionDemo6Pie(
                 "JFreeChart: SelectionDemo6Pie.java");
         demo.pack();
-        RefineryUtilities.centerFrameOnScreen(demo);
+        WindowUtils.centerFrameOnScreen(demo);
         demo.setVisible(true);
     }
 

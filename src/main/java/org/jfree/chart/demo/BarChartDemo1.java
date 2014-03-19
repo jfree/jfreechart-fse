@@ -40,24 +40,14 @@
 
 package org.jfree.chart.demo;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.font.TextAttribute;
-import java.text.AttributedString;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.StandardChartTheme;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.ui.ApplicationFrame;
-import org.jfree.chart.ui.RefineryUtilities;
+import org.jfree.chart.ui.WindowUtils;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
@@ -67,13 +57,6 @@ import org.jfree.data.category.DefaultCategoryDataset;
 public class BarChartDemo1 extends ApplicationFrame {
 
     private static final long serialVersionUID = 1L;
-
-    {
-        // set a theme using the new shadow generator feature available in
-        // 1.0.14 - for backwards compatibility it is not enabled by default
-        ChartFactory.setChartTheme(new StandardChartTheme("JFree/Shadow",
-                true));
-    }
 
     /**
      * Creates a new demo instance.
@@ -143,20 +126,8 @@ public class BarChartDemo1 extends ApplicationFrame {
      * @return The chart.
      */
     private static JFreeChart createChart(CategoryDataset dataset) {
-
-        // create the chart with default settings...
-        JFreeChart chart = ChartFactory.createBarChart(
-                "Bar Chart Demo 1",  // chart title
-                "Category",          // domain axis label
-                "Value",             // range axis label
-                dataset);
-
-        // NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
-
-        // set the background color for the chart...
-        chart.setBackgroundPaint(Color.WHITE);
-
-        // get a reference to the plot for further customisation...
+        JFreeChart chart = ChartFactory.createBarChart("Bar Chart Demo 1",
+                "Category", "Value", dataset);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
 
         // ******************************************************************
@@ -170,35 +141,7 @@ public class BarChartDemo1 extends ApplicationFrame {
         // set the range axis to display integers only...
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-
-        // disable bar outlines...
-        BarRenderer renderer = (BarRenderer) plot.getRenderer();
-        renderer.setDrawBarOutline(false);
-
-        // set up gradient paints for series...
-        GradientPaint gp0 = new GradientPaint(0.0f, 0.0f, Color.BLUE,
-                0.0f, 0.0f, new Color(0, 0, 64));
-        GradientPaint gp1 = new GradientPaint(0.0f, 0.0f, Color.GREEN,
-                0.0f, 0.0f, new Color(0, 64, 0));
-        GradientPaint gp2 = new GradientPaint(0.0f, 0.0f, Color.RED,
-                0.0f, 0.0f, new Color(64, 0, 0));
-        renderer.setSeriesPaint(0, gp0);
-        renderer.setSeriesPaint(1, gp1);
-        renderer.setSeriesPaint(2, gp2);
-
-        CategoryAxis domainAxis = plot.getDomainAxis();
-        domainAxis.setLabelPaint(Color.RED);
-        domainAxis.setLabel("Category (H20)");
-        domainAxis.getLabel().addAttribute(TextAttribute.SUPERSCRIPT, TextAttribute.SUPERSCRIPT_SUB, 11, 12);
-        
-        rangeAxis.setLabel("Value2");
-        rangeAxis.getLabel().addAttribute(TextAttribute.SUPERSCRIPT, TextAttribute.SUPERSCRIPT_SUPER, 5, 6);
-
-        
-        // OPTIONAL CUSTOMISATION COMPLETED.
-
         return chart;
-
     }
 
     /**
@@ -209,7 +152,7 @@ public class BarChartDemo1 extends ApplicationFrame {
     public static void main(String[] args) {
         BarChartDemo1 demo = new BarChartDemo1("Bar Chart Demo 1");
         demo.pack();
-        RefineryUtilities.centerFrameOnScreen(demo);
+        WindowUtils.centerFrameOnScreen(demo);
         demo.setVisible(true);
     }
 
