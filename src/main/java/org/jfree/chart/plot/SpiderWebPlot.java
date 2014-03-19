@@ -95,12 +95,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PaintList;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.Rotation;
 import org.jfree.chart.util.ShapeUtilities;
@@ -108,7 +109,6 @@ import org.jfree.chart.util.StrokeList;
 import org.jfree.chart.util.TableOrder;
 import org.jfree.chart.entity.CategoryItemEntity;
 import org.jfree.chart.entity.EntityCollection;
-import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.labels.CategoryItemLabelGenerator;
 import org.jfree.chart.labels.CategoryToolTipGenerator;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
@@ -216,26 +216,17 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     /** The legend item shape. */
     private transient Shape legendItemShape;
 
-    /** The paint for ALL series (overrides list). */
-    private transient Paint seriesPaint;
-
-    /** The series paint list. */
-    private PaintList seriesPaintList;
+    /** A map containing the paint for each series. */
+    private transient Map<Integer, Paint> seriesPaintMap;
 
     /** The base series paint (fallback). */
     private transient Paint baseSeriesPaint;
 
-    /** The outline paint for ALL series (overrides list). */
-    private transient Paint seriesOutlinePaint;
-
-    /** The series outline paint list. */
-    private PaintList seriesOutlinePaintList;
+    /** A map containing the outline paint for each series. */
+    private transient Map<Integer, Paint> seriesOutlinePaintMap;
 
     /** The base series outline paint (fallback). */
     private transient Paint baseSeriesOutlinePaint;
-
-    /** The outline stroke for ALL series (overrides list). */
-    private transient Stroke seriesOutlineStroke;
 
     /** The series outline stroke list. */
     private StrokeList seriesOutlineStrokeList;
@@ -306,15 +297,12 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
         this.direction = Rotation.CLOCKWISE;
         this.maxValue = DEFAULT_MAX_VALUE;
 
-        this.seriesPaint = null;
-        this.seriesPaintList = new PaintList();
+        this.seriesPaintMap = new HashMap<Integer, Paint>();
         this.baseSeriesPaint = null;
 
-        this.seriesOutlinePaint = null;
-        this.seriesOutlinePaintList = new PaintList();
+        this.seriesOutlinePaintMap = new HashMap<Integer, Paint>();
         this.baseSeriesOutlinePaint = DEFAULT_OUTLINE_PAINT;
 
-        this.seriesOutlineStroke = null;
         this.seriesOutlineStrokeList = new StrokeList();
         this.baseSeriesOutlineStroke = DEFAULT_OUTLINE_STROKE;
 
@@ -653,31 +641,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     //// SERIES PAINT /////////////////////////
 
     /**
-     * Returns the paint for ALL series in the plot.
-     *
-     * @return The paint (possibly <code>null</code>).
-     *
-     * @see #setSeriesPaint(Paint)
-     */
-    public Paint getSeriesPaint() {
-        return this.seriesPaint;
-    }
-
-    /**
-     * Sets the paint for ALL series in the plot. If this is set to</code> null
-     * </code>, then a list of paints is used instead (to allow different colors
-     * to be used for each series of the radar group).
-     *
-     * @param paint the paint (<code>null</code> permitted).
-     *
-     * @see #getSeriesPaint()
-     */
-    public void setSeriesPaint(Paint paint) {
-        this.seriesPaint = paint;
-        fireChangeEvent();
-    }
-
-    /**
      * Returns the paint for the specified series.
      *
      * @param series  the series index (zero-based).
@@ -687,19 +650,12 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * @see #setSeriesPaint(int, Paint)
      */
     public Paint getSeriesPaint(int series) {
-
-        // return the override, if there is one...
-        if (this.seriesPaint != null) {
-            return this.seriesPaint;
-        }
-
-        // otherwise look up the paint list
-        Paint result = this.seriesPaintList.getPaint(series);
+        Paint result = this.seriesPaintMap.get(series);
         if (result == null) {
             DrawingSupplier supplier = getDrawingSupplier();
             if (supplier != null) {
                 Paint p = supplier.getNextPaint();
-                this.seriesPaintList.setPaint(series, p);
+                this.seriesPaintMap.put(series, p);
                 result = p;
             }
             else {
@@ -707,7 +663,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
             }
         }
         return result;
-
     }
 
     /**
@@ -720,7 +675,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * @see #getSeriesPaint(int)
      */
     public void setSeriesPaint(int series, Paint paint) {
-        this.seriesPaintList.setPaint(series, paint);
+        this.seriesPaintMap.put(series, paint);
         fireChangeEvent();
     }
 
@@ -754,27 +709,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     //// SERIES OUTLINE PAINT ////////////////////////////
 
     /**
-     * Returns the outline paint for ALL series in the plot.
-     *
-     * @return The paint (possibly <code>null</code>).
-     */
-    public Paint getSeriesOutlinePaint() {
-        return this.seriesOutlinePaint;
-    }
-
-    /**
-     * Sets the outline paint for ALL series in the plot. If this is set to
-     * </code> null</code>, then a list of paints is used instead (to allow
-     * different colors to be used for each series).
-     *
-     * @param paint  the paint (<code>null</code> permitted).
-     */
-    public void setSeriesOutlinePaint(Paint paint) {
-        this.seriesOutlinePaint = paint;
-        fireChangeEvent();
-    }
-
-    /**
      * Returns the paint for the specified series.
      *
      * @param series  the series index (zero-based).
@@ -782,12 +716,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * @return The paint (never <code>null</code>).
      */
     public Paint getSeriesOutlinePaint(int series) {
-        // return the override, if there is one...
-        if (this.seriesOutlinePaint != null) {
-            return this.seriesOutlinePaint;
-        }
-        // otherwise look up the paint list
-        Paint result = this.seriesOutlinePaintList.getPaint(series);
+        Paint result = this.seriesOutlinePaintMap.get(series);
         if (result == null) {
             result = this.baseSeriesOutlinePaint;
         }
@@ -802,7 +731,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * @param paint  the paint (<code>null</code> permitted).
      */
     public void setSeriesOutlinePaint(int series, Paint paint) {
-        this.seriesOutlinePaintList.setPaint(series, paint);
+        this.seriesOutlinePaintMap.put(series, paint);
         fireChangeEvent();
     }
 
@@ -832,27 +761,6 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     //// SERIES OUTLINE STROKE /////////////////////
 
     /**
-     * Returns the outline stroke for ALL series in the plot.
-     *
-     * @return The stroke (possibly <code>null</code>).
-     */
-    public Stroke getSeriesOutlineStroke() {
-        return this.seriesOutlineStroke;
-    }
-
-    /**
-     * Sets the outline stroke for ALL series in the plot. If this is set to
-     * </code> null</code>, then a list of paints is used instead (to allow
-     * different colors to be used for each series).
-     *
-     * @param stroke  the stroke (<code>null</code> permitted).
-     */
-    public void setSeriesOutlineStroke(Stroke stroke) {
-        this.seriesOutlineStroke = stroke;
-        fireChangeEvent();
-    }
-
-    /**
      * Returns the stroke for the specified series.
      *
      * @param series  the series index (zero-based).
@@ -860,19 +768,11 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * @return The stroke (never <code>null</code>).
      */
     public Stroke getSeriesOutlineStroke(int series) {
-
-        // return the override, if there is one...
-        if (this.seriesOutlineStroke != null) {
-            return this.seriesOutlineStroke;
-        }
-
-        // otherwise look up the paint list
         Stroke result = this.seriesOutlineStrokeList.getStroke(series);
         if (result == null) {
             result = this.baseSeriesOutlineStroke;
         }
         return result;
-
     }
 
     /**
@@ -1547,28 +1447,19 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
         if (!ShapeUtilities.equal(this.legendItemShape, that.legendItemShape)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.seriesPaint, that.seriesPaint)) {
-            return false;
-        }
-        if (!this.seriesPaintList.equals(that.seriesPaintList)) {
+        if (!PaintUtilities.equalMaps(this.seriesPaintMap, 
+                that.seriesPaintMap)) {
             return false;
         }
         if (!PaintUtilities.equal(this.baseSeriesPaint, that.baseSeriesPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.seriesOutlinePaint,
-                that.seriesOutlinePaint)) {
-            return false;
-        }
-        if (!this.seriesOutlinePaintList.equals(that.seriesOutlinePaintList)) {
+        if (!PaintUtilities.equalMaps(this.seriesOutlinePaintMap, 
+                that.seriesOutlinePaintMap)) {
             return false;
         }
         if (!PaintUtilities.equal(this.baseSeriesOutlinePaint,
                 that.baseSeriesOutlinePaint)) {
-            return false;
-        }
-        if (!ObjectUtilities.equal(this.seriesOutlineStroke,
-                that.seriesOutlineStroke)) {
             return false;
         }
         if (!this.seriesOutlineStrokeList.equals(
@@ -1611,9 +1502,9 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     public Object clone() throws CloneNotSupportedException {
         SpiderWebPlot clone = (SpiderWebPlot) super.clone();
         clone.legendItemShape = ShapeUtilities.clone(this.legendItemShape);
-        clone.seriesPaintList = (PaintList) this.seriesPaintList.clone();
-        clone.seriesOutlinePaintList
-                = (PaintList) this.seriesOutlinePaintList.clone();
+        clone.seriesPaintMap = new HashMap<Integer, Paint>(this.seriesPaintMap);
+        clone.seriesOutlinePaintMap 
+                = new HashMap<Integer, Paint>(this.seriesOutlinePaintMap);
         clone.seriesOutlineStrokeList
                 = (StrokeList) this.seriesOutlineStrokeList.clone();
         return clone;
@@ -1628,13 +1519,11 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-
         SerialUtilities.writeShape(this.legendItemShape, stream);
-        SerialUtilities.writePaint(this.seriesPaint, stream);
         SerialUtilities.writePaint(this.baseSeriesPaint, stream);
-        SerialUtilities.writePaint(this.seriesOutlinePaint, stream);
+        SerialUtilities.writePaintMap(this.seriesPaintMap, stream);
         SerialUtilities.writePaint(this.baseSeriesOutlinePaint, stream);
-        SerialUtilities.writeStroke(this.seriesOutlineStroke, stream);
+        SerialUtilities.writePaintMap(this.seriesOutlinePaintMap, stream);
         SerialUtilities.writeStroke(this.baseSeriesOutlineStroke, stream);
         SerialUtilities.writePaint(this.labelPaint, stream);
         SerialUtilities.writePaint(this.axisLinePaint, stream);
@@ -1652,13 +1541,11 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     private void readObject(ObjectInputStream stream) throws IOException,
             ClassNotFoundException {
         stream.defaultReadObject();
-
         this.legendItemShape = SerialUtilities.readShape(stream);
-        this.seriesPaint = SerialUtilities.readPaint(stream);
         this.baseSeriesPaint = SerialUtilities.readPaint(stream);
-        this.seriesOutlinePaint = SerialUtilities.readPaint(stream);
+        this.seriesPaintMap = SerialUtilities.readPaintMap(stream);
         this.baseSeriesOutlinePaint = SerialUtilities.readPaint(stream);
-        this.seriesOutlineStroke = SerialUtilities.readStroke(stream);
+        this.seriesOutlinePaintMap = SerialUtilities.readPaintMap(stream);
         this.baseSeriesOutlineStroke = SerialUtilities.readStroke(stream);
         this.labelPaint = SerialUtilities.readPaint(stream);
         this.axisLinePaint = SerialUtilities.readPaint(stream);

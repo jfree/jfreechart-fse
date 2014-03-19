@@ -1,10 +1,10 @@
-/* ========================================================================
- * JCommon : a free general purpose class library for the Java(tm) platform
- * ========================================================================
+/* ===========================================================
+ * JFreeChart : a free chart library for the Java(tm) platform
+ * ===========================================================
  *
- * (C) Copyright 2000-2005, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
- * Project Info:  http://www.jfree.org/jcommon/index.html
+ * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -21,18 +21,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Java is a trademark or registered trademark of Sun Microsystems, Inc.
- * in the United States and other countries.]
- *
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * Other names may be trademarks of their respective owners.]
+ * 
  * --------------------
  * SerialUtilities.java
  * --------------------
- * (C) Copyright 2000-2005, by Object Refinery Limited.
+ * (C) Copyright 2000-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Arik Levin;
- *
- * $Id: SerialUtilities.java,v 1.15 2011/10/11 12:45:02 matinh Exp $
  *
  * Changes
  * -------
@@ -74,8 +72,6 @@ import java.util.Map;
 
 /**
  * A class containing useful utility methods relating to serialization.
- *
- * @author David Gilbert
  */
 public class SerialUtilities {
 
@@ -93,19 +89,7 @@ public class SerialUtilities {
      *
      * @return A boolean.
      */
-    public static boolean isSerializable(final Class c) {
-        /**
-        final Class[] interfaces = c.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (interfaces[i].equals(Serializable.class)) {
-                return true;
-            }
-        }
-        Class cc = c.getSuperclass();
-        if (cc != null) {
-            return isSerializable(cc);
-        }
-         */
+    public static boolean isSerializable(Class c) {
         return (Serializable.class.isAssignableFrom(c));
     }
 
@@ -120,27 +104,26 @@ public class SerialUtilities {
      * @throws IOException  if there is an I/O problem.
      * @throws ClassNotFoundException  if there is a problem loading a class.
      */
-    public static Paint readPaint(final ObjectInputStream stream)
+    public static Paint readPaint(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
 
         if (stream == null) {
             throw new IllegalArgumentException("Null 'stream' argument.");
         }
         Paint result = null;
-        final boolean isNull = stream.readBoolean();
+        boolean isNull = stream.readBoolean();
         if (!isNull) {
-            final Class c = (Class) stream.readObject();
+            Class c = (Class) stream.readObject();
             if (isSerializable(c)) {
                 result = (Paint) stream.readObject();
-            }
-            else if (c.equals(GradientPaint.class)) {
-                final float x1 = stream.readFloat();
-                final float y1 = stream.readFloat();
-                final Color c1 = (Color) stream.readObject();
-                final float x2 = stream.readFloat();
-                final float y2 = stream.readFloat();
-                final Color c2 = (Color) stream.readObject();
-                final boolean isCyclic = stream.readBoolean();
+            } else if (c.equals(GradientPaint.class)) {
+                float x1 = stream.readFloat();
+                float y1 = stream.readFloat();
+                Color c1 = (Color) stream.readObject();
+                float x2 = stream.readFloat();
+                float y2 = stream.readFloat();
+                Color c2 = (Color) stream.readObject();
+                boolean isCyclic = stream.readBoolean();
                 result = new GradientPaint(x1, y1, c1, x2, y2, c2, isCyclic);
             }
         }
@@ -156,8 +139,7 @@ public class SerialUtilities {
      *
      * @throws IOException if there is an I/O error.
      */
-    public static void writePaint(final Paint paint,
-                                  final ObjectOutputStream stream)
+    public static void writePaint(Paint paint, ObjectOutputStream stream)
         throws IOException {
 
         if (stream == null) {
@@ -168,9 +150,8 @@ public class SerialUtilities {
             stream.writeObject(paint.getClass());
             if (paint instanceof Serializable) {
                 stream.writeObject(paint);
-            }
-            else if (paint instanceof GradientPaint) {
-                final GradientPaint gp = (GradientPaint) paint;
+            } else if (paint instanceof GradientPaint) {
+                GradientPaint gp = (GradientPaint) paint;
                 stream.writeFloat((float) gp.getPoint1().getX());
                 stream.writeFloat((float) gp.getPoint1().getY());
                 stream.writeObject(gp.getColor1());
@@ -179,11 +160,9 @@ public class SerialUtilities {
                 stream.writeObject(gp.getColor2());
                 stream.writeBoolean(gp.isCyclic());
             }
-        }
-        else {
+        } else {
             stream.writeBoolean(true);
         }
-
     }
 
     /**
@@ -237,8 +216,7 @@ public class SerialUtilities {
      *
      * @throws IOException if there is an I/O error.
      */
-    public static void writeStroke(final Stroke stroke,
-                                   final ObjectOutputStream stream)
+    public static void writeStroke(Stroke stroke, ObjectOutputStream stream)
         throws IOException {
 
         if (stream == null) {
@@ -255,13 +233,11 @@ public class SerialUtilities {
                 stream.writeFloat(s.getMiterLimit());
                 stream.writeObject(s.getDashArray());
                 stream.writeFloat(s.getDashPhase());
-            }
-            else {
+            } else {
                 stream.writeObject(stroke.getClass());
                 stream.writeObject(stroke);
             }
-        }
-        else {
+        } else {
             stream.writeBoolean(true);
         }
     }
@@ -280,22 +256,22 @@ public class SerialUtilities {
      * 
      * @since 1.0.17
      */
-    public static Composite readComposite(final ObjectInputStream stream)
+    public static Composite readComposite(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
 
         if (stream == null) {
             throw new IllegalArgumentException("Null 'stream' argument.");
         }
         Composite result = null;
-        final boolean isNull = stream.readBoolean();
+        boolean isNull = stream.readBoolean();
         if (!isNull) {
-            final Class c = (Class) stream.readObject();
+            Class c = (Class) stream.readObject();
             if (isSerializable(c)) {
                 result = (Composite) stream.readObject();
             }
             else if (c.equals(AlphaComposite.class)) {
-                final int rule = stream.readInt();
-                final float alpha = stream.readFloat();
+                int rule = stream.readInt();
+                float alpha = stream.readFloat();
                 result = AlphaComposite.getInstance(rule, alpha);
             }
         }
@@ -313,8 +289,8 @@ public class SerialUtilities {
      * 
      * @since 1.0.17
      */
-    public static void writeComposite(final Composite composite,
-                                      final ObjectOutputStream stream)
+    public static void writeComposite(Composite composite,
+                                      ObjectOutputStream stream)
         throws IOException {
 
         if (stream == null) {
@@ -327,12 +303,11 @@ public class SerialUtilities {
                 stream.writeObject(composite);
             }
             else if (composite instanceof AlphaComposite) {
-                final AlphaComposite ac = (AlphaComposite) composite;
+                AlphaComposite ac = (AlphaComposite) composite;
                 stream.writeInt(ac.getRule());
                 stream.writeFloat(ac.getAlpha());
             }
-        }
-        else {
+        } else {
             stream.writeBoolean(true);
         }
     }
@@ -348,53 +323,53 @@ public class SerialUtilities {
      * @throws IOException  if there is an I/O problem.
      * @throws ClassNotFoundException  if there is a problem loading a class.
      */
-    public static Shape readShape(final ObjectInputStream stream)
+    public static Shape readShape(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
 
         if (stream == null) {
             throw new IllegalArgumentException("Null 'stream' argument.");
         }
         Shape result = null;
-        final boolean isNull = stream.readBoolean();
+        boolean isNull = stream.readBoolean();
         if (!isNull) {
-            final Class c = (Class) stream.readObject();
+            Class c = (Class) stream.readObject();
             if (c.equals(Line2D.class)) {
-                final double x1 = stream.readDouble();
-                final double y1 = stream.readDouble();
-                final double x2 = stream.readDouble();
-                final double y2 = stream.readDouble();
+                double x1 = stream.readDouble();
+                double y1 = stream.readDouble();
+                double x2 = stream.readDouble();
+                double y2 = stream.readDouble();
                 result = new Line2D.Double(x1, y1, x2, y2);
             }
             else if (c.equals(Rectangle2D.class)) {
-                final double x = stream.readDouble();
-                final double y = stream.readDouble();
-                final double w = stream.readDouble();
-                final double h = stream.readDouble();
+                double x = stream.readDouble();
+                double y = stream.readDouble();
+                double w = stream.readDouble();
+                double h = stream.readDouble();
                 result = new Rectangle2D.Double(x, y, w, h);
             }
             else if (c.equals(Ellipse2D.class)) {
-                final double x = stream.readDouble();
-                final double y = stream.readDouble();
-                final double w = stream.readDouble();
-                final double h = stream.readDouble();
+                double x = stream.readDouble();
+                double y = stream.readDouble();
+                double w = stream.readDouble();
+                double h = stream.readDouble();
                 result = new Ellipse2D.Double(x, y, w, h);
             }
             else if (c.equals(Arc2D.class)) {
-                final double x = stream.readDouble();
-                final double y = stream.readDouble();
-                final double w = stream.readDouble();
-                final double h = stream.readDouble();
-                final double as = stream.readDouble(); // Angle Start
-                final double ae = stream.readDouble(); // Angle Extent
-                final int at = stream.readInt();       // Arc type
+                double x = stream.readDouble();
+                double y = stream.readDouble();
+                double w = stream.readDouble();
+                double h = stream.readDouble();
+                double as = stream.readDouble(); // Angle Start
+                double ae = stream.readDouble(); // Angle Extent
+                int at = stream.readInt();       // Arc type
                 result = new Arc2D.Double(x, y, w, h, as, ae, at);
             }
             else if (c.equals(GeneralPath.class)) {
-                final GeneralPath gp = new GeneralPath();
-                final float[] args = new float[6];
+                GeneralPath gp = new GeneralPath();
+                float[] args = new float[6];
                 boolean hasNext = stream.readBoolean();
                 while (!hasNext) {
-                    final int type = stream.readInt();
+                    int type = stream.readInt();
                     for (int i = 0; i < 6; i++) {
                         args[i] = stream.readFloat();
                     }
@@ -440,8 +415,7 @@ public class SerialUtilities {
      *
      * @throws IOException if there is an I/O error.
      */
-    public static void writeShape(final Shape shape,
-                                  final ObjectOutputStream stream)
+    public static void writeShape(Shape shape, ObjectOutputStream stream)
         throws IOException {
 
         if (stream == null) {
@@ -450,7 +424,7 @@ public class SerialUtilities {
         if (shape != null) {
             stream.writeBoolean(false);
             if (shape instanceof Line2D) {
-                final Line2D line = (Line2D) shape;
+                Line2D line = (Line2D) shape;
                 stream.writeObject(Line2D.class);
                 stream.writeDouble(line.getX1());
                 stream.writeDouble(line.getY1());
@@ -458,7 +432,7 @@ public class SerialUtilities {
                 stream.writeDouble(line.getY2());
             }
             else if (shape instanceof Rectangle2D) {
-                final Rectangle2D rectangle = (Rectangle2D) shape;
+                Rectangle2D rectangle = (Rectangle2D) shape;
                 stream.writeObject(Rectangle2D.class);
                 stream.writeDouble(rectangle.getX());
                 stream.writeDouble(rectangle.getY());
@@ -466,7 +440,7 @@ public class SerialUtilities {
                 stream.writeDouble(rectangle.getHeight());
             }
             else if (shape instanceof Ellipse2D) {
-                final Ellipse2D ellipse = (Ellipse2D) shape;
+                Ellipse2D ellipse = (Ellipse2D) shape;
                 stream.writeObject(Ellipse2D.class);
                 stream.writeDouble(ellipse.getX());
                 stream.writeDouble(ellipse.getY());
@@ -474,7 +448,7 @@ public class SerialUtilities {
                 stream.writeDouble(ellipse.getHeight());
             }
             else if (shape instanceof Arc2D) {
-                final Arc2D arc = (Arc2D) shape;
+                Arc2D arc = (Arc2D) shape;
                 stream.writeObject(Arc2D.class);
                 stream.writeDouble(arc.getX());
                 stream.writeDouble(arc.getY());
@@ -486,11 +460,11 @@ public class SerialUtilities {
             }
             else if (shape instanceof GeneralPath) {
                 stream.writeObject(GeneralPath.class);
-                final PathIterator pi = shape.getPathIterator(null);
-                final float[] args = new float[6];
+                PathIterator pi = shape.getPathIterator(null);
+                float[] args = new float[6];
                 stream.writeBoolean(pi.isDone());
                 while (!pi.isDone()) {
-                    final int type = pi.currentSegment(args);
+                    int type = pi.currentSegment(args);
                     stream.writeInt(type);
                     // TODO: could write this to only stream the values
                     // required for the segment type
@@ -522,21 +496,20 @@ public class SerialUtilities {
      *
      * @throws IOException  if there is an I/O problem.
      */
-    public static Point2D readPoint2D(final ObjectInputStream stream)
+    public static Point2D readPoint2D(ObjectInputStream stream)
         throws IOException {
 
         if (stream == null) {
             throw new IllegalArgumentException("Null 'stream' argument.");
         }
         Point2D result = null;
-        final boolean isNull = stream.readBoolean();
+        boolean isNull = stream.readBoolean();
         if (!isNull) {
-            final double x = stream.readDouble();
-            final double y = stream.readDouble();
+            double x = stream.readDouble();
+            double y = stream.readDouble();
             result = new Point2D.Double(x, y);
         }
         return result;
-
     }
 
     /**
@@ -547,8 +520,7 @@ public class SerialUtilities {
      *
      * @throws IOException if there is an I/O error.
      */
-    public static void writePoint2D(final Point2D p,
-                                    final ObjectOutputStream stream)
+    public static void writePoint2D(Point2D p, ObjectOutputStream stream)
         throws IOException {
 
         if (stream == null) {
@@ -558,8 +530,7 @@ public class SerialUtilities {
             stream.writeBoolean(false);
             stream.writeDouble(p.getX());
             stream.writeDouble(p.getY());
-        }
-        else {
+        } else {
             stream.writeBoolean(true);
         }
     }
@@ -584,7 +555,7 @@ public class SerialUtilities {
             throw new IllegalArgumentException("Null 'stream' argument.");
         }
         AttributedString result = null;
-        final boolean isNull = stream.readBoolean();
+        boolean isNull = stream.readBoolean();
         if (!isNull) {
             // read string and attributes then create result
             String plainStr = (String) stream.readObject();
@@ -658,5 +629,44 @@ public class SerialUtilities {
 
     }
 
+    /**
+     * Reads a map of <code>Paint</code> instances that was previously written 
+     * by the {@link #writePaintMap(java.util.Map, java.io.ObjectOutputStream)}
+     * method.
+     * 
+     * @param in  the input stream (<code>null</code> not permitted).
+     * 
+     * @return A map.
+     * @throws IOException
+     * @throws ClassNotFoundException  
+     */
+    public static Map<Integer, Paint> readPaintMap(ObjectInputStream in) 
+            throws IOException, ClassNotFoundException {
+        Map<Integer, Paint> result = new HashMap<Integer, Paint>();
+        int keyCount = in.readInt();
+        for (int i = 0; i < keyCount; i++) {
+            Integer key = (Integer) in.readObject();
+            Paint paint = SerialUtilities.readPaint(in);
+            result.put(key, paint);
+        }  
+        return result;
+    }
+    
+    /**
+     * Writes a map to the output stream.
+     * 
+     * @param map  the map.
+     * @param out  the output stream.
+     * @throws IOException  
+     */
+    public static void writePaintMap(Map<Integer, Paint> map, 
+            ObjectOutputStream out) throws IOException {
+        out.writeInt(map.size());
+        for (Integer key : map.keySet()) {
+            out.writeObject(key);
+            Paint paint = map.get(key);
+            SerialUtilities.writePaint(paint, out);
+        }
+    }
 }
 

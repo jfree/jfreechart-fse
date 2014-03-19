@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------
  * HashUtilities.java
  * ------------------
- * (C) Copyright 2006-2012, by Object Refinery Limited;
+ * (C) Copyright 2006-2014, by Object Refinery Limited;
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -51,7 +51,6 @@ import java.awt.Paint;
 import java.awt.Stroke;
 
 import org.jfree.chart.util.BooleanList;
-import org.jfree.chart.util.PaintList;
 import org.jfree.chart.util.StrokeList;
 
 /**
@@ -266,43 +265,6 @@ public class HashUtilities {
                 if (size > 2) {
                     result = HashUtilities.hashCode(result, 
                             list.getBoolean(size / 2));
-                }
-            }
-        }
-        return 37 * pre + result;
-    }
-
-    /**
-     * Computes a hash code for a {@link PaintList}.  In the latest version
-     * of JCommon, the {@link PaintList} class should implement the hashCode()
-     * method correctly, but we compute it here anyway so that we can work with 
-     * older versions of JCommon (back to 1.0.0).
-     * 
-     * @param pre  the seed value.
-     * @param list  the list (<code>null</code> permitted).
-     * 
-     * @return The hash code.
-     * 
-     * @since 1.0.9
-     */
-    public static int hashCode(int pre, PaintList list) {
-        if (list == null) {
-            return pre;
-        }
-        int result = 127;
-        int size = list.size();
-        result = HashUtilities.hashCode(result, size);
-        
-        // for efficiency, we just use the first, last and middle items to
-        // compute a hashCode...
-        if (size > 0) {
-            result = HashUtilities.hashCode(result, list.getPaint(0));
-            if (size > 1) {
-                result = HashUtilities.hashCode(result, 
-                        list.getPaint(size - 1));
-                if (size > 2) {
-                    result = HashUtilities.hashCode(result, 
-                            list.getPaint(size / 2));
                 }
             }
         }
