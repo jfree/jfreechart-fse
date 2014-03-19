@@ -27,7 +27,7 @@
  * ---------
  * Tick.java
  * ---------
- * (C) Copyright 2000-2012, by Object Refinery Limited.
+ * (C) Copyright 2000-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Nicolas Brodu;
@@ -75,7 +75,8 @@ public abstract class Tick implements Serializable, Cloneable {
     /**
      * Creates a new tick.
      *
-     * @param text  the formatted version of the tick value.
+     * @param text  the formatted version of the tick value (<code>null</code> 
+     *     permitted).
      * @param textAnchor  the text anchor (<code>null</code> not permitted).
      * @param rotationAnchor  the rotation anchor (<code>null</code> not
      *                        permitted).

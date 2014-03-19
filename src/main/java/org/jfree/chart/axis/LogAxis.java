@@ -559,8 +559,7 @@ public class LogAxis extends ValueAxis {
         List<ValueTick> result = new java.util.ArrayList<ValueTick>();
         if (RectangleEdge.isTopOrBottom(edge)) {
             result = refreshTicksHorizontal(g2, dataArea, edge);
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             result = refreshTicksVertical(g2, dataArea, edge);
         }
         return result;
@@ -575,8 +574,8 @@ public class LogAxis extends ValueAxis {
      *
      * @return A list of ticks.
      */
-    protected List<ValueTick> refreshTicksHorizontal(Graphics2D g2, Rectangle2D dataArea,
-            RectangleEdge edge) {
+    protected List<ValueTick> refreshTicksHorizontal(Graphics2D g2, 
+            Rectangle2D dataArea, RectangleEdge edge) {
 
         Range range = getRange();
         List<ValueTick> ticks = new ArrayList<ValueTick>();
@@ -585,15 +584,13 @@ public class LogAxis extends ValueAxis {
         TextAnchor textAnchor;
         if (edge == RectangleEdge.TOP) {
             textAnchor = TextAnchor.BOTTOM_CENTER;
-        }
-        else {
+        } else {
             textAnchor = TextAnchor.TOP_CENTER;
         }
 
         if (isAutoTickUnitSelection()) {
             selectAutoTickUnit(g2, dataArea, edge);
         }
-        int minorTickCount = this.tickUnit.getMinorTickCount();
         double unit = getTickUnit().getSize();
         double index = Math.ceil(calculateLog(getRange().getLowerBound()) 
                 / unit);
@@ -611,8 +608,9 @@ public class LogAxis extends ValueAxis {
             // add minor ticks (for gridlines)
             double next = Math.pow(this.base, current
                     + this.tickUnit.getSize());
-            for (int i = 1; i < minorTickCount; i++) {
-                double minorV = v + i * ((next - v) / minorTickCount);
+            int minorTickIntervals = this.tickUnit.getMinorTickIntervals();
+            for (int i = 1; i < minorTickIntervals; i++) {
+                double minorV = v + i * ((next - v) / minorTickIntervals);
                 if (range.contains(minorV)) {
                     ticks.add(new LogTick(TickType.MINOR, minorV, null,
                             textAnchor));
@@ -633,8 +631,8 @@ public class LogAxis extends ValueAxis {
      *
      * @return A list of ticks.
      */
-    protected List<ValueTick> refreshTicksVertical(Graphics2D g2, Rectangle2D dataArea,
-            RectangleEdge edge) {
+    protected List<ValueTick> refreshTicksVertical(Graphics2D g2, 
+            Rectangle2D dataArea, RectangleEdge edge) {
 
         Range range = getRange();
         List<ValueTick> ticks = new ArrayList<ValueTick>();
@@ -643,15 +641,13 @@ public class LogAxis extends ValueAxis {
         TextAnchor textAnchor;
         if (edge == RectangleEdge.RIGHT) {
             textAnchor = TextAnchor.CENTER_LEFT;
-        }
-        else {
+        } else {
             textAnchor = TextAnchor.CENTER_RIGHT;
         }
 
         if (isAutoTickUnitSelection()) {
             selectAutoTickUnit(g2, dataArea, edge);
         }
-        int minorTickCount = this.tickUnit.getMinorTickCount();
         double unit = getTickUnit().getSize();
         double index = Math.ceil(calculateLog(getRange().getLowerBound()) 
                 / unit);
@@ -669,8 +665,9 @@ public class LogAxis extends ValueAxis {
             // add minor ticks (for gridlines)
             double next = Math.pow(this.base, current
                     + this.tickUnit.getSize());
-            for (int i = 1; i < minorTickCount; i++) {
-                double minorV = v + i * ((next - v) / minorTickCount);
+            int minorTickIntervals = this.tickUnit.getMinorTickIntervals();
+            for (int i = 1; i < minorTickIntervals; i++) {
+                double minorV = v + i * ((next - v) / minorTickIntervals);
                 if (range.contains(minorV)) {
                     ticks.add(new LogTick(TickType.MINOR, minorV, null,
                             textAnchor));
@@ -697,8 +694,7 @@ public class LogAxis extends ValueAxis {
             RectangleEdge edge) {
         if (RectangleEdge.isTopOrBottom(edge)) {
             selectHorizontalAutoTickUnit(g2, dataArea, edge);
-        }
-        else if (RectangleEdge.isLeftOrRight(edge)) {
+        } else if (RectangleEdge.isLeftOrRight(edge)) {
             selectVerticalAutoTickUnit(g2, dataArea, edge);
         }
     }
@@ -884,7 +880,7 @@ public class LogAxis extends ValueAxis {
      * @since 1.0.7
      */
     protected double estimateMaximumTickLabelWidth(Graphics2D g2,
-                                                   TickUnit unit) {
+            TickUnit unit) {
 
         RectangleInsets tickLabelInsets = getTickLabelInsets();
         double result = tickLabelInsets.getLeft() + tickLabelInsets.getRight();
@@ -895,8 +891,7 @@ public class LogAxis extends ValueAxis {
             FontRenderContext frc = g2.getFontRenderContext();
             LineMetrics lm = getTickLabelFont().getLineMetrics("0", frc);
             result += lm.getHeight();
-        }
-        else {
+        } else {
             // look at lower and upper bounds...
             Range range = getRange();
             double lower = range.getLowerBound();
@@ -930,8 +925,7 @@ public class LogAxis extends ValueAxis {
             double logB = log1 + length * (1 - lowerPercent);
             adjusted = new Range(calculateValueNoINF(logA), 
                     calculateValueNoINF(logB));
-        }
-        else {
+        } else {
             double logA = log1 + length * lowerPercent;
             double logB = log1 + length * upperPercent;
             adjusted = new Range(calculateValueNoINF(logA), 
@@ -1024,8 +1018,7 @@ public class LogAxis extends ValueAxis {
             if (adjusted.getLength() > 0.0) {
                 setRange(adjusted);
             }
-        }
-        else {
+        } else {
             setAutoRange(true);
         }
     }

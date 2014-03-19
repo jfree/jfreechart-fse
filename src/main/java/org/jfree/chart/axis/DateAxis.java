@@ -1575,13 +1575,10 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             long lowestTickTime = tickDate.getTime();
             long distance = unit.addToDate(tickDate, this.timeZone).getTime()
                     - lowestTickTime;
-            int minorTickSpaces = getMinorTickCount();
-            if (minorTickSpaces <= 0) {
-                minorTickSpaces = unit.getMinorTickCount();
-            }
-            for (int minorTick = 1; minorTick < minorTickSpaces; minorTick++) {
-                long minorTickTime = lowestTickTime - distance
-                        * minorTick / minorTickSpaces;
+            int minorTickIntervals = unit.getMinorTickIntervals();
+            for (int mt = 1; mt < minorTickIntervals; mt++) {
+                long minorTickTime = lowestTickTime 
+                        - distance * mt / minorTickIntervals;
                 if (minorTickTime > 0 && getRange().contains(minorTickTime)
                         && (!isHiddenValue(minorTickTime))) {
                     result.add(new DateTick(TickType.MINOR,
@@ -1630,27 +1627,22 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                 long currentTickTime = tickDate.getTime();
                 tickDate = unit.addToDate(tickDate, this.timeZone);
                 long nextTickTime = tickDate.getTime();
-                for (int minorTick = 1; minorTick < minorTickSpaces;
-                        minorTick++) {
+                for (int mt = 1; mt < minorTickIntervals; mt++) {
                     long minorTickTime = currentTickTime
-                            + (nextTickTime - currentTickTime)
-                            * minorTick / minorTickSpaces;
+                            + (nextTickTime - currentTickTime) 
+                            * mt / minorTickIntervals;
                     if (getRange().contains(minorTickTime)
                             && (!isHiddenValue(minorTickTime))) {
                         result.add(new DateTick(TickType.MINOR,
                                 new Date(minorTickTime), "",
-                                TextAnchor.TOP_CENTER, TextAnchor.CENTER,
-                                0.0));
+                                TextAnchor.TOP_CENTER, TextAnchor.CENTER, 0.0));
                     }
                 }
-
-            }
-            else {
+            } else {
                 tickDate = unit.rollDate(tickDate, this.timeZone);
                 hasRolled = true;
                 continue;
             }
-
         }
         return result;
 
@@ -1692,13 +1684,10 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             long lowestTickTime = tickDate.getTime();
             long distance = unit.addToDate(tickDate, this.timeZone).getTime()
                     - lowestTickTime;
-            int minorTickSpaces = getMinorTickCount();
-            if (minorTickSpaces <= 0) {
-                minorTickSpaces = unit.getMinorTickCount();
-            }
-            for (int minorTick = 1; minorTick < minorTickSpaces; minorTick++) {
-                long minorTickTime = lowestTickTime - distance
-                        * minorTick / minorTickSpaces;
+            int minorTickIntervals = unit.getMinorTickIntervals();
+            for (int mt = 1; mt < minorTickIntervals; mt++) {
+                long minorTickTime = lowestTickTime 
+                        - distance * mt / minorTickIntervals;
                 if (minorTickTime > 0 && getRange().contains(minorTickTime)
                         && (!isHiddenValue(minorTickTime))) {
                     result.add(new DateTick(TickType.MINOR,
@@ -1712,8 +1701,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                 DateFormat formatter = getDateFormatOverride();
                 if (formatter != null) {
                     tickLabel = formatter.format(tickDate);
-                }
-                else {
+                } else {
                     tickLabel = this.tickUnit.dateToString(tickDate);
                 }
                 TextAnchor anchor, rotationAnchor;
@@ -1723,8 +1711,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                     rotationAnchor = TextAnchor.BOTTOM_CENTER;
                     if (edge == RectangleEdge.LEFT) {
                         angle = -Math.PI / 2.0;
-                    }
-                    else {
+                    } else {
                         angle = Math.PI / 2.0;
                     }
                 }
@@ -1746,11 +1733,10 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                 long currentTickTime = tickDate.getTime();
                 tickDate = unit.addToDate(tickDate, this.timeZone);
                 long nextTickTime = tickDate.getTime();
-                for (int minorTick = 1; minorTick < minorTickSpaces;
-                        minorTick++) {
+                for (int mt = 1; mt < minorTickIntervals; mt++) {
                     long minorTickTime = currentTickTime
                             + (nextTickTime - currentTickTime)
-                            * minorTick / minorTickSpaces;
+                            * mt / minorTickIntervals;
                     if (getRange().contains(minorTickTime)
                             && (!isHiddenValue(minorTickTime))) {
                         result.add(new DateTick(TickType.MINOR,
@@ -1759,8 +1745,7 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
                                 0.0));
                     }
                 }
-            }
-            else {
+            } else {
                 tickDate = unit.rollDate(tickDate, this.timeZone);
                 hasRolled = true;
             }

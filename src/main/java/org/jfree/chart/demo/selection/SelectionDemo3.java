@@ -127,13 +127,11 @@ public class SelectionDemo3 extends ApplicationFrame
         domainAxis.setTickMarkInsideLength(2.0f);
         domainAxis.setTickMarkOutsideLength(2.0f);
 
-        domainAxis.setMinorTickCount(2);
         domainAxis.setMinorTickMarksVisible(true);
 
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setTickMarkInsideLength(2.0f);
         rangeAxis.setTickMarkOutsideLength(2.0f);
-        rangeAxis.setMinorTickCount(2);
         rangeAxis.setMinorTickMarksVisible(true);
         
         //add selection specific rendering

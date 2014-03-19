@@ -252,13 +252,6 @@ public abstract class ValueAxis extends Axis
     /** An index into an array of standard tick values. */
     private int autoTickIndex;
 
-    /**
-     * The number of minor ticks per major tick unit.  This is an override
-     * field, if the value is > 0 it is used, otherwise the axis refers to the
-     * minorTickCount in the current tickUnit.
-     */
-    private int minorTickCount;
-
     /** A flag indicating whether or not tick labels are rotated to vertical. */
     private boolean verticalTickLabels;
 
@@ -270,9 +263,7 @@ public abstract class ValueAxis extends Axis
      *                           (<code>null</code> permitted).
      */
     protected ValueAxis(String label, TickUnitSource standardTickUnits) {
-
         super(label);
-
         this.positiveArrowVisible = false;
         this.negativeArrowVisible = false;
 
@@ -320,8 +311,6 @@ public abstract class ValueAxis extends Axis
         this.leftArrow = p4;
 
         this.verticalTickLabels = false;
-        this.minorTickCount = 0;
-
     }
 
     /**
@@ -1433,34 +1422,6 @@ public abstract class ValueAxis extends Axis
     }
 
     /**
-     * Returns the number of minor tick marks to display.
-     *
-     * @return The number of minor tick marks to display.
-     *
-     * @see #setMinorTickCount(int)
-     *
-     * @since 1.0.12
-     */
-    public int getMinorTickCount() {
-        return this.minorTickCount;
-    }
-
-    /**
-     * Sets the number of minor tick marks to display, and sends an
-     * {@link AxisChangeEvent} to all registered listeners.
-     *
-     * @param count  the count.
-     *
-     * @see #getMinorTickCount()
-     *
-     * @since 1.0.12
-     */
-    public void setMinorTickCount(int count) {
-        this.minorTickCount = count;
-        fireChangeEvent();
-    }
-
-    /**
      * Converts a data value to a coordinate in Java2D space, assuming that the
      * axis runs along one edge of the specified dataArea.
      * <p>
@@ -1713,9 +1674,6 @@ public abstract class ValueAxis extends Axis
             return false;
         }
         if (this.verticalTickLabels != that.verticalTickLabels) {
-            return false;
-        }
-        if (this.minorTickCount != that.minorTickCount) {
             return false;
         }
         return super.equals(obj);
