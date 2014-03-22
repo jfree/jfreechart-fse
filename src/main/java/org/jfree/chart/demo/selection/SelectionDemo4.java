@@ -43,8 +43,8 @@ import org.jfree.data.general.Dataset;
 import org.jfree.data.general.SelectionChangeEvent;
 import org.jfree.data.general.SelectionChangeListener;
 import org.jfree.data.statistics.HistogramDataset;
-import org.jfree.data.statistics.SimpleHistogramBin;
-import org.jfree.data.statistics.SimpleHistogramDataset;
+import org.jfree.data.statistics.HistogramBin;
+import org.jfree.data.statistics.HistogramDataset;
 import org.jfree.data.xy.IntervalXYDataset;
 
 /**
@@ -53,7 +53,7 @@ import org.jfree.data.xy.IntervalXYDataset;
 public class SelectionDemo4 extends ApplicationFrame implements
           SelectionChangeListener<XYCursor> {
 
-    private SimpleHistogramDataset dataset;
+    private HistogramDataset dataset;
     private DefaultTableModel model;
     private JTable table;
 
@@ -69,7 +69,7 @@ public class SelectionDemo4 extends ApplicationFrame implements
 
         JFreeChart chart = chartPanel.getChart();
         XYPlot plot = (XYPlot) chart.getPlot();
-        this.dataset = (SimpleHistogramDataset) plot.getDataset();
+        this.dataset = (HistogramDataset) plot.getDataset();
         JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         split.add(chartPanel);
           
@@ -114,11 +114,11 @@ public class SelectionDemo4 extends ApplicationFrame implements
      * @return the dataset.
      */
     private static IntervalXYDataset createDataset() {
-        SimpleHistogramDataset dataset = new SimpleHistogramDataset("H1");
+        HistogramDataset dataset = new HistogramDataset("H1");
         double lower = 0.0;
         for (int i = 0; i < 100; i++) {
             double upper = (i + 1) / 10.0;
-            SimpleHistogramBin bin = new SimpleHistogramBin(lower, upper, true,
+            HistogramBin bin = new HistogramBin(lower, upper, true,
                        false);
             dataset.addBin(bin);
             lower = upper;

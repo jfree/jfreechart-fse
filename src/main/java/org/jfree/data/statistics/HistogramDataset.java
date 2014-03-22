@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -24,10 +24,10 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
- * ---------------------------
- * SimpleHistogramDataset.java
- * ---------------------------
- * (C) Copyright 2005-2012, by Object Refinery Limited and Contributors.
+ * ---------------------
+ * HistogramDataset.java
+ * ---------------------
+ * (C) Copyright 2005-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Sergei Ivanov;
@@ -49,6 +49,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.DomainOrder;
 import org.jfree.data.general.DatasetChangeEvent;
@@ -57,12 +58,10 @@ import org.jfree.data.xy.IntervalXYDataset;
 
 /**
  * A dataset used for creating simple histograms with custom defined bins.
- *
- * @see HistogramDataset
  */
-public class SimpleHistogramDataset extends AbstractIntervalXYDataset
+public class HistogramDataset extends AbstractIntervalXYDataset
         implements IntervalXYDataset, Cloneable, PublicCloneable,
-            Serializable {
+        Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 7997996479768018443L;
@@ -71,7 +70,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
     private Comparable key;
 
     /** The bins. */
-    private List<SimpleHistogramBin> bins;
+    private List<HistogramBin> bins;
 
     /**
      * A flag that controls whether or not the bin count is divided by the
@@ -85,12 +84,10 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      *
      * @param key  the series key (<code>null</code> not permitted).
      */
-    public SimpleHistogramDataset(Comparable key) {
-        if (key == null) {
-            throw new IllegalArgumentException("Null 'key' argument.");
-        }
+    public HistogramDataset(Comparable key) {
+        ParamChecks.nullNotPermitted(key, "key");
         this.key = key;
-        this.bins = new ArrayList<SimpleHistogramBin>();
+        this.bins = new ArrayList<HistogramBin>();
         this.adjustForBinSize = true;
     }
 
@@ -174,9 +171,9 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      *
      * @see #removeAllBins()
      */
-    public void addBin(SimpleHistogramBin bin) {
+    public void addBin(HistogramBin bin) {
         // check that the new bin doesn't overlap with any existing bin
-        for (SimpleHistogramBin existingBin : this.bins) {
+        for (HistogramBin existingBin : this.bins) {
             if (bin.overlapsWith(existingBin)) {
                 throw new RuntimeException("Overlapping bin");
             }
@@ -206,7 +203,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      */
     public void addObservation(double value, boolean notify) {
         boolean placed = false;
-        for (SimpleHistogramBin bin : this.bins) {
+        for (HistogramBin bin : this.bins) {
             if (bin.accepts(value)) {
                 bin.setItemCount(bin.getItemCount() + 1);
                 placed = true;
@@ -246,7 +243,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      * @see #removeAllBins()
      */
     public void clearObservations() {
-        for (SimpleHistogramBin bin : this.bins) {
+        for (HistogramBin bin : this.bins) {
             bin.setItemCount(0);
         }
         notifyListeners(new DatasetChangeEvent(this, this));
@@ -261,7 +258,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      * @see #addBin(SimpleHistogramBin)
      */
     public void removeAllBins() {
-        this.bins = new ArrayList<SimpleHistogramBin>();
+        this.bins = new ArrayList<HistogramBin>();
         notifyListeners(new DatasetChangeEvent(this, this));
     }
 
@@ -290,7 +287,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      */
     @Override
     public double getXValue(int series, int item) {
-        SimpleHistogramBin bin = this.bins.get(item);
+        HistogramBin bin = this.bins.get(item);
         return (bin.getLowerBound() + bin.getUpperBound()) / 2.0;
     }
 
@@ -319,7 +316,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      */
     @Override
     public double getYValue(int series, int item) {
-        SimpleHistogramBin bin = this.bins.get(item);
+        HistogramBin bin = this.bins.get(item);
         if (this.adjustForBinSize) {
             return bin.getItemCount()
                    / (bin.getUpperBound() - bin.getLowerBound());
@@ -353,7 +350,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      */
     @Override
     public double getStartXValue(int series, int item) {
-        SimpleHistogramBin bin = this.bins.get(item);
+        HistogramBin bin = this.bins.get(item);
         return bin.getLowerBound();
     }
 
@@ -381,7 +378,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      */
     @Override
     public double getEndXValue(int series, int item) {
-        SimpleHistogramBin bin = this.bins.get(item);
+        HistogramBin bin = this.bins.get(item);
         return bin.getUpperBound();
     }
 
@@ -451,10 +448,10 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof SimpleHistogramDataset)) {
+        if (!(obj instanceof HistogramDataset)) {
             return false;
         }
-        SimpleHistogramDataset that = (SimpleHistogramDataset) obj;
+        HistogramDataset that = (HistogramDataset) obj;
         if (!this.key.equals(that.key)) {
             return false;
         }
@@ -477,7 +474,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
-        SimpleHistogramDataset clone = (SimpleHistogramDataset) super.clone();
+        HistogramDataset clone = (HistogramDataset) super.clone();
         clone.bins = ObjectUtilities.deepClone(this.bins);
         return clone;
     }

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -24,10 +24,10 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
- * -----------------------
- * SimpleHistogramBin.java
- * -----------------------
- * (C) Copyright 2005-2012, by Object Refinery Limited and Contributors.
+ * -----------------
+ * HistogramBin.java
+ * -----------------
+ * (C) Copyright 2005-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -36,6 +36,7 @@
  * -------
  * 10-Jan-2005 : Version 1 (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 22-Mar-2014 : Renamed SimpleHistogramBin --> HistogramBin (DG);
  *
  */
 
@@ -46,9 +47,9 @@ import java.io.Serializable;
 import org.jfree.chart.util.PublicCloneable;
 
 /**
- * A bin for the {@link SimpleHistogramDataset}.
+ * A bin for the {@link HistogramDataset}.
  */
-public class SimpleHistogramBin implements Comparable,
+public class HistogramBin implements Comparable,
         Cloneable, PublicCloneable, Serializable {
 
     /** For serialization. */
@@ -81,7 +82,7 @@ public class SimpleHistogramBin implements Comparable,
      * @param lowerBound  the lower bound (inclusive).
      * @param upperBound  the upper bound (inclusive);
      */
-    public SimpleHistogramBin(double lowerBound, double upperBound) {
+    public HistogramBin(double lowerBound, double upperBound) {
         this(lowerBound, upperBound, true, true);
     }
 
@@ -93,7 +94,7 @@ public class SimpleHistogramBin implements Comparable,
      * @param includeLowerBound  include the lower bound?
      * @param includeUpperBound  include the upper bound?
      */
-    public SimpleHistogramBin(double lowerBound, double upperBound,
+    public HistogramBin(double lowerBound, double upperBound,
                               boolean includeLowerBound,
                               boolean includeUpperBound) {
         if (lowerBound >= upperBound) {
@@ -177,7 +178,7 @@ public class SimpleHistogramBin implements Comparable,
      *
      * @return A boolean.
      */
-    public boolean overlapsWith(SimpleHistogramBin bin) {
+    public boolean overlapsWith(HistogramBin bin) {
         if (this.upperBound < bin.lowerBound) {
             return false;
         }
@@ -204,10 +205,10 @@ public class SimpleHistogramBin implements Comparable,
      */
     @Override
     public int compareTo(Object obj) {
-        if (!(obj instanceof SimpleHistogramBin)) {
+        if (!(obj instanceof HistogramBin)) {
             return 0;
         }
-        SimpleHistogramBin bin = (SimpleHistogramBin) obj;
+        HistogramBin bin = (HistogramBin) obj;
         if (this.lowerBound < bin.lowerBound) {
             return -1;
         }
@@ -233,10 +234,10 @@ public class SimpleHistogramBin implements Comparable,
      */
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof SimpleHistogramBin)) {
+        if (!(obj instanceof HistogramBin)) {
             return false;
         }
-        SimpleHistogramBin that = (SimpleHistogramBin) obj;
+        HistogramBin that = (HistogramBin) obj;
         if (this.lowerBound != that.lowerBound) {
             return false;
         }
