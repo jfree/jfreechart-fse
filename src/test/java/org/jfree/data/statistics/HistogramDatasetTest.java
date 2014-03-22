@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,259 +21,109 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------
  * HistogramDatasetTests.java
  * --------------------------
- * (C) Copyright 2004-2009, by Object Refinery Limited.
+ * (C) Copyright 2005-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
  * Changes
  * -------
- * 01-Mar-2004 : Version 1 (DG);
- * 08-Jun-2005 : Added test for getSeriesKey(int) bug (DG);
- * 03-Aug-2006 : Added testAddSeries() and testBinBoundaries() method (DG);
- * 22-May-2008 : Added testAddSeries2() and enhanced testCloning() (DG);
- * 08-Dec-2009 : Added test2902842() for patch at SourceForge (DG);
+ * 10-Jan-2005 : Version 1 (DG);
+ * 21-May-2007 : Added testClearObservations (DG);
  *
  */
 
 package org.jfree.data.statistics;
 
-import org.jfree.data.general.DatasetChangeEvent;
-import org.jfree.data.general.DatasetChangeListener;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import org.jfree.chart.TestUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link HistogramDataset} class.
  */
-public class HistogramDatasetTest
-        implements DatasetChangeListener {
-
-
-
-
-
-    private static final double EPSILON = 0.0000000001;
+public class HistogramDatasetTest  {
 
     /**
-     * Some checks that the correct values are assigned to bins.
-     */
-    @Test
-    public void testBins() {
-        double[] values = {1.0, 2.0, 3.0, 4.0, 6.0, 12.0, 5.0, 6.3, 4.5};
-        HistogramDataset hd = new HistogramDataset();
-        hd.addSeries("Series 1", values, 5);
-        assertEquals(hd.getYValue(0, 0), 3.0, EPSILON);
-        assertEquals(hd.getYValue(0, 1), 3.0, EPSILON);
-        assertEquals(hd.getYValue(0, 2), 2.0, EPSILON);
-        assertEquals(hd.getYValue(0, 3), 0.0, EPSILON);
-        assertEquals(hd.getYValue(0, 4), 1.0, EPSILON);
-    }
-
-    /**
-     * Confirm that the equals method can distinguish all the required fields.
+     * Ensure that the equals() method can distinguish all fields.
      */
     @Test
     public void testEquals() {
-        double[] values = {1.0, 2.0, 3.0, 4.0, 6.0, 12.0, 5.0, 6.3, 4.5};
-        HistogramDataset d1 = new HistogramDataset();
-        d1.addSeries("Series 1", values, 5);
-        HistogramDataset d2 = new HistogramDataset();
-        d2.addSeries("Series 1", values, 5);
-
+        HistogramDataset d1 = new HistogramDataset("Dataset 1");
+        HistogramDataset d2 = new HistogramDataset("Dataset 1");
         assertEquals(d1, d2);
-        assertEquals(d2, d1);
 
-        d1.addSeries("Series 2", new double[] {1.0, 2.0, 3.0}, 2);
+        d1.addBin(new HistogramBin(1.0, 2.0));
         assertFalse(d1.equals(d2));
-        d2.addSeries("Series 2", new double[] {1.0, 2.0, 3.0}, 2);
+        d2.addBin(new HistogramBin(1.0, 2.0));
         assertEquals(d1, d2);
     }
 
     /**
-     * Confirm that cloning works.
+     * Some checks for the clone() method.
      */
     @Test
     public void testCloning() throws CloneNotSupportedException {
-        double[] values = {1.0, 2.0, 3.0, 4.0, 6.0, 12.0, 5.0, 6.3, 4.5};
-        HistogramDataset d1 = new HistogramDataset();
-        d1.addSeries("Series 1", values, 5);
+        HistogramDataset d1 = new HistogramDataset("Dataset 1");
         HistogramDataset d2 = (HistogramDataset) d1.clone();
         assertNotSame(d1, d2);
         assertSame(d1.getClass(), d2.getClass());
         assertEquals(d1, d2);
 
-        // simple check for independence
-        d1.addSeries("Series 2", new double[] {1.0, 2.0, 3.0}, 2);
+        // check that clone is independent of the original
+        d2.addBin(new HistogramBin(2.0, 3.0));
+        d2.addObservation(2.3);
         assertFalse(d1.equals(d2));
-        d2.addSeries("Series 2", new double[] {1.0, 2.0, 3.0}, 2);
-        assertEquals(d1, d2);
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() throws IOException, ClassNotFoundException {
-        double[] values = {1.0, 2.0, 3.0, 4.0, 6.0, 12.0, 5.0, 6.3, 4.5};
-        HistogramDataset d1 = new HistogramDataset();
-        d1.addSeries("Series 1", values, 5);
-
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(d1);
-            out.close();
-
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-        HistogramDataset d2 = (HistogramDataset) in.readObject();
-            in.close();
-
-        assertEquals(d1, d2);
-
-        // simple check for independence
-        d1.addSeries("Series 2", new double[] {1.0, 2.0, 3.0}, 2);
-        assertFalse(d1.equals(d2));
-        d2.addSeries("Series 2", new double[] {1.0, 2.0, 3.0}, 2);
+    public void testSerialization() {
+        HistogramDataset d1 = new HistogramDataset("D1");
+        HistogramDataset d2 = (HistogramDataset) TestUtils.serialised(d1);
         assertEquals(d1, d2);
     }
 
+    private static final double EPSILON = 0.0000000001;
+
     /**
-     * A test for a bug reported in the forum where the series name isn't being
-     * returned correctly.
+     * Some checks for the clearObservations() method.
      */
     @Test
-    public void testGetSeriesKey() {
-        double[] values = {1.0, 2.0, 3.0, 4.0, 6.0, 12.0, 5.0, 6.3, 4.5};
-        HistogramDataset d1 = new HistogramDataset();
-        d1.addSeries("Series 1", values, 5);
-        assertEquals("Series 1", d1.getSeriesKey(0));
+    public void testClearObservations() {
+        HistogramDataset d1 = new HistogramDataset("D1");
+        d1.clearObservations();
+        assertEquals(0, d1.getItemCount(0));
+        d1.addBin(new HistogramBin(0.0, 1.0));
+        d1.addObservation(0.5);
+        assertEquals(1.0, d1.getYValue(0, 0), EPSILON);
     }
 
     /**
-     * Some checks for the addSeries() method.
+     * Some checks for the removeAllBins() method.
      */
     @Test
-    public void testAddSeries() {
-        double[] values = {-1.0, 0.0, 0.1, 0.9, 1.0, 1.1, 1.9, 2.0, 3.0};
-        HistogramDataset d = new HistogramDataset();
-        d.addSeries("S1", values, 2, 0.0, 2.0);
-        assertEquals(0.0, d.getStartXValue(0, 0), EPSILON);
-        assertEquals(1.0, d.getEndXValue(0, 0), EPSILON);
-        assertEquals(4.0, d.getYValue(0, 0), EPSILON);
-
-        assertEquals(1.0, d.getStartXValue(0, 1), EPSILON);
-        assertEquals(2.0, d.getEndXValue(0, 1), EPSILON);
-        assertEquals(5.0, d.getYValue(0, 1), EPSILON);
-    }
-
-    /**
-     * Another check for the addSeries() method.
-     */
-    @Test
-    public void testAddSeries2() {
-        double[] values = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0};
-        HistogramDataset hd = new HistogramDataset();
-        hd.addSeries("S1", values, 5);
-        assertEquals(0.0, hd.getStartXValue(0, 0), EPSILON);
-        assertEquals(1.0, hd.getEndXValue(0, 0), EPSILON);
-        assertEquals(1.0, hd.getYValue(0, 0), EPSILON);
-        assertEquals(1.0, hd.getStartXValue(0, 1), EPSILON);
-        assertEquals(2.0, hd.getEndXValue(0, 1), EPSILON);
-        assertEquals(1.0, hd.getYValue(0, 1), EPSILON);
-        assertEquals(2.0, hd.getStartXValue(0, 2), EPSILON);
-        assertEquals(3.0, hd.getEndXValue(0, 2), EPSILON);
-        assertEquals(1.0, hd.getYValue(0, 2), EPSILON);
-        assertEquals(3.0, hd.getStartXValue(0, 3), EPSILON);
-        assertEquals(4.0, hd.getEndXValue(0, 3), EPSILON);
-        assertEquals(1.0, hd.getYValue(0, 3), EPSILON);
-        assertEquals(4.0, hd.getStartXValue(0, 4), EPSILON);
-        assertEquals(5.0, hd.getEndXValue(0, 4), EPSILON);
-        assertEquals(2.0, hd.getYValue(0, 4), EPSILON);
-    }
-
-    /**
-     * This test is derived from a reported bug.
-     */
-    @Test
-    public void testBinBoundaries() {
-        double[] values = {-5.000000000000286E-5};
-        int bins = 1260;
-        double minimum = -0.06307522528160199;
-        double maximum = 0.06297522528160199;
-        HistogramDataset d = new HistogramDataset();
-        d.addSeries("S1", values, bins, minimum, maximum);
-        assertEquals(0.0, d.getYValue(0, 629), EPSILON);
-        assertEquals(1.0, d.getYValue(0, 630), EPSILON);
-        assertEquals(0.0, d.getYValue(0, 631), EPSILON);
-        assertTrue(values[0] > d.getStartXValue(0, 630));
-        assertTrue(values[0] < d.getEndXValue(0, 630));
-    }
-
-    /**
-     * Some checks for bug 1553088.  An IndexOutOfBoundsException is thrown
-     * when a data value is *very* close to the upper limit of the last bin.
-     */
-    @Test
-    public void test1553088() {
-        double[] values = {-1.0, 0.0, -Double.MIN_VALUE, 3.0};
-        HistogramDataset d = new HistogramDataset();
-        d.addSeries("S1", values, 2, -1.0, 0.0);
-        assertEquals(-1.0, d.getStartXValue(0, 0), EPSILON);
-        assertEquals(-0.5, d.getEndXValue(0, 0), EPSILON);
-        assertEquals(1.0, d.getYValue(0, 0), EPSILON);
-
-        assertEquals(-0.5, d.getStartXValue(0, 1), EPSILON);
-        assertEquals(0.0, d.getEndXValue(0, 1), EPSILON);
-        assertEquals(3.0, d.getYValue(0, 1), EPSILON);
-    }
-
-    /**
-     * A test to show the limitation addressed by patch 2902842.
-     */
-    @Test
-    public void test2902842() {
-        this.lastEvent = null;
-        double[] values = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0};
-        HistogramDataset hd = new HistogramDataset();
-        hd.addChangeListener(this);
-        hd.addSeries("S1", values, 5);
-        assertNotNull(this.lastEvent);
-    }
-
-    /**
-     * A reference to the last event received by the datasetChanged() method.
-     */
-    private DatasetChangeEvent lastEvent;
-
-    /**
-     * Receives event notification.
-     *
-     * @param event  the event.
-     */
-    @Override
-    public void datasetChanged(DatasetChangeEvent event) {
-        this.lastEvent = event;
+    public void testRemoveAllBins() {
+        HistogramDataset d1 = new HistogramDataset("D1");
+        d1.addBin(new HistogramBin(0.0, 1.0));
+        d1.addObservation(0.5);
+        d1.addBin(new HistogramBin(2.0, 3.0));
+        assertEquals(2, d1.getItemCount(0));
+        d1.removeAllBins();
+        assertEquals(0, d1.getItemCount(0));
     }
 
 }
