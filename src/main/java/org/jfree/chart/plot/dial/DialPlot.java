@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * -------------
  * DialPlot.java
  * -------------
- * (C) Copyright 2006-2012, by Object Refinery Limited.
+ * (C) Copyright 2006-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -41,6 +41,7 @@
  *               drawn after other layers (DG);
  * 15-Feb-2008 : Fixed clipping bug (1873160) (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -62,6 +63,7 @@ import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.PlotState;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.ValueDataset;
@@ -246,9 +248,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      * @see #getDialFrame()
      */
     public void setDialFrame(DialFrame frame) {
-        if (frame == null) {
-            throw new IllegalArgumentException("Null 'frame' argument.");
-        }
+        ParamChecks.nullNotPermitted(frame, "frame");
         this.dialFrame.removeChangeListener(this);
         this.dialFrame = frame;
         frame.addChangeListener(this);
@@ -332,9 +332,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      * @param layer  the layer (<code>null</code> not permitted).
      */
     public void addLayer(DialLayer layer) {
-        if (layer == null) {
-            throw new IllegalArgumentException("Null 'layer' argument.");
-        }
+        ParamChecks.nullNotPermitted(layer, "layer");
         this.layers.add(layer);
         layer.addChangeListener(this);
         fireChangeEvent();
@@ -348,9 +346,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      * @return The layer index.
      */
     public int getLayerIndex(DialLayer layer) {
-        if (layer == null) {
-            throw new IllegalArgumentException("Null 'layer' argument.");
-        }
+        ParamChecks.nullNotPermitted(layer, "layer");
         return this.layers.indexOf(layer);
     }
 
@@ -387,9 +383,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      * @param pointer  the pointer (<code>null</code> not permitted).
      */
     public void addPointer(DialPointer pointer) {
-        if (pointer == null) {
-            throw new IllegalArgumentException("Null 'pointer' argument.");
-        }
+        ParamChecks.nullNotPermitted(pointer, "pointer");
         this.pointers.add(pointer);
         pointer.addChangeListener(this);
         fireChangeEvent();
@@ -403,9 +397,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      * @return The pointer index.
      */
     public int getPointerIndex(DialPointer pointer) {
-        if (pointer == null) {
-            throw new IllegalArgumentException("Null 'pointer' argument.");
-        }
+        ParamChecks.nullNotPermitted(pointer, "pointer");
         return this.pointers.indexOf(pointer);
     }
 
@@ -644,9 +636,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      * @param scale  the scale (<code>null</code> not permitted).
      */
     public void addScale(int index, DialScale scale) {
-        if (scale == null) {
-            throw new IllegalArgumentException("Null 'scale' argument.");
-        }
+        ParamChecks.nullNotPermitted(scale, "scale");
         DialScale existing = this.scales.get(index);
         if (existing != null) {
             removeLayer(existing);
@@ -710,9 +700,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
      */
     public static Rectangle2D rectangleByRadius(Rectangle2D rect,
             double radiusW, double radiusH) {
-        if (rect == null) {
-            throw new IllegalArgumentException("Null 'rect' argument.");
-        }
+        ParamChecks.nullNotPermitted(rect, "rect");
         double x = rect.getCenterX();
         double y = rect.getCenterY();
         double w = rect.getWidth() * radiusW;

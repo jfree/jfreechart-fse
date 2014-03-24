@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
  * CategoryToPieDataset.java
  * -------------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Christian W. Zuckschwerdt;
@@ -44,6 +44,7 @@
  *               for source, and added getSource(), getExtractType() and
  *               getExtractIndex() methods - see feature request 1477915 (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -51,6 +52,7 @@ package org.jfree.data.category;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.util.TableOrder;
 import org.jfree.data.general.AbstractDataset;
@@ -92,9 +94,7 @@ public class CategoryToPieDataset extends AbstractDataset
     public CategoryToPieDataset(CategoryDataset source,
                                 TableOrder extract,
                                 int index) {
-        if (extract == null) {
-            throw new IllegalArgumentException("Null 'extract' argument.");
-        }
+        ParamChecks.nullNotPermitted(extract, "extract");
         this.source = source;
         if (this.source != null) {
             this.source.addChangeListener(this);

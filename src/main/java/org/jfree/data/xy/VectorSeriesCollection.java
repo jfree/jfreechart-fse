@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------
  * VectorSeriesCollection.java
  * ---------------------------
- * (C) Copyright 2007-2012, by Object Refinery Limited.
+ * (C) Copyright 2007-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -40,6 +40,7 @@
  * 25-May-2007 : Moved from experimental to the main source tree (DG);
  * 22-Apr-2008 : Implemented PublicCloneable (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -47,6 +48,7 @@ package org.jfree.data.xy;
 
 import java.io.Serializable;
 import java.util.List;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.ParamChecks;

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------
  * AxisCollection.java
  * -------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -36,6 +36,7 @@
  * -------
  * 03-Nov-2003 : Added standard header (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -44,6 +45,7 @@ package org.jfree.chart.axis;
 import java.util.List;
 
 import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * A collection of axes that have been assigned to the TOP, BOTTOM, LEFT or
@@ -122,12 +124,8 @@ public class AxisCollection {
      *              (<code>null</code> not permitted).
      */
     public void add(Axis axis, RectangleEdge edge) {
-        if (axis == null) {
-            throw new IllegalArgumentException("Null 'axis' argument.");
-        }
-        if (edge == null) {
-            throw new IllegalArgumentException("Null 'edge' argument.");
-        }
+        ParamChecks.nullNotPermitted(axis, "axis");
+        ParamChecks.nullNotPermitted(edge, "edge");
         if (edge == RectangleEdge.TOP) {
             this.axesAtTop.add(axis);
         }

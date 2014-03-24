@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * XYSeriesCollection.java
  * -----------------------
- * (C) Copyright 2001-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2001-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Aaron Metzger;
@@ -58,6 +58,9 @@
  * 06-Mar-2009 : Fixed equals() implementation (DG);
  * 10-Jun-2009 : Simplified code in getX() and getY() methods (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
+ * 21-Nov-2013 : Fixed bug where removeSeries(int) was not deregistering 
+ *               vetoable listener (DG);
  *
  */
 
@@ -624,7 +627,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset
     }
 
     /**
-     * Sets the flag that indicates wether the interval width is automatically
+     * Sets the flag that indicates whether the interval width is automatically
      * calculated or not.
      *
      * @param b  a boolean.

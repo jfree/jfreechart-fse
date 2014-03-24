@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * XYLineAnnotation.java
  * ---------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Peter Kolb (see patch 2809117);
@@ -46,6 +46,7 @@
  * 05-Nov-2008 : Added workaround for JRE bug 6574155, see JFreeChart bug
  *               2221495 (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -74,6 +75,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.util.LineUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
@@ -133,12 +135,8 @@ public class XYLineAnnotation extends AbstractXYAnnotation
                             Stroke stroke, Paint paint) {
 
         super();
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;

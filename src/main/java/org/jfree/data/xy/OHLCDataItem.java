@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
  * OHLCDataItem.java
  * -----------------
- * (C) Copyright 2003-2008, by Object Refinery Limited.
+ * (C) Copyright 2003-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -36,6 +36,7 @@
  * -------
  * 03-Dec-2003 : Version 1 (DG);
  * 29-Apr-2005 : Added equals() method (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -43,6 +44,7 @@ package org.jfree.data.xy;
 
 import java.io.Serializable;
 import java.util.Date;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * Represents a single (open-high-low-close) data item in
@@ -89,9 +91,7 @@ public class OHLCDataItem implements Comparable, Serializable {
                         double low,
                         double close,
                         double volume) {
-        if (date == null) {
-            throw new IllegalArgumentException("Null 'date' argument.");
-        }
+        ParamChecks.nullNotPermitted(date, "date");
         this.date = date;
         this.open = open;
         this.high = high;

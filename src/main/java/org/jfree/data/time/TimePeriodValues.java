@@ -2,32 +2,32 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
+ * This library is free software; you can redistribute it and/or modify it 
+ * under the terms of the GNU Lesser General Public License as published by 
+ * the Free Software Foundation; either version 2.1 of the License, or 
  * (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * This library is distributed in the hope that it will be useful, but 
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public 
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, 
+ * USA.  
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
  * TimePeriodValues.java
  * ---------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -36,13 +36,14 @@
  * -------
  * 22-Apr-2003 : Version 1 (DG);
  * 30-Jul-2003 : Added clone and equals methods while testing (DG);
- * 11-Mar-2005 : Fixed bug in bounds recalculation - see bug report
+ * 11-Mar-2005 : Fixed bug in bounds recalculation - see bug report 
  *               1161329 (DG);
  * ------------- JFREECHART 1.0.x ---------------------------------------------
- * 03-Oct-2006 : Fixed NullPointerException in equals(), fire change event in
+ * 03-Oct-2006 : Fixed NullPointerException in equals(), fire change event in 
  *               add() method, updated API docs (DG);
  * 07-Apr-2008 : Fixed bug with maxMiddleIndex in updateBounds() (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -51,6 +52,7 @@ package org.jfree.data.time;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.general.Series;
@@ -239,9 +241,7 @@ public class TimePeriodValues extends Series implements Serializable {
      * @param item  the item (<code>null</code> not permitted).
      */
     public void add(TimePeriodValue item) {
-        if (item == null) {
-            throw new IllegalArgumentException("Null item not allowed.");
-        }
+        ParamChecks.nullNotPermitted(item, "item");
         this.data.add(item);
         updateBounds(item.getPeriod(), this.data.size() - 1);
         fireSeriesChanged();

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
  * TaskSeries.java
  * ---------------
- * (C) Copyright 2002-2012, by Object Refinery Limited.
+ * (C) Copyright 2002-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -41,6 +41,7 @@
  * 30-Jul-2004 : Added equals() method (DG);
  * 09-May-2008 : Fixed cloning bug (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -48,6 +49,7 @@ package org.jfree.data.gantt;
 
 import java.util.Collections;
 import java.util.List;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.general.Series;
@@ -81,9 +83,7 @@ public class TaskSeries extends Series {
      * @param task  the task (<code>null</code> not permitted).
      */
     public void add(Task task) {
-        if (task == null) {
-            throw new IllegalArgumentException("Null 'task' argument.");
-        }
+        ParamChecks.nullNotPermitted(task, "task");
         this.tasks.add(task);
         fireSeriesChanged();
     }

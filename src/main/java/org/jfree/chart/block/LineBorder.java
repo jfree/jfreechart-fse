@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * LineBorder.java
  * ---------------
- * (C) Copyright 2007-2012, by Christo Zietsman and Contributors.
+ * (C) Copyright 2007-2013, by Christo Zietsman and Contributors.
  *
  * Original Author:  Christo Zietsman;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -38,6 +38,7 @@
  *               modifications by DG (DG);
  * 13-Jun-2007 : Don't draw if area doesn't have positive dimensions (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -58,6 +59,7 @@ import java.io.Serializable;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
@@ -95,15 +97,9 @@ public class LineBorder implements BlockFrame, Serializable {
      * @param insets  the insets (<code>null</code> not permitted).
      */
     public LineBorder(Paint paint, Stroke stroke, RectangleInsets insets) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
-        if (insets == null) {
-            throw new IllegalArgumentException("Null 'insets' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
+        ParamChecks.nullNotPermitted(stroke, "stroke");
+        ParamChecks.nullNotPermitted(insets, "insets");
         this.paint = paint;
         this.stroke = stroke;
         this.insets = insets;

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
  * ComparableObjectItem.java
  * -------------------------
- * (C) Copyright 2006-2012, by Object Refinery Limited.
+ * (C) Copyright 2006-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -36,12 +36,14 @@
  * -------
  * 19-Oct-2006 : New class, based on XYDataItem (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
 package org.jfree.data;
 
 import java.io.Serializable;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.util.ObjectUtilities;
 
@@ -70,9 +72,7 @@ public class ComparableObjectItem implements Cloneable, Comparable<ComparableObj
      * @param y  the y-value (<code>null</code> permitted).
      */
     public ComparableObjectItem(Comparable x, Object y) {
-        if (x == null) {
-            throw new IllegalArgumentException("Null 'x' argument.");
-        }
+        ParamChecks.nullNotPermitted(x, "x");
         this.x = x;
         this.obj = y;
     }

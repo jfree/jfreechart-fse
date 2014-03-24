@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------------
  * BubbleXYItemLabelGenerator.java
  * -------------------------------
- * (C) Copyright 2005-2012, by Object Refinery Limited.
+ * (C) Copyright 2005-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -40,6 +40,7 @@
  * 23-Nov-2007 : Implemented hashCode() (DG);
  * 23-Apr-2008 : Implemented PublicCloneable (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -54,6 +55,7 @@ import org.jfree.chart.HashUtilities;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.renderer.xy.XYBubbleRenderer;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
 
@@ -109,9 +111,7 @@ public class BubbleXYItemLabelGenerator extends AbstractXYItemLabelGenerator
     public BubbleXYItemLabelGenerator(String formatString,
             NumberFormat xFormat, NumberFormat yFormat, NumberFormat zFormat) {
         super(formatString, xFormat, yFormat);
-        if (zFormat == null) {
-            throw new IllegalArgumentException("Null 'zFormat' argument.");
-        }
+        ParamChecks.nullNotPermitted(zFormat, "zFormat");
         this.zFormat = zFormat;
     }
 
@@ -130,9 +130,7 @@ public class BubbleXYItemLabelGenerator extends AbstractXYItemLabelGenerator
     public BubbleXYItemLabelGenerator(String formatString,
             DateFormat xFormat, DateFormat yFormat, DateFormat zFormat) {
         super(formatString, xFormat, yFormat);
-        if (zFormat == null) {
-            throw new IllegalArgumentException("Null 'zFormat' argument.");
-        }
+        ParamChecks.nullNotPermitted(zFormat, "zFormat");
         this.zDateFormat = zFormat;
     }
 

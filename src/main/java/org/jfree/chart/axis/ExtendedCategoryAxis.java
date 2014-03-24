@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * ExtendedCategoryAxis.java
  * -------------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -40,6 +40,7 @@
  * ------------- JFREECHART 1.0.x ---------------------------------------------
  * 21-Mar-2007 : Implemented equals(), clone() and fixed serialization (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -61,6 +62,7 @@ import org.jfree.chart.event.AxisChangeEvent;
 import org.jfree.chart.text.TextBlock;
 import org.jfree.chart.text.TextFragment;
 import org.jfree.chart.text.TextLine;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
@@ -113,9 +115,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
      * @see #getSubLabelFont()
      */
     public void setSubLabelFont(Font font) {
-        if (font == null) {
-            throw new IllegalArgumentException("Null 'font' argument.");
-        }
+        ParamChecks.nullNotPermitted(font, "font");
         this.sublabelFont = font;
         notifyListeners(new AxisChangeEvent(this));
     }
@@ -140,9 +140,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
      * @see #getSubLabelPaint()
      */
     public void setSubLabelPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.sublabelPaint = paint;
         notifyListeners(new AxisChangeEvent(this));
     }

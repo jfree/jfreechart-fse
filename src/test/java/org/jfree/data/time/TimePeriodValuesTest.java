@@ -37,7 +37,7 @@
  * 30-Jul-2003 : Version 1 (DG);
  * 07-Apr-2008 : Added new tests for min/max-start/middle/end
  *               index updates (DG);
- *
+ * 21-Mar-2014 : Fixed string for null comparison test. (TH)
  */
 
 package org.jfree.data.time;
@@ -262,7 +262,7 @@ public class TimePeriodValuesTest  {
             fail("IllegalArgumentException should have been thrown on null parameter");
         }
         catch (IllegalArgumentException e) {
-            assertEquals("Null item not allowed.", e.getMessage());
+            assertEquals("Null 'item' argument.", e.getMessage());
         }
     }
 

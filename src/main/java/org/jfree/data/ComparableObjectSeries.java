@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
  * ComparableObjectSeries.java
  * ---------------------------
- * (C) Copyright 2006-2012, by Object Refinery Limited.
+ * (C) Copyright 2006-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -46,6 +46,7 @@ package org.jfree.data;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.general.Series;
@@ -214,10 +215,7 @@ public class ComparableObjectSeries extends Series
      */
     protected void add(ComparableObjectItem item, boolean notify) {
 
-        if (item == null) {
-            throw new IllegalArgumentException("Null 'item' argument.");
-        }
-
+        ParamChecks.nullNotPermitted(item, "item");
         if (this.autoSort) {
             int index = Collections.binarySearch(this.data, item);
             if (index < 0) {

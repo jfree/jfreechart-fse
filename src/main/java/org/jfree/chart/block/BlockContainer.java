@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------
  * BlockContainer.java
  * -------------------
- * (C) Copyright 2004-2012, by Object Refinery Limited.
+ * (C) Copyright 2004-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -43,6 +43,7 @@
  * 20-Jul-2006 : Perform translation directly on drawing area, not via
  *               Graphics2D (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -59,6 +60,7 @@ import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.StandardEntityCollection;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * A container for a collection of {@link Block} objects.  The container uses
@@ -90,9 +92,7 @@ public class BlockContainer extends AbstractBlock
      *                     permitted).
      */
     public BlockContainer(Arrangement arrangement) {
-        if (arrangement == null) {
-            throw new IllegalArgumentException("Null 'arrangement' argument.");
-        }
+        ParamChecks.nullNotPermitted(arrangement, "arrangement");
         this.arrangement = arrangement;
         this.blocks = new ArrayList<Block>();
     }
@@ -112,9 +112,7 @@ public class BlockContainer extends AbstractBlock
      * @param arrangement  the arrangement (<code>null</code> not permitted).
      */
     public void setArrangement(Arrangement arrangement) {
-        if (arrangement == null) {
-            throw new IllegalArgumentException("Null 'arrangement' argument.");
-        }
+        ParamChecks.nullNotPermitted(arrangement, "arrangement");
         this.arrangement = arrangement;
     }
 

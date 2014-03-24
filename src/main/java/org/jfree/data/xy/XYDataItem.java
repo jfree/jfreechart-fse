@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
  * XYDataItem.java
  * ---------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -42,6 +42,7 @@
  *               debugging use (DG);
  * 10-Jun-2009 : Reimplemented cloning (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -50,6 +51,7 @@ package org.jfree.data.xy;
 import java.io.Serializable;
 
 import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * Represents one (x, y) data item for an {@link XYSeries}.  Note that
@@ -73,9 +75,7 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
      * @param y  the y-value (<code>null</code> permitted).
      */
     public XYDataItem(Number x, Number y) {
-        if (x == null) {
-            throw new IllegalArgumentException("Null 'x' argument.");
-        }
+        ParamChecks.nullNotPermitted(x, "x");
         this.x = x;
         this.y = y;
     }

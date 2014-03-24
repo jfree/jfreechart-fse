@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
  * XYAreaRenderer.java
  * -------------------
- * (C) Copyright 2002-2012, by Hari and Contributors.
+ * (C) Copyright 2002-2013, by Hari and Contributors.
  *
  * Original Author:  Hari (ourhari@hotmail.com);
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -80,6 +80,7 @@
  *               the paint under the series (DG);
  * 06-Oct-2011 : Avoid GeneralPath methods requiring Java 1.5 (MK);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -116,6 +117,7 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.urls.XYURLGenerator;
 import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.xy.XYDataset;
 
 /**
@@ -343,9 +345,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      * @param area  the area (<code>null</code> not permitted).
      */
     public void setLegendArea(Shape area) {
-        if (area == null) {
-            throw new IllegalArgumentException("Null 'area' argument.");
-        }
+        ParamChecks.nullNotPermitted(area, "area");
         this.legendArea = area;
         fireChangeEvent();
     }
@@ -396,9 +396,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
      * @since 1.0.14
      */
     public void setGradientTransformer(GradientPaintTransformer transformer) {
-        if (transformer == null) {
-            throw new IllegalArgumentException("Null 'transformer' argument.");
-        }
+        ParamChecks.nullNotPermitted(transformer, "transformer");
         this.gradientTransformer = transformer;
         fireChangeEvent();
     }

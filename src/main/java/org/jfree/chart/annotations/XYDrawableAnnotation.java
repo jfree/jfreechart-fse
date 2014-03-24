@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * XYDrawableAnnotation.java
  * -------------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -39,6 +39,7 @@
  * 30-Sep-2004 : Added support for tool tips and URLs (DG);
  * 18-Jun-2008 : Added scaling factor (DG);
  * 15-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -58,6 +59,7 @@ import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * A general annotation that can be placed on an {@link XYPlot}.
@@ -119,9 +121,7 @@ public class XYDrawableAnnotation extends AbstractXYAnnotation
             double displayHeight, double drawScaleFactor, Drawable drawable) {
 
         super();
-        if (drawable == null) {
-            throw new IllegalArgumentException("Null 'drawable' argument.");
-        }
+        ParamChecks.nullNotPermitted(drawable, "drawable");
         this.x = x;
         this.y = y;
         this.displayWidth = displayWidth;

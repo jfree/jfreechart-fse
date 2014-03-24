@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------
  * TimeSeries.java
  * ---------------
- * (C) Copyright 2001-2012, by Object Refinery Limited.
+ * (C) Copyright 2001-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Bryan Scott;
@@ -82,10 +82,12 @@
  *               changes (DG);
  * 10-Jun-2009 : Added addOrUpdate(TimeSeriesDataItem) method (DG);
  * 31-Aug-2009 : Clear minY and maxY cache values in createCopy (DG);
- * 03-Dec-2011 : Fixed bug 3446965 which affects the y-range calculation for
+ * 03-Dec-2011 : Fixed bug 3446965 which affects the y-range calculation for 
  *               the series (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
  *
+ * 02-Jul-2013 : Use ParamChecks (DG);
+ * 
  */
 
 package org.jfree.data.time;
@@ -98,6 +100,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.ParamChecks;

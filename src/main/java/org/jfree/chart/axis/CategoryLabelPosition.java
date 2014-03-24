@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------------
  * CategoryLabelPosition.java
  * --------------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -41,6 +41,7 @@
  * 11-Jan-2005 : Removed deprecated constructor in preparation for the 1.0.0
  *               release (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -51,6 +52,7 @@ import java.io.Serializable;
 import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.text.TextBlockAnchor;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * The attributes that control the position of the labels for the categories on
@@ -147,21 +149,10 @@ public class CategoryLabelPosition implements Serializable {
                                  CategoryLabelWidthType widthType,
                                  float widthRatio) {
 
-        if (categoryAnchor == null) {
-            throw new IllegalArgumentException(
-                    "Null 'categoryAnchor' argument.");
-        }
-        if (labelAnchor == null) {
-            throw new IllegalArgumentException(
-                    "Null 'labelAnchor' argument.");
-        }
-        if (rotationAnchor == null) {
-            throw new IllegalArgumentException(
-                    "Null 'rotationAnchor' argument.");
-        }
-        if (widthType == null) {
-            throw new IllegalArgumentException("Null 'widthType' argument.");
-        }
+        ParamChecks.nullNotPermitted(categoryAnchor, "categoryAnchor");
+        ParamChecks.nullNotPermitted(labelAnchor, "labelAnchor");
+        ParamChecks.nullNotPermitted(rotationAnchor, "rotationAnchor");
+        ParamChecks.nullNotPermitted(widthType, "widthType");
 
         this.categoryAnchor = categoryAnchor;
         this.labelAnchor = labelAnchor;

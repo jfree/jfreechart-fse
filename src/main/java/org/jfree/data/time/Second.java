@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * -----------
  * Second.java
  * -----------
- * (C) Copyright 2001-2009, by Object Refinery Limited.
+ * (C) Copyright 2001-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -55,6 +55,8 @@
  * 06-Oct-2006 : Refactored to cache first and last millisecond values (DG);
  * 16-Sep-2008 : Deprecated DEFAULT_TIME_ZONE (DG);
  * 02-Mar-2009 : Added new constructor with Locale (DG);
+ * 05-Jul-2012 : Replaced getTime().getTime() with getTimeInMillis() (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -65,6 +67,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * Represents a second in a particular day.  This class is immutable, which is
@@ -113,9 +116,7 @@ public class Second extends RegularTimePeriod implements Serializable {
      * @param minute  the minute (<code>null</code> not permitted).
      */
     public Second(int second, Minute minute) {
-        if (minute == null) {
-            throw new IllegalArgumentException("Null 'minute' argument.");
-        }
+        ParamChecks.nullNotPermitted(minute, "minute");
         this.day = minute.getDay();
         this.hour = (byte) minute.getHourValue();
         this.minute = (byte) minute.getMinute();
@@ -300,7 +301,6 @@ public class Second extends RegularTimePeriod implements Serializable {
         calendar.clear();
         calendar.set(year, month, day, this.hour, this.minute, this.second);
         calendar.set(Calendar.MILLISECOND, 0);
-        //return calendar.getTimeInMillis();  // this won't work for JDK 1.3
         return calendar.getTimeInMillis();
     }
 

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * SubCategoryAxis.java
  * --------------------
- * (C) Copyright 2004-2012, by Object Refinery Limited.
+ * (C) Copyright 2004-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert;
  * Contributor(s):   Adriaan Joubert;
@@ -46,6 +46,7 @@
  * 13-Nov-2008 : Fix NullPointerException when dataset is null - see bug
  *               report 2275695 (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -70,6 +71,7 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.category.CategoryDataset;
 
@@ -108,9 +110,7 @@ public class SubCategoryAxis extends CategoryAxis
      * @param subCategory  the sub-category (<code>null</code> not permitted).
      */
     public void addSubCategory(Comparable subCategory) {
-        if (subCategory == null) {
-            throw new IllegalArgumentException("Null 'subcategory' axis.");
-        }
+        ParamChecks.nullNotPermitted(subCategory, "subCategory");
         this.subCategories.add(subCategory);
         notifyListeners(new AxisChangeEvent(this));
     }
@@ -135,9 +135,7 @@ public class SubCategoryAxis extends CategoryAxis
      * @see #getSubLabelFont()
      */
     public void setSubLabelFont(Font font) {
-        if (font == null) {
-            throw new IllegalArgumentException("Null 'font' argument.");
-        }
+        ParamChecks.nullNotPermitted(font, "font");
         this.subLabelFont = font;
         notifyListeners(new AxisChangeEvent(this));
     }
@@ -162,9 +160,7 @@ public class SubCategoryAxis extends CategoryAxis
      * @see #getSubLabelPaint()
      */
     public void setSubLabelPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.subLabelPaint = paint;
         notifyListeners(new AxisChangeEvent(this));
     }
@@ -299,9 +295,7 @@ public class SubCategoryAxis extends CategoryAxis
                                               AxisState state,
                                               PlotRenderingInfo plotState) {
 
-        if (state == null) {
-            throw new IllegalArgumentException("Null 'state' argument.");
-        }
+        ParamChecks.nullNotPermitted(state, "state");
 
         g2.setFont(this.subLabelFont);
         g2.setPaint(this.subLabelPaint);

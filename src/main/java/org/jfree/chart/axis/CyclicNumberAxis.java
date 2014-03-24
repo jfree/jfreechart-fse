@@ -45,6 +45,7 @@
  * 08-Jun-2005 : Fixed equals() method to handle GradientPaint (DG);
  * 19-May-2009 : Fixed FindBugs warnings, patch by Michal Wozniak (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 

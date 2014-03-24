@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
  * AbstractDataset.java
  * --------------------
- * (C)opyright 2000-2008, by Object Refinery Limited.
+ * (C)opyright 2000-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Nicolas Brodu (for Astrium and EADS Corporate Research
@@ -52,6 +52,7 @@
  * 08-Sep-2003 : Serialization fixes (NB);
  * 11-Sep-2003 : Cloning Fixes (NB);
  * 01-Jun-2005 : Added hasListener() method for unit testing (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -68,6 +69,7 @@ import java.util.EventListener;
 import java.util.List;
 
 import javax.swing.event.EventListenerList;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * An abstract implementation of the {@link Dataset} interface, containing a
@@ -115,9 +117,7 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      */
     @Override
     public void setGroup(DatasetGroup group) {
-        if (group == null) {
-            throw new IllegalArgumentException("Null 'group' argument.");
-        }
+        ParamChecks.nullNotPermitted(group, "group");
         this.group = group;
     }
 

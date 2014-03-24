@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * XYDifferenceRenderer.java
  * -------------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Richard West, Advanced Micro Devices, Inc. (major rewrite
@@ -77,6 +77,7 @@
  * 13-Feb-2012 : Applied patch 3450234 for bug 3425881 by Patrick Schlott and
  *               Christoph Schroeder (MH);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -112,6 +113,7 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.urls.XYURLGenerator;
 import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.xy.XYDataset;
 
 /**
@@ -170,14 +172,8 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      */
     public XYDifferenceRenderer(Paint positivePaint, Paint negativePaint,
                                 boolean shapes) {
-        if (positivePaint == null) {
-            throw new IllegalArgumentException(
-                    "Null 'positivePaint' argument.");
-        }
-        if (negativePaint == null) {
-            throw new IllegalArgumentException(
-                    "Null 'negativePaint' argument.");
-        }
+        ParamChecks.nullNotPermitted(positivePaint, "positivePaint");
+        ParamChecks.nullNotPermitted(negativePaint, "negativePaint");
         this.positivePaint = positivePaint;
         this.negativePaint = negativePaint;
         this.shapesVisible = shapes;
@@ -205,9 +201,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * @see #getPositivePaint()
      */
     public void setPositivePaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.positivePaint = paint;
         fireChangeEvent();
     }
@@ -231,9 +225,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * @see #getNegativePaint()
      */
     public void setNegativePaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.negativePaint = paint;
         notifyListeners(new RendererChangeEvent(this));
     }
@@ -284,9 +276,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
      * @see #getLegendLine()
      */
     public void setLegendLine(Shape line) {
-        if (line == null) {
-            throw new IllegalArgumentException("Null 'line' argument.");
-        }
+        ParamChecks.nullNotPermitted(line, "line");
         this.legendLine = line;
         fireChangeEvent();
     }

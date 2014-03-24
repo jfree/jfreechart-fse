@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -90,6 +90,7 @@
  *               AbstractXYItemRenderer class (DG);
  * 28-Apr-2009 : Added flag to allow a renderer to treat the legend shape as
  *               a line (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 

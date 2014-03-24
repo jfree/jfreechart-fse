@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * ItemLabelPosition.java
  * ----------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -39,6 +39,7 @@
  *               checking (DG);
  * 26-Feb-2004 : Added new constructor (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -47,6 +48,7 @@ package org.jfree.chart.labels;
 import java.io.Serializable;
 
 import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * The attributes that control the position of the label for each data item on
@@ -107,23 +109,13 @@ public class ItemLabelPosition implements Serializable {
                              TextAnchor rotationAnchor,
                              double angle) {
 
-        if (itemLabelAnchor == null) {
-            throw new IllegalArgumentException(
-                    "Null 'itemLabelAnchor' argument.");
-        }
-        if (textAnchor == null) {
-            throw new IllegalArgumentException("Null 'textAnchor' argument.");
-        }
-        if (rotationAnchor == null) {
-            throw new IllegalArgumentException(
-                    "Null 'rotationAnchor' argument.");
-        }
-
+        ParamChecks.nullNotPermitted(itemLabelAnchor, "itemLabelAnchor");
+        ParamChecks.nullNotPermitted(textAnchor, "textAnchor");
+        ParamChecks.nullNotPermitted(rotationAnchor, "rotationAnchor");
         this.itemLabelAnchor = itemLabelAnchor;
         this.textAnchor = textAnchor;
         this.rotationAnchor = rotationAnchor;
         this.angle = angle;
-
     }
 
     /**

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------
  * CategoryLabelPositions.java
  * ---------------------------
- * (C) Copyright 2004-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -38,6 +38,7 @@
  * 17-Feb-2004 : Added equals() method (DG);
  * 05-Nov-2004 : Adjusted settings for UP_90 and DOWN_90 (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -49,6 +50,7 @@ import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.text.TextBlockAnchor;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * Records the label positions for a category axis.  Instances of this class
@@ -255,18 +257,10 @@ public class CategoryLabelPositions implements Serializable {
                                   CategoryLabelPosition left,
                                   CategoryLabelPosition right) {
 
-        if (top == null) {
-            throw new IllegalArgumentException("Null 'top' argument.");
-        }
-        if (bottom == null) {
-            throw new IllegalArgumentException("Null 'bottom' argument.");
-        }
-        if (left == null) {
-            throw new IllegalArgumentException("Null 'left' argument.");
-        }
-        if (right == null) {
-            throw new IllegalArgumentException("Null 'right' argument.");
-        }
+        ParamChecks.nullNotPermitted(top, "top");
+        ParamChecks.nullNotPermitted(bottom, "bottom");
+        ParamChecks.nullNotPermitted(left, "left");
+        ParamChecks.nullNotPermitted(right, "right");
 
         this.positionForAxisAtTop = top;
         this.positionForAxisAtBottom = bottom;
@@ -312,12 +306,8 @@ public class CategoryLabelPositions implements Serializable {
     public static CategoryLabelPositions replaceTopPosition(
             CategoryLabelPositions base, CategoryLabelPosition top) {
 
-        if (base == null) {
-            throw new IllegalArgumentException("Null 'base' argument.");
-        }
-        if (top == null) {
-            throw new IllegalArgumentException("Null 'top' argument.");
-        }
+        ParamChecks.nullNotPermitted(base, "base");
+        ParamChecks.nullNotPermitted(top, "top");
 
         return new CategoryLabelPositions(
             top,
@@ -339,12 +329,8 @@ public class CategoryLabelPositions implements Serializable {
     public static CategoryLabelPositions replaceBottomPosition(
             CategoryLabelPositions base, CategoryLabelPosition bottom) {
 
-        if (base == null) {
-            throw new IllegalArgumentException("Null 'base' argument.");
-        }
-        if (bottom == null) {
-            throw new IllegalArgumentException("Null 'bottom' argument.");
-        }
+        ParamChecks.nullNotPermitted(base, "base");
+        ParamChecks.nullNotPermitted(bottom, "bottom");
 
         return new CategoryLabelPositions(
             base.getLabelPosition(RectangleEdge.TOP),
@@ -366,12 +352,8 @@ public class CategoryLabelPositions implements Serializable {
     public static CategoryLabelPositions replaceLeftPosition(
             CategoryLabelPositions base, CategoryLabelPosition left) {
 
-        if (base == null) {
-            throw new IllegalArgumentException("Null 'base' argument.");
-        }
-        if (left == null) {
-            throw new IllegalArgumentException("Null 'left' argument.");
-        }
+        ParamChecks.nullNotPermitted(base, "base");
+        ParamChecks.nullNotPermitted(left, "left");
 
         return new CategoryLabelPositions(
             base.getLabelPosition(RectangleEdge.TOP),
@@ -393,13 +375,8 @@ public class CategoryLabelPositions implements Serializable {
     public static CategoryLabelPositions replaceRightPosition(
             CategoryLabelPositions base, CategoryLabelPosition right) {
 
-        if (base == null) {
-            throw new IllegalArgumentException("Null 'base' argument.");
-        }
-        if (right == null) {
-            throw new IllegalArgumentException("Null 'right' argument.");
-        }
-
+        ParamChecks.nullNotPermitted(base, "base");
+        ParamChecks.nullNotPermitted(right, "right");
         return new CategoryLabelPositions(
             base.getLabelPosition(RectangleEdge.TOP),
             base.getLabelPosition(RectangleEdge.BOTTOM),

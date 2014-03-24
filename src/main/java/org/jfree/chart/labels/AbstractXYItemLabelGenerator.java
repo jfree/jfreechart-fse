@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------------
  * AbstractXYItemLabelGenerator.java
  * ---------------------------------
- * (C) Copyright 2004-2012, by Object Refinery Limited.
+ * (C) Copyright 2004-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -50,6 +50,7 @@
  * 26-May-2008 : Added accessor methods for nullYString and updated equals()
  *               method (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -63,6 +64,7 @@ import java.util.Date;
 
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.xy.XYDataset;
 
 /**
@@ -113,15 +115,9 @@ public class AbstractXYItemLabelGenerator implements Cloneable, Serializable {
                                            NumberFormat xFormat,
                                            NumberFormat yFormat) {
 
-        if (formatString == null) {
-            throw new IllegalArgumentException("Null 'formatString' argument.");
-        }
-        if (xFormat == null) {
-            throw new IllegalArgumentException("Null 'xFormat' argument.");
-        }
-        if (yFormat == null) {
-            throw new IllegalArgumentException("Null 'yFormat' argument.");
-        }
+        ParamChecks.nullNotPermitted(formatString, "formatString");
+        ParamChecks.nullNotPermitted(xFormat, "xFormat");
+        ParamChecks.nullNotPermitted(yFormat, "yFormat");
         this.formatString = formatString;
         this.xFormat = xFormat;
         this.yFormat = yFormat;

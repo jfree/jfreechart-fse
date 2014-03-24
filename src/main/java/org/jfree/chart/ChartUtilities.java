@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------
  * ChartUtilities.java
  * -------------------
- * (C) Copyright 2001-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2001-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Wolfgang Irler;
@@ -72,6 +72,7 @@
  *               methods (DG);
  * 10-Jan-2008 : Fix bug 1868251 - don't create image with transparency when
  *               saving to JPEG format (DG);
+ * 02-Jul-2013 : Use ParamChecks class (DG);
  *
  */
 
@@ -406,6 +407,7 @@ public abstract class ChartUtilities {
             int width, int height, ChartRenderingInfo info)
             throws IOException {
 
+        ParamChecks.nullNotPermitted(out, "out");
         ParamChecks.nullNotPermitted(chart, "chart");
         BufferedImage image = chart.createBufferedImage(width, height,
                 BufferedImage.TYPE_INT_RGB, info);
@@ -432,6 +434,7 @@ public abstract class ChartUtilities {
             JFreeChart chart, int width, int height, ChartRenderingInfo info)
             throws IOException {
 
+        ParamChecks.nullNotPermitted(out, "out");
         ParamChecks.nullNotPermitted(chart, "chart");
 
         BufferedImage image = chart.createBufferedImage(width, height,

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------------------
  * DefaultMultiValueCategoryDataset.java
  * -------------------------------------
- * (C) Copyright 2007, 2008, by David Forslund and Contributors.
+ * (C) Copyright 2007-2013, by David Forslund and Contributors.
  *
  * Original Author:  David Forslund;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -38,6 +38,8 @@
  * 06-Nov-2007 : Return EMPTY_LIST not null from getValues() (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
+ * 02-JUL-2013 : Use ParamChecks (DG);
+ * 
  */
 
 package org.jfree.data.statistics;
@@ -45,6 +47,7 @@ package org.jfree.data.statistics;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.axis.NumberComparator;
 import org.jfree.chart.util.PublicCloneable;
@@ -103,15 +106,10 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
      */
     public void add(List<Number> values, Comparable rowKey, Comparable columnKey) {
 
-        if (values == null) {
-            throw new IllegalArgumentException("Null 'values' argument.");
-        }
-        if (rowKey == null) {
-            throw new IllegalArgumentException("Null 'rowKey' argument.");
-        }
-        if (columnKey == null) {
-            throw new IllegalArgumentException("Null 'columnKey' argument.");
-        }
+        ParamChecks.nullNotPermitted(values, "values");
+        ParamChecks.nullNotPermitted(rowKey, "rowKey");
+        ParamChecks.nullNotPermitted(columnKey, "columnKey");
+
         List<Number> vlist = new ArrayList<Number>(values.size());
         for (Number n : values) {
             double v = n.doubleValue();

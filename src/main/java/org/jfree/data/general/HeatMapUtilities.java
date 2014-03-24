@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
  * HeatMapUtilities.java
  * ---------------------
- * (C) Copyright 2009, 2013, by Object Refinery Limited.
+ * (C) Copyright 2009-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -35,6 +35,7 @@
  * Changes:
  * --------
  * 28-Jan-2009 : Version 1 (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -112,7 +113,6 @@ public abstract class HeatMapUtilities {
 
         ParamChecks.nullNotPermitted(dataset, "dataset");
         ParamChecks.nullNotPermitted(paintScale, "paintScale");
- 
         int xCount = dataset.getXSampleCount();
         int yCount = dataset.getYSampleCount();
         BufferedImage image = new BufferedImage(xCount, yCount,

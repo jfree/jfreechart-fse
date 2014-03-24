@@ -167,6 +167,7 @@
  * 06-Jul-2009 : Clear off-screen buffer to fully transparent (DG);
  * 10-Oct-2011 : localization fix: bug #3353913 (MH);
  * 15-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks class (DG);
  *
  */
 
@@ -247,6 +248,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.Zoomable;
 import org.jfree.chart.ui.ExtensionFileFilter;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.ResourceBundleWrapper;
 import org.jfree.chart.util.SerialUtilities;
 
@@ -1321,9 +1323,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @since 1.0.13
      */
     public void setZoomFillPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.zoomFillPaint = paint;
     }
 
@@ -1400,9 +1400,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @since 1.0.13
      */
     public void addOverlay(Overlay overlay) {
-        if (overlay == null) {
-            throw new IllegalArgumentException("Null 'overlay' argument.");
-        }
+        ParamChecks.nullNotPermitted(overlay, "overlay");
         this.overlays.add(overlay);
         overlay.addChangeListener(this);
         repaint();
@@ -1416,9 +1414,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @since 1.0.13
      */
     public void removeOverlay(Overlay overlay) {
-        if (overlay == null) {
-            throw new IllegalArgumentException("Null 'overlay' argument.");
-        }
+        ParamChecks.nullNotPermitted(overlay, "overlay");
         boolean removed = this.overlays.remove(overlay);
         if (removed) {
             overlay.removeChangeListener(this);
@@ -2750,9 +2746,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @param listener  the listener (<code>null</code> not permitted).
      */
     public void addChartMouseListener(ChartMouseListener listener) {
-        if (listener == null) {
-            throw new IllegalArgumentException("Null 'listener' argument.");
-        }
+        ParamChecks.nullNotPermitted(listener, "listener");
         this.chartMouseListeners.add(ChartMouseListener.class, listener);
     }
 

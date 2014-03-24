@@ -56,7 +56,7 @@
  * 30-Mar-2009 : Added pan(double) method (DG);
  * 28-Oct-2011 : Fixed endless loop for 0 TickUnit, # 3429707 (MH);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
- *
+ * 02-Jul-2013 : Use ParamChecks (DG); *
  */
 
 package org.jfree.chart.axis;

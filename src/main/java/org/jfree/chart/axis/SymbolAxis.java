@@ -76,6 +76,7 @@
  * 25-Jul-2007 : Added new field for alternate grid band paint (DG);
  * 15-Aug-2008 : Use alternate grid band paint when drawing (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 

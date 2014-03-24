@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------
  * Marker.java
  * -----------
- * (C) Copyright 2002-2012, by Object Refinery Limited.
+ * (C) Copyright 2002-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Nicolas Brodu;
@@ -56,6 +56,7 @@
  * 05-Sep-2006 : Added MarkerChangeListener support (DG);
  * 26-Sep-2007 : Fix for serialization bug 1802195 (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -82,6 +83,7 @@ import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.event.MarkerChangeEvent;
 import org.jfree.chart.event.MarkerChangeListener;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
@@ -172,12 +174,8 @@ public abstract class Marker implements Cloneable, Serializable {
                      Paint outlinePaint, Stroke outlineStroke,
                      float alpha) {
 
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         if (alpha < 0.0f || alpha > 1.0f) {
             throw new IllegalArgumentException(
                     "The 'alpha' value must be in the range 0.0f to 1.0f");
@@ -219,9 +217,7 @@ public abstract class Marker implements Cloneable, Serializable {
      * @see #getPaint()
      */
     public void setPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.paint = paint;
         notifyListeners(new MarkerChangeEvent(this));
     }
@@ -246,9 +242,7 @@ public abstract class Marker implements Cloneable, Serializable {
      * @see #getStroke()
      */
     public void setStroke(Stroke stroke) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         this.stroke = stroke;
         notifyListeners(new MarkerChangeEvent(this));
     }
@@ -379,9 +373,7 @@ public abstract class Marker implements Cloneable, Serializable {
      * @see #getLabelFont()
      */
     public void setLabelFont(Font font) {
-        if (font == null) {
-            throw new IllegalArgumentException("Null 'font' argument.");
-        }
+        ParamChecks.nullNotPermitted(font, "font");
         this.labelFont = font;
         notifyListeners(new MarkerChangeEvent(this));
     }
@@ -406,9 +398,7 @@ public abstract class Marker implements Cloneable, Serializable {
      * @see #getLabelPaint()
      */
     public void setLabelPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.labelPaint = paint;
         notifyListeners(new MarkerChangeEvent(this));
     }
@@ -435,9 +425,7 @@ public abstract class Marker implements Cloneable, Serializable {
      * @see #getLabelAnchor()
      */
     public void setLabelAnchor(RectangleAnchor anchor) {
-        if (anchor == null) {
-            throw new IllegalArgumentException("Null 'anchor' argument.");
-        }
+        ParamChecks.nullNotPermitted(anchor, "anchor");
         this.labelAnchor = anchor;
         notifyListeners(new MarkerChangeEvent(this));
     }
@@ -462,9 +450,7 @@ public abstract class Marker implements Cloneable, Serializable {
      * @see #getLabelOffset()
      */
     public void setLabelOffset(RectangleInsets offset) {
-        if (offset == null) {
-            throw new IllegalArgumentException("Null 'offset' argument.");
-        }
+        ParamChecks.nullNotPermitted(offset, "offset");
         this.labelOffset = offset;
         notifyListeners(new MarkerChangeEvent(this));
     }
@@ -489,9 +475,7 @@ public abstract class Marker implements Cloneable, Serializable {
      * @see #getLabelOffsetType()
      */
     public void setLabelOffsetType(LengthAdjustmentType adj) {
-        if (adj == null) {
-            throw new IllegalArgumentException("Null 'adj' argument.");
-        }
+        ParamChecks.nullNotPermitted(adj, "adj");
         this.labelOffsetType = adj;
         notifyListeners(new MarkerChangeEvent(this));
     }
@@ -516,9 +500,7 @@ public abstract class Marker implements Cloneable, Serializable {
      * @see #getLabelTextAnchor()
      */
     public void setLabelTextAnchor(TextAnchor anchor) {
-        if (anchor == null) {
-            throw new IllegalArgumentException("Null 'anchor' argument.");
-        }
+        ParamChecks.nullNotPermitted(anchor, "anchor");
         this.labelTextAnchor = anchor;
         notifyListeners(new MarkerChangeEvent(this));
     }

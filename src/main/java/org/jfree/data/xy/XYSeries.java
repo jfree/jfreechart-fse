@@ -27,7 +27,7 @@
  * -------------
  * XYSeries.java
  * -------------
- * (C) Copyright 2001-2012, Object Refinery Limited and Contributors.
+ * (C) Copyright 2001-2013, Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Aaron Metzger;
@@ -75,6 +75,7 @@
  * 10-Jun-2009 : Make clones to isolate XYDataItem instances used
  *               for data storage (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  * 
  */
 
@@ -83,6 +84,7 @@ package org.jfree.data.xy;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.ParamChecks;

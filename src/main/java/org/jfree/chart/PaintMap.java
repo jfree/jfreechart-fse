@@ -38,6 +38,7 @@
  * 17-Jan-2007 : Changed TreeMap to HashMap, so that different classes that
  *               implement Comparable can be used as keys (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks class (DG);
  *
  */
 

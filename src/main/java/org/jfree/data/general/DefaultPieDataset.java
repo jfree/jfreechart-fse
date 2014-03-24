@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
  * DefaultPieDataset.java
  * ----------------------
- * (C) Copyright 2001-2012, by Object Refinery Limited.
+ * (C) Copyright 2001-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Sam (oldman);
@@ -52,6 +52,7 @@
  * 28-Sep-2006 : Added sortByKeys() and sortByValues() methods (DG);
  * 30-Apr-2007 : Added new insertValues() methods (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -60,6 +61,7 @@ package org.jfree.data.general;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SortOrder;
@@ -93,9 +95,7 @@ public class DefaultPieDataset extends AbstractDataset
      * @param data  the data (<code>null</code> not permitted).
      */
     public DefaultPieDataset(KeyedValues data) {
-        if (data == null) {
-            throw new IllegalArgumentException("Null 'data' argument.");
-        }
+        ParamChecks.nullNotPermitted(data, "data");
         this.data = new DefaultKeyedValues();
         for (int i = 0; i < data.getItemCount(); i++) {
             this.data.addValue(data.getKey(i), data.getValue(i));
@@ -183,9 +183,7 @@ public class DefaultPieDataset extends AbstractDataset
      */
     @Override
     public Number getValue(Comparable key) {
-        if (key == null) {
-            throw new IllegalArgumentException("Null 'key' argument.");
-        }
+        ParamChecks.nullNotPermitted(key, "key");
         return this.data.getValue(key);
     }
 

@@ -27,7 +27,7 @@
  * -------------------
  * TextAnnotation.java
  * -------------------
- * (C) Copyright 2002-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2002-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Peter Kolb (patch 2809117);
@@ -174,9 +174,7 @@ public class TextAnnotation extends AbstractAnnotation implements Serializable {
      * @see #getFont()
      */
     public void setFont(Font font) {
-        if (font == null) {
-            throw new IllegalArgumentException("Null 'font' argument.");
-        }
+        ParamChecks.nullNotPermitted(font, "font");
         this.font = font;
         fireAnnotationChanged();
     }
@@ -227,9 +225,7 @@ public class TextAnnotation extends AbstractAnnotation implements Serializable {
      * @see #getTextAnchor()
      */
     public void setTextAnchor(TextAnchor anchor) {
-        if (anchor == null) {
-            throw new IllegalArgumentException("Null 'anchor' argument.");
-        }
+        ParamChecks.nullNotPermitted(anchor, "anchor");
         this.textAnchor = anchor;
         fireAnnotationChanged();
     }

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
  * AreaRenderer.java
  * -----------------
- * (C) Copyright 2002-2012, by Jon Iles and Contributors.
+ * (C) Copyright 2002-2013, by Jon Iles and Contributors.
  *
  * Original Author:  Jon Iles;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -70,6 +70,8 @@
  * 27-May-2009 : Fixed item label anchor for horizontal orientation (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
  *
+ * 03-Jul-2013 : Use ParamChecks (DG);
+ * 
  */
 
 package org.jfree.chart.renderer.category;
@@ -92,6 +94,7 @@ import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.AreaRendererEndType;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.category.CategoryDataset;
 
 /**
@@ -142,9 +145,7 @@ public class AreaRenderer extends AbstractCategoryItemRenderer
      * @see #getEndType()
      */
     public void setEndType(AreaRendererEndType type) {
-        if (type == null) {
-            throw new IllegalArgumentException("Null 'type' argument.");
-        }
+        ParamChecks.nullNotPermitted(type, "type");
         this.endType = type;
         fireChangeEvent();
     }

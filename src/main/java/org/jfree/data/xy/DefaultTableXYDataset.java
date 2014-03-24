@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------------
  * DefaultTableXYDataset.java
  * --------------------------
- * (C) Copyright 2003-2012, by Richard Atkinson and Contributors.
+ * (C) Copyright 2003-2013, by Richard Atkinson and Contributors.
  *
  * Original Author:  Richard Atkinson;
  * Contributor(s):   Jody Brownell;
@@ -59,6 +59,8 @@
  * 10-Jun-2009 : Simplified getX() and getY() (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
+ * 02-Jul-2013 : Use ParamChecks (DG);
+ * 
  */
 
 package org.jfree.data.xy;
@@ -67,6 +69,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
@@ -142,9 +145,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
      * @param series  the series (<code>null</code> not permitted).
      */
     public void addSeries(XYSeries series) {
-        if (series == null) {
-            throw new IllegalArgumentException("Null 'series' argument.");
-        }
+        ParamChecks.nullNotPermitted(series, "series");
         if (series.getAllowDuplicateXValues()) {
             throw new IllegalArgumentException(
                 "Cannot accept XYSeries that allow duplicate values. "
@@ -164,9 +165,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
      * @param series  the series (<code>null</code> not permitted).
      */
     private void updateXPoints(XYSeries series) {
-        if (series == null) {
-            throw new IllegalArgumentException("Null 'series' not permitted.");
-        }
+        ParamChecks.nullNotPermitted(series, "series");
         Set<Number> seriesXPoints = new HashSet<Number>();
         boolean savedState = this.propagateEvents;
         this.propagateEvents = false;
@@ -376,17 +375,11 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
      * @param series  the series (<code>null</code> not permitted).
      */
     public void removeSeries(XYSeries series) {
-
-        // check arguments...
-        if (series == null) {
-            throw new IllegalArgumentException("Null 'series' argument.");
-        }
-
-        // remove the series...
+        ParamChecks.nullNotPermitted(series, "series");
         if (this.data.contains(series)) {
             series.removeChangeListener(this);
             this.data.remove(series);
-            if (this.data.size() == 0) {
+            if (this.data.isEmpty()) {
                 this.xPoints.clear();
             }
             fireDatasetChanged();
@@ -411,7 +404,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
         XYSeries s = this.data.get(series);
         s.removeChangeListener(this);
         this.data.remove(series);
-        if (this.data.size() == 0) {
+        if (this.data.isEmpty()) {
             this.xPoints.clear();
         }
         else if (this.autoPrune) {
@@ -427,9 +420,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
      * @param x  the x-value.
      */
     public void removeAllValuesForX(Number x) {
-        if (x == null) {
-            throw new IllegalArgumentException("Null 'x' argument.");
-        }
+        ParamChecks.nullNotPermitted(x, "x");
         boolean savedState = this.propagateEvents;
         this.propagateEvents = false;
         for (XYSeries series : this.data) {

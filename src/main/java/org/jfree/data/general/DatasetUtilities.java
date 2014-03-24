@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------
@@ -122,13 +122,15 @@
  *               MultiValueCategoryDataset (PK);
  * 10-Sep-2009 : Fix bug 2849731 for IntervalCategoryDataset (DG);
  * 16-Feb-2010 : Patch 2952086 - find z-bounds (MH);
- *
+ * 02-Jul-2013 : Use ParamChecks (DG);
+ * 
  */
 
 package org.jfree.data.general;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.util.ArrayUtilities;
 import org.jfree.chart.util.ParamChecks;
@@ -2143,6 +2145,7 @@ public final class DatasetUtilities {
      * @since 1.0.5
      */
     public static double calculateStackTotal(TableXYDataset dataset, int item) {
+        ParamChecks.nullNotPermitted(dataset, "dataset");
         double total = 0.0;
         int seriesCount = dataset.getSeriesCount();
         for (int s = 0; s < seriesCount; s++) {

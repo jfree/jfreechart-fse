@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------------
  * StandardCategoryURLGenerator.java
  * ---------------------------------
- * (C) Copyright 2002-2012, by Richard Atkinson and Contributors.
+ * (C) Copyright 2002-2013, by Richard Atkinson and Contributors.
  *
  * Original Author:  Richard Atkinson;
  * Contributors:     David Gilbert (for Object Refinery Limited);
@@ -50,12 +50,14 @@
  * 02-Feb-2007 : Removed author tags from all over JFreeChart sources (DG);
  * 17-Apr-2007 : Use new URLUtilities class to encode URLs (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
 package org.jfree.chart.urls;
 
 import java.io.Serializable;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.category.CategoryDataset;
@@ -92,9 +94,7 @@ public class StandardCategoryURLGenerator implements CategoryURLGenerator,
      * @param prefix  the prefix to the URL (<code>null</code> not permitted).
      */
     public StandardCategoryURLGenerator(String prefix) {
-        if (prefix == null) {
-            throw new IllegalArgumentException("Null 'prefix' argument.");
-        }
+        ParamChecks.nullNotPermitted(prefix, "prefix");
         this.prefix = prefix;
     }
 
@@ -111,17 +111,9 @@ public class StandardCategoryURLGenerator implements CategoryURLGenerator,
                                         String seriesParameterName,
                                         String categoryParameterName) {
 
-        if (prefix == null) {
-            throw new IllegalArgumentException("Null 'prefix' argument.");
-        }
-        if (seriesParameterName == null) {
-            throw new IllegalArgumentException(
-                    "Null 'seriesParameterName' argument.");
-        }
-        if (categoryParameterName == null) {
-            throw new IllegalArgumentException(
-                    "Null 'categoryParameterName' argument.");
-        }
+        ParamChecks.nullNotPermitted(prefix, "prefix");
+        ParamChecks.nullNotPermitted(seriesParameterName, "seriesParameterName");
+        ParamChecks.nullNotPermitted(categoryParameterName, "categoryParameterName");
         this.prefix = prefix;
         this.seriesParameterName = seriesParameterName;
         this.categoryParameterName = categoryParameterName;

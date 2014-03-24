@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
  * DialValueIndicator.java
  * -----------------------
- * (C) Copyright 2006-2012, by Object Refinery Limited.
+ * (C) Copyright 2006-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -39,6 +39,7 @@
  * 24-Oct-2007 : Added default constructor and missing event notification (DG);
  * 09-Jun-2009 : Improved indicator resizing, fixes bug 2802014 (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -71,6 +72,7 @@ import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
@@ -259,9 +261,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * @see #getFrameAnchor()
      */
     public void setFrameAnchor(RectangleAnchor anchor) {
-        if (anchor == null) {
-            throw new IllegalArgumentException("Null 'anchor' argument.");
-        }
+        ParamChecks.nullNotPermitted(anchor, "anchor");
         this.frameAnchor = anchor;
         notifyListeners(new DialLayerChangeEvent(this));
     }
@@ -286,9 +286,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * @see #setTemplateValue(Number)
      */
     public void setTemplateValue(Number value) {
-        if (value == null) {
-            throw new IllegalArgumentException("Null 'value' argument.");
-        }
+        ParamChecks.nullNotPermitted(value, "value");
         this.templateValue = value;
         notifyListeners(new DialLayerChangeEvent(this));
     }
@@ -342,9 +340,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * @see #getNumberFormat()
      */
     public void setNumberFormat(NumberFormat formatter) {
-        if (formatter == null) {
-            throw new IllegalArgumentException("Null 'formatter' argument.");
-        }
+        ParamChecks.nullNotPermitted(formatter, "formatter");
         this.formatter = formatter;
         notifyListeners(new DialLayerChangeEvent(this));
     }
@@ -367,9 +363,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * @param font  the font (<code>null</code> not permitted).
      */
     public void setFont(Font font) {
-        if (font == null) {
-            throw new IllegalArgumentException("Null 'font' argument.");
-        }
+        ParamChecks.nullNotPermitted(font, "font");
         this.font = font;
         notifyListeners(new DialLayerChangeEvent(this));
     }
@@ -394,9 +388,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * @see #getPaint()
      */
     public void setPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.paint = paint;
         notifyListeners(new DialLayerChangeEvent(this));
     }
@@ -421,9 +413,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * @see #getBackgroundPaint()
      */
     public void setBackgroundPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.backgroundPaint = paint;
         notifyListeners(new DialLayerChangeEvent(this));
     }
@@ -448,9 +438,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * @see #getOutlineStroke()
      */
     public void setOutlineStroke(Stroke stroke) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         this.outlineStroke = stroke;
         notifyListeners(new DialLayerChangeEvent(this));
     }
@@ -475,9 +463,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * @see #getOutlinePaint()
      */
     public void setOutlinePaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.outlinePaint = paint;
         notifyListeners(new DialLayerChangeEvent(this));
     }
@@ -502,9 +488,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * @see #getInsets()
      */
     public void setInsets(RectangleInsets insets) {
-        if (insets == null) {
-            throw new IllegalArgumentException("Null 'insets' argument.");
-        }
+        ParamChecks.nullNotPermitted(insets, "insets");
         this.insets = insets;
         notifyListeners(new DialLayerChangeEvent(this));
     }
@@ -529,9 +513,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * @see #getValueAnchor()
      */
     public void setValueAnchor(RectangleAnchor anchor) {
-        if (anchor == null) {
-            throw new IllegalArgumentException("Null 'anchor' argument.");
-        }
+        ParamChecks.nullNotPermitted(anchor, "anchor");
         this.valueAnchor = anchor;
         notifyListeners(new DialLayerChangeEvent(this));
     }
@@ -556,9 +538,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
      * @see #getTextAnchor()
      */
     public void setTextAnchor(TextAnchor anchor) {
-        if (anchor == null) {
-            throw new IllegalArgumentException("Null 'anchor' argument.");
-        }
+        ParamChecks.nullNotPermitted(anchor, "anchor");
         this.textAnchor = anchor;
         notifyListeners(new DialLayerChangeEvent(this));
     }

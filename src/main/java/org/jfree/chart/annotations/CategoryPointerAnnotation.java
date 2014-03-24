@@ -39,6 +39,7 @@
  * 24-Jun-2009 : Fire change events (see patch 2809117 by PK) (DG);
  * 30-Mar-2010 : Correct calculation of pointer line (see patch 2954302) (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -351,9 +352,7 @@ public class CategoryPointerAnnotation extends CategoryTextAnnotation
      * @see #getArrowPaint()
      */
     public void setArrowPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.arrowPaint = paint;
         fireAnnotationChanged();
     }

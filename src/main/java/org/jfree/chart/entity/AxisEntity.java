@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------
  * AxisEntity.java
  * ----------------
- * (C) Copyright 2009-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2009-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  Peter Kolb;
  * Contributor(s):   ;
@@ -36,6 +36,7 @@
  * --------
  * 15-Feb-2009 : Version 1 (PK);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -49,6 +50,7 @@ import java.io.ObjectOutputStream;
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.axis.Axis;
 import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
@@ -100,10 +102,7 @@ public class AxisEntity extends ChartEntity {
     public AxisEntity(Shape area, Axis axis, String toolTipText,
             String urlText) {
         super(area, toolTipText, urlText);
-        if (axis == null) {
-            throw new IllegalArgumentException("Null 'axis' argument.");
-        }
-
+        ParamChecks.nullNotPermitted(axis, "axis");
         this.axis = axis;
     }
 

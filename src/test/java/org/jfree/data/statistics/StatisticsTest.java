@@ -36,7 +36,7 @@
  * -------
  * 25-Mar-2004 : Version 1 (DG);
  * 04-Oct-2004 : Eliminated NumberUtils usage (DG);
- *
+ * 21-Mar-2014 : Fixed string for null comparison test. (TH)
  */
 
 package org.jfree.data.statistics;
@@ -424,7 +424,7 @@ public class StatisticsTest  {
             fail("IllegalArgumentException should have been thrown on null key");
         }
         catch (IllegalArgumentException e) {
-            assertEquals("Null 'data' array.", e.getMessage());
+            assertEquals("Null 'data' argument.", e.getMessage());
         }
 
         // try zero length array

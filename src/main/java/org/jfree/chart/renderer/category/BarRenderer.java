@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------
  * BarRenderer.java
  * ----------------
- * (C) Copyright 2002-2012, by Object Refinery Limited.
+ * (C) Copyright 2002-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Christian W. Zuckschwerdt;
@@ -90,6 +90,7 @@
  * 14-Jan-2009 : Added support for seriesVisible flags (PK);
  * 03-Feb-2009 : Added defaultShadowsVisible flag - see patch 2511330 (PK);
  * 15-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -129,6 +130,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
 
@@ -181,9 +183,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
      * @since 1.0.11
      */
     public static void setDefaultBarPainter(BarPainter painter) {
-        if (painter == null) {
-            throw new IllegalArgumentException("Null 'painter' argument.");
-        }
+        ParamChecks.nullNotPermitted(painter, "painter");
         BarRenderer.defaultBarPainter = painter;
     }
 
@@ -598,9 +598,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
      * @since 1.0.11
      */
     public void setBarPainter(BarPainter painter) {
-        if (painter == null) {
-            throw new IllegalArgumentException("Null 'painter' argument.");
-        }
+        ParamChecks.nullNotPermitted(painter, "painter");
         this.barPainter = painter;
         fireChangeEvent();
     }
@@ -654,9 +652,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
      * @since 1.0.11
      */
     public void setShadowPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.shadowPaint = paint;
         fireChangeEvent();
     }

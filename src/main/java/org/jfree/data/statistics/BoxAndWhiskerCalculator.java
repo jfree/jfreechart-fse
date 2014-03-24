@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------------
  * BoxAndWhiskerCalculator.java
  * ----------------------------
- * (C) Copyright 2003-2008,  by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2013,  by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -41,6 +41,7 @@
  * ------------- JFREECHART 1.0.x ---------------------------------------------
  * 15-Nov-2006 : Cleaned up handling of null arguments, and null or NaN items
  *               in the list (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -51,6 +52,7 @@ import org.jfree.chart.axis.NumberComparator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * A utility class that calculates the mean, median, quartiles Q1 and Q3, plus
@@ -93,9 +95,7 @@ public abstract class BoxAndWhiskerCalculator {
     public static BoxAndWhiskerItem calculateBoxAndWhiskerStatistics(
             List<Number> values, boolean stripNullAndNaNItems) {
 
-        if (values == null) {
-            throw new IllegalArgumentException("Null 'values' argument.");
-        }
+        ParamChecks.nullNotPermitted(values, "values");
 
         List<Number> vlist;
         if (stripNullAndNaNItems) {
@@ -171,9 +171,7 @@ public abstract class BoxAndWhiskerCalculator {
      * @return The first quartile.
      */
     public static double calculateQ1(List<Number> values) {
-        if (values == null) {
-            throw new IllegalArgumentException("Null 'values' argument.");
-        }
+        ParamChecks.nullNotPermitted(values, "values");
 
         double result = Double.NaN;
         int count = values.size();
@@ -206,9 +204,7 @@ public abstract class BoxAndWhiskerCalculator {
      * @return The third quartile.
      */
     public static double calculateQ3(List<Number> values) {
-        if (values == null) {
-            throw new IllegalArgumentException("Null 'values' argument.");
-        }
+        ParamChecks.nullNotPermitted(values, "values");
         double result = Double.NaN;
         int count = values.size();
         if (count > 0) {

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------------------
  * StandardXYZToolTipGenerator.java
  * --------------------------------
- * (C) Copyright 2004-2012, by Object Refinery Limited.
+ * (C) Copyright 2004-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -37,6 +37,7 @@
  * 11-May-2003 : Version 1, split from StandardXYZItemLabelGenerator (DG);
  * 15-Jul-2004 : Switched getZ() and getZValue() methods (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -48,6 +49,7 @@ import java.text.MessageFormat;
 import java.text.NumberFormat;
 
 import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
 
@@ -106,9 +108,7 @@ public class StandardXYZToolTipGenerator extends StandardXYToolTipGenerator
                                        NumberFormat yFormat,
                                        NumberFormat zFormat) {
         super(formatString, xFormat, yFormat);
-        if (zFormat == null) {
-            throw new IllegalArgumentException("Null 'zFormat' argument.");
-        }
+        ParamChecks.nullNotPermitted(zFormat, "zFormat");
         this.zFormat = zFormat;
     }
 
@@ -128,9 +128,7 @@ public class StandardXYZToolTipGenerator extends StandardXYToolTipGenerator
                                        DateFormat yFormat,
                                        DateFormat zFormat) {
         super(formatString, xFormat, yFormat);
-        if (zFormat == null) {
-            throw new IllegalArgumentException("Null 'zFormat' argument.");
-        }
+        ParamChecks.nullNotPermitted(zFormat, "zFormat");
         this.zDateFormat = zFormat;
     }
 

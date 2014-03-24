@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------------
  * TimePeriodValuesCollection.java
  * -------------------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -45,6 +45,7 @@
  * 11-Jun-2007 : Fixed bug in getDomainBounds() method, and changed default
  *               value for domainIsPointsInTime to false (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -52,6 +53,7 @@ package org.jfree.data.time;
 
 import java.io.Serializable;
 import java.util.List;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.DomainInfo;
@@ -123,9 +125,7 @@ public class TimePeriodValuesCollection extends AbstractIntervalXYDataset
      * @see #getXPosition()
      */
     public void setXPosition(TimePeriodAnchor position) {
-        if (position == null) {
-            throw new IllegalArgumentException("Null 'position' argument.");
-        }
+        ParamChecks.nullNotPermitted(position, "position");
         this.xPosition = position;
     }
 
@@ -174,15 +174,10 @@ public class TimePeriodValuesCollection extends AbstractIntervalXYDataset
      * @param series  the time series.
      */
     public void addSeries(TimePeriodValues series) {
-
-        if (series == null) {
-            throw new IllegalArgumentException("Null 'series' argument.");
-        }
-
+        ParamChecks.nullNotPermitted(series, "series");
         this.data.add(series);
         series.addChangeListener(this);
         fireDatasetChanged();
-
     }
 
     /**
@@ -191,10 +186,7 @@ public class TimePeriodValuesCollection extends AbstractIntervalXYDataset
      * @param series  the series to remove (<code>null</code> not permitted).
      */
     public void removeSeries(TimePeriodValues series) {
-
-        if (series == null) {
-            throw new IllegalArgumentException("Null 'series' argument.");
-        }
+        ParamChecks.nullNotPermitted(series, "series");
         this.data.remove(series);
         series.removeChangeListener(this);
         fireDatasetChanged();

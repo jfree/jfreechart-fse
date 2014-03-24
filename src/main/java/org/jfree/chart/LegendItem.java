@@ -59,6 +59,7 @@
  * 15-Oct-2008 : Added new constructor (DG);
  * 28-Apr-2009 : Added various setter methods (DG);
  * 15-Jun-2012 : Removed JCommon dependency (DG);
+ * 01-Jul-2013 : Use ParamChecks class (DG);
  *
  */
 

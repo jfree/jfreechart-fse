@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------
  * BarRenderer3D.java
  * ------------------
- * (C) Copyright 2001-2012, by Serge V. Grachov and Contributors.
+ * (C) Copyright 2001-2013, by Serge V. Grachov and Contributors.
  *
  * Original Author:  Serge V. Grachov;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -94,6 +94,8 @@
  * 19-Mar-2009 : Override for drawRangeLine() method (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
  *
+ * 03-Jul-2013 : Use ParamChecks (DG);
+ * 
  */
 
 package org.jfree.chart.renderer.category;
@@ -137,6 +139,7 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
 
@@ -246,9 +249,7 @@ public class BarRenderer3D extends BarRenderer
      * @see #getWallPaint()
      */
     public void setWallPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.wallPaint = paint;
         fireChangeEvent();
     }

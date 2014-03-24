@@ -106,6 +106,7 @@
  *               false (DG);
  * 30-Mar-2009 : Added pan(double) method (DG);
  * 15-Jun-2012 : Remove JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
  * StandardXYItemRenderer.java
  * ---------------------------
- * (C) Copyright 2001-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2001-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Mark Watson (www.markwatson.com);
@@ -104,6 +104,7 @@
  * 21-Nov-2007 : Deprecated override flag methods (DG);
  * 02-Jun-2008 : Fixed tooltips for data items at lower edges of data area (DG);
  * 17-Jun-2008 : Apply legend shape, font and paint attributes (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -140,6 +141,7 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.urls.XYURLGenerator;
 import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.xy.XYDataset;
 
 /**
@@ -430,10 +432,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
      * @see #getGapThresholdType()
      */
     public void setGapThresholdType(UnitType thresholdType) {
-        if (thresholdType == null) {
-            throw new IllegalArgumentException(
-                    "Null 'thresholdType' argument.");
-        }
+        ParamChecks.nullNotPermitted(thresholdType, "thresholdType");
         this.gapThresholdType = thresholdType;
         fireChangeEvent();
     }
@@ -559,9 +558,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
      * @see #getLegendLine()
      */
     public void setLegendLine(Shape line) {
-        if (line == null) {
-            throw new IllegalArgumentException("Null 'line' argument.");
-        }
+        ParamChecks.nullNotPermitted(line, "line");
         this.legendLine = line;
         fireChangeEvent();
     }

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * --------------------
  * FastScatterPlot.java
  * --------------------
- * (C) Copyright 2002-2012, by Object Refinery Limited.
+ * (C) Copyright 2002-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Arnaud Lelievre;
@@ -60,6 +60,7 @@
  *               Jess Thrysoee (DG);
  * 26-Mar-2009 : Implemented Pannable, and fixed bug in zooming (DG);
  * 15-Jun-2012 : Remove JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -94,6 +95,7 @@ import org.jfree.chart.util.ArrayUtilities;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.event.PlotChangeEvent;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.ResourceBundleWrapper;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
@@ -193,12 +195,8 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
                            ValueAxis domainAxis, ValueAxis rangeAxis) {
 
         super();
-        if (domainAxis == null) {
-            throw new IllegalArgumentException("Null 'domainAxis' argument.");
-        }
-        if (rangeAxis == null) {
-            throw new IllegalArgumentException("Null 'rangeAxis' argument.");
-        }
+        ParamChecks.nullNotPermitted(domainAxis, "domainAxis");
+        ParamChecks.nullNotPermitted(rangeAxis, "rangeAxis");
 
         this.data = data;
         this.xDataRange = calculateXDataRange(data);
@@ -288,9 +286,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      * @see #getDomainAxis()
      */
     public void setDomainAxis(ValueAxis axis) {
-        if (axis == null) {
-            throw new IllegalArgumentException("Null 'axis' argument.");
-        }
+        ParamChecks.nullNotPermitted(axis, "axis");
         this.domainAxis = axis;
         fireChangeEvent();
     }
@@ -317,9 +313,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      * @see #getRangeAxis()
      */
     public void setRangeAxis(ValueAxis axis) {
-        if (axis == null) {
-            throw new IllegalArgumentException("Null 'axis' argument.");
-        }
+        ParamChecks.nullNotPermitted(axis, "axis");
         this.rangeAxis = axis;
         fireChangeEvent();
     }
@@ -345,9 +339,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      * @see #getPaint()
      */
     public void setPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.paint = paint;
         fireChangeEvent();
     }
@@ -402,9 +394,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      * @see #getDomainGridlineStroke()
      */
     public void setDomainGridlineStroke(Stroke stroke) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         this.domainGridlineStroke = stroke;
         fireChangeEvent();
     }
@@ -430,9 +420,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      * @see #getDomainGridlinePaint()
      */
     public void setDomainGridlinePaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.domainGridlinePaint = paint;
         fireChangeEvent();
     }
@@ -486,9 +474,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      * @see #getRangeGridlineStroke()
      */
     public void setRangeGridlineStroke(Stroke stroke) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         this.rangeGridlineStroke = stroke;
         fireChangeEvent();
     }
@@ -514,9 +500,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      * @see #getRangeGridlinePaint()
      */
     public void setRangeGridlinePaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.rangeGridlinePaint = paint;
         fireChangeEvent();
     }

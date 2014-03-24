@@ -27,7 +27,7 @@
  * ---------------
  * NumberAxis.java
  * ---------------
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Laurence Vanhelsuwe;
@@ -96,6 +96,7 @@
  *               collection (DG);
  * 19-Mar-2009 : Added entity support - see patch 2603321 by Peter Kolb (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -121,6 +122,7 @@ import org.jfree.chart.event.AxisChangeEvent;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.ValueAxisPlot;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.Range;
 import org.jfree.data.RangeType;
 
@@ -224,9 +226,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
      * @see #getRangeType()
      */
     public void setRangeType(RangeType rangeType) {
-        if (rangeType == null) {
-            throw new IllegalArgumentException("Null 'rangeType' argument.");
-        }
+        ParamChecks.nullNotPermitted(rangeType, "rangeType");
         this.rangeType = rangeType;
         notifyListeners(new AxisChangeEvent(this));
     }
@@ -342,9 +342,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
     public void setTickUnit(NumberTickUnit unit, boolean notify,
                             boolean turnOffAutoSelect) {
 
-        if (unit == null) {
-            throw new IllegalArgumentException("Null 'unit' argument.");
-        }
+        ParamChecks.nullNotPermitted(unit, "unit");
         this.tickUnit = unit;
         if (turnOffAutoSelect) {
             setAutoTickUnitSelection(false, false);

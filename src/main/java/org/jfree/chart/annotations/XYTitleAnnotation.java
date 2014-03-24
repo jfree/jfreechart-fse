@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -68,6 +68,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.title.Title;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.XYCoordinateType;
 import org.jfree.data.Range;
 
@@ -130,12 +131,8 @@ public class XYTitleAnnotation extends AbstractXYAnnotation
     public XYTitleAnnotation(double x, double y, Title title,
             RectangleAnchor anchor) {
         super();
-        if (title == null) {
-            throw new IllegalArgumentException("Null 'title' argument.");
-        }
-        if (anchor == null) {
-            throw new IllegalArgumentException("Null 'anchor' argument.");
-        }
+        ParamChecks.nullNotPermitted(title, "title");
+        ParamChecks.nullNotPermitted(anchor, "anchor");
         this.coordinateType = XYCoordinateType.RELATIVE;
         this.x = x;
         this.y = y;

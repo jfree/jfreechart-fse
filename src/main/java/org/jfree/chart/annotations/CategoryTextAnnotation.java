@@ -46,6 +46,7 @@
  * 23-Apr-2008 : Implemented PublicCloneable (DG);
  * 24-Jun-2009 : Fire change events (see patch 2809117 by PK) (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -123,9 +124,7 @@ public class CategoryTextAnnotation extends TextAnnotation
      * @see #getCategory()
      */
     public void setCategory(Comparable category) {
-        if (category == null) {
-            throw new IllegalArgumentException("Null 'category' argument.");
-        }
+        ParamChecks.nullNotPermitted(category, "category");
         this.category = category;
         fireAnnotationChanged();
     }

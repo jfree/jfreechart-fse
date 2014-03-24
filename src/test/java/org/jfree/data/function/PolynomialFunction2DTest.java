@@ -35,7 +35,7 @@
  * Changes
  * -------
  * 28-May-2009 : Version 1 (DG);
- *
+ * 21-Mar-2014 : Fixed string for null comparison test. (TH)
  */
 
 package org.jfree.data.function;
@@ -79,7 +79,7 @@ public class PolynomialFunction2DTest  {
             fail("Should have thrown an IllegalArgumnetException on null parameter");
         }
         catch (IllegalArgumentException e) {
-            assertEquals("Null 'coefficients' argument", e.getMessage());
+            assertEquals("Null 'coefficients' argument.", e.getMessage());
         }
     }
 

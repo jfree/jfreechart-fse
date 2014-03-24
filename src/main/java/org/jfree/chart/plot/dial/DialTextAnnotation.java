@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
  * DialTextAnnotation.java
  * -----------------------
- * (C) Copyright 2006-2012, by Object Refinery Limited.
+ * (C) Copyright 2006-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -39,6 +39,7 @@
  * 17-Oct-2007 : Updated equals() (DG);
  * 24-Oct-2007 : Added getAnchor() and setAnchor() methods (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -61,6 +62,7 @@ import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
@@ -101,9 +103,7 @@ public class DialTextAnnotation extends AbstractDialLayer implements DialLayer,
      * @param label  the label (<code>null</code> not permitted).
      */
     public DialTextAnnotation(String label) {
-        if (label == null) {
-            throw new IllegalArgumentException("Null 'label' argument.");
-        }
+        ParamChecks.nullNotPermitted(label, "label");
         this.angle = -90.0;
         this.radius = 0.3;
         this.font = new Font("Dialog", Font.BOLD, 14);
@@ -132,9 +132,7 @@ public class DialTextAnnotation extends AbstractDialLayer implements DialLayer,
      * @see #getLabel()
      */
     public void setLabel(String label) {
-        if (label == null) {
-            throw new IllegalArgumentException("Null 'label' argument.");
-        }
+        ParamChecks.nullNotPermitted(label, "label");
         this.label = label;
         notifyListeners(new DialLayerChangeEvent(this));
     }
@@ -159,9 +157,7 @@ public class DialTextAnnotation extends AbstractDialLayer implements DialLayer,
      * @see #getFont()
      */
     public void setFont(Font font) {
-        if (font == null) {
-            throw new IllegalArgumentException("Null 'font' argument.");
-        }
+        ParamChecks.nullNotPermitted(font, "font");
         this.font = font;
         notifyListeners(new DialLayerChangeEvent(this));
     }
@@ -186,9 +182,7 @@ public class DialTextAnnotation extends AbstractDialLayer implements DialLayer,
      * @see #getPaint()
      */
     public void setPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.paint = paint;
         notifyListeners(new DialLayerChangeEvent(this));
     }
@@ -272,9 +266,7 @@ public class DialTextAnnotation extends AbstractDialLayer implements DialLayer,
      * @see #getAnchor()
      */
     public void setAnchor(TextAnchor anchor) {
-        if (anchor == null) {
-            throw new IllegalArgumentException("Null 'anchor' argument.");
-        }
+        ParamChecks.nullNotPermitted(anchor, "anchor");
         this.anchor = anchor;
         notifyListeners(new DialLayerChangeEvent(this));
     }

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * ---------------------------
  * ClusteredXYBarRenderer.java
  * ---------------------------
- * (C) Copyright 2003-2012, by Paolo Cova and Contributors.
+ * (C) Copyright 2003-2013, by Paolo Cova and Contributors.
  *
  * Original Author:  Paolo Cova;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -61,6 +61,7 @@
  *               entity generation code (DG);
  * 24-Jun-2008 : Added new barPainter mechanism (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -79,6 +80,7 @@ import org.jfree.chart.plot.CrosshairState;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.Range;
 import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.XYDataset;
@@ -170,9 +172,7 @@ public class ClusteredXYBarRenderer extends XYBarRenderer
      * @return The range (possibly <code>null</code>).
      */
     protected Range findDomainBoundsWithOffset(IntervalXYDataset dataset) {
-        if (dataset == null) {
-            throw new IllegalArgumentException("Null 'dataset' argument.");
-        }
+        ParamChecks.nullNotPermitted(dataset, "dataset");
         double minimum = Double.POSITIVE_INFINITY;
         double maximum = Double.NEGATIVE_INFINITY;
         int seriesCount = dataset.getSeriesCount();

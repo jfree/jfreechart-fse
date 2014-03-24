@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------------------------
  * StandardCategorySeriesLabelGenerator.java
  * -----------------------------------------
- * (C) Copyright 2005-2012, by Object Refinery Limited.
+ * (C) Copyright 2005-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -39,6 +39,7 @@
  * 03-May-2006 : Fixed equals() method (bug 1481102) (DG);
  * 31-Mar-2008 : Added hashCode() method to appease FindBugs (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -48,6 +49,7 @@ import java.io.Serializable;
 import java.text.MessageFormat;
 
 import org.jfree.chart.HashUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.category.CategoryDataset;
 
@@ -81,9 +83,7 @@ public class StandardCategorySeriesLabelGenerator implements
      * @param format  the format pattern (<code>null</code> not permitted).
      */
     public StandardCategorySeriesLabelGenerator(String format) {
-        if (format == null) {
-            throw new IllegalArgumentException("Null 'format' argument.");
-        }
+        ParamChecks.nullNotPermitted(format, "format");
         this.formatPattern = format;
     }
 
@@ -97,9 +97,7 @@ public class StandardCategorySeriesLabelGenerator implements
      */
     @Override
     public String generateLabel(CategoryDataset dataset, int series) {
-        if (dataset == null) {
-            throw new IllegalArgumentException("Null 'dataset' argument.");
-        }
+        ParamChecks.nullNotPermitted(dataset, "dataset");
         String label = MessageFormat.format(this.formatPattern,
                 createItemArray(dataset, series));
         return label;

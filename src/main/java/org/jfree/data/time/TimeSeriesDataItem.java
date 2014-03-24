@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
  * TimeSeriesDataItem.java
  * -----------------------
- * (C) Copyright 2001-2012, by Object Refinery Limited.
+ * (C) Copyright 2001-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -45,6 +45,8 @@
  * 09-Jun-2009 : Tidied up equals() (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
+ * 03-Jul-2013 : Use ParamChecks (DG);
+ * 
  */
 
 package org.jfree.data.time;
@@ -52,6 +54,7 @@ package org.jfree.data.time;
 import java.io.Serializable;
 
 import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * Represents one data item in a time series.
@@ -96,9 +99,7 @@ public class TimeSeriesDataItem implements Cloneable, Comparable<TimeSeriesDataI
      * @param value  the value (<code>null</code> permitted).
      */
     public TimeSeriesDataItem(RegularTimePeriod period, Number value) {
-        if (period == null) {
-            throw new IllegalArgumentException("Null 'period' argument.");
-        }
+        ParamChecks.nullNotPermitted(period, "period");
         this.period = period;
         this.value = value;
     }

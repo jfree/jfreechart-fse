@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * ----------------------
  * StandardDialFrame.java
  * ----------------------
- * (C) Copyright 2006-2012, by Object Refinery Limited.
+ * (C) Copyright 2006-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -38,6 +38,7 @@
  * 08-Mar-2007 : Fix in hashCode() (DG);
  * 29-Oct-2007 : Renamed StandardDialFrame (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -59,6 +60,7 @@ import java.io.Serializable;
 
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtilities;
 
@@ -152,9 +154,7 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame,
      * @see #getBackgroundPaint()
      */
     public void setBackgroundPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.backgroundPaint = paint;
         notifyListeners(new DialLayerChangeEvent(this));
     }
@@ -179,9 +179,7 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame,
      * @see #getForegroundPaint()
      */
     public void setForegroundPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.foregroundPaint = paint;
         notifyListeners(new DialLayerChangeEvent(this));
     }
@@ -206,9 +204,7 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame,
      * @see #getStroke()
      */
     public void setStroke(Stroke stroke) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         this.stroke = stroke;
         notifyListeners(new DialLayerChangeEvent(this));
     }

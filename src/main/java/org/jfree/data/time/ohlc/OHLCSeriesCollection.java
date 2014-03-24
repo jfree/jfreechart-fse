@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------------
  * OHLCSeriesCollection.java
  * -------------------------
- * (C) Copyright 2006-2012, by Object Refinery Limited.
+ * (C) Copyright 2006-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -39,6 +39,7 @@
  * 23-May-2009 : Added hashCode() implementation (DG);
  * 26-Jun-2009 : Added removeSeries() methods (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -49,6 +50,7 @@ import java.util.List;
 
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.time.RegularTimePeriod;
 import org.jfree.data.time.TimePeriodAnchor;
@@ -100,9 +102,7 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      * @since 1.0.11
      */
     public void setXPosition(TimePeriodAnchor anchor) {
-        if (anchor == null) {
-            throw new IllegalArgumentException("Null 'anchor' argument.");
-        }
+        ParamChecks.nullNotPermitted(anchor, "anchor");
         this.xPosition = anchor;
         notifyListeners(new DatasetChangeEvent(this, this));
     }
@@ -114,9 +114,7 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      * @param series  the series (<code>null</code> not permitted).
      */
     public void addSeries(OHLCSeries series) {
-        if (series == null) {
-            throw new IllegalArgumentException("Null 'series' argument.");
-        }
+        ParamChecks.nullNotPermitted(series, "series");
         this.data.add(series);
         series.addChangeListener(this);
         fireDatasetChanged();
@@ -414,9 +412,7 @@ public class OHLCSeriesCollection extends AbstractXYDataset
      * @since 1.0.14
      */
     public boolean removeSeries(OHLCSeries series) {
-        if (series == null) {
-            throw new IllegalArgumentException("Null 'series' argument.");
-        }
+        ParamChecks.nullNotPermitted(series, "series");
         boolean removed = this.data.remove(series);
         if (removed) {
             series.removeChangeListener(this);

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
  * IntervalXYDelegate.java
  * -----------------------
- * (C) Copyright 2004-2012, by Andreas Schroeder and Contributors.
+ * (C) Copyright 2004-2013, by Andreas Schroeder and Contributors.
  *
  * Original Author:  Andreas Schroeder;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -48,6 +48,7 @@
  * 02-Feb-2007 : Removed author tags all over JFreeChart sources (DG);
  * 06-Mar-2009 : Implemented hashCode() (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -57,6 +58,7 @@ import java.io.Serializable;
 
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.DomainInfo;
 import org.jfree.data.Range;
 import org.jfree.data.RangeInfo;

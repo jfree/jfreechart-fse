@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * ------------------
  * KeyToGroupMap.java
  * ------------------
- * (C) Copyright 2004-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -40,6 +40,7 @@
  * 18-Aug-2005 : Added casts in clone() method to suppress 1.5 compiler
  *               warnings - see patch 1260587 (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -54,6 +55,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
@@ -88,9 +90,7 @@ public class KeyToGroupMap implements Cloneable, PublicCloneable, Serializable {
      * @param defaultGroup  the default group (<code>null</code> not permitted).
      */
     public KeyToGroupMap(Comparable defaultGroup) {
-        if (defaultGroup == null) {
-            throw new IllegalArgumentException("Null 'defaultGroup' argument.");
-        }
+        ParamChecks.nullNotPermitted(defaultGroup, "defaultGroup");
         this.defaultGroup = defaultGroup;
         this.groups = new ArrayList<Comparable>();
         this.keyToGroupMap = new HashMap<Comparable, Comparable>();
@@ -153,9 +153,7 @@ public class KeyToGroupMap implements Cloneable, PublicCloneable, Serializable {
      *         there is no mapping for the specified key).
      */
     public Comparable getGroup(Comparable key) {
-        if (key == null) {
-            throw new IllegalArgumentException("Null 'key' argument.");
-        }
+        ParamChecks.nullNotPermitted(key, "key");
         Comparable result = this.defaultGroup;
         Comparable group = this.keyToGroupMap.get(key);
         if (group != null) {
@@ -172,9 +170,7 @@ public class KeyToGroupMap implements Cloneable, PublicCloneable, Serializable {
      *               existing mapping).
      */
     public void mapKeyToGroup(Comparable key, Comparable group) {
-        if (key == null) {
-            throw new IllegalArgumentException("Null 'key' argument.");
-        }
+        ParamChecks.nullNotPermitted(key, "key");
         Comparable currentGroup = getGroup(key);
         if (!currentGroup.equals(this.defaultGroup)) {
             if (!currentGroup.equals(group)) {
@@ -207,9 +203,7 @@ public class KeyToGroupMap implements Cloneable, PublicCloneable, Serializable {
      * @return The key count.
      */
     public int getKeyCount(Comparable group) {
-        if (group == null) {
-            throw new IllegalArgumentException("Null 'group' argument.");
-        }
+        ParamChecks.nullNotPermitted(group, "group");
         int result = 0;
         for (Comparable g : this.keyToGroupMap.values()) {
             if (group.equals(g)) {

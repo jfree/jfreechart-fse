@@ -27,7 +27,7 @@
  * ---------------------------
  * CategoryLineAnnotation.java
  * ---------------------------
- * (C) Copyright 2005-2012, by Object Refinery Limited.
+ * (C) Copyright 2005-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Peter Kolb (patch 2809117);
@@ -40,6 +40,7 @@
  * 23-Apr-2008 : Implemented PublicCloneable (DG);
  * 24-Jun-2009 : Now extends AbstractAnnotation (see patch 2809117 by PK) (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -147,9 +148,7 @@ public class CategoryLineAnnotation extends AbstractAnnotation
      * @see #getCategory1()
      */
     public void setCategory1(Comparable category) {
-        if (category == null) {
-            throw new IllegalArgumentException("Null 'category' argument.");
-        }
+        ParamChecks.nullNotPermitted(category, "category");
         this.category1 = category;
         fireAnnotationChanged();
     }
@@ -247,9 +246,7 @@ public class CategoryLineAnnotation extends AbstractAnnotation
      * @see #getPaint()
      */
     public void setPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.paint = paint;
         fireAnnotationChanged();
     }

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * XYImageAnnotation.java
  * ----------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Mike Harris;
@@ -45,6 +45,8 @@
  *               Mike Harris) (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
  * 
+ * 02-Jul-2013 : Use ParamChecks (DG);
+ *
  */
 
 package org.jfree.chart.annotations;
@@ -68,6 +70,7 @@ import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * An annotation that allows an image to be placed at some location on
@@ -123,12 +126,8 @@ public class XYImageAnnotation extends AbstractXYAnnotation
     public XYImageAnnotation(double x, double y, Image image,
             RectangleAnchor anchor) {
         super();
-        if (image == null) {
-            throw new IllegalArgumentException("Null 'image' argument.");
-        }
-        if (anchor == null) {
-            throw new IllegalArgumentException("Null 'anchor' argument.");
-        }
+        ParamChecks.nullNotPermitted(image, "image");
+        ParamChecks.nullNotPermitted(anchor, "anchor");
         this.x = x;
         this.y = y;
         this.image = image;

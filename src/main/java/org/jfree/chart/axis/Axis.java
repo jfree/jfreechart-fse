@@ -83,7 +83,7 @@
  * 26-Sep-2008 : Added fireChangeEvent() method (DG);
  * 19-Mar-2009 : Added entity support - see patch 2603321 by Peter Kolb (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
- *
+ * 02-Jul-2013 : Use ParamChecks (DG); *
  */
 
 package org.jfree.chart.axis;

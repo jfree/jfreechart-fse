@@ -56,6 +56,7 @@
  * 12-Nov-2011 : Fixed bug 3432721, log-axis doesn't work (MH);
  * 12-Dec-2011 : Added support for radiusMinorGridilnesVisible (MH);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -835,9 +836,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      * @see #getAngleLabelFont()
      */
     public void setAngleLabelFont(Font font) {
-        if (font == null) {
-            throw new IllegalArgumentException("Null 'font' argument.");
-        }
+        ParamChecks.nullNotPermitted(font, "font");
         this.angleLabelFont = font;
         fireChangeEvent();
     }
@@ -1118,9 +1117,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      * @see #removeCornerTextItem(String)
      */
     public void addCornerTextItem(String text) {
-        if (text == null) {
-            throw new IllegalArgumentException("Null 'text' argument.");
-        }
+        ParamChecks.nullNotPermitted(text, "text");
         this.cornerTextItems.add(text);
         fireChangeEvent();
     }
@@ -1662,9 +1659,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      * @since 1.0.14
      */
     private List<Dataset> getDatasetsMappedToAxis(Integer axisIndex) {
-        if (axisIndex == null) {
-            throw new IllegalArgumentException("Null 'axisIndex' argument.");
-        }
+        ParamChecks.nullNotPermitted(axisIndex, "axisIndex");
         List<Dataset> result = new ArrayList<Dataset>();
         for (int i = 0; i < this.datasets.size(); i++) {
             List<Integer> mappedAxes = this.datasetToAxesMap.get(i);

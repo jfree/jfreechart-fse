@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * --------
  * Day.java
  * --------
- * (C) Copyright 2001-2009, by Object Refinery Limited.
+ * (C) Copyright 2001-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -58,6 +58,8 @@
  * 06-Oct-2006 : Refactored to cache first and last millisecond values (DG);
  * 16-Sep-2008 : Deprecated DEFAULT_TIME_ZONE (DG);
  * 02-Mar-2009 : Added new constructor with Locale (DG);
+ * 05-Jul-2012 : Replaced getTime().getTime() with getTimeInMillis() (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -71,6 +73,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.date.SerialDate;
 
@@ -135,9 +138,7 @@ public class Day extends RegularTimePeriod implements Serializable {
      * @param serialDate  the day (<code>null</code> not permitted).
      */
     public Day(SerialDate serialDate) {
-        if (serialDate == null) {
-            throw new IllegalArgumentException("Null 'serialDate' argument.");
-        }
+        ParamChecks.nullNotPermitted(serialDate, "serialDate");
         this.serialDate = serialDate;
         peg(Calendar.getInstance());
     }
@@ -163,15 +164,9 @@ public class Day extends RegularTimePeriod implements Serializable {
      * @param locale  the locale (<code>null</code> not permitted).
      */
     public Day(Date time, TimeZone zone, Locale locale) {
-        if (time == null) {
-            throw new IllegalArgumentException("Null 'time' argument.");
-        }
-        if (zone == null) {
-            throw new IllegalArgumentException("Null 'zone' argument.");
-        }
-        if (locale == null) {
-            throw new IllegalArgumentException("Null 'locale' argument.");
-        }
+        ParamChecks.nullNotPermitted(time, "time");
+        ParamChecks.nullNotPermitted(zone, "zone");
+        ParamChecks.nullNotPermitted(locale, "locale");
         Calendar calendar = Calendar.getInstance(zone, locale);
         calendar.setTime(time);
         int d = calendar.get(Calendar.DAY_OF_MONTH);

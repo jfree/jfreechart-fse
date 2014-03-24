@@ -41,6 +41,7 @@
  *               constructor (DG);
  * 02-Mar-2009 : Updated createInstance to use locale (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------
  * KeyedObjects.java
  * -----------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -39,6 +39,7 @@
  * 28-Sep-2007 : Clean up equals() method (DG);
  * 03-Oct-2007 : Make method behaviour consistent with DefaultKeyedValues (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 03-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -46,6 +47,7 @@ package org.jfree.data;
 
 import java.io.Serializable;
 import java.util.List;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.chart.util.PublicCloneable;
 
@@ -124,9 +126,7 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
      * @see #getKey(int)
      */
     public int getIndex(Comparable key) {
-        if (key == null) {
-            throw new IllegalArgumentException("Null 'key' argument.");
-        }
+        ParamChecks.nullNotPermitted(key, "key");
         int i = 0;
         for (KeyedObject ko : this.data) {
             if (ko.getKey().equals(key)) {
@@ -220,9 +220,7 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
         if (position < 0 || position > this.data.size()) {
             throw new IllegalArgumentException("'position' out of bounds.");
         }
-        if (key == null) {
-            throw new IllegalArgumentException("Null 'key' argument.");
-        }
+        ParamChecks.nullNotPermitted(key, "key");
         int pos = getIndex(key);
         if (pos >= 0) {
             this.data.remove(pos);

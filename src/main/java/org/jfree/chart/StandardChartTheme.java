@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
  * -----------------------
@@ -39,6 +39,7 @@
  * 10-Jul-2009 : Added shadowGenerator field (DG);
  * 29-Oct-2011 : Fixed Eclipse warnings (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks class (DG);
  *
  */
 
@@ -457,9 +458,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @since 1.0.13
      */
     public void setSmallFont(Font font) {
-        if (font == null) {
-            throw new IllegalArgumentException("Null 'font' argument.");
-        }
+        ParamChecks.nullNotPermitted(font, "font");
         this.smallFont = font;
     }
 
@@ -551,9 +550,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @see #getLegendBackgroundPaint()
      */
     public void setLegendBackgroundPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.legendBackgroundPaint = paint;
     }
 
@@ -645,9 +642,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @see #getLabelLinkStyle()
      */
     public void setLabelLinkStyle(PieLabelLinkStyle style) {
-        if (style == null) {
-            throw new IllegalArgumentException("Null 'style' argument.");
-        }
+        ParamChecks.nullNotPermitted(style, "style");
         this.labelLinkStyle = style;
     }
 
@@ -739,9 +734,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @since 1.0.13
      */
     public void setBaselinePaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.baselinePaint = paint;
     }
 
@@ -829,9 +822,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @see #getTickLabelPaint()
      */
     public void setTickLabelPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.tickLabelPaint = paint;
     }
 
@@ -945,9 +936,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @see #getXYBarPainter()
      */
     public void setXYBarPainter(XYBarPainter painter) {
-        if (painter == null) {
-            throw new IllegalArgumentException("Null 'painter' argument.");
-        }
+        ParamChecks.nullNotPermitted(painter, "painter");
         this.xyBarPainter = painter;
     }
 
@@ -1039,9 +1028,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @see #getGridBandPaint()
      */
     public void setGridBandPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.gridBandPaint = paint;
     }
 

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * ImageMapUtilities.java
  * ----------------------
- * (C) Copyright 2004-2012, by Richard Atkinson and Contributors.
+ * (C) Copyright 2004-2013, by Richard Atkinson and Contributors.
  *
  * Original Author:  Richard Atkinson;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -46,6 +46,7 @@
  * 19-Mar-2009 : Added javascriptEscape() method - see bug 2690293 by FH (DG);
  * 25-Mar-2009 : Reimplemented javascriptEscape() (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jul-2013 : Use ParamChecks (DG);
  *
  */
 
@@ -58,6 +59,7 @@ import org.jfree.chart.ChartRenderingInfo;
 import org.jfree.chart.util.StringUtils;
 import org.jfree.chart.entity.ChartEntity;
 import org.jfree.chart.entity.EntityCollection;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * Collection of utility methods related to producing image maps.
@@ -210,9 +212,7 @@ public class ImageMapUtilities {
      * @since 1.0.9
      */
     public static String htmlEscape(String input) {
-        if (input == null) {
-            throw new IllegalArgumentException("Null 'input' argument.");
-        }
+        ParamChecks.nullNotPermitted(input, "input");
         StringBuilder result = new StringBuilder();
         int length = input.length();
         for (int i = 0; i < length; i++) {
@@ -253,9 +253,7 @@ public class ImageMapUtilities {
      * @since 1.0.13
      */
     public static String javascriptEscape(String input) {
-        if (input == null) {
-            throw new IllegalArgumentException("Null 'input' argument.");
-        }
+        ParamChecks.nullNotPermitted(input, "input");
         StringBuilder result = new StringBuilder();
         int length = input.length();
         for (int i = 0; i < length; i++) {
