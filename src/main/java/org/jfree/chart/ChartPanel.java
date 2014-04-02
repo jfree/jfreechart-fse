@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * ChartPanel.java
  * ---------------
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Andrzej Porebski;
@@ -484,8 +484,26 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /** A flag that controls whether or not file extensions are enforced. */
     private boolean enforceFileExtensions;
 
-    /** A flag that indicates if original tooltip delays are changed. */
-    private boolean ownToolTipDelaysActive;
+    /** A flag that indicates if original tooltip settings are changed. */
+    private boolean toolTipSettingsActive;
+
+    /** 
+     * The tooltip initial delay to be used in this chart panel (defaults to
+     * the global ToolTipManager setting). 
+     */
+    private int toolTipInitialDelay;
+
+    /** 
+     * The tooltip dismiss delay to be used in this chart panel (defaults to
+     * the global ToolTipManager setting). 
+     */
+    private int toolTipDismissDelay;
+
+    /**
+     * The tooltip reshow delay to be used in this chart panel (defaults to
+     * the global ToolTipManager setting). 
+     */
+    private int toolTipReshowDelay;
 
     /** Original initial tooltip delay of ToolTipManager.sharedInstance(). */
     private int originalToolTipInitialDelay;
@@ -495,15 +513,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
     /** Original dismiss tooltip delay of ToolTipManager.sharedInstance(). */
     private int originalToolTipDismissDelay;
-
-    /** Own initial tooltip delay to be used in this chart panel. */
-    private int ownToolTipInitialDelay;
-
-    /** Own reshow tooltip delay to be used in this chart panel. */
-    private int ownToolTipReshowDelay;
-
-    /** Own dismiss tooltip delay to be used in this chart panel. */
-    private int ownToolTipDismissDelay;
 
     /** The factor used to zoom in on an axis range. */
     private double zoomInFactor = 0.5;
@@ -792,9 +801,9 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         // initialize ChartPanel-specific tool tip delays with
         // values the from ToolTipManager.sharedInstance()
         ToolTipManager ttm = ToolTipManager.sharedInstance();
-        this.ownToolTipInitialDelay = ttm.getInitialDelay();
-        this.ownToolTipDismissDelay = ttm.getDismissDelay();
-        this.ownToolTipReshowDelay = ttm.getReshowDelay();
+        this.toolTipInitialDelay = ttm.getInitialDelay();
+        this.toolTipDismissDelay = ttm.getDismissDelay();
+        this.toolTipReshowDelay = ttm.getReshowDelay();
 
         this.zoomAroundAnchor = false;
         this.zoomOutlinePaint = Color.BLUE;
@@ -1837,20 +1846,16 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @param e  the mouse event.
      */
     @Override
-    public void mouseEntered(MouseEvent e) {
-        if (!this.ownToolTipDelaysActive) {
+    public void mouseEntered(MouseEvent e) { 
+        if (!this.toolTipSettingsActive) {
             ToolTipManager ttm = ToolTipManager.sharedInstance();
-
             this.originalToolTipInitialDelay = ttm.getInitialDelay();
-            ttm.setInitialDelay(this.ownToolTipInitialDelay);
-
-            this.originalToolTipReshowDelay = ttm.getReshowDelay();
-            ttm.setReshowDelay(this.ownToolTipReshowDelay);
-
+            ttm.setInitialDelay(this.toolTipInitialDelay);
             this.originalToolTipDismissDelay = ttm.getDismissDelay();
-            ttm.setDismissDelay(this.ownToolTipDismissDelay);
-
-            this.ownToolTipDelaysActive = true;
+            ttm.setDismissDelay(this.toolTipDismissDelay);
+            this.originalToolTipReshowDelay = ttm.getReshowDelay();
+            ttm.setReshowDelay(this.toolTipReshowDelay);
+            this.toolTipSettingsActive = true;
         }
 
         if (this.liveMouseHandler != null) {
@@ -1859,7 +1864,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
         //handle auxiliary handlers
         int mods = e.getModifiers();
-          
         for (AbstractMouseHandler handler : auxiliaryMouseHandlers) {
             if (handler.getModifier() == 0 || 
                     (mods & handler.getModifier()) == handler.getModifier()) {
@@ -1877,13 +1881,13 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      */
     @Override
     public void mouseExited(MouseEvent e) {
-        if (this.ownToolTipDelaysActive) {
+        if (this.toolTipSettingsActive) {
             // restore original tooltip dealys
             ToolTipManager ttm = ToolTipManager.sharedInstance();
             ttm.setInitialDelay(this.originalToolTipInitialDelay);
-            ttm.setReshowDelay(this.originalToolTipReshowDelay);
             ttm.setDismissDelay(this.originalToolTipDismissDelay);
-            this.ownToolTipDelaysActive = false;
+            ttm.setReshowDelay(this.originalToolTipReshowDelay);
+            this.toolTipSettingsActive = false;
         }
 
         if (this.liveMouseHandler != null) {
@@ -2410,73 +2414,71 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     }
 
     /**
-     * Returns the initial tooltip delay value used inside this chart panel.
+     * Returns the tool tip initial delay value used inside this chart panel.
      *
      * @return An integer representing the initial delay value, in milliseconds.
      *
-     * @see javax.swing.ToolTipManager#getInitialDelay()
+     * @see #setToolTipInitialDelay(int) 
      */
-    public int getInitialDelay() {
-        return this.ownToolTipInitialDelay;
+    public int getToolTipInitialDelay() {
+        return this.toolTipInitialDelay;
     }
 
     /**
-     * Returns the reshow tooltip delay value used inside this chart panel.
+     * Sets the tool tip initial delay value for this chart panel.
      *
-     * @return An integer representing the reshow  delay value, in milliseconds.
+     * @param millis  the delay in milliseconds.
      *
-     * @see javax.swing.ToolTipManager#getReshowDelay()
+     * @see #getToolTipInitialDelay() 
      */
-    public int getReshowDelay() {
-        return this.ownToolTipReshowDelay;
+    public void setToolTipInitialDelay(int millis) {
+        this.toolTipInitialDelay = millis;
     }
 
     /**
-     * Returns the dismissal tooltip delay value used inside this chart panel.
+     * Returns the tool tip dismiss delay value used inside this chart panel.
      *
      * @return An integer representing the dismissal delay value, in
      *         milliseconds.
      *
-     * @see javax.swing.ToolTipManager#getDismissDelay()
+     * @see #setToolTipDismissDelay(int) 
      */
-    public int getDismissDelay() {
-        return this.ownToolTipDismissDelay;
+    public int getToolTipDismissDelay() {
+        return this.toolTipDismissDelay;
     }
 
     /**
-     * Specifies the initial delay value for this chart panel.
+     * Sets the tool tip dismiss delay value for this chart panel.
      *
-     * @param delay  the number of milliseconds to delay (after the cursor has
-     *               paused) before displaying.
+     * @param millis  the delay in milliseconds.
      *
-     * @see javax.swing.ToolTipManager#setInitialDelay(int)
+     * @see #getToolTipDismissDelay() 
      */
-    public void setInitialDelay(int delay) {
-        this.ownToolTipInitialDelay = delay;
+    public void setToolTipDismissDelay(int millis) {
+        this.toolTipDismissDelay = millis;
     }
 
     /**
-     * Specifies the amount of time before the user has to wait initialDelay
-     * milliseconds before a tooltip will be shown.
+     * Returns the tool tip reshow delay value used inside this chart panel.
      *
-     * @param delay  time in milliseconds
+     * @return An integer representing the reshow delay value, in milliseconds.
      *
-     * @see javax.swing.ToolTipManager#setReshowDelay(int)
+     * @see #setToolTipReshowDelay(int) 
      */
-    public void setReshowDelay(int delay) {
-        this.ownToolTipReshowDelay = delay;
+    public int getToolTipReshowDelay() {
+        return this.toolTipReshowDelay;
     }
 
     /**
-     * Specifies the dismissal delay value for this chart panel.
+     * Specifies the amount of time that the user has to wait in
+     * milliseconds before a tooltip will be reshown.
      *
-     * @param delay the number of milliseconds to delay before taking away the
-     *              tooltip
+     * @param millis  the delay in milliseconds.
      *
-     * @see javax.swing.ToolTipManager#setDismissDelay(int)
+     * @see #getToolTipReshowDelay() 
      */
-    public void setDismissDelay(int delay) {
-        this.ownToolTipDismissDelay = delay;
+    public void setToolTipReshowDelay(int millis) {
+        this.toolTipReshowDelay = millis;
     }
 
     /**
