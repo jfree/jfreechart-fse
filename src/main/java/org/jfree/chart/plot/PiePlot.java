@@ -376,7 +376,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
     private double shadowYOffset = 4.0f;
 
     /** The percentage amount to explode each pie section. */
-    private Map<Comparable, Number> explodePercentages;
+    private Map<Comparable<?>, Number> explodePercentages;
 
     /** The section label generator. */
     private PieSectionLabelGenerator labelGenerator;
@@ -584,7 +584,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         this.baseSectionOutlineStroke = DEFAULT_OUTLINE_STROKE;
         this.autoPopulateSectionOutlineStroke = false;
 
-        this.explodePercentages = new TreeMap<Comparable, Number>();
+        this.explodePercentages = new TreeMap<Comparable<?>, Number>();
 
         this.labelGenerator = new StandardPieSectionLabelGenerator();
         this.labelFont = DEFAULT_LABEL_FONT;
@@ -1580,7 +1580,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             throw new IllegalArgumentException("Null 'key' argument.");
         }
         if (this.explodePercentages == null) {
-            this.explodePercentages = new TreeMap<Comparable, Number>();
+            this.explodePercentages = new TreeMap<Comparable<?>, Number>();
         }
         this.explodePercentages.put(key, percent);
         fireChangeEvent();
@@ -3441,6 +3441,16 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
     @Override
     public Object clone() throws CloneNotSupportedException {
         PiePlot clone = (PiePlot) super.clone();
+        clone.sectionPaintMap = (PaintMap) this.sectionPaintMap.clone();
+        clone.sectionOutlinePaintMap 
+                = (PaintMap) this.sectionOutlinePaintMap.clone();
+        clone.sectionOutlineStrokeMap 
+                = (StrokeMap) this.sectionOutlineStrokeMap.clone();
+        clone.explodePercentages 
+                = new TreeMap<Comparable<?>, Number>(this.explodePercentages);
+        if (this.labelGenerator != null) {
+            clone.labelGenerator = ObjectUtilities.clone(this.labelGenerator);
+        }
         if (clone.dataset != null) {
             clone.dataset.addChangeListener(clone);
         }
@@ -3450,13 +3460,16 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         }
         clone.legendItemShape = ShapeUtilities.clone(this.legendItemShape);
         if (this.legendLabelGenerator != null) {
-            clone.legendLabelGenerator = ObjectUtilities.clone(this.legendLabelGenerator);
+            clone.legendLabelGenerator = ObjectUtilities.clone(
+                    this.legendLabelGenerator);
         }
         if (this.legendLabelToolTipGenerator != null) {
-            clone.legendLabelToolTipGenerator = ObjectUtilities.clone(this.legendLabelToolTipGenerator);
+            clone.legendLabelToolTipGenerator = ObjectUtilities.clone(
+                    this.legendLabelToolTipGenerator);
         }
         if (this.legendLabelURLGenerator instanceof PublicCloneable) {
-            clone.legendLabelURLGenerator = ObjectUtilities.clone(this.legendLabelURLGenerator);
+            clone.legendLabelURLGenerator = ObjectUtilities.clone(
+                    this.legendLabelURLGenerator);
         }
         return clone;
     }
