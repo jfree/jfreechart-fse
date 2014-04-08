@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * AbstractObjectList.java
  * -----------------------
- * (C)opyright 2003-2012, by Object Refinery Limited and Contributors.
+ * (C)opyright 2003-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Bill Kelemen; 
@@ -92,8 +92,7 @@ public class AbstractObjectList<T> implements Cloneable, Serializable {
      * @param initialCapacity  the initial capacity.
      * @param increment  the increment.
      */
-    protected AbstractObjectList(final int initialCapacity, 
-                                 final int increment) {
+    protected AbstractObjectList(int initialCapacity, int increment) {
         this.objects = new Object[initialCapacity];
         this.increment = increment;
     }
@@ -120,12 +119,12 @@ public class AbstractObjectList<T> implements Cloneable, Serializable {
      * @param index  the object index.
      * @param object  the object (<code>null</code> permitted).
      */
-    protected void set(final int index, final T object) {
+    protected void set(int index, T object) {
         if (index < 0) {
             throw new IllegalArgumentException("Requires index >= 0.");
         }
         if (index >= this.objects.length) {
-            final Object[] enlarged = new Object[index + this.increment];
+            Object[] enlarged = new Object[index + this.increment];
             System.arraycopy(this.objects, 0, enlarged, 0, this.objects.length);
             this.objects = enlarged;
         }
@@ -158,7 +157,7 @@ public class AbstractObjectList<T> implements Cloneable, Serializable {
      *
      * @return The index or -1.
      */
-    protected int indexOf(final T object) {
+    protected int indexOf(T object) {
         for (int index = 0; index < this.size; index++) {
             if (this.objects[index] == object) {
                 return (index);
@@ -175,22 +174,15 @@ public class AbstractObjectList<T> implements Cloneable, Serializable {
      * @return A boolean.
      */
     @Override
-    public boolean equals(final Object obj) {
-
-        if (obj == null) {
-            return false;
-        }
-
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
-
         if (!(obj instanceof AbstractObjectList)) {
             return false;
         }
-
-        final AbstractObjectList<?> other = (AbstractObjectList<?>) obj;
-        final int listSize = size();
+        AbstractObjectList<?> other = (AbstractObjectList<?>) obj;
+        int listSize = size();
         for (int i = 0; i < listSize; i++) {
            if (!ObjectUtilities.equal(get(i), other.get(i))) {
                return false;
@@ -220,16 +212,13 @@ public class AbstractObjectList<T> implements Cloneable, Serializable {
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
-
-        final AbstractObjectList<?> clone = (AbstractObjectList<?>) super.clone();
+        AbstractObjectList<?> clone = (AbstractObjectList<?>) super.clone();
         if (this.objects != null) {
             clone.objects = new Object[this.objects.length];
-            System.arraycopy(
-                this.objects, 0, clone.objects, 0, this.objects.length
-            );
+            System.arraycopy(this.objects, 0, clone.objects, 
+                    0, this.objects.length);
         }
         return clone;
-
     }
 
     /**
@@ -239,23 +228,21 @@ public class AbstractObjectList<T> implements Cloneable, Serializable {
      *
      * @throws IOException  if there is an I/O error.
      */
-    private void writeObject(final ObjectOutputStream stream) 
+    private void writeObject(ObjectOutputStream stream) 
         throws IOException {
 
         stream.defaultWriteObject();
-        final int count = size();
+        int count = size();
         stream.writeInt(count);
         for (int i = 0; i < count; i++) {
-            final Object object = get(i);
+            Object object = get(i);
             if (object != null && object instanceof Serializable) {
                 stream.writeInt(i);
                 stream.writeObject(object);
-            }
-            else {
+            } else {
                 stream.writeInt(-1);
             }
         }
-
     }
     
     /**
@@ -266,19 +253,17 @@ public class AbstractObjectList<T> implements Cloneable, Serializable {
      * @throws IOException  if there is an I/O error.
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
-    private void readObject(final ObjectInputStream stream) 
-        throws IOException, ClassNotFoundException {
-
+    private void readObject(ObjectInputStream stream) 
+            throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.objects = new Object[this.size];
-        final int count = stream.readInt();
+        int count = stream.readInt();
         for (int i = 0; i < count; i++) {
-            final int index = stream.readInt();
+            int index = stream.readInt();
             if (index != -1) {
                 set(index, (T)stream.readObject());
             }
         }
-        
     }
   
 }
