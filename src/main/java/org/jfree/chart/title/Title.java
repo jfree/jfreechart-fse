@@ -98,7 +98,7 @@ public abstract class Title extends AbstractBlock
 
     /** The default horizontal alignment. */
     public static final HorizontalAlignment
-            DEFAULT_HORIZONTAL_ALIGNMENT = HorizontalAlignment.CENTER;
+            DEFAULT_HORIZONTAL_ALIGNMENT = HorizontalAlignment.LEFT;
 
     /** The default vertical alignment. */
     public static final VerticalAlignment
