@@ -184,7 +184,7 @@ public class AbstractObjectList<T> implements Cloneable, Serializable {
         AbstractObjectList<?> other = (AbstractObjectList<?>) obj;
         int listSize = size();
         for (int i = 0; i < listSize; i++) {
-           if (!ObjectUtilities.equal(get(i), other.get(i))) {
+           if (!ObjectUtils.equal(get(i), other.get(i))) {
                return false;
            }
         }

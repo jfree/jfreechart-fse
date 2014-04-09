@@ -70,7 +70,7 @@ import org.jfree.chart.ui.GradientPaintTransformer;
 import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ShapeUtilities;
@@ -666,7 +666,7 @@ public class LegendGraphic extends AbstractBlock
         if (!PaintUtilities.equal(this.fillPaint, that.fillPaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.fillPaintTransformer,
+        if (!ObjectUtils.equal(this.fillPaintTransformer,
                 that.fillPaintTransformer)) {
             return false;
         }
@@ -676,7 +676,7 @@ public class LegendGraphic extends AbstractBlock
         if (!PaintUtilities.equal(this.outlinePaint, that.outlinePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.outlineStroke, that.outlineStroke)) {
+        if (!ObjectUtils.equal(this.outlineStroke, that.outlineStroke)) {
             return false;
         }
         if (this.shapeAnchor != that.shapeAnchor) {
@@ -694,7 +694,7 @@ public class LegendGraphic extends AbstractBlock
         if (!PaintUtilities.equal(this.linePaint, that.linePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.lineStroke, that.lineStroke)) {
+        if (!ObjectUtils.equal(this.lineStroke, that.lineStroke)) {
             return false;
         }
         return super.equals(obj);
@@ -708,7 +708,7 @@ public class LegendGraphic extends AbstractBlock
     @Override
     public int hashCode() {
         int result = 193;
-        result = 37 * result + ObjectUtilities.hashCode(this.fillPaint);
+        result = 37 * result + ObjectUtils.hashCode(this.fillPaint);
         // FIXME: use other fields too
         return result;
     }

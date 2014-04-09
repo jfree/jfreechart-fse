@@ -118,7 +118,7 @@ import javax.swing.event.EventListenerList;
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.BooleanList;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.ShapeList;
 import org.jfree.chart.util.ShapeUtilities;
@@ -3016,39 +3016,39 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
                 that.defaultOutlinePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.strokeList, that.strokeList)) {
+        if (!ObjectUtils.equal(this.strokeList, that.strokeList)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.defaultStroke, that.defaultStroke)) {
+        if (!ObjectUtils.equal(this.defaultStroke, that.defaultStroke)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.outlineStrokeList,
+        if (!ObjectUtils.equal(this.outlineStrokeList,
                 that.outlineStrokeList)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.defaultOutlineStroke,
+        if (!ObjectUtils.equal(this.defaultOutlineStroke,
                 that.defaultOutlineStroke)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.shapeList, that.shapeList)) {
+        if (!ObjectUtils.equal(this.shapeList, that.shapeList)) {
             return false;
         }
         if (!ShapeUtilities.equal(this.defaultShape, that.defaultShape)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.itemLabelsVisibleList,
+        if (!ObjectUtils.equal(this.itemLabelsVisibleList,
                 that.itemLabelsVisibleList)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.defaultItemLabelsVisible,
+        if (!ObjectUtils.equal(this.defaultItemLabelsVisible,
                 that.defaultItemLabelsVisible)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.itemLabelFontMap,
+        if (!ObjectUtils.equal(this.itemLabelFontMap,
                 that.itemLabelFontMap)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.defaultItemLabelFont,
+        if (!ObjectUtils.equal(this.defaultItemLabelFont,
                 that.defaultItemLabelFont)) {
             return false;
         }
@@ -3062,34 +3062,34 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
             return false;
         }
 
-        if (!ObjectUtilities.equal(this.positiveItemLabelPositionMap,
+        if (!ObjectUtils.equal(this.positiveItemLabelPositionMap,
                 that.positiveItemLabelPositionMap)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.defaultPositiveItemLabelPosition,
+        if (!ObjectUtils.equal(this.defaultPositiveItemLabelPosition,
                 that.defaultPositiveItemLabelPosition)) {
             return false;
         }
 
-        if (!ObjectUtilities.equal(this.negativeItemLabelPositionMap,
+        if (!ObjectUtils.equal(this.negativeItemLabelPositionMap,
                 that.negativeItemLabelPositionMap)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.defaultNegativeItemLabelPosition,
+        if (!ObjectUtils.equal(this.defaultNegativeItemLabelPosition,
                 that.defaultNegativeItemLabelPosition)) {
             return false;
         }
         if (this.itemLabelAnchorOffset != that.itemLabelAnchorOffset) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.createEntitiesList,
+        if (!ObjectUtils.equal(this.createEntitiesList,
                 that.createEntitiesList)) {
             return false;
         }
         if (this.defaultCreateEntities != that.defaultCreateEntities) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.legendShapeList,
+        if (!ObjectUtils.equal(this.legendShapeList,
                 that.legendShapeList)) {
             return false;
         }
@@ -3097,11 +3097,11 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
                 that.defaultLegendShape)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.legendTextFontMap, 
+        if (!ObjectUtils.equal(this.legendTextFontMap, 
                 that.legendTextFontMap)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.defaultLegendTextFont,
+        if (!ObjectUtils.equal(this.defaultLegendTextFont,
                 that.defaultLegendTextFont)) {
             return false;
         }

@@ -56,7 +56,7 @@ package org.jfree.chart.entity;
 import java.awt.Shape;
 import java.io.Serializable;
 
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.extension.DatasetCursor;
 import org.jfree.data.extension.impl.CategoryCursor;
@@ -231,7 +231,7 @@ public class CategoryItemEntity extends DataItemEntity
         if (!this.columnKey.equals(that.columnKey)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.dataset, that.dataset)) {
+        if (!ObjectUtils.equal(this.dataset, that.dataset)) {
             return false;
         }
 

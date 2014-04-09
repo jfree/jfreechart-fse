@@ -101,7 +101,7 @@ import java.util.Map;
 
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.Rotation;
 import org.jfree.chart.util.ShapeUtilities;
@@ -1479,11 +1479,11 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
         if (!this.labelGenerator.equals(that.labelGenerator)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.toolTipGenerator,
+        if (!ObjectUtils.equal(this.toolTipGenerator,
                 that.toolTipGenerator)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.urlGenerator,
+        if (!ObjectUtils.equal(this.urlGenerator,
                 that.urlGenerator)) {
             return false;
         }

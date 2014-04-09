@@ -47,7 +47,7 @@ package org.jfree.data.general;
 
 import java.io.Serializable;
 
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 
 /**
@@ -125,7 +125,7 @@ public class DefaultValueDataset extends AbstractDataset
         }
         if (obj instanceof ValueDataset) {
             ValueDataset vd = (ValueDataset) obj;
-            return ObjectUtilities.equal(this.value, vd.getValue());
+            return ObjectUtils.equal(this.value, vd.getValue());
         }
         return false;
     }

@@ -188,7 +188,7 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.ui.VerticalAlignment;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.JFreeChartEntity;
@@ -1569,7 +1569,7 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         if (this.borderVisible != that.borderVisible) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.borderStroke, that.borderStroke)) {
+        if (!ObjectUtils.equal(this.borderStroke, that.borderStroke)) {
             return false;
         }
         if (!PaintUtilities.equal(this.borderPaint, that.borderPaint)) {
@@ -1578,13 +1578,13 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         if (!this.padding.equals(that.padding)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.title, that.title)) {
+        if (!ObjectUtils.equal(this.title, that.title)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.subtitles, that.subtitles)) {
+        if (!ObjectUtils.equal(this.subtitles, that.subtitles)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.plot, that.plot)) {
+        if (!ObjectUtils.equal(this.plot, that.plot)) {
             return false;
         }
         if (!PaintUtilities.equal(
@@ -1592,7 +1592,7 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         )) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.backgroundImage,
+        if (!ObjectUtils.equal(this.backgroundImage,
                 that.backgroundImage)) {
             return false;
         }

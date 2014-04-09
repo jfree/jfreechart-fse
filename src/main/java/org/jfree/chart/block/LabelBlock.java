@@ -64,7 +64,7 @@ import java.io.ObjectOutputStream;
 
 import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.entity.ChartEntity;
@@ -399,10 +399,10 @@ public class LabelBlock extends AbstractBlock
         if (!PaintUtilities.equal(this.paint, that.paint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.toolTipText, that.toolTipText)) {
+        if (!ObjectUtils.equal(this.toolTipText, that.toolTipText)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.urlText, that.urlText)) {
+        if (!ObjectUtils.equal(this.urlText, that.urlText)) {
             return false;
         }
         if (!this.contentAlignmentPoint.equals(that.contentAlignmentPoint)) {

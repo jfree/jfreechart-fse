@@ -231,7 +231,7 @@ import org.jfree.chart.axis.ValueTick;
 import org.jfree.chart.ui.Layer;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ShapeUtilities;
@@ -4763,7 +4763,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
         if (this.orientation != that.orientation) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.axisOffset, that.axisOffset)) {
+        if (!ObjectUtils.equal(this.axisOffset, that.axisOffset)) {
             return false;
         }
         if (!this.domainAxes.equals(that.domainAxes)) {
@@ -4781,15 +4781,15 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
         if (!this.rangeAxisLocations.equals(that.rangeAxisLocations)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.datasetToDomainAxesMap,
+        if (!ObjectUtils.equal(this.datasetToDomainAxesMap,
                 that.datasetToDomainAxesMap)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.datasetToRangeAxesMap,
+        if (!ObjectUtils.equal(this.datasetToRangeAxesMap,
                 that.datasetToRangeAxesMap)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.renderers, that.renderers)) {
+        if (!ObjectUtils.equal(this.renderers, that.renderers)) {
             return false;
         }
         if (this.renderingOrder != that.renderingOrder) {
@@ -4807,7 +4807,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
         if (this.domainGridlinePosition != that.domainGridlinePosition) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.domainGridlineStroke,
+        if (!ObjectUtils.equal(this.domainGridlineStroke,
                 that.domainGridlineStroke)) {
             return false;
         }
@@ -4818,7 +4818,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
         if (this.rangeGridlinesVisible != that.rangeGridlinesVisible) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.rangeGridlineStroke,
+        if (!ObjectUtils.equal(this.rangeGridlineStroke,
                 that.rangeGridlineStroke)) {
             return false;
         }
@@ -4835,7 +4835,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
         if (this.rangeCrosshairValue != that.rangeCrosshairValue) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.rangeCrosshairStroke,
+        if (!ObjectUtils.equal(this.rangeCrosshairStroke,
                 that.rangeCrosshairStroke)) {
             return false;
         }
@@ -4847,37 +4847,37 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
                 != that.rangeCrosshairLockedOnData) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.foregroundDomainMarkers,
+        if (!ObjectUtils.equal(this.foregroundDomainMarkers,
                 that.foregroundDomainMarkers)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.backgroundDomainMarkers,
+        if (!ObjectUtils.equal(this.backgroundDomainMarkers,
                 that.backgroundDomainMarkers)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.foregroundRangeMarkers,
+        if (!ObjectUtils.equal(this.foregroundRangeMarkers,
                 that.foregroundRangeMarkers)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.backgroundRangeMarkers,
+        if (!ObjectUtils.equal(this.backgroundRangeMarkers,
                 that.backgroundRangeMarkers)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.annotations, that.annotations)) {
+        if (!ObjectUtils.equal(this.annotations, that.annotations)) {
             return false;
         }
         if (this.weight != that.weight) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.fixedDomainAxisSpace,
+        if (!ObjectUtils.equal(this.fixedDomainAxisSpace,
                 that.fixedDomainAxisSpace)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.fixedRangeAxisSpace,
+        if (!ObjectUtils.equal(this.fixedRangeAxisSpace,
                 that.fixedRangeAxisSpace)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.fixedLegendItems,
+        if (!ObjectUtils.equal(this.fixedLegendItems,
                 that.fixedLegendItems)) {
             return false;
         }
@@ -4887,11 +4887,11 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
         if (this.crosshairDatasetIndex != that.crosshairDatasetIndex) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.domainCrosshairColumnKey,
+        if (!ObjectUtils.equal(this.domainCrosshairColumnKey,
                 that.domainCrosshairColumnKey)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.domainCrosshairRowKey,
+        if (!ObjectUtils.equal(this.domainCrosshairRowKey,
                 that.domainCrosshairRowKey)) {
             return false;
         }
@@ -4899,7 +4899,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
                 that.domainCrosshairPaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.domainCrosshairStroke,
+        if (!ObjectUtils.equal(this.domainCrosshairStroke,
                 that.domainCrosshairStroke)) {
             return false;
         }
@@ -4911,7 +4911,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
                 that.rangeMinorGridlinePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.rangeMinorGridlineStroke,
+        if (!ObjectUtils.equal(this.rangeMinorGridlineStroke,
                 that.rangeMinorGridlineStroke)) {
             return false;
         }
@@ -4922,11 +4922,11 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
                 that.rangeZeroBaselinePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.rangeZeroBaselineStroke,
+        if (!ObjectUtils.equal(this.rangeZeroBaselineStroke,
                 that.rangeZeroBaselineStroke)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.shadowGenerator,
+        if (!ObjectUtils.equal(this.shadowGenerator,
                 that.shadowGenerator)) {
             return false;
         }
@@ -4984,15 +4984,15 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
             }
         }
         if (this.fixedDomainAxisSpace != null) {
-            clone.fixedDomainAxisSpace = ObjectUtilities.clone(
+            clone.fixedDomainAxisSpace = ObjectUtils.clone(
                     this.fixedDomainAxisSpace);
         }
         if (this.fixedRangeAxisSpace != null) {
-            clone.fixedRangeAxisSpace = ObjectUtilities.clone(
+            clone.fixedRangeAxisSpace = ObjectUtils.clone(
                     this.fixedRangeAxisSpace);
         }
 
-        clone.annotations = ObjectUtilities.deepClone(this.annotations);
+        clone.annotations = ObjectUtils.deepClone(this.annotations);
         clone.foregroundDomainMarkers = cloneMarkerMap(
                 this.foregroundDomainMarkers);
         clone.backgroundDomainMarkers = cloneMarkerMap(
@@ -5003,7 +5003,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
                 this.backgroundRangeMarkers);
         if (this.fixedLegendItems != null) {
             clone.fixedLegendItems
-                    = ObjectUtilities.deepClone(this.fixedLegendItems);
+                    = ObjectUtils.deepClone(this.fixedLegendItems);
         }
         return clone;
     }
@@ -5023,7 +5023,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
         Set<Integer> keys = map.keySet();
         for (Integer key : keys) {
             Collection<Marker> entry = map.get(key);
-            Collection<Marker> toAdd = ObjectUtilities.<Marker, Collection<Marker>>deepClone(entry);
+            Collection<Marker> toAdd = ObjectUtils.<Marker, Collection<Marker>>deepClone(entry);
             clone.put(key, toAdd);
         }
         return clone;

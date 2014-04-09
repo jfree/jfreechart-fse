@@ -54,7 +54,7 @@ package org.jfree.data.gantt;
 import java.io.Serializable;
 import java.util.List;
 
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.general.AbstractSeriesDataset;
 import org.jfree.data.general.SeriesChangeEvent;
@@ -678,7 +678,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
             return false;
         }
         TaskSeriesCollection that = (TaskSeriesCollection) obj;
-        if (!ObjectUtilities.equal(this.data, that.data)) {
+        if (!ObjectUtils.equal(this.data, that.data)) {
             return false;
         }
         return true;
@@ -695,7 +695,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
     @Override
     public Object clone() throws CloneNotSupportedException {
         TaskSeriesCollection clone = (TaskSeriesCollection) super.clone();
-        clone.data = ObjectUtilities.deepClone(this.data);
+        clone.data = ObjectUtils.deepClone(this.data);
         clone.keys = new java.util.ArrayList<Comparable>(this.keys);
         return clone;
     }

@@ -69,7 +69,7 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.ui.VerticalAlignment;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.event.TitleChangeEvent;
 
 /**
@@ -361,7 +361,7 @@ public class ImageTitle extends Title {
             return false;
         }
         ImageTitle that = (ImageTitle) obj;
-        if (!ObjectUtilities.equal(this.image, that.image)) {
+        if (!ObjectUtils.equal(this.image, that.image)) {
             return false;
         }
         return super.equals(obj);

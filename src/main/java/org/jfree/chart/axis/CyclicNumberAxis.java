@@ -67,7 +67,7 @@ import java.util.List;
 
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
@@ -1170,7 +1170,7 @@ public final class CyclicNumberAxis extends NumberAxis {
                 that.advanceLinePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.advanceLineStroke,
+        if (!ObjectUtils.equal(this.advanceLineStroke,
                 that.advanceLineStroke)) {
             return false;
         }

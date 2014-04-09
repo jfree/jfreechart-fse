@@ -99,7 +99,7 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.ObjectList;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.event.PlotChangeEvent;
@@ -1820,7 +1820,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
         if (!PaintUtilities.equal(this.angleLabelPaint, that.angleLabelPaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.angleGridlineStroke,
+        if (!ObjectUtils.equal(this.angleGridlineStroke,
                 that.angleGridlineStroke)) {
             return false;
         }
@@ -1832,7 +1832,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
         if (this.radiusGridlinesVisible != that.radiusGridlinesVisible) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.radiusGridlineStroke,
+        if (!ObjectUtils.equal(this.radiusGridlineStroke,
                 that.radiusGridlineStroke)) {
             return false;
         }
@@ -1850,7 +1850,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
         if (this.margin != that.margin) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.fixedLegendItems,
+        if (!ObjectUtils.equal(this.fixedLegendItems,
                 that.fixedLegendItems)) {
             return false;
         }
@@ -1869,7 +1869,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
     public Object clone() throws CloneNotSupportedException {
 
         PolarPlot clone = (PolarPlot) super.clone();
-        clone.axes = ObjectUtilities.clone(this.axes);
+        clone.axes = ObjectUtils.clone(this.axes);
         for (int i = 0; i < this.axes.size(); i++) {
             ValueAxis axis = this.axes.get(i);
             if (axis != null) {
@@ -1881,7 +1881,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
         }
 
         // the datasets are not cloned, but listeners need to be added...
-        clone.datasets = ObjectUtilities.clone(this.datasets);
+        clone.datasets = ObjectUtils.clone(this.datasets);
         for (int i = 0; i < clone.datasets.size(); ++i) {
             XYDataset d = getDataset(i);
             if (d != null) {
@@ -1889,7 +1889,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
             }
         }
 
-        clone.renderers = ObjectUtilities.clone(this.renderers);
+        clone.renderers = ObjectUtils.clone(this.renderers);
         for (int i = 0; i < this.renderers.size(); i++) {
             PolarItemRenderer renderer2 = this.renderers.get(i);
             if (renderer2 instanceof PublicCloneable) {

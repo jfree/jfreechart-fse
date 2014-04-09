@@ -51,7 +51,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 
@@ -151,7 +151,7 @@ public class StrokeMap implements Cloneable, Serializable {
         for (Comparable key : keys) {
             Stroke s1 = getStroke(key);
             Stroke s2 = that.getStroke(key);
-            if (!ObjectUtilities.equal(s1, s2)) {
+            if (!ObjectUtils.equal(s1, s2)) {
                 return false;
             }
         }

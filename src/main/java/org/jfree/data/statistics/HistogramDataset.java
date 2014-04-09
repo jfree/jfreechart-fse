@@ -48,7 +48,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.DomainOrder;
@@ -475,7 +475,7 @@ public class HistogramDataset extends AbstractIntervalXYDataset
     @Override
     public Object clone() throws CloneNotSupportedException {
         HistogramDataset clone = (HistogramDataset) super.clone();
-        clone.bins = ObjectUtilities.deepClone(this.bins);
+        clone.bins = ObjectUtils.deepClone(this.bins);
         return clone;
     }
 

@@ -104,7 +104,7 @@ public class ShapeUtilities {
     public static Shape clone(final Shape shape) {
         if (shape instanceof Cloneable) {
             try {
-                return ObjectUtilities.clone(shape);
+                return ObjectUtils.clone(shape);
             }
             catch (CloneNotSupportedException cnse) {
                 //this shouldn't be thrown if object is cloneable
@@ -144,7 +144,7 @@ public class ShapeUtilities {
         }
         else {
             // this will handle Rectangle2D...
-            return ObjectUtilities.equal(s1, s2);
+            return ObjectUtils.equal(s1, s2);
         }
     }
 

@@ -51,7 +51,7 @@ package org.jfree.data.time;
 
 import java.io.Serializable;
 
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 
 /**
  * Represents one data item in a time series.
@@ -160,10 +160,10 @@ public class TimeSeriesDataItem implements Cloneable, Comparable<TimeSeriesDataI
             return false;
         }
         TimeSeriesDataItem that = (TimeSeriesDataItem) obj;
-        if (!ObjectUtilities.equal(this.period, that.period)) {
+        if (!ObjectUtils.equal(this.period, that.period)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.value, that.value)) {
+        if (!ObjectUtils.equal(this.value, that.value)) {
             return false;
         }
         return true;

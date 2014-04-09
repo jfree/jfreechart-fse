@@ -121,7 +121,7 @@ import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.entity.CategoryLabelEntity;
@@ -1360,19 +1360,19 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
                 != this.categoryLabelPositionOffset) {
             return false;
         }
-        if (!ObjectUtilities.equal(that.categoryLabelPositions,
+        if (!ObjectUtils.equal(that.categoryLabelPositions,
                 this.categoryLabelPositions)) {
             return false;
         }
-        if (!ObjectUtilities.equal(that.categoryLabelToolTips,
+        if (!ObjectUtils.equal(that.categoryLabelToolTips,
                 this.categoryLabelToolTips)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.categoryLabelURLs, 
+        if (!ObjectUtils.equal(this.categoryLabelURLs, 
                 that.categoryLabelURLs)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.tickLabelFontMap,
+        if (!ObjectUtils.equal(this.tickLabelFontMap,
                 that.tickLabelFontMap)) {
             return false;
         }

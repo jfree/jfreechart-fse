@@ -44,7 +44,7 @@ package org.jfree.data.general;
 
 import java.io.Serializable;
 
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.data.DefaultKeyedValue;
 import org.jfree.data.KeyedValue;
 
@@ -162,10 +162,10 @@ public class DefaultKeyedValueDataset extends AbstractDataset
             }
             return true;
         }
-        if (!ObjectUtilities.equal(this.data.getKey(), that.getKey())) {
+        if (!ObjectUtils.equal(this.data.getKey(), that.getKey())) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.data.getValue(), that.getValue())) {
+        if (!ObjectUtils.equal(this.data.getValue(), that.getValue())) {
             return false;
         }
         return true;

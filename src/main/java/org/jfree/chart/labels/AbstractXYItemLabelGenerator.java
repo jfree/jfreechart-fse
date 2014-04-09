@@ -62,7 +62,7 @@ import java.text.NumberFormat;
 import java.util.Date;
 
 import org.jfree.chart.HashUtilities;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.data.xy.XYDataset;
 
 /**
@@ -318,16 +318,16 @@ public class AbstractXYItemLabelGenerator implements Cloneable, Serializable {
         if (!this.formatString.equals(that.formatString)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.xFormat, that.xFormat)) {
+        if (!ObjectUtils.equal(this.xFormat, that.xFormat)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.xDateFormat, that.xDateFormat)) {
+        if (!ObjectUtils.equal(this.xDateFormat, that.xDateFormat)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.yFormat, that.yFormat)) {
+        if (!ObjectUtils.equal(this.yFormat, that.yFormat)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.yDateFormat, that.yDateFormat)) {
+        if (!ObjectUtils.equal(this.yDateFormat, that.yDateFormat)) {
             return false;
         }
         if (!this.nullYString.equals(that.nullYString)) {

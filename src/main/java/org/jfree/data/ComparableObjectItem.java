@@ -43,7 +43,7 @@ package org.jfree.data;
 
 import java.io.Serializable;
 
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 
 /**
  * Represents one (Comparable, Object) data item for use in a
@@ -155,7 +155,7 @@ public class ComparableObjectItem implements Cloneable, Comparable<ComparableObj
         if (!this.x.equals(that.x)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.obj, that.obj)) {
+        if (!ObjectUtils.equal(this.obj, that.obj)) {
             return false;
         }
         return true;

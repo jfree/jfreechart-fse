@@ -48,7 +48,7 @@ import java.io.ObjectOutputStream;
 
 import org.jfree.chart.HashUtilities;
 import org.jfree.chart.axis.Axis;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
@@ -149,10 +149,10 @@ public class AxisEntity extends ChartEntity {
         if (!getArea().equals(that.getArea())) {
             return false;
         }
-        if (!ObjectUtilities.equal(getToolTipText(), that.getToolTipText())) {
+        if (!ObjectUtils.equal(getToolTipText(), that.getToolTipText())) {
             return false;
         }
-        if (!ObjectUtilities.equal(getURLText(), that.getURLText())) {
+        if (!ObjectUtils.equal(getURLText(), that.getURLText())) {
             return false;
         }
         if (!(this.axis.equals(that.axis))) {

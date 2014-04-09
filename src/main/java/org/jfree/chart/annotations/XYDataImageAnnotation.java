@@ -52,7 +52,7 @@ import java.io.ObjectOutputStream;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
@@ -323,7 +323,7 @@ public class XYDataImageAnnotation extends AbstractXYAnnotation
         if (this.includeInDataBounds != that.includeInDataBounds) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.image, that.image)) {
+        if (!ObjectUtils.equal(this.image, that.image)) {
             return false;
         }
         // seems to be the same...

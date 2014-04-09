@@ -82,7 +82,7 @@ import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.ValueAxisPlot;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.Range;
 
@@ -1042,7 +1042,7 @@ public class LogAxis extends ValueAxis {
         if (this.base != that.base) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.baseSymbol, that.baseSymbol)) {
+        if (!ObjectUtils.equal(this.baseSymbol, that.baseSymbol)) {
             return false;
         }
         if (!this.baseFormatter.equals(that.baseFormatter)) {
@@ -1051,7 +1051,7 @@ public class LogAxis extends ValueAxis {
         if (this.smallestValue != that.smallestValue) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.numberFormatOverride, 
+        if (!ObjectUtils.equal(this.numberFormatOverride, 
                 that.numberFormatOverride)) {
             return false;
         }

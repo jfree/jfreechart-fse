@@ -61,7 +61,7 @@ import org.jfree.chart.HashUtilities;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.event.AnnotationChangeEvent;
 import org.jfree.chart.plot.CategoryPlot;
@@ -469,7 +469,7 @@ public class CategoryPointerAnnotation extends CategoryTextAnnotation
         if (!this.arrowPaint.equals(that.arrowPaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.arrowStroke, that.arrowStroke)) {
+        if (!ObjectUtils.equal(this.arrowStroke, that.arrowStroke)) {
             return false;
         }
         if (this.labelOffset != that.labelOffset) {

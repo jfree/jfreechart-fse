@@ -71,7 +71,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jfree.chart.HashUtilities;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.DomainInfo;
@@ -435,7 +435,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset
         if (!this.intervalDelegate.equals(that.intervalDelegate)) {
             return false;
         }
-        return ObjectUtilities.equal(this.data, that.data);
+        return ObjectUtils.equal(this.data, that.data);
     }
 
     /**
@@ -448,7 +448,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset
     @Override
     public Object clone() throws CloneNotSupportedException {
         XYSeriesCollection clone = (XYSeriesCollection) super.clone();
-        clone.data = (List) ObjectUtilities.deepClone(this.data);
+        clone.data = (List) ObjectUtils.deepClone(this.data);
         clone.intervalDelegate
                 = (IntervalXYDelegate) this.intervalDelegate.clone();
         return clone;

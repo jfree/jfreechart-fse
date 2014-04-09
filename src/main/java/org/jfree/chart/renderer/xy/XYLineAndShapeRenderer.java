@@ -88,7 +88,7 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.util.BooleanList;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.entity.EntityCollection;
@@ -1168,7 +1168,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
             return false;
         }
         XYLineAndShapeRenderer that = (XYLineAndShapeRenderer) obj;
-        if (!ObjectUtilities.equal(this.seriesLinesVisible, 
+        if (!ObjectUtils.equal(this.seriesLinesVisible, 
                 that.seriesLinesVisible)) {
             return false;
         }
@@ -1178,14 +1178,14 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
         if (!ShapeUtilities.equal(this.legendLine, that.legendLine)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.seriesShapesVisible, 
+        if (!ObjectUtils.equal(this.seriesShapesVisible, 
                 that.seriesShapesVisible)) {
             return false;
         }
         if (this.baseShapesVisible != that.baseShapesVisible) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.seriesShapesFilled, 
+        if (!ObjectUtils.equal(this.seriesShapesFilled, 
                 that.seriesShapesFilled)) {
             return false;
         }

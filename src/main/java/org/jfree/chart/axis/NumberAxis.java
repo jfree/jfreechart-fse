@@ -116,7 +116,7 @@ import java.util.Locale;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.event.AxisChangeEvent;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
@@ -1333,10 +1333,10 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
         if (this.autoRangeStickyZero != that.autoRangeStickyZero) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.tickUnit, that.tickUnit)) {
+        if (!ObjectUtils.equal(this.tickUnit, that.tickUnit)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.numberFormatOverride,
+        if (!ObjectUtils.equal(this.numberFormatOverride,
                 that.numberFormatOverride)) {
             return false;
         }

@@ -118,7 +118,7 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.GradientPaintTransformer;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -1175,7 +1175,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
     public Object clone() throws CloneNotSupportedException {
         XYBarRenderer result = (XYBarRenderer) super.clone();
         if (this.gradientPaintTransformer != null) {
-            result.gradientPaintTransformer = ObjectUtilities.clone(this.gradientPaintTransformer);
+            result.gradientPaintTransformer = ObjectUtils.clone(this.gradientPaintTransformer);
         }
         return result;
     }
@@ -1208,15 +1208,15 @@ public class XYBarRenderer extends AbstractXYItemRenderer
         if (this.useYInterval != that.useYInterval) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.gradientPaintTransformer,
+        if (!ObjectUtils.equal(this.gradientPaintTransformer,
                 that.gradientPaintTransformer)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.positiveItemLabelPositionFallback,
+        if (!ObjectUtils.equal(this.positiveItemLabelPositionFallback,
                 that.positiveItemLabelPositionFallback)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.negativeItemLabelPositionFallback,
+        if (!ObjectUtils.equal(this.negativeItemLabelPositionFallback,
                 that.negativeItemLabelPositionFallback)) {
             return false;
         }

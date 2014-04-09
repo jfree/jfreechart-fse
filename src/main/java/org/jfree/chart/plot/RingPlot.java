@@ -72,7 +72,7 @@ import java.text.DecimalFormat;
 import java.text.Format;
 
 import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.Rotation;
 import org.jfree.chart.util.ShapeUtilities;
@@ -667,7 +667,7 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
         if (!this.centerTextMode.equals(that.centerTextMode)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.centerText, that.centerText)) {
+        if (!ObjectUtils.equal(this.centerText, that.centerText)) {
             return false;
         }
         if (!this.centerTextFormatter.equals(that.centerTextFormatter)) {
@@ -682,7 +682,7 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
         if (this.separatorsVisible != that.separatorsVisible) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.separatorStroke,
+        if (!ObjectUtils.equal(this.separatorStroke,
                 that.separatorStroke)) {
             return false;
         }

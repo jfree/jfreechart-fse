@@ -38,7 +38,7 @@
  * 15-Sep-2003 : Fixed bug in clone(List) method (DG);
  * 25-Nov-2004 : Modified clone(Object) method to fail with objects that
  *               cannot be cloned, added new deepClone(Collection) method.
- *               Renamed ObjectUtils --> ObjectUtilities (DG);
+ *               Renamed ObjectUtils --> ObjectUtils (DG);
  * 11-Jan-2005 : Removed deprecated code in preparation for 1.0.0 release (DG);
  * 18-Aug-2005 : Added casts to suppress compiler warnings, as suggested in
  *               patch 1260622 (DG);
@@ -57,12 +57,12 @@ import java.util.Collection;
  * A collection of useful static utility methods for handling classes and object
  * instantiation.
  */
-public final class ObjectUtilities {
+public final class ObjectUtils {
 
     /**
      * Default constructor - private.
      */
-    private ObjectUtilities() {
+    private ObjectUtils() {
     }
 
     /**
@@ -158,7 +158,7 @@ public final class ObjectUtilities {
         // all JDK-Collections are cloneable ...
         // and if the collection is not clonable, then we should throw
         // a CloneNotSupportedException anyway ...
-        final C result = ObjectUtilities.clone(collection);
+        final C result = ObjectUtils.clone(collection);
         result.clear();
         for (T item : collection) {
             if (item == null) {

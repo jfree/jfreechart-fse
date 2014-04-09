@@ -67,7 +67,7 @@ public class CloneUtils {
             Object value = source.get(key);
             if (value != null) {
                 try {
-                    result.put(key, ObjectUtilities.clone(value));
+                    result.put(key, ObjectUtils.clone(value));
                 } catch (CloneNotSupportedException ex) {
                     throw new RuntimeException(ex);
                 }

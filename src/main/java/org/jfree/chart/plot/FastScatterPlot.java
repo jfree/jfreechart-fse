@@ -91,7 +91,7 @@ import org.jfree.chart.axis.ValueTick;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ArrayUtilities;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.util.ResourceBundleWrapper;
@@ -1034,10 +1034,10 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
         if (!ArrayUtilities.equal(this.data, that.data)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.domainAxis, that.domainAxis)) {
+        if (!ObjectUtils.equal(this.domainAxis, that.domainAxis)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.rangeAxis, that.rangeAxis)) {
+        if (!ObjectUtils.equal(this.rangeAxis, that.rangeAxis)) {
             return false;
         }
         if (!PaintUtilities.equal(this.paint, that.paint)) {
@@ -1050,7 +1050,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
                 that.domainGridlinePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.domainGridlineStroke,
+        if (!ObjectUtils.equal(this.domainGridlineStroke,
                 that.domainGridlineStroke)) {
             return false;
         }
@@ -1061,7 +1061,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
                 that.rangeGridlinePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.rangeGridlineStroke,
+        if (!ObjectUtils.equal(this.rangeGridlineStroke,
                 that.rangeGridlineStroke)) {
             return false;
         }

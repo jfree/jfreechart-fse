@@ -56,7 +56,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jfree.chart.ChartRenderingInfo;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
@@ -224,13 +224,13 @@ public class PlotRenderingInfo implements Cloneable, Serializable {
             return false;
         }
         PlotRenderingInfo that = (PlotRenderingInfo) obj;
-        if (!ObjectUtilities.equal(this.dataArea, that.dataArea)) {
+        if (!ObjectUtils.equal(this.dataArea, that.dataArea)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.plotArea, that.plotArea)) {
+        if (!ObjectUtils.equal(this.plotArea, that.plotArea)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.subplotInfo, that.subplotInfo)) {
+        if (!ObjectUtils.equal(this.subplotInfo, that.subplotInfo)) {
             return false;
         }
         return true;

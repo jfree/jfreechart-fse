@@ -61,7 +61,7 @@ import java.io.Serializable;
 import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
@@ -347,20 +347,20 @@ public class TextBox implements Serializable {
             return false;
         }
         TextBox that = (TextBox) obj;
-        if (!ObjectUtilities.equal(this.outlinePaint, that.outlinePaint)) {
+        if (!ObjectUtils.equal(this.outlinePaint, that.outlinePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.outlineStroke, that.outlineStroke)) {
+        if (!ObjectUtils.equal(this.outlineStroke, that.outlineStroke)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.interiorGap, that.interiorGap)) {
+        if (!ObjectUtils.equal(this.interiorGap, that.interiorGap)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.backgroundPaint,
+        if (!ObjectUtils.equal(this.backgroundPaint,
                 that.backgroundPaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.shadowPaint, that.shadowPaint)) {
+        if (!ObjectUtils.equal(this.shadowPaint, that.shadowPaint)) {
             return false;
         }
         if (this.shadowXOffset != that.shadowXOffset) {
@@ -369,7 +369,7 @@ public class TextBox implements Serializable {
         if (this.shadowYOffset != that.shadowYOffset) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.textBlock, that.textBlock)) {
+        if (!ObjectUtils.equal(this.textBlock, that.textBlock)) {
             return false;
         }
 

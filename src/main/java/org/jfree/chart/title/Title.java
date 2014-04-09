@@ -76,7 +76,7 @@ import org.jfree.chart.ui.HorizontalAlignment;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.VerticalAlignment;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.event.TitleChangeEvent;
 import org.jfree.chart.event.TitleChangeListener;
 import org.jfree.chart.util.ParamChecks;
@@ -426,10 +426,10 @@ public abstract class Title extends AbstractBlock
     @Override
     public int hashCode() {
         int result = 193;
-        result = 37 * result + ObjectUtilities.hashCode(this.position);
+        result = 37 * result + ObjectUtils.hashCode(this.position);
         result = 37 * result
-                + ObjectUtilities.hashCode(this.horizontalAlignment);
-        result = 37 * result + ObjectUtilities.hashCode(this.verticalAlignment);
+                + ObjectUtils.hashCode(this.horizontalAlignment);
+        result = 37 * result + ObjectUtils.hashCode(this.verticalAlignment);
         return result;
     }
 

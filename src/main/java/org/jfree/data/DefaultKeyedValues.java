@@ -68,7 +68,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SortOrder;
 
@@ -470,9 +470,9 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable,
     @Override
     public Object clone() throws CloneNotSupportedException {
         DefaultKeyedValues clone = (DefaultKeyedValues) super.clone();
-        clone.keys = ObjectUtilities.clone(this.keys);
-        clone.values = ObjectUtilities.clone(this.values);
-        clone.indexMap = ObjectUtilities.clone(this.indexMap);
+        clone.keys = ObjectUtils.clone(this.keys);
+        clone.values = ObjectUtils.clone(this.values);
+        clone.indexMap = ObjectUtils.clone(this.indexMap);
         return clone;
     }
 

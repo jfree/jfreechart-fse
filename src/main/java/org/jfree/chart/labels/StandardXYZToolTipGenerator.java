@@ -47,7 +47,7 @@ import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
 
@@ -250,10 +250,10 @@ public class StandardXYZToolTipGenerator extends StandardXYToolTipGenerator
             return false;
         }
         StandardXYZToolTipGenerator that = (StandardXYZToolTipGenerator) obj;
-        if (!ObjectUtilities.equal(this.zFormat, that.zFormat)) {
+        if (!ObjectUtils.equal(this.zFormat, that.zFormat)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.zDateFormat, that.zDateFormat)) {
+        if (!ObjectUtils.equal(this.zDateFormat, that.zDateFormat)) {
             return false;
         }
         return true;

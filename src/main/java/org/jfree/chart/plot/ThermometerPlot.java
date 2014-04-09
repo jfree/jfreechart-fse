@@ -123,7 +123,7 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.UnitType;
 import org.jfree.chart.util.ResourceBundleWrapper;
@@ -1427,7 +1427,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
         if (!super.equals(obj)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.rangeAxis, that.rangeAxis)) {
+        if (!ObjectUtils.equal(this.rangeAxis, that.rangeAxis)) {
             return false;
         }
         if (this.axisLocation != that.axisLocation) {
@@ -1439,10 +1439,10 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
         if (this.upperBound != that.upperBound) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.padding, that.padding)) {
+        if (!ObjectUtils.equal(this.padding, that.padding)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.thermometerStroke,
+        if (!ObjectUtils.equal(this.thermometerStroke,
                 that.thermometerStroke)) {
             return false;
         }
@@ -1456,13 +1456,13 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
         if (this.valueLocation != that.valueLocation) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.valueFont, that.valueFont)) {
+        if (!ObjectUtils.equal(this.valueFont, that.valueFont)) {
             return false;
         }
         if (!PaintUtilities.equal(this.valuePaint, that.valuePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.valueFormat, that.valueFormat)) {
+        if (!ObjectUtils.equal(this.valueFormat, that.valueFormat)) {
             return false;
         }
         if (!PaintUtilities.equal(this.mercuryPaint, that.mercuryPaint)) {
@@ -1542,7 +1542,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
         if (clone.dataset != null) {
             clone.dataset.addChangeListener(clone);
         }
-        clone.rangeAxis = ObjectUtilities.clone(this.rangeAxis);
+        clone.rangeAxis = ObjectUtils.clone(this.rangeAxis);
         if (clone.rangeAxis != null) {
             clone.rangeAxis.setPlot(clone);
             clone.rangeAxis.addChangeListener(clone);

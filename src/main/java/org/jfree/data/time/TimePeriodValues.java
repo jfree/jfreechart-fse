@@ -52,7 +52,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.data.general.Series;
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesException;
@@ -422,11 +422,11 @@ public class TimePeriodValues extends Series implements Serializable {
             return false;
         }
         TimePeriodValues that = (TimePeriodValues) obj;
-        if (!ObjectUtilities.equal(this.getDomainDescription(),
+        if (!ObjectUtils.equal(this.getDomainDescription(),
                 that.getDomainDescription())) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.getRangeDescription(),
+        if (!ObjectUtils.equal(this.getRangeDescription(),
                 that.getRangeDescription())) {
             return false;
         }

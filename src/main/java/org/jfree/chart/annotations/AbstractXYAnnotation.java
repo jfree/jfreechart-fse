@@ -49,7 +49,7 @@ import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.XYAnnotationEntity;
 import org.jfree.chart.plot.PlotRenderingInfo;
@@ -183,10 +183,10 @@ public abstract class AbstractXYAnnotation extends AbstractAnnotation
             return false;
         }
         AbstractXYAnnotation that = (AbstractXYAnnotation) obj;
-        if (!ObjectUtilities.equal(this.toolTipText, that.toolTipText)) {
+        if (!ObjectUtils.equal(this.toolTipText, that.toolTipText)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.url, that.url)) {
+        if (!ObjectUtils.equal(this.url, that.url)) {
             return false;
         }
         return true;

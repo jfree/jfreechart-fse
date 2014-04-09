@@ -63,7 +63,7 @@ import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.util.BooleanList;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -534,7 +534,7 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
             return false;
         }
         ScatterRenderer that = (ScatterRenderer) obj;
-        if (!ObjectUtilities.equal(this.seriesShapesFilled,
+        if (!ObjectUtils.equal(this.seriesShapesFilled,
                 that.seriesShapesFilled)) {
             return false;
         }

@@ -63,7 +63,7 @@ import java.io.Serializable;
 
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.entity.EntityCollection;
@@ -303,7 +303,7 @@ public class YIntervalRenderer extends AbstractXYItemRenderer
             return false;
         }
         YIntervalRenderer that = (YIntervalRenderer) obj;
-        if (!ObjectUtilities.equal(this.additionalItemLabelGenerator,
+        if (!ObjectUtils.equal(this.additionalItemLabelGenerator,
                 that.additionalItemLabelGenerator)) {
             return false;
         }

@@ -62,7 +62,7 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.event.OverlayChangeEvent;
 import org.jfree.chart.plot.Crosshair;
@@ -586,8 +586,8 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
     @Override
     public Object clone() throws CloneNotSupportedException {
         CrosshairOverlay clone = (CrosshairOverlay) super.clone();
-        clone.xCrosshairs = ObjectUtilities.deepClone(this.xCrosshairs);
-        clone.yCrosshairs = ObjectUtilities.deepClone(this.yCrosshairs);
+        clone.xCrosshairs = ObjectUtils.deepClone(this.xCrosshairs);
+        clone.yCrosshairs = ObjectUtils.deepClone(this.yCrosshairs);
         return clone;
     }
 

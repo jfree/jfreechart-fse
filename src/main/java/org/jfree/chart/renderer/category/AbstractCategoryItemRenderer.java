@@ -137,7 +137,7 @@ import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ObjectList;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SortOrder;
 import org.jfree.chart.entity.CategoryItemEntity;
@@ -1352,39 +1352,39 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
         }
         AbstractCategoryItemRenderer that = (AbstractCategoryItemRenderer) obj;
 
-        if (!ObjectUtilities.equal(this.itemLabelGeneratorMap,
+        if (!ObjectUtils.equal(this.itemLabelGeneratorMap,
                 that.itemLabelGeneratorMap)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.defaultItemLabelGenerator,
+        if (!ObjectUtils.equal(this.defaultItemLabelGenerator,
                 that.defaultItemLabelGenerator)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.toolTipGeneratorMap,
+        if (!ObjectUtils.equal(this.toolTipGeneratorMap,
                 that.toolTipGeneratorMap)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.defaultToolTipGenerator,
+        if (!ObjectUtils.equal(this.defaultToolTipGenerator,
                 that.defaultToolTipGenerator)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.urlGeneratorMap, 
+        if (!ObjectUtils.equal(this.urlGeneratorMap, 
                 that.urlGeneratorMap)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.defaultURLGenerator,
+        if (!ObjectUtils.equal(this.defaultURLGenerator,
                 that.defaultURLGenerator)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.legendItemLabelGenerator,
+        if (!ObjectUtils.equal(this.legendItemLabelGenerator,
                 that.legendItemLabelGenerator)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.legendItemToolTipGenerator,
+        if (!ObjectUtils.equal(this.legendItemToolTipGenerator,
                 that.legendItemToolTipGenerator)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.legendItemURLGenerator,
+        if (!ObjectUtils.equal(this.legendItemURLGenerator,
                 that.legendItemURLGenerator)) {
             return false;
         }
@@ -1566,13 +1566,13 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
         }
 
         if (this.legendItemLabelGenerator instanceof PublicCloneable) {
-            clone.legendItemLabelGenerator = ObjectUtilities.clone(this.legendItemLabelGenerator);
+            clone.legendItemLabelGenerator = ObjectUtils.clone(this.legendItemLabelGenerator);
         }
         if (this.legendItemToolTipGenerator instanceof PublicCloneable) {
-            clone.legendItemToolTipGenerator = ObjectUtilities.clone(this.legendItemToolTipGenerator);
+            clone.legendItemToolTipGenerator = ObjectUtils.clone(this.legendItemToolTipGenerator);
         }
         if (this.legendItemURLGenerator instanceof PublicCloneable) {
-            clone.legendItemURLGenerator = ObjectUtilities.clone(this.legendItemURLGenerator);
+            clone.legendItemURLGenerator = ObjectUtils.clone(this.legendItemURLGenerator);
         }
         return clone;
     }

@@ -53,7 +53,7 @@ package org.jfree.chart.urls;
 
 import java.io.Serializable;
 
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.data.general.PieDataset;
 
 /**
@@ -175,7 +175,7 @@ public class StandardPieURLGenerator implements PieURLGenerator, Serializable {
         if (!this.categoryParameterName.equals(that.categoryParameterName)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.indexParameterName,
+        if (!ObjectUtils.equal(this.indexParameterName,
                 that.indexParameterName)) {
             return false;
         }

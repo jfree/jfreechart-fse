@@ -107,7 +107,7 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.util.BooleanList;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.entity.EntityCollection;
@@ -876,18 +876,18 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
         if (this.baseLinesVisible != that.baseLinesVisible) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.seriesLinesVisible,
+        if (!ObjectUtils.equal(this.seriesLinesVisible,
                 that.seriesLinesVisible)) {
             return false;
         }
         if (this.baseShapesVisible != that.baseShapesVisible) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.seriesShapesVisible,
+        if (!ObjectUtils.equal(this.seriesShapesVisible,
                 that.seriesShapesVisible)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.seriesShapesFilled,
+        if (!ObjectUtils.equal(this.seriesShapesFilled,
                 that.seriesShapesFilled)) {
             return false;
         }

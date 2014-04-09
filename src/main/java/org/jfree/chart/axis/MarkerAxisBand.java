@@ -60,7 +60,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.text.TextUtilities;
 
@@ -249,10 +249,10 @@ public class MarkerAxisBand implements Serializable {
         if (this.bottomOuterGap != that.bottomOuterGap) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.font, that.font)) {
+        if (!ObjectUtils.equal(this.font, that.font)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.markers, that.markers)) {
+        if (!ObjectUtils.equal(this.markers, that.markers)) {
             return false;
         }
         return true;

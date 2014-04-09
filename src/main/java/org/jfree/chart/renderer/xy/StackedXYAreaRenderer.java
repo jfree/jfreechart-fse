@@ -84,7 +84,7 @@ import java.io.Serializable;
 import java.util.Stack;
 
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ShapeUtilities;
@@ -659,7 +659,7 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
         if (!PaintUtilities.equal(this.shapePaint, that.shapePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.shapeStroke, that.shapeStroke)) {
+        if (!ObjectUtils.equal(this.shapeStroke, that.shapeStroke)) {
             return false;
         }
         return true;

@@ -150,7 +150,7 @@ import java.util.TimeZone;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.ValueAxisPlot;
@@ -1846,24 +1846,24 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
             return false;
         }
         DateAxis that = (DateAxis) obj;
-        if (!ObjectUtilities.equal(this.timeZone, that.timeZone)) {
+        if (!ObjectUtils.equal(this.timeZone, that.timeZone)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.locale, that.locale)) {
+        if (!ObjectUtils.equal(this.locale, that.locale)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.tickUnit, that.tickUnit)) {
+        if (!ObjectUtils.equal(this.tickUnit, that.tickUnit)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.dateFormatOverride,
+        if (!ObjectUtils.equal(this.dateFormatOverride,
                 that.dateFormatOverride)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.tickMarkPosition,
+        if (!ObjectUtils.equal(this.tickMarkPosition,
                 that.tickMarkPosition)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.timeline, that.timeline)) {
+        if (!ObjectUtils.equal(this.timeline, that.timeline)) {
             return false;
         }
         return super.equals(obj);

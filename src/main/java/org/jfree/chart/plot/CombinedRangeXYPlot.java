@@ -115,7 +115,7 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.event.PlotChangeListener;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
@@ -700,7 +700,7 @@ public class CombinedRangeXYPlot extends XYPlot
         if (this.gap != that.gap) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.subplots, that.subplots)) {
+        if (!ObjectUtils.equal(this.subplots, that.subplots)) {
             return false;
         }
         return super.equals(obj);
@@ -717,7 +717,7 @@ public class CombinedRangeXYPlot extends XYPlot
     @Override
     public Object clone() throws CloneNotSupportedException {
         CombinedRangeXYPlot result = (CombinedRangeXYPlot) super.clone();
-        result.subplots = (List<XYPlot>) ObjectUtilities.deepClone(this.subplots);
+        result.subplots = (List<XYPlot>) ObjectUtils.deepClone(this.subplots);
         for (XYPlot subplot : result.subplots) {
             subplot.setParent(result);
         }

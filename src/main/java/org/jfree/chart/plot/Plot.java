@@ -179,7 +179,7 @@ import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.ui.Align;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtilities;
@@ -1353,10 +1353,10 @@ public abstract class Plot implements AxisChangeListener,
             return false;
         }
         Plot that = (Plot) obj;
-        if (!ObjectUtilities.equal(this.noDataMessage, that.noDataMessage)) {
+        if (!ObjectUtils.equal(this.noDataMessage, that.noDataMessage)) {
             return false;
         }
-        if (!ObjectUtilities.equal(
+        if (!ObjectUtils.equal(
             this.noDataMessageFont, that.noDataMessageFont
         )) {
             return false;
@@ -1365,13 +1365,13 @@ public abstract class Plot implements AxisChangeListener,
                 that.noDataMessagePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.insets, that.insets)) {
+        if (!ObjectUtils.equal(this.insets, that.insets)) {
             return false;
         }
         if (this.outlineVisible != that.outlineVisible) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.outlineStroke, that.outlineStroke)) {
+        if (!ObjectUtils.equal(this.outlineStroke, that.outlineStroke)) {
             return false;
         }
         if (!PaintUtilities.equal(this.outlinePaint, that.outlinePaint)) {
@@ -1380,7 +1380,7 @@ public abstract class Plot implements AxisChangeListener,
         if (!PaintUtilities.equal(this.backgroundPaint, that.backgroundPaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.backgroundImage,
+        if (!ObjectUtils.equal(this.backgroundImage,
                 that.backgroundImage)) {
             return false;
         }
@@ -1420,10 +1420,10 @@ public abstract class Plot implements AxisChangeListener,
         // childs in combined plots instead
         if (this.datasetGroup != null) {
             clone.datasetGroup
-                = ObjectUtilities.clone(this.datasetGroup);
+                = ObjectUtils.clone(this.datasetGroup);
         }
         clone.drawingSupplier
-            = ObjectUtilities.clone(this.drawingSupplier);
+            = ObjectUtils.clone(this.drawingSupplier);
         clone.listenerList = new EventListenerList();
         return clone;
     }

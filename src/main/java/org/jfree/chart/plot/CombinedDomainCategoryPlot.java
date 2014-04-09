@@ -81,7 +81,7 @@ import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.event.PlotChangeListener;
 import org.jfree.chart.util.ParamChecks;
@@ -652,7 +652,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
         if (this.gap != that.gap) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.subplots, that.subplots)) {
+        if (!ObjectUtils.equal(this.subplots, that.subplots)) {
             return false;
         }
         return super.equals(obj);
@@ -670,7 +670,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
     public Object clone() throws CloneNotSupportedException {
         CombinedDomainCategoryPlot result
             = (CombinedDomainCategoryPlot) super.clone();
-        result.subplots = ObjectUtilities.deepClone(this.subplots);
+        result.subplots = ObjectUtils.deepClone(this.subplots);
         for (CategoryPlot child : this.subplots) {
             child.setParent(result);
         }

@@ -78,7 +78,7 @@ import org.jfree.chart.ui.LengthAdjustmentType;
 import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.event.MarkerChangeEvent;
 import org.jfree.chart.event.MarkerChangeListener;
@@ -599,22 +599,22 @@ public abstract class Marker implements Cloneable, Serializable {
         if (!PaintUtilities.equal(this.paint, that.paint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.stroke, that.stroke)) {
+        if (!ObjectUtils.equal(this.stroke, that.stroke)) {
             return false;
         }
         if (!PaintUtilities.equal(this.outlinePaint, that.outlinePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.outlineStroke, that.outlineStroke)) {
+        if (!ObjectUtils.equal(this.outlineStroke, that.outlineStroke)) {
             return false;
         }
         if (this.alpha != that.alpha) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.label, that.label)) {
+        if (!ObjectUtils.equal(this.label, that.label)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.labelFont, that.labelFont)) {
+        if (!ObjectUtils.equal(this.labelFont, that.labelFont)) {
             return false;
         }
         if (!PaintUtilities.equal(this.labelPaint, that.labelPaint)) {
@@ -626,7 +626,7 @@ public abstract class Marker implements Cloneable, Serializable {
         if (this.labelTextAnchor != that.labelTextAnchor) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.labelOffset, that.labelOffset)) {
+        if (!ObjectUtils.equal(this.labelOffset, that.labelOffset)) {
             return false;
         }
         if (!this.labelOffsetType.equals(that.labelOffsetType)) {

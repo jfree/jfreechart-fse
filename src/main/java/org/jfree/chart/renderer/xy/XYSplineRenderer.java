@@ -63,7 +63,7 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.ui.GradientPaintTransformer;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.xy.XYDataset;
 
@@ -499,7 +499,7 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
         if (this.fillType != that.fillType) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.gradientPaintTransformer, 
+        if (!ObjectUtils.equal(this.gradientPaintTransformer, 
                 that.gradientPaintTransformer)) {
             return false;
         }

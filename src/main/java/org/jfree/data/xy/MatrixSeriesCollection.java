@@ -50,7 +50,7 @@ package org.jfree.data.xy;
 import java.io.Serializable;
 import java.util.List;
 
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 
 /**
@@ -250,7 +250,7 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
         if (obj instanceof MatrixSeriesCollection) {
             MatrixSeriesCollection c = (MatrixSeriesCollection) obj;
 
-            return ObjectUtilities.equal(this.seriesList, c.seriesList);
+            return ObjectUtils.equal(this.seriesList, c.seriesList);
         }
 
         return false;
@@ -276,7 +276,7 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
     @Override
     public Object clone() throws CloneNotSupportedException {
         MatrixSeriesCollection clone = (MatrixSeriesCollection) super.clone();
-        clone.seriesList = ObjectUtilities.deepClone(this.seriesList);
+        clone.seriesList = ObjectUtils.deepClone(this.seriesList);
         return clone;
     }
 

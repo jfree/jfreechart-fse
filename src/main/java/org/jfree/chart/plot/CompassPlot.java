@@ -89,7 +89,7 @@ import java.util.ResourceBundle;
 import org.jfree.chart.LegendItem;
 
 import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.needle.ArrowNeedle;
@@ -773,7 +773,7 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
         if (this.labelType != that.labelType) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.labelFont, that.labelFont)) {
+        if (!ObjectUtils.equal(this.labelFont, that.labelFont)) {
             return false;
         }
         if (this.drawBorder != that.drawBorder) {
@@ -790,7 +790,7 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
                 that.roseCenterPaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.compassFont, that.compassFont)) {
+        if (!ObjectUtils.equal(this.compassFont, that.compassFont)) {
             return false;
         }
         if (!Arrays.equals(this.seriesNeedle, that.seriesNeedle)) {

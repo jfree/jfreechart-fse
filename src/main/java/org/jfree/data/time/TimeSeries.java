@@ -99,7 +99,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.Range;
 import org.jfree.data.general.Series;
@@ -1103,7 +1103,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     @Override
     public Object clone() throws CloneNotSupportedException {
         TimeSeries clone = (TimeSeries) super.clone();
-        clone.data = ObjectUtilities.deepClone(this.data);
+        clone.data = ObjectUtils.deepClone(this.data);
         return clone;
     }
 
@@ -1210,15 +1210,15 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
             return false;
         }
         TimeSeries that = (TimeSeries) obj;
-        if (!ObjectUtilities.equal(getDomainDescription(),
+        if (!ObjectUtils.equal(getDomainDescription(),
                 that.getDomainDescription())) {
             return false;
         }
-        if (!ObjectUtilities.equal(getRangeDescription(),
+        if (!ObjectUtils.equal(getRangeDescription(),
                 that.getRangeDescription())) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.timePeriodClass,
+        if (!ObjectUtils.equal(this.timePeriodClass,
                 that.timePeriodClass)) {
             return false;
         }
@@ -1232,7 +1232,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
         if (count != that.getItemCount()) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.data, that.data)) {
+        if (!ObjectUtils.equal(this.data, that.data)) {
             return false;
         }
         return super.equals(obj);

@@ -43,7 +43,7 @@
 package org.jfree.chart.axis;
 
 import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.text.TextBlock;
 import org.jfree.chart.text.TextBlockAnchor;
 
@@ -124,13 +124,13 @@ public class CategoryTick extends Tick {
         }
         if (obj instanceof CategoryTick && super.equals(obj)) {
             CategoryTick that = (CategoryTick) obj;
-            if (!ObjectUtilities.equal(this.category, that.category)) {
+            if (!ObjectUtils.equal(this.category, that.category)) {
                 return false;
             }
-            if (!ObjectUtilities.equal(this.label, that.label)) {
+            if (!ObjectUtils.equal(this.label, that.label)) {
                 return false;
             }
-            if (!ObjectUtilities.equal(this.labelAnchor, that.labelAnchor)) {
+            if (!ObjectUtils.equal(this.labelAnchor, that.labelAnchor)) {
                 return false;
            }
             return true;

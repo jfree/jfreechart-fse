@@ -51,7 +51,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
@@ -186,7 +186,7 @@ public class MeterInterval implements Serializable {
         if (!PaintUtilities.equal(this.outlinePaint, that.outlinePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.outlineStroke, that.outlineStroke)) {
+        if (!ObjectUtils.equal(this.outlineStroke, that.outlineStroke)) {
             return false;
         }
         if (!PaintUtilities.equal(this.backgroundPaint, that.backgroundPaint)) {

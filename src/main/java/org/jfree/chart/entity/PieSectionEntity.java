@@ -59,7 +59,7 @@ import java.awt.Shape;
 import java.io.Serializable;
 
 import org.jfree.chart.HashUtilities;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.data.extension.DatasetCursor;
 import org.jfree.data.extension.impl.PieCursor;
 import org.jfree.data.general.Dataset;
@@ -222,7 +222,7 @@ public class PieSectionEntity extends DataItemEntity
             return false;
         }
         PieSectionEntity that = (PieSectionEntity) obj;
-        if (!ObjectUtilities.equal(this.dataset, that.dataset)) {
+        if (!ObjectUtils.equal(this.dataset, that.dataset)) {
             return false;
         }
         if (this.pieIndex != that.pieIndex) {
@@ -231,7 +231,7 @@ public class PieSectionEntity extends DataItemEntity
         if (this.sectionIndex != that.sectionIndex) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.sectionKey, that.sectionKey)) {
+        if (!ObjectUtils.equal(this.sectionKey, that.sectionKey)) {
             return false;
         }
         return super.equals(obj);

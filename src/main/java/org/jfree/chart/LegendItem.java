@@ -82,7 +82,7 @@ import java.text.CharacterIterator;
 import org.jfree.chart.ui.GradientPaintTransformer;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
 import org.jfree.chart.util.AttributedStringUtilities;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
@@ -1029,7 +1029,7 @@ public class LegendItem implements Cloneable, Serializable {
                 that.attributedLabel)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.description, that.description)) {
+        if (!ObjectUtils.equal(this.description, that.description)) {
             return false;
         }
         if (this.shapeVisible != that.shapeVisible) {
@@ -1044,7 +1044,7 @@ public class LegendItem implements Cloneable, Serializable {
         if (!PaintUtilities.equal(this.fillPaint, that.fillPaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.fillPaintTransformer,
+        if (!ObjectUtils.equal(this.fillPaintTransformer,
                 that.fillPaintTransformer)) {
             return false;
         }
@@ -1069,7 +1069,7 @@ public class LegendItem implements Cloneable, Serializable {
         if (!PaintUtilities.equal(this.linePaint, that.linePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.labelFont, that.labelFont)) {
+        if (!ObjectUtils.equal(this.labelFont, that.labelFont)) {
             return false;
         }
         if (!PaintUtilities.equal(this.labelPaint, that.labelPaint)) {

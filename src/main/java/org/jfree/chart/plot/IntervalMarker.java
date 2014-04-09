@@ -54,7 +54,7 @@ import java.io.Serializable;
 
 import org.jfree.chart.ui.GradientPaintTransformer;
 import org.jfree.chart.ui.LengthAdjustmentType;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.event.MarkerChangeEvent;
 
 /**
@@ -213,7 +213,7 @@ public class IntervalMarker extends Marker implements Cloneable, Serializable {
         if (this.endValue != that.endValue) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.gradientPaintTransformer,
+        if (!ObjectUtils.equal(this.gradientPaintTransformer,
                 that.gradientPaintTransformer)) {
             return false;
         }

@@ -104,7 +104,7 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.ui.VerticalAlignment;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.entity.ChartEntity;
@@ -817,10 +817,10 @@ public class TextTitle extends Title implements Serializable, Cloneable,
             return false;
         }
         TextTitle that = (TextTitle) obj;
-        if (!ObjectUtilities.equal(this.text, that.text)) {
+        if (!ObjectUtils.equal(this.text, that.text)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.font, that.font)) {
+        if (!ObjectUtils.equal(this.font, that.font)) {
             return false;
         }
         if (!PaintUtilities.equal(this.paint, that.paint)) {
@@ -838,10 +838,10 @@ public class TextTitle extends Title implements Serializable, Cloneable,
         if (this.expandToFitSpace != that.expandToFitSpace) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.toolTipText, that.toolTipText)) {
+        if (!ObjectUtils.equal(this.toolTipText, that.toolTipText)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.urlText, that.urlText)) {
+        if (!ObjectUtils.equal(this.urlText, that.urlText)) {
             return false;
         }
         return super.equals(obj);

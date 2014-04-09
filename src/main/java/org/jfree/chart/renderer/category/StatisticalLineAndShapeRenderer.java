@@ -75,7 +75,7 @@ import org.jfree.chart.HashUtilities;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ShapeUtilities;
@@ -449,7 +449,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
                 that.errorIndicatorPaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.errorIndicatorStroke,
+        if (!ObjectUtils.equal(this.errorIndicatorStroke,
                 that.errorIndicatorStroke)) {
             return false;
         }
