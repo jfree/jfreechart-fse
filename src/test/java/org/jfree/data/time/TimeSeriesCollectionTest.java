@@ -55,6 +55,7 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
@@ -478,7 +479,6 @@ public class TimeSeriesCollectionTest {
         assertEquals(new Range(10.0, 10.0), collection.getRangeBounds(
                 visibleSeries, range, true));
         collection.setXPosition(TimePeriodAnchor.END);
-        assertTrue(collection.getRangeBounds(
-                visibleSeries, range, true).isNaNRange());
+        assertNull(collection.getRangeBounds(visibleSeries, range, true));
     }
 }
