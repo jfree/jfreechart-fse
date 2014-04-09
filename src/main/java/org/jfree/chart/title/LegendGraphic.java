@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------
  * LegendGraphic.java
  * ------------------
- * (C) Copyright 2004-2012, by Object Refinery Limited.
+ * (C) Copyright 2004-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -61,7 +61,6 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
 import org.jfree.chart.block.AbstractBlock;
 import org.jfree.chart.block.Block;
 import org.jfree.chart.block.LengthConstraintType;
@@ -72,15 +71,16 @@ import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.ShapeUtilities;
 
 /**
  * The graphical item within a legend item.
  */
-public class LegendGraphic extends AbstractBlock
-                           implements Block, PublicCloneable {
+public class LegendGraphic extends AbstractBlock implements Block, 
+        PublicCloneable {
 
     /** For serialization. */
     static final long serialVersionUID = -1338791523854985009L;
@@ -153,12 +153,8 @@ public class LegendGraphic extends AbstractBlock
      * @param fillPaint  the fill paint (<code>null</code> not permitted).
      */
     public LegendGraphic(Shape shape, Paint fillPaint) {
-        if (shape == null) {
-            throw new IllegalArgumentException("Null 'shape' argument.");
-        }
-        if (fillPaint == null) {
-            throw new IllegalArgumentException("Null 'fillPaint' argument.");
-        }
+        ParamChecks.nullNotPermitted(shape, "shape");
+        ParamChecks.nullNotPermitted(fillPaint, "fillPaint");
         this.shapeVisible = true;
         this.shape = shape;
         this.shapeAnchor = RectangleAnchor.CENTER;
@@ -286,9 +282,7 @@ public class LegendGraphic extends AbstractBlock
      * @see #getFillPaintTransformer()
      */
     public void setFillPaintTransformer(GradientPaintTransformer transformer) {
-        if (transformer == null) {
-            throw new IllegalArgumentException("Null 'transformer' argument.");
-        }
+        ParamChecks.nullNotPermitted(transformer, "transformer");
         this.fillPaintTransformer = transformer;
     }
 
@@ -379,9 +373,7 @@ public class LegendGraphic extends AbstractBlock
      * @see #setShapeAnchor(RectangleAnchor)
      */
     public void setShapeAnchor(RectangleAnchor anchor) {
-        if (anchor == null) {
-            throw new IllegalArgumentException("Null 'anchor' argument.");
-        }
+        ParamChecks.nullNotPermitted(anchor, "anchor");
         this.shapeAnchor = anchor;
     }
 
@@ -405,9 +397,7 @@ public class LegendGraphic extends AbstractBlock
      * @see #getShapeLocation()
      */
     public void setShapeLocation(RectangleAnchor location) {
-        if (location == null) {
-            throw new IllegalArgumentException("Null 'location' argument.");
-        }
+        ParamChecks.nullNotPermitted(location, "location");
         this.shapeLocation = location;
     }
 
