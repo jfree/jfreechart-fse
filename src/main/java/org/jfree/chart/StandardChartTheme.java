@@ -90,10 +90,10 @@ import org.jfree.chart.renderer.AbstractRenderer;
 import org.jfree.chart.renderer.category.BarPainter;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
-import org.jfree.chart.renderer.category.GradientBarPainter;
 import org.jfree.chart.renderer.category.MinMaxCategoryRenderer;
+import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.chart.renderer.category.StatisticalBarRenderer;
-import org.jfree.chart.renderer.xy.GradientXYBarPainter;
+import org.jfree.chart.renderer.xy.StandardXYBarPainter;
 import org.jfree.chart.renderer.xy.XYBarPainter;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
@@ -120,6 +120,34 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
 
     private static final long serialVersionUID = 6387476296773755770L;
 
+    /** The first font family to try (usually found on Windows). */
+    private static final String FONT_FAMILY_1 = "Palatino Linotype";
+
+    /** The second font family to try (usually found on MacOSX). */
+    private static final String FONT_FAMILY_2 = "Palatino";
+    
+    /**
+     * Creates a default font with the specified <code>style</code> and 
+     * <code>size</code>.  The method attempts to use 'Palatino Linotype' 
+     * ('Palatino' on MacOSX) but if it is not found it falls back to the
+     * <code>Font.SERIF</code> font family.
+     * 
+     * @param style  the style (see java.awt.Font).
+     * @param size  the size.
+     * 
+     * @return The font.
+     */
+    public static Font createDefaultFont(int style, int size) {
+        Font f = new Font(FONT_FAMILY_1, style, size);
+        if ("Dialog".equals(f.getFamily())) {
+            f = new Font(FONT_FAMILY_2, style, size);
+            if ("Dialog".equals(f.getFamily())) {
+                f = new Font(Font.SERIF, style, size);
+            }
+        }
+        return f;
+    }
+    
     /** The name of this theme. */
     private String name;
 
@@ -324,29 +352,29 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
     public StandardChartTheme(String name, boolean shadow) {
         ParamChecks.nullNotPermitted(name, "name");
         this.name = name;
-        this.extraLargeFont = new Font("Tahoma", Font.BOLD, 20);
-        this.largeFont = new Font("Tahoma", Font.BOLD, 14);
-        this.regularFont = new Font("Tahoma", Font.PLAIN, 12);
-        this.smallFont = new Font("Tahoma", Font.PLAIN, 10);
+        this.extraLargeFont = createDefaultFont(Font.BOLD, 24);
+        this.largeFont = createDefaultFont(Font.BOLD, 14);
+        this.regularFont = createDefaultFont(Font.PLAIN, 12);
+        this.smallFont = createDefaultFont(Font.PLAIN, 10);
         this.titlePaint = Color.BLACK;
         this.subtitlePaint = Color.BLACK;
         this.legendBackgroundPaint = Color.WHITE;
         this.legendItemPaint = Color.DARK_GRAY;
         this.chartBackgroundPaint = Color.WHITE;
         this.drawingSupplier = new DefaultDrawingSupplier();
-        this.plotBackgroundPaint = Color.LIGHT_GRAY;
-        this.plotOutlinePaint = Color.BLACK;
+        this.plotBackgroundPaint = Color.WHITE;
+        this.plotOutlinePaint = new Color(0, 0, 0, 0);
         this.labelLinkPaint = Color.BLACK;
         this.labelLinkStyle = PieLabelLinkStyle.CUBIC_CURVE;
         this.axisOffset = new RectangleInsets(4, 4, 4, 4);
         this.domainGridlinePaint = Color.WHITE;
-        this.rangeGridlinePaint = Color.WHITE;
+        this.rangeGridlinePaint = Color.LIGHT_GRAY;
         this.baselinePaint = Color.BLACK;
         this.crosshairPaint = Color.BLUE;
         this.axisLabelPaint = Color.DARK_GRAY;
         this.tickLabelPaint = Color.DARK_GRAY;
-        this.barPainter = new GradientBarPainter();
-        this.xyBarPainter = new GradientXYBarPainter();
+        this.barPainter = new StandardBarPainter();
+        this.xyBarPainter = new StandardXYBarPainter();
         this.shadowVisible = false;
         this.shadowPaint = Color.GRAY;
         this.itemLabelPaint = Color.BLACK;
