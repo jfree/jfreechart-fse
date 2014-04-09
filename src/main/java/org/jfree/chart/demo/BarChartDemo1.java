@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------
  * BarChartDemo1.java
  * ------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   ;
@@ -71,6 +71,7 @@ public class BarChartDemo1 extends ApplicationFrame {
         chartPanel.setFillZoomRectangle(true);
         chartPanel.setMouseWheelEnabled(true);
         chartPanel.setPreferredSize(new Dimension(500, 270));
+        
         setContentPane(chartPanel);
     }
 
@@ -150,7 +151,8 @@ public class BarChartDemo1 extends ApplicationFrame {
      * @param args  ignored.
      */
     public static void main(String[] args) {
-        BarChartDemo1 demo = new BarChartDemo1("Bar Chart Demo 1");
+        BarChartDemo1 demo = new BarChartDemo1(
+                "JFreeChart 2: BarChartDemo1.java");
         demo.pack();
         WindowUtils.centerFrameOnScreen(demo);
         demo.setVisible(true);
