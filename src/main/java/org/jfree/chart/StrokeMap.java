@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------
  * StrokeMap.java
  * --------------
- * (C) Copyright 2006-2012, by Object Refinery Limited.
+ * (C) Copyright 2006-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -46,6 +46,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -70,13 +71,13 @@ public class StrokeMap implements Cloneable, Serializable {
     static final long serialVersionUID = -8148916785963525169L;
 
     /** Storage for the keys and values. */
-    private transient Map<Comparable, Stroke> store;
+    private transient Map<Comparable<?>, Stroke> store;
 
     /**
      * Creates a new (empty) map.
      */
     public StrokeMap() {
-        this.store = new TreeMap<Comparable, Stroke>();
+        this.store = new TreeMap<Comparable<?>, Stroke>();
     }
 
     /**
@@ -146,7 +147,7 @@ public class StrokeMap implements Cloneable, Serializable {
         if (this.store.size() != that.store.size()) {
             return false;
         }
-        Set<Comparable> keys = this.store.keySet();
+        Set<Comparable<?>> keys = this.store.keySet();
         for (Comparable key : keys) {
             Stroke s1 = getStroke(key);
             Stroke s2 = that.getStroke(key);
@@ -166,9 +167,12 @@ public class StrokeMap implements Cloneable, Serializable {
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
+        StrokeMap clone = (StrokeMap) super.clone();
+        clone.store = new TreeMap<Comparable<?>, Stroke>();
+        clone.store.putAll(this.store);
         // TODO: I think we need to make sure the keys are actually cloned,
         // whereas the stroke instances are always immutable so they're OK
-        return super.clone();
+        return clone;
     }
 
     /**
@@ -181,7 +185,7 @@ public class StrokeMap implements Cloneable, Serializable {
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
         stream.writeInt(this.store.size());
-        Set<Comparable> keys = this.store.keySet();
+        Set<Comparable<?>> keys = this.store.keySet();
         for (Comparable key : keys) {
             stream.writeObject(key);
             Stroke stroke = getStroke(key);
@@ -200,7 +204,7 @@ public class StrokeMap implements Cloneable, Serializable {
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.store = new TreeMap<Comparable, Stroke>();
+        this.store = new TreeMap<Comparable<?>, Stroke>();
         int keyCount = stream.readInt();
         for (int i = 0; i < keyCount; i++) {
             Comparable key = (Comparable) stream.readObject();
