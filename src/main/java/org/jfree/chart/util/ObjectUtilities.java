@@ -109,30 +109,31 @@ public final class ObjectUtilities {
      * @return A clone of the specified object.
      * @throws CloneNotSupportedException if the object cannot be cloned.
      */
-    public static <T> T clone(final T object)
-        throws CloneNotSupportedException {
+    public static <T> T clone(T object) throws CloneNotSupportedException {
         if (object == null) {
             throw new IllegalArgumentException("Null 'object' argument.");
         }
         if (object instanceof PublicCloneable) {
-            final PublicCloneable pc = (PublicCloneable) object;
+            PublicCloneable pc = (PublicCloneable) object;
             return (T) pc.clone();
-        }
-        else {
+        } else {
             try {
-                final Method method = object.getClass().getMethod("clone");
+                Method method = object.getClass().getMethod("clone");
                 if (Modifier.isPublic(method.getModifiers())) {
                     return (T) method.invoke(object);
                 }
             }
             catch (NoSuchMethodException e) {
                 //Log.warn("Object without clone() method is impossible.");
+                throw new CloneNotSupportedException(e.getMessage());
             }
             catch (IllegalAccessException e) {
                 //Log.warn("Object.clone(): unable to call method.");
+                throw new CloneNotSupportedException(e.getMessage());
             }
             catch (InvocationTargetException e) {
                 //Log.warn("Object without clone() method is impossible.");
+                throw new CloneNotSupportedException(e.getMessage());
             }
         }
         throw new CloneNotSupportedException("Failed to clone.");
