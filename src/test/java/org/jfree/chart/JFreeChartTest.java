@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * JFreeChartTests.java
  * --------------------
- * (C) Copyright 2002-2013, by Object Refinery Limited.
+ * (C) Copyright 2002-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -46,6 +46,25 @@
 
 package org.jfree.chart;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.net.URL;
+import java.util.List;
+import javax.swing.ImageIcon;
 import org.jfree.chart.event.ChartChangeEvent;
 import org.jfree.chart.event.ChartChangeListener;
 import org.jfree.chart.plot.PiePlot;
@@ -62,33 +81,6 @@ import org.jfree.data.time.Day;
 import org.jfree.data.time.RegularTimePeriod;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Image;
-import java.awt.RenderingHints;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.net.URL;
-import java.util.List;
-import javax.swing.ImageIcon;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link JFreeChart} class.
@@ -179,9 +171,9 @@ public class JFreeChartTest  implements ChartChangeListener {
         assertEquals(chart1, chart2);
 
         // subtitles
-        chart1.addSubtitle(new TextTitle("Subtitle"));
+        chart1.addSubtitle("Subtitle");
         assertFalse(chart1.equals(chart2));
-        chart2.addSubtitle(new TextTitle("Subtitle"));
+        chart2.addSubtitle("Subtitle");
         assertEquals(chart1, chart2);
 
         // plot
@@ -284,25 +276,13 @@ public class JFreeChartTest  implements ChartChangeListener {
      * Serialize a pie chart, restore it, and check for equality.
      */
     @Test
-    public void testSerialization1() throws IOException, ClassNotFoundException {
-
+    public void testSerialization1() {
         DefaultPieDataset data = new DefaultPieDataset();
         data.setValue("Type 1", 54.5);
         data.setValue("Type 2", 23.9);
         data.setValue("Type 3", 45.8);
-
         JFreeChart c1 = ChartFactory.createPieChart("Test", data);
-
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(c1);
-            out.close();
-
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            JFreeChart c2 = (JFreeChart) in.readObject();
-            in.close();
-
+        JFreeChart c2 = (JFreeChart) TestUtils.serialised(c1);
         assertEquals(c1, c2);
         LegendTitle lt2 = c2.getLegend();
         assertSame(lt2.getSources()[0], c2.getPlot());
@@ -312,41 +292,24 @@ public class JFreeChartTest  implements ChartChangeListener {
      * Serialize a 3D pie chart, restore it, and check for equality.
      */
     @Test
-    public void testSerialization2() throws IOException, ClassNotFoundException {
-
+    public void testSerialization2() {
         DefaultPieDataset data = new DefaultPieDataset();
         data.setValue("Type 1", 54.5);
         data.setValue("Type 2", 23.9);
         data.setValue("Type 3", 45.8);
-
         JFreeChart c1 = ChartFactory.createPieChart3D("Test", data);
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(c1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
-        JFreeChart c2 = (JFreeChart) in.readObject();
-        in.close();
-
+        JFreeChart c2 = (JFreeChart) TestUtils.serialised(c1);
         assertEquals(c1, c2);
-
     }
 
     /**
      * Serialize a bar chart, restore it, and check for equality.
      */
     @Test
-    public void testSerialization3() throws IOException, ClassNotFoundException {
-
-        // row keys...
+    public void testSerialization3() {
         String series1 = "First";
         String series2 = "Second";
         String series3 = "Third";
-
-        // column keys...
         String category1 = "Category 1";
         String category2 = "Category 2";
         String category3 = "Category 3";
@@ -389,26 +352,15 @@ public class JFreeChartTest  implements ChartChangeListener {
         // create the chart...
         JFreeChart c1 = ChartFactory.createBarChart("Vertical Bar Chart",
                 "Category", "Value", dataset);
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(c1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
-        JFreeChart c2 = (JFreeChart) in.readObject();
-        in.close();
+        JFreeChart c2 = (JFreeChart) TestUtils.serialised(c1);
         assertEquals(c1, c2);
-
     }
 
     /**
      * Serialize a time seroes chart, restore it, and check for equality.
      */
     @Test
-    public void testSerialization4() throws IOException, ClassNotFoundException {
-
+    public void testSerialization4() {
         RegularTimePeriod t = new Day();
         TimeSeries series = new TimeSeries("Series 1");
         series.add(t, 36.4);
@@ -419,18 +371,8 @@ public class JFreeChartTest  implements ChartChangeListener {
 
         JFreeChart c1 = ChartFactory.createTimeSeriesChart("Test", "Date",
                 "Value", dataset);
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(c1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
-        JFreeChart c2 = (JFreeChart) in.readObject();
-        in.close();
+        JFreeChart c2 = (JFreeChart) TestUtils.serialised(c1);
         assertEquals(c1, c2);
-
     }
 
     /**
@@ -450,8 +392,8 @@ public class JFreeChartTest  implements ChartChangeListener {
         assertEquals(t1, chart.getSubtitle(2));  // subtitle 1 is the legend
 
         try {
-            chart.addSubtitle(null);
-            fail("Should have thrown an IllegalArgumentException on index out of range");
+            chart.addSubtitle((Title) null);
+            fail("Expect IllegalArgumentException for null title");
         }
         catch (IllegalArgumentException e) {
             assertEquals("Null 'subtitle' argument.", e.getMessage());
@@ -460,13 +402,12 @@ public class JFreeChartTest  implements ChartChangeListener {
 
         try {
             chart.addSubtitle(-1, t0);
-            fail("Should have thrown an IllegalArgumentException on index out of range");
+            fail("Expect IllegalArgumentException on index out of range");
         }
         catch (IllegalArgumentException e) {
-            assertEquals("The 'index' argument is out of range.", e.getMessage());
+            assertEquals("The 'index' argument is out of range.", e
+                    .getMessage());
         }
-
-
 
         try {
             chart.addSubtitle(4, t0);
