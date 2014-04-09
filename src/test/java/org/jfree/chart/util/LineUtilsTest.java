@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * LineUtilitiesTests.java
  * -----------------------
- * (C) Copyright 2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2008, 2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -48,16 +48,10 @@ import java.awt.geom.Rectangle2D;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-
-
 /**
  * Tests for the {@link LineUtilities} class.
  */
-public class LineUtilitiesTest  {
-
-
-
-
+public class LineUtilsTest  {
 
     private boolean lineEquals(Line2D line, double x1, double y1, double x2,
             double y2) {
@@ -77,56 +71,56 @@ public class LineUtilitiesTest  {
         Rectangle2D rect = new Rectangle2D.Double(1.0, 1.0, 1.0, 1.0);
         Line2D line = new Line2D.Double();
 
-        assertFalse(LineUtilities.clipLine(line, rect));
+        assertFalse(LineUtils.clipLine(line, rect));
         assertTrue(lineEquals(line, 0.0, 0.0, 0.0, 0.0));
 
         line.setLine(0.5, 0.5, 0.6, 0.6);
-        assertFalse(LineUtilities.clipLine(line, rect));
+        assertFalse(LineUtils.clipLine(line, rect));
         assertTrue(lineEquals(line, 0.5, 0.5, 0.6, 0.6));
 
         line.setLine(0.5, 0.5, 1.6, 0.6);
-        assertFalse(LineUtilities.clipLine(line, rect));
+        assertFalse(LineUtils.clipLine(line, rect));
         assertTrue(lineEquals(line, 0.5, 0.5, 1.6, 0.6));
 
         line.setLine(0.5, 0.5, 2.6, 0.6);
-        assertFalse(LineUtilities.clipLine(line, rect));
+        assertFalse(LineUtils.clipLine(line, rect));
         assertTrue(lineEquals(line, 0.5, 0.5, 2.6, 0.6));
 
         line.setLine(0.5, 0.5, 0.6, 1.6);
-        assertFalse(LineUtilities.clipLine(line, rect));
+        assertFalse(LineUtils.clipLine(line, rect));
         assertTrue(lineEquals(line, 0.5, 0.5, 0.6, 1.6));
 
         line.setLine(0.5, 0.5, 1.6, 1.6);
-        assertTrue(LineUtilities.clipLine(line, rect));
+        assertTrue(LineUtils.clipLine(line, rect));
         assertTrue(lineEquals(line, 1.0, 1.0, 1.6, 1.6));
 
         line.setLine(0.5, 0.5, 2.6, 1.6);
-        assertTrue(LineUtilities.clipLine(line, rect));
+        assertTrue(LineUtils.clipLine(line, rect));
         assertTrue(lineEquals(line, 1.4545454545454546, 1.0, 2.0,
                 1.2857142857142858));
 
         line.setLine(0.5, 0.5, 0.5, 2.6);
-        assertFalse(LineUtilities.clipLine(line, rect));
+        assertFalse(LineUtils.clipLine(line, rect));
         assertTrue(lineEquals(line, 0.5, 0.5, 0.5, 2.6));
 
         line.setLine(0.5, 0.5, 1.5, 2.6);
-        assertTrue(LineUtilities.clipLine(line, rect));
+        assertTrue(LineUtils.clipLine(line, rect));
         assertTrue(lineEquals(line, 1.0, 1.55, 1.2142857142857142, 2.0));
 
         line.setLine(0.5, 0.5, 2.5, 2.6);
-        assertTrue(LineUtilities.clipLine(line, rect));
+        assertTrue(LineUtils.clipLine(line, rect));
         assertTrue(lineEquals(line, 1.0, 1.025, 1.9285714285714284, 2.0));
 
         line.setLine(0.5, 0.5, 1.5, 1.5);
-        assertTrue(LineUtilities.clipLine(line, rect));
+        assertTrue(LineUtils.clipLine(line, rect));
         assertTrue(lineEquals(line, 1.0, 1.0, 1.5, 1.5));
 
         line.setLine(2.5, 1.0, 1.5, 1.5);
-        assertTrue(LineUtilities.clipLine(line, rect));
+        assertTrue(LineUtils.clipLine(line, rect));
         assertTrue(lineEquals(line, 2.0, 1.25, 1.5, 1.5));
 
         line.setLine(1.5, 1.5, 2.5, 1.0);
-        assertTrue(LineUtilities.clipLine(line, rect));
+        assertTrue(LineUtils.clipLine(line, rect));
         assertTrue(lineEquals(line, 1.5, 1.5, 2.0, 1.25));
     }
 
