@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------
  * DefaultDrawingSupplier.java
  * ---------------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Jeremy Bowman;
@@ -64,6 +64,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 import org.jfree.chart.ChartColor;
+import org.jfree.chart.Colors;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.util.SerialUtilities;
@@ -146,13 +147,11 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      * paint, stroke and shapes.
      */
     public DefaultDrawingSupplier() {
-
-        this(DEFAULT_PAINT_SEQUENCE, DEFAULT_FILL_PAINT_SEQUENCE,
-             DEFAULT_OUTLINE_PAINT_SEQUENCE,
-             DEFAULT_STROKE_SEQUENCE,
-             DEFAULT_OUTLINE_STROKE_SEQUENCE,
-             DEFAULT_SHAPE_SEQUENCE);
-
+        this(Colors.getDefaultColors(), DEFAULT_FILL_PAINT_SEQUENCE,
+                DEFAULT_OUTLINE_PAINT_SEQUENCE,
+                DEFAULT_STROKE_SEQUENCE,
+                DEFAULT_OUTLINE_STROKE_SEQUENCE,
+                DEFAULT_SHAPE_SEQUENCE);
     }
 
     /**
@@ -164,19 +163,15 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      * @param outlineStrokeSequence  the outline stroke sequence.
      * @param shapeSequence  the shape sequence.
      */
-    public DefaultDrawingSupplier(Paint[] paintSequence,
-                                  Paint[] outlinePaintSequence,
-                                  Stroke[] strokeSequence,
-                                  Stroke[] outlineStrokeSequence,
-                                  Shape[] shapeSequence) {
-
+    public DefaultDrawingSupplier(Paint[] paintSequence, 
+            Paint[] outlinePaintSequence, Stroke[] strokeSequence,
+            Stroke[] outlineStrokeSequence, Shape[] shapeSequence) {
         this.paintSequence = paintSequence;
         this.fillPaintSequence = DEFAULT_FILL_PAINT_SEQUENCE;
         this.outlinePaintSequence = outlinePaintSequence;
         this.strokeSequence = strokeSequence;
         this.outlineStrokeSequence = outlineStrokeSequence;
         this.shapeSequence = shapeSequence;
-
     }
 
     /**
@@ -195,7 +190,6 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
             Paint[] fillPaintSequence, Paint[] outlinePaintSequence,
             Stroke[] strokeSequence, Stroke[] outlineStrokeSequence,
             Shape[] shapeSequence) {
-
         this.paintSequence = paintSequence;
         this.fillPaintSequence = fillPaintSequence;
         this.outlinePaintSequence = outlinePaintSequence;
@@ -211,8 +205,8 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      */
     @Override
     public Paint getNextPaint() {
-        Paint result
-            = this.paintSequence[this.paintIndex % this.paintSequence.length];
+        Paint result = this.paintSequence[this.paintIndex 
+                % this.paintSequence.length];
         this.paintIndex++;
         return result;
     }
@@ -224,8 +218,8 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      */
     @Override
     public Paint getNextOutlinePaint() {
-        Paint result = this.outlinePaintSequence[
-                this.outlinePaintIndex % this.outlinePaintSequence.length];
+        Paint result = this.outlinePaintSequence[this.outlinePaintIndex 
+                % this.outlinePaintSequence.length];
         this.outlinePaintIndex++;
         return result;
     }
@@ -291,9 +285,7 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      * @return The array of shapes.
      */
     public static Shape[] createStandardSeriesShapes() {
-
         Shape[] result = new Shape[10];
-
         double size = 6.0;
         double delta = size / 2.0;
         int[] xpoints = null;
@@ -337,9 +329,7 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
         xpoints = intArray(-delta, delta, delta);
         ypoints = intArray(0.0, -delta, +delta);
         result[9] = new Polygon(xpoints, ypoints, 3);
-
         return result;
-
     }
 
     /**
@@ -351,17 +341,13 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      */
     @Override
     public boolean equals(Object obj) {
-
         if (obj == this) {
             return true;
         }
-
         if (!(obj instanceof DefaultDrawingSupplier)) {
             return false;
         }
-
         DefaultDrawingSupplier that = (DefaultDrawingSupplier) obj;
-
         if (!Arrays.equals(this.paintSequence, that.paintSequence)) {
             return false;
         }
@@ -395,7 +381,6 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
             return false;
         }
         return true;
-
     }
 
     /**
