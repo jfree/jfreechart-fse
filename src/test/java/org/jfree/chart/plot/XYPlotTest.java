@@ -53,9 +53,31 @@
 
 package org.jfree.chart.plot;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import org.junit.Test;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
+import org.jfree.chart.TestUtils;
 import org.jfree.chart.annotations.XYTextAnnotation;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.DateAxis;
@@ -79,61 +101,25 @@ import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.junit.Test;
-
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import org.jfree.chart.TestUtils;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link XYPlot} class.
  */
 public class XYPlotTest  {
 
-
-
-
-
-// FIXME: the getDatasetCount() method is returning a count of the slots
-// available for datasets, rather than the number of datasets actually
-// specified...see if there is some way to clean this up.
-//    /**
-//     * Added this test in response to a bug report.
-//     */
-//    public void testGetDatasetCount() {
-//        XYPlot plot = new XYPlot();
-//        assertEquals(0, plot.getDatasetCount());
-//    }
+    /**
+     * Added this test in response to a bug report.
+     */
+    public void testGetDatasetCount() {
+        XYPlot plot = new XYPlot();
+        assertEquals(0, plot.getDatasetCount());
+    }
 
     /**
      * Some checks for the equals() method.
      */
     @Test
     public void testEquals() {
-
         XYPlot plot1 = new XYPlot();
         XYPlot plot2 = new XYPlot();
         assertEquals(plot1, plot2);
@@ -451,6 +437,76 @@ public class XYPlotTest  {
     }
 
     /**
+     * This test covers a flaw in the ObjectList equals() method.
+     */
+    @Test
+    public void testEquals_ObjectList() {
+        XYPlot p1 = new XYPlot();
+        p1.setDomainAxis(new NumberAxis("A"));
+        XYPlot p2 = new XYPlot();
+        p2.setDomainAxis(new NumberAxis("A"));
+        assertEquals(p1, p2);
+        p2.setDomainAxis(1, new NumberAxis("B"));
+        assertNotEquals(p1, p2);
+    }
+    
+    /**
+     * This test covers a flaw in the ObjectList equals() method.
+     */
+    @Test
+    public void testEquals_ObjectList2() {
+        XYPlot p1 = new XYPlot();
+        p1.setDomainAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+        XYPlot p2 = new XYPlot();
+        p2.setDomainAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+        assertEquals(p1, p2);
+        p2.setDomainAxisLocation(1, AxisLocation.TOP_OR_LEFT);
+        assertNotEquals(p1, p2);
+    }
+
+    /**
+     * This test covers a flaw in the ObjectList equals() method.
+     */
+    @Test
+    public void testEquals_ObjectList3() {
+        XYPlot p1 = new XYPlot();
+        p1.setRangeAxis(new NumberAxis("A"));
+        XYPlot p2 = new XYPlot();
+        p2.setRangeAxis(new NumberAxis("A"));
+        assertEquals(p1, p2);
+        p2.setRangeAxis(1, new NumberAxis("B"));
+        assertNotEquals(p1, p2);
+    }
+    
+    /**
+     * This test covers a flaw in the ObjectList equals() method.
+     */
+    @Test
+    public void testEquals_ObjectList4() {
+        XYPlot p1 = new XYPlot();
+        p1.setRangeAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+        XYPlot p2 = new XYPlot();
+        p2.setRangeAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+        assertEquals(p1, p2);
+        p2.setRangeAxisLocation(1, AxisLocation.TOP_OR_LEFT);
+        assertNotEquals(p1, p2);
+    }
+
+    /**
+     * This test covers a flaw in the ObjectList equals() method.
+     */
+    @Test
+    public void testEquals_ObjectList5() {
+        XYPlot p1 = new XYPlot();
+        p1.setRenderer(new XYBarRenderer());
+        XYPlot p2 = new XYPlot();
+        p2.setRenderer(new XYBarRenderer());
+        assertEquals(p1, p2);
+        p2.setRenderer(1, new XYLineAndShapeRenderer());
+        assertNotEquals(p1, p2);
+    }
+
+    /**
      * Confirm that basic cloning works.
      * @throws CloneNotSupportedException 
      */
@@ -675,26 +731,14 @@ public class XYPlotTest  {
      * uses a {@link DateAxis} and a {@link StandardXYToolTipGenerator}.
      */
     @Test
-    public void testSerialization2() throws IOException, ClassNotFoundException {
-
+    public void testSerialization2() {
         IntervalXYDataset data1 = createDataset1();
         XYItemRenderer renderer1 = new XYBarRenderer(0.20);
         renderer1.setDefaultToolTipGenerator(
                 StandardXYToolTipGenerator.getTimeSeriesInstance());
         XYPlot p1 = new XYPlot(data1, new DateAxis("Date"), null, renderer1);
-
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(p1);
-            out.close();
-
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-        XYPlot p2 = (XYPlot) in.readObject();
-            in.close();
-
+        XYPlot p2 = (XYPlot) TestUtils.serialised(p1);
         assertEquals(p1, p2);
-
     }
 
     /**
@@ -708,28 +752,13 @@ public class XYPlotTest  {
      * reproduce the bug (now fixed).
      */
     @Test
-    public void testSerialization3() throws IOException, ClassNotFoundException {
-
+    public void testSerialization3() {
         XYSeriesCollection dataset = new XYSeriesCollection();
         JFreeChart chart = ChartFactory.createXYLineChart("Test Chart",
                 "Domain Axis", "Range Axis", dataset);
-
-        // serialize and deserialize the chart....
-
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(chart);
-            out.close();
-
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            JFreeChart chart2 = (JFreeChart) in.readObject();
-            in.close();
-
+        JFreeChart chart2 = (JFreeChart) TestUtils.serialised(chart);
         assertEquals(chart, chart2);
         chart2.createBufferedImage(300, 200);
-
-        //FIXME we should really be asserting a value here
     }
 
     /**
@@ -737,8 +766,7 @@ public class XYPlotTest  {
      * markers for a plot are not being serialized.
      */
     @Test
-    public void testSerialization4() throws IOException, ClassNotFoundException {
-
+    public void testSerialization4() {
         XYSeriesCollection dataset = new XYSeriesCollection();
         JFreeChart chart = ChartFactory.createXYLineChart("Test Chart",
                 "Domain Axis", "Range Axis", dataset);
@@ -746,22 +774,10 @@ public class XYPlotTest  {
         plot.addDomainMarker(new ValueMarker(1.0), Layer.FOREGROUND);
         plot.addDomainMarker(new IntervalMarker(2.0, 3.0), Layer.BACKGROUND);
         plot.addRangeMarker(new ValueMarker(4.0), Layer.FOREGROUND);
-        plot.addRangeMarker(new IntervalMarker(5.0, 6.0), Layer.BACKGROUND);
-
-        // serialize and deserialize the chart....
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(chart);
-            out.close();
-
-            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                    buffer.toByteArray()));
-            JFreeChart chart2 = (JFreeChart) in.readObject();
-            in.close();
-
+        plot.addRangeMarker(new IntervalMarker(5.0, 6.0), Layer.BACKGROUND);    
+        JFreeChart chart2 = (JFreeChart) TestUtils.serialised(chart);
         assertEquals(chart, chart2);
         chart2.createBufferedImage(300, 200);
-        //FIXME we should be asserting a value here
     }
 
     /**
@@ -770,7 +786,7 @@ public class XYPlotTest  {
      * at SourceForge.
      */
     @Test
-    public void testSerialization5() throws IOException, ClassNotFoundException {
+    public void testSerialization5() {
         XYSeriesCollection dataset1 = new XYSeriesCollection();
         NumberAxis domainAxis1 = new NumberAxis("Domain 1");
         NumberAxis rangeAxis1 = new NumberAxis("Range 1");
@@ -784,17 +800,7 @@ public class XYPlotTest  {
         p1.setDomainAxis(1, domainAxis2);
         p1.setRangeAxis(1, rangeAxis2);
         p1.setRenderer(1, renderer2);
-
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(p1);
-            out.close();
-            ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-            );
-        XYPlot p2 = (XYPlot) in.readObject();
-            in.close();
-
+        XYPlot p2 = (XYPlot) TestUtils.serialised(p1);
         assertEquals(p1, p2);
 
         // now check that all datasets, renderers and axes are being listened
@@ -868,8 +874,6 @@ public class XYPlotTest  {
      * @return Series 1.
      */
     private IntervalXYDataset createDataset1() {
-
-        // create dataset 1...
         TimeSeries series1 = new TimeSeries("Series 1");
         series1.add(new Day(1, MonthConstants.MARCH, 2002), 12353.3);
         series1.add(new Day(2, MonthConstants.MARCH, 2002), 13734.4);
@@ -886,10 +890,7 @@ public class XYPlotTest  {
         series1.add(new Day(13, MonthConstants.MARCH, 2002), 13102.2);
         series1.add(new Day(14, MonthConstants.MARCH, 2002), 14230.2);
         series1.add(new Day(15, MonthConstants.MARCH, 2002), 11235.2);
-
-        TimeSeriesCollection collection = new TimeSeriesCollection(series1);
-        return collection;
-
+        return new TimeSeriesCollection(series1);
     }
 
     /**
@@ -898,11 +899,9 @@ public class XYPlotTest  {
      * @return A sample dataset.
      */
     private XYDataset createDataset2() {
-        // create dataset 1...
         XYSeries series = new XYSeries("Series 2");
         XYSeriesCollection collection = new XYSeriesCollection(series);
         return collection;
-
     }
 
     /**
