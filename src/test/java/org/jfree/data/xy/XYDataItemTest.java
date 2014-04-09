@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * XYDataItemTests.java
  * --------------------
- * (C) Copyright 2003-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -42,36 +42,24 @@ package org.jfree.data.xy;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import org.jfree.chart.TestUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 
-
-
 /**
  * Tests for the {@link XYDataItem} class.
  */
 public class XYDataItemTest  {
-
-
-
-
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
     @Test
     public void testEquals() {
-
         XYDataItem i1 = new XYDataItem(1.0, 1.1);
         XYDataItem i2 = new XYDataItem(1.0, 1.1);
         assertEquals(i1, i2);
@@ -82,7 +70,6 @@ public class XYDataItemTest  {
 
         i2.setY(new Double(9.9));
         assertEquals(i1, i2);
-
     }
 
     /**
@@ -102,21 +89,9 @@ public class XYDataItemTest  {
      */
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
-
         XYDataItem i1 = new XYDataItem(1.0, 1.1);
-
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(i1);
-            out.close();
-
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-        XYDataItem i2 = (XYDataItem) in.readObject();
-            in.close();
-
+        XYDataItem i2 = (XYDataItem) TestUtils.serialised(i1);
         assertEquals(i1, i2);
-
     }
 
 }

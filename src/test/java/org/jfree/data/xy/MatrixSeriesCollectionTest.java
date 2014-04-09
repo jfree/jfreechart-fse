@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------------------
  * MatrixSeriesCollectionTests.java
  * --------------------------------
- * (C) Copyright 2006-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2006-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -41,31 +41,21 @@
 
 package org.jfree.data.xy;
 
-import org.jfree.chart.util.PublicCloneable;
-import org.junit.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Test;
+
+import org.jfree.chart.TestUtils;
+import org.jfree.chart.util.PublicCloneable;
+
 /**
  * Tests for the {@link MatrixSeriesCollection} class.
  */
 public class MatrixSeriesCollectionTest  {
-
-
-
-
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
@@ -122,22 +112,13 @@ public class MatrixSeriesCollectionTest  {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() throws IOException, ClassNotFoundException {
+    public void testSerialization() {
         MatrixSeries s1 = new MatrixSeries("Series", 2, 3);
         s1.update(0, 0, 1.1);
         MatrixSeriesCollection c1 = new MatrixSeriesCollection();
         c1.addSeries(s1);
-
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(c1);
-            out.close();
-
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
-        MatrixSeriesCollection c2 = (MatrixSeriesCollection) in.readObject();
-            in.close();
-
+        MatrixSeriesCollection c2 
+                = (MatrixSeriesCollection) TestUtils.serialised(c1);
         assertEquals(c1, c2);
     }
 
