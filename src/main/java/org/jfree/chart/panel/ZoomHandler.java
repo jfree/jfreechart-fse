@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------
  * ZoomHandler.java
  * ----------------
- * (C) Copyright 2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2013, 2014,by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Michael Zinsmaier;
@@ -48,7 +48,7 @@ import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 
 /**
  * A mouse handler than performs a zooming operation on a ChartPanel.
@@ -62,23 +62,23 @@ public class ZoomHandler extends AbstractMouseHandler {
 
     private Rectangle2D zoomRectangle;
 
-    public ZoomHandler(int modifier) {
-        super(modifier);
-        zoomPoint = null;
-    }
-    
     public ZoomHandler() {
         super();
         zoomPoint = null;
     }
 
+    public ZoomHandler(int modifier) {
+        super(modifier);
+        zoomPoint = null;
+    }
+    
     @Override
     public void mousePressed(MouseEvent e) {
         ChartPanel chartPanel = (ChartPanel) e.getSource();
         Rectangle2D screenDataArea = chartPanel.getScreenDataArea(e.getX(),
                 e.getY());
         if (screenDataArea != null) {
-            this.zoomPoint = ShapeUtilities.getPointInRectangle(e.getX(),
+            this.zoomPoint = ShapeUtils.getPointInRectangle(e.getX(),
                     e.getY(), screenDataArea);
         }
         else {
@@ -90,7 +90,6 @@ public class ZoomHandler extends AbstractMouseHandler {
     @Override
     public void mouseDragged(MouseEvent e) {
         ChartPanel panel = (ChartPanel) e.getSource();
-
         if (this.zoomPoint == null) {
             //no initial zoom rectangle exists but the handler is set
             //as life handler unregister
@@ -274,6 +273,7 @@ public class ZoomHandler extends AbstractMouseHandler {
     /**
      * @see AbstractMouseHandler#isLiveHandler()
      */
+    @Override
     public boolean isLiveHandler() {
         return true;
     }

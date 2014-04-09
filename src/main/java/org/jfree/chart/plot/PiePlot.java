@@ -230,7 +230,7 @@ import org.jfree.chart.util.ResourceBundleWrapper;
 import org.jfree.chart.util.Rotation;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.chart.util.ShadowGenerator;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.util.UnitType;
 import org.jfree.data.DefaultKeyedValues;
 import org.jfree.data.KeyedValues;
@@ -2588,7 +2588,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
 
             if (currentPass == 0) {
                 if (this.shadowPaint != null && this.shadowGenerator == null) {
-                    Shape shadowArc = ShapeUtilities.createTranslatedShape(
+                    Shape shadowArc = ShapeUtils.createTranslatedShape(
                             arc, (float) this.shadowXOffset,
                             (float) this.shadowYOffset);
                     g2.setPaint(this.shadowPaint);
@@ -2696,11 +2696,11 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
                 Rectangle2D bounds = TextUtilities.getTextBounds(label, g2, fm);
                 Rectangle2D out = this.labelPadding.createOutsetRectangle(
                         bounds);
-                Shape bg = ShapeUtilities.createTranslatedShape(out,
+                Shape bg = ShapeUtils.createTranslatedShape(out,
                         x - bounds.getCenterX(), y - bounds.getCenterY());
                 if (this.labelShadowPaint != null
                         && this.shadowGenerator == null) {
-                    Shape shadow = ShapeUtilities.createTranslatedShape(bg,
+                    Shape shadow = ShapeUtils.createTranslatedShape(bg,
                             this.shadowXOffset, this.shadowYOffset);
                     g2.setPaint(this.labelShadowPaint);
                     g2.fill(shadow);
@@ -3362,7 +3362,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         if (!(this.minimumArcAngleToDraw == that.minimumArcAngleToDraw)) {
             return false;
         }
-        if (!ShapeUtilities.equal(this.legendItemShape, that.legendItemShape)) {
+        if (!ShapeUtils.equal(this.legendItemShape, that.legendItemShape)) {
             return false;
         }
         if (!ObjectUtils.equal(this.legendLabelGenerator,
@@ -3424,7 +3424,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             clone.urlGenerator = ObjectUtils.clone(
                     this.urlGenerator);
         }
-        clone.legendItemShape = ShapeUtilities.clone(this.legendItemShape);
+        clone.legendItemShape = ShapeUtils.clone(this.legendItemShape);
         if (this.legendLabelGenerator != null) {
             clone.legendLabelGenerator = ObjectUtils.clone(
                     this.legendLabelGenerator);

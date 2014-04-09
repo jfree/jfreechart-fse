@@ -121,7 +121,7 @@ import org.jfree.chart.util.BooleanList;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.ShapeList;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.util.StrokeList;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.event.RendererChangeListener;
@@ -3033,7 +3033,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
         if (!ObjectUtils.equal(this.shapeList, that.shapeList)) {
             return false;
         }
-        if (!ShapeUtilities.equal(this.defaultShape, that.defaultShape)) {
+        if (!ShapeUtils.equal(this.defaultShape, that.defaultShape)) {
             return false;
         }
         if (!ObjectUtils.equal(this.itemLabelsVisibleList,
@@ -3093,7 +3093,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
                 that.legendShapeList)) {
             return false;
         }
-        if (!ShapeUtilities.equal(this.defaultLegendShape,
+        if (!ShapeUtils.equal(this.defaultLegendShape,
                 that.defaultLegendShape)) {
             return false;
         }
@@ -3207,7 +3207,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
             clone.shapeList = (ShapeList) this.shapeList.clone();
         }
         if (this.defaultShape != null) {
-            clone.defaultShape = ShapeUtilities.clone(this.defaultShape);
+            clone.defaultShape = ShapeUtils.clone(this.defaultShape);
         }
 
         // 'itemLabelsVisible' : immutable, no need to clone reference

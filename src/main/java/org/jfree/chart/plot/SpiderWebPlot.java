@@ -104,7 +104,7 @@ import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.Rotation;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.util.StrokeList;
 import org.jfree.chart.util.TableOrder;
 import org.jfree.chart.entity.CategoryItemEntity;
@@ -1326,7 +1326,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
                              int cat, double startAngle, double extent) {
         FontRenderContext frc = g2.getFontRenderContext();
 
-        String label = null;
+        String label;
         if (this.dataExtractOrder == TableOrder.BY_ROW) {
             // if series are in rows, then the categories are the column keys
             label = this.labelGenerator.generateColumnLabel(this.dataset, cat);
@@ -1444,7 +1444,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
         if (!this.axisLineStroke.equals(that.axisLineStroke)) {
             return false;
         }
-        if (!ShapeUtilities.equal(this.legendItemShape, that.legendItemShape)) {
+        if (!ShapeUtils.equal(this.legendItemShape, that.legendItemShape)) {
             return false;
         }
         if (!PaintUtilities.equalMaps(this.seriesPaintMap, 
@@ -1501,7 +1501,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     @Override
     public Object clone() throws CloneNotSupportedException {
         SpiderWebPlot clone = (SpiderWebPlot) super.clone();
-        clone.legendItemShape = ShapeUtilities.clone(this.legendItemShape);
+        clone.legendItemShape = ShapeUtils.clone(this.legendItemShape);
         clone.seriesPaintMap = new HashMap<Integer, Paint>(this.seriesPaintMap);
         clone.seriesOutlinePaintMap 
                 = new HashMap<Integer, Paint>(this.seriesOutlinePaintMap);

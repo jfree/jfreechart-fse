@@ -66,7 +66,7 @@ import java.util.Arrays;
 import org.jfree.chart.ChartColor;
 import org.jfree.chart.Colors;
 import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
@@ -402,7 +402,7 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
             return false;
         }
         for (int i = 0; i < s1.length; i++) {
-            if (!ShapeUtilities.equal(s1[i], s2[i])) {
+            if (!ShapeUtils.equal(s1[i], s2[i])) {
                 return false;
             }
         }

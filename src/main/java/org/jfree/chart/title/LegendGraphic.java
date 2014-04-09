@@ -74,7 +74,7 @@ import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtilities;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 
 /**
  * The graphical item within a legend item.
@@ -508,43 +508,35 @@ public class LegendGraphic extends AbstractBlock implements Block,
         if (w == LengthConstraintType.NONE) {
             if (h == LengthConstraintType.NONE) {
                 contentSize = arrangeNN(g2);
-            }
-            else if (h == LengthConstraintType.RANGE) {
+            } else if (h == LengthConstraintType.RANGE) {
                 throw new RuntimeException("Not yet implemented.");
-            }
-            else if (h == LengthConstraintType.FIXED) {
+            } else if (h == LengthConstraintType.FIXED) {
                 throw new RuntimeException("Not yet implemented.");
             }
         }
         else if (w == LengthConstraintType.RANGE) {
             if (h == LengthConstraintType.NONE) {
                 throw new RuntimeException("Not yet implemented.");
-            }
-            else if (h == LengthConstraintType.RANGE) {
+            } else if (h == LengthConstraintType.RANGE) {
                 throw new RuntimeException("Not yet implemented.");
-            }
-            else if (h == LengthConstraintType.FIXED) {
+            } else if (h == LengthConstraintType.FIXED) {
                 throw new RuntimeException("Not yet implemented.");
             }
         }
         else if (w == LengthConstraintType.FIXED) {
             if (h == LengthConstraintType.NONE) {
                 throw new RuntimeException("Not yet implemented.");
-            }
-            else if (h == LengthConstraintType.RANGE) {
+            } else if (h == LengthConstraintType.RANGE) {
                 throw new RuntimeException("Not yet implemented.");
-            }
-            else if (h == LengthConstraintType.FIXED) {
+            } else if (h == LengthConstraintType.FIXED) {
                 contentSize = new Size2D(
                     contentConstraint.getWidth(),
                     contentConstraint.getHeight()
                 );
             }
         }
-        return new Size2D(
-            calculateTotalWidth(contentSize.getWidth()),
-            calculateTotalHeight(contentSize.getHeight())
-        );
+        return new Size2D(calculateTotalWidth(contentSize.getWidth()),
+                calculateTotalHeight(contentSize.getHeight()));
     }
 
     /**
@@ -584,7 +576,7 @@ public class LegendGraphic extends AbstractBlock implements Block,
         if (this.lineVisible) {
             Point2D location = RectangleAnchor.coordinates(area,
                     this.shapeLocation);
-            Shape aLine = ShapeUtilities.createTranslatedShape(getLine(),
+            Shape aLine = ShapeUtils.createTranslatedShape(getLine(),
                     this.shapeAnchor, location.getX(), location.getY());
             g2.setPaint(this.linePaint);
             g2.setStroke(this.lineStroke);
@@ -595,7 +587,7 @@ public class LegendGraphic extends AbstractBlock implements Block,
             Point2D location = RectangleAnchor.coordinates(area,
                     this.shapeLocation);
 
-            Shape s = ShapeUtilities.createTranslatedShape(this.shape,
+            Shape s = ShapeUtils.createTranslatedShape(this.shape,
                     this.shapeAnchor, location.getX(), location.getY());
             if (this.shapeFilled) {
                 Paint p = this.fillPaint;
@@ -647,7 +639,7 @@ public class LegendGraphic extends AbstractBlock implements Block,
         if (this.shapeVisible != that.shapeVisible) {
             return false;
         }
-        if (!ShapeUtilities.equal(this.shape, that.shape)) {
+        if (!ShapeUtils.equal(this.shape, that.shape)) {
             return false;
         }
         if (this.shapeFilled != that.shapeFilled) {
@@ -678,7 +670,7 @@ public class LegendGraphic extends AbstractBlock implements Block,
         if (this.lineVisible != that.lineVisible) {
             return false;
         }
-        if (!ShapeUtilities.equal(this.line, that.line)) {
+        if (!ShapeUtils.equal(this.line, that.line)) {
             return false;
         }
         if (!PaintUtilities.equal(this.linePaint, that.linePaint)) {
@@ -713,8 +705,8 @@ public class LegendGraphic extends AbstractBlock implements Block,
     @Override
     public Object clone() throws CloneNotSupportedException {
         LegendGraphic clone = (LegendGraphic) super.clone();
-        clone.shape = ShapeUtilities.clone(this.shape);
-        clone.line = ShapeUtilities.clone(this.line);
+        clone.shape = ShapeUtils.clone(this.shape);
+        clone.line = ShapeUtils.clone(this.line);
         return clone;
     }
 

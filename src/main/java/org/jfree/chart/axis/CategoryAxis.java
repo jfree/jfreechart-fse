@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------
  * CategoryAxis.java
  * -----------------
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert;
  * Contributor(s):   Pady Srinivasan (patch 1217634);
@@ -111,7 +111,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.text.AttributedString;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -123,7 +122,6 @@ import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.entity.CategoryLabelEntity;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.AxisChangeEvent;
@@ -135,6 +133,7 @@ import org.jfree.chart.text.TextBlock;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.data.category.CategoryDataset;
 
 /**
@@ -1013,7 +1012,8 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
             return state;
         }
         List<CategoryTick> ticks = refreshTicks(g2, state, plotArea, edge);
-        //state.setTicks(ticks);        //FIXME MMC had to remove this as the types don't match
+        //state.setTicks(ticks);        
+        //FIXME MMC had to remove this as the types don't match
 
         int categoryIndex = 0;
         for (CategoryTick tick : ticks) {
@@ -1274,7 +1274,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         Size2D size = block.calculateDimensions(g2);
         Rectangle2D box = new Rectangle2D.Double(0.0, 0.0, size.getWidth(),
                 size.getHeight());
-        Shape rotatedBox = ShapeUtilities.rotateShape(box, position.getAngle(),
+        Shape rotatedBox = ShapeUtils.rotateShape(box, position.getAngle(),
                 0.0f, 0.0f);
         double w = rotatedBox.getBounds2D().getWidth() + insets.getLeft()
                 + insets.getRight();
@@ -1298,7 +1298,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         Size2D size = block.calculateDimensions(g2);
         Rectangle2D box = new Rectangle2D.Double(0.0, 0.0, size.getWidth(),
                 size.getHeight());
-        Shape rotatedBox = ShapeUtilities.rotateShape(box, position.getAngle(),
+        Shape rotatedBox = ShapeUtils.rotateShape(box, position.getAngle(),
                 0.0f, 0.0f);
         double h = rotatedBox.getBounds2D().getHeight()
                    + insets.getTop() + insets.getBottom();

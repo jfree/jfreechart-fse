@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -105,7 +105,7 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.GradientPaintTransformer;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
 import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.XYSeriesLabelGenerator;
@@ -592,11 +592,10 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
         if (getPlotShapes()) {
             shape = getItemShape(series, item);
             if (orientation == PlotOrientation.VERTICAL) {
-                shape = ShapeUtilities.createTranslatedShape(shape, transX1,
+                shape = ShapeUtils.createTranslatedShape(shape, transX1, 
                         transY1);
-            }
-            else if (orientation == PlotOrientation.HORIZONTAL) {
-                shape = ShapeUtilities.createTranslatedShape(shape, transY1,
+            } else if (orientation == PlotOrientation.HORIZONTAL) {
+                shape = ShapeUtils.createTranslatedShape(shape, transY1,
                         transX1);
             }
             g2.draw(shape);
@@ -695,7 +694,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
     @Override
     public Object clone() throws CloneNotSupportedException {
         XYAreaRenderer clone = (XYAreaRenderer) super.clone();
-        clone.legendArea = ShapeUtilities.clone(this.legendArea);
+        clone.legendArea = ShapeUtils.clone(this.legendArea);
         return clone;
     }
 
@@ -733,7 +732,7 @@ public class XYAreaRenderer extends AbstractXYItemRenderer
         if (!this.gradientTransformer.equals(that.gradientTransformer)) {
             return false;
         }
-        if (!ShapeUtilities.equal(this.legendArea, that.legendArea)) {
+        if (!ShapeUtils.equal(this.legendArea, that.legendArea)) {
             return false;
         }
         return true;

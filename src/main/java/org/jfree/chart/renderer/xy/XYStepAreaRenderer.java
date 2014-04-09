@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * XYStepAreaRenderer.java
  * -----------------------
- * (C) Copyright 2003-2013, by Matthias Rose and Contributors.
+ * (C) Copyright 2003-2014, by Matthias Rose and Contributors.
  *
  * Original Author:  Matthias Rose (based on XYAreaRenderer.java);
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -68,7 +68,7 @@ import java.io.Serializable;
 
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.XYToolTipGenerator;
@@ -161,9 +161,8 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
      *                          (<code>null</code> permitted).
      * @param urlGenerator  the URL generator (<code>null</code> permitted).
      */
-    public XYStepAreaRenderer(int type,
-                              XYToolTipGenerator toolTipGenerator,
-                              XYURLGenerator urlGenerator) {
+    public XYStepAreaRenderer(int type, XYToolTipGenerator toolTipGenerator,
+            XYURLGenerator urlGenerator) {
 
         super();
         setDefaultToolTipGenerator(toolTipGenerator);
@@ -171,11 +170,9 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
 
         if (type == AREA) {
             this.plotArea = true;
-        }
-        else if (type == SHAPES) {
+        } else if (type == SHAPES) {
             this.shapesVisible = true;
-        }
-        else if (type == AREA_AND_SHAPES) {
+        } else if (type == AREA_AND_SHAPES) {
             this.plotArea = true;
             this.shapesVisible = true;
         }
@@ -497,17 +494,15 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
             if (getShapesVisible()) {
                 shape = getItemShape(series, item);
                 if (orientation == PlotOrientation.VERTICAL) {
-                    shape = ShapeUtilities.createTranslatedShape(shape,
+                    shape = ShapeUtils.createTranslatedShape(shape,
                             transX1, transY1);
-                }
-                else if (orientation == PlotOrientation.HORIZONTAL) {
-                    shape = ShapeUtilities.createTranslatedShape(shape,
+                } else if (orientation == PlotOrientation.HORIZONTAL) {
+                    shape = ShapeUtils.createTranslatedShape(shape,
                             transY1, transX1);
                 }
                 if (isShapesFilled()) {
                     g2.fill(shape);
-                }
-                else {
+                } else {
                     g2.draw(shape);
                 }
             }

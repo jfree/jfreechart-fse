@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------------
  * FreePathSelectionHandler.java
  * -----------------------------
- * (C) Copyright 2013, by Michael Zinsmaier and Contributors.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier and Contributors.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -52,7 +52,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 
 /**
  * A mouse handler that allows data items to be selected. The selection path
@@ -157,7 +157,7 @@ public class FreePathSelectionHandler extends RegionSelectionHandler {
             return; // we never started a selection
         }
         Point pt = e.getPoint();
-        Point2D pt2 = ShapeUtilities.getPointInRectangle(pt.x, pt.y,
+        Point2D pt2 = ShapeUtils.getPointInRectangle(pt.x, pt.y,
                 panel.getScreenDataArea());
         if (pt2.distance(this.lastPoint) > 5) {
             this.points.add(new Point((int)pt2.getX(), (int)pt2.getY()));

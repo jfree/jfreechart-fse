@@ -75,7 +75,7 @@ import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.Rotation;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.util.UnitType;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.PieSectionEntity;
@@ -563,7 +563,7 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
                 double shadowXOffset = getShadowXOffset();
                 double shadowYOffset = getShadowYOffset();
                 if (shadowPaint != null && getShadowGenerator() == null) {
-                    Shape shadowArc = ShapeUtilities.createTranslatedShape(
+                    Shape shadowArc = ShapeUtils.createTranslatedShape(
                             path, (float) shadowXOffset, (float) shadowYOffset);
                     g2.setPaint(shadowPaint);
                     g2.fill(shadowArc);

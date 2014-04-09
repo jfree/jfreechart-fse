@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------------
  * FreeRegionSelectionHandler.java
  * -------------------------------
- * (C) Copyright 2009-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2009-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Michael Zinsmaier;
@@ -49,7 +49,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 
 /**
  * A mouse handler that allows data items to be selected. The selection shape
@@ -111,6 +111,7 @@ public class FreeRegionSelectionHandler extends RegionSelectionHandler {
      * 
      * @param e the event.
      */
+    @Override
     public void mousePressed(MouseEvent e) {
         if (!(e.getSource() instanceof ChartPanel)) {
             return;
@@ -136,6 +137,7 @@ public class FreeRegionSelectionHandler extends RegionSelectionHandler {
      * 
      * @param e the event.
      */
+    @Override
     public void mouseDragged(MouseEvent e) {
         ChartPanel panel = (ChartPanel) e.getSource();
         if (this.lastPoint == null) {
@@ -143,7 +145,7 @@ public class FreeRegionSelectionHandler extends RegionSelectionHandler {
             return; // we never started a selection
         }
         Point pt = e.getPoint();
-        Point2D pt2 = ShapeUtilities.getPointInRectangle(pt.x, pt.y,
+        Point2D pt2 = ShapeUtils.getPointInRectangle(pt.x, pt.y,
                 panel.getScreenDataArea());
         if (pt2.distance(this.lastPoint) > 5) {
             this.selectionPath.lineTo(pt2.getX(), pt2.getY());
@@ -160,6 +162,7 @@ public class FreeRegionSelectionHandler extends RegionSelectionHandler {
      * the event source. The SelectionManager is then responsible for the processing
      * of the geometric selection.
      */
+    @Override
     public void mouseReleased(MouseEvent e) {
         ChartPanel panel = (ChartPanel) e.getSource();
         if (this.lastPoint == null) {

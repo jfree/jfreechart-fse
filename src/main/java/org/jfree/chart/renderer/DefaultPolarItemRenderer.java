@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------------
  * DefaultPolarItemRenderer.java
  * -----------------------------
- * (C) Copyright 2004-2013, by Solution Engineering, Inc. and
+ * (C) Copyright 2004-2014, by Solution Engineering, Inc. and
  *     Contributors.
  *
  * Original Author:  Daniel Bridenbecker, Solution Engineering, Inc.;
@@ -86,7 +86,7 @@ import org.jfree.chart.util.BooleanList;
 import org.jfree.chart.util.ObjectList;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.XYItemEntity;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -561,7 +561,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
                 }
                 final int x = Math.round(coords[0]);
                 final int y = Math.round(coords[1]);
-                final Shape shape = ShapeUtilities.createTranslatedShape(
+                final Shape shape = ShapeUtils.createTranslatedShape(
                         getItemShape(seriesIndex, i++), x,  y);
 
                 Paint paint;
@@ -910,7 +910,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         if (this.useFillPaint != that.useFillPaint) {
             return false;
         }
-        if (!ShapeUtilities.equal(this.legendLine, that.legendLine)) {
+        if (!ShapeUtils.equal(this.legendLine, that.legendLine)) {
             return false;
         }
         if (this.shapesVisible != that.shapesVisible) {
@@ -952,7 +952,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         DefaultPolarItemRenderer clone
                 = (DefaultPolarItemRenderer) super.clone();
         if (this.legendLine != null) {
-            clone.legendLine = ShapeUtilities.clone(this.legendLine);
+            clone.legendLine = ShapeUtils.clone(this.legendLine);
         }
         clone.seriesFilled = (BooleanList) this.seriesFilled.clone();
         clone.toolTipGeneratorList

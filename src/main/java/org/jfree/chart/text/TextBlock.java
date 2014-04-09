@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -62,7 +62,7 @@ import org.jfree.chart.ui.HorizontalAlignment;
 import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.ParamChecks;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 
 /**
  * A list of {@link TextLine} objects that form a block of text.
@@ -184,15 +184,13 @@ public class TextBlock implements Serializable {
     public Shape calculateBounds(Graphics2D g2, float anchorX, float anchorY,
             TextBlockAnchor anchor, float rotateX, float rotateY, 
             double angle) {
-
         Size2D d = calculateDimensions(g2);
         float[] offsets = calculateOffsets(anchor, d.getWidth(), d.getHeight());
         Rectangle2D bounds = new Rectangle2D.Double(anchorX + offsets[0], 
                 anchorY + offsets[1], d.getWidth(), d.getHeight());
-        Shape rotatedBounds = ShapeUtilities.rotateShape(bounds, angle, 
+        Shape rotatedBounds = ShapeUtils.rotateShape(bounds, angle, 
                 rotateX, rotateY);
         return rotatedBounds;
-
     }
 
     /**
@@ -255,8 +253,8 @@ public class TextBlock implements Serializable {
      *
      * @return The offsets (float[0] = x offset, float[1] = y offset).
      */
-    private float[] calculateOffsets(TextBlockAnchor anchor,
-                                     double width, double height) {
+    private float[] calculateOffsets(TextBlockAnchor anchor, double width, 
+            double height) {
         float[] result = new float[2];
         float xAdj = 0.0f;
         float yAdj = 0.0f;
@@ -264,38 +262,28 @@ public class TextBlock implements Serializable {
         if (anchor == TextBlockAnchor.TOP_CENTER
                 || anchor == TextBlockAnchor.CENTER
                 || anchor == TextBlockAnchor.BOTTOM_CENTER) {
-
             xAdj = (float) -width / 2.0f;
-
         }
         else if (anchor == TextBlockAnchor.TOP_RIGHT
                 || anchor == TextBlockAnchor.CENTER_RIGHT
                 || anchor == TextBlockAnchor.BOTTOM_RIGHT) {
-
             xAdj = (float) -width;
-
         }
 
         if (anchor == TextBlockAnchor.TOP_LEFT
                 || anchor == TextBlockAnchor.TOP_CENTER
                 || anchor == TextBlockAnchor.TOP_RIGHT) {
-
             yAdj = 0.0f;
-
         }
         else if (anchor == TextBlockAnchor.CENTER_LEFT
                 || anchor == TextBlockAnchor.CENTER
                 || anchor == TextBlockAnchor.CENTER_RIGHT) {
-
             yAdj = (float) -height / 2.0f;
-
         }
         else if (anchor == TextBlockAnchor.BOTTOM_LEFT
                 || anchor == TextBlockAnchor.BOTTOM_CENTER
                 || anchor == TextBlockAnchor.BOTTOM_RIGHT) {
-
             yAdj = (float) -height;
-
         }
         result[0] = xAdj;
         result[1] = yAdj;

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------
  * ShapeList.java
  * --------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -103,7 +103,6 @@ public class ShapeList extends AbstractObjectList<Shape> {
      */
     @Override
     public boolean equals(Object obj) {
-
         if (obj == this) {
             return true;
         }
@@ -112,13 +111,12 @@ public class ShapeList extends AbstractObjectList<Shape> {
         }
         ShapeList that = (ShapeList) obj;
         int listSize = size();
-        for (int i = 0; i < listSize; i++) {
-           if (!ShapeUtilities.equal(get(i), that.get(i))) {
+        for (int i = 0; i < listSize; i++) { // FIXME: this is wrong
+           if (!ShapeUtils.equal(get(i), that.get(i))) {
                return false;
            }
         }
         return true;
-
     }
 
     /**

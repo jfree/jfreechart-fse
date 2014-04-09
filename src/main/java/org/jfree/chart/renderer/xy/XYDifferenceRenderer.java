@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -101,7 +101,7 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.XYItemEntity;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -915,12 +915,9 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
         if (getShapesVisible()) {
             Shape l_shape = getItemShape(x_series, x_item);
             if (l_orientation == PlotOrientation.HORIZONTAL) {
-                l_shape = ShapeUtilities.createTranslatedShape(l_shape,
-                        l_y1, l_x1);
-            }
-            else {
-                l_shape = ShapeUtilities.createTranslatedShape(l_shape,
-                        l_x1, l_y1);
+                l_shape = ShapeUtils.createTranslatedShape(l_shape, l_y1, l_x1);
+            } else {
+                l_shape = ShapeUtils.createTranslatedShape(l_shape, l_x1, l_y1);
             }
             if (l_shape.intersects(x_dataArea)) {
                 x_graphics.setPaint(getItemPaint(x_series, x_item));
@@ -1203,7 +1200,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
         if (this.shapesVisible != that.shapesVisible) {
             return false;
         }
-        if (!ShapeUtilities.equal(this.legendLine, that.legendLine)) {
+        if (!ShapeUtils.equal(this.legendLine, that.legendLine)) {
             return false;
         }
         if (this.roundXCoordinates != that.roundXCoordinates) {
@@ -1222,7 +1219,7 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
     @Override
     public Object clone() throws CloneNotSupportedException {
         XYDifferenceRenderer clone = (XYDifferenceRenderer) super.clone();
-        clone.legendLine = ShapeUtilities.clone(this.legendLine);
+        clone.legendLine = ShapeUtils.clone(this.legendLine);
         return clone;
     }
 

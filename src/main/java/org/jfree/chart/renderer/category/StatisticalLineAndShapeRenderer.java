@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------------------------
  * StatisticalLineAndShapeRenderer.java
  * ------------------------------------
- * (C) Copyright 2005-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  Mofeed Shahin;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -78,7 +78,7 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CategoryPlot;
@@ -221,16 +221,10 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
      * @param pass  the pass.
      */
     @Override
-    public void drawItem(Graphics2D g2,
-                         CategoryItemRendererState state,
-                         Rectangle2D dataArea,
-                         CategoryPlot plot,
-                         CategoryAxis domainAxis,
-                         ValueAxis rangeAxis,
-                         CategoryDataset dataset,
-                         int row,
-                         int column,
-                         int pass) {
+    public void drawItem(Graphics2D g2, CategoryItemRendererState state, 
+            Rectangle2D dataArea, CategoryPlot plot, CategoryAxis domainAxis,
+            ValueAxis rangeAxis, CategoryDataset dataset, int row, int column,
+            int pass) {
 
         // do nothing if item is not visible
         if (!getItemVisible(row, column)) {
@@ -341,18 +335,16 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
         if (pass == 1 && getItemShapeVisible(row, column)) {
             Shape shape = getItemShape(row, column);
             if (orientation == PlotOrientation.HORIZONTAL) {
-                shape = ShapeUtilities.createTranslatedShape(shape, y1, x1);
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
-                shape = ShapeUtilities.createTranslatedShape(shape, x1, y1);
+                shape = ShapeUtils.createTranslatedShape(shape, y1, x1);
+            } else if (orientation == PlotOrientation.VERTICAL) {
+                shape = ShapeUtils.createTranslatedShape(shape, x1, y1);
             }
             hotspot = shape;
 
             if (getItemShapeFilled(row, column)) {
                 if (getUseFillPaint()) {
                     g2.setPaint(getItemFillPaint(row, column));
-                }
-                else {
+                } else {
                     g2.setPaint(getItemPaint(row, column));
                 }
                 g2.fill(shape);
@@ -360,8 +352,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
             if (getDrawOutlines()) {
                 if (getUseOutlinePaint()) {
                     g2.setPaint(getItemOutlinePaint(row, column));
-                }
-                else {
+                } else {
                     g2.setPaint(getItemPaint(row, column));
                 }
                 g2.setStroke(getItemOutlineStroke(row, column));
@@ -372,8 +363,7 @@ public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
                 if (orientation == PlotOrientation.HORIZONTAL) {
                     drawItemLabel(g2, orientation, dataset, row, column,
                             y1, x1, (meanValue.doubleValue() < 0.0));
-                }
-                else if (orientation == PlotOrientation.VERTICAL) {
+                } else if (orientation == PlotOrientation.VERTICAL) {
                     drawItemLabel(g2, orientation, dataset, row, column,
                             x1, y1, (meanValue.doubleValue() < 0.0));
                 }

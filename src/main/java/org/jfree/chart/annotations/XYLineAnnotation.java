@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * XYLineAnnotation.java
  * ---------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Peter Kolb (see patch 2809117);
@@ -68,12 +68,13 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.util.LineUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 
 /**
@@ -130,22 +131,16 @@ public class XYLineAnnotation extends AbstractXYAnnotation
      * @param paint  the line color (<code>null</code> not permitted).
      */
     public XYLineAnnotation(double x1, double y1, double x2, double y2,
-                            Stroke stroke, Paint paint) {
-
+            Stroke stroke, Paint paint) {
         super();
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
         this.stroke = stroke;
         this.paint = paint;
-
     }
 
     /**
@@ -163,9 +158,8 @@ public class XYLineAnnotation extends AbstractXYAnnotation
      */
     @Override
     public void draw(Graphics2D g2, XYPlot plot, Rectangle2D dataArea,
-                     ValueAxis domainAxis, ValueAxis rangeAxis,
-                     int rendererIndex,
-                     PlotRenderingInfo info) {
+            ValueAxis domainAxis, ValueAxis rangeAxis, int rendererIndex,
+            PlotRenderingInfo info) {
 
         PlotOrientation orientation = plot.getOrientation();
         RectangleEdge domainEdge = Plot.resolveDomainAxisLocation(
@@ -209,7 +203,7 @@ public class XYLineAnnotation extends AbstractXYAnnotation
         String toolTip = getToolTipText();
         String url = getURL();
         if (toolTip != null || url != null) {
-            addEntity(info, ShapeUtilities.createLineRegion(line, 1.0f),
+            addEntity(info, ShapeUtils.createLineRegion(line, 1.0f),
                     rendererIndex, toolTip, url);
         }
     }
