@@ -141,8 +141,10 @@ import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.annotations.Annotation;
@@ -153,7 +155,6 @@ import org.jfree.chart.ui.Layer;
 import org.jfree.chart.ui.LengthAdjustmentType;
 import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.ObjectList;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.entity.EntityCollection;
@@ -178,6 +179,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.AbstractRenderer;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.urls.XYURLGenerator;
+import org.jfree.chart.util.CloneUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.Range;
 import org.jfree.data.general.DatasetUtilities;
@@ -198,13 +200,13 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     private XYPlot plot;
 
     /** A list of item label generators (one per series). */
-    private ObjectList<XYItemLabelGenerator> itemLabelGeneratorList;
+    private Map<Integer, XYItemLabelGenerator> itemLabelGeneratorList;
 
     /** The base item label generator. */
     private XYItemLabelGenerator baseItemLabelGenerator;
 
     /** A list of tool tip generators (one per series). */
-    private ObjectList<XYToolTipGenerator> toolTipGeneratorList;
+    private Map<Integer, XYToolTipGenerator> toolTipGeneratorList;
 
     /** The base tool tip generator. */
     private XYToolTipGenerator baseToolTipGenerator;
@@ -239,8 +241,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      */
     protected AbstractXYItemRenderer() {
         super();
-        this.itemLabelGeneratorList = new ObjectList<XYItemLabelGenerator>();
-        this.toolTipGeneratorList = new ObjectList<XYToolTipGenerator>();
+        this.itemLabelGeneratorList = new HashMap<Integer, XYItemLabelGenerator>();
+        this.toolTipGeneratorList = new HashMap<Integer, XYToolTipGenerator>();
         this.urlGenerator = null;
         this.backgroundAnnotations = new java.util.ArrayList<XYAnnotation>();
         this.foregroundAnnotations = new java.util.ArrayList<XYAnnotation>();
@@ -362,7 +364,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     @Override
     public void setSeriesItemLabelGenerator(int series,
             XYItemLabelGenerator generator, boolean notify) {
-        this.itemLabelGeneratorList.set(series, generator);
+        this.itemLabelGeneratorList.put(series, generator);
         if (notify) {
             fireChangeEvent();
         }
@@ -463,7 +465,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     @Override
     public void setSeriesToolTipGenerator(int series,
             XYToolTipGenerator generator, boolean notify) {
-        this.toolTipGeneratorList.set(series, generator);
+        this.toolTipGeneratorList.put(series, generator);
         if (notify) {
             fireChangeEvent();
         }
@@ -1323,12 +1325,9 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @return The coordinates for drawing the marker label.
      */
     protected Point2D calculateDomainMarkerTextAnchorPoint(Graphics2D g2,
-            PlotOrientation orientation,
-            Rectangle2D dataArea,
-            Rectangle2D markerArea,
-            RectangleInsets markerOffset,
-            LengthAdjustmentType labelOffsetType,
-            RectangleAnchor anchor) {
+            PlotOrientation orientation, Rectangle2D dataArea,
+            Rectangle2D markerArea, RectangleInsets markerOffset,
+            LengthAdjustmentType labelOffsetType, RectangleAnchor anchor) {
 
         Rectangle2D anchorRect = null;
         if (orientation == PlotOrientation.HORIZONTAL) {
@@ -1521,12 +1520,9 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * @return The coordinates for drawing the marker label.
      */
     private Point2D calculateRangeMarkerTextAnchorPoint(Graphics2D g2,
-                                      PlotOrientation orientation,
-                                      Rectangle2D dataArea,
-                                      Rectangle2D markerArea,
-                                      RectangleInsets markerOffset,
-                                      LengthAdjustmentType labelOffsetForRange,
-                                      RectangleAnchor anchor) {
+            PlotOrientation orientation, Rectangle2D dataArea,
+            Rectangle2D markerArea, RectangleInsets markerOffset,
+            LengthAdjustmentType labelOffsetForRange, RectangleAnchor anchor) {
 
         Rectangle2D anchorRect = null;
         if (orientation == PlotOrientation.HORIZONTAL) {
@@ -1540,7 +1536,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         return RectangleAnchor.coordinates(anchorRect, anchor);
 
     }
-
+    
     /**
      * Returns a clone of the renderer.
      *
@@ -1554,16 +1550,16 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         AbstractXYItemRenderer clone = (AbstractXYItemRenderer) super.clone();
         // 'plot' : just retain reference, not a deep copy
 
-        clone.itemLabelGeneratorList
-                = (ObjectList<XYItemLabelGenerator>) this.itemLabelGeneratorList.clone();
+        clone.itemLabelGeneratorList = CloneUtils.cloneMapValues(
+                this.itemLabelGeneratorList);
         if (this.baseItemLabelGenerator != null
                 && this.baseItemLabelGenerator instanceof PublicCloneable) {
             PublicCloneable pc = (PublicCloneable) this.baseItemLabelGenerator;
             clone.baseItemLabelGenerator = (XYItemLabelGenerator) pc.clone();
         }
 
-        clone.toolTipGeneratorList
-                = (ObjectList<XYToolTipGenerator>) this.toolTipGeneratorList.clone();
+        clone.toolTipGeneratorList = CloneUtils.cloneMapValues(
+                this.toolTipGeneratorList);
         if (this.baseToolTipGenerator != null
                 && this.baseToolTipGenerator instanceof PublicCloneable) {
             PublicCloneable pc = (PublicCloneable) this.baseToolTipGenerator;
