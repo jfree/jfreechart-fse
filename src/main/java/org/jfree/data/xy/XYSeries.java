@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------
  * XYSeries.java
  * -------------
- * (C) Copyright 2001-2012, Object Refinery Limited and Contributors.
+ * (C) Copyright 2001-2014, Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Aaron Metzger;
@@ -283,13 +283,11 @@ public class XYSeries extends Series implements Cloneable, Serializable {
         }
         if (itemContributesToYBounds) {
             findBoundsByIteration();
-        }
-        else if (itemContributesToXBounds) {
+        } else if (itemContributesToXBounds) {
             if (getAutoSort()) {
                 this.minX = getX(0).doubleValue();
                 this.maxX = getX(getItemCount() - 1).doubleValue();
-            }
-            else {
+            } else {
                 findBoundsByIteration();
             }
         }
@@ -507,8 +505,7 @@ public class XYSeries extends Series implements Cloneable, Serializable {
             int index = Collections.binarySearch(this.data, item);
             if (index < 0) {
                 this.data.add(-index - 1, item);
-            }
-            else {
+            } else {
                 if (this.allowDuplicateXValues) {
                     // need to make sure we are adding *after* any duplicates
                     int size = this.data.size();
@@ -518,12 +515,10 @@ public class XYSeries extends Series implements Cloneable, Serializable {
                     }
                     if (index < this.data.size()) {
                         this.data.add(index, item);
-                    }
-                    else {
+                    } else {
                         this.data.add(item);
                     }
-                }
-                else {
+                } else {
                     throw new SeriesException("X-value already exists.");
                 }
             }
