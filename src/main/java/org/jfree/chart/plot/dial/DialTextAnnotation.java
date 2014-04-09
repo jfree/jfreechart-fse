@@ -56,7 +56,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtilities;
+import org.jfree.chart.HashUtils;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
@@ -361,7 +361,7 @@ public class DialTextAnnotation extends AbstractDialLayer implements DialLayer,
     @Override
     public int hashCode() {
         int result = 193;
-        result = 37 * result + HashUtilities.hashCodeForPaint(this.paint);
+        result = 37 * result + HashUtils.hashCodeForPaint(this.paint);
         result = 37 * result + this.font.hashCode();
         result = 37 * result + this.label.hashCode();
         result = 37 * result + this.anchor.hashCode();

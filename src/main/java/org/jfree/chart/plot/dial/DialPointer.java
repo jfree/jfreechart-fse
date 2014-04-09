@@ -61,7 +61,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtilities;
+import org.jfree.chart.HashUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtilities;
@@ -192,7 +192,7 @@ public abstract class DialPointer extends AbstractDialLayer
     @Override
     public int hashCode() {
         int result = 23;
-        result = HashUtilities.hashCode(result, this.radius);
+        result = HashUtils.hashCode(result, this.radius);
         return result;
     }
 
@@ -358,8 +358,8 @@ public abstract class DialPointer extends AbstractDialLayer
         @Override
         public int hashCode() {
             int result = super.hashCode();
-            result = HashUtilities.hashCode(result, this.paint);
-            result = HashUtilities.hashCode(result, this.stroke);
+            result = HashUtils.hashCode(result, this.paint);
+            result = HashUtils.hashCode(result, this.stroke);
             return result;
         }
 
@@ -624,9 +624,9 @@ public abstract class DialPointer extends AbstractDialLayer
         @Override
         public int hashCode() {
             int result = super.hashCode();
-            result = HashUtilities.hashCode(result, this.widthRadius);
-            result = HashUtilities.hashCode(result, this.fillPaint);
-            result = HashUtilities.hashCode(result, this.outlinePaint);
+            result = HashUtils.hashCode(result, this.widthRadius);
+            result = HashUtils.hashCode(result, this.fillPaint);
+            result = HashUtils.hashCode(result, this.outlinePaint);
             return result;
         }
 

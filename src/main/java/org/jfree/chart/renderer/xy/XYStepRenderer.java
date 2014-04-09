@@ -78,7 +78,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtilities;
+import org.jfree.chart.HashUtils;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.util.PublicCloneable;
@@ -349,7 +349,7 @@ public class XYStepRenderer extends XYLineAndShapeRenderer
      */
     @Override
     public int hashCode() {
-        return HashUtilities.hashCode(super.hashCode(), this.stepPoint);
+        return HashUtils.hashCode(super.hashCode(), this.stepPoint);
     }
 
     /**

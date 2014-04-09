@@ -42,7 +42,7 @@
 package org.jfree.data.time.ohlc;
 
 import java.io.Serializable;
-import org.jfree.chart.HashUtilities;
+import org.jfree.chart.HashUtils;
 
 /**
  * A high low data record (immutable).  This class is used internally by the
@@ -154,10 +154,10 @@ public class OHLC implements Serializable {
     @Override
     public int hashCode() {
         int result = 193;
-        result = HashUtilities.hashCode(result, this.open);
-        result = HashUtilities.hashCode(result, this.high);
-        result = HashUtilities.hashCode(result, this.low);
-        result = HashUtilities.hashCode(result, this.close);
+        result = HashUtils.hashCode(result, this.open);
+        result = HashUtils.hashCode(result, this.high);
+        result = HashUtils.hashCode(result, this.low);
+        result = HashUtils.hashCode(result, this.close);
         return result;
     }
 

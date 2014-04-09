@@ -58,7 +58,7 @@ package org.jfree.chart.entity;
 import java.awt.Shape;
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtilities;
+import org.jfree.chart.HashUtils;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.data.extension.DatasetCursor;
 import org.jfree.data.extension.impl.PieCursor;
@@ -245,8 +245,8 @@ public class PieSectionEntity extends DataItemEntity
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = HashUtilities.hashCode(result, this.pieIndex);
-        result = HashUtilities.hashCode(result, this.sectionIndex);
+        result = HashUtils.hashCode(result, this.pieIndex);
+        result = HashUtils.hashCode(result, this.sectionIndex);
         return result;
     }
 

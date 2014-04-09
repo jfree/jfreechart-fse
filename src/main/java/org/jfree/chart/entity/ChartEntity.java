@@ -82,7 +82,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtilities;
+import org.jfree.chart.HashUtils;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.imagemap.ToolTipTagFragmentGenerator;
@@ -397,8 +397,8 @@ public class ChartEntity implements Cloneable, PublicCloneable, Serializable {
     @Override
     public int hashCode() {
         int result = 37;
-        result = HashUtilities.hashCode(result, this.toolTipText);
-        result = HashUtilities.hashCode(result, this.urlText);
+        result = HashUtils.hashCode(result, this.toolTipText);
+        result = HashUtils.hashCode(result, this.urlText);
         return result;
     }
 

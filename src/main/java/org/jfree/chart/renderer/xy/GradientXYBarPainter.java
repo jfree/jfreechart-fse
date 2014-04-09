@@ -51,7 +51,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtilities;
+import org.jfree.chart.HashUtils;
 import org.jfree.chart.ui.RectangleEdge;
 
 /**
@@ -371,9 +371,9 @@ public class GradientXYBarPainter implements XYBarPainter, Serializable {
     @Override
     public int hashCode() {
         int hash = 37;
-        hash = HashUtilities.hashCode(hash, this.g1);
-        hash = HashUtilities.hashCode(hash, this.g2);
-        hash = HashUtilities.hashCode(hash, this.g3);
+        hash = HashUtils.hashCode(hash, this.g1);
+        hash = HashUtils.hashCode(hash, this.g2);
+        hash = HashUtils.hashCode(hash, this.g3);
         return hash;
     }
 
