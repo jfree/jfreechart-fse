@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * DatasetUtilities.java
  * ---------------------
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Andrzej Porebski (bug fix);
@@ -130,7 +130,7 @@ package org.jfree.data.general;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jfree.chart.util.ArrayUtilities;
+import org.jfree.chart.util.ArrayUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.DomainInfo;
 import org.jfree.data.DomainOrder;
@@ -418,10 +418,10 @@ public final class DatasetUtilities {
 
         ParamChecks.nullNotPermitted(rowKeys, "rowKeys");
         ParamChecks.nullNotPermitted(columnKeys, "columnKeys");
-        if (ArrayUtilities.hasDuplicateItems(rowKeys)) {
+        if (ArrayUtils.hasDuplicateItems(rowKeys)) {
             throw new IllegalArgumentException("Duplicate items in 'rowKeys'.");
         }
-        if (ArrayUtilities.hasDuplicateItems(columnKeys)) {
+        if (ArrayUtils.hasDuplicateItems(columnKeys)) {
             throw new IllegalArgumentException(
                     "Duplicate items in 'columnKeys'.");
         }
@@ -1670,9 +1670,7 @@ public final class DatasetUtilities {
      * @return The minimum value (possibly <code>null</code>).
      */
     public static Number findMinimumRangeValue(CategoryDataset dataset) {
-
         ParamChecks.nullNotPermitted(dataset, "dataset");
-
         if (dataset instanceof RangeInfo) {
             RangeInfo info = (RangeInfo) dataset;
             return new Double(info.getRangeLowerBound(true));

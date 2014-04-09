@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * FastScatterPlot.java
  * --------------------
- * (C) Copyright 2002-2012, by Object Refinery Limited.
+ * (C) Copyright 2002-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Arnaud Lelievre;
@@ -90,7 +90,7 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.axis.ValueTick;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.ArrayUtilities;
+import org.jfree.chart.util.ArrayUtils;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.event.PlotChangeEvent;
@@ -219,7 +219,6 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
         this.rangeGridlinesVisible = true;
         this.rangeGridlinePaint = FastScatterPlot.DEFAULT_GRIDLINE_PAINT;
         this.rangeGridlineStroke = FastScatterPlot.DEFAULT_GRIDLINE_STROKE;
-
     }
 
     /**
@@ -1031,7 +1030,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
         if (this.rangePannable != that.rangePannable) {
             return false;
         }
-        if (!ArrayUtilities.equal(this.data, that.data)) {
+        if (!ArrayUtils.equal(this.data, that.data)) {
             return false;
         }
         if (!ObjectUtils.equal(this.domainAxis, that.domainAxis)) {
@@ -1078,10 +1077,9 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
-
         FastScatterPlot clone = (FastScatterPlot) super.clone();
         if (this.data != null) {
-            clone.data = ArrayUtilities.clone(this.data);
+            clone.data = ArrayUtils.clone(this.data);
         }
         if (this.domainAxis != null) {
             clone.domainAxis = (ValueAxis) this.domainAxis.clone();
@@ -1094,7 +1092,6 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
             clone.rangeAxis.addChangeListener(clone);
         }
         return clone;
-
     }
 
     /**
