@@ -97,7 +97,7 @@ import org.jfree.chart.plot.CrosshairState;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.util.LineUtilities;
+import org.jfree.chart.util.LineUtils;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.xy.XYDataset;
 
@@ -863,14 +863,14 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
         }
 
         PlotOrientation orientation = plot.getOrientation();
-        boolean visible = false;
+        boolean visible;
         if (orientation == PlotOrientation.HORIZONTAL) {
             state.workingLine.setLine(transY0, transX0, transY1, transX1);
         }
         else if (orientation == PlotOrientation.VERTICAL) {
             state.workingLine.setLine(transX0, transY0, transX1, transY1);
         }
-        visible = LineUtilities.clipLine(state.workingLine, dataArea);
+        visible = LineUtils.clipLine(state.workingLine, dataArea);
         if (visible) {
             drawFirstPassShape(g2, pass, series, item, state.workingLine);
         }
@@ -1067,7 +1067,7 @@ public class XYLineAndShapeRenderer extends AbstractXYItemRenderer
      * @param datasetIndex  the dataset index (zero-based).
      * @param series  the series index (zero-based).
      *
-     * @return A legend item for the series (possibly <code>null</code).
+     * @return A legend item for the series (possibly <code>null</code>).
      */
     @Override
     public LegendItem getLegendItem(int datasetIndex, int series) {

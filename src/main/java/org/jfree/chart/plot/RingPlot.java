@@ -83,7 +83,7 @@ import org.jfree.chart.labels.PieToolTipGenerator;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.urls.PieURLGenerator;
-import org.jfree.chart.util.LineUtilities;
+import org.jfree.chart.util.LineUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.general.PieDataset;
@@ -625,8 +625,8 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
             }
             else if (currentPass == 2) {
                 if (this.separatorsVisible) {
-                    Line2D extendedSeparator = LineUtilities.extendLine(
-                            separator, this.innerSeparatorExtension,
+                    Line2D extendedSeparator = LineUtils.extendLine(separator, 
+                            this.innerSeparatorExtension,
                         this.outerSeparatorExtension);
                     g2.setStroke(this.separatorStroke);
                     g2.setPaint(this.separatorPaint);
