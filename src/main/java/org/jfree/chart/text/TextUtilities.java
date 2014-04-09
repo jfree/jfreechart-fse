@@ -802,6 +802,8 @@ public class TextUtilities {
         float halfAscent = ascent / 2.0f;
         float descent = layout.getDescent();
         float leading = layout.getLeading();
+        double height = Math.max(bounds.getHeight(), 
+                ascent + descent + leading);
         float xAdj = 0.0f;
         float yAdj = 0.0f;
         
@@ -813,13 +815,13 @@ public class TextUtilities {
         }
 
         if (anchor.isTop()) {
-            yAdj = -descent - leading + (float) bounds.getHeight();
+            yAdj = -descent - leading + (float) height;
         }
         else if (anchor.isHalfAscent()) {
             yAdj = halfAscent;
         }
         else if (anchor.isHalfHeight()) {
-            yAdj = -descent - leading + (float) (bounds.getHeight() / 2.0);
+            yAdj = -descent - leading + (float) (height / 2.0);
         }
         else if (anchor.isBaseline()) {
             yAdj = 0.0f;
