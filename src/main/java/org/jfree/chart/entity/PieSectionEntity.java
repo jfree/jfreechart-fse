@@ -58,7 +58,7 @@ package org.jfree.chart.entity;
 import java.awt.Shape;
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtils;
+import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.data.extension.DatasetCursor;
 import org.jfree.data.extension.impl.PieCursor;

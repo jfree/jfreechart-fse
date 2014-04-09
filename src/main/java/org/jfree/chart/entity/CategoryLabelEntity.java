@@ -44,7 +44,7 @@ package org.jfree.chart.entity;
 
 import java.awt.Shape;
 
-import org.jfree.chart.HashUtils;
+import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.util.ObjectUtils;
 

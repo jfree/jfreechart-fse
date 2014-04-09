@@ -47,7 +47,7 @@ package org.jfree.chart.labels;
 import java.io.Serializable;
 import java.text.MessageFormat;
 
-import org.jfree.chart.HashUtils;
+import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.xy.XYDataset;
 

@@ -43,7 +43,7 @@ package org.jfree.data.function;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import org.jfree.chart.HashUtils;
+import org.jfree.chart.util.HashUtils;
 
 /**
  * A function in the form <code>y = a0 + a1 * x + a2 * x^2 + ... + an *

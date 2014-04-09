@@ -50,7 +50,7 @@ import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 
-import org.jfree.chart.HashUtils;
+import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.renderer.xy.XYBubbleRenderer;

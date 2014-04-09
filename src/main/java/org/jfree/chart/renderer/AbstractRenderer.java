@@ -115,7 +115,7 @@ import java.util.Map;
 
 import javax.swing.event.EventListenerList;
 
-import org.jfree.chart.HashUtils;
+import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.BooleanList;
 import org.jfree.chart.util.ObjectUtils;

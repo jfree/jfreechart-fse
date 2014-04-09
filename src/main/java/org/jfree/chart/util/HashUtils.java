@@ -44,7 +44,7 @@
  *
  */
 
-package org.jfree.chart;
+package org.jfree.chart.util;
 
 import java.awt.GradientPaint;
 import java.awt.Paint;

@@ -50,7 +50,7 @@ import java.util.List;
 
 import javax.swing.event.EventListenerList;
 
-import org.jfree.chart.HashUtils;
+import org.jfree.chart.util.HashUtils;
 
 /**
  * A base class that can be used to implement a {@link DialLayer}.  It includes

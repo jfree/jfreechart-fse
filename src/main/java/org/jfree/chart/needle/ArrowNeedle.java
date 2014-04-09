@@ -53,7 +53,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtils;
+import org.jfree.chart.util.HashUtils;
 
 /**
  * A needle in the shape of an arrow.

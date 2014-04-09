@@ -48,7 +48,7 @@ import java.awt.Color;
 import java.awt.Paint;
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtils;
+import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.util.PublicCloneable;
 
 /**

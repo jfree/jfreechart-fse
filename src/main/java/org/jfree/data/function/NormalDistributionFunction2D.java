@@ -47,7 +47,7 @@ package org.jfree.data.function;
 
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtils;
+import org.jfree.chart.util.HashUtils;
 
 /**
  * A normal distribution function.  See

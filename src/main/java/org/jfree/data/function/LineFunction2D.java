@@ -44,7 +44,7 @@ package org.jfree.data.function;
 
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtils;
+import org.jfree.chart.util.HashUtils;
 
 /**
  * A function in the form y = a + bx.

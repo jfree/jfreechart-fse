@@ -47,7 +47,7 @@ package org.jfree.data.time.ohlc;
 import java.io.Serializable;
 import java.util.List;
 
-import org.jfree.chart.HashUtils;
+import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.time.RegularTimePeriod;

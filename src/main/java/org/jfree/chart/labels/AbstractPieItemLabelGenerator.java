@@ -48,7 +48,7 @@ import java.io.Serializable;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 
-import org.jfree.chart.HashUtils;
+import org.jfree.chart.util.HashUtils;
 import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.general.PieDataset;
 
