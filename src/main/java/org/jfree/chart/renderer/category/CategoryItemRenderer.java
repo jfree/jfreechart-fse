@@ -297,13 +297,13 @@ public interface CategoryItemRenderer extends Renderer {
       CategoryURLGenerator generator, boolean notify);
 
   /**
-   * Returns the default item URL generator.
+   * Returns the default URL generator for data items.
    *
-   * @return The item URL generator (possibly <code>null</code>).
+   * @return The URL generator (possibly <code>null</code>).
    *
-   * @see #setDefaultItemURLGenerator(CategoryURLGenerator)
+   * @see #setDefaultURLGenerator(CategoryURLGenerator)
    */
-  public CategoryURLGenerator getDefaultItemURLGenerator();
+  public CategoryURLGenerator getDefaultURLGenerator();
 
   /**
    * Sets the default item URL generator and sends a {@link RendererChangeEvent}
@@ -311,11 +311,18 @@ public interface CategoryItemRenderer extends Renderer {
    *
    * @param generator  the item URL generator (<code>null</code> permitted).
    *
-   * @see #getDefaultItemURLGenerator()
+   * @see #getDefaultURLGenerator()
    */
-  public void setDefaultItemURLGenerator(CategoryURLGenerator generator);
+  public void setDefaultURLGenerator(CategoryURLGenerator generator);
 
-  public void setDefaultItemURLGenerator(CategoryURLGenerator generator,
+  /**
+   * Sets the default URL generator and, if requested, sends a change event to
+   * all registered listeners.
+   * 
+   * @param generator  the generator (<code>null</code> permitted).
+   * @param notify  notify listeners?
+   */
+  public void setDefaultURLGenerator(CategoryURLGenerator generator,
       boolean notify);
 
 
