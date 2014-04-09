@@ -180,7 +180,6 @@ import javax.swing.event.EventListenerList;
 import org.jfree.chart.block.BlockParams;
 import org.jfree.chart.block.EntityBlockResult;
 import org.jfree.chart.block.LengthConstraintType;
-import org.jfree.chart.block.LineBorder;
 import org.jfree.chart.block.RectangleConstraint;
 import org.jfree.chart.ui.Align;
 import org.jfree.chart.ui.Drawable;
@@ -240,6 +239,10 @@ public class JFreeChart implements Drawable, TitleChangeListener,
     /** The default font for titles. */
     public static final Font DEFAULT_TITLE_FONT
             = new Font("SansSerif", Font.BOLD, 18);
+
+    /** The default font for titles. */
+    public static final Font DEFAULT_SUBTITLE_FONT
+            = new Font("SansSerif", Font.PLAIN, 12);
 
     /** The default background color. */
     public static final Paint DEFAULT_BACKGROUND_PAINT
@@ -393,7 +396,7 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         this.borderStroke = new BasicStroke(1.0f);
         this.borderPaint = Color.BLACK;
 
-        this.padding = RectangleInsets.ZERO_INSETS;
+        this.padding = new RectangleInsets(4, 4, 4, 4);
 
         this.plot = plot;
         plot.addChangeListener(this);
@@ -404,7 +407,7 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         if (createLegend) {
             LegendTitle legend = new LegendTitle(this.plot);
             legend.setMargin(new RectangleInsets(1.0, 1.0, 1.0, 1.0));
-            legend.setFrame(new LineBorder());
+            legend.setHorizontalAlignment(HorizontalAlignment.RIGHT);
             legend.setBackgroundPaint(Color.WHITE);
             legend.setPosition(RectangleEdge.BOTTOM);
             this.subtitles.add(legend);
@@ -730,6 +733,16 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         return this.subtitles.get(index);
     }
 
+    /**
+     * Adds a subtitle to the chart and sends a change event to all 
+     * registered listeners.
+     * 
+     * @param subtitle  the subtitle (<code>null</code> not permitted). 
+     */
+    public void addSubtitle(String subtitle) {
+        addSubtitle(new TextTitle(subtitle, DEFAULT_SUBTITLE_FONT));    
+    }
+    
     /**
      * Adds a chart subtitle, and notifies registered listeners that the chart
      * has been modified.
