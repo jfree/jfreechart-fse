@@ -81,7 +81,7 @@ import java.text.CharacterIterator;
 
 import org.jfree.chart.ui.GradientPaintTransformer;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
-import org.jfree.chart.util.AttributedStringUtilities;
+import org.jfree.chart.util.AttributedStringUtils;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.ParamChecks;
@@ -1015,7 +1015,7 @@ public class LegendItem implements Cloneable, Serializable {
         if (!this.label.equals(that.label)) {
             return false;
         }
-        if (!AttributedStringUtilities.equal(this.attributedLabel,
+        if (!AttributedStringUtils.equal(this.attributedLabel,
                 that.attributedLabel)) {
             return false;
         }

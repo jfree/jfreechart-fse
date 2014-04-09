@@ -122,7 +122,7 @@ import org.jfree.chart.event.AxisChangeListener;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.util.AttributedStringUtilities;
+import org.jfree.chart.util.AttributedStringUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 
@@ -1397,7 +1397,7 @@ public abstract class Axis implements Cloneable, Serializable {
         if (this.visible != that.visible) {
             return false;
         }
-        if (!AttributedStringUtilities.equal(this.label, that.label)) {
+        if (!AttributedStringUtils.equal(this.label, that.label)) {
             return false;
         }
         if (!ObjectUtils.equal(this.labelFont, that.labelFont)) {
@@ -1477,7 +1477,7 @@ public abstract class Axis implements Cloneable, Serializable {
     @Override
     public int hashCode() {
         if (getLabel() != null) {
-            String s = AttributedStringUtilities.toString(
+            String s = AttributedStringUtils.toString(
                     getLabel().getIterator());
             return s.hashCode();
         }
