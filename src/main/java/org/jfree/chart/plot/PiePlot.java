@@ -183,6 +183,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Paint;
+import java.awt.RadialGradientPaint;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Arc2D;
@@ -197,13 +198,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
+import org.jfree.chart.JFreeChart;
 
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.PaintMap;
@@ -224,6 +224,7 @@ import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.urls.PieURLGenerator;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ResourceBundleWrapper;
 import org.jfree.chart.util.Rotation;
@@ -724,9 +725,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @see #getDirection()
      */
     public void setDirection(Rotation direction) {
-        if (direction == null) {
-            throw new IllegalArgumentException("Null 'direction' argument.");
-        }
+        ParamChecks.nullNotPermitted(direction, "direction");
         this.direction = direction;
         fireChangeEvent();
 
@@ -1038,9 +1037,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @see #getBaseSectionPaint()
      */
     public void setBaseSectionPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.baseSectionPaint = paint;
         fireChangeEvent();
     }
@@ -1247,9 +1244,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @see #getBaseSectionOutlinePaint()
      */
     public void setBaseSectionOutlinePaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.baseSectionOutlinePaint = paint;
         fireChangeEvent();
     }
@@ -1430,9 +1425,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @see #getBaseSectionOutlineStroke()
      */
     public void setBaseSectionOutlineStroke(Stroke stroke) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         this.baseSectionOutlineStroke = stroke;
         fireChangeEvent();
     }
@@ -1563,7 +1556,6 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         return result;
     }
 
-
     /**
      * Sets the amount that a pie section should be exploded and sends a
      * {@link PlotChangeEvent} to all registered listeners.
@@ -1576,9 +1568,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @see #getExplodePercent(Comparable)
      */
     public void setExplodePercent(Comparable key, double percent) {
-        if (key == null) {
-            throw new IllegalArgumentException("Null 'key' argument.");
-        }
+        ParamChecks.nullNotPermitted(key, "key");
         if (this.explodePercentages == null) {
             this.explodePercentages = new TreeMap<Comparable<?>, Number>();
         }
@@ -1731,9 +1721,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @since 1.0.10
      */
     public void setLabelLinkStyle(PieLabelLinkStyle style) {
-        if (style == null) {
-            throw new IllegalArgumentException("Null 'style' argument.");
-        }
+        ParamChecks.nullNotPermitted(style, "style");
         this.labelLinkStyle = style;
         fireChangeEvent();
     }
@@ -1812,9 +1800,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @see #getLabelLinkStroke()
      */
     public void setLabelLinkStroke(Stroke stroke) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         this.labelLinkStroke = stroke;
         fireChangeEvent();
     }
@@ -1881,9 +1867,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @see #getLabelPaint()
      */
     public void setLabelPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.labelPaint = paint;
         fireChangeEvent();
     }
@@ -2065,9 +2049,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @see #getSimpleLabelOffset()
      */
     public void setSimpleLabelOffset(RectangleInsets offset) {
-        if (offset == null) {
-            throw new IllegalArgumentException("Null 'offset' argument.");
-        }
+        ParamChecks.nullNotPermitted(offset, "offset");
         this.simpleLabelOffset = offset;
         fireChangeEvent();
     }
@@ -2093,9 +2075,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @since 1.0.6
      */
     public void setLabelDistributor(AbstractPieLabelDistributor distributor) {
-        if (distributor == null) {
-            throw new IllegalArgumentException("Null 'distributor' argument.");
-        }
+        ParamChecks.nullNotPermitted(distributor, "distributor");
         this.labelDistributor = distributor;
         fireChangeEvent();
     }
@@ -2232,9 +2212,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @see #getLegendLabelGenerator()
      */
     public void setLegendLabelGenerator(PieSectionLabelGenerator generator) {
-        if (generator == null) {
-            throw new IllegalArgumentException("Null 'generator' argument.");
-        }
+        ParamChecks.nullNotPermitted(generator, "generator");
         this.legendLabelGenerator = generator;
         fireChangeEvent();
     }
@@ -2396,8 +2374,10 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
 
         if (!DatasetUtilities.isEmptyOrNull(this.dataset)) {
             Graphics2D savedG2 = g2;
+            boolean suppressShadow = Boolean.TRUE.equals(g2.getRenderingHint(
+                    JFreeChart.KEY_SUPPRESS_SHADOW_GENERATION));
             BufferedImage dataImage = null;
-            if (this.shadowGenerator != null) {
+            if (this.shadowGenerator != null && !suppressShadow) {
                 dataImage = new BufferedImage((int) area.getWidth(),
                     (int) area.getHeight(), BufferedImage.TYPE_INT_ARGB);
                 g2 = dataImage.createGraphics();
@@ -2405,8 +2385,9 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
                 g2.setRenderingHints(savedG2.getRenderingHints());
             }
             drawPie(g2, area, info);
-            if (this.shadowGenerator != null) {
-                BufferedImage shadowImage = this.shadowGenerator.createDropShadow(dataImage);
+            if (this.shadowGenerator != null && !suppressShadow) {
+                BufferedImage shadowImage 
+                        = this.shadowGenerator.createDropShadow(dataImage);
                 g2 = savedG2;
                 g2.drawImage(shadowImage, (int) area.getX()
                         + this.shadowGenerator.calculateOffsetX(),
@@ -2928,7 +2909,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             }
         }
         double hh = plotArea.getHeight();
-        double gap = hh * getInteriorGap();
+        double gap = 0.00; //hh * getInteriorGap();
         this.labelDistributor.distributeLabels(plotArea.getMinY() + gap,
                 hh - 2 * gap);
         for (int i = 0; i < this.labelDistributor.getItemCount(); i++) {
@@ -3219,32 +3200,17 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      */
     protected Paint lookupSectionPaint(Comparable key, PiePlotState state) {
         Paint paint = lookupSectionPaint(key, getAutoPopulateSectionPaint());
-        // If using JDK 1.6 or later the passed Paint Object can be a RadialGradientPaint
-        // We need to adjust the radius and center for this object to match the Pie.
-        try {
-            // FIXME : we are using JDK1.6 now, don't need reflection here
-            Class c = Class.forName("java.awt.RadialGradientPaint");
-            Constructor cc = c.getConstructor(new Class[] {
-                    Point2D.class, float.class, float[].class, Color[].class});
-
-             if (c.isInstance(paint)) {
-                 // User did pass a RadialGradientPaint object
-                 Method m = c.getMethod("getFractions", new Class[] {});
-                 Object fractions = m.invoke(paint, new Object[] {});
-                 m = c.getMethod("getColors", new Class[] {});
-                 Object clrs = m.invoke(paint, new Object[] {});
+        // for a RadialGradientPaint we adjust the center and radius to match
+        // the current pie segment...
+        if (paint instanceof RadialGradientPaint) {
+            RadialGradientPaint rgp = (RadialGradientPaint) paint;
                  Point2D center = getArcCenter(state, key);
-                 float radius = (float) state.getPieHRadius();
-
-                 Paint radialPaint = (Paint) cc.newInstance(new Object[] {
-                         center, radius,
-                         fractions, clrs});
-                 // return the new RadialGradientPaint
-                 return radialPaint;
+            float radius = (float) Math.max(state.getPieHRadius(), 
+                    state.getPieWRadius());
+            float[] fractions = rgp.getFractions();
+            Color[] colors = rgp.getColors();
+            paint = new RadialGradientPaint(center, radius, fractions, colors);
              }
-        } catch (Exception e) {
-        }
-        // Return whatever it was
         return paint;
     }
 
