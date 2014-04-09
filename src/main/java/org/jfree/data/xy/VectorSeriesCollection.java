@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------
  * VectorSeriesCollection.java
  * ---------------------------
- * (C) Copyright 2007-2012, by Object Refinery Limited.
+ * (C) Copyright 2007-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -47,7 +47,6 @@ package org.jfree.data.xy;
 
 import java.io.Serializable;
 import java.util.List;
-
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
@@ -108,17 +107,14 @@ public class VectorSeriesCollection extends AbstractXYDataset
      * {@link DatasetChangeEvent} to all registered listeners.
      */
     public void removeAllSeries() {
-
         // deregister the collection as a change listener to each series in the
         // collection
         for (VectorSeries series : this.data) {
             series.removeChangeListener(this);
         }
-
         // remove all the series from the collection and notify listeners.
         this.data.clear();
         fireDatasetChanged();
-
     }
 
     /**

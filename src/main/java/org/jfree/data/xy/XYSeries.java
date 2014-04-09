@@ -83,7 +83,6 @@ package org.jfree.data.xy;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.general.Series;
