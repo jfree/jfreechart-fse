@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -24,10 +24,10 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * --------------------------------
- * AbstractXYItemRendererTests.java
- * --------------------------------
- * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
+ * -------------------------------
+ * AbstractXYItemRendererTest.java
+ * -------------------------------
+ * (C) Copyright 2004-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -41,26 +41,26 @@
 
 package org.jfree.chart.renderer.xy;
 
-import org.jfree.chart.labels.StandardXYSeriesLabelGenerator;
-import org.jfree.data.Range;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 
+import org.junit.Test;
+
+import org.jfree.chart.labels.StandardXYItemLabelGenerator;
+import org.jfree.chart.labels.StandardXYSeriesLabelGenerator;
+import org.jfree.chart.labels.StandardXYToolTipGenerator;
+import org.jfree.data.Range;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 /**
  * Tests for the {@link AbstractXYItemRenderer} class.
  */
-public class AbstractXYItemRendererTest  {
-
-
-
-
+public class AbstractXYItemRendererTest {
 
     /**
      * Creates a test dataset.
@@ -110,7 +110,8 @@ public class AbstractXYItemRendererTest  {
      * Check that the legendItemLabelGenerator is cloned.
      */
     @Test
-    public void testCloning_LegendItemLabelGenerator() throws CloneNotSupportedException {
+    public void testCloning_LegendItemLabelGenerator() 
+            throws CloneNotSupportedException {
         StandardXYSeriesLabelGenerator generator
                 = new StandardXYSeriesLabelGenerator("Series {0}");
         XYBarRenderer r1 = new XYBarRenderer();
@@ -122,14 +123,17 @@ public class AbstractXYItemRendererTest  {
         assertEquals(r1, r2);
 
         // check that the generator has been cloned
-        assertNotSame(r1.getLegendItemLabelGenerator(), r2.getLegendItemLabelGenerator());
+        assertNotSame(r1.getLegendItemLabelGenerator(), 
+                r2.getLegendItemLabelGenerator());
     }
 
     /**
      * Check that the legendItemToolTipGenerator is cloned.
+     * @throws java.lang.CloneNotSupportedException
      */
     @Test
-    public void testCloning_LegendItemToolTipGenerator() throws CloneNotSupportedException {
+    public void testCloning_LegendItemToolTipGenerator() 
+            throws CloneNotSupportedException {
         StandardXYSeriesLabelGenerator generator
                 = new StandardXYSeriesLabelGenerator("Series {0}");
         XYBarRenderer r1 = new XYBarRenderer();
@@ -140,14 +144,17 @@ public class AbstractXYItemRendererTest  {
         assertEquals(r1, r2);
 
         // check that the generator has been cloned
-        assertNotSame(r1.getLegendItemToolTipGenerator(), r2.getLegendItemToolTipGenerator());
+        assertNotSame(r1.getLegendItemToolTipGenerator(), 
+                r2.getLegendItemToolTipGenerator());
     }
 
     /**
      * Check that the legendItemURLGenerator is cloned.
+     * @throws java.lang.CloneNotSupportedException
      */
     @Test
-    public void testCloning_LegendItemURLGenerator() throws CloneNotSupportedException {
+    public void testCloning_LegendItemURLGenerator() 
+            throws CloneNotSupportedException {
         StandardXYSeriesLabelGenerator generator
                 = new StandardXYSeriesLabelGenerator("Series {0}");
         XYBarRenderer r1 = new XYBarRenderer();
@@ -158,8 +165,31 @@ public class AbstractXYItemRendererTest  {
         assertEquals(r1, r2);
 
         // check that the generator has been cloned
-        assertNotSame(r1.getLegendItemURLGenerator(), r2.getLegendItemURLGenerator());
+        assertNotSame(r1.getLegendItemURLGenerator(), 
+                r2.getLegendItemURLGenerator());
     }
 
+    @Test
+    public void testEquals_ObjectList() {
+        XYBarRenderer r1 = new XYBarRenderer();
+        r1.setSeriesItemLabelGenerator(0, new StandardXYItemLabelGenerator());
+        XYBarRenderer r2 = new XYBarRenderer();
+        r2.setSeriesItemLabelGenerator(0, new StandardXYItemLabelGenerator());
+        assertEquals(r1, r2);
+        r2.setSeriesItemLabelGenerator(1, 
+                new StandardXYItemLabelGenerator("X"));
+        assertNotEquals(r1, r2);
+    }
+
+    @Test
+    public void testEquals_ObjectList2() {
+        XYBarRenderer r1 = new XYBarRenderer();
+        r1.setSeriesToolTipGenerator(0, new StandardXYToolTipGenerator());
+        XYBarRenderer r2 = new XYBarRenderer();
+        r2.setSeriesToolTipGenerator(0, new StandardXYToolTipGenerator());
+        assertEquals(r1, r2);
+        r2.setSeriesToolTipGenerator(1, new StandardXYToolTipGenerator());
+        assertNotEquals(r1, r2);
+    }
 
 }
