@@ -58,7 +58,7 @@ public class Colors {
      * @return The default colors. 
      */
     public static Color[] getDefaultColors() {
-        return createPastelColors();
+        return createFancyLightColors();
     }
 
     /**
