@@ -483,9 +483,10 @@ public class JFreeChart implements Drawable, TitleChangeListener,
     }
 
     /**
-     * Returns the stroke used to draw the chart border (if visible).
+     * Returns the stroke used to draw the chart border (if visible).  The 
+     * default value is <code>BasicStroke(1.0f)</code>.
      *
-     * @return The border stroke.
+     * @return The border stroke (never <code>null</code>).
      *
      * @see #setBorderStroke(Stroke)
      */
@@ -494,21 +495,24 @@ public class JFreeChart implements Drawable, TitleChangeListener,
     }
 
     /**
-     * Sets the stroke used to draw the chart border (if visible).
+     * Sets the stroke used to draw the chart border (if visible) and sends
+     * a change event to all registered listeners.
      *
      * @param stroke  the stroke.
      *
      * @see #getBorderStroke()
      */
     public void setBorderStroke(Stroke stroke) {
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         this.borderStroke = stroke;
         fireChartChanged();
     }
 
     /**
-     * Returns the paint used to draw the chart border (if visible).
+     * Returns the paint used to draw the chart border (if visible).  The
+     * default value is <code>Color.BLACK</code>.
      *
-     * @return The border paint.
+     * @return The border paint (never <code>null</code>).
      *
      * @see #setBorderPaint(Paint)
      */
@@ -517,13 +521,15 @@ public class JFreeChart implements Drawable, TitleChangeListener,
     }
 
     /**
-     * Sets the paint used to draw the chart border (if visible).
+     * Sets the paint used to draw the chart border (if visible) and sends
+     * a change event to all registered listeners.
      *
      * @param paint  the paint.
      *
      * @see #getBorderPaint()
      */
     public void setBorderPaint(Paint paint) {
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.borderPaint = paint;
         fireChartChanged();
     }
@@ -1157,15 +1163,13 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         if (isBorderVisible()) {
             Paint paint = getBorderPaint();
             Stroke stroke = getBorderStroke();
-            if (paint != null && stroke != null) {
-                Rectangle2D borderArea = new Rectangle2D.Double(
+            Rectangle2D borderArea = new Rectangle2D.Double(
                         chartArea.getX(), chartArea.getY(),
                         chartArea.getWidth() - 1.0, chartArea.getHeight()
                         - 1.0);
-                g2.setPaint(paint);
-                g2.setStroke(stroke);
-                g2.draw(borderArea);
-            }
+            g2.setPaint(paint);
+            g2.setStroke(stroke);
+            g2.draw(borderArea);
         }
 
         // draw the title and subtitles...
@@ -1569,7 +1573,7 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         if (this.borderVisible != that.borderVisible) {
             return false;
         }
-        if (!ObjectUtils.equal(this.borderStroke, that.borderStroke)) {
+        if (!this.borderStroke.equals(that.borderStroke)) {
             return false;
         }
         if (!PaintUtilities.equal(this.borderPaint, that.borderPaint)) {
