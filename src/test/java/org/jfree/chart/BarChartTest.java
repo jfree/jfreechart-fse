@@ -74,10 +74,6 @@ public class BarChartTest  {
     /** A chart. */
     private JFreeChart chart;
 
-
-
-
-
     /**
      * Common test setup.
      */

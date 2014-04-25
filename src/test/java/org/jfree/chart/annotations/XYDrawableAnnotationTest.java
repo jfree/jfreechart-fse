@@ -44,8 +44,12 @@
 
 package org.jfree.chart.annotations;
 
-import org.jfree.chart.ui.Drawable;
-import org.jfree.chart.util.PublicCloneable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
 import java.awt.Graphics2D;
@@ -59,11 +63,8 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import org.jfree.chart.drawable.Drawable;
+import org.jfree.chart.util.PublicCloneable;
 
 /**
  * Tests for the {@link XYDrawableAnnotation} class.
@@ -112,10 +113,6 @@ public class XYDrawableAnnotationTest  {
             return super.clone();
         }
     }
-
-
-
-
 
     /**
      * Confirm that the equals method can distinguish all the required fields.

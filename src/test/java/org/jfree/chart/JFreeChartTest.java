@@ -59,12 +59,13 @@ import org.junit.Test;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GradientPaint;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.net.URL;
 import java.util.List;
 import javax.swing.ImageIcon;
+import org.jfree.chart.drawable.ColorPainter;
+import org.jfree.chart.drawable.BorderPainter;
 import org.jfree.chart.event.ChartChangeEvent;
 import org.jfree.chart.event.ChartChangeListener;
 import org.jfree.chart.plot.PiePlot;
@@ -139,23 +140,13 @@ public class JFreeChartTest  implements ChartChangeListener {
                 RenderingHints.VALUE_TEXT_ANTIALIAS_ON));
         assertEquals(chart1, chart2);
 
-        // borderVisible
-        chart1.setBorderVisible(true);
-        assertFalse(chart1.equals(chart2));
-        chart2.setBorderVisible(true);
-        assertEquals(chart1, chart2);
 
-        // borderStroke
-        BasicStroke s = new BasicStroke(2.0f);
-        chart1.setBorderStroke(s);
+        // borderPainter
+        chart1.setBorderPainter(new BorderPainter(Color.RED, 
+                new BasicStroke(1.0f)));
         assertFalse(chart1.equals(chart2));
-        chart2.setBorderStroke(s);
-        assertEquals(chart1, chart2);
-
-        // borderPaint
-        chart1.setBorderPaint(Color.RED);
-        assertFalse(chart1.equals(chart2));
-        chart2.setBorderPaint(Color.RED);
+        chart2.setBorderPainter(new BorderPainter(Color.RED, 
+                new BasicStroke(1.0f)));
         assertEquals(chart1, chart2);
 
         // padding
@@ -187,11 +178,9 @@ public class JFreeChartTest  implements ChartChangeListener {
         assertEquals(chart1, chart2);
 
         // backgroundPaint
-        chart1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
-                3.0f, 4.0f, Color.BLUE));
+        chart1.setBackgroundPainter(new ColorPainter(Color.RED));
         assertFalse(chart1.equals(chart2));
-        chart2.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
-                3.0f, 4.0f, Color.BLUE));
+        chart2.setBackgroundPainter(new ColorPainter(Color.RED));
         assertEquals(chart1, chart2);
 
         // backgroundImage

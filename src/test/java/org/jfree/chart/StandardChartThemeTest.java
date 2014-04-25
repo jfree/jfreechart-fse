@@ -57,6 +57,7 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
 
+import org.jfree.chart.drawable.ColorPainter;
 import org.jfree.chart.plot.DefaultDrawingSupplier;
 import org.jfree.chart.plot.PieLabelLinkStyle;
 import org.jfree.chart.renderer.category.GradientBarPainter;
@@ -119,11 +120,9 @@ public class StandardChartThemeTest  {
         assertEquals(t1, t2);
 
         //chartBackgroundPaint;
-        t1.setChartBackgroundPaint(new GradientPaint(2f, 3f, Color.BLUE, 4f, 5f, 
-                Color.RED));
+        t1.setChartBackgroundPainter(new ColorPainter(Color.RED));
         assertFalse(t1.equals(t2));
-        t2.setChartBackgroundPaint(new GradientPaint(2f, 3f, Color.BLUE, 4f, 5f, 
-                Color.RED));
+        t2.setChartBackgroundPainter(new ColorPainter(Color.RED));
         assertEquals(t1, t2);
 
         //legendBackgroundPaint;
@@ -158,12 +157,10 @@ public class StandardChartThemeTest  {
                 new Shape[] {new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0)}));
         assertEquals(t1, t2);
 
-        //plotBackgroundPaint;
-        t1.setPlotBackgroundPaint(new GradientPaint(4f, 3f, Color.RED, 6f, 7f, 
-                Color.BLUE));
+        //plotBackgroundPainter;
+        t1.setPlotBackgroundPainter(new ColorPainter(Color.RED));
         assertFalse(t1.equals(t2));
-        t2.setPlotBackgroundPaint(new GradientPaint(4f, 3f, Color.RED, 6f, 7f, 
-                Color.BLUE));
+        t2.setPlotBackgroundPainter(new ColorPainter(Color.RED));
         assertEquals(t1, t2);
 
         //plotOutlinePaint;

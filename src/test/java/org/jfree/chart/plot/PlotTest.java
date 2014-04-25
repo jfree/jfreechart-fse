@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------
  * PlotTests.java
  * --------------
- * (C) Copyright 2005-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -43,9 +43,9 @@
 
 package org.jfree.chart.plot;
 
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.ui.Align;
-import org.jfree.chart.ui.RectangleInsets;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
 import org.junit.Test;
 
 import java.awt.BasicStroke;
@@ -59,9 +59,10 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.net.URL;
 import javax.swing.ImageIcon;
+import org.jfree.chart.drawable.ColorPainter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import org.jfree.chart.ui.Align;
+import org.jfree.chart.ui.RectangleInsets;
 
 /**
  * Some tests for the {@link Plot} class.
@@ -141,12 +142,10 @@ public class PlotTest  {
                 3.0f, 4.0f, Color.green));
         assertEquals(plot1, plot2);
 
-        // backgroundPaint
-        plot1.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.cyan,
-                3.0f, 4.0f, Color.green));
+        // backgroundPainter
+        plot1.setBackgroundPainter(new ColorPainter(Color.RED));
         assertFalse(plot1.equals(plot2));
-        plot2.setBackgroundPaint(new GradientPaint(1.0f, 2.0f, Color.cyan,
-                3.0f, 4.0f, Color.green));
+        plot2.setBackgroundPainter(new ColorPainter(Color.RED));
         assertEquals(plot1, plot2);
 
         // backgroundImage

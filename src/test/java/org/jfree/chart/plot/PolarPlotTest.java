@@ -76,6 +76,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 
@@ -83,10 +84,6 @@ import static org.junit.Assert.assertSame;
  * Some tests for the {@link PolarPlot} class.
  */
 public class PolarPlotTest  {
-
-
-
-
 
     /**
      * Some checks for the getLegendItems() method.
@@ -234,6 +231,50 @@ public class PolarPlotTest  {
         assertEquals(plot1, plot2);
     }
 
+    @Test
+    public void testEquals_Axes() {
+        PolarPlot p1 = new PolarPlot();
+        p1.setAxis(0, new NumberAxis("Axis1"));
+        PolarPlot p2 = new PolarPlot();
+        p2.setAxis(0, new NumberAxis("Axis1"));
+        assertEquals(p1, p2);
+        p2.setAxis(1, new NumberAxis("Axis2"));
+        assertNotEquals(p1, p2);
+    }
+
+    @Test
+    public void testEquals_AxisLocation() {
+        PolarPlot p1 = new PolarPlot();
+        p1.setAxisLocation(0, PolarAxisLocation.NORTH_LEFT);
+        PolarPlot p2 = new PolarPlot();
+        p2.setAxisLocation(0, PolarAxisLocation.NORTH_LEFT);
+        assertEquals(p1, p2);
+        p2.setAxisLocation(8, PolarAxisLocation.EAST_ABOVE);
+        assertNotEquals(p1, p2);
+    }
+
+    @Test
+    public void testEquals_Dataset() {
+        PolarPlot p1 = new PolarPlot();
+        p1.setDataset(0, new XYSeriesCollection());
+        PolarPlot p2 = new PolarPlot();
+        p2.setDataset(0, new XYSeriesCollection());
+        assertEquals(p1, p2);
+        p2.setDataset(1, new XYSeriesCollection());
+        assertNotEquals(p1, p2);
+    }
+
+    @Test
+    public void testEquals_Renderer() {
+        PolarPlot p1 = new PolarPlot();
+        p1.setRenderer(0, new DefaultPolarItemRenderer());
+        PolarPlot p2 = new PolarPlot();
+        p2.setRenderer(0, new DefaultPolarItemRenderer());
+        assertEquals(p1, p2);
+        p2.setRenderer(1, new DefaultPolarItemRenderer());
+        assertNotEquals(p1, p2);
+    }
+    
     /**
      * Some basic checks for the clone() method.
      * @throws CloneNotSupportedException 
