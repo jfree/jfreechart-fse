@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * RectangleAnchor.java
  * --------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -80,14 +80,14 @@ public enum RectangleAnchor {
     RIGHT("RectangleAnchor.RIGHT");
 
     /** The name. */
-    private String name;
+    private final String name;
 
     /**
      * Private constructor.
      *
      * @param name  the name.
      */
-    private RectangleAnchor(final String name) {
+    private RectangleAnchor(String name) {
         this.name = name;
     }
 
@@ -109,34 +109,26 @@ public enum RectangleAnchor {
      *
      * @return The (x, y) coordinates.
      */
-    public static Point2D coordinates(final Rectangle2D rectangle,
-                                      final RectangleAnchor anchor) {
+    public static Point2D coordinates(Rectangle2D rectangle, 
+            RectangleAnchor anchor) {
         Point2D result = new Point2D.Double();
         if (anchor == RectangleAnchor.CENTER) {
             result.setLocation(rectangle.getCenterX(), rectangle.getCenterY());
-        }
-        else if (anchor == RectangleAnchor.TOP) {
+        } else if (anchor == RectangleAnchor.TOP) {
             result.setLocation(rectangle.getCenterX(), rectangle.getMinY());
-        }
-        else if (anchor == RectangleAnchor.BOTTOM) {
+        } else if (anchor == RectangleAnchor.BOTTOM) {
             result.setLocation(rectangle.getCenterX(), rectangle.getMaxY());
-        }
-        else if (anchor == RectangleAnchor.LEFT) {
+        } else if (anchor == RectangleAnchor.LEFT) {
             result.setLocation(rectangle.getMinX(), rectangle.getCenterY());
-        }
-        else if (anchor == RectangleAnchor.RIGHT) {
+        } else if (anchor == RectangleAnchor.RIGHT) {
             result.setLocation(rectangle.getMaxX(), rectangle.getCenterY());
-        }
-        else if (anchor == RectangleAnchor.TOP_LEFT) {
+        } else if (anchor == RectangleAnchor.TOP_LEFT) {
             result.setLocation(rectangle.getMinX(), rectangle.getMinY());
-        }
-        else if (anchor == RectangleAnchor.TOP_RIGHT) {
+        } else if (anchor == RectangleAnchor.TOP_RIGHT) {
             result.setLocation(rectangle.getMaxX(), rectangle.getMinY());
-        }
-        else if (anchor == RectangleAnchor.BOTTOM_LEFT) {
+        } else if (anchor == RectangleAnchor.BOTTOM_LEFT) {
             result.setLocation(rectangle.getMinX(), rectangle.getMaxY());
-        }
-        else if (anchor == RectangleAnchor.BOTTOM_RIGHT) {
+        } else if (anchor == RectangleAnchor.BOTTOM_RIGHT) {
             result.setLocation(rectangle.getMaxX(), rectangle.getMaxY());
         }
         return result;
@@ -153,57 +145,37 @@ public enum RectangleAnchor {
      *
      * @return A rectangle.
      */
-    public static Rectangle2D createRectangle(final Size2D dimensions,
-                                              final double anchorX,
-                                              final double anchorY,
-                                              final RectangleAnchor anchor) {
+    public static Rectangle2D createRectangle(Size2D dimensions, double anchorX,
+            double anchorY, RectangleAnchor anchor) {
         Rectangle2D result = null;
-        final double w = dimensions.getWidth();
-        final double h = dimensions.getHeight();
+        double w = dimensions.getWidth();
+        double h = dimensions.getHeight();
         if (anchor == RectangleAnchor.CENTER) {
-            result = new Rectangle2D.Double(
-                anchorX - w / 2.0, anchorY - h / 2.0, w, h
-            );
-        }
-        else if (anchor == RectangleAnchor.TOP) {
-            result = new Rectangle2D.Double(
-                anchorX - w / 2.0, anchorY - h / 2.0, w, h
-            );
-        }
-        else if (anchor == RectangleAnchor.BOTTOM) {
-            result = new Rectangle2D.Double(
-                anchorX - w / 2.0, anchorY - h / 2.0, w, h
-            );
-        }
-        else if (anchor == RectangleAnchor.LEFT) {
-            result = new Rectangle2D.Double(
-                anchorX, anchorY - h / 2.0, w, h
-            );
-        }
-        else if (anchor == RectangleAnchor.RIGHT) {
-            result = new Rectangle2D.Double(
-                anchorX - w, anchorY - h / 2.0, w, h
-            );
-        }
-        else if (anchor == RectangleAnchor.TOP_LEFT) {
-            result = new Rectangle2D.Double(
-                anchorX - w / 2.0, anchorY - h / 2.0, w, h
-            );
-        }
-        else if (anchor == RectangleAnchor.TOP_RIGHT) {
-            result = new Rectangle2D.Double(
-                anchorX - w / 2.0, anchorY - h / 2.0, w, h
-            );
-        }
-        else if (anchor == RectangleAnchor.BOTTOM_LEFT) {
-            result = new Rectangle2D.Double(
-                anchorX - w / 2.0, anchorY - h / 2.0, w, h
-            );
-        }
-        else if (anchor == RectangleAnchor.BOTTOM_RIGHT) {
-            result = new Rectangle2D.Double(
-                anchorX - w / 2.0, anchorY - h / 2.0, w, h
-            );
+            result = new Rectangle2D.Double(anchorX - w / 2.0, 
+                    anchorY - h / 2.0, w, h);
+        } else if (anchor == RectangleAnchor.TOP) {
+            result = new Rectangle2D.Double(anchorX - w / 2.0, 
+                    anchorY - h / 2.0, w, h);
+        } else if (anchor == RectangleAnchor.BOTTOM) {
+            result = new Rectangle2D.Double(anchorX - w / 2.0, 
+                    anchorY - h / 2.0, w, h);
+        } else if (anchor == RectangleAnchor.LEFT) {
+            result = new Rectangle2D.Double(anchorX, anchorY - h / 2.0, w, h);
+        } else if (anchor == RectangleAnchor.RIGHT) {
+            result = new Rectangle2D.Double(anchorX - w, anchorY - h / 2.0, w, 
+                    h);
+        } else if (anchor == RectangleAnchor.TOP_LEFT) {
+            result = new Rectangle2D.Double(anchorX - w / 2.0, 
+                    anchorY - h / 2.0, w, h);
+        } else if (anchor == RectangleAnchor.TOP_RIGHT) {
+            result = new Rectangle2D.Double(anchorX - w / 2.0, 
+                    anchorY - h / 2.0, w, h);
+        } else if (anchor == RectangleAnchor.BOTTOM_LEFT) {
+            result = new Rectangle2D.Double(anchorX - w / 2.0, 
+                    anchorY - h / 2.0, w, h);
+        } else if (anchor == RectangleAnchor.BOTTOM_RIGHT) {
+            result = new Rectangle2D.Double(anchorX - w / 2.0, 
+                    anchorY - h / 2.0, w, h);
         }
         return result;
     }
