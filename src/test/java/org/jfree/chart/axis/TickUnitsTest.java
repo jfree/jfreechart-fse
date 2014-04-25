@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -24,10 +24,10 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -------------------
- * TickUnitsTests.java
- * -------------------
- * (C) Copyright 2007, 2008, by Object Refinery Limited and Contributors.
+ * ------------------
+ * TickUnitsTest.java
+ * ------------------
+ * (C) Copyright 2007-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -40,49 +40,27 @@
 
 package org.jfree.chart.axis;
 
-import org.junit.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
+
+import org.junit.Test;
+
+import org.jfree.chart.TestUtils;
 
 /**
  * Tests for the {@link TickUnits} class.
  */
 public class TickUnitsTest  {
 
-
-
-
-
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() throws IOException, ClassNotFoundException {
-
+    public void testSerialization() {
         TickUnits t1 = (TickUnits) NumberAxis.createIntegerTickUnits();
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(t1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
-        TickUnits t2 = (TickUnits) in.readObject();
-        in.close();
-
+        TickUnits t2 = TestUtils.serialised(t1);
         assertEquals(t1, t2);
-
     }
 
     /**
