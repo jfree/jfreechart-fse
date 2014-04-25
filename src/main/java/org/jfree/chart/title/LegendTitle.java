@@ -92,7 +92,7 @@ import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SortOrder;
 import org.jfree.chart.entity.EntityCollection;
@@ -648,7 +648,7 @@ public class LegendTitle extends Title
             return false;
         }
         LegendTitle that = (LegendTitle) obj;
-        if (!PaintUtilities.equal(this.backgroundPaint, that.backgroundPaint)) {
+        if (!PaintUtils.equal(this.backgroundPaint, that.backgroundPaint)) {
             return false;
         }
         if (this.legendItemGraphicEdge != that.legendItemGraphicEdge) {

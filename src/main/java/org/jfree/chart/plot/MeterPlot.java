@@ -118,7 +118,7 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.util.ResourceBundleWrapper;
@@ -1228,27 +1228,27 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
         if (!ObjectUtils.equal(this.intervals, that.intervals)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.dialOutlinePaint,
+        if (!PaintUtils.equal(this.dialOutlinePaint,
                 that.dialOutlinePaint)) {
             return false;
         }
         if (this.shape != that.shape) {
             return false;
         }
-        if (!PaintUtilities.equal(this.dialBackgroundPaint,
+        if (!PaintUtils.equal(this.dialBackgroundPaint,
                 that.dialBackgroundPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.needlePaint, that.needlePaint)) {
+        if (!PaintUtils.equal(this.needlePaint, that.needlePaint)) {
             return false;
         }
         if (!ObjectUtils.equal(this.valueFont, that.valueFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.valuePaint, that.valuePaint)) {
+        if (!PaintUtils.equal(this.valuePaint, that.valuePaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.tickPaint, that.tickPaint)) {
+        if (!PaintUtils.equal(this.tickPaint, that.tickPaint)) {
             return false;
         }
         if (this.tickSize != that.tickSize) {
@@ -1260,7 +1260,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
         if (!ObjectUtils.equal(this.tickLabelFont, that.tickLabelFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.tickLabelPaint, that.tickLabelPaint)) {
+        if (!PaintUtils.equal(this.tickLabelPaint, that.tickLabelPaint)) {
             return false;
         }
         if (!ObjectUtils.equal(this.tickLabelFormat,

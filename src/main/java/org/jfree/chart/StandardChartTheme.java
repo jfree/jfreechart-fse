@@ -69,7 +69,7 @@ import org.jfree.chart.block.LabelBlock;
 import org.jfree.chart.drawable.ColorPainter;
 import org.jfree.chart.drawable.Drawable;
 import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.CombinedDomainCategoryPlot;
@@ -1662,21 +1662,21 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         if (!this.smallFont.equals(that.smallFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.titlePaint, that.titlePaint)) {
+        if (!PaintUtils.equal(this.titlePaint, that.titlePaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.subtitlePaint, that.subtitlePaint)) {
+        if (!PaintUtils.equal(this.subtitlePaint, that.subtitlePaint)) {
             return false;
         }
         if (!ObjectUtils.equal(this.chartBackgroundPainter,
                 that.chartBackgroundPainter)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.legendBackgroundPaint,
+        if (!PaintUtils.equal(this.legendBackgroundPaint,
                 that.legendBackgroundPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.legendItemPaint, that.legendItemPaint)) {
+        if (!PaintUtils.equal(this.legendItemPaint, that.legendItemPaint)) {
             return false;
         }
         if (!this.drawingSupplier.equals(that.drawingSupplier)) {
@@ -1686,43 +1686,43 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
                 that.plotBackgroundPainter)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.plotOutlinePaint,
+        if (!PaintUtils.equal(this.plotOutlinePaint,
                 that.plotOutlinePaint)) {
             return false;
         }
         if (!this.labelLinkStyle.equals(that.labelLinkStyle)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.labelLinkPaint, that.labelLinkPaint)) {
+        if (!PaintUtils.equal(this.labelLinkPaint, that.labelLinkPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.domainGridlinePaint,
+        if (!PaintUtils.equal(this.domainGridlinePaint,
                 that.domainGridlinePaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.rangeGridlinePaint,
+        if (!PaintUtils.equal(this.rangeGridlinePaint,
                 that.rangeGridlinePaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.crosshairPaint, that.crosshairPaint)) {
+        if (!PaintUtils.equal(this.crosshairPaint, that.crosshairPaint)) {
             return false;
         }
         if (!this.axisOffset.equals(that.axisOffset)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.axisLabelPaint, that.axisLabelPaint)) {
+        if (!PaintUtils.equal(this.axisLabelPaint, that.axisLabelPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.tickLabelPaint, that.tickLabelPaint)) {
+        if (!PaintUtils.equal(this.tickLabelPaint, that.tickLabelPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.itemLabelPaint, that.itemLabelPaint)) {
+        if (!PaintUtils.equal(this.itemLabelPaint, that.itemLabelPaint)) {
             return false;
         }
         if (this.shadowVisible != that.shadowVisible) {
             return false;
         }
-        if (!PaintUtilities.equal(this.shadowPaint, that.shadowPaint)) {
+        if (!PaintUtils.equal(this.shadowPaint, that.shadowPaint)) {
             return false;
         }
         if (!this.barPainter.equals(that.barPainter)) {
@@ -1731,18 +1731,18 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         if (!this.xyBarPainter.equals(that.xyBarPainter)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.thermometerPaint,
+        if (!PaintUtils.equal(this.thermometerPaint,
                 that.thermometerPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.errorIndicatorPaint,
+        if (!PaintUtils.equal(this.errorIndicatorPaint,
                 that.errorIndicatorPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.gridBandPaint, that.gridBandPaint)) {
+        if (!PaintUtils.equal(this.gridBandPaint, that.gridBandPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.gridBandAlternatePaint,
+        if (!PaintUtils.equal(this.gridBandAlternatePaint,
                 that.gridBandAlternatePaint)) {
             return false;
         }

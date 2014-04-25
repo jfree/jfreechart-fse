@@ -56,7 +56,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.event.AxisChangeEvent;
 import org.jfree.chart.text.TextBlock;
 import org.jfree.chart.text.TextFragment;
@@ -210,7 +210,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
         if (!this.sublabelFont.equals(that.sublabelFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.sublabelPaint, that.sublabelPaint)) {
+        if (!PaintUtils.equal(this.sublabelPaint, that.sublabelPaint)) {
             return false;
         }
         if (!this.sublabels.equals(that.sublabels)) {

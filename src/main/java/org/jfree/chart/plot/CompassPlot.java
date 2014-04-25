@@ -90,7 +90,7 @@ import org.jfree.chart.LegendItem;
 
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.needle.ArrowNeedle;
 import org.jfree.chart.needle.LineNeedle;
@@ -779,14 +779,14 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
         if (this.drawBorder != that.drawBorder) {
             return false;
         }
-        if (!PaintUtilities.equal(this.roseHighlightPaint,
+        if (!PaintUtils.equal(this.roseHighlightPaint,
                 that.roseHighlightPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.rosePaint, that.rosePaint)) {
+        if (!PaintUtils.equal(this.rosePaint, that.rosePaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.roseCenterPaint,
+        if (!PaintUtils.equal(this.roseCenterPaint,
                 that.roseCenterPaint)) {
             return false;
         }

@@ -66,7 +66,7 @@ import java.io.Serializable;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.plot.Plot;
@@ -239,7 +239,7 @@ public class XYLineAnnotation extends AbstractXYAnnotation
         if (this.y2 != that.y2) {
             return false;
         }
-        if (!PaintUtilities.equal(this.paint, that.paint)) {
+        if (!PaintUtils.equal(this.paint, that.paint)) {
             return false;
         }
         if (!ObjectUtils.equal(this.stroke, that.stroke)) {

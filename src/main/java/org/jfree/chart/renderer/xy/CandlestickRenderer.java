@@ -103,7 +103,7 @@ import java.io.Serializable;
 
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -898,10 +898,10 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
         if (this.candleWidth != that.candleWidth) {
             return false;
         }
-        if (!PaintUtilities.equal(this.upPaint, that.upPaint)) {
+        if (!PaintUtils.equal(this.upPaint, that.upPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.downPaint, that.downPaint)) {
+        if (!PaintUtils.equal(this.downPaint, that.downPaint)) {
             return false;
         }
         if (this.drawVolume != that.drawVolume) {
@@ -923,7 +923,7 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
         if (this.useOutlinePaint != that.useOutlinePaint) {
             return false;
         }
-        if (!PaintUtilities.equal(this.volumePaint, that.volumePaint)) {
+        if (!PaintUtils.equal(this.volumePaint, that.volumePaint)) {
             return false;
         }
         return super.equals(obj);

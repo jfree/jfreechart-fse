@@ -62,7 +62,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import org.jfree.chart.util.HashUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtils;
 
@@ -341,7 +341,7 @@ public abstract class DialPointer extends AbstractDialLayer
                 return false;
             }
             DialPointer.Pin that = (DialPointer.Pin) obj;
-            if (!PaintUtilities.equal(this.paint, that.paint)) {
+            if (!PaintUtils.equal(this.paint, that.paint)) {
                 return false;
             }
             if (!this.stroke.equals(that.stroke)) {
@@ -607,10 +607,10 @@ public abstract class DialPointer extends AbstractDialLayer
             if (this.widthRadius != that.widthRadius) {
                 return false;
             }
-            if (!PaintUtilities.equal(this.fillPaint, that.fillPaint)) {
+            if (!PaintUtils.equal(this.fillPaint, that.fillPaint)) {
                 return false;
             }
-            if (!PaintUtilities.equal(this.outlinePaint, that.outlinePaint)) {
+            if (!PaintUtils.equal(this.outlinePaint, that.outlinePaint)) {
                 return false;
             }
             return super.equals(obj);

@@ -119,7 +119,7 @@ import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.BooleanList;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.ShapeList;
 import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.util.StrokeList;
@@ -2995,24 +2995,24 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
                 != that.defaultSeriesVisibleInLegend) {
             return false;
         }
-        if (!PaintUtilities.equalMaps(this.paintMap, that.paintMap)) {
+        if (!PaintUtils.equalMaps(this.paintMap, that.paintMap)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.defaultPaint, that.defaultPaint)) {
+        if (!PaintUtils.equal(this.defaultPaint, that.defaultPaint)) {
             return false;
         }
-        if (!PaintUtilities.equalMaps(this.fillPaintMap, that.fillPaintMap)) {
+        if (!PaintUtils.equalMaps(this.fillPaintMap, that.fillPaintMap)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.defaultFillPaint,
+        if (!PaintUtils.equal(this.defaultFillPaint,
                 that.defaultFillPaint)) {
             return false;
         }
-        if (!PaintUtilities.equalMaps(this.outlinePaintMap, 
+        if (!PaintUtils.equalMaps(this.outlinePaintMap, 
                 that.outlinePaintMap)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.defaultOutlinePaint,
+        if (!PaintUtils.equal(this.defaultOutlinePaint,
                 that.defaultOutlinePaint)) {
             return false;
         }
@@ -3053,11 +3053,11 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
             return false;
         }
 
-        if (!PaintUtilities.equalMaps(this.itemLabelPaintMap,
+        if (!PaintUtils.equalMaps(this.itemLabelPaintMap,
                 that.itemLabelPaintMap)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.defaultItemLabelPaint,
+        if (!PaintUtils.equal(this.defaultItemLabelPaint,
                 that.defaultItemLabelPaint)) {
             return false;
         }
@@ -3105,11 +3105,11 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
                 that.defaultLegendTextFont)) {
             return false;
         }
-        if (!PaintUtilities.equalMaps(this.legendTextPaintMap,
+        if (!PaintUtils.equalMaps(this.legendTextPaintMap,
                 that.legendTextPaintMap)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.defaultLegendTextPaint,
+        if (!PaintUtils.equal(this.defaultLegendTextPaint,
                 that.defaultLegendTextPaint)) {
             return false;
         }

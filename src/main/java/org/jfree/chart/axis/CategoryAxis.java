@@ -121,7 +121,7 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.entity.CategoryLabelEntity;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.AxisChangeEvent;
@@ -1486,7 +1486,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         for (Map.Entry<Comparable, Paint> entry : map1.entrySet()) {
             Paint p1 = entry.getValue();
             Paint p2 = map2.get(entry.getKey());
-            if (!PaintUtilities.equal(p1, p2)) {
+            if (!PaintUtils.equal(p1, p2)) {
                 return false;
             }
         }

@@ -55,7 +55,7 @@ import java.io.Serializable;
 import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.ui.GradientPaintTransformer;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtils;
 
@@ -212,7 +212,7 @@ public class DialBackground extends AbstractDialLayer implements DialLayer,
             return false;
         }
         DialBackground that = (DialBackground) obj;
-        if (!PaintUtilities.equal(this.paint, that.paint)) {
+        if (!PaintUtils.equal(this.paint, that.paint)) {
             return false;
         }
         if (!this.gradientPaintTransformer.equals(

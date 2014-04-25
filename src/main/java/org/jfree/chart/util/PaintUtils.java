@@ -25,19 +25,19 @@
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
- * PaintUtilities.java
+ * PaintUtils.java
  * -------------------
  * (C) Copyright 2003-2012, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
  *
- * $Id: PaintUtilities.java,v 1.10 2007/11/02 17:50:37 taqua Exp $
+ * $Id: PaintUtils.java,v 1.10 2007/11/02 17:50:37 taqua Exp $
  *
  * Changes
  * -------
  * 13-Nov-2003 : Version 1 (DG);
- * 04-Oct-2004 : Renamed PaintUtils --> PaintUtilities (DG);
+ * 04-Oct-2004 : Renamed PaintUtils --> PaintUtils (DG);
  * 23-Feb-2005 : Rewrote equal() method with less indenting required (DG);
  * 16-Jun-2012 : Moved from JCommon to JFreeChart (DG);
  *
@@ -52,12 +52,12 @@ import java.util.Map;
 /**
  * Utility code that relates to <code>Paint</code> objects.
  */
-public class PaintUtilities {
+public class PaintUtils {
 
     /**
      * Private constructor prevents object creation.
      */
-    private PaintUtilities() {
+    private PaintUtils() {
     }
 
     /**
@@ -114,7 +114,7 @@ public class PaintUtilities {
             if (!m2.containsKey(entry.getKey())) {
                 return false;
             }
-            if (!PaintUtilities.equal(entry.getValue(), 
+            if (!PaintUtils.equal(entry.getValue(), 
                     m2.get(entry.getKey()))) {
                 return false;
             }

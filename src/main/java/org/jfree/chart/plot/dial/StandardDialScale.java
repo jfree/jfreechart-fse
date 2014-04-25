@@ -65,7 +65,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.util.SerialUtils;
@@ -916,7 +916,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
         if (this.majorTickLength != that.majorTickLength) {
             return false;
         }
-        if (!PaintUtilities.equal(this.majorTickPaint, that.majorTickPaint)) {
+        if (!PaintUtils.equal(this.majorTickPaint, that.majorTickPaint)) {
             return false;
         }
         if (!this.majorTickStroke.equals(that.majorTickStroke)) {
@@ -928,7 +928,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
         if (this.minorTickLength != that.minorTickLength) {
             return false;
         }
-        if (!PaintUtilities.equal(this.minorTickPaint, that.minorTickPaint)) {
+        if (!PaintUtils.equal(this.minorTickPaint, that.minorTickPaint)) {
             return false;
         }
         if (!this.minorTickStroke.equals(that.minorTickStroke)) {
@@ -943,7 +943,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
         if (!this.tickLabelFont.equals(that.tickLabelFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.tickLabelPaint, that.tickLabelPaint)) {
+        if (!PaintUtils.equal(this.tickLabelPaint, that.tickLabelPaint)) {
             return false;
         }
         return super.equals(obj);

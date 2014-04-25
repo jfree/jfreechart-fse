@@ -53,7 +53,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtils;
 
@@ -156,7 +156,7 @@ public class PaintMap implements Cloneable, Serializable {
         for (Comparable key : keys) {
             Paint p1 = getPaint(key);
             Paint p2 = that.getPaint(key);
-            if (!PaintUtilities.equal(p1, p2)) {
+            if (!PaintUtils.equal(p1, p2)) {
                 return false;
             }
         }

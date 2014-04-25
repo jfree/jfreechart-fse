@@ -53,7 +53,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtils;
@@ -131,7 +131,7 @@ public class LookupPaintScale implements PaintScale, PublicCloneable,
             if (this.value != that.value) {
                 return false;
             }
-            if (!PaintUtilities.equal(this.paint, that.paint)) {
+            if (!PaintUtils.equal(this.paint, that.paint)) {
                 return false;
             }
             return true;
@@ -348,7 +348,7 @@ public class LookupPaintScale implements PaintScale, PublicCloneable,
         if (this.upperBound != that.upperBound) {
             return false;
         }
-        if (!PaintUtilities.equal(this.defaultPaint, that.defaultPaint)) {
+        if (!PaintUtils.equal(this.defaultPaint, that.defaultPaint)) {
             return false;
         }
         if (!this.lookupTable.equals(that.lookupTable)) {

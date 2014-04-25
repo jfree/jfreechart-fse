@@ -62,7 +62,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import org.jfree.chart.util.HashUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtils;
 
@@ -433,10 +433,10 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame,
             return false;
         }
         ArcDialFrame that = (ArcDialFrame) obj;
-        if (!PaintUtilities.equal(this.backgroundPaint, that.backgroundPaint)) {
+        if (!PaintUtils.equal(this.backgroundPaint, that.backgroundPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.foregroundPaint, that.foregroundPaint)) {
+        if (!PaintUtils.equal(this.foregroundPaint, that.foregroundPaint)) {
             return false;
         }
         if (this.startAngle != that.startAngle) {

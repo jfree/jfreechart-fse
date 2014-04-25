@@ -100,7 +100,7 @@ import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.ObjectList;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -1817,14 +1817,14 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
         if (!this.angleLabelFont.equals(that.angleLabelFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.angleLabelPaint, that.angleLabelPaint)) {
+        if (!PaintUtils.equal(this.angleLabelPaint, that.angleLabelPaint)) {
             return false;
         }
         if (!ObjectUtils.equal(this.angleGridlineStroke,
                 that.angleGridlineStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(
+        if (!PaintUtils.equal(
             this.angleGridlinePaint, that.angleGridlinePaint
         )) {
             return false;
@@ -1836,7 +1836,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
                 that.radiusGridlineStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.radiusGridlinePaint,
+        if (!PaintUtils.equal(this.radiusGridlinePaint,
                 that.radiusGridlinePaint)) {
             return false;
         }

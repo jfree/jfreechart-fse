@@ -124,7 +124,7 @@ import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.UnitType;
 import org.jfree.chart.util.ResourceBundleWrapper;
 import org.jfree.chart.util.SerialUtils;
@@ -1446,7 +1446,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
                 that.thermometerStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.thermometerPaint,
+        if (!PaintUtils.equal(this.thermometerPaint,
                 that.thermometerPaint)) {
             return false;
         }
@@ -1459,13 +1459,13 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
         if (!ObjectUtils.equal(this.valueFont, that.valueFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.valuePaint, that.valuePaint)) {
+        if (!PaintUtils.equal(this.valuePaint, that.valuePaint)) {
             return false;
         }
         if (!ObjectUtils.equal(this.valueFormat, that.valueFormat)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.mercuryPaint, that.mercuryPaint)) {
+        if (!PaintUtils.equal(this.mercuryPaint, that.mercuryPaint)) {
             return false;
         }
         if (this.showValueLines != that.showValueLines) {
@@ -1493,7 +1493,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
             return false;
         }
         for (int i = 0; i < this.subrangePaint.length; i++) {
-            if (!PaintUtilities.equal(this.subrangePaint[i],
+            if (!PaintUtils.equal(this.subrangePaint[i],
                     that.subrangePaint[i])) {
                 return false;
             }

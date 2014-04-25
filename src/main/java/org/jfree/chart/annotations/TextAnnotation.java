@@ -66,7 +66,7 @@ import java.io.Serializable;
 import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.event.AnnotationChangeEvent;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtils;
@@ -306,7 +306,7 @@ public class TextAnnotation extends AbstractAnnotation implements Serializable {
         if (!ObjectUtils.equal(this.font, that.getFont())) {
             return false;
         }
-        if (!PaintUtilities.equal(this.paint, that.getPaint())) {
+        if (!PaintUtils.equal(this.paint, that.getPaint())) {
             return false;
         }
         if (!ObjectUtils.equal(this.textAnchor, that.getTextAnchor())) {

@@ -223,7 +223,7 @@ import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.urls.PieURLGenerator;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ResourceBundleWrapper;
@@ -3259,7 +3259,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
                 that.sectionPaintMap)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.baseSectionPaint,
+        if (!PaintUtils.equal(this.baseSectionPaint,
                 that.baseSectionPaint)) {
             return false;
         }
@@ -3270,7 +3270,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
                 that.sectionOutlinePaintMap)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.baseSectionOutlinePaint,
+        if (!PaintUtils.equal(this.baseSectionOutlinePaint,
                 that.baseSectionOutlinePaint)) {
             return false;
         }
@@ -3282,7 +3282,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
                 that.baseSectionOutlineStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.shadowPaint, that.shadowPaint)) {
+        if (!PaintUtils.equal(this.shadowPaint, that.shadowPaint)) {
             return false;
         }
         if (!(this.shadowXOffset == that.shadowXOffset)) {
@@ -3302,14 +3302,14 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         if (!ObjectUtils.equal(this.labelFont, that.labelFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.labelPaint, that.labelPaint)) {
+        if (!PaintUtils.equal(this.labelPaint, that.labelPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.labelBackgroundPaint,
+        if (!PaintUtils.equal(this.labelBackgroundPaint,
                 that.labelBackgroundPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.labelOutlinePaint,
+        if (!PaintUtils.equal(this.labelOutlinePaint,
                 that.labelOutlinePaint)) {
             return false;
         }
@@ -3317,7 +3317,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
                 that.labelOutlineStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.labelShadowPaint,
+        if (!PaintUtils.equal(this.labelShadowPaint,
                 that.labelShadowPaint)) {
             return false;
         }
@@ -3345,7 +3345,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         if (!this.labelLinkStyle.equals(that.labelLinkStyle)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.labelLinkPaint, that.labelLinkPaint)) {
+        if (!PaintUtils.equal(this.labelLinkPaint, that.labelLinkPaint)) {
             return false;
         }
         if (!ObjectUtils.equal(this.labelLinkStroke,

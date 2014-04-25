@@ -57,7 +57,7 @@ import java.io.Serializable;
 
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.SerialUtils;
 
 /**
@@ -198,7 +198,7 @@ public class LineBorder implements BlockFrame, Serializable {
             return false;
         }
         LineBorder that = (LineBorder) obj;
-        if (!PaintUtilities.equal(this.paint, that.paint)) {
+        if (!PaintUtils.equal(this.paint, that.paint)) {
             return false;
         }
         if (!ObjectUtils.equal(this.stroke, that.stroke)) {

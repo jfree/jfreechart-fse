@@ -82,7 +82,7 @@ import java.io.Serializable;
 
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -489,10 +489,10 @@ public class HighLowRenderer extends AbstractXYItemRenderer
         if (this.drawCloseTicks != that.drawCloseTicks) {
             return false;
         }
-        if (!PaintUtilities.equal(this.openTickPaint, that.openTickPaint)) {
+        if (!PaintUtils.equal(this.openTickPaint, that.openTickPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.closeTickPaint, that.closeTickPaint)) {
+        if (!PaintUtils.equal(this.closeTickPaint, that.closeTickPaint)) {
             return false;
         }
         if (this.tickLength != that.tickLength) {

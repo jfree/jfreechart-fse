@@ -68,7 +68,7 @@ import java.io.Serializable;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.CategoryItemLabelGenerator;
@@ -597,10 +597,10 @@ public class GanttRenderer extends IntervalBarRenderer
             return false;
         }
         GanttRenderer that = (GanttRenderer) obj;
-        if (!PaintUtilities.equal(this.completePaint, that.completePaint)) {
+        if (!PaintUtils.equal(this.completePaint, that.completePaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.incompletePaint, that.incompletePaint)) {
+        if (!PaintUtils.equal(this.incompletePaint, that.incompletePaint)) {
             return false;
         }
         if (this.startPercent != that.startPercent) {

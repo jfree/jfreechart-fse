@@ -83,7 +83,7 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.util.TableOrder;
 import org.jfree.chart.event.PlotChangeEvent;
@@ -628,7 +628,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
         if (!this.aggregatedItemsKey.equals(that.aggregatedItemsKey)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.aggregatedItemsPaint,
+        if (!PaintUtils.equal(this.aggregatedItemsPaint,
                 that.aggregatedItemsPaint)) {
             return false;
         }

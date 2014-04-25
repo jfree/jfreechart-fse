@@ -81,7 +81,7 @@ import javax.swing.Icon;
 
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CategoryPlot;
@@ -449,7 +449,7 @@ public class MinMaxCategoryRenderer extends AbstractCategoryItemRenderer {
         if (this.plotLines != that.plotLines) {
             return false;
         }
-        if (!PaintUtilities.equal(this.groupPaint, that.groupPaint)) {
+        if (!PaintUtils.equal(this.groupPaint, that.groupPaint)) {
             return false;
         }
         if (!this.groupStroke.equals(that.groupStroke)) {

@@ -54,7 +54,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.SerialUtils;
 
 /**
@@ -157,7 +157,7 @@ public class ColorBlock extends AbstractBlock implements Block {
             return false;
         }
         ColorBlock that = (ColorBlock) obj;
-        if (!PaintUtilities.equal(this.paint, that.paint)) {
+        if (!PaintUtils.equal(this.paint, that.paint)) {
             return false;
         }
         return super.equals(obj);

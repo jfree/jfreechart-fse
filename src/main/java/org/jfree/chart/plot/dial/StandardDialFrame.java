@@ -58,7 +58,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import org.jfree.chart.util.HashUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtils;
 
@@ -288,10 +288,10 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame,
             return false;
         }
         StandardDialFrame that = (StandardDialFrame) obj;
-        if (!PaintUtilities.equal(this.backgroundPaint, that.backgroundPaint)) {
+        if (!PaintUtils.equal(this.backgroundPaint, that.backgroundPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.foregroundPaint, that.foregroundPaint)) {
+        if (!PaintUtils.equal(this.foregroundPaint, that.foregroundPaint)) {
             return false;
         }
         if (this.radius != that.radius) {

@@ -73,7 +73,7 @@ import java.text.Format;
 
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.Rotation;
 import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.util.UnitType;
@@ -686,7 +686,7 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
                 that.separatorStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.separatorPaint, that.separatorPaint)) {
+        if (!PaintUtils.equal(this.separatorPaint, that.separatorPaint)) {
             return false;
         }
         if (this.innerSeparatorExtension != that.innerSeparatorExtension) {

@@ -280,7 +280,7 @@ import org.jfree.chart.ui.Layer;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.event.AnnotationChangeEvent;
 import org.jfree.chart.event.ChartChangeEventType;
@@ -5409,7 +5409,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
                 that.domainGridlineStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.domainGridlinePaint,
+        if (!PaintUtils.equal(this.domainGridlinePaint,
                 that.domainGridlinePaint)) {
             return false;
         }
@@ -5417,7 +5417,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
                 that.rangeGridlineStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.rangeGridlinePaint,
+        if (!PaintUtils.equal(this.rangeGridlinePaint,
                 that.rangeGridlinePaint)) {
             return false;
         }
@@ -5425,7 +5425,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
                 that.domainMinorGridlineStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.domainMinorGridlinePaint,
+        if (!PaintUtils.equal(this.domainMinorGridlinePaint,
                 that.domainMinorGridlinePaint)) {
             return false;
         }
@@ -5433,11 +5433,11 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
                 that.rangeMinorGridlineStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.rangeMinorGridlinePaint,
+        if (!PaintUtils.equal(this.rangeMinorGridlinePaint,
                 that.rangeMinorGridlinePaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.domainZeroBaselinePaint,
+        if (!PaintUtils.equal(this.domainZeroBaselinePaint,
                 that.domainZeroBaselinePaint)) {
             return false;
         }
@@ -5445,7 +5445,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
                 that.domainZeroBaselineStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.rangeZeroBaselinePaint,
+        if (!PaintUtils.equal(this.rangeZeroBaselinePaint,
                 that.rangeZeroBaselinePaint)) {
             return false;
         }
@@ -5457,7 +5457,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
                 that.domainCrosshairStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.domainCrosshairPaint,
+        if (!PaintUtils.equal(this.domainCrosshairPaint,
                 that.domainCrosshairPaint)) {
             return false;
         }
@@ -5465,7 +5465,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
                 that.rangeCrosshairStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.rangeCrosshairPaint,
+        if (!PaintUtils.equal(this.rangeCrosshairPaint,
                 that.rangeCrosshairPaint)) {
             return false;
         }
@@ -5508,11 +5508,11 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
                 that.fixedLegendItems)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.domainTickBandPaint,
+        if (!PaintUtils.equal(this.domainTickBandPaint,
                 that.domainTickBandPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.rangeTickBandPaint,
+        if (!PaintUtils.equal(this.rangeTickBandPaint,
                 that.rangeTickBandPaint)) {
             return false;
         }
@@ -5520,7 +5520,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
             return false;
         }
         for (int i = 0; i < 4; i++) {
-            if (!PaintUtilities.equal(this.quadrantPaint[i],
+            if (!PaintUtils.equal(this.quadrantPaint[i],
                     that.quadrantPaint[i])) {
                 return false;
             }

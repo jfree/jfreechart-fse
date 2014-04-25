@@ -41,7 +41,7 @@
  *               easier.  Also fixed a bug that meant the minimum bar length
  *               was being ignored (DG);
  * 04-Oct-2004 : Reworked equals() method and renamed PaintUtils
- *               --> PaintUtilities (DG);
+ *               --> PaintUtils (DG);
  * 05-Nov-2004 : Modified drawItem() signature (DG);
  * 07-Jan-2005 : Renamed getRangeExtent() --> findRangeBounds (DG);
  * 23-Feb-2005 : Added argument checking (DG);
@@ -75,7 +75,7 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.GradientPaintTransformType;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.CategoryItemLabelGenerator;
@@ -445,17 +445,17 @@ public class WaterfallBarRenderer extends BarRenderer {
             return false;
         }
         WaterfallBarRenderer that = (WaterfallBarRenderer) obj;
-        if (!PaintUtilities.equal(this.firstBarPaint, that.firstBarPaint)) {
+        if (!PaintUtils.equal(this.firstBarPaint, that.firstBarPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.lastBarPaint, that.lastBarPaint)) {
+        if (!PaintUtils.equal(this.lastBarPaint, that.lastBarPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.positiveBarPaint,
+        if (!PaintUtils.equal(this.positiveBarPaint,
                 that.positiveBarPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.negativeBarPaint,
+        if (!PaintUtils.equal(this.negativeBarPaint,
                 that.negativeBarPaint)) {
             return false;
         }

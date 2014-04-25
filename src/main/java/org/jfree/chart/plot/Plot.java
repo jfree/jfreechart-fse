@@ -182,7 +182,7 @@ import org.jfree.chart.ui.Align;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.general.DatasetChangeEvent;
@@ -1293,7 +1293,7 @@ public abstract class Plot implements AxisChangeListener,
         )) {
             return false;
         }
-        if (!PaintUtilities.equal(this.noDataMessagePaint,
+        if (!PaintUtils.equal(this.noDataMessagePaint,
                 that.noDataMessagePaint)) {
             return false;
         }
@@ -1306,7 +1306,7 @@ public abstract class Plot implements AxisChangeListener,
         if (!ObjectUtils.equal(this.outlineStroke, that.outlineStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.outlinePaint, that.outlinePaint)) {
+        if (!PaintUtils.equal(this.outlinePaint, that.outlinePaint)) {
             return false;
         }
         if (!ObjectUtils.equal(this.backgroundPainter, 

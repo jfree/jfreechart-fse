@@ -99,7 +99,7 @@ import java.util.LinkedList;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.entity.EntityCollection;
@@ -1191,10 +1191,10 @@ public class XYDifferenceRenderer extends AbstractXYItemRenderer
             return false;
         }
         XYDifferenceRenderer that = (XYDifferenceRenderer) obj;
-        if (!PaintUtilities.equal(this.positivePaint, that.positivePaint)) {
+        if (!PaintUtils.equal(this.positivePaint, that.positivePaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.negativePaint, that.negativePaint)) {
+        if (!PaintUtils.equal(this.negativePaint, that.negativePaint)) {
             return false;
         }
         if (this.shapesVisible != that.shapesVisible) {

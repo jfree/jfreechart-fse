@@ -92,7 +92,7 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ArrayUtils;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.util.ResourceBundleWrapper;
 import org.jfree.chart.util.SerialUtils;
@@ -1039,13 +1039,13 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
         if (!ObjectUtils.equal(this.rangeAxis, that.rangeAxis)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.paint, that.paint)) {
+        if (!PaintUtils.equal(this.paint, that.paint)) {
             return false;
         }
         if (this.domainGridlinesVisible != that.domainGridlinesVisible) {
             return false;
         }
-        if (!PaintUtilities.equal(this.domainGridlinePaint,
+        if (!PaintUtils.equal(this.domainGridlinePaint,
                 that.domainGridlinePaint)) {
             return false;
         }
@@ -1056,7 +1056,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
         if (!this.rangeGridlinesVisible == that.rangeGridlinesVisible) {
             return false;
         }
-        if (!PaintUtilities.equal(this.rangeGridlinePaint,
+        if (!PaintUtils.equal(this.rangeGridlinePaint,
                 that.rangeGridlinePaint)) {
             return false;
         }

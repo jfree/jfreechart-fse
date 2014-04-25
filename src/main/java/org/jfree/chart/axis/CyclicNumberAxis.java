@@ -68,7 +68,7 @@ import java.util.List;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.text.TextUtilities;
@@ -1166,7 +1166,7 @@ public final class CyclicNumberAxis extends NumberAxis {
         if (this.offset != that.offset) {
             return false;
         }
-        if (!PaintUtilities.equal(this.advanceLinePaint,
+        if (!PaintUtils.equal(this.advanceLinePaint,
                 that.advanceLinePaint)) {
             return false;
         }

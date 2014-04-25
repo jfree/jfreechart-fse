@@ -65,7 +65,7 @@ import java.io.Serializable;
 
 import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.SerialUtils;
 
 /**
@@ -362,16 +362,16 @@ public abstract class MeterNeedle implements Serializable {
             return false;
         }
         MeterNeedle that = (MeterNeedle) obj;
-        if (!PaintUtilities.equal(this.outlinePaint, that.outlinePaint)) {
+        if (!PaintUtils.equal(this.outlinePaint, that.outlinePaint)) {
             return false;
         }
         if (!ObjectUtils.equal(this.outlineStroke, that.outlineStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.fillPaint, that.fillPaint)) {
+        if (!PaintUtils.equal(this.fillPaint, that.fillPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.highlightPaint, that.highlightPaint)) {
+        if (!PaintUtils.equal(this.highlightPaint, that.highlightPaint)) {
             return false;
         }
         if (this.size != that.size) {

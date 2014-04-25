@@ -102,7 +102,7 @@ import java.util.Map;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.Rotation;
 import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.util.StrokeList;
@@ -1438,7 +1438,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
         if (this.axisLabelGap != that.axisLabelGap) {
             return false;
         }
-        if (!PaintUtilities.equal(this.axisLinePaint, that.axisLinePaint)) {
+        if (!PaintUtils.equal(this.axisLinePaint, that.axisLinePaint)) {
             return false;
         }
         if (!this.axisLineStroke.equals(that.axisLineStroke)) {
@@ -1447,18 +1447,18 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
         if (!ShapeUtils.equal(this.legendItemShape, that.legendItemShape)) {
             return false;
         }
-        if (!PaintUtilities.equalMaps(this.seriesPaintMap, 
+        if (!PaintUtils.equalMaps(this.seriesPaintMap, 
                 that.seriesPaintMap)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.baseSeriesPaint, that.baseSeriesPaint)) {
+        if (!PaintUtils.equal(this.baseSeriesPaint, that.baseSeriesPaint)) {
             return false;
         }
-        if (!PaintUtilities.equalMaps(this.seriesOutlinePaintMap, 
+        if (!PaintUtils.equalMaps(this.seriesOutlinePaintMap, 
                 that.seriesOutlinePaintMap)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.baseSeriesOutlinePaint,
+        if (!PaintUtils.equal(this.baseSeriesOutlinePaint,
                 that.baseSeriesOutlinePaint)) {
             return false;
         }
@@ -1473,7 +1473,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
         if (!this.labelFont.equals(that.labelFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.labelPaint, that.labelPaint)) {
+        if (!PaintUtils.equal(this.labelPaint, that.labelPaint)) {
             return false;
         }
         if (!this.labelGenerator.equals(that.labelGenerator)) {

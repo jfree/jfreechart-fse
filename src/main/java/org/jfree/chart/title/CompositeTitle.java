@@ -60,7 +60,7 @@ import org.jfree.chart.block.BlockContainer;
 import org.jfree.chart.block.BorderArrangement;
 import org.jfree.chart.block.RectangleConstraint;
 import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.event.TitleChangeEvent;
 import org.jfree.chart.util.SerialUtils;
 
@@ -218,7 +218,7 @@ public class CompositeTitle extends Title implements Cloneable, Serializable {
         if (!this.container.equals(that.container)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.backgroundPaint, that.backgroundPaint)) {
+        if (!PaintUtils.equal(this.backgroundPaint, that.backgroundPaint)) {
             return false;
         }
         return super.equals(obj);

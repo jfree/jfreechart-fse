@@ -98,7 +98,7 @@ import java.util.List;
 
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -791,10 +791,10 @@ public class XYBoxAndWhiskerRenderer extends AbstractXYItemRenderer
         if (this.boxWidth != that.getBoxWidth()) {
             return false;
         }
-        if (!PaintUtilities.equal(this.boxPaint, that.boxPaint)) {
+        if (!PaintUtils.equal(this.boxPaint, that.boxPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.artifactPaint, that.artifactPaint)) {
+        if (!PaintUtils.equal(this.artifactPaint, that.artifactPaint)) {
             return false;
         }
         if (this.fillBox != that.fillBox) {

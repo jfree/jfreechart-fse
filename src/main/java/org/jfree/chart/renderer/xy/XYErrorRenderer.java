@@ -56,7 +56,7 @@ import java.io.ObjectOutputStream;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CrosshairState;
 import org.jfree.chart.plot.PlotOrientation;
@@ -421,7 +421,7 @@ public class XYErrorRenderer extends XYLineAndShapeRenderer {
         if (this.capLength != that.capLength) {
             return false;
         }
-        if (!PaintUtilities.equal(this.errorPaint, that.errorPaint)) {
+        if (!PaintUtils.equal(this.errorPaint, that.errorPaint)) {
             return false;
         }
         if (!ObjectUtils.equal(this.errorStroke, that.errorStroke)) {

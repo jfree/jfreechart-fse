@@ -114,7 +114,7 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.entity.AxisEntity;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.AxisChangeEvent;
@@ -1403,7 +1403,7 @@ public abstract class Axis implements Cloneable, Serializable {
         if (!ObjectUtils.equal(this.labelFont, that.labelFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.labelPaint, that.labelPaint)) {
+        if (!PaintUtils.equal(this.labelPaint, that.labelPaint)) {
             return false;
         }
         if (!ObjectUtils.equal(this.labelInsets, that.labelInsets)) {
@@ -1421,7 +1421,7 @@ public abstract class Axis implements Cloneable, Serializable {
         if (!ObjectUtils.equal(this.axisLineStroke, that.axisLineStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.axisLinePaint, that.axisLinePaint)) {
+        if (!PaintUtils.equal(this.axisLinePaint, that.axisLinePaint)) {
             return false;
         }
         if (this.tickLabelsVisible != that.tickLabelsVisible) {
@@ -1430,7 +1430,7 @@ public abstract class Axis implements Cloneable, Serializable {
         if (!ObjectUtils.equal(this.tickLabelFont, that.tickLabelFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.tickLabelPaint, that.tickLabelPaint)) {
+        if (!PaintUtils.equal(this.tickLabelPaint, that.tickLabelPaint)) {
             return false;
         }
         if (!ObjectUtils.equal(
@@ -1447,7 +1447,7 @@ public abstract class Axis implements Cloneable, Serializable {
         if (this.tickMarkOutsideLength != that.tickMarkOutsideLength) {
             return false;
         }
-        if (!PaintUtilities.equal(this.tickMarkPaint, that.tickMarkPaint)) {
+        if (!PaintUtils.equal(this.tickMarkPaint, that.tickMarkPaint)) {
             return false;
         }
         if (!ObjectUtils.equal(this.tickMarkStroke, that.tickMarkStroke)) {
