@@ -60,7 +60,6 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.urls.XYURLGenerator;
 import org.jfree.data.DomainOrder;
 import org.jfree.data.general.DatasetChangeListener;
-import org.jfree.data.general.DatasetGroup;
 import org.jfree.data.xy.XYDataset;
 
 /**
@@ -490,27 +489,6 @@ public class CyclicXYItemRenderer extends StandardXYItemRenderer
          */
         @Override
         public void removeChangeListener(DatasetChangeListener listener) {
-            // unused in parent
-        }
-
-        /**
-         * Returns the dataset group.
-         *
-         * @return The dataset group.
-         */
-        @Override
-        public DatasetGroup getGroup() {
-            // unused but must return something, so while we are at it...
-            return this.delegateSet.getGroup();
-        }
-
-        /**
-         * Does nothing.
-         *
-         * @param group  ignored.
-         */
-        @Override
-        public void setGroup(DatasetGroup group) {
             // unused in parent
         }
 

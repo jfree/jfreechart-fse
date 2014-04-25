@@ -76,18 +76,4 @@ public interface Dataset {
      */
     public void removeChangeListener(DatasetChangeListener listener);
 
-    /**
-     * Returns the dataset group.
-     *
-     * @return The dataset group.
-     */
-    public DatasetGroup getGroup();
-
-    /**
-     * Sets the dataset group.
-     *
-     * @param group  the dataset group.
-     */
-    public void setGroup(DatasetGroup group);
-
 }

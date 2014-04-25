@@ -79,9 +79,6 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
     /** For serialization. */
     private static final long serialVersionUID = 1918768939869230744L;
 
-    /** The group that the dataset belongs to. */
-    private DatasetGroup group;
-
     /** Storage for registered change listeners. */
     private transient EventListenerList listenerList;
 
@@ -90,35 +87,7 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      * group.
      */
     protected AbstractDataset() {
-        this.group = new DatasetGroup();
         this.listenerList = new EventListenerList();
-    }
-
-    /**
-     * Returns the dataset group for the dataset.
-     *
-     * @return The group (never <code>null</code>).
-     *
-     * @see #setGroup(DatasetGroup)
-     */
-    @Override
-    public DatasetGroup getGroup() {
-        return this.group;
-    }
-
-    /**
-     * Sets the dataset group for the dataset.
-     *
-     * @param group  the group (<code>null</code> not permitted).
-     *
-     * @see #getGroup()
-     */
-    @Override
-    public void setGroup(DatasetGroup group) {
-        if (group == null) {
-            throw new IllegalArgumentException("Null 'group' argument.");
-        }
-        this.group = group;
     }
 
     /**

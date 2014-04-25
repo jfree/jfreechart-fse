@@ -187,7 +187,6 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetChangeListener;
-import org.jfree.data.general.DatasetGroup;
 import org.jfree.data.general.LabelChangeEvent;
 import org.jfree.data.general.LabelChangeListener;
 import org.jfree.data.general.SelectionChangeEvent;
@@ -242,9 +241,6 @@ public abstract class Plot implements AxisChangeListener,
 
     /** The parent plot (<code>null</code> if this is the root plot). */
     private Plot parent;
-
-    /** The dataset group (to be used for thread synchronisation). */
-    private DatasetGroup datasetGroup;
 
     /** The message to display if no data is available. */
     private String noDataMessage;
@@ -326,28 +322,6 @@ public abstract class Plot implements AxisChangeListener,
 
         this.notify = true;
         this.listenerList = new EventListenerList();
-    }
-
-    /**
-     * Returns the dataset group for the plot (not currently used).
-     *
-     * @return The dataset group.
-     *
-     * @see #setDatasetGroup(DatasetGroup)
-     */
-    public DatasetGroup getDatasetGroup() {
-        return this.datasetGroup;
-    }
-
-    /**
-     * Sets the dataset group (not currently used).
-     *
-     * @param group  the dataset group (<code>null</code> permitted).
-     *
-     * @see #getDatasetGroup()
-     */
-    protected void setDatasetGroup(DatasetGroup group) {
-        this.datasetGroup = group;
     }
 
     /**
@@ -1351,12 +1325,7 @@ public abstract class Plot implements AxisChangeListener,
         Plot clone = (Plot) super.clone();
         // private Plot parent <-- don't clone the parent plot, but take care
         // childs in combined plots instead
-        if (this.datasetGroup != null) {
-            clone.datasetGroup
-                = ObjectUtils.clone(this.datasetGroup);
-        }
-        clone.drawingSupplier
-            = ObjectUtils.clone(this.drawingSupplier);
+        clone.drawingSupplier = ObjectUtils.clone(this.drawingSupplier);
         clone.listenerList = new EventListenerList();
         return clone;
     }
