@@ -46,6 +46,7 @@ package org.jfree.chart.ui;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * Used to indicate an anchor point for a rectangle.
@@ -92,6 +93,38 @@ public enum RectangleAnchor {
     }
 
     /**
+     * Returns the anchor point relative to the specified rectangle.
+     * 
+     * @param rectangle  the rectangle (<code>null</code> not permitted).
+     * 
+     * @return The anchor point (never <code>null</code>). 
+     */
+    public Point2D getAnchorPoint(Rectangle2D rectangle) {
+        ParamChecks.nullNotPermitted(rectangle, "rectangle");
+        Point2D result = new Point2D.Double();
+        if (this == RectangleAnchor.CENTER) {
+            result.setLocation(rectangle.getCenterX(), rectangle.getCenterY());
+        } else if (this == RectangleAnchor.TOP) {
+            result.setLocation(rectangle.getCenterX(), rectangle.getMinY());
+        } else if (this == RectangleAnchor.BOTTOM) {
+            result.setLocation(rectangle.getCenterX(), rectangle.getMaxY());
+        } else if (this == RectangleAnchor.LEFT) {
+            result.setLocation(rectangle.getMinX(), rectangle.getCenterY());
+        } else if (this == RectangleAnchor.RIGHT) {
+            result.setLocation(rectangle.getMaxX(), rectangle.getCenterY());
+        } else if (this == RectangleAnchor.TOP_LEFT) {
+            result.setLocation(rectangle.getMinX(), rectangle.getMinY());
+        } else if (this == RectangleAnchor.TOP_RIGHT) {
+            result.setLocation(rectangle.getMaxX(), rectangle.getMinY());
+        } else if (this == RectangleAnchor.BOTTOM_LEFT) {
+            result.setLocation(rectangle.getMinX(), rectangle.getMaxY());
+        } else if (this == RectangleAnchor.BOTTOM_RIGHT) {
+            result.setLocation(rectangle.getMaxX(), rectangle.getMaxY());
+        }
+        return result;
+    }
+    
+    /**
      * Returns a string representing the object.
      *
      * @return The string.
@@ -108,30 +141,12 @@ public enum RectangleAnchor {
      * @param anchor  the anchor.
      *
      * @return The (x, y) coordinates.
+     * 
+     * @deprecated Use {@link #getAnchorPoint(java.awt.geom.Rectangle2D)}.
      */
     public static Point2D coordinates(Rectangle2D rectangle, 
             RectangleAnchor anchor) {
-        Point2D result = new Point2D.Double();
-        if (anchor == RectangleAnchor.CENTER) {
-            result.setLocation(rectangle.getCenterX(), rectangle.getCenterY());
-        } else if (anchor == RectangleAnchor.TOP) {
-            result.setLocation(rectangle.getCenterX(), rectangle.getMinY());
-        } else if (anchor == RectangleAnchor.BOTTOM) {
-            result.setLocation(rectangle.getCenterX(), rectangle.getMaxY());
-        } else if (anchor == RectangleAnchor.LEFT) {
-            result.setLocation(rectangle.getMinX(), rectangle.getCenterY());
-        } else if (anchor == RectangleAnchor.RIGHT) {
-            result.setLocation(rectangle.getMaxX(), rectangle.getCenterY());
-        } else if (anchor == RectangleAnchor.TOP_LEFT) {
-            result.setLocation(rectangle.getMinX(), rectangle.getMinY());
-        } else if (anchor == RectangleAnchor.TOP_RIGHT) {
-            result.setLocation(rectangle.getMaxX(), rectangle.getMinY());
-        } else if (anchor == RectangleAnchor.BOTTOM_LEFT) {
-            result.setLocation(rectangle.getMinX(), rectangle.getMaxY());
-        } else if (anchor == RectangleAnchor.BOTTOM_RIGHT) {
-            result.setLocation(rectangle.getMaxX(), rectangle.getMaxY());
-        }
-        return result;
+        return anchor.getAnchorPoint(rectangle);
     }
 
     /**
@@ -179,5 +194,5 @@ public enum RectangleAnchor {
         }
         return result;
     }
-
+    
 }
