@@ -48,6 +48,7 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -85,8 +86,8 @@ public class TestUtils {
      * 
      * @return A serialised and deserialised object.
      */
-    public static Object serialised(Object original) {
-        Object result = null;
+    public static <T extends Serializable> T serialised(T original) {
+        T result = null;
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         ObjectOutput out;
         try {
@@ -95,7 +96,7 @@ public class TestUtils {
             out.close();
             ObjectInput in = new ObjectInputStream(
                     new ByteArrayInputStream(buffer.toByteArray()));
-            result = in.readObject();
+            result = (T) in.readObject();
             in.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
