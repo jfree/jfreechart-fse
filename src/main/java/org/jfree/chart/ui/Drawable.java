@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------
  * Drawable.java
  * -------------
- * (C) Copyright 2002-2012, by Object Refinery Limited.
+ * (C) Copyright 2002-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -45,17 +45,16 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 /**
- * An interface for an object that can draw itself within an area on a Graphics2D.
- *
- * @author David Gilbert
+ * An interface for an object that can draw itself within an arbitrary 
+ * rectangle using Java2D's <code>Graphics2D</code> API.
  */
 public interface Drawable {
 
     /**
      * Draws the object.
      *
-     * @param g2  the graphics device.
-     * @param area  the area inside which the object should be drawn.
+     * @param g2  the graphics device (<code>null</code> not permitted).
+     * @param area  the drawing bounds (<code>null</code> not permitted).
      */
     public void draw(Graphics2D g2, Rectangle2D area);
 
