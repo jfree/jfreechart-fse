@@ -57,7 +57,7 @@ import java.util.List;
 
 import org.jfree.chart.ChartRenderingInfo;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * Stores information about the dimensions of a plot and its subplots.
@@ -270,8 +270,8 @@ public class PlotRenderingInfo implements Cloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeShape(this.dataArea, stream);
-        SerialUtilities.writeShape(this.plotArea, stream);
+        SerialUtils.writeShape(this.dataArea, stream);
+        SerialUtils.writeShape(this.plotArea, stream);
     }
 
     /**
@@ -285,8 +285,8 @@ public class PlotRenderingInfo implements Cloneable, Serializable {
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.dataArea = (Rectangle2D) SerialUtilities.readShape(stream);
-        this.plotArea = (Rectangle2D) SerialUtilities.readShape(stream);
+        this.dataArea = (Rectangle2D) SerialUtils.readShape(stream);
+        this.plotArea = (Rectangle2D) SerialUtils.readShape(stream);
     }
 
 }

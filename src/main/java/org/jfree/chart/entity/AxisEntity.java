@@ -49,7 +49,7 @@ import java.io.ObjectOutputStream;
 import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.axis.Axis;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A class that captures information about an Axis of a chart.
@@ -196,7 +196,7 @@ public class AxisEntity extends ChartEntity {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeShape(getArea(), stream);
+        SerialUtils.writeShape(getArea(), stream);
     }
 
     /**
@@ -210,7 +210,7 @@ public class AxisEntity extends ChartEntity {
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        setArea(SerialUtilities.readShape(stream));
+        setArea(SerialUtils.readShape(stream));
     }
 
 }

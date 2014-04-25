@@ -25,7 +25,7 @@
  * Other names may be trademarks of their respective owners.]
  * 
  * --------------------
- * SerialUtilities.java
+ * SerialUtils.java
  * --------------------
  * (C) Copyright 2000-2014, by Object Refinery Limited.
  *
@@ -73,12 +73,12 @@ import java.util.Map;
 /**
  * A class containing useful utility methods relating to serialization.
  */
-public class SerialUtilities {
+public class SerialUtils {
 
     /**
      * Private constructor prevents object creation.
      */
-    private SerialUtilities() {
+    private SerialUtils() {
     }
 
     /**
@@ -646,7 +646,7 @@ public class SerialUtilities {
         int keyCount = in.readInt();
         for (int i = 0; i < keyCount; i++) {
             Integer key = (Integer) in.readObject();
-            Paint paint = SerialUtilities.readPaint(in);
+            Paint paint = SerialUtils.readPaint(in);
             result.put(key, paint);
         }  
         return result;
@@ -665,7 +665,7 @@ public class SerialUtilities {
         for (Integer key : map.keySet()) {
             out.writeObject(key);
             Paint paint = map.get(key);
-            SerialUtilities.writePaint(paint, out);
+            SerialUtils.writePaint(paint, out);
         }
     }
 }

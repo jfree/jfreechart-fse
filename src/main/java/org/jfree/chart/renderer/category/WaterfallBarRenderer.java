@@ -83,7 +83,7 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.AbstractRenderer;
 import org.jfree.chart.util.ParamChecks;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
 
@@ -472,10 +472,10 @@ public class WaterfallBarRenderer extends BarRenderer {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.firstBarPaint, stream);
-        SerialUtilities.writePaint(this.lastBarPaint, stream);
-        SerialUtilities.writePaint(this.positiveBarPaint, stream);
-        SerialUtilities.writePaint(this.negativeBarPaint, stream);
+        SerialUtils.writePaint(this.firstBarPaint, stream);
+        SerialUtils.writePaint(this.lastBarPaint, stream);
+        SerialUtils.writePaint(this.positiveBarPaint, stream);
+        SerialUtils.writePaint(this.negativeBarPaint, stream);
     }
 
     /**
@@ -489,10 +489,10 @@ public class WaterfallBarRenderer extends BarRenderer {
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.firstBarPaint = SerialUtilities.readPaint(stream);
-        this.lastBarPaint = SerialUtilities.readPaint(stream);
-        this.positiveBarPaint = SerialUtilities.readPaint(stream);
-        this.negativeBarPaint = SerialUtilities.readPaint(stream);
+        this.firstBarPaint = SerialUtils.readPaint(stream);
+        this.lastBarPaint = SerialUtils.readPaint(stream);
+        this.positiveBarPaint = SerialUtils.readPaint(stream);
+        this.negativeBarPaint = SerialUtils.readPaint(stream);
     }
 
 }

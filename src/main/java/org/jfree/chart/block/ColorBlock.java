@@ -55,7 +55,7 @@ import java.io.ObjectOutputStream;
 
 import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A block that is filled with a single color.
@@ -172,7 +172,7 @@ public class ColorBlock extends AbstractBlock implements Block {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.paint, stream);
+        SerialUtils.writePaint(this.paint, stream);
     }
 
     /**
@@ -186,7 +186,7 @@ public class ColorBlock extends AbstractBlock implements Block {
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.paint = SerialUtilities.readPaint(stream);
+        this.paint = SerialUtils.readPaint(stream);
     }
 
 }

@@ -254,7 +254,7 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.Zoomable;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.ResourceBundleWrapper;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A Swing GUI component for displaying a {@link JFreeChart} object.
@@ -3298,9 +3298,9 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.zoomFillPaint, stream);
-        SerialUtilities.writePaint(this.zoomOutlinePaint, stream);
-        SerialUtilities.writeStroke(this.selectionOutlineStroke, stream);
+        SerialUtils.writePaint(this.zoomFillPaint, stream);
+        SerialUtils.writePaint(this.zoomOutlinePaint, stream);
+        SerialUtils.writeStroke(this.selectionOutlineStroke, stream);
     }
 
     /**
@@ -3314,9 +3314,9 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.zoomFillPaint = SerialUtilities.readPaint(stream);
-        this.zoomOutlinePaint = SerialUtilities.readPaint(stream);
-        this.selectionOutlineStroke = SerialUtilities.readStroke(stream);
+        this.zoomFillPaint = SerialUtils.readPaint(stream);
+        this.zoomOutlinePaint = SerialUtils.readPaint(stream);
+        this.selectionOutlineStroke = SerialUtils.readStroke(stream);
           
         // we create a new but empty chartMouseListeners list
         this.chartMouseListeners = new EventListenerList();

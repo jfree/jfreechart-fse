@@ -141,7 +141,7 @@ import org.jfree.chart.renderer.item.StrokeIRS;
 import org.jfree.chart.renderer.item.VisibilityIRS;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.util.ParamChecks;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * Base class providing common services for renderers.  Most methods that update
@@ -3273,20 +3273,20 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.defaultPaint, stream);
-        SerialUtilities.writePaintMap(this.paintMap, stream);
-        SerialUtilities.writePaint(this.defaultFillPaint, stream);
-        SerialUtilities.writePaintMap(this.fillPaintMap, stream);
-        SerialUtilities.writePaint(this.defaultOutlinePaint, stream);
-        SerialUtilities.writePaintMap(this.outlinePaintMap, stream);
-        SerialUtilities.writeStroke(this.defaultStroke, stream);
-        SerialUtilities.writeStroke(this.defaultOutlineStroke, stream);
-        SerialUtilities.writeShape(this.defaultShape, stream);
-        SerialUtilities.writePaint(this.defaultItemLabelPaint, stream);
-        SerialUtilities.writePaintMap(this.itemLabelPaintMap, stream);
-        SerialUtilities.writeShape(this.defaultLegendShape, stream);
-        SerialUtilities.writePaint(this.defaultLegendTextPaint, stream);
-        SerialUtilities.writePaintMap(this.legendTextPaintMap, stream);
+        SerialUtils.writePaint(this.defaultPaint, stream);
+        SerialUtils.writePaintMap(this.paintMap, stream);
+        SerialUtils.writePaint(this.defaultFillPaint, stream);
+        SerialUtils.writePaintMap(this.fillPaintMap, stream);
+        SerialUtils.writePaint(this.defaultOutlinePaint, stream);
+        SerialUtils.writePaintMap(this.outlinePaintMap, stream);
+        SerialUtils.writeStroke(this.defaultStroke, stream);
+        SerialUtils.writeStroke(this.defaultOutlineStroke, stream);
+        SerialUtils.writeShape(this.defaultShape, stream);
+        SerialUtils.writePaint(this.defaultItemLabelPaint, stream);
+        SerialUtils.writePaintMap(this.itemLabelPaintMap, stream);
+        SerialUtils.writeShape(this.defaultLegendShape, stream);
+        SerialUtils.writePaint(this.defaultLegendTextPaint, stream);
+        SerialUtils.writePaintMap(this.legendTextPaintMap, stream);
     }
 
     /**
@@ -3300,20 +3300,20 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.defaultPaint = SerialUtilities.readPaint(stream);
-        this.paintMap = SerialUtilities.readPaintMap(stream);
-        this.defaultFillPaint = SerialUtilities.readPaint(stream);
-        this.fillPaintMap = SerialUtilities.readPaintMap(stream);
-        this.defaultOutlinePaint = SerialUtilities.readPaint(stream);
-        this.outlinePaintMap = SerialUtilities.readPaintMap(stream);
-        this.defaultStroke = SerialUtilities.readStroke(stream);
-        this.defaultOutlineStroke = SerialUtilities.readStroke(stream);
-        this.defaultShape = SerialUtilities.readShape(stream);
-        this.defaultItemLabelPaint = SerialUtilities.readPaint(stream);
-        this.itemLabelPaintMap = SerialUtilities.readPaintMap(stream);
-        this.defaultLegendShape = SerialUtilities.readShape(stream);
-        this.defaultLegendTextPaint = SerialUtilities.readPaint(stream);
-        this.legendTextPaintMap = SerialUtilities.readPaintMap(stream);
+        this.defaultPaint = SerialUtils.readPaint(stream);
+        this.paintMap = SerialUtils.readPaintMap(stream);
+        this.defaultFillPaint = SerialUtils.readPaint(stream);
+        this.fillPaintMap = SerialUtils.readPaintMap(stream);
+        this.defaultOutlinePaint = SerialUtils.readPaint(stream);
+        this.outlinePaintMap = SerialUtils.readPaintMap(stream);
+        this.defaultStroke = SerialUtils.readStroke(stream);
+        this.defaultOutlineStroke = SerialUtils.readStroke(stream);
+        this.defaultShape = SerialUtils.readShape(stream);
+        this.defaultItemLabelPaint = SerialUtils.readPaint(stream);
+        this.itemLabelPaintMap = SerialUtils.readPaintMap(stream);
+        this.defaultLegendShape = SerialUtils.readShape(stream);
+        this.defaultLegendTextPaint = SerialUtils.readPaint(stream);
+        this.legendTextPaintMap = SerialUtils.readPaintMap(stream);
 
         // listeners are not restored automatically, but storage must be
         // provided...

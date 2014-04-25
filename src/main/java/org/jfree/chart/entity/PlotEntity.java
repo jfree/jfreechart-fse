@@ -49,7 +49,7 @@ import java.io.ObjectOutputStream;
 import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.plot.Plot;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A class that captures information about a plot.
@@ -196,7 +196,7 @@ public class PlotEntity extends ChartEntity {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeShape(getArea(), stream);
+        SerialUtils.writeShape(getArea(), stream);
      }
 
     /**
@@ -210,7 +210,7 @@ public class PlotEntity extends ChartEntity {
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        setArea(SerialUtilities.readShape(stream));
+        setArea(SerialUtils.readShape(stream));
     }
 
 }

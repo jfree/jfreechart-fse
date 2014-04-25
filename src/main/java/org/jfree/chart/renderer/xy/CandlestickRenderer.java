@@ -113,7 +113,7 @@ import org.jfree.chart.plot.CrosshairState;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.OHLCDataset;
@@ -950,9 +950,9 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.upPaint, stream);
-        SerialUtilities.writePaint(this.downPaint, stream);
-        SerialUtilities.writePaint(this.volumePaint, stream);
+        SerialUtils.writePaint(this.upPaint, stream);
+        SerialUtils.writePaint(this.downPaint, stream);
+        SerialUtils.writePaint(this.volumePaint, stream);
     }
 
     /**
@@ -966,9 +966,9 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.upPaint = SerialUtilities.readPaint(stream);
-        this.downPaint = SerialUtilities.readPaint(stream);
-        this.volumePaint = SerialUtilities.readPaint(stream);
+        this.upPaint = SerialUtils.readPaint(stream);
+        this.downPaint = SerialUtils.readPaint(stream);
+        this.volumePaint = SerialUtils.readPaint(stream);
     }
 
 }

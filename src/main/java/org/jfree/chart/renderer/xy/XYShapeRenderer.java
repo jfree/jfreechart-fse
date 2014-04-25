@@ -70,7 +70,7 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.LookupPaintScale;
 import org.jfree.chart.renderer.PaintScale;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.xy.XYDataset;
@@ -602,8 +602,8 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.guideLinePaint = SerialUtilities.readPaint(stream);
-        this.guideLineStroke = SerialUtilities.readStroke(stream);
+        this.guideLinePaint = SerialUtils.readPaint(stream);
+        this.guideLineStroke = SerialUtils.readStroke(stream);
     }
 
     /**
@@ -615,8 +615,8 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.guideLinePaint, stream);
-        SerialUtilities.writeStroke(this.guideLineStroke, stream);
+        SerialUtils.writePaint(this.guideLinePaint, stream);
+        SerialUtils.writeStroke(this.guideLineStroke, stream);
     }
 
 }

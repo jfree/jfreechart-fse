@@ -100,7 +100,7 @@ import org.jfree.chart.renderer.xy.AbstractXYItemRenderer;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.urls.XYURLGenerator;
 import org.jfree.chart.util.ParamChecks;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.xy.XYDataset;
 
 /**
@@ -983,8 +983,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.legendLine = SerialUtilities.readShape(stream);
-        this.fillComposite = SerialUtilities.readComposite(stream);
+        this.legendLine = SerialUtils.readShape(stream);
+        this.fillComposite = SerialUtils.readComposite(stream);
     }
 
     /**
@@ -996,7 +996,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeShape(this.legendLine, stream);
-        SerialUtilities.writeComposite(this.fillComposite, stream);
+        SerialUtils.writeShape(this.legendLine, stream);
+        SerialUtils.writeComposite(this.fillComposite, stream);
     }
 }

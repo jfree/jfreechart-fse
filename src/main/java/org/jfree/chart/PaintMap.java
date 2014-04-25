@@ -55,7 +55,7 @@ import java.util.TreeMap;
 
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.ParamChecks;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A storage structure that maps <code>Comparable</code> instances with
@@ -194,7 +194,7 @@ public class PaintMap implements Cloneable, Serializable {
         for (Comparable key : keys) {
             stream.writeObject(key);
             Paint paint = getPaint(key);
-            SerialUtilities.writePaint(paint, stream);
+            SerialUtils.writePaint(paint, stream);
         }
     }
 
@@ -213,7 +213,7 @@ public class PaintMap implements Cloneable, Serializable {
         int keyCount = stream.readInt();
         for (int i = 0; i < keyCount; i++) {
             Comparable key = (Comparable) stream.readObject();
-            Paint paint = SerialUtilities.readPaint(stream);
+            Paint paint = SerialUtils.readPaint(stream);
             this.store.put(key, paint);
         }
     }

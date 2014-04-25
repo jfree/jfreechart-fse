@@ -61,7 +61,7 @@ import org.jfree.chart.event.AxisChangeEvent;
 import org.jfree.chart.text.TextBlock;
 import org.jfree.chart.text.TextFragment;
 import org.jfree.chart.text.TextLine;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * An extended version of the {@link CategoryAxis} class that supports
@@ -242,7 +242,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.sublabelPaint, stream);
+        SerialUtils.writePaint(this.sublabelPaint, stream);
     }
 
     /**
@@ -256,7 +256,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.sublabelPaint = SerialUtilities.readPaint(stream);
+        this.sublabelPaint = SerialUtils.readPaint(stream);
     }
 
 }

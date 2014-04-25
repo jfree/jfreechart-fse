@@ -103,7 +103,7 @@ import org.jfree.chart.needle.PointerNeedle;
 import org.jfree.chart.needle.ShipNeedle;
 import org.jfree.chart.needle.WindNeedle;
 import org.jfree.chart.util.ResourceBundleWrapper;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.general.DefaultValueDataset;
 import org.jfree.data.general.ValueDataset;
 
@@ -877,9 +877,9 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.rosePaint, stream);
-        SerialUtilities.writePaint(this.roseCenterPaint, stream);
-        SerialUtilities.writePaint(this.roseHighlightPaint, stream);
+        SerialUtils.writePaint(this.rosePaint, stream);
+        SerialUtils.writePaint(this.roseCenterPaint, stream);
+        SerialUtils.writePaint(this.roseHighlightPaint, stream);
     }
 
     /**
@@ -893,9 +893,9 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.rosePaint = SerialUtilities.readPaint(stream);
-        this.roseCenterPaint = SerialUtilities.readPaint(stream);
-        this.roseHighlightPaint = SerialUtilities.readPaint(stream);
+        this.rosePaint = SerialUtils.readPaint(stream);
+        this.roseCenterPaint = SerialUtils.readPaint(stream);
+        this.roseHighlightPaint = SerialUtils.readPaint(stream);
     }
 
 }

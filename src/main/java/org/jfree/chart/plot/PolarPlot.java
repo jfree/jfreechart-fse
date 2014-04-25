@@ -109,7 +109,7 @@ import org.jfree.chart.renderer.PolarItemRenderer;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.ResourceBundleWrapper;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DatasetChangeEvent;
@@ -1915,11 +1915,11 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeStroke(this.angleGridlineStroke, stream);
-        SerialUtilities.writePaint(this.angleGridlinePaint, stream);
-        SerialUtilities.writeStroke(this.radiusGridlineStroke, stream);
-        SerialUtilities.writePaint(this.radiusGridlinePaint, stream);
-        SerialUtilities.writePaint(this.angleLabelPaint, stream);
+        SerialUtils.writeStroke(this.angleGridlineStroke, stream);
+        SerialUtils.writePaint(this.angleGridlinePaint, stream);
+        SerialUtils.writeStroke(this.radiusGridlineStroke, stream);
+        SerialUtils.writePaint(this.radiusGridlinePaint, stream);
+        SerialUtils.writePaint(this.angleLabelPaint, stream);
     }
 
     /**
@@ -1934,11 +1934,11 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
         throws IOException, ClassNotFoundException {
 
         stream.defaultReadObject();
-        this.angleGridlineStroke = SerialUtilities.readStroke(stream);
-        this.angleGridlinePaint = SerialUtilities.readPaint(stream);
-        this.radiusGridlineStroke = SerialUtilities.readStroke(stream);
-        this.radiusGridlinePaint = SerialUtilities.readPaint(stream);
-        this.angleLabelPaint = SerialUtilities.readPaint(stream);
+        this.angleGridlineStroke = SerialUtils.readStroke(stream);
+        this.angleGridlinePaint = SerialUtils.readPaint(stream);
+        this.radiusGridlineStroke = SerialUtils.readStroke(stream);
+        this.radiusGridlinePaint = SerialUtils.readPaint(stream);
+        this.angleLabelPaint = SerialUtils.readPaint(stream);
 
         int rangeAxisCount = this.axes.size();
         for (int i = 0; i < rangeAxisCount; i++) {

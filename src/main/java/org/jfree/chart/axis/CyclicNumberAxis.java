@@ -73,7 +73,7 @@ import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.util.ParamChecks;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 
 /**
@@ -1122,8 +1122,8 @@ public final class CyclicNumberAxis extends NumberAxis {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.advanceLinePaint, stream);
-        SerialUtilities.writeStroke(this.advanceLineStroke, stream);
+        SerialUtils.writePaint(this.advanceLinePaint, stream);
+        SerialUtils.writeStroke(this.advanceLineStroke, stream);
     }
 
     /**
@@ -1137,8 +1137,8 @@ public final class CyclicNumberAxis extends NumberAxis {
     private void readObject(ObjectInputStream stream) throws IOException, 
             ClassNotFoundException {
         stream.defaultReadObject();
-        this.advanceLinePaint = SerialUtilities.readPaint(stream);
-        this.advanceLineStroke = SerialUtilities.readStroke(stream);
+        this.advanceLinePaint = SerialUtils.readPaint(stream);
+        this.advanceLineStroke = SerialUtils.readStroke(stream);
     }
 
     /**

@@ -87,7 +87,7 @@ import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.imagemap.ToolTipTagFragmentGenerator;
 import org.jfree.chart.imagemap.URLTagFragmentGenerator;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A class that captures information about some component of a chart (a bar,
@@ -424,7 +424,7 @@ public class ChartEntity implements Cloneable, PublicCloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeShape(this.area, stream);
+        SerialUtils.writeShape(this.area, stream);
      }
 
     /**
@@ -438,7 +438,7 @@ public class ChartEntity implements Cloneable, PublicCloneable, Serializable {
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.area = SerialUtilities.readShape(stream);
+        this.area = SerialUtils.readShape(stream);
     }
 
 }

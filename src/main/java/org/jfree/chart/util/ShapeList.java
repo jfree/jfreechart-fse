@@ -145,7 +145,7 @@ public class ShapeList extends AbstractObjectList<Shape> {
             final Shape shape = getShape(i);
             if (shape != null) {
                 stream.writeInt(i);
-                SerialUtilities.writeShape(shape, stream);
+                SerialUtils.writeShape(shape, stream);
             }
             else {
                 stream.writeInt(-1);
@@ -169,7 +169,7 @@ public class ShapeList extends AbstractObjectList<Shape> {
         for (int i = 0; i < count; i++) {
             final int index = stream.readInt();
             if (index != -1) {
-                setShape(index, SerialUtilities.readShape(stream));
+                setShape(index, SerialUtils.readShape(stream));
             }
         }
 

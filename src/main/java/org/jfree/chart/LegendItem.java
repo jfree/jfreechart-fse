@@ -87,7 +87,7 @@ import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ShapeUtils;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.general.Dataset;
 
 /**
@@ -1114,15 +1114,15 @@ public class LegendItem implements Cloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeAttributedString(this.attributedLabel, stream);
-        SerialUtilities.writeShape(this.shape, stream);
-        SerialUtilities.writePaint(this.fillPaint, stream);
-        SerialUtilities.writeStroke(this.outlineStroke, stream);
-        SerialUtilities.writePaint(this.outlinePaint, stream);
-        SerialUtilities.writeShape(this.line, stream);
-        SerialUtilities.writeStroke(this.lineStroke, stream);
-        SerialUtilities.writePaint(this.linePaint, stream);
-        SerialUtilities.writePaint(this.labelPaint, stream);
+        SerialUtils.writeAttributedString(this.attributedLabel, stream);
+        SerialUtils.writeShape(this.shape, stream);
+        SerialUtils.writePaint(this.fillPaint, stream);
+        SerialUtils.writeStroke(this.outlineStroke, stream);
+        SerialUtils.writePaint(this.outlinePaint, stream);
+        SerialUtils.writeShape(this.line, stream);
+        SerialUtils.writeStroke(this.lineStroke, stream);
+        SerialUtils.writePaint(this.linePaint, stream);
+        SerialUtils.writePaint(this.labelPaint, stream);
     }
 
     /**
@@ -1136,15 +1136,15 @@ public class LegendItem implements Cloneable, Serializable {
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.attributedLabel = SerialUtilities.readAttributedString(stream);
-        this.shape = SerialUtilities.readShape(stream);
-        this.fillPaint = SerialUtilities.readPaint(stream);
-        this.outlineStroke = SerialUtilities.readStroke(stream);
-        this.outlinePaint = SerialUtilities.readPaint(stream);
-        this.line = SerialUtilities.readShape(stream);
-        this.lineStroke = SerialUtilities.readStroke(stream);
-        this.linePaint = SerialUtilities.readPaint(stream);
-        this.labelPaint = SerialUtilities.readPaint(stream);
+        this.attributedLabel = SerialUtils.readAttributedString(stream);
+        this.shape = SerialUtils.readShape(stream);
+        this.fillPaint = SerialUtils.readPaint(stream);
+        this.outlineStroke = SerialUtils.readStroke(stream);
+        this.outlinePaint = SerialUtils.readPaint(stream);
+        this.line = SerialUtils.readShape(stream);
+        this.lineStroke = SerialUtils.readStroke(stream);
+        this.linePaint = SerialUtils.readPaint(stream);
+        this.labelPaint = SerialUtils.readPaint(stream);
     }
 
 }

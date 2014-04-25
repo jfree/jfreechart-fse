@@ -134,7 +134,7 @@ import org.jfree.chart.event.AxisChangeEvent;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.util.ParamChecks;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 
 /**
@@ -1702,10 +1702,10 @@ public abstract class ValueAxis extends Axis
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeShape(this.upArrow, stream);
-        SerialUtilities.writeShape(this.downArrow, stream);
-        SerialUtilities.writeShape(this.leftArrow, stream);
-        SerialUtilities.writeShape(this.rightArrow, stream);
+        SerialUtils.writeShape(this.upArrow, stream);
+        SerialUtils.writeShape(this.downArrow, stream);
+        SerialUtils.writeShape(this.leftArrow, stream);
+        SerialUtils.writeShape(this.rightArrow, stream);
     }
 
     /**
@@ -1720,10 +1720,10 @@ public abstract class ValueAxis extends Axis
             throws IOException, ClassNotFoundException {
 
         stream.defaultReadObject();
-        this.upArrow = SerialUtilities.readShape(stream);
-        this.downArrow = SerialUtilities.readShape(stream);
-        this.leftArrow = SerialUtilities.readShape(stream);
-        this.rightArrow = SerialUtilities.readShape(stream);
+        this.upArrow = SerialUtils.readShape(stream);
+        this.downArrow = SerialUtils.readShape(stream);
+        this.leftArrow = SerialUtils.readShape(stream);
+        this.rightArrow = SerialUtils.readShape(stream);
     }
 
 }

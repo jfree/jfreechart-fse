@@ -69,7 +69,7 @@ import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.util.ParamChecks;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.category.CategoryDataset;
 
 /**
@@ -524,8 +524,8 @@ public class CategoryPointerAnnotation extends CategoryTextAnnotation
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.arrowPaint, stream);
-        SerialUtilities.writeStroke(this.arrowStroke, stream);
+        SerialUtils.writePaint(this.arrowPaint, stream);
+        SerialUtils.writeStroke(this.arrowStroke, stream);
     }
 
     /**
@@ -539,8 +539,8 @@ public class CategoryPointerAnnotation extends CategoryTextAnnotation
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.arrowPaint = SerialUtilities.readPaint(stream);
-        this.arrowStroke = SerialUtilities.readStroke(stream);
+        this.arrowPaint = SerialUtils.readPaint(stream);
+        this.arrowStroke = SerialUtils.readStroke(stream);
     }
 
 }

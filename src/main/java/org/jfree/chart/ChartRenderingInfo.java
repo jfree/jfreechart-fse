@@ -61,7 +61,7 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.StandardEntityCollection;
 import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A structure for storing rendering information from one call to the
@@ -238,7 +238,7 @@ public class ChartRenderingInfo implements Cloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeShape(this.chartArea, stream);
+        SerialUtils.writeShape(this.chartArea, stream);
     }
 
     /**
@@ -252,7 +252,7 @@ public class ChartRenderingInfo implements Cloneable, Serializable {
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.chartArea = (Rectangle2D) SerialUtilities.readShape(stream);
+        this.chartArea = (Rectangle2D) SerialUtils.readShape(stream);
     }
 
 }

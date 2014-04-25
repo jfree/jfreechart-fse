@@ -143,7 +143,7 @@ public class StrokeList extends AbstractObjectList<Stroke> {
             final Stroke stroke = getStroke(i);
             if (stroke != null) {
                 stream.writeInt(i);
-                SerialUtilities.writeStroke(stroke, stream);
+                SerialUtils.writeStroke(stroke, stream);
             }
             else {
                 stream.writeInt(-1);
@@ -167,7 +167,7 @@ public class StrokeList extends AbstractObjectList<Stroke> {
         for (int i = 0; i < count; i++) {
             final int index = stream.readInt();
             if (index != -1) {
-                setStroke(index, SerialUtilities.readStroke(stream));
+                setStroke(index, SerialUtils.readStroke(stream));
             }
         }
 

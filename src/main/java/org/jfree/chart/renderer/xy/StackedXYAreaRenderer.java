@@ -97,7 +97,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.urls.XYURLGenerator;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.xy.TableXYDataset;
@@ -688,8 +688,8 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.shapePaint = SerialUtilities.readPaint(stream);
-        this.shapeStroke = SerialUtilities.readStroke(stream);
+        this.shapePaint = SerialUtils.readPaint(stream);
+        this.shapeStroke = SerialUtils.readStroke(stream);
     }
 
     /**
@@ -701,8 +701,8 @@ public class StackedXYAreaRenderer extends XYAreaRenderer
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.shapePaint, stream);
-        SerialUtilities.writeStroke(this.shapeStroke, stream);
+        SerialUtils.writePaint(this.shapePaint, stream);
+        SerialUtils.writeStroke(this.shapeStroke, stream);
     }
 
 }

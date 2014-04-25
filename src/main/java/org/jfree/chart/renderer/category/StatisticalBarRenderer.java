@@ -90,7 +90,7 @@ import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.CategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.statistics.StatisticalCategoryDataset;
@@ -581,8 +581,8 @@ public class StatisticalBarRenderer extends BarRenderer
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.errorIndicatorPaint, stream);
-        SerialUtilities.writeStroke(this.errorIndicatorStroke, stream);
+        SerialUtils.writePaint(this.errorIndicatorPaint, stream);
+        SerialUtils.writeStroke(this.errorIndicatorStroke, stream);
     }
 
     /**
@@ -596,8 +596,8 @@ public class StatisticalBarRenderer extends BarRenderer
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.errorIndicatorPaint = SerialUtilities.readPaint(stream);
-        this.errorIndicatorStroke = SerialUtilities.readStroke(stream);
+        this.errorIndicatorPaint = SerialUtils.readPaint(stream);
+        this.errorIndicatorStroke = SerialUtils.readStroke(stream);
     }
 
 }

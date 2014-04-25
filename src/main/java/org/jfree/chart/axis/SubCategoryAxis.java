@@ -70,7 +70,7 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.category.CategoryDataset;
 
 /**
@@ -430,7 +430,7 @@ public class SubCategoryAxis extends CategoryAxis
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.subLabelPaint, stream);
+        SerialUtils.writePaint(this.subLabelPaint, stream);
     }
 
     /**
@@ -444,7 +444,7 @@ public class SubCategoryAxis extends CategoryAxis
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.subLabelPaint = SerialUtilities.readPaint(stream);
+        this.subLabelPaint = SerialUtils.readPaint(stream);
     }
 
 }

@@ -62,7 +62,7 @@ import org.jfree.chart.block.RectangleConstraint;
 import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.event.TitleChangeEvent;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A title that contains multiple titles within a {@link BlockContainer}.
@@ -233,7 +233,7 @@ public class CompositeTitle extends Title implements Cloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.backgroundPaint, stream);
+        SerialUtils.writePaint(this.backgroundPaint, stream);
     }
 
     /**
@@ -247,7 +247,7 @@ public class CompositeTitle extends Title implements Cloneable, Serializable {
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.backgroundPaint = SerialUtilities.readPaint(stream);
+        this.backgroundPaint = SerialUtils.readPaint(stream);
     }
 
 }

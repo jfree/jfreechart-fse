@@ -88,7 +88,7 @@ import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.util.TableOrder;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.title.TextTitle;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.CategoryToPieDataset;
 import org.jfree.data.general.DatasetChangeEvent;
@@ -670,8 +670,8 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.aggregatedItemsPaint, stream);
-        SerialUtilities.writeShape(this.legendItemShape, stream);
+        SerialUtils.writePaint(this.aggregatedItemsPaint, stream);
+        SerialUtils.writeShape(this.legendItemShape, stream);
     }
 
     /**
@@ -685,8 +685,8 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.aggregatedItemsPaint = SerialUtilities.readPaint(stream);
-        this.legendItemShape = SerialUtilities.readShape(stream);
+        this.aggregatedItemsPaint = SerialUtils.readPaint(stream);
+        this.legendItemShape = SerialUtils.readShape(stream);
         this.sectionPaints = new HashMap<Comparable, Paint>();
     }
 

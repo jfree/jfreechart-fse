@@ -68,7 +68,7 @@ import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A scale for a {@link DialPlot}.
@@ -1009,11 +1009,11 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.majorTickPaint, stream);
-        SerialUtilities.writeStroke(this.majorTickStroke, stream);
-        SerialUtilities.writePaint(this.minorTickPaint, stream);
-        SerialUtilities.writeStroke(this.minorTickStroke, stream);
-        SerialUtilities.writePaint(this.tickLabelPaint, stream);
+        SerialUtils.writePaint(this.majorTickPaint, stream);
+        SerialUtils.writeStroke(this.majorTickStroke, stream);
+        SerialUtils.writePaint(this.minorTickPaint, stream);
+        SerialUtils.writeStroke(this.minorTickStroke, stream);
+        SerialUtils.writePaint(this.tickLabelPaint, stream);
     }
 
     /**
@@ -1027,11 +1027,11 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale,
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.majorTickPaint = SerialUtilities.readPaint(stream);
-        this.majorTickStroke = SerialUtilities.readStroke(stream);
-        this.minorTickPaint = SerialUtilities.readPaint(stream);
-        this.minorTickStroke = SerialUtilities.readStroke(stream);
-        this.tickLabelPaint = SerialUtilities.readPaint(stream);
+        this.majorTickPaint = SerialUtils.readPaint(stream);
+        this.majorTickStroke = SerialUtils.readStroke(stream);
+        this.minorTickPaint = SerialUtils.readPaint(stream);
+        this.minorTickStroke = SerialUtils.readStroke(stream);
+        this.tickLabelPaint = SerialUtils.readPaint(stream);
     }
 
 }

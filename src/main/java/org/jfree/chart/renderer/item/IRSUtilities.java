@@ -46,7 +46,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.jfree.chart.renderer.AbstractRenderer;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.extension.DatasetCursor;
 import org.jfree.data.extension.DatasetSelectionExtension;
@@ -165,9 +165,9 @@ public class IRSUtilities {
             private void writeObject(ObjectOutputStream stream) 
                     throws IOException {
                 stream.defaultWriteObject();
-                SerialUtilities.writePaint(m_outlinePaint, stream);
-                SerialUtilities.writePaint(m_fillPaint, stream);
-                SerialUtilities.writePaint(m_itemPaint, stream);
+                SerialUtils.writePaint(m_outlinePaint, stream);
+                SerialUtils.writePaint(m_fillPaint, stream);
+                SerialUtils.writePaint(m_itemPaint, stream);
             }
 
             /**
@@ -181,9 +181,9 @@ public class IRSUtilities {
             private void readObject(ObjectInputStream stream) 
                     throws IOException, ClassNotFoundException {
                 stream.defaultReadObject();
-                m_outlinePaint = SerialUtilities.readPaint(stream);
-                m_fillPaint = SerialUtilities.readPaint(stream);
-                m_itemPaint = SerialUtilities.readPaint(stream);
+                m_outlinePaint = SerialUtils.readPaint(stream);
+                m_fillPaint = SerialUtils.readPaint(stream);
+                m_itemPaint = SerialUtils.readPaint(stream);
             }
             
         };

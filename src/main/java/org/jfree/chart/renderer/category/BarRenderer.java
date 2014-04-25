@@ -128,7 +128,7 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
 
@@ -1400,7 +1400,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.shadowPaint, stream);
+        SerialUtils.writePaint(this.shadowPaint, stream);
     }
 
     /**
@@ -1414,7 +1414,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.shadowPaint = SerialUtilities.readPaint(stream);
+        this.shadowPaint = SerialUtils.readPaint(stream);
     }
 
 }

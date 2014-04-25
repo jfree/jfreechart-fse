@@ -51,7 +51,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Objects;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * An object that will draw a simple border around an area (with support for
@@ -213,7 +213,7 @@ public class BorderPainter implements Drawable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeStroke(this.stroke, stream);
+        SerialUtils.writeStroke(this.stroke, stream);
     }
 
     /**
@@ -227,6 +227,6 @@ public class BorderPainter implements Drawable, Serializable {
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.stroke = SerialUtilities.readStroke(stream);
+        this.stroke = SerialUtils.readStroke(stream);
     }
 }

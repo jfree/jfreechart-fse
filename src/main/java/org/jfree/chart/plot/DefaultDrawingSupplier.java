@@ -67,7 +67,7 @@ import org.jfree.chart.ChartColor;
 import org.jfree.chart.Colors;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ShapeUtils;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A default implementation of the {@link DrawingSupplier} interface.  All
@@ -422,31 +422,31 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
         int paintCount = this.paintSequence.length;
         stream.writeInt(paintCount);
         for (Paint aPaintSequence : this.paintSequence) {
-            SerialUtilities.writePaint(aPaintSequence, stream);
+            SerialUtils.writePaint(aPaintSequence, stream);
         }
 
         int outlinePaintCount = this.outlinePaintSequence.length;
         stream.writeInt(outlinePaintCount);
         for (Paint anOutlinePaintSequence : this.outlinePaintSequence) {
-            SerialUtilities.writePaint(anOutlinePaintSequence, stream);
+            SerialUtils.writePaint(anOutlinePaintSequence, stream);
         }
 
         int strokeCount = this.strokeSequence.length;
         stream.writeInt(strokeCount);
         for (Stroke aStrokeSequence : this.strokeSequence) {
-            SerialUtilities.writeStroke(aStrokeSequence, stream);
+            SerialUtils.writeStroke(aStrokeSequence, stream);
         }
 
         int outlineStrokeCount = this.outlineStrokeSequence.length;
         stream.writeInt(outlineStrokeCount);
         for (Stroke anOutlineStrokeSequence : this.outlineStrokeSequence) {
-            SerialUtilities.writeStroke(anOutlineStrokeSequence, stream);
+            SerialUtils.writeStroke(anOutlineStrokeSequence, stream);
         }
 
         int shapeCount = this.shapeSequence.length;
         stream.writeInt(shapeCount);
         for (Shape aShapeSequence : this.shapeSequence) {
-            SerialUtilities.writeShape(aShapeSequence, stream);
+            SerialUtils.writeShape(aShapeSequence, stream);
         }
 
     }
@@ -466,31 +466,31 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
         int paintCount = stream.readInt();
         this.paintSequence = new Paint[paintCount];
         for (int i = 0; i < paintCount; i++) {
-            this.paintSequence[i] = SerialUtilities.readPaint(stream);
+            this.paintSequence[i] = SerialUtils.readPaint(stream);
         }
 
         int outlinePaintCount = stream.readInt();
         this.outlinePaintSequence = new Paint[outlinePaintCount];
         for (int i = 0; i < outlinePaintCount; i++) {
-            this.outlinePaintSequence[i] = SerialUtilities.readPaint(stream);
+            this.outlinePaintSequence[i] = SerialUtils.readPaint(stream);
         }
 
         int strokeCount = stream.readInt();
         this.strokeSequence = new Stroke[strokeCount];
         for (int i = 0; i < strokeCount; i++) {
-            this.strokeSequence[i] = SerialUtilities.readStroke(stream);
+            this.strokeSequence[i] = SerialUtils.readStroke(stream);
         }
 
         int outlineStrokeCount = stream.readInt();
         this.outlineStrokeSequence = new Stroke[outlineStrokeCount];
         for (int i = 0; i < outlineStrokeCount; i++) {
-            this.outlineStrokeSequence[i] = SerialUtilities.readStroke(stream);
+            this.outlineStrokeSequence[i] = SerialUtils.readStroke(stream);
         }
 
         int shapeCount = stream.readInt();
         this.shapeSequence = new Shape[shapeCount];
         for (int i = 0; i < shapeCount; i++) {
-            this.shapeSequence[i] = SerialUtilities.readShape(stream);
+            this.shapeSequence[i] = SerialUtils.readShape(stream);
         }
 
     }

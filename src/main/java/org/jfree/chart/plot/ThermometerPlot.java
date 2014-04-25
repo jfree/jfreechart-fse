@@ -127,7 +127,7 @@ import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.UnitType;
 import org.jfree.chart.util.ResourceBundleWrapper;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DefaultValueDataset;
@@ -1563,14 +1563,14 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeStroke(this.thermometerStroke, stream);
-        SerialUtilities.writePaint(this.thermometerPaint, stream);
-        SerialUtilities.writePaint(this.valuePaint, stream);
-        SerialUtilities.writePaint(this.mercuryPaint, stream);
-        SerialUtilities.writeStroke(this.subrangeIndicatorStroke, stream);
-        SerialUtilities.writeStroke(this.rangeIndicatorStroke, stream);
+        SerialUtils.writeStroke(this.thermometerStroke, stream);
+        SerialUtils.writePaint(this.thermometerPaint, stream);
+        SerialUtils.writePaint(this.valuePaint, stream);
+        SerialUtils.writePaint(this.mercuryPaint, stream);
+        SerialUtils.writeStroke(this.subrangeIndicatorStroke, stream);
+        SerialUtils.writeStroke(this.rangeIndicatorStroke, stream);
         for (int i = 0; i < 3; i++) {
-            SerialUtilities.writePaint(this.subrangePaint[i], stream);
+            SerialUtils.writePaint(this.subrangePaint[i], stream);
         }
     }
 
@@ -1585,15 +1585,15 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot,
     private void readObject(ObjectInputStream stream) throws IOException,
             ClassNotFoundException {
         stream.defaultReadObject();
-        this.thermometerStroke = SerialUtilities.readStroke(stream);
-        this.thermometerPaint = SerialUtilities.readPaint(stream);
-        this.valuePaint = SerialUtilities.readPaint(stream);
-        this.mercuryPaint = SerialUtilities.readPaint(stream);
-        this.subrangeIndicatorStroke = SerialUtilities.readStroke(stream);
-        this.rangeIndicatorStroke = SerialUtilities.readStroke(stream);
+        this.thermometerStroke = SerialUtils.readStroke(stream);
+        this.thermometerPaint = SerialUtils.readPaint(stream);
+        this.valuePaint = SerialUtils.readPaint(stream);
+        this.mercuryPaint = SerialUtils.readPaint(stream);
+        this.subrangeIndicatorStroke = SerialUtils.readStroke(stream);
+        this.rangeIndicatorStroke = SerialUtils.readStroke(stream);
         this.subrangePaint = new Paint[3];
         for (int i = 0; i < 3; i++) {
-            this.subrangePaint[i] = SerialUtilities.readPaint(stream);
+            this.subrangePaint[i] = SerialUtils.readPaint(stream);
         }
         if (this.rangeAxis != null) {
             this.rangeAxis.addChangeListener(this);

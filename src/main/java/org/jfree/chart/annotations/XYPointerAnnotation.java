@@ -80,7 +80,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * An arrow and label that can be placed on an {@link XYPlot}.  The arrow is
@@ -547,8 +547,8 @@ public class XYPointerAnnotation extends XYTextAnnotation
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.arrowPaint, stream);
-        SerialUtilities.writeStroke(this.arrowStroke, stream);
+        SerialUtils.writePaint(this.arrowPaint, stream);
+        SerialUtils.writeStroke(this.arrowStroke, stream);
     }
 
     /**
@@ -562,8 +562,8 @@ public class XYPointerAnnotation extends XYTextAnnotation
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.arrowPaint = SerialUtilities.readPaint(stream);
-        this.arrowStroke = SerialUtilities.readStroke(stream);
+        this.arrowPaint = SerialUtils.readPaint(stream);
+        this.arrowStroke = SerialUtils.readStroke(stream);
     }
 
 }

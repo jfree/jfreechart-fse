@@ -294,7 +294,7 @@ import org.jfree.chart.renderer.xy.XYItemRendererState;
 import org.jfree.chart.util.CloneUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.ResourceBundleWrapper;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.chart.util.ShadowGenerator;
 import org.jfree.data.Range;
 import org.jfree.data.general.Dataset;
@@ -5619,28 +5619,28 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeStroke(this.domainGridlineStroke, stream);
-        SerialUtilities.writePaint(this.domainGridlinePaint, stream);
-        SerialUtilities.writeStroke(this.rangeGridlineStroke, stream);
-        SerialUtilities.writePaint(this.rangeGridlinePaint, stream);
-        SerialUtilities.writeStroke(this.domainMinorGridlineStroke, stream);
-        SerialUtilities.writePaint(this.domainMinorGridlinePaint, stream);
-        SerialUtilities.writeStroke(this.rangeMinorGridlineStroke, stream);
-        SerialUtilities.writePaint(this.rangeMinorGridlinePaint, stream);
-        SerialUtilities.writeStroke(this.rangeZeroBaselineStroke, stream);
-        SerialUtilities.writePaint(this.rangeZeroBaselinePaint, stream);
-        SerialUtilities.writeStroke(this.domainCrosshairStroke, stream);
-        SerialUtilities.writePaint(this.domainCrosshairPaint, stream);
-        SerialUtilities.writeStroke(this.rangeCrosshairStroke, stream);
-        SerialUtilities.writePaint(this.rangeCrosshairPaint, stream);
-        SerialUtilities.writePaint(this.domainTickBandPaint, stream);
-        SerialUtilities.writePaint(this.rangeTickBandPaint, stream);
-        SerialUtilities.writePoint2D(this.quadrantOrigin, stream);
+        SerialUtils.writeStroke(this.domainGridlineStroke, stream);
+        SerialUtils.writePaint(this.domainGridlinePaint, stream);
+        SerialUtils.writeStroke(this.rangeGridlineStroke, stream);
+        SerialUtils.writePaint(this.rangeGridlinePaint, stream);
+        SerialUtils.writeStroke(this.domainMinorGridlineStroke, stream);
+        SerialUtils.writePaint(this.domainMinorGridlinePaint, stream);
+        SerialUtils.writeStroke(this.rangeMinorGridlineStroke, stream);
+        SerialUtils.writePaint(this.rangeMinorGridlinePaint, stream);
+        SerialUtils.writeStroke(this.rangeZeroBaselineStroke, stream);
+        SerialUtils.writePaint(this.rangeZeroBaselinePaint, stream);
+        SerialUtils.writeStroke(this.domainCrosshairStroke, stream);
+        SerialUtils.writePaint(this.domainCrosshairPaint, stream);
+        SerialUtils.writeStroke(this.rangeCrosshairStroke, stream);
+        SerialUtils.writePaint(this.rangeCrosshairPaint, stream);
+        SerialUtils.writePaint(this.domainTickBandPaint, stream);
+        SerialUtils.writePaint(this.rangeTickBandPaint, stream);
+        SerialUtils.writePoint2D(this.quadrantOrigin, stream);
         for (int i = 0; i < 4; i++) {
-            SerialUtilities.writePaint(this.quadrantPaint[i], stream);
+            SerialUtils.writePaint(this.quadrantPaint[i], stream);
         }
-        SerialUtilities.writeStroke(this.domainZeroBaselineStroke, stream);
-        SerialUtilities.writePaint(this.domainZeroBaselinePaint, stream);
+        SerialUtils.writeStroke(this.domainZeroBaselineStroke, stream);
+        SerialUtils.writePaint(this.domainZeroBaselinePaint, stream);
     }
 
     /**
@@ -5655,30 +5655,30 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
         throws IOException, ClassNotFoundException {
 
         stream.defaultReadObject();
-        this.domainGridlineStroke = SerialUtilities.readStroke(stream);
-        this.domainGridlinePaint = SerialUtilities.readPaint(stream);
-        this.rangeGridlineStroke = SerialUtilities.readStroke(stream);
-        this.rangeGridlinePaint = SerialUtilities.readPaint(stream);
-        this.domainMinorGridlineStroke = SerialUtilities.readStroke(stream);
-        this.domainMinorGridlinePaint = SerialUtilities.readPaint(stream);
-        this.rangeMinorGridlineStroke = SerialUtilities.readStroke(stream);
-        this.rangeMinorGridlinePaint = SerialUtilities.readPaint(stream);
-        this.rangeZeroBaselineStroke = SerialUtilities.readStroke(stream);
-        this.rangeZeroBaselinePaint = SerialUtilities.readPaint(stream);
-        this.domainCrosshairStroke = SerialUtilities.readStroke(stream);
-        this.domainCrosshairPaint = SerialUtilities.readPaint(stream);
-        this.rangeCrosshairStroke = SerialUtilities.readStroke(stream);
-        this.rangeCrosshairPaint = SerialUtilities.readPaint(stream);
-        this.domainTickBandPaint = SerialUtilities.readPaint(stream);
-        this.rangeTickBandPaint = SerialUtilities.readPaint(stream);
-        this.quadrantOrigin = SerialUtilities.readPoint2D(stream);
+        this.domainGridlineStroke = SerialUtils.readStroke(stream);
+        this.domainGridlinePaint = SerialUtils.readPaint(stream);
+        this.rangeGridlineStroke = SerialUtils.readStroke(stream);
+        this.rangeGridlinePaint = SerialUtils.readPaint(stream);
+        this.domainMinorGridlineStroke = SerialUtils.readStroke(stream);
+        this.domainMinorGridlinePaint = SerialUtils.readPaint(stream);
+        this.rangeMinorGridlineStroke = SerialUtils.readStroke(stream);
+        this.rangeMinorGridlinePaint = SerialUtils.readPaint(stream);
+        this.rangeZeroBaselineStroke = SerialUtils.readStroke(stream);
+        this.rangeZeroBaselinePaint = SerialUtils.readPaint(stream);
+        this.domainCrosshairStroke = SerialUtils.readStroke(stream);
+        this.domainCrosshairPaint = SerialUtils.readPaint(stream);
+        this.rangeCrosshairStroke = SerialUtils.readStroke(stream);
+        this.rangeCrosshairPaint = SerialUtils.readPaint(stream);
+        this.domainTickBandPaint = SerialUtils.readPaint(stream);
+        this.rangeTickBandPaint = SerialUtils.readPaint(stream);
+        this.quadrantOrigin = SerialUtils.readPoint2D(stream);
         this.quadrantPaint = new Paint[4];
         for (int i = 0; i < 4; i++) {
-            this.quadrantPaint[i] = SerialUtilities.readPaint(stream);
+            this.quadrantPaint[i] = SerialUtils.readPaint(stream);
         }
 
-        this.domainZeroBaselineStroke = SerialUtilities.readStroke(stream);
-        this.domainZeroBaselinePaint = SerialUtilities.readPaint(stream);
+        this.domainZeroBaselineStroke = SerialUtils.readStroke(stream);
+        this.domainZeroBaselinePaint = SerialUtils.readPaint(stream);
 
         // register the plot as a listener with its axes, datasets, and
         // renderers...

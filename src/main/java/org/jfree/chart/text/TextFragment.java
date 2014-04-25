@@ -67,7 +67,7 @@ import java.io.Serializable;
 import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.util.ParamChecks;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A text item, with an associated font, that fits on a single line (see
@@ -299,7 +299,7 @@ public class TextFragment implements Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.paint, stream);
+        SerialUtils.writePaint(this.paint, stream);
     }
 
     /**
@@ -313,7 +313,7 @@ public class TextFragment implements Serializable {
     private void readObject(final ObjectInputStream stream) throws IOException, 
             ClassNotFoundException {
         stream.defaultReadObject();
-        this.paint = SerialUtilities.readPaint(stream);
+        this.paint = SerialUtils.readPaint(stream);
     }
 
 }

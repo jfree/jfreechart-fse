@@ -74,7 +74,7 @@ import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.CategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.gantt.GanttCategoryDataset;
 
@@ -621,8 +621,8 @@ public class GanttRenderer extends IntervalBarRenderer
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.completePaint, stream);
-        SerialUtilities.writePaint(this.incompletePaint, stream);
+        SerialUtils.writePaint(this.completePaint, stream);
+        SerialUtils.writePaint(this.incompletePaint, stream);
     }
 
     /**
@@ -636,8 +636,8 @@ public class GanttRenderer extends IntervalBarRenderer
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.completePaint = SerialUtilities.readPaint(stream);
-        this.incompletePaint = SerialUtilities.readPaint(stream);
+        this.completePaint = SerialUtils.readPaint(stream);
+        this.incompletePaint = SerialUtils.readPaint(stream);
     }
 
 }

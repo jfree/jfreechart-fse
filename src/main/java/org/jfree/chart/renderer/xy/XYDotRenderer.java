@@ -76,7 +76,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.util.ParamChecks;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.xy.XYDataset;
 
 /**
@@ -401,7 +401,7 @@ public class XYDotRenderer extends AbstractXYItemRenderer
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.legendShape = SerialUtilities.readShape(stream);
+        this.legendShape = SerialUtils.readShape(stream);
     }
 
     /**
@@ -413,7 +413,7 @@ public class XYDotRenderer extends AbstractXYItemRenderer
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeShape(this.legendShape, stream);
+        SerialUtils.writeShape(this.legendShape, stream);
     }
 
 }

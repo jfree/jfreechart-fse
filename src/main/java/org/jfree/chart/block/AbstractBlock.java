@@ -62,7 +62,7 @@ import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.ShapeUtils;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 
 /**
@@ -614,7 +614,7 @@ public class AbstractBlock implements Cloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeShape(this.bounds, stream);
+        SerialUtils.writeShape(this.bounds, stream);
     }
 
     /**
@@ -628,7 +628,7 @@ public class AbstractBlock implements Cloneable, Serializable {
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.bounds = (Rectangle2D) SerialUtilities.readShape(stream);
+        this.bounds = (Rectangle2D) SerialUtils.readShape(stream);
     }
 
 }

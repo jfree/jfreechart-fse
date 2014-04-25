@@ -113,7 +113,7 @@ import org.jfree.chart.labels.CategoryItemLabelGenerator;
 import org.jfree.chart.labels.CategoryToolTipGenerator;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.urls.CategoryURLGenerator;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetUtilities;
@@ -1519,15 +1519,15 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeShape(this.legendItemShape, stream);
-        SerialUtilities.writePaint(this.baseSeriesPaint, stream);
-        SerialUtilities.writePaintMap(this.seriesPaintMap, stream);
-        SerialUtilities.writePaint(this.baseSeriesOutlinePaint, stream);
-        SerialUtilities.writePaintMap(this.seriesOutlinePaintMap, stream);
-        SerialUtilities.writeStroke(this.baseSeriesOutlineStroke, stream);
-        SerialUtilities.writePaint(this.labelPaint, stream);
-        SerialUtilities.writePaint(this.axisLinePaint, stream);
-        SerialUtilities.writeStroke(this.axisLineStroke, stream);
+        SerialUtils.writeShape(this.legendItemShape, stream);
+        SerialUtils.writePaint(this.baseSeriesPaint, stream);
+        SerialUtils.writePaintMap(this.seriesPaintMap, stream);
+        SerialUtils.writePaint(this.baseSeriesOutlinePaint, stream);
+        SerialUtils.writePaintMap(this.seriesOutlinePaintMap, stream);
+        SerialUtils.writeStroke(this.baseSeriesOutlineStroke, stream);
+        SerialUtils.writePaint(this.labelPaint, stream);
+        SerialUtils.writePaint(this.axisLinePaint, stream);
+        SerialUtils.writeStroke(this.axisLineStroke, stream);
     }
 
     /**
@@ -1541,15 +1541,15 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     private void readObject(ObjectInputStream stream) throws IOException,
             ClassNotFoundException {
         stream.defaultReadObject();
-        this.legendItemShape = SerialUtilities.readShape(stream);
-        this.baseSeriesPaint = SerialUtilities.readPaint(stream);
-        this.seriesPaintMap = SerialUtilities.readPaintMap(stream);
-        this.baseSeriesOutlinePaint = SerialUtilities.readPaint(stream);
-        this.seriesOutlinePaintMap = SerialUtilities.readPaintMap(stream);
-        this.baseSeriesOutlineStroke = SerialUtilities.readStroke(stream);
-        this.labelPaint = SerialUtilities.readPaint(stream);
-        this.axisLinePaint = SerialUtilities.readPaint(stream);
-        this.axisLineStroke = SerialUtilities.readStroke(stream);
+        this.legendItemShape = SerialUtils.readShape(stream);
+        this.baseSeriesPaint = SerialUtils.readPaint(stream);
+        this.seriesPaintMap = SerialUtils.readPaintMap(stream);
+        this.baseSeriesOutlinePaint = SerialUtils.readPaint(stream);
+        this.seriesOutlinePaintMap = SerialUtils.readPaintMap(stream);
+        this.baseSeriesOutlineStroke = SerialUtils.readStroke(stream);
+        this.labelPaint = SerialUtils.readPaint(stream);
+        this.axisLinePaint = SerialUtils.readPaint(stream);
+        this.axisLineStroke = SerialUtils.readStroke(stream);
         if (this.dataset != null) {
             this.dataset.addChangeListener(this);
         }

@@ -122,7 +122,7 @@ import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.util.ResourceBundleWrapper;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.ValueDataset;
@@ -1285,12 +1285,12 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.dialBackgroundPaint, stream);
-        SerialUtilities.writePaint(this.dialOutlinePaint, stream);
-        SerialUtilities.writePaint(this.needlePaint, stream);
-        SerialUtilities.writePaint(this.valuePaint, stream);
-        SerialUtilities.writePaint(this.tickPaint, stream);
-        SerialUtilities.writePaint(this.tickLabelPaint, stream);
+        SerialUtils.writePaint(this.dialBackgroundPaint, stream);
+        SerialUtils.writePaint(this.dialOutlinePaint, stream);
+        SerialUtils.writePaint(this.needlePaint, stream);
+        SerialUtils.writePaint(this.valuePaint, stream);
+        SerialUtils.writePaint(this.tickPaint, stream);
+        SerialUtils.writePaint(this.tickLabelPaint, stream);
     }
 
     /**
@@ -1304,12 +1304,12 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.dialBackgroundPaint = SerialUtilities.readPaint(stream);
-        this.dialOutlinePaint = SerialUtilities.readPaint(stream);
-        this.needlePaint = SerialUtilities.readPaint(stream);
-        this.valuePaint = SerialUtilities.readPaint(stream);
-        this.tickPaint = SerialUtilities.readPaint(stream);
-        this.tickLabelPaint = SerialUtilities.readPaint(stream);
+        this.dialBackgroundPaint = SerialUtils.readPaint(stream);
+        this.dialOutlinePaint = SerialUtils.readPaint(stream);
+        this.needlePaint = SerialUtils.readPaint(stream);
+        this.valuePaint = SerialUtils.readPaint(stream);
+        this.tickPaint = SerialUtils.readPaint(stream);
+        this.tickLabelPaint = SerialUtils.readPaint(stream);
         if (this.dataset != null) {
             this.dataset.addChangeListener(this);
         }

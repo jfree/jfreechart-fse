@@ -132,7 +132,7 @@ import org.jfree.chart.text.G2TextMeasurer;
 import org.jfree.chart.text.TextBlock;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.util.ParamChecks;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.chart.util.ShapeUtils;
 import org.jfree.data.category.CategoryDataset;
 
@@ -1436,7 +1436,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         int count = in.readInt();
         for (int i = 0; i < count; i++) {
             Comparable category = (Comparable) in.readObject();
-            Paint paint = SerialUtilities.readPaint(in);
+            Paint paint = SerialUtils.readPaint(in);
             result.put(category, paint);
         }
         return result;
@@ -1465,7 +1465,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
             out.writeInt(count);
             for (Comparable key : keys) {
                 out.writeObject(key);
-                SerialUtilities.writePaint(map.get(key), out);
+                SerialUtils.writePaint(map.get(key), out);
             }
         }
     }

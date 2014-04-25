@@ -85,7 +85,7 @@ import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.urls.PieURLGenerator;
 import org.jfree.chart.util.LineUtils;
 import org.jfree.chart.util.ParamChecks;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.general.PieDataset;
 
 /**
@@ -736,8 +736,8 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeStroke(this.separatorStroke, stream);
-        SerialUtilities.writePaint(this.separatorPaint, stream);
+        SerialUtils.writeStroke(this.separatorStroke, stream);
+        SerialUtils.writePaint(this.separatorPaint, stream);
     }
 
     /**
@@ -751,8 +751,8 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.separatorStroke = SerialUtilities.readStroke(stream);
-        this.separatorPaint = SerialUtilities.readPaint(stream);
+        this.separatorStroke = SerialUtils.readStroke(stream);
+        this.separatorPaint = SerialUtils.readPaint(stream);
     }
 
 }

@@ -124,7 +124,7 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.util.AttributedStringUtils;
 import org.jfree.chart.util.ParamChecks;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * The base class for all axes in JFreeChart.  Subclasses are divided into
@@ -1493,13 +1493,13 @@ public abstract class Axis implements Cloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeAttributedString(this.label, stream);
-        SerialUtilities.writePaint(this.labelPaint, stream);
-        SerialUtilities.writePaint(this.tickLabelPaint, stream);
-        SerialUtilities.writeStroke(this.axisLineStroke, stream);
-        SerialUtilities.writePaint(this.axisLinePaint, stream);
-        SerialUtilities.writeStroke(this.tickMarkStroke, stream);
-        SerialUtilities.writePaint(this.tickMarkPaint, stream);
+        SerialUtils.writeAttributedString(this.label, stream);
+        SerialUtils.writePaint(this.labelPaint, stream);
+        SerialUtils.writePaint(this.tickLabelPaint, stream);
+        SerialUtils.writeStroke(this.axisLineStroke, stream);
+        SerialUtils.writePaint(this.axisLinePaint, stream);
+        SerialUtils.writeStroke(this.tickMarkStroke, stream);
+        SerialUtils.writePaint(this.tickMarkPaint, stream);
     }
 
     /**
@@ -1513,13 +1513,13 @@ public abstract class Axis implements Cloneable, Serializable {
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.label = SerialUtilities.readAttributedString(stream);
-        this.labelPaint = SerialUtilities.readPaint(stream);
-        this.tickLabelPaint = SerialUtilities.readPaint(stream);
-        this.axisLineStroke = SerialUtilities.readStroke(stream);
-        this.axisLinePaint = SerialUtilities.readPaint(stream);
-        this.tickMarkStroke = SerialUtilities.readStroke(stream);
-        this.tickMarkPaint = SerialUtilities.readPaint(stream);
+        this.label = SerialUtils.readAttributedString(stream);
+        this.labelPaint = SerialUtils.readPaint(stream);
+        this.tickLabelPaint = SerialUtils.readPaint(stream);
+        this.axisLineStroke = SerialUtils.readStroke(stream);
+        this.axisLinePaint = SerialUtils.readPaint(stream);
+        this.tickMarkStroke = SerialUtils.readStroke(stream);
+        this.tickMarkPaint = SerialUtils.readPaint(stream);
         this.listenerList = new EventListenerList();
     }
 

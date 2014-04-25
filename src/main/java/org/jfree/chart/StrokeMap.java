@@ -53,7 +53,7 @@ import java.util.TreeMap;
 
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.ParamChecks;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A storage structure that maps <code>Comparable</code> instances with
@@ -189,7 +189,7 @@ public class StrokeMap implements Cloneable, Serializable {
         for (Comparable key : keys) {
             stream.writeObject(key);
             Stroke stroke = getStroke(key);
-            SerialUtilities.writeStroke(stroke, stream);
+            SerialUtils.writeStroke(stroke, stream);
         }
     }
 
@@ -208,7 +208,7 @@ public class StrokeMap implements Cloneable, Serializable {
         int keyCount = stream.readInt();
         for (int i = 0; i < keyCount; i++) {
             Comparable key = (Comparable) stream.readObject();
-            Stroke stroke = SerialUtilities.readStroke(stream);
+            Stroke stroke = SerialUtils.readStroke(stream);
             this.store.put(key, stroke);
         }
     }

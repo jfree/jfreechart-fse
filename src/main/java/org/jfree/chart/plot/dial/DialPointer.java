@@ -64,7 +64,7 @@ import java.io.Serializable;
 import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A base class for the pointer in a {@link DialPlot}.
@@ -372,8 +372,8 @@ public abstract class DialPointer extends AbstractDialLayer
          */
         private void writeObject(ObjectOutputStream stream) throws IOException {
             stream.defaultWriteObject();
-            SerialUtilities.writePaint(this.paint, stream);
-            SerialUtilities.writeStroke(this.stroke, stream);
+            SerialUtils.writePaint(this.paint, stream);
+            SerialUtils.writeStroke(this.stroke, stream);
         }
 
         /**
@@ -387,8 +387,8 @@ public abstract class DialPointer extends AbstractDialLayer
         private void readObject(ObjectInputStream stream)
                 throws IOException, ClassNotFoundException {
             stream.defaultReadObject();
-            this.paint = SerialUtilities.readPaint(stream);
-            this.stroke = SerialUtilities.readStroke(stream);
+            this.paint = SerialUtils.readPaint(stream);
+            this.stroke = SerialUtils.readStroke(stream);
         }
 
     }
@@ -639,8 +639,8 @@ public abstract class DialPointer extends AbstractDialLayer
          */
         private void writeObject(ObjectOutputStream stream) throws IOException {
             stream.defaultWriteObject();
-            SerialUtilities.writePaint(this.fillPaint, stream);
-            SerialUtilities.writePaint(this.outlinePaint, stream);
+            SerialUtils.writePaint(this.fillPaint, stream);
+            SerialUtils.writePaint(this.outlinePaint, stream);
         }
 
         /**
@@ -654,8 +654,8 @@ public abstract class DialPointer extends AbstractDialLayer
         private void readObject(ObjectInputStream stream)
                 throws IOException, ClassNotFoundException {
             stream.defaultReadObject();
-            this.fillPaint = SerialUtilities.readPaint(stream);
-            this.outlinePaint = SerialUtilities.readPaint(stream);
+            this.fillPaint = SerialUtils.readPaint(stream);
+            this.outlinePaint = SerialUtils.readPaint(stream);
         }
 
     }

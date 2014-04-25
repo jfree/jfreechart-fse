@@ -73,7 +73,7 @@ import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.chart.util.ShapeUtils;
 
 /**
@@ -719,13 +719,13 @@ public class LegendGraphic extends AbstractBlock implements Block,
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeShape(this.shape, stream);
-        SerialUtilities.writePaint(this.fillPaint, stream);
-        SerialUtilities.writePaint(this.outlinePaint, stream);
-        SerialUtilities.writeStroke(this.outlineStroke, stream);
-        SerialUtilities.writeShape(this.line, stream);
-        SerialUtilities.writePaint(this.linePaint, stream);
-        SerialUtilities.writeStroke(this.lineStroke, stream);
+        SerialUtils.writeShape(this.shape, stream);
+        SerialUtils.writePaint(this.fillPaint, stream);
+        SerialUtils.writePaint(this.outlinePaint, stream);
+        SerialUtils.writeStroke(this.outlineStroke, stream);
+        SerialUtils.writeShape(this.line, stream);
+        SerialUtils.writePaint(this.linePaint, stream);
+        SerialUtils.writeStroke(this.lineStroke, stream);
     }
 
     /**
@@ -739,13 +739,13 @@ public class LegendGraphic extends AbstractBlock implements Block,
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.shape = SerialUtilities.readShape(stream);
-        this.fillPaint = SerialUtilities.readPaint(stream);
-        this.outlinePaint = SerialUtilities.readPaint(stream);
-        this.outlineStroke = SerialUtilities.readStroke(stream);
-        this.line = SerialUtilities.readShape(stream);
-        this.linePaint = SerialUtilities.readPaint(stream);
-        this.lineStroke = SerialUtilities.readStroke(stream);
+        this.shape = SerialUtils.readShape(stream);
+        this.fillPaint = SerialUtils.readPaint(stream);
+        this.outlinePaint = SerialUtils.readPaint(stream);
+        this.outlineStroke = SerialUtils.readStroke(stream);
+        this.line = SerialUtils.readShape(stream);
+        this.linePaint = SerialUtils.readPaint(stream);
+        this.lineStroke = SerialUtils.readStroke(stream);
     }
 
 }

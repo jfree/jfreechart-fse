@@ -56,7 +56,7 @@ import java.util.List;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A paint scale that uses a lookup table to associate paint instances
@@ -155,7 +155,7 @@ public class LookupPaintScale implements PaintScale, PublicCloneable,
          */
         private void writeObject(ObjectOutputStream stream) throws IOException {
             stream.defaultWriteObject();
-            SerialUtilities.writePaint(this.paint, stream);
+            SerialUtils.writePaint(this.paint, stream);
         }
 
         /**
@@ -169,7 +169,7 @@ public class LookupPaintScale implements PaintScale, PublicCloneable,
         private void readObject(ObjectInputStream stream)
                 throws IOException, ClassNotFoundException {
             stream.defaultReadObject();
-            this.paint = SerialUtilities.readPaint(stream);
+            this.paint = SerialUtils.readPaint(stream);
         }
 
     }
@@ -395,7 +395,7 @@ public class LookupPaintScale implements PaintScale, PublicCloneable,
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.defaultPaint, stream);
+        SerialUtils.writePaint(this.defaultPaint, stream);
     }
 
     /**
@@ -409,7 +409,7 @@ public class LookupPaintScale implements PaintScale, PublicCloneable,
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.defaultPaint = SerialUtilities.readPaint(stream);
+        this.defaultPaint = SerialUtils.readPaint(stream);
     }
 
 }
