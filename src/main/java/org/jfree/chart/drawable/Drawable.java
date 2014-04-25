@@ -39,7 +39,7 @@
  * 
  */
 
-package org.jfree.chart.ui;
+package org.jfree.chart.drawable;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;

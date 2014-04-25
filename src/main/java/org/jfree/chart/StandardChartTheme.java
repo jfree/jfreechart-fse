@@ -66,6 +66,8 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.block.Block;
 import org.jfree.chart.block.BlockContainer;
 import org.jfree.chart.block.LabelBlock;
+import org.jfree.chart.drawable.ColorPainter;
+import org.jfree.chart.drawable.Drawable;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
@@ -103,6 +105,7 @@ import org.jfree.chart.title.PaintScaleLegend;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.chart.title.Title;
 import org.jfree.chart.util.DefaultShadowGenerator;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.chart.util.ShadowGenerator;
@@ -177,8 +180,8 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
     /** The paint used to display subtitles. */
     private transient Paint subtitlePaint;
 
-    /** The background paint for the chart. */
-    private transient Paint chartBackgroundPaint;
+    /** The background color for the chart. */
+    private transient Drawable chartBackgroundPainter;
 
     /** The legend background paint. */
     private transient Paint legendBackgroundPaint;
@@ -189,8 +192,8 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
     /** The drawing supplier. */
     private DrawingSupplier drawingSupplier;
 
-    /** The background paint for the plot. */
-    private transient Paint plotBackgroundPaint;
+    /** The background painter for the plot. */
+    private Drawable plotBackgroundPainter;
 
     /** The plot outline paint. */
     private transient Paint plotOutlinePaint;
@@ -285,8 +288,8 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         theme.subtitlePaint = Color.WHITE;
         theme.legendBackgroundPaint = Color.BLACK;
         theme.legendItemPaint = Color.WHITE;
-        theme.chartBackgroundPaint = Color.BLACK;
-        theme.plotBackgroundPaint = Color.BLACK;
+        theme.chartBackgroundPainter = new ColorPainter(Color.BLACK);
+        theme.plotBackgroundPainter = new ColorPainter(Color.BLACK);
         theme.plotOutlinePaint = Color.YELLOW;
         theme.baselinePaint = Color.WHITE;
         theme.crosshairPaint = Color.RED;
@@ -360,9 +363,9 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         this.subtitlePaint = Color.BLACK;
         this.legendBackgroundPaint = Color.WHITE;
         this.legendItemPaint = Color.DARK_GRAY;
-        this.chartBackgroundPaint = Color.WHITE;
+        this.chartBackgroundPainter = new ColorPainter(Color.WHITE);
         this.drawingSupplier = new DefaultDrawingSupplier();
-        this.plotBackgroundPaint = Color.WHITE;
+        this.plotBackgroundPainter = new ColorPainter(Color.WHITE);
         this.plotOutlinePaint = new Color(0, 0, 0, 0);
         this.labelLinkPaint = Color.BLACK;
         this.labelLinkStyle = PieLabelLinkStyle.CUBIC_CURVE;
@@ -528,26 +531,28 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
     }
 
     /**
-     * Returns the chart background paint.
+     * Returns the chart background painter.
      *
      * @return The chart background paint (never <code>null</code>).
      *
      * @see #setChartBackgroundPaint(Paint)
      */
-    public Paint getChartBackgroundPaint() {
-        return this.chartBackgroundPaint;
+    public Drawable getChartBackgroundPainter() {
+        return this.chartBackgroundPainter;
     }
 
     /**
-     * Sets the chart background paint.
+     * Sets the chart background painter.
+     * <br><br>
+     * Note that for cloning charts the background painter is assumed to be
+     * immutable.
      *
-     * @param paint  the paint (<code>null</code> not permitted).
+     * @param painter  the painter (<code>null</code> permitted).
      *
-     * @see #getChartBackgroundPaint()
+     * @see #getChartBackgroundPainter()
      */
-    public void setChartBackgroundPaint(Paint paint) {
-        ParamChecks.nullNotPermitted(paint, "paint");
-        this.chartBackgroundPaint = paint;
+    public void setChartBackgroundPainter(Drawable painter) {
+        this.chartBackgroundPainter = painter;
     }
 
     /**
@@ -599,26 +604,25 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
     }
 
     /**
-     * Returns the plot background paint.
+     * Returns the plot background painter.
      *
-     * @return The plot background paint (never <code>null</code>).
+     * @return The painter (possibly <code>null</code>).
      *
-     * @see #setPlotBackgroundPaint(Paint)
+     * @see #setPlotBackgroundPainter(Drawable)
      */
-    public Paint getPlotBackgroundPaint() {
-        return this.plotBackgroundPaint;
+    public Drawable getPlotBackgroundPainter() {
+        return this.plotBackgroundPainter;
     }
 
     /**
-     * Sets the plot background paint.
+     * Sets the plot background painter.
      *
-     * @param paint  the paint (<code>null</code> not permitted).
+     * @param painter the painter (<code>null</code> permitted).
      *
-     * @see #getPlotBackgroundPaint()
+     * @see #getPlotBackgroundPainter()
      */
-    public void setPlotBackgroundPaint(Paint paint) {
-        ParamChecks.nullNotPermitted(paint, "paint");
-        this.plotBackgroundPaint = paint;
+    public void setPlotBackgroundPainter(Drawable painter) {
+        this.plotBackgroundPainter = painter;
     }
 
     /**
@@ -1122,7 +1126,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
             applyToTitle(chart.getSubtitle(i));
         }
 
-        chart.setBackgroundPaint(this.chartBackgroundPaint);
+        chart.setBackgroundPainter(this.chartBackgroundPainter);
 
         // now process the plot if there is one
         Plot plot = chart.getPlot();
@@ -1210,9 +1214,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         if (plot.getDrawingSupplier() != null) {
             plot.setDrawingSupplier(getDrawingSupplier());
         }
-        if (plot.getBackgroundPaint() != null) {
-            plot.setBackgroundPaint(this.plotBackgroundPaint);
-        }
+        plot.setBackgroundPainter(this.plotBackgroundPainter);
         plot.setOutlinePaint(this.plotOutlinePaint);
 
         // now handle specific plot types (and yes, I know this is some
@@ -1457,7 +1459,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      * @param plot  the plot (<code>null</code> not permitted).
      */
     protected void applyToMeterPlot(MeterPlot plot) {
-        plot.setDialBackgroundPaint(this.plotBackgroundPaint);
+        //plot.setDialBackgroundPaint(this.plotBackgroundPaint); FIXME
         plot.setValueFont(this.largeFont);
         plot.setValuePaint(this.axisLabelPaint);
         plot.setDialOutlinePaint(this.plotOutlinePaint);
@@ -1666,8 +1668,8 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         if (!PaintUtilities.equal(this.subtitlePaint, that.subtitlePaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.chartBackgroundPaint,
-                that.chartBackgroundPaint)) {
+        if (!ObjectUtils.equal(this.chartBackgroundPainter,
+                that.chartBackgroundPainter)) {
             return false;
         }
         if (!PaintUtilities.equal(this.legendBackgroundPaint,
@@ -1680,8 +1682,8 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         if (!this.drawingSupplier.equals(that.drawingSupplier)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.plotBackgroundPaint,
-                that.plotBackgroundPaint)) {
+        if (!ObjectUtils.equal(this.plotBackgroundPainter,
+                that.plotBackgroundPainter)) {
             return false;
         }
         if (!PaintUtilities.equal(this.plotOutlinePaint,
@@ -1770,10 +1772,8 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         stream.defaultWriteObject();
         SerialUtilities.writePaint(this.titlePaint, stream);
         SerialUtilities.writePaint(this.subtitlePaint, stream);
-        SerialUtilities.writePaint(this.chartBackgroundPaint, stream);
         SerialUtilities.writePaint(this.legendBackgroundPaint, stream);
         SerialUtilities.writePaint(this.legendItemPaint, stream);
-        SerialUtilities.writePaint(this.plotBackgroundPaint, stream);
         SerialUtilities.writePaint(this.plotOutlinePaint, stream);
         SerialUtilities.writePaint(this.labelLinkPaint, stream);
         SerialUtilities.writePaint(this.baselinePaint, stream);
@@ -1803,10 +1803,8 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         stream.defaultReadObject();
         this.titlePaint = SerialUtilities.readPaint(stream);
         this.subtitlePaint = SerialUtilities.readPaint(stream);
-        this.chartBackgroundPaint = SerialUtilities.readPaint(stream);
         this.legendBackgroundPaint = SerialUtilities.readPaint(stream);
         this.legendItemPaint = SerialUtilities.readPaint(stream);
-        this.plotBackgroundPaint = SerialUtilities.readPaint(stream);
         this.plotOutlinePaint = SerialUtilities.readPaint(stream);
         this.labelLinkPaint = SerialUtilities.readPaint(stream);
         this.baselinePaint = SerialUtilities.readPaint(stream);

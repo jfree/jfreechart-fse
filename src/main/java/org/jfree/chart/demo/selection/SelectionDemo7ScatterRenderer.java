@@ -111,7 +111,7 @@ public class SelectionDemo7ScatterRenderer extends ApplicationFrame {
         ScatterRenderer r = new ScatterRenderer();
         CategoryPlot plot = new CategoryPlot(dataset, new CategoryAxis(
                 "Category"), new NumberAxis("Value"), r);
-        plot.setBackgroundPaint(Color.lightGray);
+        plot.setBackgroundColor(Color.LIGHT_GRAY);
         plot.setDomainGridlinePaint(Color.white);
         plot.setRangeGridlinePaint(Color.white);
         plot.setAxisOffset(new RectangleInsets(4, 4, 4, 4));

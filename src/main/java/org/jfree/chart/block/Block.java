@@ -47,7 +47,7 @@ package org.jfree.chart.block;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-import org.jfree.chart.ui.Drawable;
+import org.jfree.chart.drawable.Drawable;
 import org.jfree.chart.ui.Size2D;
 
 /**

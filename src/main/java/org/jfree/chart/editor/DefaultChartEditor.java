@@ -58,6 +58,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import org.jfree.chart.drawable.ColorPainter;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ui.LCBLayout;
@@ -121,7 +122,7 @@ class DefaultChartEditor extends JPanel implements ActionListener, ChartEditor {
         interior.add(new JLabel(""));
         interior.add(new JLabel(localizationResources.getString(
                 "Background_paint")));
-        this.background = new PaintSample(chart.getBackgroundPaint());
+        this.background = new PaintSample(Color.WHITE);  // FIXME
         interior.add(this.background);
         JButton button = new JButton(localizationResources.getString(
                 "Select..."));
@@ -273,7 +274,7 @@ class DefaultChartEditor extends JPanel implements ActionListener, ChartEditor {
         this.plotEditor.updatePlotProperties(chart.getPlot());
 
         chart.setAntiAlias(getAntiAlias());
-        chart.setBackgroundPaint(getBackgroundPaint());
+        chart.setBackgroundPainter(new ColorPainter((Color) getBackgroundPaint()));
     }
 
 }

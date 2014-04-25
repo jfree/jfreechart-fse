@@ -599,7 +599,7 @@ public abstract class ChartFactory {
         ParamChecks.nullNotPermitted(order, "order");
         MultiplePiePlot plot = new MultiplePiePlot(dataset);
         plot.setDataExtractOrder(order);
-        plot.setBackgroundPaint(null);
+        plot.setBackgroundColor(null);
         plot.setOutlineStroke(null);
 
         PieToolTipGenerator tooltipGenerator
@@ -678,7 +678,7 @@ public abstract class ChartFactory {
         ParamChecks.nullNotPermitted(order, "order");
         MultiplePiePlot plot = new MultiplePiePlot(dataset);
         plot.setDataExtractOrder(order);
-        plot.setBackgroundPaint(null);
+        plot.setBackgroundColor(null);
         plot.setOutlineStroke(null);
 
         JFreeChart pieChart = new JFreeChart(new PiePlot3D(null));
@@ -687,7 +687,7 @@ public abstract class ChartFactory {
         seriesTitle.setPosition(RectangleEdge.BOTTOM);
         pieChart.setTitle(seriesTitle);
         pieChart.removeLegend();
-        pieChart.setBackgroundPaint(null);
+        pieChart.setBackgroundPainter(null);
         plot.setPieChart(pieChart);
 
         PieToolTipGenerator tooltipGenerator

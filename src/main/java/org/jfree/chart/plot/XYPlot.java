@@ -3422,7 +3422,9 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      */
     @Override
     public void drawBackground(Graphics2D g2, Rectangle2D area) {
-        fillBackground(g2, area, this.orientation);
+        if (getBackgroundPainter() != null) {
+            getBackgroundPainter().draw(g2, area);
+        }
         drawQuadrants(g2, area);
         drawBackgroundImage(g2, area);
     }

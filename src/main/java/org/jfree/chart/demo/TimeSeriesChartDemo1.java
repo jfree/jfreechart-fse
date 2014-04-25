@@ -48,8 +48,8 @@ import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.drawable.ColorPainter;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.StandardChartTheme;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.WindowUtils;
@@ -97,7 +97,7 @@ public class TimeSeriesChartDemo1 extends ApplicationFrame {
                 "Date", "Price Per Unit", 
                 dataset);
 
-        chart.setBackgroundPaint(Color.WHITE);
+        chart.setBackgroundPainter(new ColorPainter(Color.WHITE));
 
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setDomainGridlinePaint(Color.LIGHT_GRAY);

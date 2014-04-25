@@ -3721,7 +3721,9 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      */
     @Override
     public void drawBackground(Graphics2D g2, Rectangle2D area) {
-        fillBackground(g2, area, this.orientation);
+        if (getBackgroundPainter() != null) {
+            getBackgroundPainter().draw(g2, area);
+        }
         drawBackgroundImage(g2, area);
     }
 

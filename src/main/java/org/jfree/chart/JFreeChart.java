@@ -154,27 +154,22 @@
 package org.jfree.chart;
 
 import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Paint;
 import java.awt.RenderingHints;
 import java.awt.Shape;
-import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.UIManager;
 import javax.swing.event.EventListenerList;
 
 import org.jfree.chart.block.BlockParams;
@@ -182,14 +177,14 @@ import org.jfree.chart.block.EntityBlockResult;
 import org.jfree.chart.block.LengthConstraintType;
 import org.jfree.chart.block.RectangleConstraint;
 import org.jfree.chart.ui.Align;
-import org.jfree.chart.ui.Drawable;
+import org.jfree.chart.drawable.ColorPainter;
+import org.jfree.chart.drawable.Drawable;
 import org.jfree.chart.ui.HorizontalAlignment;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.ui.VerticalAlignment;
 import org.jfree.chart.util.ObjectUtils;
-import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.JFreeChartEntity;
 import org.jfree.chart.event.ChartChangeEvent;
@@ -206,7 +201,6 @@ import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.chart.title.Title;
 import org.jfree.chart.util.ParamChecks;
-import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
 
 /**
@@ -244,10 +238,6 @@ public class JFreeChart implements Drawable, TitleChangeListener,
     public static final Font DEFAULT_SUBTITLE_FONT
             = new Font("SansSerif", Font.PLAIN, 12);
 
-    /** The default background color. */
-    public static final Paint DEFAULT_BACKGROUND_PAINT
-            = UIManager.getColor("Panel.background");
-
     /** The default background image. */
     public static final Image DEFAULT_BACKGROUND_IMAGE = null;
 
@@ -278,18 +268,18 @@ public class JFreeChart implements Drawable, TitleChangeListener,
      */
     private transient RenderingHints renderingHints;
 
-    /** A flag that controls whether or not the chart border is drawn. */
-    private boolean borderVisible;
+    /** The border painter (if <code>null</code> no border will be drawn). */
+    private Drawable borderPainter;
 
-    /** The stroke used to draw the chart border (if visible). */
-    private transient Stroke borderStroke;
-
-    /** The paint used to draw the chart border (if visible). */
-    private transient Paint borderPaint;
+    /** 
+     * The background painter (if <code>null</code> no background will be 
+     * drawn. 
+     */
+    private Drawable backgroundPainter;
 
     /** The padding between the chart border and the chart drawing area. */
     private RectangleInsets padding;
-
+    
     /** The chart title (optional). */
     private TextTitle title;
 
@@ -304,9 +294,6 @@ public class JFreeChart implements Drawable, TitleChangeListener,
      * required in the constructor). 
      */
     private Plot plot;
-
-    /** Paint used to draw the background of the chart. */
-    private transient Paint backgroundPaint;
 
     /** An optional background image for the chart. */
     private transient Image backgroundImage;  // todo: not serialized yet
@@ -392,12 +379,9 @@ public class JFreeChart implements Drawable, TitleChangeListener,
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
-        this.borderVisible = false;
-        this.borderStroke = new BasicStroke(1.0f);
-        this.borderPaint = Color.BLACK;
-
+        this.borderPainter = null;
+        this.backgroundPainter = new ColorPainter();
         this.padding = new RectangleInsets(4, 4, 4, 4);
-
         this.plot = plot;
         plot.addChangeListener(this);
 
@@ -423,12 +407,9 @@ public class JFreeChart implements Drawable, TitleChangeListener,
             this.title.addChangeListener(this);
         }
 
-        this.backgroundPaint = DEFAULT_BACKGROUND_PAINT;
-
         this.backgroundImage = DEFAULT_BACKGROUND_IMAGE;
         this.backgroundImageAlignment = DEFAULT_BACKGROUND_IMAGE_ALIGNMENT;
         this.backgroundImageAlpha = DEFAULT_BACKGROUND_IMAGE_ALPHA;
-
     }
 
     /**
@@ -458,82 +439,58 @@ public class JFreeChart implements Drawable, TitleChangeListener,
     }
 
     /**
-     * Returns a flag that controls whether or not a border is drawn around the
-     * outside of the chart.
-     *
-     * @return A boolean.
-     *
-     * @see #setBorderVisible(boolean)
+     * Returns the border painter (an object responsible for drawing a border
+     * around the chart area).  The default value is <code>null</code>.
+     * 
+     * @return The border painter (possibly <code>null</code>).
      */
-    public boolean isBorderVisible() {
-        return this.borderVisible;
+    public Drawable getBorderPainter() {
+        return this.borderPainter;
     }
-
+    
     /**
-     * Sets a flag that controls whether or not a border is drawn around the
-     * outside of the chart.
-     *
-     * @param visible  the flag.
-     *
-     * @see #isBorderVisible()
+     * Sets the border painter and sends a change event to all registered 
+     * listeners.  If you set this to <code>null</code>, no border will be
+     * drawn.  The border painter can be any implementation of the 
+     * {@link Drawable} interface, for example {@link BorderPainter}.
+     * <br><br>
+     * Note that for cloning, it is <em>assumed</em> that the painter is 
+     * immutable (in other words, the painter will not be cloned).
+     * 
+     * @param painter  the new painter (<code>null</code> permitted).
      */
-    public void setBorderVisible(boolean visible) {
-        this.borderVisible = visible;
+    public void setBorderPainter(Drawable painter) {
+        this.borderPainter = painter;
         fireChartChanged();
     }
 
     /**
-     * Returns the stroke used to draw the chart border (if visible).  The 
-     * default value is <code>BasicStroke(1.0f)</code>.
-     *
-     * @return The border stroke (never <code>null</code>).
-     *
-     * @see #setBorderStroke(Stroke)
+     * Returns the background painter.  The default value is an instance of 
+     * {@link StandardBarPainter} (created via the default constructor).
+     * 
+     * @return The background painter (possibly <code>null</code>). 
      */
-    public Stroke getBorderStroke() {
-        return this.borderStroke;
+    public Drawable getBackgroundPainter() {
+        return this.backgroundPainter;
     }
 
     /**
-     * Sets the stroke used to draw the chart border (if visible) and sends
-     * a change event to all registered listeners.
-     *
-     * @param stroke  the stroke.
-     *
-     * @see #getBorderStroke()
+     * Sets the background painter and sends a change event to all registered
+     * listeners.  If you set this to <code>null</code>, no background will
+     * be drawn for the chart.  The border painter can be any implementation of 
+     * the {@link Drawable} interface, for example 
+     * {@link ColorPainter}.
+     * <br><br>
+     * Note that for cloning, it is <em>assumed</em> that the painter is 
+     * immutable (in other words, the painter will not be cloned).
+     * 
+     * @param painter  the new painter (<code>null</code> permitted).
      */
-    public void setBorderStroke(Stroke stroke) {
-        ParamChecks.nullNotPermitted(stroke, "stroke");
-        this.borderStroke = stroke;
+    public void setBackgroundPainter(Drawable painter) {
+        this.backgroundPainter = painter;
         fireChartChanged();
     }
-
-    /**
-     * Returns the paint used to draw the chart border (if visible).  The
-     * default value is <code>Color.BLACK</code>.
-     *
-     * @return The border paint (never <code>null</code>).
-     *
-     * @see #setBorderPaint(Paint)
-     */
-    public Paint getBorderPaint() {
-        return this.borderPaint;
-    }
-
-    /**
-     * Sets the paint used to draw the chart border (if visible) and sends
-     * a change event to all registered listeners.
-     *
-     * @param paint  the paint.
-     *
-     * @see #getBorderPaint()
-     */
-    public void setBorderPaint(Paint paint) {
-        ParamChecks.nullNotPermitted(paint, "paint");
-        this.borderPaint = paint;
-        fireChartChanged();
-    }
-
+    
     /**
      * Returns the padding between the chart border and the chart drawing area.
      *
@@ -925,42 +882,6 @@ public class JFreeChart implements Drawable, TitleChangeListener,
     }
 
     /**
-     * Returns the paint used for the chart background.
-     *
-     * @return The paint (possibly <code>null</code>).
-     *
-     * @see #setBackgroundPaint(Paint)
-     */
-    public Paint getBackgroundPaint() {
-        return this.backgroundPaint;
-    }
-
-    /**
-     * Sets the paint used to fill the chart background and sends a
-     * {@link ChartChangeEvent} to all registered listeners.
-     *
-     * @param paint  the paint (<code>null</code> permitted).
-     *
-     * @see #getBackgroundPaint()
-     */
-    public void setBackgroundPaint(Paint paint) {
-
-        if (this.backgroundPaint != null) {
-            if (!this.backgroundPaint.equals(paint)) {
-                this.backgroundPaint = paint;
-                fireChartChanged();
-            }
-        }
-        else {
-            if (paint != null) {
-                this.backgroundPaint = paint;
-                fireChartChanged();
-            }
-        }
-
-    }
-
-    /**
      * Returns the background image for the chart, or <code>null</code> if
      * there is no image.
      *
@@ -1141,9 +1062,8 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         g2.addRenderingHints(this.renderingHints);
 
         // draw the chart background...
-        if (this.backgroundPaint != null) {
-            g2.setPaint(this.backgroundPaint);
-            g2.fill(chartArea);
+        if (this.backgroundPainter != null) {
+            this.backgroundPainter.draw(g2, chartArea);
         }
 
         if (this.backgroundImage != null) {
@@ -1160,16 +1080,8 @@ public class JFreeChart implements Drawable, TitleChangeListener,
             g2.setComposite(originalComposite);
         }
 
-        if (isBorderVisible()) {
-            Paint paint = getBorderPaint();
-            Stroke stroke = getBorderStroke();
-            Rectangle2D borderArea = new Rectangle2D.Double(
-                        chartArea.getX(), chartArea.getY(),
-                        chartArea.getWidth() - 1.0, chartArea.getHeight()
-                        - 1.0);
-            g2.setPaint(paint);
-            g2.setStroke(stroke);
-            g2.draw(borderArea);
+        if (this.borderPainter != null) {
+            this.borderPainter.draw(g2, chartArea);
         }
 
         // draw the title and subtitles...
@@ -1570,13 +1482,7 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         if (!this.renderingHints.equals(that.renderingHints)) {
             return false;
         }
-        if (this.borderVisible != that.borderVisible) {
-            return false;
-        }
-        if (!this.borderStroke.equals(that.borderStroke)) {
-            return false;
-        }
-        if (!PaintUtilities.equal(this.borderPaint, that.borderPaint)) {
+        if (!ObjectUtils.equal(this.borderPainter, that.borderPainter)) {
             return false;
         }
         if (!this.padding.equals(that.padding)) {
@@ -1591,9 +1497,8 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         if (!ObjectUtils.equal(this.plot, that.plot)) {
             return false;
         }
-        if (!PaintUtilities.equal(
-            this.backgroundPaint, that.backgroundPaint
-        )) {
+        if (!ObjectUtils.equal(this.backgroundPainter, 
+                that.backgroundPainter)) {
             return false;
         }
         if (!ObjectUtils.equal(this.backgroundImage,
@@ -1612,19 +1517,6 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         return true;
     }
 
-    /**
-     * Provides serialization support.
-     *
-     * @param stream  the output stream.
-     *
-     * @throws IOException  if there is an I/O error.
-     */
-    private void writeObject(ObjectOutputStream stream) throws IOException {
-        stream.defaultWriteObject();
-        SerialUtilities.writeStroke(this.borderStroke, stream);
-        SerialUtilities.writePaint(this.borderPaint, stream);
-        SerialUtilities.writePaint(this.backgroundPaint, stream);
-    }
 
     /**
      * Provides serialization support.
@@ -1634,12 +1526,9 @@ public class JFreeChart implements Drawable, TitleChangeListener,
      * @throws IOException  if there is an I/O error.
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
-    private void readObject(ObjectInputStream stream)
-        throws IOException, ClassNotFoundException {
+    private void readObject(ObjectInputStream stream) throws IOException, 
+            ClassNotFoundException {
         stream.defaultReadObject();
-        this.borderStroke = SerialUtilities.readStroke(stream);
-        this.borderPaint = SerialUtilities.readPaint(stream);
-        this.backgroundPaint = SerialUtilities.readPaint(stream);
         this.progressListeners = new EventListenerList();
         this.changeListeners = new EventListenerList();
         this.renderingHints = new RenderingHints(
@@ -1670,10 +1559,6 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         JFreeChart chart = (JFreeChart) super.clone();
 
         chart.renderingHints = (RenderingHints) this.renderingHints.clone();
-        // private boolean borderVisible;
-        // private transient Stroke borderStroke;
-        // private transient Paint borderPaint;
-
         if (this.title != null) {
             chart.title = (TextTitle) this.title.clone();
             chart.title.addChangeListener(chart);

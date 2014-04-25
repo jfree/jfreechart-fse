@@ -139,7 +139,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Font;
-import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Paint;
@@ -160,7 +159,10 @@ import javax.swing.event.EventListenerList;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemSource;
+import org.jfree.chart.annotations.Annotation;
 import org.jfree.chart.axis.AxisLocation;
+import org.jfree.chart.drawable.ColorPainter;
+import org.jfree.chart.drawable.Drawable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.PlotEntity;
 import org.jfree.chart.event.AnnotationChangeEvent;
@@ -197,8 +199,9 @@ import org.jfree.data.general.SelectionChangeListener;
  * provides facilities common to most plot types.
  */
 public abstract class Plot implements AxisChangeListener,
-        DatasetChangeListener, SelectionChangeListener, LabelChangeListener, AnnotationChangeListener, MarkerChangeListener,
-        LegendItemSource, PublicCloneable, Cloneable, Serializable {
+        DatasetChangeListener, SelectionChangeListener, LabelChangeListener, 
+        AnnotationChangeListener, MarkerChangeListener, LegendItemSource, 
+        PublicCloneable, Cloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -8831571430103671324L;
@@ -222,9 +225,6 @@ public abstract class Plot implements AxisChangeListener,
 
     /** The default background alpha transparency. */
     public static final float DEFAULT_BACKGROUND_ALPHA = 1.0f;
-
-    /** The default background color. */
-    public static final Paint DEFAULT_BACKGROUND_PAINT = Color.WHITE;
 
     /** The minimum width at which the plot should be drawn. */
     public static final int MINIMUM_WIDTH_TO_DRAW = 10;
@@ -271,9 +271,9 @@ public abstract class Plot implements AxisChangeListener,
     /** The Paint used to draw an outline around the plot. */
     private transient Paint outlinePaint;
 
-    /** An optional color used to fill the plot background. */
-    private transient Paint backgroundPaint;
-
+    /** An optional painter used to fill the plot background. */
+    private Drawable backgroundPainter;
+    
     /** An optional image for the plot background. */
     private transient Image backgroundImage;  // not currently serialized
 
@@ -308,10 +308,9 @@ public abstract class Plot implements AxisChangeListener,
      * Creates a new plot.
      */
     protected Plot() {
-
         this.parent = null;
         this.insets = DEFAULT_INSETS;
-        this.backgroundPaint = DEFAULT_BACKGROUND_PAINT;
+        this.backgroundPainter = new ColorPainter(Color.WHITE);
         this.backgroundAlpha = DEFAULT_BACKGROUND_ALPHA;
         this.backgroundImage = null;
         this.outlineVisible = true;
@@ -327,7 +326,6 @@ public abstract class Plot implements AxisChangeListener,
 
         this.notify = true;
         this.listenerList = new EventListenerList();
-
     }
 
     /**
@@ -526,6 +524,35 @@ public abstract class Plot implements AxisChangeListener,
     public void setInsets(RectangleInsets insets) {
         setInsets(insets, true);
     }
+    
+    /**
+     * Returns the background painter.  The default value is 
+     * <code>new ColorPainter(Color.WHITE)</code>.
+     * 
+     * @return The background painter (possibly <code>null</code>). 
+     */
+    public Drawable getBackgroundPainter() {
+        return this.backgroundPainter;
+    }
+    
+    /**
+     * Sets the background painter and sends a change event to all registered
+     * listeners.
+     * 
+     * @param painter  the new painter (<code>null</code> permitted). 
+     */
+    public void setBackgroundPainter(Drawable painter) {
+        this.backgroundPainter = painter;
+        fireChangeEvent();
+    }
+    
+    public void setBackgroundColor(Color color) {
+        if (color != null) {
+            setBackgroundPainter(new ColorPainter(color));
+        } else {
+            setBackgroundPainter(null);
+        }
+    }
 
     /**
      * Sets the insets for the plot and, if requested,  and sends a
@@ -547,45 +574,6 @@ public abstract class Plot implements AxisChangeListener,
             if (notify) {
                 fireChangeEvent();
             }
-        }
-
-    }
-
-    /**
-     * Returns the background color of the plot area.
-     *
-     * @return The paint (possibly <code>null</code>).
-     *
-     * @see #setBackgroundPaint(Paint)
-     */
-    public Paint getBackgroundPaint() {
-        return this.backgroundPaint;
-    }
-
-    /**
-     * Sets the background color of the plot area and sends a
-     * {@link PlotChangeEvent} to all registered listeners.
-     *
-     * @param paint  the paint (<code>null</code> permitted).
-     *
-     * @see #getBackgroundPaint()
-     */
-    public void setBackgroundPaint(Paint paint) {
-
-        if (paint == null) {
-            if (this.backgroundPaint != null) {
-                this.backgroundPaint = null;
-                fireChangeEvent();
-            }
-        }
-        else {
-            if (this.backgroundPaint != null) {
-                if (this.backgroundPaint.equals(paint)) {
-                    return;  // nothing to do
-                }
-            }
-            this.backgroundPaint = paint;
-            fireChangeEvent();
         }
 
     }
@@ -1026,66 +1014,10 @@ public abstract class Plot implements AxisChangeListener,
     public void drawBackground(Graphics2D g2, Rectangle2D area) {
         // some subclasses override this method completely, so don't put
         // anything here that *must* be done
-        fillBackground(g2, area);
+        if (this.backgroundPainter != null) {
+            this.backgroundPainter.draw(g2, area);
+        }
         drawBackgroundImage(g2, area);
-    }
-
-    /**
-     * Fills the specified area with the background paint.
-     *
-     * @param g2  the graphics device.
-     * @param area  the area.
-     *
-     * @see #getBackgroundPaint()
-     * @see #getBackgroundAlpha()
-     * @see #fillBackground(Graphics2D, Rectangle2D, PlotOrientation)
-     */
-    protected void fillBackground(Graphics2D g2, Rectangle2D area) {
-        fillBackground(g2, area, PlotOrientation.VERTICAL);
-    }
-
-    /**
-     * Fills the specified area with the background paint.  If the background
-     * paint is an instance of <code>GradientPaint</code>, the gradient will
-     * run in the direction suggested by the plot's orientation.
-     *
-     * @param g2  the graphics target.
-     * @param area  the plot area.
-     * @param orientation  the plot orientation (<code>null</code> not
-     *         permitted).
-     *
-     * @since 1.0.6
-     */
-    protected void fillBackground(Graphics2D g2, Rectangle2D area,
-            PlotOrientation orientation) {
-        if (orientation == null) {
-            throw new IllegalArgumentException("Null 'orientation' argument.");
-        }
-        if (this.backgroundPaint == null) {
-            return;
-        }
-        Paint p = this.backgroundPaint;
-        if (p instanceof GradientPaint) {
-            GradientPaint gp = (GradientPaint) p;
-            if (orientation == PlotOrientation.VERTICAL) {
-                p = new GradientPaint((float) area.getCenterX(),
-                        (float) area.getMaxY(), gp.getColor1(),
-                        (float) area.getCenterX(), (float) area.getMinY(),
-                        gp.getColor2());
-            }
-            else if (orientation == PlotOrientation.HORIZONTAL) {
-                p = new GradientPaint((float) area.getMinX(),
-                        (float) area.getCenterY(), gp.getColor1(),
-                        (float) area.getMaxX(), (float) area.getCenterY(),
-                        gp.getColor2());
-            }
-        }
-        Composite originalComposite = g2.getComposite();
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
-                this.backgroundAlpha));
-        g2.setPaint(p);
-        g2.fill(area);
-        g2.setComposite(originalComposite);
     }
 
     /**
@@ -1377,7 +1309,8 @@ public abstract class Plot implements AxisChangeListener,
         if (!PaintUtilities.equal(this.outlinePaint, that.outlinePaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.backgroundPaint, that.backgroundPaint)) {
+        if (!ObjectUtils.equal(this.backgroundPainter, 
+                that.backgroundPainter)) {
             return false;
         }
         if (!ObjectUtils.equal(this.backgroundImage,
@@ -1441,7 +1374,6 @@ public abstract class Plot implements AxisChangeListener,
         SerialUtilities.writeStroke(this.outlineStroke, stream);
         SerialUtilities.writePaint(this.outlinePaint, stream);
         // backgroundImage
-        SerialUtilities.writePaint(this.backgroundPaint, stream);
     }
 
     /**
@@ -1459,10 +1391,7 @@ public abstract class Plot implements AxisChangeListener,
         this.outlineStroke = SerialUtilities.readStroke(stream);
         this.outlinePaint = SerialUtilities.readPaint(stream);
         // backgroundImage
-        this.backgroundPaint = SerialUtilities.readPaint(stream);
-
         this.listenerList = new EventListenerList();
-
     }
 
     /**

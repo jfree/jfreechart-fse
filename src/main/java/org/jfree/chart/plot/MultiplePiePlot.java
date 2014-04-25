@@ -164,7 +164,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
         this.pieChart = new JFreeChart(piePlot);
         this.pieChart.removeLegend();
         this.dataExtractOrder = TableOrder.BY_COLUMN;
-        this.pieChart.setBackgroundPaint(null);
+        this.pieChart.setBackgroundPainter(null);
         TextTitle seriesTitle = new TextTitle("Series Title",
                 new Font("SansSerif", Font.BOLD, 12));
         seriesTitle.setPosition(RectangleEdge.BOTTOM);
