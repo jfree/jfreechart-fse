@@ -243,6 +243,48 @@ public class SerialUtils {
     }
 
     /**
+     * Serializes a map of strokes.
+     *
+     * @param map    The map to serialize. <code>null</code> not permitted.
+     * @param stream The object stream to serialize to. <code>null</code> not permitted.
+     *
+     * @throws java.io.IOException on IO errors.
+     */
+    public static void writeStrokeMap(Map<Integer, Stroke> map, ObjectOutputStream stream) throws IOException {
+        ParamChecks.nullNotPermitted(map, "map");
+        ParamChecks.nullNotPermitted(stream, "stream");
+        stream.writeInt(map.size());
+        for (Integer key : map.keySet()) {
+            stream.writeInt(key.intValue());
+            writeStroke(map.get(key), stream);
+        }
+    }
+
+
+    /**
+     * Serializes a map of strokes.
+     *
+     * @param stream The object stream to serialize to. <code>null</code> not permitted.
+     *
+     * @throws java.io.IOException on IO errors.
+     *
+     * @return a map of strokes, never <code>null</code>
+     */
+    public static Map<Integer, Stroke> readStrokeMap( ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        ParamChecks.nullNotPermitted(stream, "stream");
+        Map<Integer, Stroke> result = new HashMap<Integer, Stroke>();
+        int size = stream.readInt();
+        for (int i = 0; i < size; i++) {
+            int key = stream.readInt();
+            Stroke stroke = readStroke(stream);
+
+            result.put(key, stroke);
+        }
+        return result;
+    }
+
+
+    /**
      * Reads a <code>Composite</code> object that has been serialised by the
      * {@link SerialUtilities#writeComposite(Composite, ObjectOutputStream)}
      * method.
@@ -253,7 +295,7 @@ public class SerialUtils {
      *
      * @throws IOException  if there is an I/O problem.
      * @throws ClassNotFoundException  if there is a problem loading a class.
-     * 
+     *
      * @since 1.0.17
      */
     public static Composite readComposite(ObjectInputStream stream)
@@ -286,7 +328,7 @@ public class SerialUtils {
      * @param stream  the output stream (<code>null</code> not permitted).
      *
      * @throws IOException if there is an I/O error.
-     * 
+     *
      * @since 1.0.17
      */
     public static void writeComposite(Composite composite,
@@ -630,17 +672,17 @@ public class SerialUtils {
     }
 
     /**
-     * Reads a map of <code>Paint</code> instances that was previously written 
+     * Reads a map of <code>Paint</code> instances that was previously written
      * by the {@link #writePaintMap(java.util.Map, java.io.ObjectOutputStream)}
      * method.
-     * 
+     *
      * @param in  the input stream (<code>null</code> not permitted).
-     * 
+     *
      * @return A map.
      * @throws IOException
-     * @throws ClassNotFoundException  
+     * @throws ClassNotFoundException
      */
-    public static Map<Integer, Paint> readPaintMap(ObjectInputStream in) 
+    public static Map<Integer, Paint> readPaintMap(ObjectInputStream in)
             throws IOException, ClassNotFoundException {
         Map<Integer, Paint> result = new HashMap<Integer, Paint>();
         int keyCount = in.readInt();
@@ -648,18 +690,18 @@ public class SerialUtils {
             Integer key = (Integer) in.readObject();
             Paint paint = SerialUtils.readPaint(in);
             result.put(key, paint);
-        }  
+        }
         return result;
     }
-    
+
     /**
      * Writes a map to the output stream.
-     * 
+     *
      * @param map  the map.
      * @param out  the output stream.
-     * @throws IOException  
+     * @throws IOException
      */
-    public static void writePaintMap(Map<Integer, Paint> map, 
+    public static void writePaintMap(Map<Integer, Paint> map,
             ObjectOutputStream out) throws IOException {
         out.writeInt(map.size());
         for (Integer key : map.keySet()) {

@@ -177,18 +177,18 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     private double axisLabelGap;
 
     /**
-     * The paint used to draw the axis lines.
+     * The paints used to draw the axis lines.
      *
-     * @since 1.0.4
+     * @since 1.0.17
      */
-    private Map<Integer, Paint> axisLinePaints = new HashMap<Integer, Paint>();
+    private transient Map<Integer, Paint> axisLinePaints = new HashMap<Integer, Paint>();
 
     /**
-     * The stroke used to draw the axis lines.
+     * The strokes used to draw the axis lines.
      *
-     * @since 1.0.4
+     * @since 1.0.17
      */
-    private Map<Integer, Stroke> axisLineStrokes = new HashMap<Integer, Stroke>();
+    private transient Map<Integer, Stroke> axisLineStrokes = new HashMap<Integer, Stroke>();
 
     /**
      * The visibility of the axis lines
@@ -784,9 +784,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
      * @since 1.0.4
      */
     public void setAxisLineStroke(Stroke stroke) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         List keys = getKeysByExtractOrder();
         for (int i = 0, keysSize = keys.size(); i < keysSize; i++) {
             axisLineStrokes.put(i, stroke);
@@ -2081,6 +2079,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
         SerialUtils.writePaintMap(this.seriesOutlinePaintMap, stream);
         SerialUtils.writeStroke(this.baseSeriesOutlineStroke, stream);
         SerialUtils.writePaint(this.labelPaint, stream);
+        SerialUtils.writePaintMap(this.axisLinePaints, stream);
+        SerialUtils.writeStrokeMap(this.axisLineStrokes, stream);
     }
 
     /**
@@ -2100,6 +2100,8 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
         this.seriesOutlinePaintMap = SerialUtils.readPaintMap(stream);
         this.baseSeriesOutlineStroke = SerialUtils.readStroke(stream);
         this.labelPaint = SerialUtils.readPaint(stream);
+        this.axisLinePaints = SerialUtils.readPaintMap(stream);
+        this.axisLineStrokes = SerialUtils.readStrokeMap(stream);
 
         if (this.dataset != null) {
             this.dataset.addChangeListener(this);

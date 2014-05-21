@@ -224,15 +224,15 @@ public class SpiderWebPlotTest  {
         assertEquals(p1, p2);
 
         // axisLinePaint
-        p1.setAxisLinePaint(Color.RED);
+        p1.setAxisLinePaint(0, Color.RED);
         assertFalse(p1.equals(p2));
-        p2.setAxisLinePaint(Color.RED);
+        p2.setAxisLinePaint(0, Color.RED);
         assertEquals(p1, p2);
 
         // axisLineStroke
-        p1.setAxisLineStroke(new BasicStroke(1.1f));
+        p1.setAxisLineStroke(0, new BasicStroke(1.1f));
         assertFalse(p1.equals(p2));
-        p2.setAxisLineStroke(new BasicStroke(1.1f));
+        p2.setAxisLineStroke(0, new BasicStroke(1.1f));
         assertEquals(p1, p2);
     }
 
@@ -283,19 +283,13 @@ public class SpiderWebPlotTest  {
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
         SpiderWebPlot p1 = new SpiderWebPlot(new DefaultCategoryDataset());
-        p1.setAxisLinePaint(new GradientPaint(1f, 2f, Color.BLUE, 3f, 4f, 
-                Color.RED));
-        p1.setBaseSeriesOutlinePaint(new GradientPaint(5f, 6f, Color.YELLOW,
-                7f, 8f, Color.BLACK));
-        p1.setBaseSeriesPaint(new GradientPaint(1f, 2f, Color.GRAY, 3f, 4f,
-                Color.PINK));
-        p1.setLabelPaint(new GradientPaint(4f, 3f, Color.WHITE, 2f, 1f, 
-                Color.BLUE));
-        p1.setSeriesOutlinePaint(0, new GradientPaint(1f, 2f, Color.MAGENTA,
-                3f, 4f, Color.GREEN));
-        p1.setSeriesPaint(0, new GradientPaint(1f, 2f, Color.PINK, 3f, 4f, 
-                Color.CYAN));
-        SpiderWebPlot p2 = (SpiderWebPlot) TestUtils.serialised(p1);
+        p1.setAxisLinePaint(0, new GradientPaint(1f, 2f, Color.BLUE, 3f, 4f, Color.RED));
+        p1.setBaseSeriesOutlinePaint(new GradientPaint(5f, 6f, Color.YELLOW, 7f, 8f, Color.BLACK));
+        p1.setBaseSeriesPaint(new GradientPaint(1f, 2f, Color.GRAY, 3f, 4f, Color.PINK));
+        p1.setLabelPaint(new GradientPaint(4f, 3f, Color.WHITE, 2f, 1f, Color.BLUE));
+        p1.setSeriesOutlinePaint(0, new GradientPaint(1f, 2f, Color.MAGENTA, 3f, 4f, Color.GREEN));
+        p1.setSeriesPaint(0, new GradientPaint(1f, 2f, Color.PINK, 3f, 4f, Color.CYAN));
+        SpiderWebPlot p2 = TestUtils.serialised(p1);
         assertEquals(p1, p2);
     }
 
