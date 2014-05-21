@@ -53,8 +53,7 @@ import org.jfree.chart.renderer.RendererState;
  * An object that retains temporary state information for a
  * {@link CategoryItemRenderer}.
  */
-public class CategoryItemRendererState
-        <RowKey extends Comparable, ColumnKey extends Comparable> extends RendererState {
+public class CategoryItemRendererState extends RendererState {
 
     /** The bar width. */
     private double barWidth;
@@ -71,7 +70,7 @@ public class CategoryItemRendererState
      *
      * @since 1.0.11
      */
-    private CategoryCrosshairState<RowKey, ColumnKey> crosshairState;
+    private CategoryCrosshairState crosshairState;
 
     /**
      * Creates a new object for recording temporary state information for a
@@ -140,7 +139,7 @@ public class CategoryItemRendererState
      *
      * @see #setCrosshairState(CategoryCrosshairState)
      */
-    public CategoryCrosshairState<RowKey, ColumnKey> getCrosshairState() {
+    public CategoryCrosshairState getCrosshairState() {
         return this.crosshairState;
     }
 
@@ -153,7 +152,7 @@ public class CategoryItemRendererState
      *
      * @see #getCrosshairState()
      */
-    public void setCrosshairState(CategoryCrosshairState<RowKey, ColumnKey> state) {
+    public void setCrosshairState(CategoryCrosshairState state) {
         this.crosshairState = state;
     }
 
@@ -173,12 +172,14 @@ public class CategoryItemRendererState
         if (this.visibleSeries == null) {
             return rowIndex;
         }
-        for (int index = 0; index < this.visibleSeries.length; index++) {
-            if (this.visibleSeries[index] == rowIndex) {
-                return index;
+        int index = -1;
+        for (int vRow = 0; vRow < this.visibleSeries.length; vRow++) {
+            if (this.visibleSeries[vRow] == rowIndex) {
+                index = vRow;
+                break;
             }
         }
-        return -1;
+        return index;
     }
 
     /**
@@ -198,9 +199,9 @@ public class CategoryItemRendererState
 
     /**
      * Returns a copy of the visible series array.
-     * 
+     *
      * @return The visible series array (possibly <code>null</code>).
-     * 
+     *
      * @since 1.0.13
      */
     public int[] getVisibleSeriesArray() {

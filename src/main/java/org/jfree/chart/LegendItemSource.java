@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * LegendItemSource.java
  * ---------------------
- * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -35,10 +35,13 @@
  * Changes
  * -------
  * 23-Feb-2005 : Version 1 (DG);
+ * 10-Mar-2013 : Removed LegendItemCollection class (DG);
  *
  */
 
 package org.jfree.chart;
+
+import java.util.List;
 
 /**
  * A source of legend items.  A {@link org.jfree.chart.title.LegendTitle} will
@@ -52,6 +55,6 @@ public interface LegendItemSource {
      *
      * @return The legend item collection (never <code>null</code>).
      */
-    public LegendItemCollection getLegendItems();
+    public List<LegendItem> getLegendItems();
 
 }
