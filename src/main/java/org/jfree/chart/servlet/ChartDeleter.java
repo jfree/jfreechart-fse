@@ -43,11 +43,12 @@
 
 package org.jfree.chart.servlet;
 
-import javax.servlet.http.HttpSessionBindingEvent;
-import javax.servlet.http.HttpSessionBindingListener;
 import java.io.File;
 import java.io.Serializable;
 import java.util.List;
+
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
 
 /**
  * Used for deleting charts from the temporary directory when the users session

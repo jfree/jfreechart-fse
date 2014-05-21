@@ -45,15 +45,29 @@ package org.jfree.data.gantt;
 import org.jfree.data.time.SimpleTimePeriod;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link TaskSeriesCollection} class.
  */
-public class TaskSeriesCollectionTest {
+public class TaskSeriesCollectionTest  {
+
+
+
 
 
     /**
@@ -563,24 +577,24 @@ public class TaskSeriesCollectionTest {
         // these methods should throw an IndexOutOfBoundsException since the
         // column is too high...
         try {
-            /* Number start = */
-            tsc.getStartValue(0, 3);
+            /* Number start = */ tsc.getStartValue(0, 3);
             fail("Should have thrown an IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException e) {
+        }
+        catch (IndexOutOfBoundsException e) {
             // expected
         }
         try {
-            /* Number end = */
-            tsc.getEndValue(0, 3);
+            /* Number end = */ tsc.getEndValue(0, 3);
             fail("Should have thrown an IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException e) {
+        }
+        catch (IndexOutOfBoundsException e) {
             // expected
         }
         try {
-            /* int count = */
-            tsc.getSubIntervalCount(0, 3);
+            /* int count = */ tsc.getSubIntervalCount(0, 3);
             fail("Should have thrown an IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException e) {
+        }
+        catch (IndexOutOfBoundsException e) {
             // expected
         }
     }
@@ -622,7 +636,8 @@ public class TaskSeriesCollectionTest {
         try {
             c.getSeries(null);
             fail("NullPointerException should have been thrown by passing null parameter");
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e) {
             //expected
         }
     }
@@ -643,14 +658,16 @@ public class TaskSeriesCollectionTest {
         try {
             c.remove(-1);
             fail("Should have thrown an IllegalArgumentException on index out of bounds");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("TaskSeriesCollection.remove(): index outside valid range.", e.getMessage());
         }
 
         try {
             c.remove(1);
             fail("Should have thrown an IllegalArgumentException on index out of bounds");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("TaskSeriesCollection.remove(): index outside valid range.", e.getMessage());
         }
     }

@@ -44,14 +44,27 @@ package org.jfree.data.xy;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Some tests for the {@link XYBarDataset} class.
  */
-public class XYBarDatasetTest {
+public class XYBarDatasetTest  {
+
+
+
 
 
     /**
@@ -60,14 +73,14 @@ public class XYBarDatasetTest {
     @Test
     public void testEquals() {
         DefaultXYDataset d1 = new DefaultXYDataset();
-        double[] x1 = new double[]{1.0, 2.0, 3.0};
-        double[] y1 = new double[]{4.0, 5.0, 6.0};
-        double[][] data1 = new double[][]{x1, y1};
+        double[] x1 = new double[] {1.0, 2.0, 3.0};
+        double[] y1 = new double[] {4.0, 5.0, 6.0};
+        double[][] data1 = new double[][] {x1, y1};
         d1.addSeries("S1", data1);
         DefaultXYDataset d2 = new DefaultXYDataset();
-        double[] x2 = new double[]{1.0, 2.0, 3.0};
-        double[] y2 = new double[]{4.0, 5.0, 6.0};
-        double[][] data2 = new double[][]{x2, y2};
+        double[] x2 = new double[] {1.0, 2.0, 3.0};
+        double[] y2 = new double[] {4.0, 5.0, 6.0};
+        double[][] data2 = new double[][] {x2, y2};
         d2.addSeries("S1", data2);
 
         XYBarDataset bd1 = new XYBarDataset(d1, 5.0);
@@ -82,9 +95,9 @@ public class XYBarDatasetTest {
     @Test
     public void testCloning() throws CloneNotSupportedException {
         DefaultXYDataset d1 = new DefaultXYDataset();
-        double[] x1 = new double[]{1.0, 2.0, 3.0};
-        double[] y1 = new double[]{4.0, 5.0, 6.0};
-        double[][] data1 = new double[][]{x1, y1};
+        double[] x1 = new double[] {1.0, 2.0, 3.0};
+        double[] y1 = new double[] {4.0, 5.0, 6.0};
+        double[][] data1 = new double[][] {x1, y1};
         d1.addSeries("S1", data1);
         XYBarDataset bd1 = new XYBarDataset(d1, 5.0);
         XYBarDataset bd2 = (XYBarDataset) bd1.clone();
@@ -94,10 +107,10 @@ public class XYBarDatasetTest {
 
         // check independence
         d1 = (DefaultXYDataset) bd1.getUnderlyingDataset();
-        d1.addSeries("S2", new double[][]{{1.0}, {2.0}});
+        d1.addSeries("S2", new double[][] {{1.0}, {2.0}});
         assertFalse(bd1.equals(bd2));
         DefaultXYDataset d2 = (DefaultXYDataset) bd2.getUnderlyingDataset();
-        d2.addSeries("S2", new double[][]{{1.0}, {2.0}});
+        d2.addSeries("S2", new double[][] {{1.0}, {2.0}});
         assertEquals(bd1, bd2);
     }
 
@@ -107,9 +120,9 @@ public class XYBarDatasetTest {
     @Test
     public void testPublicCloneable() {
         DefaultXYDataset d1 = new DefaultXYDataset();
-        double[] x1 = new double[]{1.0, 2.0, 3.0};
-        double[] y1 = new double[]{4.0, 5.0, 6.0};
-        double[][] data1 = new double[][]{x1, y1};
+        double[] x1 = new double[] {1.0, 2.0, 3.0};
+        double[] y1 = new double[] {4.0, 5.0, 6.0};
+        double[][] data1 = new double[][] {x1, y1};
         d1.addSeries("S1", data1);
         XYBarDataset bd1 = new XYBarDataset(d1, 5.0);
         assertTrue(bd1 instanceof PublicCloneable);
@@ -121,21 +134,21 @@ public class XYBarDatasetTest {
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
         DefaultXYDataset d1 = new DefaultXYDataset();
-        double[] x1 = new double[]{1.0, 2.0, 3.0};
-        double[] y1 = new double[]{4.0, 5.0, 6.0};
-        double[][] data1 = new double[][]{x1, y1};
+        double[] x1 = new double[] {1.0, 2.0, 3.0};
+        double[] y1 = new double[] {4.0, 5.0, 6.0};
+        double[][] data1 = new double[][] {x1, y1};
         d1.addSeries("S1", data1);
         XYBarDataset bd1 = new XYBarDataset(d1, 5.0);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(bd1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(bd1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         XYBarDataset bd2 = (XYBarDataset) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(bd1, bd2);
     }

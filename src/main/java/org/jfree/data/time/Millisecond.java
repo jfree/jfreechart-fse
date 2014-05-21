@@ -145,6 +145,7 @@ public class Millisecond extends RegularTimePeriod implements Serializable, Comp
      *
      * @param time  the time.
      *
+     * @see #Millisecond(Date, TimeZone)
      */
     public Millisecond(Date time) {
         this(time, TimeZone.getDefault(), Locale.getDefault());
@@ -243,7 +244,8 @@ public class Millisecond extends RegularTimePeriod implements Serializable, Comp
         RegularTimePeriod result = null;
         if (this.millisecond != FIRST_MILLISECOND_IN_SECOND) {
             result = new Millisecond(this.millisecond - 1, getSecond());
-        } else {
+        }
+        else {
             Second previous = (Second) getSecond().previous();
             if (previous != null) {
                 result = new Millisecond(LAST_MILLISECOND_IN_SECOND, previous);
@@ -262,7 +264,8 @@ public class Millisecond extends RegularTimePeriod implements Serializable, Comp
         RegularTimePeriod result = null;
         if (this.millisecond != LAST_MILLISECOND_IN_SECOND) {
             result = new Millisecond(this.millisecond + 1, getSecond());
-        } else {
+        }
+        else {
             Second next = (Second) getSecond().next();
             if (next != null) {
                 result = new Millisecond(FIRST_MILLISECOND_IN_SECOND, next);
@@ -361,10 +364,12 @@ public class Millisecond extends RegularTimePeriod implements Serializable, Comp
             difference = getFirstMillisecond() - ms.getFirstMillisecond();
             if (difference > 0) {
                 result = 1;
-            } else {
+            }
+            else {
                 if (difference < 0) {
                     result = -1;
-                } else {
+                }
+                else {
                     result = 0;
                 }
             }

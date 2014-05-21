@@ -53,16 +53,31 @@ import org.jfree.data.xy.OHLCDataItem;
 import org.jfree.data.xy.OHLCDataset;
 import org.junit.Test;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link CandlestickRenderer} class.
  */
-public class CandlestickRendererTest {
+public class CandlestickRendererTest  {
+
+
+
 
 
     private static final double EPSILON = 0.0000000001;
@@ -197,15 +212,15 @@ public class CandlestickRendererTest {
 
         CandlestickRenderer r1 = new CandlestickRenderer();
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(r1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(r1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         CandlestickRenderer r2 = (CandlestickRenderer) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(r1, r2);
 
@@ -221,19 +236,19 @@ public class CandlestickRendererTest {
         OHLCDataItem item1 = new OHLCDataItem(new Date(1L), 2.0, 4.0, 1.0, 3.0,
                 100);
         OHLCDataset dataset = new DefaultOHLCDataset("S1",
-                new OHLCDataItem[]{item1});
+                new OHLCDataItem[] {item1});
         Range range = renderer.findRangeBounds(dataset);
         assertEquals(new Range(1.0, 4.0), range);
 
         OHLCDataItem item2 = new OHLCDataItem(new Date(1L), -1.0, 3.0, -1.0,
                 3.0, 100);
-        dataset = new DefaultOHLCDataset("S1", new OHLCDataItem[]{item1,
+        dataset = new DefaultOHLCDataset("S1", new OHLCDataItem[] {item1,
                 item2});
         range = renderer.findRangeBounds(dataset);
         assertEquals(new Range(-1.0, 4.0), range);
 
         // try an empty dataset - should return a null range
-        dataset = new DefaultOHLCDataset("S1", new OHLCDataItem[]{});
+        dataset = new DefaultOHLCDataset("S1", new OHLCDataItem[] {});
         range = renderer.findRangeBounds(dataset);
         assertNull(range);
 

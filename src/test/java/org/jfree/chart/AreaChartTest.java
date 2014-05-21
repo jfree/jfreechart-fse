@@ -55,19 +55,24 @@ import org.jfree.data.general.DatasetUtilities;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for an area chart.
  */
-public class AreaChartTest {
+public class AreaChartTest  {
 
     /** A chart. */
     private JFreeChart chart;
+
+
+
 
 
     /**
@@ -114,12 +119,12 @@ public class AreaChartTest {
      */
     @Test
     public void testDrawWithNullInfo() {
-        BufferedImage image = new BufferedImage(200, 100,
-                BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2 = image.createGraphics();
-        this.chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null,
-                null);
-        g2.dispose();
+            BufferedImage image = new BufferedImage(200 , 100,
+                    BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2 = image.createGraphics();
+            this.chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null,
+                    null);
+            g2.dispose();
         //FIXME this should really assert a return value
     }
 
@@ -129,9 +134,9 @@ public class AreaChartTest {
     @Test
     public void testReplaceDataset() {
         Number[][] data = new Integer[][]
-                {{-30, -20},
-                        {-10, 10},
-                        {20, 30}};
+            {{-30, -20},
+             {-10, 10},
+             {20, 30}};
 
         CategoryDataset newData = DatasetUtilities.createCategoryDataset(
                 "S", "C", data);
@@ -143,9 +148,9 @@ public class AreaChartTest {
         ValueAxis axis = plot.getRangeAxis();
         Range range = axis.getRange();
         assertTrue("Expecting the lower bound of the range to be around -30: "
-                + range.getLowerBound(), range.getLowerBound() <= -30);
+                   + range.getLowerBound(), range.getLowerBound() <= -30);
         assertTrue("Expecting the upper bound of the range to be around 30: "
-                + range.getUpperBound(), range.getUpperBound() >= 30);
+                   + range.getUpperBound(), range.getUpperBound() >= 30);
 
     }
 
@@ -156,9 +161,9 @@ public class AreaChartTest {
      */
     private static JFreeChart createAreaChart() {
         Number[][] data = new Integer[][]
-                {{-3, -2},
-                        {-1, 1},
-                        {2, 3}};
+            {{-3, -2},
+             {-1, 1},
+             {2, 3}};
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
         return ChartFactory.createAreaChart("Area Chart", "Domain", "Range",

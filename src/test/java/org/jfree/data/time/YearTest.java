@@ -49,15 +49,28 @@ package org.jfree.data.time;
 
 import org.junit.Test;
 
-import java.io.*;
-import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link Year} class.
  */
-public class YearTest {
+public class YearTest  {
 
 
     /**
@@ -201,16 +214,16 @@ public class YearTest {
 
         Year y1 = new Year(1999);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(y1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(y1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
+            ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-        );
+            );
         Year y2 = (Year) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(y1, y2);
 
@@ -268,7 +281,8 @@ public class YearTest {
         try {
             y.getFirstMillisecond(null);
             fail("NullPointerException should have been thrown");
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e) {
             //we expect to go in here
         }
     }
@@ -287,7 +301,8 @@ public class YearTest {
         try {
             y.getFirstMillisecond(null);
             fail("NullPointerException should have been thrown");
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e) {
             // we expect to go in here
         }
     }
@@ -323,7 +338,8 @@ public class YearTest {
         try {
             y.getLastMillisecond(null);
             fail("NullPointerException should have been thrown");
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e) {
             //we expect to go in here
         }
     }
@@ -342,7 +358,8 @@ public class YearTest {
         try {
             y.getLastMillisecond(null);
             fail("NullPointerException should have been thrown");
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e) {
             //we expect to go in here
         }
     }

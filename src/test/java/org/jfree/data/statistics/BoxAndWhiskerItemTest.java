@@ -42,7 +42,13 @@ package org.jfree.data.statistics;
 
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
@@ -50,7 +56,10 @@ import static org.junit.Assert.assertEquals;
 /**
  * Tests for the {@link BoxAndWhiskerItem} class.
  */
-public class BoxAndWhiskerItemTest {
+public class BoxAndWhiskerItemTest  {
+
+
+
 
 
     /**
@@ -62,12 +71,12 @@ public class BoxAndWhiskerItemTest {
         BoxAndWhiskerItem i1 = new BoxAndWhiskerItem(
                 1.0, 2.0, 3.0, 4.0,
                 5.0, 6.0, 7.0, 8.0,
-                new ArrayList()
+            new ArrayList()
         );
         BoxAndWhiskerItem i2 = new BoxAndWhiskerItem(
                 1.0, 2.0, 3.0, 4.0,
                 5.0, 6.0, 7.0, 8.0,
-                new ArrayList()
+            new ArrayList()
         );
         assertEquals(i1, i2);
         assertEquals(i2, i1);
@@ -83,7 +92,7 @@ public class BoxAndWhiskerItemTest {
         BoxAndWhiskerItem i1 = new BoxAndWhiskerItem(
                 1.0, 2.0, 3.0, 4.0,
                 5.0, 6.0, 7.0, 8.0,
-                new ArrayList()
+            new ArrayList()
         );
 
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -92,7 +101,7 @@ public class BoxAndWhiskerItemTest {
         out.close();
 
         ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
+            new ByteArrayInputStream(buffer.toByteArray())
         );
         BoxAndWhiskerItem i2 = (BoxAndWhiskerItem) in.readObject();
         in.close();

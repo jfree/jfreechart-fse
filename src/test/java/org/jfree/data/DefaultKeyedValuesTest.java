@@ -50,15 +50,27 @@ package org.jfree.data;
 import org.jfree.chart.util.SortOrder;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link DefaultKeyedValues} class.
  */
-public class DefaultKeyedValuesTest {
+public class DefaultKeyedValuesTest  {
 
 
     /**
@@ -127,17 +139,17 @@ public class DefaultKeyedValuesTest {
     public void testGetValue() {
         DefaultKeyedValues v1 = new DefaultKeyedValues();
         try {
-            /* Number n = */
-            v1.getValue(-1);
+            /* Number n = */ v1.getValue(-1);
             fail("Should have thrown an IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException e) {
+        }
+        catch (IndexOutOfBoundsException e) {
             // expected
         }
         try {
-            /* Number n = */
-            v1.getValue(0);
+            /* Number n = */ v1.getValue(0);
             fail("Should have thrown an IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException e) {
+        }
+        catch (IndexOutOfBoundsException e) {
             // expected
         }
         DefaultKeyedValues v2 = new DefaultKeyedValues();
@@ -147,10 +159,10 @@ public class DefaultKeyedValuesTest {
         assertEquals(3, v2.getValue(2));
 
         try {
-            /* Number n = */
-            v2.getValue("KK");
+            /* Number n = */ v2.getValue("KK");
             fail("Should have thrown an UnknownKeyException");
-        } catch (UnknownKeyException e) {
+        }
+        catch (UnknownKeyException e) {
             assertEquals("Key not found: KK", e.getMessage());
         }
     }
@@ -162,17 +174,17 @@ public class DefaultKeyedValuesTest {
     public void testGetKey() {
         DefaultKeyedValues v1 = new DefaultKeyedValues();
         try {
-            /* Comparable k = */
-            v1.getKey(-1);
+            /* Comparable k = */ v1.getKey(-1);
             fail("Should have thrown an IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException e) {
+        }
+        catch (IndexOutOfBoundsException e) {
             // expected
         }
         try {
-            /* Comparable k = */
-            v1.getKey(0);
+            /* Comparable k = */ v1.getKey(0);
             fail("Should have thrown an IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException e) {
+        }
+        catch (IndexOutOfBoundsException e) {
             // expected
         }
         DefaultKeyedValues v2 = new DefaultKeyedValues();
@@ -197,10 +209,11 @@ public class DefaultKeyedValuesTest {
         assertEquals(2, v2.getIndex("K3"));
 
         // try null
-        try {
+       try {
             v2.getIndex(null);
-            fail("Should have thrown an IllegalArgumentException on null key");
-        } catch (IllegalArgumentException e) {
+           fail("Should have thrown an IllegalArgumentException on null key");
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }
@@ -217,7 +230,6 @@ public class DefaultKeyedValuesTest {
         v.removeValue("K1");
         assertEquals(-1, v.getIndex("K1"));
     }
-
     /**
      * Some checks for the addValue() method.
      */
@@ -238,7 +250,8 @@ public class DefaultKeyedValuesTest {
         try {
             v1.addValue(null, 99.9);
             fail("Should have thrown IllegalArgumentException on null key");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }
@@ -337,7 +350,8 @@ public class DefaultKeyedValuesTest {
         try {
             data.removeValue("XXX");
             fail("Should have thrown an UnknownKeyException");
-        } catch (UnknownKeyException e) {
+        }
+        catch (UnknownKeyException e) {
             assertEquals("The key (XXX) is not recognised.", e.getMessage());
         }
     }
@@ -496,7 +510,7 @@ public class DefaultKeyedValuesTest {
         out.close();
 
         ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
+            new ByteArrayInputStream(buffer.toByteArray())
         );
         DefaultKeyedValues v2 = (DefaultKeyedValues) in.readObject();
         in.close();

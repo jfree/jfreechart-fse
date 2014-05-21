@@ -63,8 +63,6 @@
 
 package org.jfree.data.time;
 
-import org.jfree.chart.date.SerialDate;
-
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -73,6 +71,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import org.jfree.chart.date.SerialDate;
 
 /**
  * Represents a single day in the range 1-Jan-1900 to 31-Dec-9999.  This class
@@ -86,19 +86,19 @@ public class Day extends RegularTimePeriod implements Serializable {
 
     /** A standard date formatter. */
     protected static final DateFormat DATE_FORMAT
-            = new SimpleDateFormat("yyyy-MM-dd");
+        = new SimpleDateFormat("yyyy-MM-dd");
 
     /** A date formatter for the default locale. */
     protected static final DateFormat
-            DATE_FORMAT_SHORT = DateFormat.getDateInstance(DateFormat.SHORT);
+        DATE_FORMAT_SHORT = DateFormat.getDateInstance(DateFormat.SHORT);
 
     /** A date formatter for the default locale. */
     protected static final DateFormat
-            DATE_FORMAT_MEDIUM = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        DATE_FORMAT_MEDIUM = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
     /** A date formatter for the default locale. */
     protected static final DateFormat
-            DATE_FORMAT_LONG = DateFormat.getDateInstance(DateFormat.LONG);
+        DATE_FORMAT_LONG = DateFormat.getDateInstance(DateFormat.LONG);
 
     /** The day (uses SerialDate for convenience). */
     private SerialDate serialDate;
@@ -147,6 +147,8 @@ public class Day extends RegularTimePeriod implements Serializable {
      * default time zone.
      *
      * @param time  the time (<code>null</code> not permitted).
+     *
+     * @see #Day(Date, TimeZone)
      */
     public Day(Date time) {
         // defer argument checking...
@@ -322,12 +324,7 @@ public class Day extends RegularTimePeriod implements Serializable {
         int month = this.serialDate.getMonth();
         int day = this.serialDate.getDayOfMonth();
         calendar.clear();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month - 1);
-        calendar.set(Calendar.DAY_OF_MONTH, day);
-        calendar.set(Calendar.HOUR, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
+        calendar.set(year, month - 1, day, 0, 0, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTimeInMillis();
     }
@@ -349,12 +346,7 @@ public class Day extends RegularTimePeriod implements Serializable {
         int month = this.serialDate.getMonth();
         int day = this.serialDate.getDayOfMonth();
         calendar.clear();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month - 1);
-        calendar.set(Calendar.DAY_OF_MONTH, day);
-        calendar.set(Calendar.HOUR, 23);
-        calendar.set(Calendar.MINUTE, 59);
-        calendar.set(Calendar.SECOND, 59);
+        calendar.set(year, month - 1, day, 23, 59, 59);
         calendar.set(Calendar.MILLISECOND, 999);
         return calendar.getTimeInMillis();
     }
@@ -378,7 +370,10 @@ public class Day extends RegularTimePeriod implements Serializable {
             return false;
         }
         Day that = (Day) obj;
-        return this.serialDate.equals(that.getSerialDate());
+        if (!this.serialDate.equals(that.getSerialDate())) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -450,12 +445,14 @@ public class Day extends RegularTimePeriod implements Serializable {
      */
     public static Day parseDay(String s) {
         try {
-            return new Day(Day.DATE_FORMAT.parse(s));
-        } catch (ParseException e1) {
+            return new Day (Day.DATE_FORMAT.parse(s));
+        }
+        catch (ParseException e1) {
             try {
-                return new Day(Day.DATE_FORMAT_SHORT.parse(s));
-            } catch (ParseException e2) {
-                // ignore
+                return new Day (Day.DATE_FORMAT_SHORT.parse(s));
+            }
+            catch (ParseException e2) {
+              // ignore
             }
         }
         return null;

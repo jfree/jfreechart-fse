@@ -43,15 +43,28 @@ package org.jfree.data.xy;
 
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+
 
 
 /**
  * Some checks for the {@link IntervalXYDelegate} class.
  */
-public class IntervalXYDelegateTest {
+public class IntervalXYDelegateTest  {
+
+
+
 
 
     /**
@@ -59,35 +72,35 @@ public class IntervalXYDelegateTest {
      */
     @Test
     public void testEquals() {
-        XYSeries s1 = new XYSeries("Series");
-        s1.add(1.2, 3.4);
-        XYSeriesCollection c1 = new XYSeriesCollection();
-        c1.addSeries(s1);
-        IntervalXYDelegate d1 = new IntervalXYDelegate(c1);
+       XYSeries s1 = new XYSeries("Series");
+       s1.add(1.2, 3.4);
+       XYSeriesCollection c1 = new XYSeriesCollection();
+       c1.addSeries(s1);
+       IntervalXYDelegate d1 = new IntervalXYDelegate(c1);
 
-        XYSeries s2 = new XYSeries("Series");
-        XYSeriesCollection c2 = new XYSeriesCollection();
-        s2.add(1.2, 3.4);
-        c2.addSeries(s2);
-        IntervalXYDelegate d2 = new IntervalXYDelegate(c2);
+       XYSeries s2 = new XYSeries("Series");
+       XYSeriesCollection c2 = new XYSeriesCollection();
+       s2.add(1.2, 3.4);
+       c2.addSeries(s2);
+       IntervalXYDelegate d2 = new IntervalXYDelegate(c2);
 
-        assertEquals(d1, d2);
-        assertEquals(d2, d1);
+       assertEquals(d1, d2);
+       assertEquals(d2, d1);
 
-        d1.setAutoWidth(false);
-        assertFalse(d1.equals(d2));
-        d2.setAutoWidth(false);
-        assertEquals(d1, d2);
+       d1.setAutoWidth(false);
+       assertFalse(d1.equals(d2));
+       d2.setAutoWidth(false);
+       assertEquals(d1, d2);
 
-        d1.setIntervalPositionFactor(0.123);
-        assertFalse(d1.equals(d2));
-        d2.setIntervalPositionFactor(0.123);
-        assertEquals(d1, d2);
+       d1.setIntervalPositionFactor(0.123);
+       assertFalse(d1.equals(d2));
+       d2.setIntervalPositionFactor(0.123);
+       assertEquals(d1, d2);
 
-        d1.setFixedIntervalWidth(1.23);
-        assertFalse(d1.equals(d2));
-        d2.setFixedIntervalWidth(1.23);
-        assertEquals(d1, d2);
+       d1.setFixedIntervalWidth(1.23);
+       assertFalse(d1.equals(d2));
+       d2.setFixedIntervalWidth(1.23);
+       assertEquals(d1, d2);
     }
 
     /**
@@ -118,16 +131,16 @@ public class IntervalXYDelegateTest {
         c1.addSeries(s1);
         IntervalXYDelegate d1 = new IntervalXYDelegate(c1);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(d1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(d1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
+            ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-        );
+            );
         IntervalXYDelegate d2 = (IntervalXYDelegate) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(d1, d2);
 

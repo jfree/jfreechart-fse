@@ -45,15 +45,26 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.xy.DefaultXYDataset;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link TimeSeriesURLGenerator} class.
  */
-public class TimeSeriesURLGeneratorTest {
+public class TimeSeriesURLGeneratorTest  {
+
+
+
 
 
     /**
@@ -63,7 +74,7 @@ public class TimeSeriesURLGeneratorTest {
     public void testGenerateURL() {
         TimeSeriesURLGenerator g = new TimeSeriesURLGenerator();
         DefaultXYDataset dataset = new DefaultXYDataset();
-        dataset.addSeries("Series '1'", new double[][]{{1.0, 2.0},
+        dataset.addSeries("Series '1'", new double[][] {{1.0, 2.0},
                 {3.0, 4.0}});
         String s = g.generateURL(dataset, 0, 0);
         assertTrue(s.startsWith("index.html?series=Series+%271%27&amp;item="));
@@ -122,15 +133,15 @@ public class TimeSeriesURLGeneratorTest {
 
         TimeSeriesURLGenerator g1 = new TimeSeriesURLGenerator();
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(g1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(g1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                    buffer.toByteArray()));
         TimeSeriesURLGenerator g2 = (TimeSeriesURLGenerator) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(g1, g2);
 

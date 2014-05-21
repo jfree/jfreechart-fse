@@ -48,14 +48,23 @@ package org.jfree.data.time;
 import org.jfree.data.Range;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 /**
  * Some tests for the {@link TimePeriodValuesCollection} class.
  */
-public class TimePeriodValuesCollectionTest {
+public class TimePeriodValuesCollectionTest  {
 
 
     /**
@@ -72,32 +81,32 @@ public class TimePeriodValuesCollectionTest {
         assertEquals(1, dataset.getSeriesCount());
         dataset.removeSeries(v1);
         assertEquals(0, dataset.getSeriesCount());
-
+        
         TimePeriodValues v2 = new TimePeriodValues("V2");
         v1.add(new Day(5, 3, 2005), 1.2);
         v1.add(new Day(6, 3, 2005), 3.4);
         dataset.addSeries(v2);
         assertEquals(1, dataset.getSeriesCount());
     }
-
+    
     /**
      * Tests the equals() method.
      */
     @Test
     public void testEquals() {
-
+        
         TimePeriodValuesCollection c1 = new TimePeriodValuesCollection();
         TimePeriodValuesCollection c2 = new TimePeriodValuesCollection();
         assertEquals(c1, c2);
-
+        
         c1.setXPosition(TimePeriodAnchor.END);
         assertFalse(c1.equals(c2));
         c2.setXPosition(TimePeriodAnchor.END);
         assertEquals(c1, c2);
-
+        
         TimePeriodValues v1 = new TimePeriodValues("Test");
         TimePeriodValues v2 = new TimePeriodValues("Test");
-
+        
         c1.addSeries(v1);
         assertFalse(c1.equals(c2));
         c2.addSeries(v2);
@@ -133,24 +142,26 @@ public class TimePeriodValuesCollectionTest {
         TimePeriodValues s1 = new TimePeriodValues("Series 1");
         c1.addSeries(s1);
         assertEquals("Series 1", c1.getSeries(0).getKey());
-
+        
         try {
             c1.getSeries(-1);
             fail("IllegalArgumentException should have been thrown on negative series");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Index 'series' out of range.", e.getMessage());
         }
 
         try {
             c1.getSeries(1);
             fail("IllegalArgumentException should have been thrown on index greater than series length");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Index 'series' out of range.", e.getMessage());
         }
     }
-
+    
     private static final double EPSILON = 0.0000000001;
-
+    
     /**
      * Some checks for the getDomainBounds() method.
      */
@@ -160,7 +171,7 @@ public class TimePeriodValuesCollectionTest {
         TimePeriodValuesCollection dataset = new TimePeriodValuesCollection();
         Range r = dataset.getDomainBounds(false);
         assertNull(r);
-
+        
         // check dataset with one time period
         TimePeriodValues s1 = new TimePeriodValues("S1");
         s1.add(new SimpleTimePeriod(1000L, 2000L), 1.0);
@@ -168,17 +179,17 @@ public class TimePeriodValuesCollectionTest {
         r = dataset.getDomainBounds(false);
         assertEquals(1500.0, r.getLowerBound(), EPSILON);
         assertEquals(1500.0, r.getUpperBound(), EPSILON);
-
+        
         // check dataset with two time periods
         s1.add(new SimpleTimePeriod(1500L, 3000L), 2.0);
         r = dataset.getDomainBounds(false);
         assertEquals(1500.0, r.getLowerBound(), EPSILON);
-        assertEquals(2250.0, r.getUpperBound(), EPSILON);
+        assertEquals(2250.0, r.getUpperBound(), EPSILON);  
     }
 
     /**
      * Some more checks for the getDomainBounds() method.
-     *
+     * 
      * @see #testGetDomainBoundsWithoutInterval()
      */
     @Test
@@ -187,7 +198,7 @@ public class TimePeriodValuesCollectionTest {
         TimePeriodValuesCollection dataset = new TimePeriodValuesCollection();
         Range r = dataset.getDomainBounds(true);
         assertNull(r);
-
+        
         // check dataset with one time period
         TimePeriodValues s1 = new TimePeriodValues("S1");
         s1.add(new SimpleTimePeriod(1000L, 2000L), 1.0);
@@ -195,13 +206,13 @@ public class TimePeriodValuesCollectionTest {
         r = dataset.getDomainBounds(true);
         assertEquals(1000.0, r.getLowerBound(), EPSILON);
         assertEquals(2000.0, r.getUpperBound(), EPSILON);
-
+        
         // check dataset with two time periods
         s1.add(new SimpleTimePeriod(1500L, 3000L), 2.0);
         r = dataset.getDomainBounds(true);
         assertEquals(1000.0, r.getLowerBound(), EPSILON);
         assertEquals(3000.0, r.getUpperBound(), EPSILON);
-
+        
         // add a third time period
         s1.add(new SimpleTimePeriod(6000L, 7000L), 1.5);
         r = dataset.getDomainBounds(true);
@@ -212,6 +223,6 @@ public class TimePeriodValuesCollectionTest {
         s1.add(new SimpleTimePeriod(4000L, 5000L), 1.4);
         r = dataset.getDomainBounds(true);
         assertEquals(1000.0, r.getLowerBound(), EPSILON);
-        assertEquals(7000.0, r.getUpperBound(), EPSILON);
+        assertEquals(7000.0, r.getUpperBound(), EPSILON);    
     }
 }

@@ -51,14 +51,28 @@ import org.jfree.data.Range;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link GroupedStackedBarRenderer} class.
  */
-public class GroupedStackedBarRendererTest {
+public class GroupedStackedBarRendererTest  {
+
+
+
 
 
     /**
@@ -111,15 +125,15 @@ public class GroupedStackedBarRendererTest {
 
         GroupedStackedBarRenderer r1 = new GroupedStackedBarRenderer();
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(r1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(r1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                    buffer.toByteArray()));
         GroupedStackedBarRenderer r2 = (GroupedStackedBarRenderer) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(r1, r2);
 
@@ -131,20 +145,19 @@ public class GroupedStackedBarRendererTest {
      */
     @Test
     public void testDrawWithNullInfo() {
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.addValue(1.0, "S1", "C1");
-        dataset.addValue(2.0, "S1", "C2");
-        dataset.addValue(3.0, "S2", "C1");
-        dataset.addValue(4.0, "S2", "C2");
-        GroupedStackedBarRenderer renderer
-                = new GroupedStackedBarRenderer();
-        CategoryPlot plot = new CategoryPlot(dataset,
-                new CategoryAxis("Category"), new NumberAxis("Value"),
-                renderer);
-        JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */
-        chart.createBufferedImage(300, 200,
-                null);
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+            dataset.addValue(1.0, "S1", "C1");
+            dataset.addValue(2.0, "S1", "C2");
+            dataset.addValue(3.0, "S2", "C1");
+            dataset.addValue(4.0, "S2", "C2");
+            GroupedStackedBarRenderer renderer
+                    = new GroupedStackedBarRenderer();
+            CategoryPlot plot = new CategoryPlot(dataset,
+                    new CategoryAxis("Category"), new NumberAxis("Value"),
+                    renderer);
+            JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
+                    null);
 
     }
 

@@ -138,6 +138,7 @@ public class Month extends RegularTimePeriod implements Serializable {
      *
      * @param time  the date/time (<code>null</code> not permitted).
      *
+     * @see #Month(Date, TimeZone)
      */
     public Month(Date time) {
         this(time, TimeZone.getDefault(), Locale.getDefault());
@@ -245,10 +246,12 @@ public class Month extends RegularTimePeriod implements Serializable {
         Month result;
         if (this.month != MonthConstants.JANUARY) {
             result = new Month(this.month - 1, this.year);
-        } else {
+        }
+        else {
             if (this.year > 1900) {
                 result = new Month(MonthConstants.DECEMBER, this.year - 1);
-            } else {
+            }
+            else {
                 result = null;
             }
         }
@@ -268,10 +271,12 @@ public class Month extends RegularTimePeriod implements Serializable {
         Month result;
         if (this.month != MonthConstants.DECEMBER) {
             result = new Month(this.month + 1, this.year);
-        } else {
+        }
+        else {
             if (this.year < 9999) {
                 result = new Month(MonthConstants.JANUARY, this.year + 1);
-            } else {
+            }
+            else {
                 result = null;
             }
         }
@@ -443,18 +448,21 @@ public class Month extends RegularTimePeriod implements Serializable {
             yearIsFirst = true;
             s1 = s.substring(0, 5);
             s2 = s.substring(5);
-        } else {
+        }
+        else {
             s1 = s.substring(0, i).trim();
             s2 = s.substring(i + 1, s.length()).trim();
             // now it is trickier to determine if the month or year is first
             Year y1 = Month.evaluateAsYear(s1);
             if (y1 == null) {
                 yearIsFirst = false;
-            } else {
+            }
+            else {
                 Year y2 = Month.evaluateAsYear(s2);
                 if (y2 == null) {
                     yearIsFirst = true;
-                } else {
+                }
+                else {
                     yearIsFirst = (s1.length() > s2.length());
                 }
             }
@@ -464,7 +472,8 @@ public class Month extends RegularTimePeriod implements Serializable {
         if (yearIsFirst) {
             year = Month.evaluateAsYear(s1);
             month = SerialDate.stringToMonthCode(s2);
-        } else {
+        }
+        else {
             year = Month.evaluateAsYear(s2);
             month = SerialDate.stringToMonthCode(s1);
         }
@@ -514,7 +523,8 @@ public class Month extends RegularTimePeriod implements Serializable {
         Year result = null;
         try {
             result = Year.parseYear(s);
-        } catch (TimePeriodFormatException e) {
+        }
+        catch (TimePeriodFormatException e) {
             // suppress
         }
         return result;

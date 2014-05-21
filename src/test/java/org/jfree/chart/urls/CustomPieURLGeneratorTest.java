@@ -44,16 +44,29 @@ package org.jfree.chart.urls;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link CustomPieURLGenerator} class.
  */
-public class CustomPieURLGeneratorTest {
+public class CustomPieURLGeneratorTest  {
+
+
+
 
 
     /**

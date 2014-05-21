@@ -154,7 +154,10 @@ public class SimpleTimePeriod implements TimePeriod, Comparable<TimePeriod>, Ser
         if (!this.getStart().equals(that.getStart())) {
             return false;
         }
-        return this.getEnd().equals(that.getEnd());
+        if (!this.getEnd().equals(that.getEnd())) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -178,19 +181,25 @@ public class SimpleTimePeriod implements TimePeriod, Comparable<TimePeriod>, Ser
         long m1 = t2 + (t3 - t2) / 2L;
         if (m0 < m1) {
             return -1;
-        } else if (m0 > m1) {
+        }
+        else if (m0 > m1) {
             return 1;
-        } else {
+        }
+        else {
             if (t0 < t2) {
                 return -1;
-            } else if (t0 > t2) {
+            }
+            else if (t0 > t2) {
                 return 1;
-            } else {
+            }
+            else {
                 if (t1 < t3) {
                     return -1;
-                } else if (t1 > t3) {
+                }
+                else if (t1 > t3) {
                     return 1;
-                } else {
+                }
+                else {
                     return 0;
                 }
             }

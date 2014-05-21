@@ -44,15 +44,31 @@ package org.jfree.chart.annotations;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Stroke;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link XYPolygonAnnotation} class.
  */
-public class XYPolygonAnnotationTest {
+public class XYPolygonAnnotationTest  {
+
+
+
 
 
     /**
@@ -62,24 +78,24 @@ public class XYPolygonAnnotationTest {
     public void testEquals() {
         Stroke stroke1 = new BasicStroke(2.0f);
         Stroke stroke2 = new BasicStroke(2.5f);
-        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[]{1.0,
+        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[] {1.0,
                 2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.RED, Color.BLUE);
-        XYPolygonAnnotation a2 = new XYPolygonAnnotation(new double[]{1.0,
+        XYPolygonAnnotation a2 = new XYPolygonAnnotation(new double[] {1.0,
                 2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.RED, Color.BLUE);
         assertEquals(a1, a2);
         assertEquals(a2, a1);
 
-        a1 = new XYPolygonAnnotation(new double[]{99.0, 2.0, 3.0, 4.0, 5.0,
+        a1 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
                 6.0}, stroke1, Color.RED, Color.BLUE);
         assertFalse(a1.equals(a2));
-        a2 = new XYPolygonAnnotation(new double[]{99.0, 2.0, 3.0, 4.0, 5.0,
+        a2 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
                 6.0}, stroke1, Color.RED, Color.BLUE);
         assertEquals(a1, a2);
 
-        a1 = new XYPolygonAnnotation(new double[]{99.0, 2.0, 3.0, 4.0, 5.0,
+        a1 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
                 6.0}, stroke2, Color.RED, Color.BLUE);
         assertFalse(a1.equals(a2));
-        a2 = new XYPolygonAnnotation(new double[]{99.0, 2.0, 3.0, 4.0, 5.0,
+        a2 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
                 6.0}, stroke2, Color.RED, Color.BLUE);
         assertEquals(a1, a2);
 
@@ -87,10 +103,10 @@ public class XYPolygonAnnotationTest {
                 4.0f, Color.WHITE);
         GradientPaint gp2 = new GradientPaint(1.0f, 2.0f, Color.yellow, 3.0f,
                 4.0f, Color.WHITE);
-        a1 = new XYPolygonAnnotation(new double[]{99.0, 2.0, 3.0, 4.0, 5.0,
+        a1 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
                 6.0}, stroke2, gp1, Color.BLUE);
         assertFalse(a1.equals(a2));
-        a2 = new XYPolygonAnnotation(new double[]{99.0, 2.0, 3.0, 4.0, 5.0,
+        a2 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
                 6.0}, stroke2, gp2, Color.BLUE);
         assertEquals(a1, a2);
 
@@ -98,10 +114,10 @@ public class XYPolygonAnnotationTest {
                 4.0f, Color.WHITE);
         GradientPaint gp4 = new GradientPaint(1.0f, 2.0f, Color.green, 3.0f,
                 4.0f, Color.WHITE);
-        a1 = new XYPolygonAnnotation(new double[]{99.0, 2.0, 3.0, 4.0, 5.0,
+        a1 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
                 6.0}, stroke2, gp1, gp3);
         assertFalse(a1.equals(a2));
-        a2 = new XYPolygonAnnotation(new double[]{99.0, 2.0, 3.0, 4.0, 5.0,
+        a2 = new XYPolygonAnnotation(new double[] {99.0, 2.0, 3.0, 4.0, 5.0,
                 6.0}, stroke2, gp2, gp4);
         assertEquals(a1, a2);
     }
@@ -112,9 +128,9 @@ public class XYPolygonAnnotationTest {
     @Test
     public void testHashCode() {
         Stroke stroke = new BasicStroke(2.0f);
-        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[]{1.0,
+        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[] {1.0,
                 2.0, 3.0, 4.0, 5.0, 6.0}, stroke, Color.RED, Color.BLUE);
-        XYPolygonAnnotation a2 = new XYPolygonAnnotation(new double[]{1.0,
+        XYPolygonAnnotation a2 = new XYPolygonAnnotation(new double[] {1.0,
                 2.0, 3.0, 4.0, 5.0, 6.0}, stroke, Color.RED, Color.BLUE);
         assertEquals(a1, a2);
         int h1 = a1.hashCode();
@@ -128,7 +144,7 @@ public class XYPolygonAnnotationTest {
     @Test
     public void testCloning() throws CloneNotSupportedException {
         Stroke stroke1 = new BasicStroke(2.0f);
-        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[]{1.0,
+        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[] {1.0,
                 2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.RED, Color.BLUE);
         XYPolygonAnnotation a2 = (XYPolygonAnnotation) a1.clone();
 
@@ -144,7 +160,7 @@ public class XYPolygonAnnotationTest {
     @Test
     public void testPublicCloneable() {
         Stroke stroke1 = new BasicStroke(2.0f);
-        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[]{1.0,
+        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[] {1.0,
                 2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.RED, Color.BLUE);
         assertTrue(a1 instanceof PublicCloneable);
     }
@@ -156,19 +172,19 @@ public class XYPolygonAnnotationTest {
     public void testSerialization() throws IOException, ClassNotFoundException {
 
         Stroke stroke1 = new BasicStroke(2.0f);
-        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[]{1.0,
+        XYPolygonAnnotation a1 = new XYPolygonAnnotation(new double[] {1.0,
                 2.0, 3.0, 4.0, 5.0, 6.0}, stroke1, Color.RED, Color.BLUE);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(a1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(a1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
+            ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-        );
-        XYPolygonAnnotation a2 = (XYPolygonAnnotation) in.readObject();
-        in.close();
+            );
+            XYPolygonAnnotation a2 = (XYPolygonAnnotation) in.readObject();
+            in.close();
 
         assertEquals(a1, a2);
 

@@ -120,7 +120,7 @@ public class PieLabelDistributor extends AbstractPieLabelDistributor {
                 PieLabelRecord r1 = getPieLabelRecord(lower + 1);
                 if (r1.getLowerY() < r0.getUpperY()) {
                     double adjust = r0.getUpperY() - r1.getLowerY()
-                            + this.minGap;
+                                    + this.minGap;
                     r1.setAllocatedY(r1.getAllocatedY() + adjust);
                 }
             }
@@ -150,7 +150,7 @@ public class PieLabelDistributor extends AbstractPieLabelDistributor {
                 record1.setAllocatedY(Math.min(minY + height
                         - record1.getLabelHeight() / 2.0,
                         record0.getUpperY() + this.minGap
-                                + record1.getLabelHeight() / 2.0));
+                        + record1.getLabelHeight() / 2.0));
             }
         }
     }

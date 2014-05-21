@@ -44,15 +44,27 @@ package org.jfree.data;
 import org.jfree.data.general.DefaultPieDataset;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link KeyedObject} class.
  */
-public class KeyedObjectTest {
+public class KeyedObjectTest  {
+
+
+
 
 
     /**
@@ -125,16 +137,16 @@ public class KeyedObjectTest {
 
         KeyedObject ko1 = new KeyedObject("Test", "Object");
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(ko1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(ko1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
+            ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-        );
+            );
         KeyedObject ko2 = (KeyedObject) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(ko1, ko2);
 

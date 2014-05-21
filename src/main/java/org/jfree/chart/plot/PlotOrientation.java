@@ -47,7 +47,7 @@ package org.jfree.chart.plot;
  */
 public enum PlotOrientation {
 
-    /** For a plot where the range axis is horizontal. */
+   /** For a plot where the range axis is horizontal. */
     HORIZONTAL("PlotOrientation.HORIZONTAL"),
 
     /** For a plot where the range axis is vertical. */

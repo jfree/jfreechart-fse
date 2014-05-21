@@ -147,9 +147,11 @@ public abstract class TickUnit implements Comparable<TickUnit>, Serializable {
 
         if (this.size > other.getSize()) {
             return 1;
-        } else if (this.size < other.getSize()) {
+        }
+        else if (this.size < other.getSize()) {
             return -1;
-        } else {
+        }
+        else {
             return 0;
         }
 

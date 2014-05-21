@@ -43,7 +43,13 @@ package org.jfree.data.time;
 
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
@@ -52,7 +58,10 @@ import static org.junit.Assert.assertFalse;
 /**
  * Some tests for the {@link DateRange} class.
  */
-public class DateRangeTest {
+public class DateRangeTest  {
+
+
+
 
 
     /**
@@ -83,15 +92,15 @@ public class DateRangeTest {
     public void testSerialization() throws IOException, ClassNotFoundException {
         DateRange r1 = new DateRange(new Date(1000L), new Date(2000L));
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(r1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(r1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         DateRange r2 = (DateRange) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(r1, r2);
     }

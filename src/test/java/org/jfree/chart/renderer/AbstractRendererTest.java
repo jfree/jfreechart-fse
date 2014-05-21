@@ -369,7 +369,7 @@ public class AbstractRendererTest  {
         r2.setSeriesItemLabelFont(1, new Font(Font.DIALOG, Font.PLAIN, 5));
         assertNotEquals(r1, r2);
     }
-
+    
     @Test
     public void testEquals_ObjectList2() {
         BarRenderer r1 = new BarRenderer();
@@ -571,7 +571,7 @@ public class AbstractRendererTest  {
 
         RendererChangeDetector detector = new RendererChangeDetector();
         BarRenderer r1 = new BarRenderer();  // have to use a subclass of
-        // AbstractRenderer
+                                             // AbstractRenderer
         r1.addChangeListener(detector);
 
         // PAINT
@@ -718,7 +718,7 @@ public class AbstractRendererTest  {
         r.setAutoPopulateSeriesPaint(true);
         /*CategoryPlot plot =*/ new CategoryPlot(null, new CategoryAxis(
                 "Category"), new NumberAxis("Value"), r);
-        assertEquals(DefaultDrawingSupplier.DEFAULT_PAINT_SEQUENCE[0],
+            assertEquals(DefaultDrawingSupplier.DEFAULT_PAINT_SEQUENCE[0],
                 r.lookupSeriesPaint(0));
         assertNotNull(r.getSeriesPaint(0));
     }

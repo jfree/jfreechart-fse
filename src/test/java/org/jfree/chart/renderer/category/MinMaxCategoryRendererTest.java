@@ -50,15 +50,30 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.junit.Test;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link MinMaxCategoryRenderer} class.
  */
-public class MinMaxCategoryRendererTest {
+public class MinMaxCategoryRendererTest  {
+
+
+
 
 
     /**
@@ -130,15 +145,15 @@ public class MinMaxCategoryRendererTest {
 
         MinMaxCategoryRenderer r1 = new MinMaxCategoryRenderer();
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(r1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(r1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         MinMaxCategoryRenderer r2 = (MinMaxCategoryRenderer) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(r1, r2);
 
@@ -150,15 +165,14 @@ public class MinMaxCategoryRendererTest {
      */
     @Test
     public void testDrawWithNullInfo() {
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.addValue(1.0, "S1", "C1");
-        CategoryPlot plot = new CategoryPlot(dataset,
-                new CategoryAxis("Category"), new NumberAxis("Value"),
-                new MinMaxCategoryRenderer());
-        JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */
-        chart.createBufferedImage(300, 200,
-                null);
+           DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+            dataset.addValue(1.0, "S1", "C1");
+            CategoryPlot plot = new CategoryPlot(dataset,
+                    new CategoryAxis("Category"), new NumberAxis("Value"),
+                    new MinMaxCategoryRenderer());
+            JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
+                    null);
     }
 
 }

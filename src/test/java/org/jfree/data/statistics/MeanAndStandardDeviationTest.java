@@ -42,7 +42,13 @@ package org.jfree.data.statistics;
 
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -50,7 +56,10 @@ import static org.junit.Assert.assertFalse;
 /**
  * Tests for the {@link MeanAndStandardDeviation} class.
  */
-public class MeanAndStandardDeviationTest {
+public class MeanAndStandardDeviationTest  {
+
+
+
 
 
     /**
@@ -90,16 +99,16 @@ public class MeanAndStandardDeviationTest {
     public void testSerialization() throws IOException, ClassNotFoundException {
         MeanAndStandardDeviation m1 = new MeanAndStandardDeviation(1.2, 3.4);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(m1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(m1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
+            ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-        );
+            );
         MeanAndStandardDeviation m2 = (MeanAndStandardDeviation) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(m1, m2);
 

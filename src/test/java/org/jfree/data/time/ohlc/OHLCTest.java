@@ -43,16 +43,26 @@ package org.jfree.data.time.ohlc;
 
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 
+
 /**
  * Tests for the {@link OHLC} class.
  */
-public class OHLCTest {
+public class OHLCTest  {
+
+
+
 
 
     /**
@@ -101,15 +111,15 @@ public class OHLCTest {
     public void testSerialization() throws IOException, ClassNotFoundException {
         OHLC i1 = new OHLC(2.0, 4.0, 1.0, 3.0);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(i1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(i1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         OHLC i2 = (OHLC) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(i1, i2);
     }

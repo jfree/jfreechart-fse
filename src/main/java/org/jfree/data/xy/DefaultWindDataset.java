@@ -47,13 +47,13 @@
 
 package org.jfree.data.xy;
 
-import org.jfree.chart.util.PublicCloneable;
-
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import org.jfree.chart.util.PublicCloneable;
 
 /**
  * A default implementation of the {@link WindDataset} interface.
@@ -146,11 +146,13 @@ public class DefaultWindDataset extends AbstractXYDataset
                     Number xNumber;
                     if (xObject instanceof Number) {
                         xNumber = (Number) xObject;
-                    } else {
+                    }
+                    else {
                         if (xObject instanceof Date) {
                             Date xDate = (Date) xObject;
                             xNumber = xDate.getTime();
-                        } else {
+                        }
+                        else {
                             xNumber = 0;
                         }
                     }
@@ -393,9 +395,11 @@ class WindDataItem implements Comparable<WindDataItem>, Serializable {
     public int compareTo(WindDataItem item) {
         if (this.x.doubleValue() > item.x.doubleValue()) {
             return 1;
-        } else if (this.x.equals(item.x)) {
+        }
+        else if (this.x.equals(item.x)) {
             return 0;
-        } else {
+        }
+        else {
             return -1;
         }
 

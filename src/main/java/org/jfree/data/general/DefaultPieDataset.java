@@ -57,15 +57,15 @@
 
 package org.jfree.data.general;
 
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
+
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SortOrder;
 import org.jfree.data.DefaultKeyedValues;
 import org.jfree.data.KeyedValues;
 import org.jfree.data.UnknownKeyException;
-
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * A default implementation of the {@link PieDataset} interface.
@@ -341,7 +341,8 @@ public class DefaultPieDataset extends AbstractDataset
                 if (v2 != null) {
                     return false;
                 }
-            } else {
+            }
+            else {
                 if (!v1.equals(v2)) {
                     return false;
                 }

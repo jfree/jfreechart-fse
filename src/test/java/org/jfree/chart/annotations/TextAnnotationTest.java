@@ -46,14 +46,21 @@ package org.jfree.chart.annotations;
 import org.jfree.chart.ui.TextAnchor;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link TextAnnotation} class.
  */
-public class TextAnnotationTest {
+public class TextAnnotationTest  {
+
+
+
 
 
     /**

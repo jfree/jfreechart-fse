@@ -47,12 +47,16 @@
 
 package org.jfree.data.category;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.ResourceBundle;
+
 import org.jfree.chart.util.ResourceBundleWrapper;
 import org.jfree.data.DataUtilities;
 import org.jfree.data.UnknownKeyException;
 import org.jfree.data.general.AbstractSeriesDataset;
-
-import java.util.*;
 
 /**
  * A convenience class that provides a default implementation of the
@@ -154,9 +158,9 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
             int seriesCount = starts.length;
             if (seriesCount != ends.length) {
                 String errMsg = "DefaultIntervalCategoryDataset: the number "
-                        + "of series in the start value dataset does "
-                        + "not match the number of series in the end "
-                        + "value dataset.";
+                    + "of series in the start value dataset does "
+                    + "not match the number of series in the end "
+                    + "value dataset.";
                 throw new IllegalArgumentException(errMsg);
             }
             if (seriesCount > 0) {
@@ -167,11 +171,12 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
                     if (seriesKeys.length != seriesCount) {
                         throw new IllegalArgumentException(
                                 "The number of series keys does not "
-                                        + "match the number of series in the data.");
+                                + "match the number of series in the data.");
                     }
 
                     this.seriesKeys = seriesKeys;
-                } else {
+                }
+                else {
                     String prefix = resources.getString(
                             "series.default-prefix") + " ";
                     this.seriesKeys = generateKeys(seriesCount, prefix);
@@ -181,25 +186,27 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
                 int categoryCount = starts[0].length;
                 if (categoryCount != ends[0].length) {
                     String errMsg = "DefaultIntervalCategoryDataset: the "
-                            + "number of categories in the start value "
-                            + "dataset does not match the number of "
-                            + "categories in the end value dataset.";
+                                + "number of categories in the start value "
+                                + "dataset does not match the number of "
+                                + "categories in the end value dataset.";
                     throw new IllegalArgumentException(errMsg);
                 }
                 if (categoryKeys != null) {
                     if (categoryKeys.length != categoryCount) {
                         throw new IllegalArgumentException(
                                 "The number of category keys does not match "
-                                        + "the number of categories in the data.");
+                                + "the number of categories in the data.");
                     }
                     this.categoryKeys = categoryKeys;
-                } else {
+                }
+                else {
                     String prefix = resources.getString(
                             "categories.default-prefix") + " ";
                     this.categoryKeys = generateKeys(categoryCount, prefix);
                 }
 
-            } else {
+            }
+            else {
                 this.seriesKeys = new Comparable[0];
                 this.categoryKeys = new Comparable[0];
             }
@@ -314,7 +321,8 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
         // we've stored them in an array...
         if (this.categoryKeys == null) {
             return new ArrayList<Comparable>();
-        } else {
+        }
+        else {
             return Collections.unmodifiableList(Arrays.asList(
                     this.categoryKeys));
         }
@@ -433,14 +441,14 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
         // check arguments...
         if ((series < 0) || (series >= getSeriesCount())) {
             throw new IllegalArgumentException(
-                    "DefaultIntervalCategoryDataset.getValue(): "
-                            + "series index out of range.");
+                "DefaultIntervalCategoryDataset.getValue(): "
+                + "series index out of range.");
         }
 
         if ((category < 0) || (category >= getCategoryCount())) {
             throw new IllegalArgumentException(
-                    "DefaultIntervalCategoryDataset.getValue(): "
-                            + "category index out of range.");
+                "DefaultIntervalCategoryDataset.getValue(): "
+                + "category index out of range.");
         }
 
         // fetch the value...
@@ -485,14 +493,14 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
     public Number getEndValue(int series, int category) {
         if ((series < 0) || (series >= getSeriesCount())) {
             throw new IllegalArgumentException(
-                    "DefaultIntervalCategoryDataset.getValue(): "
-                            + "series index out of range.");
+                "DefaultIntervalCategoryDataset.getValue(): "
+                + "series index out of range.");
         }
 
         if ((category < 0) || (category >= getCategoryCount())) {
             throw new IllegalArgumentException(
-                    "DefaultIntervalCategoryDataset.getValue(): "
-                            + "category index out of range.");
+                "DefaultIntervalCategoryDataset.getValue(): "
+                + "category index out of range.");
         }
 
         return this.endData[series][category];
@@ -513,16 +521,16 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
         // does the series exist?
         if ((series < 0) || (series > getSeriesCount() - 1)) {
             throw new IllegalArgumentException(
-                    "DefaultIntervalCategoryDataset.setValue: "
-                            + "series outside valid range.");
+                "DefaultIntervalCategoryDataset.setValue: "
+                + "series outside valid range.");
         }
 
         // is the category valid?
         int categoryIndex = getCategoryIndex(category);
         if (categoryIndex < 0) {
             throw new IllegalArgumentException(
-                    "DefaultIntervalCategoryDataset.setValue: "
-                            + "unrecognised category.");
+                "DefaultIntervalCategoryDataset.setValue: "
+                + "unrecognised category.");
         }
 
         // update the data...
@@ -546,16 +554,16 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
         // does the series exist?
         if ((series < 0) || (series > getSeriesCount() - 1)) {
             throw new IllegalArgumentException(
-                    "DefaultIntervalCategoryDataset.setValue: "
-                            + "series outside valid range.");
+                "DefaultIntervalCategoryDataset.setValue: "
+                + "series outside valid range.");
         }
 
         // is the category valid?
         int categoryIndex = getCategoryIndex(category);
         if (categoryIndex < 0) {
             throw new IllegalArgumentException(
-                    "DefaultIntervalCategoryDataset.setValue: "
-                            + "unrecognised category.");
+                "DefaultIntervalCategoryDataset.setValue: "
+                + "unrecognised category.");
         }
 
         // update the data...
@@ -662,7 +670,8 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset
         // we've stored them in an array...
         if (this.seriesKeys == null) {
             return new java.util.ArrayList<Comparable>();
-        } else {
+        }
+        else {
             return Collections.unmodifiableList(Arrays.asList(this.seriesKeys));
         }
     }

@@ -50,14 +50,27 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link LevelRenderer} class.
  */
-public class LevelRendererTest {
+public class LevelRendererTest  {
+
+
+
 
 
     /**
@@ -152,16 +165,16 @@ public class LevelRendererTest {
 
         LevelRenderer r1 = new LevelRenderer();
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(r1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(r1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
+            ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-        );
+            );
         LevelRenderer r2 = (LevelRenderer) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(r1, r2);
 
@@ -173,15 +186,14 @@ public class LevelRendererTest {
      */
     @Test
     public void testDrawWithNullInfo() {
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.addValue(1.0, "S1", "C1");
-        CategoryPlot plot = new CategoryPlot(dataset,
-                new CategoryAxis("Category"), new NumberAxis("Value"),
-                new LevelRenderer());
-        JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */
-        chart.createBufferedImage(300, 200,
-                null);
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+            dataset.addValue(1.0, "S1", "C1");
+            CategoryPlot plot = new CategoryPlot(dataset,
+                    new CategoryAxis("Category"), new NumberAxis("Value"),
+                    new LevelRenderer());
+            JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
+                    null);
 
     }
 
@@ -202,8 +214,7 @@ public class LevelRendererTest {
         CategoryPlot plot = new CategoryPlot(dataset0, new CategoryAxis("x"),
                 new NumberAxis("y"), r);
         plot.setDataset(1, dataset1);
-        /*JFreeChart chart =*/
-        new JFreeChart(plot);
+        /*JFreeChart chart =*/ new JFreeChart(plot);
         LegendItem li = r.getLegendItem(1, 2);
         assertEquals("R5", li.getLabel());
         assertEquals(1, li.getDatasetIndex());

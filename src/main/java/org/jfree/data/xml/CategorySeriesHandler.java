@@ -118,7 +118,7 @@ public class CategorySeriesHandler extends DefaultHandler
 
         else {
             throw new SAXException(
-                    "Expecting <Series> or <Item> tag...found " + qName
+                "Expecting <Series> or <Item> tag...found " + qName
             );
         }
     }

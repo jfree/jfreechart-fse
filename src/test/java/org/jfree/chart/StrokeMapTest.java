@@ -42,15 +42,23 @@ package org.jfree.chart;
 
 import org.junit.Test;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.BasicStroke;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
 /**
  * Some tests for the {@link StrokeMap} class.
  */
-public class StrokeMapTest {
+public class StrokeMapTest  {
 
     /**
      * Some checks for the getStroke() method.
@@ -68,7 +76,8 @@ public class StrokeMapTest {
         try {
             m1.getStroke(null);
             fail("IllegalArgumentException should have been thrown on null argument");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }
@@ -86,7 +95,8 @@ public class StrokeMapTest {
         try {
             m1.put(null, new BasicStroke(1.1f));
             fail("IllegalArgumentException should have been thrown on null parameter");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }

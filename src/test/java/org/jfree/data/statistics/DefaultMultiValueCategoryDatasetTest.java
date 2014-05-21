@@ -44,16 +44,29 @@ package org.jfree.data.statistics;
 import org.jfree.data.UnknownKeyException;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link DefaultMultiValueCategoryDataset} class.
  */
-public class DefaultMultiValueCategoryDatasetTest {
+public class DefaultMultiValueCategoryDatasetTest  {
+
+
+
 
 
     /**
@@ -72,14 +85,16 @@ public class DefaultMultiValueCategoryDatasetTest {
         try {
             d.getValue("XX", "C1");
             fail("UnknownKeyException should have been thrown on an unknown key");
-        } catch (UnknownKeyException e) {
+        }
+        catch (UnknownKeyException e) {
             assertEquals("Row key (XX) not recognised.", e.getMessage());
         }
 
         try {
             d.getValue("R1", "XX");
             fail("UnknownKeyException should have been thrown on an unknown key");
-        } catch (UnknownKeyException e) {
+        }
+        catch (UnknownKeyException e) {
             assertEquals("Column key (XX) not recognised.", e.getMessage());
         }
     }
@@ -93,10 +108,10 @@ public class DefaultMultiValueCategoryDatasetTest {
                 = new DefaultMultiValueCategoryDataset();
 
         try {
-            /* Number n =*/
-            d.getValue(0, 0);
+            /* Number n =*/ d.getValue(0, 0);
             fail("IndexOutOfBoundsException should have been thrown on key out of range");
-        } catch (IndexOutOfBoundsException e) {
+        }
+        catch (IndexOutOfBoundsException e) {
             assertEquals("Index: 0, Size: 0", e.getMessage());
         }
     }
@@ -182,6 +197,7 @@ public class DefaultMultiValueCategoryDatasetTest {
                 = new DefaultMultiValueCategoryDataset();
 
 
+
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         ObjectOutput out = new ObjectOutputStream(buffer);
         out.writeObject(d1);
@@ -208,7 +224,8 @@ public class DefaultMultiValueCategoryDatasetTest {
         try {
             d1.add(null, "R1", "C1");
             fail("IllegalArgumentException should have been thrown on a null key");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'values' argument.", e.getMessage());
         }
 
@@ -219,7 +236,8 @@ public class DefaultMultiValueCategoryDatasetTest {
         try {
             d1.add(values, null, "C2");
             fail("IllegalArgumentException should have been thrown on a null key");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'rowKey' argument.", e.getMessage());
         }
     }

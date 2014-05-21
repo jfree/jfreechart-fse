@@ -52,13 +52,20 @@ import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+
 
 
 /**
  * Tests for the {@link RelativeDateFormat} class.
  */
-public class RelativeDateFormatTest {
+public class RelativeDateFormatTest  {
+
+
+
 
 
     private Locale savedLocale;

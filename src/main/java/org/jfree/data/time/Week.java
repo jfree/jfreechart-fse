@@ -149,7 +149,7 @@ public class Week extends RegularTimePeriod implements Serializable {
         this.week = (byte) week;
         this.year = (short) year.getYear();
         peg(Calendar.getInstance());
-    }
+   }
 
     /**
      * Creates a time period for the week in which the specified date/time
@@ -197,7 +197,8 @@ public class Week extends RegularTimePeriod implements Serializable {
                 && calendar.get(Calendar.MONTH) == Calendar.DECEMBER) {
             this.week = 1;
             this.year = (short) (calendar.get(Calendar.YEAR) + 1);
-        } else {
+        }
+        else {
             this.week = (byte) Math.min(tempWeek, LAST_WEEK_IN_YEAR);
             int yyyy = calendar.get(Calendar.YEAR);
             // alternatively, sometimes the first few days of the year are
@@ -296,7 +297,8 @@ public class Week extends RegularTimePeriod implements Serializable {
         Week result;
         if (this.week != FIRST_WEEK_IN_YEAR) {
             result = new Week(this.week - 1, this.year);
-        } else {
+        }
+        else {
             // we need to work out if the previous year has 52 or 53 weeks...
             if (this.year > 1900) {
                 int yy = this.year - 1;
@@ -304,7 +306,8 @@ public class Week extends RegularTimePeriod implements Serializable {
                 prevYearCalendar.set(yy, Calendar.DECEMBER, 31);
                 result = new Week(prevYearCalendar.getActualMaximum(
                         Calendar.WEEK_OF_YEAR), yy);
-            } else {
+            }
+            else {
                 result = null;
             }
         }
@@ -327,17 +330,20 @@ public class Week extends RegularTimePeriod implements Serializable {
         Week result;
         if (this.week < 52) {
             result = new Week(this.week + 1, this.year);
-        } else {
+        }
+        else {
             Calendar calendar = Calendar.getInstance();
             calendar.set(this.year, Calendar.DECEMBER, 31);
             int actualMaxWeek
-                    = calendar.getActualMaximum(Calendar.WEEK_OF_YEAR);
+                = calendar.getActualMaximum(Calendar.WEEK_OF_YEAR);
             if (this.week < actualMaxWeek) {
                 result = new Week(this.week + 1, this.year);
-            } else {
+            }
+            else {
                 if (this.year < 9999) {
                     result = new Week(FIRST_WEEK_IN_YEAR, this.year + 1);
-                } else {
+                }
+                else {
                     result = null;
                 }
             }
@@ -441,7 +447,10 @@ public class Week extends RegularTimePeriod implements Serializable {
         if (this.week != that.week) {
             return false;
         }
-        return this.year == that.year;
+        if (this.year != that.year) {
+            return false;
+        }
+        return true;
 
     }
 
@@ -531,7 +540,8 @@ public class Week extends RegularTimePeriod implements Serializable {
                                 "Can't evaluate the week.");
                     }
                     result = new Week(w, y);
-                } else {
+                }
+                else {
                     y = Week.evaluateAsYear(s2);
                     if (y != null) {
                         w = Week.stringToWeek(s1);
@@ -540,13 +550,15 @@ public class Week extends RegularTimePeriod implements Serializable {
                                     "Can't evaluate the week.");
                         }
                         result = new Week(w, y);
-                    } else {
+                    }
+                    else {
                         throw new TimePeriodFormatException(
                                 "Can't evaluate the year.");
                     }
                 }
 
-            } else {
+            }
+            else {
                 throw new TimePeriodFormatException(
                         "Could not find separator.");
             }
@@ -593,7 +605,8 @@ public class Week extends RegularTimePeriod implements Serializable {
         Year result = null;
         try {
             result = Year.parseYear(s);
-        } catch (TimePeriodFormatException e) {
+        }
+        catch (TimePeriodFormatException e) {
             // suppress
         }
         return result;
@@ -617,7 +630,8 @@ public class Week extends RegularTimePeriod implements Serializable {
             if ((result < 1) || (result > LAST_WEEK_IN_YEAR)) {
                 result = -1;
             }
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             // suppress
         }
         return result;

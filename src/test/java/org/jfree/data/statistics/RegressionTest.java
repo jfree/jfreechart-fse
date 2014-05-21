@@ -51,7 +51,10 @@ import static org.junit.Assert.assertEquals;
 /**
  * Tests for the {@link Regression} class.
  */
-public class RegressionTest {
+public class RegressionTest  {
+
+
+
 
 
     /**

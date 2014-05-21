@@ -47,6 +47,10 @@
 
 package org.jfree.chart.renderer.xy;
 
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
+
 import org.jfree.chart.axis.CyclicNumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.labels.XYToolTipGenerator;
@@ -59,10 +63,6 @@ import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.general.DatasetGroup;
 import org.jfree.data.xy.XYDataset;
 
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.io.Serializable;
-
 /**
  * The Cyclic XY item renderer is specially designed to handle cyclic axis.
  * While the standard renderer would draw a line across the plot when a cycling
@@ -74,7 +74,7 @@ import java.io.Serializable;
  * with non-cyclic axis.
  */
 public class CyclicXYItemRenderer extends StandardXYItemRenderer
-        implements Serializable {
+                                  implements Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 4035912243303764892L;
@@ -205,15 +205,11 @@ public class CyclicXYItemRenderer extends StandardXYItemRenderer
                     && (xcycleBound <= x[0]))) {
                 double[] nx = new double[3];
                 double[] ny = new double[3];
-                nx[0] = x[0];
-                nx[2] = x[1];
-                ny[0] = y[0];
-                ny[2] = y[1];
+                nx[0] = x[0]; nx[2] = x[1]; ny[0] = y[0]; ny[2] = y[1];
                 nx[1] = xcycleBound;
                 ny[1] = (y[1] - y[0]) * (xcycleBound - x[0])
                         / (x[1] - x[0]) + y[0];
-                x = nx;
-                y = ny;
+                x = nx; y = ny;
             }
         }
 
@@ -228,35 +224,26 @@ public class CyclicXYItemRenderer extends StandardXYItemRenderer
                     || (ycycleBound >= y[1]) && (ycycleBound <= y[0]))) {
                 double[] nx = new double[x.length + 1];
                 double[] ny = new double[y.length + 1];
-                nx[0] = x[0];
-                nx[2] = x[1];
-                ny[0] = y[0];
-                ny[2] = y[1];
+                nx[0] = x[0]; nx[2] = x[1]; ny[0] = y[0]; ny[2] = y[1];
                 ny[1] = ycycleBound;
                 nx[1] = (x[1] - x[0]) * (ycycleBound - y[0])
                         / (y[1] - y[0]) + x[0];
                 if (x.length == 3) {
-                    nx[3] = x[2];
-                    ny[3] = y[2];
+                    nx[3] = x[2]; ny[3] = y[2];
                 }
-                x = nx;
-                y = ny;
-            } else if ((x.length == 3) && (y[1] != y[2]) && ((ycycleBound >= y[1])
+                x = nx; y = ny;
+            }
+            else if ((x.length == 3) && (y[1] != y[2]) && ((ycycleBound >= y[1])
                     && (ycycleBound <= y[2])
                     || (ycycleBound >= y[2]) && (ycycleBound <= y[1]))) {
                 double[] nx = new double[4];
                 double[] ny = new double[4];
-                nx[0] = x[0];
-                nx[1] = x[1];
-                nx[3] = x[2];
-                ny[0] = y[0];
-                ny[1] = y[1];
-                ny[3] = y[2];
+                nx[0] = x[0]; nx[1] = x[1]; nx[3] = x[2];
+                ny[0] = y[0]; ny[1] = y[1]; ny[3] = y[2];
                 ny[2] = ycycleBound;
                 nx[2] = (x[2] - x[1]) * (ycycleBound - y[1])
                         / (y[2] - y[1]) + x[1];
-                x = nx;
-                y = ny;
+                x = nx; y = ny;
             }
         }
 
@@ -286,8 +273,8 @@ public class CyclicXYItemRenderer extends StandardXYItemRenderer
             }
         }
         super.drawItem(
-                g2, state, dataArea, info, plot, domainAxis, rangeAxis,
-                newset, series, 1, crosshairState, pass
+            g2, state, dataArea, info, plot, domainAxis, rangeAxis,
+            newset, series, 1, crosshairState, pass
         );
 
         if (cnax != null) {
@@ -356,11 +343,10 @@ public class CyclicXYItemRenderer extends StandardXYItemRenderer
          * @param y  the y values.
          * @param delegateSet  the dataset.
          */
-        public OverwriteDataSet(double[] x, double[] y,
+        public OverwriteDataSet(double [] x, double[] y,
                                 XYDataset delegateSet) {
             this.delegateSet = delegateSet;
-            this.x = new Double[x.length];
-            this.y = new Double[y.length];
+            this.x = new Double[x.length]; this.y = new Double[y.length];
             for (int i = 0; i < x.length; ++i) {
                 this.x[i] = x[i];
                 this.y[i] = y[i];

@@ -49,16 +49,25 @@ import org.jfree.chart.ui.GradientPaintTransformer;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link IntervalMarker} class.
  */
 public class IntervalMarkerTest
 
-        implements MarkerChangeListener {
+    implements MarkerChangeListener {
 
     MarkerChangeEvent lastEvent;
 
@@ -71,6 +80,9 @@ public class IntervalMarkerTest
     public void markerChanged(MarkerChangeEvent event) {
         this.lastEvent = event;
     }
+
+
+
 
 
     /**
@@ -115,7 +127,7 @@ public class IntervalMarkerTest
         assertEquals(m1, m2);
     }
 
-    /**
+   /**
      * Serialize an instance, restore it, and check for equality.
      */
     @Test

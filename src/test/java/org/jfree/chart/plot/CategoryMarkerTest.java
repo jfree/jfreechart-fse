@@ -44,10 +44,22 @@ import org.jfree.chart.event.MarkerChangeEvent;
 import org.jfree.chart.event.MarkerChangeListener;
 import org.junit.Test;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
 
 /**
  * Some tests for the {@link CategoryMarker} class.
@@ -66,6 +78,9 @@ public class CategoryMarkerTest
     public void markerChanged(MarkerChangeEvent event) {
         this.lastEvent = event;
     }
+
+
+
 
 
     /**
@@ -146,7 +161,7 @@ public class CategoryMarkerTest
         assertEquals(m1, m2);
     }
 
-    /**
+   /**
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
@@ -188,7 +203,8 @@ public class CategoryMarkerTest
         try {
             m.setKey(null);
             fail("Expected an IllegalArgumentException for null.");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }

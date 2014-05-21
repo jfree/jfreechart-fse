@@ -42,14 +42,28 @@ package org.jfree.data;
 
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link ComparableObjectItem} class.
  */
-public class ComparableObjectItemTest {
+public class ComparableObjectItemTest  {
+
+
+
 
 
     /**
@@ -59,11 +73,11 @@ public class ComparableObjectItemTest {
     public void testConstructor() {
         // check null argument 1
         try {
-            /* ComparableObjectItem item1 = */
-            new ComparableObjectItem(null,
+            /* ComparableObjectItem item1 = */ new ComparableObjectItem(null,
                     "XYZ");
             fail("Should have thrown an IllegalArgumentException on null parameter");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'x' argument.", e.getMessage());
         }
     }

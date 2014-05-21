@@ -42,16 +42,22 @@ package org.jfree.chart.needle;
 
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Stroke;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 
+
 /**
  * Tests for the {@link MeterNeedle} class.
  */
-public class MeterNeedleTest {
+public class MeterNeedleTest  {
+
+
 
 
     /**

@@ -83,7 +83,7 @@ import org.jfree.data.xy.TableXYDataset;
  */
 public class TimeTableXYDataset extends AbstractIntervalXYDataset
         implements Cloneable, PublicCloneable, IntervalXYDataset, DomainInfo,
-        TableXYDataset {
+                   TableXYDataset {
 
     /**
      * The data structure to store the values.  Each column represents
@@ -275,7 +275,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @see #add(TimePeriod, double, Comparable)
      */
     public void remove(TimePeriod period, Comparable seriesName,
-                       boolean notify) {
+            boolean notify) {
         this.values.removeValue(period, seriesName);
         if (notify) {
             fireDatasetChanged();
@@ -590,8 +590,8 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
             return false;
         }
         if (!this.workingCalendar.getTimeZone().equals(
-                that.workingCalendar.getTimeZone())
-                ) {
+            that.workingCalendar.getTimeZone())
+        ) {
             return false;
         }
         if (!this.values.equals(that.values)) {

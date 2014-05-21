@@ -57,11 +57,17 @@
 
 package org.jfree.data.general;
 
-import javax.swing.event.EventListenerList;
-import java.io.*;
+import java.io.IOException;
+import java.io.InvalidObjectException;
+import java.io.ObjectInputStream;
+import java.io.ObjectInputValidation;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.EventListener;
 import java.util.List;
+
+import javax.swing.event.EventListenerList;
 
 /**
  * An abstract implementation of the {@link Dataset} interface, containing a
@@ -224,11 +230,11 @@ public abstract class AbstractDataset implements Dataset, Cloneable,
      * @throws ClassNotFoundException if there is a problem loading a class.
      */
     private void readObject(ObjectInputStream stream)
-            throws IOException, ClassNotFoundException {
+        throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.listenerList = new EventListenerList();
         stream.registerValidation(this, 10);  // see comments about priority of
-        // 10 in validateObject()
+                                              // 10 in validateObject()
     }
 
     /**

@@ -52,17 +52,30 @@ package org.jfree.data.time;
 import org.jfree.chart.date.MonthConstants;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link Day} class.
  */
-public class DayTest {
+public class DayTest  {
 
 
     /**
@@ -201,15 +214,15 @@ public class DayTest {
     public void testSerialization() throws IOException, ClassNotFoundException {
         Day d1 = new Day(15, 4, 2000);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(d1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(d1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                    buffer.toByteArray()));
         Day d2 = (Day) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(d1, d2);
     }
@@ -276,7 +289,8 @@ public class DayTest {
         try {
             d.getFirstMillisecond(null);
             fail("NullPointerException should have been thrown");
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e) {
             // we expect to go in here
         }
     }
@@ -295,7 +309,8 @@ public class DayTest {
         try {
             d.getFirstMillisecond(null);
             fail("NullPointerException should have been thrown");
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e) {
             //we expect to go in here
         }
     }
@@ -329,7 +344,8 @@ public class DayTest {
         try {
             d.getLastMillisecond(null);
             fail("NullPointerExcption should have been thrown");
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e) {
             //we expect to go in here
         }
     }
@@ -349,7 +365,8 @@ public class DayTest {
         try {
             d.getLastMillisecond(null);
             fail("NullPointerException should have been thrown");
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e) {
             //we expect to go in here
         }
     }

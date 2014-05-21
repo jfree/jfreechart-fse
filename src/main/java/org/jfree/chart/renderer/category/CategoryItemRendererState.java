@@ -199,9 +199,9 @@ public class CategoryItemRendererState extends RendererState {
 
     /**
      * Returns a copy of the visible series array.
-     *
+     * 
      * @return The visible series array (possibly <code>null</code>).
-     *
+     * 
      * @since 1.0.13
      */
     public int[] getVisibleSeriesArray() {

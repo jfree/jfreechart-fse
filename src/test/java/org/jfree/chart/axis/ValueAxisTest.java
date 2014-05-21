@@ -53,19 +53,27 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import static junit.framework.Assert.assertNotSame;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link ValueAxis} class.
  */
-public class ValueAxisTest {
+public class ValueAxisTest  {
 
     private static final double EPSILON = 0.000000001;
+
+
+
 
 
     /**
@@ -238,7 +246,7 @@ public class ValueAxisTest {
         plot.setAxisOffset(RectangleInsets.ZERO_INSETS);
         ValueAxis yAxis = plot.getRangeAxis();
         yAxis.setFixedDimension(100.0);
-        BufferedImage image = new BufferedImage(500, 300,
+        BufferedImage image = new BufferedImage(500, 300, 
                 BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = image.createGraphics();
         ChartRenderingInfo info = new ChartRenderingInfo();

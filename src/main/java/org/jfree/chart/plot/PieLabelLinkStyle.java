@@ -49,13 +49,13 @@ package org.jfree.chart.plot;
 public enum PieLabelLinkStyle {
 
     /** STANDARD. */
-    STANDARD("PieLabelLinkStyle.STANDARD"),
+   STANDARD("PieLabelLinkStyle.STANDARD"),
 
     /** QUAD_CURVE. */
-    QUAD_CURVE("PieLabelLinkStyle.QUAD_CURVE"),
+   QUAD_CURVE("PieLabelLinkStyle.QUAD_CURVE"),
 
     /** CUBIC_CURVE. */
-    CUBIC_CURVE("PieLabelLinkStyle.CUBIC_CURVE");
+   CUBIC_CURVE("PieLabelLinkStyle.CUBIC_CURVE");
 
     /** The name. */
     private String name;

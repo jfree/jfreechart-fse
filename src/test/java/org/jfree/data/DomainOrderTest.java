@@ -42,14 +42,25 @@ package org.jfree.data;
 
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link DomainOrder} class.
  */
-public class DomainOrderTest {
+public class DomainOrderTest  {
+
+
+
 
 
     /**
@@ -91,16 +102,16 @@ public class DomainOrderTest {
     public void testSerialization() throws IOException, ClassNotFoundException {
         DomainOrder d1 = DomainOrder.ASCENDING;
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(d1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(d1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
+            ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-        );
+            );
         DomainOrder d2 = (DomainOrder) in.readObject();
-        in.close();
+            in.close();
 
         assertSame(d1, d2);
     }

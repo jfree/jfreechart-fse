@@ -68,7 +68,7 @@ import org.jfree.data.category.CategoryDataset;
  * items in a {@link org.jfree.chart.plot.CategoryPlot}.
  * <p>
  * To assist with cloning charts, classes that implement this interface should
- * also implement the {@link org.jfree.chart.util.PublicCloneable} interface.
+ * also implement the {@link org.jfree.util.PublicCloneable} interface.
  */
 public interface CategoryItemLabelGenerator {
 

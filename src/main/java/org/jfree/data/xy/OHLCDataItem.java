@@ -203,7 +203,8 @@ public class OHLCDataItem implements Comparable, Serializable {
         if (object instanceof OHLCDataItem) {
             OHLCDataItem item = (OHLCDataItem) object;
             return this.date.compareTo(item.date);
-        } else {
+        }
+        else {
             throw new ClassCastException("OHLCDataItem.compareTo().");
         }
     }

@@ -46,27 +46,47 @@
 
 package org.jfree.chart.renderer.xy;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.labels.ItemLabelPosition;
-import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.ui.GradientPaintTransformType;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
 import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.labels.ItemLabelPosition;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.Range;
-import org.jfree.data.xy.*;
+import org.jfree.data.xy.DefaultIntervalXYDataset;
+import org.jfree.data.xy.XYBarDataset;
+import org.jfree.data.xy.XYIntervalSeries;
+import org.jfree.data.xy.XYIntervalSeriesCollection;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.IOException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link XYBarRenderer} class.
  */
-public class XYBarRendererTest {
+public class XYBarRendererTest  {
+
+
+
 
 
     /**
@@ -193,15 +213,15 @@ public class XYBarRendererTest {
 
         XYBarRenderer r1 = new XYBarRenderer();
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(r1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(r1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         XYBarRenderer r2 = (XYBarRenderer) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(r1, r2);
 
@@ -216,15 +236,15 @@ public class XYBarRendererTest {
         XYBarRenderer r1 = new XYBarRenderer();
         r1.setPositiveItemLabelPositionFallback(new ItemLabelPosition());
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(r1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(r1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         XYBarRenderer r2 = (XYBarRenderer) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(r1, r2);
 
@@ -290,7 +310,7 @@ public class XYBarRendererTest {
         double[] y = {1.0, 2.0, 3.0, 4.0};
         double[] starty = {0.9, 1.8, 2.7, 3.6};
         double[] endy = {1.1, 2.2, 3.3, 4.4};
-        double[][] data = new double[][]{x, startx, endx, y, starty, endy};
+        double[][] data = new double[][] {x, startx, endx, y, starty, endy};
         dataset.addSeries("Series 1", data);
         XYBarRenderer renderer = new XYBarRenderer();
         renderer.setUseYInterval(true);
@@ -361,8 +381,7 @@ public class XYBarRendererTest {
         XYPlot plot = new XYPlot(new XYBarDataset(d1, 1.0), new NumberAxis("x"),
                 new NumberAxis("y"), r);
         plot.setDataset(1, new XYBarDataset(d2, 2.0));
-        /*JFreeChart chart =*/
-        new JFreeChart(plot);
+        /*JFreeChart chart =*/ new JFreeChart(plot);
         LegendItem li = r.getLegendItem(1, 2);
         assertEquals("S5", li.getLabel());
         assertEquals(1, li.getDatasetIndex());

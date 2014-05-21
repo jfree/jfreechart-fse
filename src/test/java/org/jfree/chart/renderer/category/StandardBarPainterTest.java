@@ -43,7 +43,13 @@ package org.jfree.chart.renderer.category;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -51,7 +57,10 @@ import static org.junit.Assert.assertFalse;
 /**
  * Tests for the {@link StandardBarPainter} class.
  */
-public class StandardBarPainterTest {
+public class StandardBarPainterTest  {
+
+
+
 
 
     /**
@@ -95,14 +104,14 @@ public class StandardBarPainterTest {
     public void testSerialization() throws IOException, ClassNotFoundException {
         StandardBarPainter p1 = new StandardBarPainter();
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(p1);
-        out.close();
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(p1);
+            out.close();
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         StandardBarPainter p2 = (StandardBarPainter) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(p1, p2);
     }

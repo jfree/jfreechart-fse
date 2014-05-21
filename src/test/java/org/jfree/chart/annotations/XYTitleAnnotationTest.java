@@ -50,14 +50,26 @@ import org.jfree.data.xy.DefaultTableXYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link XYTitleAnnotation} class.
  */
-public class XYTitleAnnotationTest {
+public class XYTitleAnnotationTest  {
+
+
+
 
 
     /**
@@ -69,7 +81,7 @@ public class XYTitleAnnotationTest {
         XYTitleAnnotation a1 = new XYTitleAnnotation(1.0, 2.0, t);
         XYTitleAnnotation a2 = new XYTitleAnnotation(1.0, 2.0, t);
         assertEquals(a1, a2);
-
+        
         a1 = new XYTitleAnnotation(1.1, 2.0, t);
         assertFalse(a1.equals(a2));
         a2 = new XYTitleAnnotation(1.1, 2.0, t);
@@ -79,7 +91,7 @@ public class XYTitleAnnotationTest {
         assertFalse(a1.equals(a2));
         a2 = new XYTitleAnnotation(1.1, 2.2, t);
         assertEquals(a1, a2);
-
+        
         TextTitle t2 = new TextTitle("Title 2");
         a1 = new XYTitleAnnotation(1.1, 2.2, t2);
         assertFalse(a1.equals(a2));
@@ -100,7 +112,7 @@ public class XYTitleAnnotationTest {
         int h2 = a2.hashCode();
         assertEquals(h1, h2);
     }
-
+    
     /**
      * Confirm that cloning works.
      */
@@ -133,7 +145,7 @@ public class XYTitleAnnotationTest {
         in.close();
         assertEquals(a1, a2);
     }
-
+    
     /**
      * Draws the chart with a <code>null</code> info object to make sure that 
      * no exceptions are thrown.
@@ -141,31 +153,30 @@ public class XYTitleAnnotationTest {
     @Test
     public void testDrawWithNullInfo() {
 
-        DefaultTableXYDataset dataset = new DefaultTableXYDataset();
-
-        XYSeries s1 = new XYSeries("Series 1", true, false);
-        s1.add(5.0, 5.0);
-        s1.add(10.0, 15.5);
-        s1.add(15.0, 9.5);
-        s1.add(20.0, 7.5);
-        dataset.addSeries(s1);
-
-        XYSeries s2 = new XYSeries("Series 2", true, false);
-        s2.add(5.0, 5.0);
-        s2.add(10.0, 15.5);
-        s2.add(15.0, 9.5);
-        s2.add(20.0, 3.5);
-        dataset.addSeries(s2);
-        XYPlot plot = new XYPlot(dataset,
-                new NumberAxis("X"), new NumberAxis("Y"),
-                new XYLineAndShapeRenderer());
-        plot.addAnnotation(new XYTitleAnnotation(5.0, 6.0,
-                new TextTitle("Hello World!")));
-        JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */
-        chart.createBufferedImage(300, 200,
-                null);
-        //FIXME we should really assert a value here
+            DefaultTableXYDataset dataset = new DefaultTableXYDataset();
+        
+            XYSeries s1 = new XYSeries("Series 1", true, false);
+            s1.add(5.0, 5.0);
+            s1.add(10.0, 15.5);
+            s1.add(15.0, 9.5);
+            s1.add(20.0, 7.5);
+            dataset.addSeries(s1);
+        
+            XYSeries s2 = new XYSeries("Series 2", true, false);
+            s2.add(5.0, 5.0);
+            s2.add(10.0, 15.5);
+            s2.add(15.0, 9.5);
+            s2.add(20.0, 3.5);
+            dataset.addSeries(s2);
+            XYPlot plot = new XYPlot(dataset, 
+                    new NumberAxis("X"), new NumberAxis("Y"), 
+                    new XYLineAndShapeRenderer());
+            plot.addAnnotation(new XYTitleAnnotation(5.0, 6.0, 
+                    new TextTitle("Hello World!")));
+            JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */ chart.createBufferedImage(300, 200, 
+                    null);
+            //FIXME we should really assert a value here
     }
 
 }

@@ -42,13 +42,13 @@
 
 package org.jfree.data.category;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.UnknownKeyException;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DatasetChangeEvent;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * A {@link CategoryDataset} implementation that presents a subset of the
@@ -80,7 +80,7 @@ public class SlidingCategoryDataset extends AbstractDataset
      * @param maxColumns  the maximumColumnCount.
      */
     public SlidingCategoryDataset(CategoryDataset underlying, int firstColumn,
-                                  int maxColumns) {
+            int maxColumns) {
         this.underlying = underlying;
         this.firstCategoryIndex = firstColumn;
         this.maximumCategoryCount = maxColumns;
@@ -262,7 +262,8 @@ public class SlidingCategoryDataset extends AbstractDataset
         int c = getColumnIndex(columnKey);
         if (c != -1) {
             return this.underlying.getValue(r, c + this.firstCategoryIndex);
-        } else {
+        }
+        else {
             throw new UnknownKeyException("Unknown columnKey: " + columnKey);
         }
     }
@@ -277,7 +278,8 @@ public class SlidingCategoryDataset extends AbstractDataset
         int last = lastCategoryIndex();
         if (last == -1) {
             return 0;
-        } else {
+        }
+        else {
             return Math.max(last - this.firstCategoryIndex + 1, 0);
         }
     }

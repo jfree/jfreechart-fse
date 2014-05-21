@@ -43,14 +43,26 @@ package org.jfree.data;
 
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link ComparableObjectSeries} class.
  */
-public class ComparableObjectSeriesTest {
+public class ComparableObjectSeriesTest  {
 
     static class MyComparableObjectSeries extends ComparableObjectSeries {
 
@@ -62,7 +74,6 @@ public class ComparableObjectSeriesTest {
         public MyComparableObjectSeries(Comparable key) {
             super(key);
         }
-
         /**
          * Creates a new instance.
          *
@@ -71,10 +82,9 @@ public class ComparableObjectSeriesTest {
          * @param allowDuplicateXValues  allow duplicate values?
          */
         public MyComparableObjectSeries(Comparable key, boolean autoSort,
-                                        boolean allowDuplicateXValues) {
+                boolean allowDuplicateXValues) {
             super(key, autoSort, allowDuplicateXValues);
         }
-
         @Override
         public void add(Comparable x, Object y) {
             super.add(x, y);
@@ -85,6 +95,9 @@ public class ComparableObjectSeriesTest {
             return super.remove(x);
         }
     }
+
+
+
 
 
     /**
@@ -102,10 +115,10 @@ public class ComparableObjectSeriesTest {
 
         // try null key
         try {
-            /*s1 = */
-            new ComparableObjectSeries(null);
+            /*s1 = */new ComparableObjectSeries(null);
             fail("Should have thrown an IllegalArgumentException on null parameter");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }
@@ -178,15 +191,15 @@ public class ComparableObjectSeriesTest {
         MyComparableObjectSeries s1 = new MyComparableObjectSeries("A");
         s1.add(new Integer(1), "ABC");
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(s1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(s1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         MyComparableObjectSeries s2 = (MyComparableObjectSeries) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(s1, s2);
     }

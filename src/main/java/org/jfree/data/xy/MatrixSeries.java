@@ -47,9 +47,9 @@
 
 package org.jfree.data.xy;
 
-import org.jfree.data.general.Series;
-
 import java.io.Serializable;
+
+import org.jfree.data.general.Series;
 
 /**
  * Represents a dense matrix M[i,j] where each Mij item of the matrix has a

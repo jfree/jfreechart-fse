@@ -42,7 +42,7 @@
 
 package org.jfree.chart;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -123,7 +123,7 @@ public class ChartTransferable implements Transferable {
      * @param cloneData  clone the dataset(s)?
      */
     public ChartTransferable(JFreeChart chart, int width, int height,
-                             boolean cloneData) {
+            boolean cloneData) {
         this(chart, width, height, 0, 0, Integer.MAX_VALUE, Integer.MAX_VALUE,
                 true);
     }
@@ -145,15 +145,16 @@ public class ChartTransferable implements Transferable {
      * @since 1.0.14
      */
     public ChartTransferable(JFreeChart chart, int width, int height,
-                             int minDrawW, int minDrawH, int maxDrawW, int maxDrawH,
-                             boolean cloneData) {
+            int minDrawW, int minDrawH, int maxDrawW, int maxDrawH,
+            boolean cloneData) {
 
         // we clone the chart because presumably there can be some delay
         // between putting this instance on the system clipboard and
         // actually having the getTransferData() method called...
         try {
             this.chart = (JFreeChart) chart.clone();
-        } catch (CloneNotSupportedException e) {
+        }
+        catch (CloneNotSupportedException e) {
             this.chart = chart;
         }
         // FIXME: we've cloned the chart, but the dataset(s) aren't cloned
@@ -173,7 +174,7 @@ public class ChartTransferable implements Transferable {
      */
     @Override
     public DataFlavor[] getTransferDataFlavors() {
-        return new DataFlavor[]{this.imageFlavor};
+        return new DataFlavor[] {this.imageFlavor};
     }
 
     /**
@@ -206,7 +207,8 @@ public class ChartTransferable implements Transferable {
             return createBufferedImage(this.chart, this.width, this.height,
                     this.minDrawWidth, this.minDrawHeight, this.maxDrawWidth,
                     this.maxDrawHeight);
-        } else {
+        }
+        else {
             throw new UnsupportedFlavorException(flavor);
         }
     }
@@ -222,12 +224,12 @@ public class ChartTransferable implements Transferable {
      * @param maxDrawW  the maximum width for chart drawing.
      * @param maxDrawH  the maximum height for chart drawing.
      *
-     * @return A chart image.
+     * @return  A chart image.
      *
      * @since 1.0.14
      */
     private BufferedImage createBufferedImage(JFreeChart chart, int w, int h,
-                                              int minDrawW, int minDrawH, int maxDrawW, int maxDrawH) {
+            int minDrawW, int minDrawH, int maxDrawW, int maxDrawH) {
 
         BufferedImage image = new BufferedImage(w, h,
                 BufferedImage.TYPE_INT_ARGB);
@@ -243,7 +245,8 @@ public class ChartTransferable implements Transferable {
             scaleX = drawWidth / minDrawW;
             drawWidth = minDrawW;
             scale = true;
-        } else if (drawWidth > maxDrawW) {
+        }
+        else if (drawWidth > maxDrawW) {
             scaleX = drawWidth / maxDrawW;
             drawWidth = maxDrawW;
             scale = true;
@@ -252,7 +255,8 @@ public class ChartTransferable implements Transferable {
             scaleY = drawHeight / minDrawH;
             drawHeight = minDrawH;
             scale = true;
-        } else if (drawHeight > maxDrawH) {
+        }
+        else if (drawHeight > maxDrawH) {
             scaleY = drawHeight / maxDrawH;
             drawHeight = maxDrawH;
             scale = true;

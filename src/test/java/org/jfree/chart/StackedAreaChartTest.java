@@ -55,19 +55,24 @@ import org.jfree.data.general.DatasetUtilities;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Some tests for a stacked area chart.
  */
-public class StackedAreaChartTest {
+public class StackedAreaChartTest  {
 
     /** A chart. */
     private JFreeChart chart;
+
+
+
 
 
     /**
@@ -85,7 +90,7 @@ public class StackedAreaChartTest {
     @Test
     public void testDrawWithNullInfo() {
 
-        BufferedImage image = new BufferedImage(200, 100,
+        BufferedImage image = new BufferedImage(200 , 100,
                 BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = image.createGraphics();
         this.chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null,
@@ -102,9 +107,9 @@ public class StackedAreaChartTest {
 
         // create a dataset...
         Number[][] data = new Integer[][]
-                {{-30, -20},
-                        {-10, 10},
-                        {20, 30}};
+            {{-30, -20},
+             {-10, 10},
+             {20, 30}};
 
         CategoryDataset newData = DatasetUtilities.createCategoryDataset("S",
                 "C", data);
@@ -117,9 +122,9 @@ public class StackedAreaChartTest {
         ValueAxis axis = plot.getRangeAxis();
         Range range = axis.getRange();
         assertTrue("Expecting the lower bound of the range to be around -30: "
-                + range.getLowerBound(), range.getLowerBound() <= -30);
+                    + range.getLowerBound(), range.getLowerBound() <= -30);
         assertTrue("Expecting the upper bound of the range to be around 30: "
-                + range.getUpperBound(), range.getUpperBound() >= 30);
+                   + range.getUpperBound(), range.getUpperBound() >= 30);
 
     }
 
@@ -132,7 +137,7 @@ public class StackedAreaChartTest {
         CategoryPlot plot = (CategoryPlot) this.chart.getPlot();
         CategoryItemRenderer renderer = plot.getRenderer();
         StandardCategoryToolTipGenerator tt
-                = new StandardCategoryToolTipGenerator();
+            = new StandardCategoryToolTipGenerator();
         renderer.setSeriesToolTipGenerator(0, tt);
         CategoryToolTipGenerator tt2 = renderer.getToolTipGenerator(0, 0);
         assertSame(tt2, tt);
@@ -161,9 +166,9 @@ public class StackedAreaChartTest {
     private static JFreeChart createChart() {
 
         Number[][] data = new Integer[][]
-                {{-3, -2},
-                        {-1, 1},
-                        {2, 3}};
+            {{-3, -2},
+             {-1, 1},
+             {2, 3}};
 
         CategoryDataset dataset = DatasetUtilities.createCategoryDataset("S",
                 "C", data);

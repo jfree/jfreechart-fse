@@ -43,14 +43,25 @@ package org.jfree.chart.plot;
 import org.jfree.chart.text.TextBox;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Some tests for the {@link CategoryMarker} class.
  */
-public class PieLabelRecordTest {
+public class PieLabelRecordTest  {
+
+
+
 
 
     /**
@@ -112,7 +123,7 @@ public class PieLabelRecordTest {
         assertFalse(p1 instanceof Cloneable);
     }
 
-    /**
+   /**
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
@@ -121,15 +132,15 @@ public class PieLabelRecordTest {
         PieLabelRecord p1 = new PieLabelRecord("A", 1.0, 2.0, new TextBox("B"),
                 3.0, 4.0, 5.0);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(p1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(p1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         PieLabelRecord p2 = (PieLabelRecord) in.readObject();
-        in.close();
+            in.close();
 
         boolean b = p1.equals(p2);
         assertTrue(b);

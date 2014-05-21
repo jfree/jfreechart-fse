@@ -59,14 +59,27 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.Test;
 
 import java.awt.geom.Rectangle2D;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link XYAreaRenderer} class.
  */
-public class XYAreaRendererTest {
+public class XYAreaRendererTest  {
+
+
+
 
 
     /**
@@ -179,15 +192,15 @@ public class XYAreaRendererTest {
 
         XYAreaRenderer r1 = new XYAreaRenderer();
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(r1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(r1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         XYAreaRenderer r2 = (XYAreaRenderer) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(r1, r2);
 
@@ -199,28 +212,27 @@ public class XYAreaRendererTest {
      */
     @Test
     public void testDrawWithNullInfo() {
-        DefaultTableXYDataset dataset = new DefaultTableXYDataset();
+            DefaultTableXYDataset dataset = new DefaultTableXYDataset();
 
-        XYSeries s1 = new XYSeries("Series 1", true, false);
-        s1.add(5.0, 5.0);
-        s1.add(10.0, 15.5);
-        s1.add(15.0, 9.5);
-        s1.add(20.0, 7.5);
-        dataset.addSeries(s1);
+            XYSeries s1 = new XYSeries("Series 1", true, false);
+            s1.add(5.0, 5.0);
+            s1.add(10.0, 15.5);
+            s1.add(15.0, 9.5);
+            s1.add(20.0, 7.5);
+            dataset.addSeries(s1);
 
-        XYSeries s2 = new XYSeries("Series 2", true, false);
-        s2.add(5.0, 5.0);
-        s2.add(10.0, 15.5);
-        s2.add(15.0, 9.5);
-        s2.add(20.0, 3.5);
-        dataset.addSeries(s2);
-        XYPlot plot = new XYPlot(dataset,
-                new NumberAxis("X"), new NumberAxis("Y"),
-                new XYAreaRenderer());
-        JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */
-        chart.createBufferedImage(300, 200,
-                null);
+            XYSeries s2 = new XYSeries("Series 2", true, false);
+            s2.add(5.0, 5.0);
+            s2.add(10.0, 15.5);
+            s2.add(15.0, 9.5);
+            s2.add(20.0, 3.5);
+            dataset.addSeries(s2);
+            XYPlot plot = new XYPlot(dataset,
+                    new NumberAxis("X"), new NumberAxis("Y"),
+                    new XYAreaRenderer());
+            JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
+                    null);
 
     }
 
@@ -253,8 +265,7 @@ public class XYAreaRendererTest {
         XYPlot plot = new XYPlot(d1, new NumberAxis("x"),
                 new NumberAxis("y"), r);
         plot.setDataset(1, d2);
-        /*JFreeChart chart =*/
-        new JFreeChart(plot);
+        /*JFreeChart chart =*/ new JFreeChart(plot);
         LegendItem li = r.getLegendItem(1, 2);
         assertEquals("S5", li.getLabel());
         assertEquals(1, li.getDatasetIndex());

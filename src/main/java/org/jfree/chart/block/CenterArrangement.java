@@ -43,12 +43,12 @@
 
 package org.jfree.chart.block;
 
-import org.jfree.chart.ui.Size2D;
-
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.List;
+
+import org.jfree.chart.ui.Size2D;
 
 /**
  * Arranges a block in the center of its container.  This class is immutable.
@@ -99,25 +99,33 @@ public class CenterArrangement implements Arrangement, Serializable {
         if (w == LengthConstraintType.NONE) {
             if (h == LengthConstraintType.NONE) {
                 return arrangeNN(container, g2);
-            } else if (h == LengthConstraintType.FIXED) {
-                throw new RuntimeException("Not implemented.");
-            } else if (h == LengthConstraintType.RANGE) {
+            }
+            else if (h == LengthConstraintType.FIXED) {
                 throw new RuntimeException("Not implemented.");
             }
-        } else if (w == LengthConstraintType.FIXED) {
+            else if (h == LengthConstraintType.RANGE) {
+                throw new RuntimeException("Not implemented.");
+            }
+        }
+        else if (w == LengthConstraintType.FIXED) {
             if (h == LengthConstraintType.NONE) {
                 return arrangeFN(container, g2, constraint);
-            } else if (h == LengthConstraintType.FIXED) {
-                throw new RuntimeException("Not implemented.");
-            } else if (h == LengthConstraintType.RANGE) {
+            }
+            else if (h == LengthConstraintType.FIXED) {
                 throw new RuntimeException("Not implemented.");
             }
-        } else if (w == LengthConstraintType.RANGE) {
+            else if (h == LengthConstraintType.RANGE) {
+                throw new RuntimeException("Not implemented.");
+            }
+        }
+        else if (w == LengthConstraintType.RANGE) {
             if (h == LengthConstraintType.NONE) {
                 return arrangeRN(container, g2, constraint);
-            } else if (h == LengthConstraintType.FIXED) {
+            }
+            else if (h == LengthConstraintType.FIXED) {
                 return arrangeRF(container, g2, constraint);
-            } else if (h == LengthConstraintType.RANGE) {
+            }
+            else if (h == LengthConstraintType.RANGE) {
                 return arrangeRR(container, g2, constraint);
             }
         }
@@ -164,7 +172,8 @@ public class CenterArrangement implements Arrangement, Serializable {
         Size2D s = arrangeFN(container, g2, constraint);
         if (constraint.getHeightRange().contains(s.height)) {
             return s;
-        } else {
+        }
+        else {
             RectangleConstraint c = constraint.toFixedHeight(
                     constraint.getHeightRange().constrain(s.getHeight()));
             return arrangeFF(container, g2, c);
@@ -206,7 +215,8 @@ public class CenterArrangement implements Arrangement, Serializable {
         Size2D s1 = arrangeNN(container, g2);
         if (constraint.getWidthRange().contains(s1.width)) {
             return s1;  // TODO: we didn't check the height yet
-        } else {
+        }
+        else {
             RectangleConstraint c = constraint.toFixedWidth(
                     constraint.getWidthRange().getUpperBound());
             return arrangeFR(container, g2, c);
@@ -229,7 +239,8 @@ public class CenterArrangement implements Arrangement, Serializable {
         Size2D s = arrangeNF(container, g2, constraint);
         if (constraint.getWidthRange().contains(s.width)) {
             return s;
-        } else {
+        }
+        else {
             RectangleConstraint c = constraint.toFixedWidth(
                     constraint.getWidthRange().constrain(s.getWidth()));
             return arrangeFF(container, g2, c);
@@ -253,7 +264,8 @@ public class CenterArrangement implements Arrangement, Serializable {
         Size2D s1 = arrangeNN(container, g2);
         if (constraint.getWidthRange().contains(s1.width)) {
             return s1;
-        } else {
+        }
+        else {
             RectangleConstraint c = constraint.toFixedWidth(
                     constraint.getWidthRange().getUpperBound());
             return arrangeFN(container, g2, c);

@@ -60,14 +60,14 @@
 
 package org.jfree.data.time;
 
-import org.jfree.chart.date.MonthConstants;
-import org.jfree.chart.date.SerialDate;
-
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import org.jfree.chart.date.MonthConstants;
+import org.jfree.chart.date.SerialDate;
 
 /**
  * Defines a quarter (in a given year).  The range supported is Q1 1900 to
@@ -87,14 +87,14 @@ public class Quarter extends RegularTimePeriod implements Serializable {
 
     /** The first month in each quarter. */
     public static final int[] FIRST_MONTH_IN_QUARTER = {
-            0, MonthConstants.JANUARY, MonthConstants.APRIL, MonthConstants.JULY,
-            MonthConstants.OCTOBER
+        0, MonthConstants.JANUARY, MonthConstants.APRIL, MonthConstants.JULY,
+        MonthConstants.OCTOBER
     };
 
     /** The last month in each quarter. */
     public static final int[] LAST_MONTH_IN_QUARTER = {
-            0, MonthConstants.MARCH, MonthConstants.JUNE, MonthConstants.SEPTEMBER,
-            MonthConstants.DECEMBER
+        0, MonthConstants.MARCH, MonthConstants.JUNE, MonthConstants.SEPTEMBER,
+        MonthConstants.DECEMBER
     };
 
     /** The year in which the quarter falls. */
@@ -152,7 +152,7 @@ public class Quarter extends RegularTimePeriod implements Serializable {
      *
      * @param time  the date/time (<code>null</code> not permitted).
      *
-     * @see #Quarter(Date)
+     * @see #Quarter(Date, TimeZone)
      */
     public Quarter(Date time) {
         this(time, TimeZone.getDefault(), Locale.getDefault());
@@ -261,10 +261,12 @@ public class Quarter extends RegularTimePeriod implements Serializable {
         Quarter result;
         if (this.quarter > FIRST_QUARTER) {
             result = new Quarter(this.quarter - 1, this.year);
-        } else {
+        }
+        else {
             if (this.year > 1900) {
                 result = new Quarter(LAST_QUARTER, this.year - 1);
-            } else {
+            }
+            else {
                 result = null;
             }
         }
@@ -281,10 +283,12 @@ public class Quarter extends RegularTimePeriod implements Serializable {
         Quarter result;
         if (this.quarter < LAST_QUARTER) {
             result = new Quarter(this.quarter + 1, this.year);
-        } else {
+        }
+        else {
             if (this.year < 9999) {
                 result = new Quarter(FIRST_QUARTER, this.year + 1);
-            } else {
+            }
+            else {
                 result = null;
             }
         }
@@ -371,7 +375,7 @@ public class Quarter extends RegularTimePeriod implements Serializable {
 
         // CASE 2 : Comparing to another TimePeriod object
         // -----------------------------------------------
-        else {
+        else  {
             // more difficult case - evaluate later...
             result = 0;
         }

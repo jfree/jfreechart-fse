@@ -46,15 +46,28 @@ import org.jfree.data.DataUtilities;
 import org.jfree.data.UnknownKeyException;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link DefaultIntervalCategoryDataset} class.
  */
-public class DefaultIntervalCategoryDatasetTest {
+public class DefaultIntervalCategoryDatasetTest  {
+
+
+
 
 
     /**
@@ -62,15 +75,15 @@ public class DefaultIntervalCategoryDatasetTest {
      */
     @Test
     public void testGetValue() {
-        double[] starts_S1 = new double[]{0.1, 0.2, 0.3};
-        double[] starts_S2 = new double[]{0.3, 0.4, 0.5};
-        double[] ends_S1 = new double[]{0.5, 0.6, 0.7};
-        double[] ends_S2 = new double[]{0.7, 0.8, 0.9};
-        double[][] starts = new double[][]{starts_S1, starts_S2};
-        double[][] ends = new double[][]{ends_S1, ends_S2};
+        double[] starts_S1 = new double[] {0.1, 0.2, 0.3};
+        double[] starts_S2 = new double[] {0.3, 0.4, 0.5};
+        double[] ends_S1 = new double[] {0.5, 0.6, 0.7};
+        double[] ends_S2 = new double[] {0.7, 0.8, 0.9};
+        double[][] starts = new double[][] {starts_S1, starts_S2};
+        double[][] ends = new double[][] {ends_S1, ends_S2};
         DefaultIntervalCategoryDataset d = new DefaultIntervalCategoryDataset(
-                new Comparable[]{"Series 1", "Series 2"},
-                new Comparable[]{"Category 1", "Category 2", "Category 3"},
+                new Comparable[] {"Series 1", "Series 2"},
+                new Comparable[] {"Category 1", "Category 2", "Category 3"},
                 DataUtilities.createNumberArray2D(starts),
                 DataUtilities.createNumberArray2D(ends));
 
@@ -103,14 +116,16 @@ public class DefaultIntervalCategoryDatasetTest {
         try {
             d.getValue("XX", "Category 1");
             fail("UnknownKeyException should have been thrown with provided key");
-        } catch (UnknownKeyException e) {
+        }
+        catch (UnknownKeyException e) {
             assertEquals("Unknown 'series' key.", e.getMessage());
         }
 
         try {
             d.getValue("Series 1", "XX");
             fail("UnknownKeyException should have been thrown with provided key");
-        } catch (UnknownKeyException e) {
+        }
+        catch (UnknownKeyException e) {
             assertEquals("Unknown 'category' key.", e.getMessage());
         }
     }
@@ -121,12 +136,12 @@ public class DefaultIntervalCategoryDatasetTest {
      */
     @Test
     public void testGetRowAndColumnCount() {
-        double[] starts_S1 = new double[]{0.1, 0.2, 0.3};
-        double[] starts_S2 = new double[]{0.3, 0.4, 0.5};
-        double[] ends_S1 = new double[]{0.5, 0.6, 0.7};
-        double[] ends_S2 = new double[]{0.7, 0.8, 0.9};
-        double[][] starts = new double[][]{starts_S1, starts_S2};
-        double[][] ends = new double[][]{ends_S1, ends_S2};
+        double[] starts_S1 = new double[] {0.1, 0.2, 0.3};
+        double[] starts_S2 = new double[] {0.3, 0.4, 0.5};
+        double[] ends_S1 = new double[] {0.5, 0.6, 0.7};
+        double[] ends_S2 = new double[] {0.7, 0.8, 0.9};
+        double[][] starts = new double[][] {starts_S1, starts_S2};
+        double[][] ends = new double[][] {ends_S1, ends_S2};
         DefaultIntervalCategoryDataset d
                 = new DefaultIntervalCategoryDataset(starts, ends);
 
@@ -139,21 +154,21 @@ public class DefaultIntervalCategoryDatasetTest {
      */
     @Test
     public void testEquals() {
-        double[] starts_S1A = new double[]{0.1, 0.2, 0.3};
-        double[] starts_S2A = new double[]{0.3, 0.4, 0.5};
-        double[] ends_S1A = new double[]{0.5, 0.6, 0.7};
-        double[] ends_S2A = new double[]{0.7, 0.8, 0.9};
-        double[][] startsA = new double[][]{starts_S1A, starts_S2A};
-        double[][] endsA = new double[][]{ends_S1A, ends_S2A};
+        double[] starts_S1A = new double[] {0.1, 0.2, 0.3};
+        double[] starts_S2A = new double[] {0.3, 0.4, 0.5};
+        double[] ends_S1A = new double[] {0.5, 0.6, 0.7};
+        double[] ends_S2A = new double[] {0.7, 0.8, 0.9};
+        double[][] startsA = new double[][] {starts_S1A, starts_S2A};
+        double[][] endsA = new double[][] {ends_S1A, ends_S2A};
         DefaultIntervalCategoryDataset dA
                 = new DefaultIntervalCategoryDataset(startsA, endsA);
 
-        double[] starts_S1B = new double[]{0.1, 0.2, 0.3};
-        double[] starts_S2B = new double[]{0.3, 0.4, 0.5};
-        double[] ends_S1B = new double[]{0.5, 0.6, 0.7};
-        double[] ends_S2B = new double[]{0.7, 0.8, 0.9};
-        double[][] startsB = new double[][]{starts_S1B, starts_S2B};
-        double[][] endsB = new double[][]{ends_S1B, ends_S2B};
+        double[] starts_S1B = new double[] {0.1, 0.2, 0.3};
+        double[] starts_S2B = new double[] {0.3, 0.4, 0.5};
+        double[] ends_S1B = new double[] {0.5, 0.6, 0.7};
+        double[] ends_S2B = new double[] {0.7, 0.8, 0.9};
+        double[][] startsB = new double[][] {starts_S1B, starts_S2B};
+        double[][] endsB = new double[][] {ends_S1B, ends_S2B};
         DefaultIntervalCategoryDataset dB
                 = new DefaultIntervalCategoryDataset(startsB, endsB);
 
@@ -163,10 +178,10 @@ public class DefaultIntervalCategoryDatasetTest {
         // check that two empty datasets are equal
         DefaultIntervalCategoryDataset empty1
                 = new DefaultIntervalCategoryDataset(new double[0][0],
-                new double[0][0]);
+                        new double[0][0]);
         DefaultIntervalCategoryDataset empty2
                 = new DefaultIntervalCategoryDataset(new double[0][0],
-                new double[0][0]);
+                        new double[0][0]);
         assertEquals(empty1, empty2);
     }
 
@@ -176,12 +191,12 @@ public class DefaultIntervalCategoryDatasetTest {
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
 
-        double[] starts_S1 = new double[]{0.1, 0.2, 0.3};
-        double[] starts_S2 = new double[]{0.3, 0.4, 0.5};
-        double[] ends_S1 = new double[]{0.5, 0.6, 0.7};
-        double[] ends_S2 = new double[]{0.7, 0.8, 0.9};
-        double[][] starts = new double[][]{starts_S1, starts_S2};
-        double[][] ends = new double[][]{ends_S1, ends_S2};
+        double[] starts_S1 = new double[] {0.1, 0.2, 0.3};
+        double[] starts_S2 = new double[] {0.3, 0.4, 0.5};
+        double[] ends_S1 = new double[] {0.5, 0.6, 0.7};
+        double[] ends_S2 = new double[] {0.7, 0.8, 0.9};
+        double[][] starts = new double[][] {starts_S1, starts_S2};
+        double[][] ends = new double[][] {ends_S1, ends_S2};
         DefaultIntervalCategoryDataset d1
                 = new DefaultIntervalCategoryDataset(starts, ends);
 
@@ -204,15 +219,15 @@ public class DefaultIntervalCategoryDatasetTest {
      */
     @Test
     public void testCloning() throws CloneNotSupportedException {
-        double[] starts_S1 = new double[]{0.1, 0.2, 0.3};
-        double[] starts_S2 = new double[]{0.3, 0.4, 0.5};
-        double[] ends_S1 = new double[]{0.5, 0.6, 0.7};
-        double[] ends_S2 = new double[]{0.7, 0.8, 0.9};
-        double[][] starts = new double[][]{starts_S1, starts_S2};
-        double[][] ends = new double[][]{ends_S1, ends_S2};
+        double[] starts_S1 = new double[] {0.1, 0.2, 0.3};
+        double[] starts_S2 = new double[] {0.3, 0.4, 0.5};
+        double[] ends_S1 = new double[] {0.5, 0.6, 0.7};
+        double[] ends_S2 = new double[] {0.7, 0.8, 0.9};
+        double[][] starts = new double[][] {starts_S1, starts_S2};
+        double[][] ends = new double[][] {ends_S1, ends_S2};
         DefaultIntervalCategoryDataset d1 = new DefaultIntervalCategoryDataset(
-                new Comparable[]{"Series 1", "Series 2"},
-                new Comparable[]{"Category 1", "Category 2", "Category 3"},
+                new Comparable[] {"Series 1", "Series 2"},
+                new Comparable[] {"Category 1", "Category 2", "Category 3"},
                 DataUtilities.createNumberArray2D(starts),
                 DataUtilities.createNumberArray2D(ends));
         DefaultIntervalCategoryDataset d2 = (DefaultIntervalCategoryDataset) d1.clone();
@@ -235,7 +250,7 @@ public class DefaultIntervalCategoryDatasetTest {
     public void testCloning2() throws CloneNotSupportedException {
         DefaultIntervalCategoryDataset d1
                 = new DefaultIntervalCategoryDataset(new double[0][0],
-                new double[0][0]);
+                    new double[0][0]);
         DefaultIntervalCategoryDataset d2 = (DefaultIntervalCategoryDataset) d1.clone();
 
         assertNotSame(d1, d2);
@@ -248,15 +263,15 @@ public class DefaultIntervalCategoryDatasetTest {
      */
     @Test
     public void testSetStartValue() {
-        double[] starts_S1 = new double[]{0.1, 0.2, 0.3};
-        double[] starts_S2 = new double[]{0.3, 0.4, 0.5};
-        double[] ends_S1 = new double[]{0.5, 0.6, 0.7};
-        double[] ends_S2 = new double[]{0.7, 0.8, 0.9};
-        double[][] starts = new double[][]{starts_S1, starts_S2};
-        double[][] ends = new double[][]{ends_S1, ends_S2};
+        double[] starts_S1 = new double[] {0.1, 0.2, 0.3};
+        double[] starts_S2 = new double[] {0.3, 0.4, 0.5};
+        double[] ends_S1 = new double[] {0.5, 0.6, 0.7};
+        double[] ends_S2 = new double[] {0.7, 0.8, 0.9};
+        double[][] starts = new double[][] {starts_S1, starts_S2};
+        double[][] ends = new double[][] {ends_S1, ends_S2};
         DefaultIntervalCategoryDataset d1 = new DefaultIntervalCategoryDataset(
-                new Comparable[]{"Series 1", "Series 2"},
-                new Comparable[]{"Category 1", "Category 2", "Category 3"},
+                new Comparable[] {"Series 1", "Series 2"},
+                new Comparable[] {"Category 1", "Category 2", "Category 3"},
                 DataUtilities.createNumberArray2D(starts),
                 DataUtilities.createNumberArray2D(ends));
         d1.setStartValue(0, "Category 2", 99.9);
@@ -266,14 +281,16 @@ public class DefaultIntervalCategoryDatasetTest {
         try {
             d1.setStartValue(-1, "Category 2", 99.9);
             fail("IllegalArgumentException should have been thrown on negative key");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("DefaultIntervalCategoryDataset.setValue: series outside valid range.", e.getMessage());
         }
 
         try {
             d1.setStartValue(2, "Category 2", 99.9);
             fail("IllegalArgumentException should have been thrown on key out of range");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("DefaultIntervalCategoryDataset.setValue: series outside valid range.", e.getMessage());
         }
     }
@@ -283,15 +300,15 @@ public class DefaultIntervalCategoryDatasetTest {
      */
     @Test
     public void testSetEndValue() {
-        double[] starts_S1 = new double[]{0.1, 0.2, 0.3};
-        double[] starts_S2 = new double[]{0.3, 0.4, 0.5};
-        double[] ends_S1 = new double[]{0.5, 0.6, 0.7};
-        double[] ends_S2 = new double[]{0.7, 0.8, 0.9};
-        double[][] starts = new double[][]{starts_S1, starts_S2};
-        double[][] ends = new double[][]{ends_S1, ends_S2};
+        double[] starts_S1 = new double[] {0.1, 0.2, 0.3};
+        double[] starts_S2 = new double[] {0.3, 0.4, 0.5};
+        double[] ends_S1 = new double[] {0.5, 0.6, 0.7};
+        double[] ends_S2 = new double[] {0.7, 0.8, 0.9};
+        double[][] starts = new double[][] {starts_S1, starts_S2};
+        double[][] ends = new double[][] {ends_S1, ends_S2};
         DefaultIntervalCategoryDataset d1 = new DefaultIntervalCategoryDataset(
-                new Comparable[]{"Series 1", "Series 2"},
-                new Comparable[]{"Category 1", "Category 2", "Category 3"},
+                new Comparable[] {"Series 1", "Series 2"},
+                new Comparable[] {"Category 1", "Category 2", "Category 3"},
                 DataUtilities.createNumberArray2D(starts),
                 DataUtilities.createNumberArray2D(ends));
         d1.setEndValue(0, "Category 2", 99.9);
@@ -301,14 +318,16 @@ public class DefaultIntervalCategoryDatasetTest {
         try {
             d1.setEndValue(-1, "Category 2", 99.9);
             fail("IllegalArgumentException should have been thrown on negative key");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("DefaultIntervalCategoryDataset.setValue: series outside valid range.", e.getMessage());
         }
 
         try {
             d1.setEndValue(2, "Category 2", 99.9);
             fail("IllegalArgumentException should have been thrown on index out of range");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("DefaultIntervalCategoryDataset.setValue: series outside valid range.", e.getMessage());
         }
     }
@@ -321,7 +340,7 @@ public class DefaultIntervalCategoryDatasetTest {
         // check an empty dataset
         DefaultIntervalCategoryDataset empty
                 = new DefaultIntervalCategoryDataset(new double[0][0],
-                new double[0][0]);
+                        new double[0][0]);
         assertEquals(0, empty.getSeriesCount());
     }
 
@@ -333,7 +352,7 @@ public class DefaultIntervalCategoryDatasetTest {
         // check an empty dataset
         DefaultIntervalCategoryDataset empty
                 = new DefaultIntervalCategoryDataset(new double[0][0],
-                new double[0][0]);
+                        new double[0][0]);
         assertEquals(0, empty.getCategoryCount());
     }
 
@@ -345,7 +364,7 @@ public class DefaultIntervalCategoryDatasetTest {
         // check an empty dataset
         DefaultIntervalCategoryDataset empty
                 = new DefaultIntervalCategoryDataset(new double[0][0],
-                new double[0][0]);
+                        new double[0][0]);
         assertEquals(-1, empty.getSeriesIndex("ABC"));
     }
 
@@ -357,7 +376,7 @@ public class DefaultIntervalCategoryDatasetTest {
         // check an empty dataset
         DefaultIntervalCategoryDataset empty
                 = new DefaultIntervalCategoryDataset(new double[0][0],
-                new double[0][0]);
+                        new double[0][0]);
         assertEquals(-1, empty.getRowIndex("ABC"));
     }
 
@@ -369,9 +388,9 @@ public class DefaultIntervalCategoryDatasetTest {
         // check an empty dataset
         DefaultIntervalCategoryDataset empty
                 = new DefaultIntervalCategoryDataset(new double[0][0],
-                new double[0][0]);
+                        new double[0][0]);
 
-        empty.setSeriesKeys(new String[0]);
+            empty.setSeriesKeys(new String[0]);
 
     }
 
@@ -383,7 +402,7 @@ public class DefaultIntervalCategoryDatasetTest {
         // check an empty dataset
         DefaultIntervalCategoryDataset empty
                 = new DefaultIntervalCategoryDataset(new double[0][0],
-                new double[0][0]);
+                        new double[0][0]);
         assertEquals(-1, empty.getCategoryIndex("ABC"));
     }
 
@@ -395,7 +414,7 @@ public class DefaultIntervalCategoryDatasetTest {
         // check an empty dataset
         DefaultIntervalCategoryDataset empty
                 = new DefaultIntervalCategoryDataset(new double[0][0],
-                new double[0][0]);
+                        new double[0][0]);
         assertEquals(-1, empty.getColumnIndex("ABC"));
     }
 
@@ -407,9 +426,9 @@ public class DefaultIntervalCategoryDatasetTest {
         // check an empty dataset
         DefaultIntervalCategoryDataset empty
                 = new DefaultIntervalCategoryDataset(new double[0][0],
-                new double[0][0]);
+                        new double[0][0]);
 
-        empty.setCategoryKeys(new String[0]);
+            empty.setCategoryKeys(new String[0]);
 
     }
 
@@ -421,7 +440,7 @@ public class DefaultIntervalCategoryDatasetTest {
         // check an empty dataset
         DefaultIntervalCategoryDataset empty
                 = new DefaultIntervalCategoryDataset(new double[0][0],
-                new double[0][0]);
+                        new double[0][0]);
         List keys = empty.getColumnKeys();
         assertEquals(0, keys.size());
     }
@@ -434,7 +453,7 @@ public class DefaultIntervalCategoryDatasetTest {
         // check an empty dataset
         DefaultIntervalCategoryDataset empty
                 = new DefaultIntervalCategoryDataset(new double[0][0],
-                new double[0][0]);
+                        new double[0][0]);
         List keys = empty.getRowKeys();
         assertEquals(0, keys.size());
     }
@@ -447,7 +466,7 @@ public class DefaultIntervalCategoryDatasetTest {
         // check an empty dataset
         DefaultIntervalCategoryDataset empty
                 = new DefaultIntervalCategoryDataset(new double[0][0],
-                new double[0][0]);
+                        new double[0][0]);
         assertEquals(0, empty.getColumnCount());
     }
 
@@ -459,7 +478,7 @@ public class DefaultIntervalCategoryDatasetTest {
         // check an empty dataset
         DefaultIntervalCategoryDataset empty
                 = new DefaultIntervalCategoryDataset(new double[0][0],
-                new double[0][0]);
+                        new double[0][0]);
         assertEquals(0, empty.getColumnCount());
     }
 

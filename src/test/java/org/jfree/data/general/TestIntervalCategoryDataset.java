@@ -225,7 +225,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      * @see #getValue(Comparable, Comparable)
      */
     public void addItem(Number value, Number lower, Number upper,
-                        Comparable rowKey, Comparable columnKey) {
+            Comparable rowKey, Comparable columnKey) {
         IntervalDataItem item = new IntervalDataItem(value, lower, upper);
         this.data.addObject(item, rowKey, columnKey);
         fireDatasetChanged();
@@ -241,7 +241,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      * @see #getValue(Comparable, Comparable)
      */
     public void addItem(double value, double lower, double upper,
-                        Comparable rowKey, Comparable columnKey) {
+            Comparable rowKey, Comparable columnKey) {
         addItem(new Double(value), new Double(lower), new Double(upper),
                 rowKey, columnKey);
     }
@@ -257,7 +257,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      * @see #getValue(Comparable, Comparable)
      */
     public void setItem(Number value, Number lower, Number upper,
-                        Comparable rowKey, Comparable columnKey) {
+            Comparable rowKey, Comparable columnKey) {
         IntervalDataItem item = new IntervalDataItem(value, lower, upper);
         this.data.addObject(item, rowKey, columnKey);
         fireDatasetChanged();
@@ -274,7 +274,7 @@ public class TestIntervalCategoryDataset extends AbstractDataset
      * @see #getValue(Comparable, Comparable)
      */
     public void setItem(double value, double lower, double upper,
-                        Comparable rowKey, Comparable columnKey) {
+            Comparable rowKey, Comparable columnKey) {
         setItem(new Double(value), new Double(lower), new Double(upper),
                 rowKey, columnKey);
     }
@@ -388,7 +388,8 @@ public class TestIntervalCategoryDataset extends AbstractDataset
                     if (v2 != null) {
                         return false;
                     }
-                } else if (!v1.equals(v2)) {
+                }
+                else if (!v1.equals(v2)) {
                     return false;
                 }
             }

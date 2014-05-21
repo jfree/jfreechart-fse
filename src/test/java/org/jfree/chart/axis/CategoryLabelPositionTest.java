@@ -47,7 +47,13 @@ import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.TextAnchor;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -55,7 +61,10 @@ import static org.junit.Assert.assertFalse;
 /**
  * Tests for the {@link CategoryLabelPosition} class.
  */
-public class CategoryLabelPositionTest {
+public class CategoryLabelPositionTest  {
+
+
+
 
 
     /**
@@ -120,7 +129,7 @@ public class CategoryLabelPositionTest {
         assertEquals(p1, p2);
 
         p1 = new CategoryLabelPosition(RectangleAnchor.TOP,
-                TextBlockAnchor.CENTER, TextAnchor.CENTER, Math.PI / 6.0,
+                TextBlockAnchor.CENTER, TextAnchor.CENTER,  Math.PI / 6.0,
                 CategoryLabelWidthType.CATEGORY, 0.55f);
         assertFalse(p1.equals(p2));
         p2 = new CategoryLabelPosition(RectangleAnchor.TOP,

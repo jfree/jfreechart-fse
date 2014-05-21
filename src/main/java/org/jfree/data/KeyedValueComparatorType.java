@@ -40,13 +40,11 @@
 
 package org.jfree.data;
 
-import java.io.Serializable;
-
 /**
  * Used to indicate the type of a {@link KeyedValueComparator} : 'by key' or
  * 'by value'.
  */
-public enum KeyedValueComparatorType implements Serializable {
+public enum KeyedValueComparatorType {
 
     /** An object representing 'by key' sorting. */
     BY_KEY("KeyedValueComparatorType.BY_KEY"),
@@ -75,5 +73,6 @@ public enum KeyedValueComparatorType implements Serializable {
     public String toString() {
         return this.name;
     }
+
 }
 

@@ -46,14 +46,14 @@ package org.jfree.chart.axis;
  */
 public enum DateTickMarkPosition {
 
-    /** Start of period. */
+     /** Start of period. */
     START("DateTickMarkPosition.START"),
 
     /** Middle of period. */
     MIDDLE("DateTickMarkPosition.MIDDLE"),
 
     /** End of period. */
-    END("DateTickMarkPosition.END");
+   END("DateTickMarkPosition.END");
 
     /** The name. */
     private String name;

@@ -45,10 +45,14 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 
+
 /**
  * Tests for the {@link ImageMapUtilities} class.
  */
-public class ImageMapUtilitiesTest {
+public class ImageMapUtilitiesTest  {
+
+
+
 
 
     /**
@@ -75,7 +79,7 @@ public class ImageMapUtilitiesTest {
         assertEquals("", ImageMapUtilities.javascriptEscape(""));
         assertEquals("abc", ImageMapUtilities.javascriptEscape("abc"));
         assertEquals("\\\'", ImageMapUtilities.javascriptEscape("\'"));
-        assertEquals("\\\"", ImageMapUtilities.javascriptEscape("\""));
+        assertEquals("\\\"", ImageMapUtilities.javascriptEscape("\""));   
         assertEquals("\\\\", ImageMapUtilities.javascriptEscape("\\"));
     }
 

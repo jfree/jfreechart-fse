@@ -117,11 +117,14 @@ public enum RectangleEdge {
         RectangleEdge result = null;
         if (edge == RectangleEdge.TOP) {
             result = RectangleEdge.BOTTOM;
-        } else if (edge == RectangleEdge.BOTTOM) {
+        }
+        else if (edge == RectangleEdge.BOTTOM) {
             result = RectangleEdge.TOP;
-        } else if (edge == RectangleEdge.LEFT) {
+        }
+        else if (edge == RectangleEdge.LEFT) {
             result = RectangleEdge.RIGHT;
-        } else if (edge == RectangleEdge.RIGHT) {
+        }
+        else if (edge == RectangleEdge.RIGHT) {
             result = RectangleEdge.LEFT;
         }
         return result;
@@ -140,11 +143,14 @@ public enum RectangleEdge {
         double result = 0.0;
         if (edge == RectangleEdge.TOP) {
             result = rectangle.getMinY();
-        } else if (edge == RectangleEdge.BOTTOM) {
+        }
+        else if (edge == RectangleEdge.BOTTOM) {
             result = rectangle.getMaxY();
-        } else if (edge == RectangleEdge.LEFT) {
+        }
+        else if (edge == RectangleEdge.LEFT) {
             result = rectangle.getMinX();
-        } else if (edge == RectangleEdge.RIGHT) {
+        }
+        else if (edge == RectangleEdge.RIGHT) {
             result = rectangle.getMaxX();
         }
         return result;

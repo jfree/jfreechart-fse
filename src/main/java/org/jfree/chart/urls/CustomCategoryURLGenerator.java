@@ -42,12 +42,12 @@
  */
 package org.jfree.chart.urls;
 
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.data.category.CategoryDataset;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.category.CategoryDataset;
 
 /**
  * A custom URL generator.

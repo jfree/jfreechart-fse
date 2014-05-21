@@ -48,12 +48,12 @@
 
 package org.jfree.chart.urls;
 
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.data.xy.XYDataset;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.xy.XYDataset;
 
 /**
  * A custom URL generator.
@@ -182,7 +182,8 @@ public class CustomXYURLGenerator implements XYURLGenerator, Cloneable,
                     if (!u1.equals(u2)) {
                         return false;
                     }
-                } else {
+                }
+                else {
                     if (u2 != null) {
                         return false;
                     }

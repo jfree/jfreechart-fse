@@ -94,3 +94,4 @@ public interface StatisticalCategoryDataset extends CategoryDataset {
     public Number getStdDevValue(Comparable rowKey, Comparable columnKey);
 
 }
+

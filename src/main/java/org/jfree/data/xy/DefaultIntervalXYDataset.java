@@ -46,13 +46,13 @@
 
 package org.jfree.data.xy;
 
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.data.general.DatasetChangeEvent;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.jfree.chart.util.ParamChecks;
+
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.general.DatasetChangeEvent;
 
 /**
  * A dataset that defines a range (interval) for both the x-values and the
@@ -407,13 +407,14 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
                 || length != data[3].length || length != data[4].length
                 || length != data[5].length) {
             throw new IllegalArgumentException(
-                    "The 'data' array must contain six arrays with equal length.");
+                "The 'data' array must contain six arrays with equal length.");
         }
         int seriesIndex = indexOf(seriesKey);
         if (seriesIndex == -1) {  // add a new series
             this.seriesKeys.add(seriesKey);
             this.seriesList.add(data);
-        } else {  // replace an existing series
+        }
+        else {  // replace an existing series
             this.seriesList.remove(seriesIndex);
             this.seriesList.add(seriesIndex, data);
         }
@@ -532,7 +533,7 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset
             System.arraycopy(y, 0, yy, 0, y.length);
             System.arraycopy(yStart, 0, yyStart, 0, yStart.length);
             System.arraycopy(yEnd, 0, yyEnd, 0, yEnd.length);
-            clone.seriesList.add(i, new double[][]{xx, xxStart, xxEnd, yy,
+            clone.seriesList.add(i, new double[][] {xx, xxStart, xxEnd, yy,
                     yyStart, yyEnd});
         }
         return clone;

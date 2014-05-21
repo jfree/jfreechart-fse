@@ -53,13 +53,22 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link CombinedRangeCategoryPlot} class.
@@ -79,6 +88,9 @@ public class CombinedRangeCategoryPlotTest
     public void chartChanged(ChartChangeEvent event) {
         this.events.add(event);
     }
+
+
+
 
 
     /**
@@ -110,14 +122,14 @@ public class CombinedRangeCategoryPlotTest
     public void testSerialization() throws IOException, ClassNotFoundException {
         CombinedRangeCategoryPlot plot1 = createPlot();
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(plot1);
-        out.close();
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
-        CombinedRangeCategoryPlot plot2 = (CombinedRangeCategoryPlot) in.readObject();
-        in.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(plot1);
+            out.close();
+            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                    buffer.toByteArray()));
+            CombinedRangeCategoryPlot plot2 = (CombinedRangeCategoryPlot) in.readObject();
+            in.close();
 
         assertEquals(plot1, plot2);
 

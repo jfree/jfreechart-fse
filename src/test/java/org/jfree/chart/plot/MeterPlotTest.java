@@ -47,16 +47,30 @@ import org.jfree.data.Range;
 import org.jfree.data.general.DefaultValueDataset;
 import org.junit.Test;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link MeterPlot} class.
  */
-public class MeterPlotTest {
+public class MeterPlotTest  {
+
+
+
 
 
     /**
@@ -234,15 +248,15 @@ public class MeterPlotTest {
         p1.setTickPaint(new GradientPaint(1.0f, 2.0f, Color.RED,
                 3.0f, 4.0f, Color.BLUE));
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(p1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(p1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                     new ByteArrayInputStream(buffer.toByteArray()));
         MeterPlot p2 = (MeterPlot) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(p1, p2);
     }
@@ -254,15 +268,15 @@ public class MeterPlotTest {
     public void testSerialization2() throws IOException, ClassNotFoundException {
         MeterPlot p1 = new MeterPlot(new DefaultValueDataset(1.23));
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(p1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(p1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                     new ByteArrayInputStream(buffer.toByteArray()));
         MeterPlot p2 = (MeterPlot) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(p1, p2);
 

@@ -53,7 +53,7 @@ public class BooleanList extends AbstractObjectList<Boolean> {
 
     /** For serialization. */
     private static final long serialVersionUID = -8543170333219422042L;
-
+    
     /**
      * Creates a new list.
      */

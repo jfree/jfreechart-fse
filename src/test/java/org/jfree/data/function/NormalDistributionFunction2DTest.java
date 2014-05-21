@@ -42,16 +42,26 @@ package org.jfree.data.function;
 
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 
+
 /**
  * Tests for the {@link NormalDistributionFunction2D} class.
  */
-public class NormalDistributionFunction2DTest {
+public class NormalDistributionFunction2DTest  {
+
+
+
 
 
     private static final double EPSILON = 0.000000001;
@@ -91,15 +101,15 @@ public class NormalDistributionFunction2DTest {
         NormalDistributionFunction2D f1 = new NormalDistributionFunction2D(1.0,
                 2.0);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(f1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(f1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                    buffer.toByteArray()));
         NormalDistributionFunction2D f2 = (NormalDistributionFunction2D) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(f1, f2);
     }

@@ -50,19 +50,34 @@ import org.jfree.chart.ui.GradientPaintTransformType;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
 import java.awt.font.TextAttribute;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.text.AttributedString;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link LegendItem} class.
  */
-public class LegendItemTest {
+public class LegendItemTest  {
+
+
+
 
 
     /**
@@ -213,7 +228,7 @@ public class LegendItemTest {
                 "URL", false, new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0),
                 false, Color.BLACK, false, Color.yellow, new BasicStroke(2.1f),
                 false, new Line2D.Double(1.0, 2.0, 3.0, 4.0),
-                new BasicStroke(2.1f), Color.green);
+                new BasicStroke(2.1f),  Color.green);
         assertEquals(item1, item2);
 
         item1 = new LegendItem("Label2", "Description2", "ToolTip",
@@ -245,8 +260,8 @@ public class LegendItemTest {
         item1 = new LegendItem("Label2", "Description2", "ToolTip", "URL",
                 false, new Rectangle2D.Double(4.0, 3.0, 2.0, 1.0), false,
                 Color.BLACK, false, Color.yellow, new BasicStroke(2.1f), false,
-                new Line2D.Double(4.0, 3.0, 2.0, 1.0), new BasicStroke(3.3f),
-                Color.WHITE
+            new Line2D.Double(4.0, 3.0, 2.0, 1.0), new BasicStroke(3.3f),
+            Color.WHITE
         );
         assertFalse(item1.equals(item2));
         item2 = new LegendItem("Label2", "Description2", "ToolTip",
@@ -311,7 +326,7 @@ public class LegendItemTest {
         LegendItem item1 = new LegendItem("Item", "Description",
                 "ToolTip", "URL",
                 new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), new GradientPaint(
-                5.0f, 6.0f, Color.BLUE, 7.0f, 8.0f, Color.gray));
+                        5.0f, 6.0f, Color.BLUE, 7.0f, 8.0f, Color.gray));
         item1.setLabelPaint(new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f,
                 4.0f, Color.yellow));
         item1.setOutlinePaint(new GradientPaint(4.0f, 3.0f, Color.green, 2.0f,
@@ -350,7 +365,7 @@ public class LegendItemTest {
         LegendItem item2 = (LegendItem) in.readObject();
         in.close();
 
-        assertEquals(item1, item2);
+            assertEquals(item1, item2);
     }
 
     /**

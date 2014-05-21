@@ -255,10 +255,10 @@ public abstract class Regression {
         }
         int validItems = 0;
         double[][] data = new double[2][itemCount];
-        for (int item = 0; item < itemCount; item++) {
+        for(int item = 0; item < itemCount; item++){
             double x = dataset.getXValue(series, item);
             double y = dataset.getYValue(series, item);
-            if (!Double.isNaN(x) && !Double.isNaN(y)) {
+            if (!Double.isNaN(x) && !Double.isNaN(y)){
                 data[0][validItems] = x;
                 data[1][validItems] = y;
                 validItems++;
@@ -271,26 +271,30 @@ public abstract class Regression {
         int coefficients = order + 2;
         double[] result = new double[equations + 1];
         double[][] matrix = new double[equations][coefficients];
+        double sumX = 0.0;
         double sumY = 0.0;
 
-        for (int item = 0; item < validItems; item++) {
+        for(int item = 0; item < validItems; item++){
+            sumX += data[0][item];
             sumY += data[1][item];
-            for (int eq = 0; eq < equations; eq++) {
-                for (int coe = 0; coe < coefficients - 1; coe++) {
-                    matrix[eq][coe] += Math.pow(data[0][item], eq + coe);
+            for(int eq = 0; eq < equations; eq++){
+                for(int coe = 0; coe < coefficients - 1; coe++){
+                    matrix[eq][coe] += Math.pow(data[0][item],eq + coe);
                 }
                 matrix[eq][coefficients - 1] += data[1][item]
-                        * Math.pow(data[0][item], eq);
+                        * Math.pow(data[0][item],eq);
             }
         }
         double[][] subMatrix = calculateSubMatrix(matrix);
         for (int eq = 1; eq < equations; eq++) {
             matrix[eq][0] = 0;
-            System.arraycopy(subMatrix[eq - 1], 0, matrix[eq], 1, coefficients - 1);
+            for (int coe = 1; coe < coefficients; coe++) {
+                matrix[eq][coe] = subMatrix[eq - 1][coe - 1];
+            }
         }
         for (int eq = equations - 1; eq > -1; eq--) {
             double value = matrix[eq][coefficients - 1];
-            for (int coe = eq; coe < coefficients - 1; coe++) {
+            for (int coe = eq; coe < coefficients -1; coe++) {
                 value -= matrix[eq][coe] * result[coe];
             }
             result[eq] = value / matrix[eq][eq];
@@ -301,7 +305,7 @@ public abstract class Regression {
         for (int item = 0; item < validItems; item++) {
             double yCalc = 0;
             for (int eq = 0; eq < equations; eq++) {
-                yCalc += result[eq] * Math.pow(data[0][item], eq);
+                yCalc += result[eq] * Math.pow(data[0][item],eq);
             }
             yRegSquare += Math.pow(yCalc - meanY, 2);
             yObsSquare += Math.pow(data[1][item] - meanY, 2);
@@ -316,19 +320,19 @@ public abstract class Regression {
      * and columns is 1 less than that of the original matrix; (2)the matrix
      * is triangular, i.e. all elements a (row, column) with column > row are
      * zero.  This method is used for calculating a polynomial regression.
-     *
+     * 
      * @param matrix  the start matrix.
      *
      * @return The new matrix.
      */
-    private static double[][] calculateSubMatrix(double[][] matrix) {
+    private static double[][] calculateSubMatrix(double[][] matrix){
         int equations = matrix.length;
         int coefficients = matrix[0].length;
         double[][] result = new double[equations - 1][coefficients - 1];
         for (int eq = 1; eq < equations; eq++) {
             double factor = matrix[0][0] / matrix[eq][0];
             for (int coe = 1; coe < coefficients; coe++) {
-                result[eq - 1][coe - 1] = matrix[0][coe] - matrix[eq][coe]
+                result[eq - 1][coe -1] = matrix[0][coe] - matrix[eq][coe]
                         * factor;
             }
         }
@@ -338,12 +342,13 @@ public abstract class Regression {
         // check for zero pivot element
         if (result[0][0] == 0) {
             boolean found = false;
-            for (double[] aResult : result) {
-                if (!found && aResult[0] != 0) {
+            for (int i = 0; i < result.length; i ++) {
+                if (result[i][0] != 0) {
                     found = true;
                     double[] temp = result[0];
-                    System.arraycopy(aResult, 0, result[0], 0, aResult.length);
-                    System.arraycopy(temp, 0, aResult, 0, temp.length);
+                    System.arraycopy(result[i], 0, result[0], 0, result[i].length);
+                    System.arraycopy(temp, 0, result[i], 0, temp.length);
+                    break;
                 }
             }
             if (!found) {
@@ -351,10 +356,11 @@ public abstract class Regression {
             }
         }
         double[][] subMatrix = calculateSubMatrix(result);
-        for (int eq = 1; eq < equations - 1; eq++) {
+        for (int eq = 1; eq < equations -  1; eq++) {
             result[eq][0] = 0;
-            System.arraycopy(subMatrix[eq - 1], 0,
-                    result[eq], 1, coefficients - 1 - 1);
+            for (int coe = 1; coe < coefficients - 1; coe++) {
+                result[eq][coe] = subMatrix[eq - 1][coe - 1];
+            }
         }
         return result;
     }

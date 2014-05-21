@@ -144,6 +144,7 @@ public class Second extends RegularTimePeriod implements Serializable {
      *
      * @param time  the time (<code>null</code> not permitted).
      *
+     * @see #Second(Date, TimeZone)
      */
     public Second(Date time) {
         this(time, TimeZone.getDefault(), Locale.getDefault());
@@ -239,7 +240,8 @@ public class Second extends RegularTimePeriod implements Serializable {
         Second result = null;
         if (this.second != FIRST_SECOND_IN_MINUTE) {
             result = new Second(this.second - 1, getMinute());
-        } else {
+        }
+        else {
             Minute previous = (Minute) getMinute().previous();
             if (previous != null) {
                 result = new Second(LAST_SECOND_IN_MINUTE, previous);
@@ -258,7 +260,8 @@ public class Second extends RegularTimePeriod implements Serializable {
         Second result = null;
         if (this.second != LAST_SECOND_IN_MINUTE) {
             result = new Second(this.second + 1, getMinute());
-        } else {
+        }
+        else {
             Minute next = (Minute) getMinute().next();
             if (next != null) {
                 result = new Second(FIRST_SECOND_IN_MINUTE, next);
@@ -295,12 +298,7 @@ public class Second extends RegularTimePeriod implements Serializable {
         int month = this.day.getMonth() - 1;
         int day = this.day.getDayOfMonth();
         calendar.clear();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month );
-        calendar.set(Calendar.DAY_OF_MONTH, day);
-        calendar.set(Calendar.HOUR, this.hour);
-        calendar.set(Calendar.MINUTE, this.minute);
-        calendar.set(Calendar.SECOND, this.second);
+        calendar.set(year, month, day, this.hour, this.minute, this.second);
         calendar.set(Calendar.MILLISECOND, 0);
         //return calendar.getTimeInMillis();  // this won't work for JDK 1.3
         return calendar.getTimeInMillis();
@@ -350,7 +348,10 @@ public class Second extends RegularTimePeriod implements Serializable {
         if (this.hour != that.hour) {
             return false;
         }
-        return this.day.equals(that.day);
+        if (!this.day.equals(that.day)) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -391,16 +392,18 @@ public class Second extends RegularTimePeriod implements Serializable {
             Second s = (Second) o1;
             if (this.firstMillisecond < s.firstMillisecond) {
                 return -1;
-            } else if (this.firstMillisecond > s.firstMillisecond) {
+            }
+            else if (this.firstMillisecond > s.firstMillisecond) {
                 return 1;
-            } else {
+            }
+            else {
                 return 0;
             }
         }
 
         // CASE 2 : Comparing to another TimePeriod object
         // -----------------------------------------------
-        else {
+        else  {
             // more difficult case - evaluate later...
             result = 0;
         }

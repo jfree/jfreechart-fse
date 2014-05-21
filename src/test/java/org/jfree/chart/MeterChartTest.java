@@ -46,7 +46,7 @@ import org.jfree.data.Range;
 import org.jfree.data.general.DefaultValueDataset;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
@@ -54,7 +54,10 @@ import java.awt.image.BufferedImage;
 /**
  * Miscellaneous checks for meter charts.
  */
-public class MeterChartTest {
+public class MeterChartTest  {
+
+
+
 
 
     /**

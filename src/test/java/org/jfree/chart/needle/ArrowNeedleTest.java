@@ -42,15 +42,27 @@ package org.jfree.chart.needle;
 
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+
 
 
 /**
  * Tests for the {@link ArrowNeedle} class.
  */
-public class ArrowNeedleTest {
+public class ArrowNeedleTest  {
+
+
 
 
     /**
@@ -58,15 +70,15 @@ public class ArrowNeedleTest {
      */
     @Test
     public void testEquals() {
-        ArrowNeedle n1 = new ArrowNeedle(false);
-        ArrowNeedle n2 = new ArrowNeedle(false);
-        assertEquals(n1, n2);
-        assertEquals(n2, n1);
+       ArrowNeedle n1 = new ArrowNeedle(false);
+       ArrowNeedle n2 = new ArrowNeedle(false);
+       assertEquals(n1, n2);
+       assertEquals(n2, n1);
 
-        n1 = new ArrowNeedle(true);
-        assertFalse(n1.equals(n2));
-        n2 = new ArrowNeedle(true);
-        assertEquals(n1, n2);
+       n1 = new ArrowNeedle(true);
+       assertFalse(n1.equals(n2));
+       n2 = new ArrowNeedle(true);
+       assertEquals(n1, n2);
     }
 
     /**
@@ -93,7 +105,7 @@ public class ArrowNeedleTest {
         out.writeObject(n1);
         out.close();
         ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
+            new ByteArrayInputStream(buffer.toByteArray())
         );
         ArrowNeedle n2 = (ArrowNeedle) in.readObject();
         in.close();

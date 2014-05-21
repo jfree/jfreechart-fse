@@ -48,12 +48,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link Statistics} class.
  */
-public class StatisticsTest {
+public class StatisticsTest  {
+
+
+
 
 
     /**
@@ -68,14 +73,16 @@ public class StatisticsTest {
         try {
             Statistics.calculateMean((Number[]) null);
             fail("IllegalArgumentException should have been thrown on null key");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'values' argument.", e.getMessage());
         }
 
         try {
             Statistics.calculateMean((Number[]) null, false);
             fail("IllegalArgumentException should have been thrown on negative key");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'values' argument.", e.getMessage());
         }
 
@@ -85,19 +92,19 @@ public class StatisticsTest {
                 false)));
 
         // try an array containing a single Number
-        Number[] values = new Number[]{1.0};
+        Number[] values = new Number[] {1.0};
         assertEquals(1.0, Statistics.calculateMean(values), EPSILON);
         assertEquals(1.0, Statistics.calculateMean(values, true), EPSILON);
         assertEquals(1.0, Statistics.calculateMean(values, false), EPSILON);
 
         // try an array containing a single Number and a null
-        values = new Number[]{1.0, null};
+        values = new Number[] {1.0, null};
         assertTrue(Double.isNaN(Statistics.calculateMean(values)));
         assertTrue(Double.isNaN(Statistics.calculateMean(values, true)));
         assertEquals(1.0, Statistics.calculateMean(values, false), EPSILON);
 
         // try an array containing a single Number and a NaN
-        values = new Number[]{1.0, Double.NaN};
+        values = new Number[] {1.0, Double.NaN};
         assertTrue(Double.isNaN(Statistics.calculateMean(values)));
         assertTrue(Double.isNaN(Statistics.calculateMean(values, true)));
         assertEquals(1.0, Statistics.calculateMean(values, false), EPSILON);
@@ -115,14 +122,16 @@ public class StatisticsTest {
         try {
             Statistics.calculateMean((Collection<Number>) null);
             fail("IllegalArgumentException should have been thrown on null key");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'values' argument.", e.getMessage());
         }
 
         try {
             Statistics.calculateMean((Collection<Number>) null, false);
             fail("IllegalArgumentException should have been thrown on null key");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'values' argument.", e.getMessage());
         }
 
@@ -179,7 +188,7 @@ public class StatisticsTest {
         assertTrue(Double.isNaN(Statistics.calculateMedian(null, true)));
 
         // check empty list
-        List<Number> list = new ArrayList<Number>();
+        List <Number>list = new ArrayList<Number>();
         assertTrue(Double.isNaN(Statistics.calculateMedian(list, false)));
         assertTrue(Double.isNaN(Statistics.calculateMedian(list, true)));
 
@@ -188,13 +197,15 @@ public class StatisticsTest {
         try {
             Statistics.calculateMedian(list, false);
             fail("Should have thrown a NullPointerException");
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e) {
             //we expect ot go in here
         }
         try {
             Statistics.calculateMedian(list, true);
             fail("Should have thrown a NullPointerException");
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e) {
             //we expect to go in here
         }
 
@@ -411,7 +422,8 @@ public class StatisticsTest {
         try {
             Statistics.getStdDev(null);
             fail("IllegalArgumentException should have been thrown on null key");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'data' array.", e.getMessage());
         }
 
@@ -419,7 +431,8 @@ public class StatisticsTest {
         try {
             Statistics.getStdDev(new Double[0]);
             fail("IllegalArgumentException should have been thrown on empty key");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Zero length 'data' array.", e.getMessage());
         }
 

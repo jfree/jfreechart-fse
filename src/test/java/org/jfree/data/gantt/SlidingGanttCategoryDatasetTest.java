@@ -42,16 +42,29 @@ package org.jfree.data.gantt;
 
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+
 
 
 /**
  * Tests for the {@link SlidingGanttCategoryDataset} class.
  */
-public class SlidingGanttCategoryDatasetTest {
+public class SlidingGanttCategoryDatasetTest  {
+
+
+
 
 
     /**
@@ -131,15 +144,15 @@ public class SlidingGanttCategoryDatasetTest {
         SlidingGanttCategoryDataset d1 = new SlidingGanttCategoryDataset(
                 u1, 0, 5);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(d1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(d1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         SlidingGanttCategoryDataset d2 = (SlidingGanttCategoryDataset) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(d1, d2);
 

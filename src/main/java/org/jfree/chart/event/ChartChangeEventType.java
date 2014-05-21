@@ -39,13 +39,12 @@
  */
 
 package org.jfree.chart.event;
-
 /**
  * Defines tokens used to indicate an event type.
  */
 public enum ChartChangeEventType {
 
-    /** GENERAL. */
+   /** GENERAL. */
     GENERAL("ChartChangeEventType.GENERAL"),
 
     /** NEW_DATASET. */

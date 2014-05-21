@@ -40,10 +40,6 @@
 
 package org.jfree.chart.annotations;
 
-import org.jfree.chart.event.AnnotationChangeEvent;
-import org.jfree.chart.event.AnnotationChangeListener;
-
-import javax.swing.event.EventListenerList;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -51,6 +47,11 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.EventListener;
 import java.util.List;
+
+import javax.swing.event.EventListenerList;
+
+import org.jfree.chart.event.AnnotationChangeEvent;
+import org.jfree.chart.event.AnnotationChangeListener;
 
 /**
  * An abstract implementation of the {@link Annotation} interface, containing a
@@ -156,11 +157,11 @@ public abstract class AbstractAnnotation implements Annotation, Cloneable,
      * Returns a flag that indicates whether listeners should be
      * notified about changes to the annotation.
      *
-     * @return the flag.
+     * @return  the flag.
      *
      * @see #setNotify(boolean)
      */
-    public boolean getNotify() {
+    public boolean getNotify(){
         return this.notify;
     }
 
@@ -172,7 +173,7 @@ public abstract class AbstractAnnotation implements Annotation, Cloneable,
      *
      * @see #getNotify()
      */
-    public void setNotify(boolean flag) {
+    public void setNotify(boolean flag){
         this.notify = flag;
         if (notify) {
             fireAnnotationChanged();
@@ -216,7 +217,7 @@ public abstract class AbstractAnnotation implements Annotation, Cloneable,
      * @throws ClassNotFoundException if there is a problem loading a class.
      */
     private void readObject(ObjectInputStream stream)
-            throws IOException, ClassNotFoundException {
+        throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.listenerList = new EventListenerList();
     }

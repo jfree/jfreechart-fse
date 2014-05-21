@@ -49,10 +49,10 @@
 
 package org.jfree.data.xy;
 
-import org.jfree.chart.util.PublicCloneable;
-
 import java.util.Arrays;
 import java.util.Date;
+
+import org.jfree.chart.util.PublicCloneable;
 
 /**
  * A simple implementation of the {@link OHLCDataset} interface.  See also
@@ -99,8 +99,8 @@ public class DefaultHighLowDataset extends AbstractXYDataset
      * @param volume  the volume values (<code>null</code> not permitted).
      */
     public DefaultHighLowDataset(Comparable seriesKey, Date[] date,
-                                 double[] high, double[] low, double[] open, double[] close,
-                                 double[] volume) {
+            double[] high, double[] low, double[] open, double[] close,
+            double[] volume) {
 
         if (seriesKey == null) {
             throw new IllegalArgumentException("Null 'series' argument.");

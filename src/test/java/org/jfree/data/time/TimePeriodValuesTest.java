@@ -48,15 +48,24 @@ import org.jfree.data.general.SeriesChangeListener;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * A collection of test cases for the {@link TimePeriodValues} class.
  */
-public class TimePeriodValuesTest {
+public class TimePeriodValuesTest  {
 
     /** Series A. */
     private TimePeriodValues seriesA;
@@ -66,6 +75,9 @@ public class TimePeriodValuesTest {
 
     /** Series C. */
     private TimePeriodValues seriesC;
+
+
+
 
 
     /**
@@ -248,7 +260,8 @@ public class TimePeriodValuesTest {
         try {
             tpv.add(null);
             fail("IllegalArgumentException should have been thrown on null parameter");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null item not allowed.", e.getMessage());
         }
     }

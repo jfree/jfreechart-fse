@@ -46,7 +46,7 @@ package org.jfree.data;
  *
  * @see DefaultKeyedValue
  */
-public interface KeyedValue<Key extends Comparable> extends Value {
+public interface KeyedValue extends Value {
 
     /**
      * Returns the key associated with the value.  The key returned by this
@@ -54,6 +54,6 @@ public interface KeyedValue<Key extends Comparable> extends Value {
      *
      * @return The key (never <code>null</code>).
      */
-    public Key getKey();
+    public Comparable getKey();
 
 }

@@ -52,17 +52,31 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.Test;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.Color;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link XYBlockRenderer} class.
  */
-public class XYBlockRendererTest {
+public class XYBlockRendererTest  {
 
     private static final double EPSILON = 0.0000000001;
+
+
+
 
 
     /**
@@ -201,7 +215,7 @@ public class XYBlockRendererTest {
         Range r = renderer.findRangeBounds(dataset);
         assertNull(r);
     }
-
+    
     /**
      * Some tests for the findDomainBounds() method.
      */
@@ -221,6 +235,6 @@ public class XYBlockRendererTest {
         dataset.removeAllSeries();
         r = renderer.findDomainBounds(dataset);
         assertNull(r);
-    }
-
+    }    
+           
 }

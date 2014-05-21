@@ -41,10 +41,10 @@
 
 package org.jfree.data.general;
 
+import java.io.Serializable;
+
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.DataUtilities;
-
-import java.io.Serializable;
 
 /**
  * A default implementation of the {@link HeatMapDataset} interface.
@@ -87,7 +87,7 @@ public class DefaultHeatMapDataset extends AbstractDataset
      * @param maxY  the maximum y-value in the dataset.
      */
     public DefaultHeatMapDataset(int xSamples, int ySamples, double minX,
-                                 double maxX, double minY, double maxY) {
+            double maxX, double minY, double maxY) {
 
         if (xSamples < 1) {
             throw new IllegalArgumentException("Requires 'xSamples' > 0");

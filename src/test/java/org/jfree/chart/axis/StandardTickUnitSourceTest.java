@@ -42,14 +42,23 @@ package org.jfree.chart.axis;
 
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for the {@link StandardTickUnitSource} class.
  */
-public class StandardTickUnitSourceTest {
+public class StandardTickUnitSourceTest  {
+
+
+
 
 
     /**

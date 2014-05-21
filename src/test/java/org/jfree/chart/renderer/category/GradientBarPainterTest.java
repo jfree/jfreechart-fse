@@ -43,7 +43,13 @@ package org.jfree.chart.renderer.category;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -51,7 +57,10 @@ import static org.junit.Assert.assertFalse;
 /**
  * Tests for the {@link GradientBarPainter} class.
  */
-public class GradientBarPainterTest {
+public class GradientBarPainterTest  {
+
+
+
 
 
     /**
@@ -110,14 +119,14 @@ public class GradientBarPainterTest {
     public void testSerialization() throws IOException, ClassNotFoundException {
         GradientBarPainter p1 = new GradientBarPainter(0.1, 0.2, 0.3);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(p1);
-        out.close();
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(p1);
+            out.close();
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         GradientBarPainter p2 = (GradientBarPainter) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(p1, p2);
     }

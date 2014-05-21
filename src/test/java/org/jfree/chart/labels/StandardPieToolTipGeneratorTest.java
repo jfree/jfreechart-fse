@@ -50,16 +50,29 @@ package org.jfree.chart.labels;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link StandardPieToolTipGenerator} class.
  */
-public class StandardPieToolTipGeneratorTest {
+public class StandardPieToolTipGeneratorTest  {
+
+
+
 
 
     /**
@@ -150,15 +163,15 @@ public class StandardPieToolTipGeneratorTest {
 
         StandardPieToolTipGenerator g1 = new StandardPieToolTipGenerator();
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(g1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(g1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
-        StandardPieToolTipGenerator g2 = (StandardPieToolTipGenerator) in.readObject();
-        in.close();
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
+            StandardPieToolTipGenerator g2 = (StandardPieToolTipGenerator) in.readObject();
+            in.close();
 
 
         assertEquals(g1, g2);

@@ -52,7 +52,10 @@ import static org.junit.Assert.assertFalse;
 /**
  * Tests for the {@link Outlier} class.
  */
-public class OutlierTest {
+public class OutlierTest  {
+
+
+
 
 
     private static final double EPSILON = 0.000000001;

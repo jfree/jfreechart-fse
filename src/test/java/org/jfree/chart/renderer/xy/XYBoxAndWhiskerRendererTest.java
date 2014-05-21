@@ -51,18 +51,33 @@ import org.jfree.data.statistics.BoxAndWhiskerItem;
 import org.jfree.data.statistics.DefaultBoxAndWhiskerXYDataset;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link XYBoxAndWhiskerRenderer} class.
  */
-public class XYBoxAndWhiskerRendererTest {
+public class XYBoxAndWhiskerRendererTest  {
+
+
+
 
 
     /**
@@ -170,11 +185,11 @@ public class XYBoxAndWhiskerRendererTest {
         JFreeChart chart = ChartFactory.createBoxAndWhiskerChart("Title", "X",
                 "Y", d1);
 
-        BufferedImage image = new BufferedImage(400, 200,
-                BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2 = image.createGraphics();
-        chart.draw(g2, new Rectangle2D.Double(0, 0, 400, 200), null, null);
-        g2.dispose();
+            BufferedImage image = new BufferedImage(400, 200,
+                    BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2 = image.createGraphics();
+            chart.draw(g2, new Rectangle2D.Double(0, 0, 400, 200), null, null);
+            g2.dispose();
         //FIXME we should assert a value here
     }
 

@@ -47,10 +47,16 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -58,7 +64,10 @@ import static org.junit.Assert.assertFalse;
 /**
  * Tests for the {@link PiePlot3D} class.
  */
-public class PiePlot3DTest {
+public class PiePlot3DTest  {
+
+
+
 
 
     /**
@@ -90,15 +99,15 @@ public class PiePlot3DTest {
 
         PiePlot3D p1 = new PiePlot3D(null);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(p1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(p1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         PiePlot3D p2 = (PiePlot3D) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(p1, p2);
 
@@ -110,11 +119,11 @@ public class PiePlot3DTest {
     @Test
     public void testDrawWithNullDataset() {
         JFreeChart chart = ChartFactory.createPieChart3D("Test", null);
-        BufferedImage image = new BufferedImage(200, 100,
-                BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2 = image.createGraphics();
-        chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
-        g2.dispose();
+            BufferedImage image = new BufferedImage(200 , 100,
+                    BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2 = image.createGraphics();
+            chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
+            g2.dispose();
 
     }
 

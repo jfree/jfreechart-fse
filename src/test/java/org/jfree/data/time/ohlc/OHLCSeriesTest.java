@@ -49,9 +49,22 @@ import org.jfree.data.general.SeriesException;
 import org.jfree.data.time.Year;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link OHLCSeries} class.
@@ -70,6 +83,9 @@ public class OHLCSeriesTest
     public void seriesChanged(SeriesChangeEvent event) {
         this.lastEvent = event;
     }
+
+
+
 
 
     /**
@@ -143,15 +159,15 @@ public class OHLCSeriesTest
         OHLCSeries s1 = new OHLCSeries("s1");
         s1.add(new Year(2006), 2.0, 4.0, 1.0, 3.0);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(s1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(s1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         OHLCSeries s2 = (OHLCSeries) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(s1, s2);
 
@@ -216,7 +232,8 @@ public class OHLCSeriesTest
         try {
             s1.add(new Year(2006), 1.0, 1.0, 1.0, 1.0);
             fail("Should have thrown a SeriesException on duplicate value");
-        } catch (SeriesException e) {
+        }
+        catch (SeriesException e) {
             assertEquals("X-value already exists.", e.getMessage());
         }
     }

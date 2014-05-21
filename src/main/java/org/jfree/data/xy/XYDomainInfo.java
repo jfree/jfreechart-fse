@@ -40,9 +40,8 @@
 
 package org.jfree.data.xy;
 
-import org.jfree.data.Range;
-
 import java.util.List;
+import org.jfree.data.Range;
 
 /**
  * An interface that can (optionally) be implemented by a dataset to assist in
@@ -64,6 +63,6 @@ public interface XYDomainInfo {
      *     values).
      */
     public Range getDomainBounds(List<Comparable> visibleSeriesKeys,
-                                 boolean includeInterval);
+            boolean includeInterval);
 
 }

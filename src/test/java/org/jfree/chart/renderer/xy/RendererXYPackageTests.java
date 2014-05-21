@@ -59,7 +59,10 @@ import org.jfree.data.xy.XYSeriesCollection;
  * <P>
  * These tests can be run using JUnit (http://www.junit.org).
  */
-public class RendererXYPackageTests {
+public class RendererXYPackageTests  {
+
+
+
 
 
     /**

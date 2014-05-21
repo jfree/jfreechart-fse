@@ -53,13 +53,22 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link CombinedDomainCategoryPlot} class.
@@ -127,14 +136,14 @@ public class CombinedDomainCategoryPlotTest
     public void testSerialization() throws IOException, ClassNotFoundException {
         CombinedDomainCategoryPlot plot1 = createPlot();
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(plot1);
-        out.close();
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
-        CombinedDomainCategoryPlot plot2 = (CombinedDomainCategoryPlot) in.readObject();
-        in.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(plot1);
+            out.close();
+            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                    buffer.toByteArray()));
+            CombinedDomainCategoryPlot plot2 = (CombinedDomainCategoryPlot) in.readObject();
+            in.close();
 
 
         assertEquals(plot1, plot2);
@@ -265,10 +274,10 @@ public class CombinedDomainCategoryPlotTest
         rangeAxis1.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         LineAndShapeRenderer renderer1 = new LineAndShapeRenderer();
         renderer1.setDefaultToolTipGenerator(
-                new StandardCategoryToolTipGenerator()
+            new StandardCategoryToolTipGenerator()
         );
         CategoryPlot subplot1 = new CategoryPlot(
-                dataset1, null, rangeAxis1, renderer1
+            dataset1, null, rangeAxis1, renderer1
         );
         subplot1.setDomainGridlinesVisible(true);
 
@@ -277,16 +286,16 @@ public class CombinedDomainCategoryPlotTest
         rangeAxis2.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         BarRenderer renderer2 = new BarRenderer();
         renderer2.setDefaultToolTipGenerator(
-                new StandardCategoryToolTipGenerator()
+            new StandardCategoryToolTipGenerator()
         );
         CategoryPlot subplot2 = new CategoryPlot(
-                dataset2, null, rangeAxis2, renderer2
+            dataset2, null, rangeAxis2, renderer2
         );
         subplot2.setDomainGridlinesVisible(true);
 
         CategoryAxis domainAxis = new CategoryAxis("Category");
         CombinedDomainCategoryPlot plot
-                = new CombinedDomainCategoryPlot(domainAxis);
+            = new CombinedDomainCategoryPlot(domainAxis);
         plot.add(subplot1, 2);
         plot.add(subplot2, 1);
         return plot;

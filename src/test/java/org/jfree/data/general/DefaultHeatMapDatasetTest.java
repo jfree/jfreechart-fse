@@ -42,9 +42,21 @@ package org.jfree.data.general;
 
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+
 
 
 /**
@@ -69,7 +81,9 @@ public class DefaultHeatMapDatasetTest
     }
 
 
+
     private static final double EPSILON = 0.0000000001;
+
 
 
     /**
@@ -193,15 +207,15 @@ public class DefaultHeatMapDatasetTest
         d1.setZValue(1, 0, Double.NaN);
 
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(d1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(d1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                    buffer.toByteArray()));
         DefaultHeatMapDataset d2 = (DefaultHeatMapDataset) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(d1, d2);
     }

@@ -48,14 +48,28 @@ import org.jfree.data.Range;
 import org.jfree.data.UnknownKeyException;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link DefaultStatisticalCategoryDataset} class.
  */
-public class DefaultStatisticalCategoryDatasetTest {
+public class DefaultStatisticalCategoryDatasetTest  {
+
+
+
 
 
     /**
@@ -140,21 +154,21 @@ public class DefaultStatisticalCategoryDatasetTest {
     @Test
     public void testSerialization1() throws IOException, ClassNotFoundException {
         DefaultStatisticalCategoryDataset d1
-                = new DefaultStatisticalCategoryDataset();
+            = new DefaultStatisticalCategoryDataset();
         d1.add(1.1, 2.2, "R1", "C1");
         d1.add(3.3, 4.4, "R1", "C2");
         d1.add(null, 5.5, "R1", "C3");
         d1.add(6.6, null, "R2", "C3");
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(d1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(d1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         DefaultStatisticalCategoryDataset d2 = (DefaultStatisticalCategoryDataset) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(d1, d2);
     }
@@ -165,18 +179,18 @@ public class DefaultStatisticalCategoryDatasetTest {
     @Test
     public void testSerialization2() throws IOException, ClassNotFoundException {
         DefaultStatisticalCategoryDataset d1
-                = new DefaultStatisticalCategoryDataset();
+            = new DefaultStatisticalCategoryDataset();
         d1.add(1.2, 3.4, "Row 1", "Column 1");
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(d1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(d1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         DefaultStatisticalCategoryDataset d2 = (DefaultStatisticalCategoryDataset) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(d1, d2);
     }
@@ -252,7 +266,8 @@ public class DefaultStatisticalCategoryDatasetTest {
         try {
             data.remove("R1", "R2");
             fail("UnknownKeyException should have been thrown on the unknown key");
-        } catch (UnknownKeyException e) {
+        }
+        catch (UnknownKeyException e) {
             assertEquals("Row key (R1) not recognised.", e.getMessage());
         }
 
@@ -285,7 +300,7 @@ public class DefaultStatisticalCategoryDatasetTest {
         dataset.add(1.0, Double.NaN, "R1", "C1");
         assertEquals(1.0, dataset.getRangeLowerBound(true), EPSILON);
         assertEquals(1.0, dataset.getRangeUpperBound(true), EPSILON);
-
+        
         Range r = dataset.getRangeBounds(true);
         assertEquals(1.0, r.getLowerBound(), EPSILON);
         assertEquals(1.0, r.getUpperBound(), EPSILON);

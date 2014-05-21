@@ -44,22 +44,24 @@
 
 package org.jfree.chart.renderer.xy;
 
+import java.awt.AlphaComposite;
+import java.awt.Composite;
+import java.awt.Graphics2D;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Rectangle2D;
+import java.util.List;
+
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CrosshairState;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.data.Range;
 import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.XYDataset;
-
-import java.awt.*;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Rectangle2D;
-import java.util.List;
 
 /**
  * A specialised subclass of the {@link XYLineAndShapeRenderer} that requires
@@ -196,7 +198,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
      */
     @Override
     public XYItemRendererState initialise(Graphics2D g2, Rectangle2D dataArea,
-                                          XYPlot plot, XYDataset dataset, PlotRenderingInfo info) {
+            XYPlot plot, XYDataset dataset, PlotRenderingInfo info) {
         State state = new State(info);
         state.seriesPath = new GeneralPath();
         state.setProcessVisibleItemsOnly(false);
@@ -288,7 +290,7 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
 
             double x = intervalDataset.getXValue(series, item);
             double yLow = intervalDataset.getStartYValue(series, item);
-            double yHigh = intervalDataset.getEndYValue(series, item);
+            double yHigh  = intervalDataset.getEndYValue(series, item);
 
             RectangleEdge xAxisLocation = plot.getDomainAxisEdge();
             RectangleEdge yAxisLocation = plot.getRangeAxisEdge();
@@ -301,11 +303,12 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
 
             PlotOrientation orientation = plot.getOrientation();
             if (orientation == PlotOrientation.HORIZONTAL) {
-                drState.lowerCoordinates.add(new double[]{yyLow, xx});
-                drState.upperCoordinates.add(new double[]{yyHigh, xx});
-            } else if (orientation == PlotOrientation.VERTICAL) {
-                drState.lowerCoordinates.add(new double[]{xx, yyLow});
-                drState.upperCoordinates.add(new double[]{xx, yyHigh});
+                drState.lowerCoordinates.add(new double[] {yyLow, xx});
+                drState.upperCoordinates.add(new double[] {yyHigh, xx});
+            }
+            else if (orientation == PlotOrientation.VERTICAL) {
+                drState.lowerCoordinates.add(new double[] {xx, yyLow});
+                drState.upperCoordinates.add(new double[] {xx, yyHigh});
             }
 
             if (item == (dataset.getItemCount(series) - 1)) {
@@ -316,8 +319,8 @@ public class DeviationRenderer extends XYLineAndShapeRenderer {
                         AlphaComposite.SRC_OVER, this.alpha));
                 g2.setPaint(getItemFillPaint(series, item));
                 GeneralPath area = new GeneralPath(GeneralPath.WIND_NON_ZERO,
-                        drState.lowerCoordinates.size()
-                                + drState.upperCoordinates.size());
+                        drState.lowerCoordinates.size() 
+                        + drState.upperCoordinates.size());
                 double[] coords = drState.lowerCoordinates.get(0);
                 area.moveTo((float) coords[0], (float) coords[1]);
                 for (int i = 1; i < drState.lowerCoordinates.size(); i++) {

@@ -43,12 +43,12 @@
 
 package org.jfree.chart.block;
 
-import org.jfree.chart.ui.Size2D;
-
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.List;
+
+import org.jfree.chart.ui.Size2D;
 
 /**
  * Arranges blocks in a grid within their container.
@@ -107,31 +107,39 @@ public class GridArrangement implements Arrangement, Serializable {
         if (w == LengthConstraintType.NONE) {
             if (h == LengthConstraintType.NONE) {
                 return arrangeNN(container, g2);
-            } else if (h == LengthConstraintType.FIXED) {
+            }
+            else if (h == LengthConstraintType.FIXED) {
                 return arrangeNF(container, g2, constraint);
-            } else if (h == LengthConstraintType.RANGE) {
+            }
+            else if (h == LengthConstraintType.RANGE) {
                 // find optimum height, then map to range
                 return arrangeNR(container, g2, constraint);
             }
-        } else if (w == LengthConstraintType.FIXED) {
+        }
+        else if (w == LengthConstraintType.FIXED) {
             if (h == LengthConstraintType.NONE) {
                 // find optimum height
                 return arrangeFN(container, g2, constraint);
-            } else if (h == LengthConstraintType.FIXED) {
+            }
+            else if (h == LengthConstraintType.FIXED) {
                 return arrangeFF(container, g2, constraint);
-            } else if (h == LengthConstraintType.RANGE) {
+            }
+            else if (h == LengthConstraintType.RANGE) {
                 // find optimum height and map to range
                 return arrangeFR(container, g2, constraint);
             }
-        } else if (w == LengthConstraintType.RANGE) {
+        }
+        else if (w == LengthConstraintType.RANGE) {
             // find optimum width and map to range
             if (h == LengthConstraintType.NONE) {
                 // find optimum height
                 return arrangeRN(container, g2, constraint);
-            } else if (h == LengthConstraintType.FIXED) {
+            }
+            else if (h == LengthConstraintType.FIXED) {
                 // fixed width
                 return arrangeRF(container, g2, constraint);
-            } else if (h == LengthConstraintType.RANGE) {
+            }
+            else if (h == LengthConstraintType.RANGE) {
                 return arrangeRR(container, g2, constraint);
             }
         }
@@ -210,7 +218,8 @@ public class GridArrangement implements Arrangement, Serializable {
 
         if (constraint.getHeightRange().contains(size1.getHeight())) {
             return size1;
-        } else {
+        }
+        else {
             double h = constraint.getHeightRange().constrain(size1.getHeight());
             RectangleConstraint c2 = constraint.toFixedHeight(h);
             return arrange(container, g2, c2);
@@ -234,7 +243,8 @@ public class GridArrangement implements Arrangement, Serializable {
 
         if (constraint.getWidthRange().contains(size1.getWidth())) {
             return size1;
-        } else {
+        }
+        else {
             double w = constraint.getWidthRange().constrain(size1.getWidth());
             RectangleConstraint c2 = constraint.toFixedWidth(w);
             return arrange(container, g2, c2);
@@ -258,7 +268,8 @@ public class GridArrangement implements Arrangement, Serializable {
 
         if (constraint.getWidthRange().contains(size1.getWidth())) {
             return size1;
-        } else {
+        }
+        else {
             double w = constraint.getWidthRange().constrain(size1.getWidth());
             RectangleConstraint c2 = constraint.toFixedWidth(w);
             return arrange(container, g2, c2);
@@ -282,7 +293,8 @@ public class GridArrangement implements Arrangement, Serializable {
 
         if (constraint.getHeightRange().contains(size1.getHeight())) {
             return size1;
-        } else {
+        }
+        else {
             double h = constraint.getHeightRange().constrain(size1.getHeight());
             RectangleConstraint c2 = constraint.toFixedHeight(h);
             return arrange(container, g2, c2);
@@ -306,7 +318,8 @@ public class GridArrangement implements Arrangement, Serializable {
         if (constraint.getWidthRange().contains(size1.getWidth())) {
             if (constraint.getHeightRange().contains(size1.getHeight())) {
                 return size1;
-            } else {
+            }
+            else {
                 // width is OK, but height must be constrained
                 double h = constraint.getHeightRange().constrain(
                         size1.getHeight());
@@ -314,7 +327,8 @@ public class GridArrangement implements Arrangement, Serializable {
                         size1.getWidth(), h);
                 return arrangeFF(container, g2, cc);
             }
-        } else {
+        }
+        else {
             if (constraint.getHeightRange().contains(size1.getHeight())) {
                 // height is OK, but width must be constrained
                 double w = constraint.getWidthRange().constrain(
@@ -323,7 +337,8 @@ public class GridArrangement implements Arrangement, Serializable {
                         size1.getHeight());
                 return arrangeFF(container, g2, cc);
 
-            } else {
+            }
+            else {
                 double w = constraint.getWidthRange().constrain(
                         size1.getWidth());
                 double h = constraint.getHeightRange().constrain(

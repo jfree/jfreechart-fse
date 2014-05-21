@@ -44,8 +44,16 @@ package org.jfree.chart.block;
 import org.jfree.chart.ui.RectangleInsets;
 import org.junit.Test;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -53,7 +61,10 @@ import static org.junit.Assert.assertFalse;
 /**
  * Tests for the {@link LineBorder} class.
  */
-public class LineBorderTest {
+public class LineBorderTest  {
+
+
+
 
 
     /**

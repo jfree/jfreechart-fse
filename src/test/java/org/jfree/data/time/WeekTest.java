@@ -53,15 +53,28 @@ package org.jfree.data.time;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.*;
-import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link Week} class.
  */
-public class WeekTest {
+public class WeekTest  {
 
     /** A week. */
     private Week w1Y1900;
@@ -74,6 +87,9 @@ public class WeekTest {
 
     /** A week. */
     private Week w52Y9999;
+
+
+
 
 
     /**
@@ -152,15 +168,15 @@ public class WeekTest {
 
         Week w1 = new Week(24, 1999);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(w1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(w1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         Week w2 = (Week) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(w1, w2);
 
@@ -276,7 +292,8 @@ public class WeekTest {
                     TimeZone.getTimeZone("GMT"), Locale.UK);
             assertEquals(2005, w.getYearValue());
             assertEquals(52, w.getWeek());
-        } finally {
+        }
+        finally {
             Locale.setDefault(saved);
         }
     }
@@ -295,7 +312,8 @@ public class WeekTest {
             Week w = new Week(gc.getTime(), zone, Locale.UK);
             assertEquals(53, w.getWeek());
             assertEquals(new Year(2004), w.getYear());
-        } finally {
+        }
+        finally {
             Locale.setDefault(saved);
         }
     }
@@ -327,7 +345,8 @@ public class WeekTest {
             TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
             Calendar c = new GregorianCalendar(zone);
             assertEquals(-603302400000L, w.getFirstMillisecond(c));
-        } finally {
+        }
+        finally {
             Locale.setDefault(saved);
         }
 
@@ -335,7 +354,8 @@ public class WeekTest {
         try {
             w.getFirstMillisecond(null);
             fail("NullPointerException should have been thrown");
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e) {
             //should go in here
         }
     }
@@ -354,7 +374,8 @@ public class WeekTest {
         try {
             w.getFirstMillisecond(null);
             fail("NullPointerException should have been thrown");
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e) {
             //we should go in here
         }
     }
@@ -386,7 +407,8 @@ public class WeekTest {
             TimeZone zone = TimeZone.getTimeZone("America/Los_Angeles");
             Calendar c = new GregorianCalendar(zone);
             assertEquals(-629913600001L, w.getLastMillisecond(c));
-        } finally {
+        }
+        finally {
             Locale.setDefault(saved);
         }
 
@@ -394,7 +416,8 @@ public class WeekTest {
         try {
             w.getLastMillisecond(null);
             fail("NullPointerException should have been thrown");
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e) {
             //we should go in here
         }
     }
@@ -413,7 +436,8 @@ public class WeekTest {
         try {
             w.getLastMillisecond(null);
             fail("NullPointerException should have been thrown");
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e) {
             //we should go in here
         }
     }

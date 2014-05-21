@@ -44,15 +44,29 @@ package org.jfree.data.category;
 import org.jfree.data.UnknownKeyException;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link SlidingCategoryDataset} class.
  */
-public class SlidingCategoryDatasetTest {
+public class SlidingCategoryDatasetTest  {
+
+
+
 
 
     /**
@@ -119,15 +133,15 @@ public class SlidingCategoryDatasetTest {
         u1.addValue(2.0, "R1", "C2");
         SlidingCategoryDataset d1 = new SlidingCategoryDataset(u1, 0, 5);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(d1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(d1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         SlidingCategoryDataset d2 = (SlidingCategoryDataset) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(d1, d2);
 
@@ -233,14 +247,16 @@ public class SlidingCategoryDatasetTest {
         try {
             dataset.getValue("R1", "C1");
             fail("UnknownKeyException should have been thrown with provided key");
-        } catch (UnknownKeyException e) {
+        }
+        catch (UnknownKeyException e) {
             assertEquals("Unknown columnKey: C1", e.getMessage());
         }
 
         try {
             dataset.getValue("R1", "C4");
             fail("UnknownKeyException should have been thrown with provided key");
-        } catch (UnknownKeyException e) {
+        }
+        catch (UnknownKeyException e) {
             assertEquals("Unknown columnKey: C4", e.getMessage());
         }
     }

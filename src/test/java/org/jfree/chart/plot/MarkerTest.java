@@ -49,18 +49,26 @@ import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.TextAnchor;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.Arrays;
 import java.util.EventListener;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link Marker} class.
  */
-public class MarkerTest implements MarkerChangeListener {
+public class MarkerTest  implements MarkerChangeListener {
 
     MarkerChangeEvent lastEvent;
+
+
+
 
 
     /**
@@ -82,7 +90,8 @@ public class MarkerTest implements MarkerChangeListener {
         try {
             m.setPaint(null);
             fail("Expected an IllegalArgumentException for null.");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'paint' argument.", e.getMessage());
         }
     }
@@ -106,7 +115,8 @@ public class MarkerTest implements MarkerChangeListener {
         try {
             m.setStroke(null);
             fail("Expected an IllegalArgumentException for null.");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'stroke' argument.", e.getMessage());
         }
     }
@@ -208,7 +218,8 @@ public class MarkerTest implements MarkerChangeListener {
         try {
             m.setLabelFont(null);
             fail("Expected an IllegalArgumentException for null.");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'font' argument.", e.getMessage());
         }
     }
@@ -232,7 +243,8 @@ public class MarkerTest implements MarkerChangeListener {
         try {
             m.setLabelPaint(null);
             fail("Expected an IllegalArgumentException for null.");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'paint' argument.", e.getMessage());
         }
     }
@@ -256,7 +268,8 @@ public class MarkerTest implements MarkerChangeListener {
         try {
             m.setLabelAnchor(null);
             fail("Expected an IllegalArgumentException for null.");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'anchor' argument.", e.getMessage());
         }
     }
@@ -280,7 +293,8 @@ public class MarkerTest implements MarkerChangeListener {
         try {
             m.setLabelOffset(null);
             fail("Expected an IllegalArgumentException for null.");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'offset' argument.", e.getMessage());
         }
     }
@@ -305,7 +319,8 @@ public class MarkerTest implements MarkerChangeListener {
         try {
             m.setLabelOffsetType(null);
             fail("Expected an IllegalArgumentException for null.");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'adj' argument.", e.getMessage());
         }
     }
@@ -330,7 +345,8 @@ public class MarkerTest implements MarkerChangeListener {
         try {
             m.setLabelTextAnchor(null);
             fail("Expected an IllegalArgumentException for null.");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'anchor' argument.", e.getMessage());
         }
     }

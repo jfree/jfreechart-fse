@@ -40,13 +40,13 @@
 
 package org.jfree.data.io;
 
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
+
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  * A utility class for reading {@link CategoryDataset} data from a CSV file.
@@ -101,7 +101,8 @@ public class CSV {
         while (line != null) {
             if (lineIndex == 0) {  // first line contains column keys
                 columnKeys = extractColumnKeys(line);
-            } else {  // remaining lines contain a row key and data values
+            }
+            else {  // remaining lines contain a row key and data values
                 extractRowKeyAndData(line, dataset, columnKeys);
             }
             line = reader.readLine();
@@ -125,7 +126,7 @@ public class CSV {
         for (int i = 0; i < line.length(); i++) {
             if (line.charAt(i) == this.fieldDelimiter) {
                 if (fieldIndex > 0) {  // first field is ignored, since
-                    // column 0 is for row keys
+                                       // column 0 is for row keys
                     String key = line.substring(start, i);
                     keys.add(removeStringDelimiters(key));
                 }
@@ -156,13 +157,14 @@ public class CSV {
                 if (fieldIndex == 0) {  // first field contains the row key
                     String key = line.substring(start, i);
                     rowKey = removeStringDelimiters(key);
-                } else {  // remaining fields contain values
+                }
+                else {  // remaining fields contain values
                     Double value = Double.valueOf(
-                            removeStringDelimiters(line.substring(start, i))
+                        removeStringDelimiters(line.substring(start, i))
                     );
                     dataset.addValue(
-                            value, rowKey,
-                            columnKeys.get(fieldIndex - 1)
+                        value, rowKey,
+                        columnKeys.get(fieldIndex - 1)
                     );
                 }
                 start = i + 1;
@@ -170,10 +172,10 @@ public class CSV {
             }
         }
         Double value = Double.valueOf(
-                removeStringDelimiters(line.substring(start, line.length()))
+            removeStringDelimiters(line.substring(start, line.length()))
         );
         dataset.addValue(
-                value, rowKey, columnKeys.get(fieldIndex - 1)
+            value, rowKey, columnKeys.get(fieldIndex - 1)
         );
     }
 

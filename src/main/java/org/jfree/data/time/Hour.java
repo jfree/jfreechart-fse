@@ -137,7 +137,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
      *
      * @param time  the date-time (<code>null</code> not permitted).
      *
-     * @see #Hour(Date)
+     * @see #Hour(Date, TimeZone)
      */
     public Hour(Date time) {
         // defer argument checking...
@@ -270,11 +270,13 @@ public class Hour extends RegularTimePeriod implements Serializable {
         Hour result;
         if (this.hour != FIRST_HOUR_IN_DAY) {
             result = new Hour(this.hour - 1, this.day);
-        } else { // we are at the first hour in the day...
+        }
+        else { // we are at the first hour in the day...
             Day prevDay = (Day) this.day.previous();
             if (prevDay != null) {
                 result = new Hour(LAST_HOUR_IN_DAY, prevDay);
-            } else {
+            }
+            else {
                 result = null;
             }
         }
@@ -291,11 +293,13 @@ public class Hour extends RegularTimePeriod implements Serializable {
         Hour result;
         if (this.hour != LAST_HOUR_IN_DAY) {
             result = new Hour(this.hour + 1, this.day);
-        } else { // we are at the last hour in the day...
+        }
+        else { // we are at the last hour in the day...
             Day nextDay = (Day) this.day.next();
             if (nextDay != null) {
                 result = new Hour(FIRST_HOUR_IN_DAY, nextDay);
-            } else {
+            }
+            else {
                 result = null;
             }
         }
@@ -462,7 +466,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
         Day day = Day.parseDay(daystr);
         if (day != null) {
             String hourstr = s.substring(
-                    Math.min(daystr.length() + 1, s.length()), s.length()
+                Math.min(daystr.length() + 1, s.length()), s.length()
             );
             hourstr = hourstr.trim();
             int hour = Integer.parseInt(hourstr);

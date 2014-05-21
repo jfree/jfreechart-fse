@@ -48,15 +48,30 @@ import org.jfree.data.time.TimePeriodAnchor;
 import org.jfree.data.time.Year;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link OHLCSeriesCollection} class.
  */
 public class OHLCSeriesCollectionTest
         implements DatasetChangeListener {
+
+
+
 
 
     /**
@@ -120,15 +135,15 @@ public class OHLCSeriesCollectionTest
         s1.add(new Year(2006), 1.0, 1.1, 1.2, 1.3);
         c1.addSeries(s1);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(c1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(c1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         OHLCSeriesCollection c2 = (OHLCSeriesCollection) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(c1, c2);
     }
@@ -143,10 +158,10 @@ public class OHLCSeriesCollectionTest
         OHLCSeriesCollection dataset = new OHLCSeriesCollection();
         dataset.addSeries(s1);
         try {
-            /* XYSeries s = */
-            dataset.getSeries(1);
+            /* XYSeries s = */ dataset.getSeries(1);
             fail("Should have thrown on IllegalArgumentException on index out of bounds");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Series index out of bounds", e.getMessage());
         }
     }

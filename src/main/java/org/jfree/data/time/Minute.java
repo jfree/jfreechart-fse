@@ -130,6 +130,7 @@ public class Minute extends RegularTimePeriod implements Serializable {
      *
      * @param time  the time (<code>null</code> not permitted).
      *
+     * @see #Minute(Date, TimeZone)
      */
     public Minute(Date time) {
         // defer argument checking
@@ -271,11 +272,13 @@ public class Minute extends RegularTimePeriod implements Serializable {
         Minute result;
         if (this.minute != FIRST_MINUTE_IN_HOUR) {
             result = new Minute(this.minute - 1, getHour());
-        } else {
+        }
+        else {
             Hour h = (Hour) getHour().previous();
             if (h != null) {
                 result = new Minute(LAST_MINUTE_IN_HOUR, h);
-            } else {
+            }
+            else {
                 result = null;
             }
         }
@@ -292,11 +295,13 @@ public class Minute extends RegularTimePeriod implements Serializable {
         Minute result;
         if (this.minute != LAST_MINUTE_IN_HOUR) {
             result = new Minute(this.minute + 1, getHour());
-        } else { // we are at the last minute in the hour...
+        }
+        else { // we are at the last minute in the hour...
             Hour nextHour = (Hour) getHour().next();
             if (nextHour != null) {
                 result = new Minute(FIRST_MINUTE_IN_HOUR, nextHour);
-            } else {
+            }
+            else {
                 result = null;
             }
         }
@@ -461,7 +466,7 @@ public class Minute extends RegularTimePeriod implements Serializable {
         Day day = Day.parseDay(daystr);
         if (day != null) {
             String hmstr = s.substring(
-                    Math.min(daystr.length() + 1, s.length()), s.length()
+                Math.min(daystr.length() + 1, s.length()), s.length()
             );
             hmstr = hmstr.trim();
 
@@ -470,8 +475,8 @@ public class Minute extends RegularTimePeriod implements Serializable {
 
             if ((hour >= 0) && (hour <= 23)) {
                 String minstr = hmstr.substring(
-                        Math.min(hourstr.length() + 1, hmstr.length()),
-                        hmstr.length()
+                    Math.min(hourstr.length() + 1, hmstr.length()),
+                    hmstr.length()
                 );
                 int minute = Integer.parseInt(minstr);
                 if ((minute >= 0) && (minute <= 59)) {

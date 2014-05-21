@@ -44,13 +44,13 @@
 
 package org.jfree.data.xy;
 
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.data.DomainOrder;
-import org.jfree.data.general.DatasetChangeEvent;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.DomainOrder;
+import org.jfree.data.general.DatasetChangeEvent;
 
 /**
  * A default implementation of the {@link XYDataset} interface that stores
@@ -263,13 +263,14 @@ public class DefaultXYDataset extends AbstractXYDataset
         }
         if (data[0].length != data[1].length) {
             throw new IllegalArgumentException(
-                    "The 'data' array must contain two arrays with equal length.");
+                "The 'data' array must contain two arrays with equal length.");
         }
         int seriesIndex = indexOf(seriesKey);
         if (seriesIndex == -1) {  // add a new series
             this.seriesKeys.add(seriesKey);
             this.seriesList.add(data);
-        } else {  // replace an existing series
+        }
+        else {  // replace an existing series
             this.seriesList.remove(seriesIndex);
             this.seriesList.add(seriesIndex, data);
         }
@@ -371,7 +372,7 @@ public class DefaultXYDataset extends AbstractXYDataset
             double[] yy = new double[y.length];
             System.arraycopy(x, 0, xx, 0, x.length);
             System.arraycopy(y, 0, yy, 0, y.length);
-            clone.seriesList.add(i, new double[][]{xx, yy});
+            clone.seriesList.add(i, new double[][] {xx, yy});
         }
         return clone;
     }

@@ -131,7 +131,8 @@ public class TickUnits implements TickUnitSource, Cloneable, Serializable {
         int index = Collections.binarySearch(this.tickUnits, unit);
         if (index >= 0) {
             index = index + 1;
-        } else {
+        }
+        else {
             index = -index;
         }
 
@@ -154,7 +155,8 @@ public class TickUnits implements TickUnitSource, Cloneable, Serializable {
         int index = Collections.binarySearch(this.tickUnits, unit);
         if (index >= 0) {
             return this.tickUnits.get(index);
-        } else {
+        }
+        else {
             index = -(index + 1);
             return this.tickUnits.get(Math.min(index,
                     this.tickUnits.size() - 1));

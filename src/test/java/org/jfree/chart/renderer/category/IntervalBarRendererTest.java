@@ -51,14 +51,28 @@ import org.jfree.data.Range;
 import org.jfree.data.category.DefaultIntervalCategoryDataset;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link IntervalBarRenderer} class.
  */
-public class IntervalBarRendererTest {
+public class IntervalBarRendererTest  {
+
+
+
 
 
     /**
@@ -116,14 +130,14 @@ public class IntervalBarRendererTest {
     public void testSerialization() throws IOException, ClassNotFoundException {
         IntervalBarRenderer r1 = new IntervalBarRenderer();
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(r1);
-        out.close();
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(r1);
+            out.close();
+            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                    buffer.toByteArray()));
         IntervalBarRenderer r2 = (IntervalBarRenderer) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(r1, r2);
     }
@@ -134,19 +148,18 @@ public class IntervalBarRendererTest {
      */
     @Test
     public void testDrawWithNullInfo() {
-        double[][] starts = new double[][]{{0.1, 0.2, 0.3},
-                {0.3, 0.4, 0.5}};
-        double[][] ends = new double[][]{{0.5, 0.6, 0.7}, {0.7, 0.8, 0.9}};
-        DefaultIntervalCategoryDataset dataset
-                = new DefaultIntervalCategoryDataset(starts, ends);
-        IntervalBarRenderer renderer = new IntervalBarRenderer();
-        CategoryPlot plot = new CategoryPlot(dataset,
-                new CategoryAxis("Category"), new NumberAxis("Value"),
-                renderer);
-        JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */
-        chart.createBufferedImage(300, 200,
-                null);
+            double[][] starts = new double[][] {{0.1, 0.2, 0.3},
+                    {0.3, 0.4, 0.5}};
+            double[][] ends = new double[][] {{0.5, 0.6, 0.7}, {0.7, 0.8, 0.9}};
+            DefaultIntervalCategoryDataset dataset
+                    = new DefaultIntervalCategoryDataset(starts, ends);
+            IntervalBarRenderer renderer = new IntervalBarRenderer();
+            CategoryPlot plot = new CategoryPlot(dataset,
+                    new CategoryAxis("Category"), new NumberAxis("Value"),
+                    renderer);
+            JFreeChart chart = new JFreeChart(plot);
+            /* BufferedImage image = */ chart.createBufferedImage(300, 200,
+                    null);
 
     }
 
@@ -164,8 +177,8 @@ public class IntervalBarRendererTest {
                 new double[0][0]);
         assertNull(r.findRangeBounds(dataset));
 
-        double[][] starts = new double[][]{{0.1, 0.2, 0.3}, {0.3, 0.4, 0.5}};
-        double[][] ends = new double[][]{{0.5, 0.6, 0.7}, {0.7, 0.8, 0.9}};
+        double[][] starts = new double[][] {{0.1, 0.2, 0.3}, {0.3, 0.4, 0.5}};
+        double[][] ends = new double[][] {{0.5, 0.6, 0.7}, {0.7, 0.8, 0.9}};
         dataset = new DefaultIntervalCategoryDataset(starts, ends);
         assertEquals(new Range(0.0, 0.9), r.findRangeBounds(dataset));
         r.setIncludeBaseInRange(false);

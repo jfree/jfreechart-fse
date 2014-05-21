@@ -45,14 +45,26 @@ package org.jfree.chart.renderer.category;
 import org.jfree.chart.util.PublicCloneable;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link DefaultCategoryItemRenderer} class.
  */
-public class DefaultCategoryItemRendererTest {
+public class DefaultCategoryItemRendererTest  {
+
+
+
 
 
     /**
@@ -107,16 +119,16 @@ public class DefaultCategoryItemRendererTest {
 
         DefaultCategoryItemRenderer r1 = new DefaultCategoryItemRenderer();
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(r1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(r1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
+            ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-        );
+            );
         DefaultCategoryItemRenderer r2 = (DefaultCategoryItemRenderer) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(r1, r2);
 

@@ -46,20 +46,36 @@ import org.jfree.data.time.Day;
 import org.jfree.data.time.Month;
 import org.junit.Test;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Paint;
+import java.awt.Stroke;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link PeriodAxisLabelInfo} class.
  */
-public class PeriodAxisLabelInfoTest {
+public class PeriodAxisLabelInfoTest  {
+
+
+
 
 
     /**
@@ -175,9 +191,9 @@ public class PeriodAxisLabelInfoTest {
      */
     @Test
     public void testCreateInstance() {
-        PeriodAxisLabelInfo info = new PeriodAxisLabelInfo(Day.class,
+        PeriodAxisLabelInfo info = new PeriodAxisLabelInfo(Day.class, 
                 new SimpleDateFormat("d"));
-        Day d = (Day) info.createInstance(new Date(0L),
+        Day d = (Day) info.createInstance(new Date(0L), 
                 TimeZone.getTimeZone("GMT"), Locale.UK);
         assertEquals(new Day(1, 1, 1970), d);
     }

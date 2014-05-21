@@ -48,17 +48,17 @@
 
 package org.jfree.chart.block;
 
-import org.jfree.chart.entity.EntityCollection;
-import org.jfree.chart.entity.StandardEntityCollection;
-import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.util.PublicCloneable;
-
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.jfree.chart.ui.Size2D;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.entity.EntityCollection;
+import org.jfree.chart.entity.StandardEntityCollection;
 
 /**
  * A container for a collection of {@link Block} objects.  The container uses

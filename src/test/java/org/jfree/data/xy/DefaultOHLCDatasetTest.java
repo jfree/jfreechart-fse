@@ -47,15 +47,28 @@ import org.jfree.data.Range;
 import org.jfree.data.general.DatasetUtilities;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link DefaultOHLCDataset} class.
  */
-public class DefaultOHLCDatasetTest {
+public class DefaultOHLCDatasetTest  {
+
+
+
 
 
     private static final double EPSILON = 0.0000000001;
@@ -92,10 +105,10 @@ public class DefaultOHLCDatasetTest {
         d2 = new DefaultOHLCDataset("Series 2", new OHLCDataItem[0]);
         assertEquals(d1, d2);
 
-        d1 = new DefaultOHLCDataset("Series 2", new OHLCDataItem[]{
+        d1 = new DefaultOHLCDataset("Series 2", new OHLCDataItem[] {
                 new OHLCDataItem(new Date(123L), 1.2, 3.4, 5.6, 7.8, 99.9)});
         assertFalse(d1.equals(d2));
-        d2 = new DefaultOHLCDataset("Series 2", new OHLCDataItem[]{
+        d2 = new DefaultOHLCDataset("Series 2", new OHLCDataItem[] {
                 new OHLCDataItem(new Date(123L), 1.2, 3.4, 5.6, 7.8, 99.9)});
         assertEquals(d1, d2);
 
@@ -124,7 +137,7 @@ public class DefaultOHLCDatasetTest {
         OHLCDataItem item2 = new OHLCDataItem(new Date(2L), 6.0, 7.0, 8.0, 9.0,
                 10.0);
         // create an array of items in reverse order
-        OHLCDataItem[] items = new OHLCDataItem[]{item2, item1};
+        OHLCDataItem[] items = new OHLCDataItem[] {item2, item1};
         DefaultOHLCDataset d1 = new DefaultOHLCDataset("Series 1", items);
         DefaultOHLCDataset d2 = (DefaultOHLCDataset) d1.clone();
         assertNotSame(d1, d2);
@@ -153,16 +166,16 @@ public class DefaultOHLCDatasetTest {
         DefaultOHLCDataset d1 = new DefaultOHLCDataset("Series 1",
                 new OHLCDataItem[0]);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(d1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(d1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
+            ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-        );
+            );
         DefaultOHLCDataset d2 = (DefaultOHLCDataset) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(d1, d2);
     }

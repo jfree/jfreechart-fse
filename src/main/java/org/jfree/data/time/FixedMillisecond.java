@@ -155,7 +155,8 @@ public class FixedMillisecond extends RegularTimePeriod
         if (object instanceof FixedMillisecond) {
             FixedMillisecond m = (FixedMillisecond) object;
             return this.time == m.getFirstMillisecond();
-        } else {
+        }
+        else {
             return false;
         }
 
@@ -193,10 +194,12 @@ public class FixedMillisecond extends RegularTimePeriod
             difference = this.time - t1.time;
             if (difference > 0) {
                 result = 1;
-            } else {
+            }
+            else {
                 if (difference < 0) {
-                    result = -1;
-                } else {
+                   result = -1;
+                }
+                else {
                     result = 0;
                 }
             }

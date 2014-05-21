@@ -43,12 +43,18 @@ package org.jfree.chart.axis;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link AxisSpace} class.
  */
-public class AxisSpaceTest {
+public class AxisSpaceTest  {
+
+
+
 
 
     /**

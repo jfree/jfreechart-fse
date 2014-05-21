@@ -49,14 +49,14 @@
 
 package org.jfree.data.category;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jfree.chart.util.TableOrder;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.general.PieDataset;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A {@link PieDataset} implementation that obtains its data from one row or
@@ -149,7 +149,8 @@ public class CategoryToPieDataset extends AbstractDataset
         if (this.source != null) {
             if (this.extract == TableOrder.BY_ROW) {
                 result = this.source.getColumnCount();
-            } else if (this.extract == TableOrder.BY_COLUMN) {
+            }
+            else if (this.extract == TableOrder.BY_COLUMN) {
                 result = this.source.getRowCount();
             }
         }
@@ -176,7 +177,8 @@ public class CategoryToPieDataset extends AbstractDataset
         }
         if (this.extract == TableOrder.BY_ROW) {
             result = this.source.getValue(this.index, item);
-        } else if (this.extract == TableOrder.BY_COLUMN) {
+        }
+        else if (this.extract == TableOrder.BY_COLUMN) {
             result = this.source.getValue(item, this.index);
         }
         return result;
@@ -202,7 +204,8 @@ public class CategoryToPieDataset extends AbstractDataset
         }
         if (this.extract == TableOrder.BY_ROW) {
             result = this.source.getColumnKey(index);
-        } else if (this.extract == TableOrder.BY_COLUMN) {
+        }
+        else if (this.extract == TableOrder.BY_COLUMN) {
             result = this.source.getRowKey(index);
         }
         return result;
@@ -222,7 +225,8 @@ public class CategoryToPieDataset extends AbstractDataset
         if (this.source != null) {
             if (this.extract == TableOrder.BY_ROW) {
                 result = this.source.getColumnIndex(key);
-            } else if (this.extract == TableOrder.BY_COLUMN) {
+            }
+            else if (this.extract == TableOrder.BY_COLUMN) {
                 result = this.source.getRowIndex(key);
             }
         }
@@ -243,7 +247,8 @@ public class CategoryToPieDataset extends AbstractDataset
         if (this.source != null) {
             if (this.extract == TableOrder.BY_ROW) {
                 result = this.source.getColumnKeys();
-            } else if (this.extract == TableOrder.BY_COLUMN) {
+            }
+            else if (this.extract == TableOrder.BY_COLUMN) {
                 result = this.source.getRowKeys();
             }
         }
@@ -266,7 +271,8 @@ public class CategoryToPieDataset extends AbstractDataset
         if (keyIndex != -1) {
             if (this.extract == TableOrder.BY_ROW) {
                 result = this.source.getValue(this.index, keyIndex);
-            } else if (this.extract == TableOrder.BY_COLUMN) {
+            }
+            else if (this.extract == TableOrder.BY_COLUMN) {
                 result = this.source.getValue(keyIndex, this.index);
             }
         }
@@ -320,7 +326,8 @@ public class CategoryToPieDataset extends AbstractDataset
                 if (v2 != null) {
                     return false;
                 }
-            } else {
+            }
+            else {
                 if (!v1.equals(v2)) {
                     return false;
                 }

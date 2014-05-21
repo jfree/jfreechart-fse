@@ -42,15 +42,26 @@ package org.jfree.chart.needle;
 
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+
 
 
 /**
  * Tests for the {@link PointerNeedle} class.
  */
-public class PointerNeedleTest {
+public class PointerNeedleTest  {
+
+
 
 
     /**
@@ -58,10 +69,10 @@ public class PointerNeedleTest {
      */
     @Test
     public void testEquals() {
-        PointerNeedle n1 = new PointerNeedle();
-        PointerNeedle n2 = new PointerNeedle();
-        assertEquals(n1, n2);
-        assertEquals(n2, n1);
+       PointerNeedle n1 = new PointerNeedle();
+       PointerNeedle n2 = new PointerNeedle();
+       assertEquals(n1, n2);
+       assertEquals(n2, n1);
     }
 
     /**
@@ -83,15 +94,15 @@ public class PointerNeedleTest {
     public void testSerialization() throws IOException, ClassNotFoundException {
         PointerNeedle n1 = new PointerNeedle();
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(n1);
-        out.close();
-        ObjectInput in = new ObjectInputStream(
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(n1);
+            out.close();
+            ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray())
-        );
+            );
         PointerNeedle n2 = (PointerNeedle) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(n1, n2);
     }

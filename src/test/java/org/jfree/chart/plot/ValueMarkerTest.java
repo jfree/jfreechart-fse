@@ -54,20 +54,37 @@ import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.TextAnchor;
 import org.junit.Test;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Stroke;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link ValueMarker} class.
  */
 public class ValueMarkerTest
 
-        implements MarkerChangeListener {
+    implements MarkerChangeListener {
 
 
     MarkerChangeEvent lastEvent;
+
+
+
 
 
     /**
@@ -168,7 +185,7 @@ public class ValueMarkerTest
         assertEquals(m1, m2);
     }
 
-    /**
+   /**
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
@@ -176,15 +193,15 @@ public class ValueMarkerTest
 
         ValueMarker m1 = new ValueMarker(25.0);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(m1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(m1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         ValueMarker m2 = (ValueMarker) in.readObject();
-        in.close();
+            in.close();
 
         boolean b = m1.equals(m2);
         assertTrue(b);
@@ -225,15 +242,15 @@ public class ValueMarkerTest
 
         ValueMarker m1 = new ValueMarker(25.0);
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(m1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(m1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         ValueMarker m2 = (ValueMarker) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(m1, m2);
 
