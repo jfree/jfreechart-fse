@@ -1854,6 +1854,9 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
                 that.fixedLegendItems)) {
             return false;
         }
+        if (!ObjectUtils.equal(this.datasets, that.datasets)) {
+            return false;
+        }
         return super.equals(obj);
     }
 
