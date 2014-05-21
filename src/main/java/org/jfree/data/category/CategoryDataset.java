@@ -62,8 +62,7 @@ import org.jfree.data.general.Dataset;
  * The categories are represented by <code>Comparable</code> instance, with the
  * category label being provided by the <code>toString</code> method.
  */
-public interface CategoryDataset<RowKey extends Comparable, ColumnKey extends Comparable>
-        extends KeyedValues2D<RowKey, ColumnKey>, Dataset {
+public interface CategoryDataset extends KeyedValues2D, Dataset {
 
     // no additional methods required
 

@@ -53,8 +53,7 @@ import org.jfree.data.category.CategoryDataset;
  * also implement the <code>org.jfree.util.PublicCloneable</code> interface (in
  * JCommon).
  */
-public interface CategoryToolTipGenerator
-        <RowKey extends Comparable, ColumnKey extends Comparable> {
+public interface CategoryToolTipGenerator {
 
     /**
      * Generates the tool tip text for an item in a dataset.  Note: in the
@@ -67,7 +66,6 @@ public interface CategoryToolTipGenerator
      *
      * @return The tooltip text (possibly <code>null</code>).
      */
-    public String generateToolTip(CategoryDataset<RowKey, ColumnKey> dataset,
-                                  int row, int column);
+    public String generateToolTip(CategoryDataset dataset, int row, int column);
 
 }

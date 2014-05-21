@@ -40,18 +40,16 @@
 
 package org.jfree.data.statistics;
 
-import org.jfree.data.category.CategoryDataset;
-
 import java.util.List;
+
+import org.jfree.data.category.CategoryDataset;
 
 /**
  * A category dataset that defines multiple values for each item.
  *
  * @since 1.0.7
  */
-public interface MultiValueCategoryDataset
-        <RowKey extends Comparable, ColumnKey extends Comparable>
-        extends CategoryDataset<RowKey, ColumnKey> {
+public interface MultiValueCategoryDataset extends CategoryDataset {
 
     /**
      * Returns a list (possibly empty) of the values for the specified item.
@@ -73,6 +71,6 @@ public interface MultiValueCategoryDataset
      *
      * @return The list of values.
      */
-    public List<Number> getValues(RowKey rowKey, ColumnKey columnKey);
+    public List<Number> getValues(Comparable rowKey, Comparable columnKey);
 
 }
