@@ -46,10 +46,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import org.jfree.chart.HashUtilities;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.HashUtils;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.plot.Plot;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A class that captures information about a plot.
@@ -149,10 +149,10 @@ public class PlotEntity extends ChartEntity {
         if (!getArea().equals(that.getArea())) {
             return false;
         }
-        if (!ObjectUtilities.equal(getToolTipText(), that.getToolTipText())) {
+        if (!ObjectUtils.equal(getToolTipText(), that.getToolTipText())) {
             return false;
         }
-        if (!ObjectUtilities.equal(getURLText(), that.getURLText())) {
+        if (!ObjectUtils.equal(getURLText(), that.getURLText())) {
             return false;
         }
         if (!(this.plot.equals(that.plot))) {
@@ -169,8 +169,8 @@ public class PlotEntity extends ChartEntity {
     @Override
     public int hashCode() {
         int result = 39;
-        result = HashUtilities.hashCode(result, getToolTipText());
-        result = HashUtilities.hashCode(result, getURLText());
+        result = HashUtils.hashCode(result, getToolTipText());
+        result = HashUtils.hashCode(result, getURLText());
         return result;
     }
 
@@ -196,7 +196,7 @@ public class PlotEntity extends ChartEntity {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeShape(getArea(), stream);
+        SerialUtils.writeShape(getArea(), stream);
      }
 
     /**
@@ -210,7 +210,7 @@ public class PlotEntity extends ChartEntity {
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        setArea(SerialUtilities.readShape(stream));
+        setArea(SerialUtils.readShape(stream));
     }
 
 }

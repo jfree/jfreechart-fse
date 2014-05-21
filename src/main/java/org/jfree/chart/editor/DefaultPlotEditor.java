@@ -152,7 +152,7 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
 
     protected JPanel createPlotPanel(Plot plot) {
         this.plotInsets = plot.getInsets();
-        this.backgroundPaintSample = new PaintSample(plot.getBackgroundPaint());
+        this.backgroundPaintSample = new PaintSample(Color.WHITE);
         this.outlineStrokeSample = new StrokeSample(plot.getOutlineStroke());
         this.outlinePaintSample = new PaintSample(plot.getOutlinePaint());
         if (plot instanceof CategoryPlot) {
@@ -511,7 +511,7 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
         // set the plot properties...
         plot.setOutlinePaint(getOutlinePaint());
         plot.setOutlineStroke(getOutlineStroke());
-        plot.setBackgroundPaint(getBackgroundPaint());
+        plot.setBackgroundColor((Color) getBackgroundPaint());
         plot.setInsets(getPlotInsets());
 
         // then the axis properties...

@@ -46,11 +46,11 @@
 
 package org.jfree.data.gantt;
 
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.data.general.Series;
-
 import java.util.Collections;
 import java.util.List;
+
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.data.general.Series;
 
 /**
  * A series that contains zero, one or many {@link Task} objects.
@@ -194,7 +194,7 @@ public class TaskSeries extends Series {
     @Override
     public Object clone() throws CloneNotSupportedException {
         TaskSeries clone = (TaskSeries) super.clone();
-        clone.tasks = ObjectUtilities.deepClone(this.tasks);
+        clone.tasks = ObjectUtils.deepClone(this.tasks);
         return clone;
     }
 

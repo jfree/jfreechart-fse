@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------
  * ShapeList.java
  * --------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -42,7 +42,7 @@
 
 package org.jfree.chart.util;
 
-import java.awt.*;
+import java.awt.Shape;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -103,7 +103,6 @@ public class ShapeList extends AbstractObjectList<Shape> {
      */
     @Override
     public boolean equals(Object obj) {
-
         if (obj == this) {
             return true;
         }
@@ -112,13 +111,12 @@ public class ShapeList extends AbstractObjectList<Shape> {
         }
         ShapeList that = (ShapeList) obj;
         int listSize = size();
-        for (int i = 0; i < listSize; i++) {
-            if (!ShapeUtilities.equal(get(i), that.get(i))) {
-                return false;
-            }
+        for (int i = 0; i < listSize; i++) { // FIXME: this is wrong
+           if (!ShapeUtils.equal(get(i), that.get(i))) {
+               return false;
+           }
         }
         return true;
-
     }
 
     /**
@@ -147,8 +145,9 @@ public class ShapeList extends AbstractObjectList<Shape> {
             final Shape shape = getShape(i);
             if (shape != null) {
                 stream.writeInt(i);
-                SerialUtilities.writeShape(shape, stream);
-            } else {
+                SerialUtils.writeShape(shape, stream);
+            }
+            else {
                 stream.writeInt(-1);
             }
         }
@@ -170,7 +169,7 @@ public class ShapeList extends AbstractObjectList<Shape> {
         for (int i = 0; i < count; i++) {
             final int index = stream.readInt();
             if (index != -1) {
-                setShape(index, SerialUtilities.readShape(stream));
+                setShape(index, SerialUtils.readShape(stream));
             }
         }
 

@@ -44,9 +44,9 @@ package org.jfree.chart.entity;
 
 import java.awt.Shape;
 
-import org.jfree.chart.HashUtilities;
+import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 
 /**
  * An entity to represent the labels on a {@link CategoryAxis}.
@@ -97,7 +97,7 @@ public class CategoryLabelEntity extends TickLabelEntity {
             return false;
         }
         CategoryLabelEntity that = (CategoryLabelEntity) obj;
-        if (!ObjectUtilities.equal(this.key, that.key)) {
+        if (!ObjectUtils.equal(this.key, that.key)) {
             return false;
         }
         return super.equals(obj);
@@ -111,7 +111,7 @@ public class CategoryLabelEntity extends TickLabelEntity {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = HashUtilities.hashCode(result, this.key);
+        result = HashUtils.hashCode(result, this.key);
         return result;
     }
 

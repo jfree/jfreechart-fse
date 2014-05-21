@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * XYAreaRenderer2.java
  * --------------------
- * (C) Copyright 2004-2012, by Hari and Contributors.
+ * (C) Copyright 2004-2014, by Hari and Contributors.
  *
  * Original Author:  Hari (ourhari@hotmail.com);
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -96,7 +96,7 @@ import java.io.ObjectOutputStream;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.XYItemEntity;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -107,7 +107,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.urls.XYURLGenerator;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.xy.XYDataset;
 
 /**
@@ -419,7 +419,7 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
         if (this.showOutline != that.showOutline) {
             return false;
         }
-        if (!ShapeUtilities.equal(this.legendArea, that.legendArea)) {
+        if (!ShapeUtils.equal(this.legendArea, that.legendArea)) {
             return false;
         }
         return super.equals(obj);
@@ -435,7 +435,7 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
     @Override
     public Object clone() throws CloneNotSupportedException {
         XYAreaRenderer2 clone = (XYAreaRenderer2) super.clone();
-        clone.legendArea = ShapeUtilities.clone(this.legendArea);
+        clone.legendArea = ShapeUtils.clone(this.legendArea);
         return clone;
     }
 
@@ -450,7 +450,7 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.legendArea = SerialUtilities.readShape(stream);
+        this.legendArea = SerialUtils.readShape(stream);
     }
 
     /**
@@ -462,7 +462,7 @@ public class XYAreaRenderer2 extends AbstractXYItemRenderer
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeShape(this.legendArea, stream);
+        SerialUtils.writeShape(this.legendArea, stream);
     }
 
 }

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -24,10 +24,10 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ------------------
- * XYSeriesTests.java
- * ------------------
- * (C) Copyright 2003-2009, by Object Refinery Limited and Contributors.
+ * -----------------
+ * XYSeriesTest.java
+ * -----------------
+ * (C) Copyright 2003-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -46,18 +46,23 @@
 
 package org.jfree.data.xy;
 
+import org.jfree.chart.TestUtils;
 import org.jfree.data.general.SeriesException;
 import org.junit.Test;
 
-import java.io.*;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link XYSeries} class.
  */
 public class XYSeriesTest {
-
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
@@ -167,19 +172,10 @@ public class XYSeriesTest {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() throws IOException, ClassNotFoundException {
+    public void testSerialization() {
         XYSeries s1 = new XYSeries("Series");
         s1.add(1.0, 1.1);
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(s1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
-        XYSeries s2 = (XYSeries) in.readObject();
-        in.close();
-
+        XYSeries s2 = (XYSeries) TestUtils.serialised(s1);
         assertEquals(s1, s2);
     }
 
@@ -304,7 +300,8 @@ public class XYSeriesTest {
         try {
             series.update(2, 99);
             fail("SeriesException should have been thrown for unknown key");
-        } catch (SeriesException e) {
+        }
+        catch (SeriesException e) {
             assertEquals("No observation for x = 2", e.getMessage());
         }
     }
@@ -314,12 +311,12 @@ public class XYSeriesTest {
      */
     @Test
     public void testUpdate2() {
-        XYSeries series = new XYSeries("Series", false, true);
-        series.add(5.0, 55.0);
-        series.add(4.0, 44.0);
-        series.add(6.0, 66.0);
-        series.update(4.0, 99.0);
-        assertEquals(99.0, series.getY(1));
+       XYSeries series = new XYSeries("Series", false, true);
+       series.add(5.0, 55.0);
+       series.add(4.0, 44.0);
+       series.add(6.0, 66.0);
+       series.update(4.0, 99.0);
+       assertEquals(99.0, series.getY(1));
     }
 
     /**
@@ -629,7 +626,7 @@ public class XYSeriesTest {
 
         s1.add(0.0, null);
         assertEquals(-1.1, s1.getMinY(), EPSILON);
-    }
+   }
 
     /**
      * Some checks for the getMaxY() method.
@@ -653,6 +650,22 @@ public class XYSeriesTest {
 
         s1.add(0.0, null);
         assertEquals(99.9, s1.getMaxY(), EPSILON);
+    }
+
+    /**
+     * A test for a bug reported in the forum:
+     * 
+     * http://www.jfree.org/forum/viewtopic.php?f=3&t=116601
+     */
+    @Test
+    public void testGetMaxY2() {
+        XYSeries series = new XYSeries(1, true, false);
+        series.addOrUpdate(1, 20);
+        series.addOrUpdate(2, 30);
+        series.addOrUpdate(3, 40);
+        assertEquals(40.0, series.getMaxY(), EPSILON);
+        series.addOrUpdate(2, 22);
+        assertEquals(40.0, series.getMaxY(), EPSILON);        
     }
 
     /**
@@ -765,4 +778,37 @@ public class XYSeriesTest {
         assertEquals(2.0, s1.getMaxY(), EPSILON);
     }
 
+    @Test
+    public void testSetKey() {
+        XYSeries s1 = new XYSeries("S");
+        s1.setKey("S1");
+        assertEquals("S1", s1.getKey());
+        
+        XYSeriesCollection c = new XYSeriesCollection();
+        c.addSeries(s1);
+        XYSeries s2 = new XYSeries("S2");
+        c.addSeries(s2);
+        
+        // now we should be allowed to change s1's key to anything but "S2"
+        s1.setKey("OK");
+        assertEquals("OK", s1.getKey());
+        
+        try {
+            s1.setKey("S2");
+            fail("Expect an exception here.");
+        } catch (IllegalArgumentException e) {
+            // OK
+        }
+        
+        // after s1 is removed from the collection, we should be able to set
+        // the key to anything we want...
+        c.removeSeries(s1);
+        s1.setKey("S2");
+        
+        // check that removing by index also works
+        s1.setKey("S1");
+        c.addSeries(s1);
+        c.removeSeries(1);
+        s1.setKey("S2");
+    }
 }

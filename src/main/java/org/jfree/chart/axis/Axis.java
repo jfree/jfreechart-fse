@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------
  * Axis.java
  * ---------
- * (C) Copyright 2000-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Bill Kelemen;
@@ -88,22 +88,14 @@
 
 package org.jfree.chart.axis;
 
-import org.jfree.chart.entity.AxisEntity;
-import org.jfree.chart.entity.EntityCollection;
-import org.jfree.chart.event.AxisChangeEvent;
-import org.jfree.chart.event.AxisChangeListener;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.SerialUtilities;
-
-import javax.swing.event.EventListenerList;
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -111,9 +103,28 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.text.AttributedString;
 import java.util.Arrays;
 import java.util.EventListener;
 import java.util.List;
+
+import javax.swing.event.EventListenerList;
+
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.PaintUtils;
+import org.jfree.chart.entity.AxisEntity;
+import org.jfree.chart.entity.EntityCollection;
+import org.jfree.chart.event.AxisChangeEvent;
+import org.jfree.chart.event.AxisChangeListener;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.util.AttributedStringUtils;
+import org.jfree.chart.util.ParamChecks;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * The base class for all axes in JFreeChart.  Subclasses are divided into
@@ -178,7 +189,7 @@ public abstract class Axis implements Cloneable, Serializable {
     private boolean visible;
 
     /** The label for the axis. */
-    private String label;
+    private transient AttributedString label;
 
     /** The font for displaying the axis label. */
     private Font labelFont;
@@ -191,6 +202,9 @@ public abstract class Axis implements Cloneable, Serializable {
 
     /** The label angle. */
     private double labelAngle;
+
+    /** The axis label location. */
+    private AxisLabelLocation labelLocation;
 
     /** A flag that controls whether or not the axis line is visible. */
     private boolean axisLineVisible;
@@ -280,13 +294,17 @@ public abstract class Axis implements Cloneable, Serializable {
      * @param label  the axis label (<code>null</code> permitted).
      */
     protected Axis(String label) {
-
-        this.label = label;
         this.visible = DEFAULT_AXIS_VISIBLE;
         this.labelFont = DEFAULT_AXIS_LABEL_FONT;
         this.labelPaint = DEFAULT_AXIS_LABEL_PAINT;
+        if (label != null) {
+            AttributedString s = new AttributedString(label);
+            s.addAttributes(this.labelFont.getAttributes(), 0, label.length());
+            this.label = s;
+        }
         this.labelInsets = DEFAULT_AXIS_LABEL_INSETS;
         this.labelAngle = 0.0;
+        this.labelLocation = AxisLabelLocation.MIDDLE;
 
         this.axisLineVisible = true;
         this.axisLinePaint = DEFAULT_AXIS_LINE_PAINT;
@@ -310,7 +328,6 @@ public abstract class Axis implements Cloneable, Serializable {
         this.plot = null;
 
         this.listenerList = new EventListenerList();
-
     }
 
     /**
@@ -341,7 +358,8 @@ public abstract class Axis implements Cloneable, Serializable {
     }
 
     /**
-     * Returns the label for the axis.
+     * Returns the label for the axis (the returned value is a copy, so 
+     * modifying it will not impact the state of the axis).
      *
      * @return The label for the axis (<code>null</code> possible).
      *
@@ -349,8 +367,12 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getLabelPaint()
      * @see #setLabel(String)
      */
-    public String getLabel() {
-        return this.label;
+    public AttributedString getLabel() {
+        if (this.label != null) {
+            return new AttributedString(this.label.getIterator());
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -363,23 +385,47 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #setLabelFont(Font)
      * @see #setLabelPaint(Paint)
      */
-    public void setLabel(String label) {
-
-        String existing = this.label;
-        if (existing != null) {
-            if (!existing.equals(label)) {
-                this.label = label;
-                fireChangeEvent();
-            }
+    public void setLabel(AttributedString label) {
+        if (label != null) {
+            this.label = new AttributedString(label.getIterator());
         } else {
-            if (label != null) {
-                this.label = label;
-                fireChangeEvent();
-            }
+            this.label = null;
         }
-
+        fireChangeEvent();
     }
 
+    /**
+     * Sets the label for the axis and sends an {@link AxisChangeEvent} to
+     * all registered listeners.  Note that this is a convenience method that
+     * converts the <code>String</code> argument to an 
+     * <code>AttributedString</code> (which is the actual type for the label).
+     * 
+     * @param label  the label (<code>null</code> permitted).
+     * 
+     * @see #setLabel(java.text.AttributedString) 
+     */
+    public void setLabel(String label) {
+        this.label = createLabel(label);
+        fireChangeEvent();
+    }
+    
+    /**
+     * Creates and returns an <code>AttributedString</code> with the specified
+     * text and the labelFont attributes applied.
+     * 
+     * @param label  the label (<code>null</code> permitted).
+     * 
+     * @return An attributed string or <code>null</code>.
+     */
+    public AttributedString createLabel(String label) {
+        if (label == null) {
+            return null;
+        }
+        AttributedString s = new AttributedString(label);
+        s.addAttributes(this.labelFont.getAttributes(), 0, label.length());
+        return s;
+    }
+    
     /**
      * Returns the font for the axis label.
      *
@@ -400,13 +446,13 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getLabelFont()
      */
     public void setLabelFont(Font font) {
-        if (font == null) {
-            throw new IllegalArgumentException("Null 'font' argument.");
+        ParamChecks.nullNotPermitted(font, "font");
+        this.labelFont = font;
+        if (this.label != null) {
+            this.label.addAttributes(font.getAttributes(), 0, 
+                    this.label.getIterator().getEndIndex());
         }
-        if (!this.labelFont.equals(font)) {
-            this.labelFont = font;
-            fireChangeEvent();
-        }
+        fireChangeEvent();
     }
 
     /**
@@ -429,9 +475,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getLabelPaint()
      */
     public void setLabelPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.labelPaint = paint;
         fireChangeEvent();
     }
@@ -470,9 +514,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @since 1.0.10
      */
     public void setLabelInsets(RectangleInsets insets, boolean notify) {
-        if (insets == null) {
-            throw new IllegalArgumentException("Null 'insets' argument.");
-        }
+        ParamChecks.nullNotPermitted(insets, "insets");
         if (!insets.equals(this.labelInsets)) {
             this.labelInsets = insets;
             if (notify) {
@@ -502,6 +544,32 @@ public abstract class Axis implements Cloneable, Serializable {
      */
     public void setLabelAngle(double angle) {
         this.labelAngle = angle;
+        fireChangeEvent();
+    }
+
+    /**
+     * Returns the location of the axis label.  The default is
+     * {@link AxisLabelLocation#MIDDLE}.
+     * 
+     * @return The location of the axis label (never <code>null</code>). 
+     * 
+     * @since 1.0.16
+     */
+    public AxisLabelLocation getLabelLocation() {
+        return this.labelLocation;
+    }
+    
+    /**
+     * Sets the axis label location and sends an {@link AxisChangeEvent} to
+     * all registered listeners.
+     * 
+     * @param location  the new location (<code>null</code> not permitted).
+     * 
+     * @since 1.0.16
+     */
+    public void setLabelLocation(AxisLabelLocation location) {
+        ParamChecks.nullNotPermitted(location, "location");
+        this.labelLocation = location;
         fireChangeEvent();
     }
 
@@ -553,9 +621,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getAxisLinePaint()
      */
     public void setAxisLinePaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.axisLinePaint = paint;
         fireChangeEvent();
     }
@@ -580,9 +646,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getAxisLineStroke()
      */
     public void setAxisLineStroke(Stroke stroke) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         this.axisLineStroke = stroke;
         fireChangeEvent();
     }
@@ -612,12 +676,10 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #setTickLabelPaint(Paint)
      */
     public void setTickLabelsVisible(boolean flag) {
-
         if (flag != this.tickLabelsVisible) {
             this.tickLabelsVisible = flag;
             fireChangeEvent();
         }
-
     }
 
     /**
@@ -673,16 +735,11 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getTickLabelFont()
      */
     public void setTickLabelFont(Font font) {
-
-        if (font == null) {
-            throw new IllegalArgumentException("Null 'font' argument.");
-        }
-
+        ParamChecks.nullNotPermitted(font, "font");
         if (!this.tickLabelFont.equals(font)) {
             this.tickLabelFont = font;
             fireChangeEvent();
         }
-
     }
 
     /**
@@ -705,9 +762,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getTickLabelPaint()
      */
     public void setTickLabelPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.tickLabelPaint = paint;
         fireChangeEvent();
     }
@@ -732,9 +787,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getTickLabelInsets()
      */
     public void setTickLabelInsets(RectangleInsets insets) {
-        if (insets == null) {
-            throw new IllegalArgumentException("Null 'insets' argument.");
-        }
+        ParamChecks.nullNotPermitted(insets, "insets");
         if (!this.tickLabelInsets.equals(insets)) {
             this.tickLabelInsets = insets;
             fireChangeEvent();
@@ -839,9 +892,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getTickMarkStroke()
      */
     public void setTickMarkStroke(Stroke stroke) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         if (!this.tickMarkStroke.equals(stroke)) {
             this.tickMarkStroke = stroke;
             fireChangeEvent();
@@ -868,9 +919,7 @@ public abstract class Axis implements Cloneable, Serializable {
      * @see #getTickMarkPaint()
      */
     public void setTickMarkPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.tickMarkPaint = paint;
         fireChangeEvent();
     }
@@ -1008,9 +1057,7 @@ public abstract class Axis implements Cloneable, Serializable {
      *         space).
      */
     public abstract AxisSpace reserveSpace(Graphics2D g2, Plot plot,
-                                           Rectangle2D plotArea,
-                                           RectangleEdge edge,
-                                           AxisSpace space);
+            Rectangle2D plotArea, RectangleEdge edge, AxisSpace space);
 
     /**
      * Draws the axis on a Java 2D graphics device (such as the screen or a
@@ -1026,12 +1073,9 @@ public abstract class Axis implements Cloneable, Serializable {
      *
      * @return The axis state (never <code>null</code>).
      */
-    public abstract AxisState draw(Graphics2D g2,
-                                   double cursor,
-                                   Rectangle2D plotArea,
-                                   Rectangle2D dataArea,
-                                   RectangleEdge edge,
-                                   PlotRenderingInfo plotState);
+    public abstract AxisState draw(Graphics2D g2, double cursor,
+            Rectangle2D plotArea, Rectangle2D dataArea, RectangleEdge edge,
+            PlotRenderingInfo plotState);
 
     /**
      * Calculates the positions of the ticks for the axis, storing the results
@@ -1044,8 +1088,8 @@ public abstract class Axis implements Cloneable, Serializable {
      *
      * @return The list of ticks.
      */
-    public abstract List<? extends Tick> refreshTicks(Graphics2D g2, AxisState state,
-                                                      Rectangle2D dataArea, RectangleEdge edge);
+    public abstract List<? extends Tick> refreshTicks(Graphics2D g2, 
+            AxisState state, Rectangle2D dataArea, RectangleEdge edge);
 
     /**
      * Created an entity for the axis.
@@ -1061,25 +1105,28 @@ public abstract class Axis implements Cloneable, Serializable {
      * @since 1.0.13
      */
     protected void createAndAddEntity(double cursor, AxisState state,
-                                      Rectangle2D dataArea, RectangleEdge edge,
-                                      PlotRenderingInfo plotState) {
+            Rectangle2D dataArea, RectangleEdge edge,
+            PlotRenderingInfo plotState) {
 
         if (plotState == null || plotState.getOwner() == null) {
-            return;  // no need to create entity if we can´t save it anyways...
+            return;  // no need to create entity if we can't save it anyways...
         }
         Rectangle2D hotspot = null;
         if (edge.equals(RectangleEdge.TOP)) {
             hotspot = new Rectangle2D.Double(dataArea.getX(),
                     state.getCursor(), dataArea.getWidth(),
                     cursor - state.getCursor());
-        } else if (edge.equals(RectangleEdge.BOTTOM)) {
+        }
+        else if (edge.equals(RectangleEdge.BOTTOM)) {
             hotspot = new Rectangle2D.Double(dataArea.getX(), cursor,
                     dataArea.getWidth(), state.getCursor() - cursor);
-        } else if (edge.equals(RectangleEdge.LEFT)) {
+        }
+        else if (edge.equals(RectangleEdge.LEFT)) {
             hotspot = new Rectangle2D.Double(state.getCursor(),
                     dataArea.getY(), cursor - state.getCursor(),
                     dataArea.getHeight());
-        } else if (edge.equals(RectangleEdge.RIGHT)) {
+        }
+        else if (edge.equals(RectangleEdge.RIGHT)) {
             hotspot = new Rectangle2D.Double(cursor, dataArea.getY(),
                     state.getCursor() - cursor, dataArea.getHeight());
         }
@@ -1159,12 +1206,12 @@ public abstract class Axis implements Cloneable, Serializable {
      * @return The enclosing rectangle.
      */
     protected Rectangle2D getLabelEnclosure(Graphics2D g2, RectangleEdge edge) {
-
         Rectangle2D result = new Rectangle2D.Double();
-        String axisLabel = getLabel();
-        if (axisLabel != null && !axisLabel.equals("")) {
-            FontMetrics fm = g2.getFontMetrics(getLabelFont());
-            Rectangle2D bounds = TextUtilities.getTextBounds(axisLabel, g2, fm);
+        AttributedString axisLabel = getLabel();
+        if (axisLabel != null) {
+            TextLayout layout = new TextLayout(axisLabel.getIterator(), 
+                    g2.getFontRenderContext());
+            Rectangle2D bounds = layout.getBounds();
             RectangleInsets insets = getLabelInsets();
             bounds = insets.createOutsetRectangle(bounds);
             double angle = getLabelAngle();
@@ -1174,11 +1221,10 @@ public abstract class Axis implements Cloneable, Serializable {
             double x = bounds.getCenterX();
             double y = bounds.getCenterY();
             AffineTransform transformer
-                    = AffineTransform.getRotateInstance(angle, x, y);
+                = AffineTransform.getRotateInstance(angle, x, y);
             Shape labelBounds = transformer.createTransformedShape(bounds);
             result = labelBounds.getBounds2D();
         }
-
         return result;
 
     }
@@ -1195,25 +1241,23 @@ public abstract class Axis implements Cloneable, Serializable {
      *
      * @return Information about the axis.
      */
-    protected AxisState drawLabel(String label, Graphics2D g2,
-                                  Rectangle2D plotArea, Rectangle2D dataArea, RectangleEdge edge,
-                                  AxisState state) {
+    protected AxisState drawLabel(AttributedString label, Graphics2D g2,
+            Rectangle2D plotArea, Rectangle2D dataArea, RectangleEdge edge,
+            AxisState state) {
 
         // it is unlikely that 'state' will be null, but check anyway...
-        if (state == null) {
-            throw new IllegalArgumentException("Null 'state' argument.");
-        }
+        ParamChecks.nullNotPermitted(state, "state");
 
-        if ((label == null) || (label.equals(""))) {
+        if (label == null) {
             return state;
         }
 
-        Font font = getLabelFont();
         RectangleInsets insets = getLabelInsets();
-        g2.setFont(font);
+        g2.setFont(getLabelFont());
         g2.setPaint(getLabelPaint());
-        FontMetrics fm = g2.getFontMetrics();
-        Rectangle2D labelBounds = TextUtilities.getTextBounds(label, g2, fm);
+        TextLayout layout = new TextLayout(label.getIterator(), 
+                g2.getFontRenderContext());
+        Rectangle2D labelBounds = layout.getBounds();
 
         if (edge == RectangleEdge.TOP) {
             AffineTransform t = AffineTransform.getRotateInstance(
@@ -1221,55 +1265,59 @@ public abstract class Axis implements Cloneable, Serializable {
                     labelBounds.getCenterY());
             Shape rotatedLabelBounds = t.createTransformedShape(labelBounds);
             labelBounds = rotatedLabelBounds.getBounds2D();
-            double labelx = dataArea.getCenterX();
+            double labelx = this.labelLocation.labelLocationX(dataArea);
             double labely = state.getCursor() - insets.getBottom()
-                    - labelBounds.getHeight() / 2.0;
+                            - labelBounds.getHeight() / 2.0;
+            TextAnchor anchor = this.labelLocation.labelAnchorH();
             TextUtilities.drawRotatedString(label, g2, (float) labelx,
-                    (float) labely, TextAnchor.CENTER, getLabelAngle(),
-                    TextAnchor.CENTER);
+                    (float) labely, anchor, getLabelAngle(), TextAnchor.CENTER);
             state.cursorUp(insets.getTop() + labelBounds.getHeight()
                     + insets.getBottom());
-        } else if (edge == RectangleEdge.BOTTOM) {
+        }
+        else if (edge == RectangleEdge.BOTTOM) {
             AffineTransform t = AffineTransform.getRotateInstance(
                     getLabelAngle(), labelBounds.getCenterX(),
                     labelBounds.getCenterY());
             Shape rotatedLabelBounds = t.createTransformedShape(labelBounds);
             labelBounds = rotatedLabelBounds.getBounds2D();
-            double labelx = dataArea.getCenterX();
+            double labelx = this.labelLocation.labelLocationX(dataArea);
             double labely = state.getCursor()
-                    + insets.getTop() + labelBounds.getHeight() / 2.0;
+                            + insets.getTop() + labelBounds.getHeight() / 2.0;
+            TextAnchor anchor = this.labelLocation.labelAnchorH();
             TextUtilities.drawRotatedString(label, g2, (float) labelx,
-                    (float) labely, TextAnchor.CENTER, getLabelAngle(),
-                    TextAnchor.CENTER);
+                    (float) labely, anchor, getLabelAngle(), TextAnchor.CENTER);
             state.cursorDown(insets.getTop() + labelBounds.getHeight()
                     + insets.getBottom());
-        } else if (edge == RectangleEdge.LEFT) {
+        }
+        else if (edge == RectangleEdge.LEFT) {
             AffineTransform t = AffineTransform.getRotateInstance(
                     getLabelAngle() - Math.PI / 2.0, labelBounds.getCenterX(),
                     labelBounds.getCenterY());
             Shape rotatedLabelBounds = t.createTransformedShape(labelBounds);
             labelBounds = rotatedLabelBounds.getBounds2D();
             double labelx = state.getCursor()
-                    - insets.getRight() - labelBounds.getWidth() / 2.0;
-            double labely = dataArea.getCenterY();
+                            - insets.getRight() - labelBounds.getWidth() / 2.0;
+            double labely = this.labelLocation.labelLocationY(dataArea);
+            TextAnchor anchor = this.labelLocation.labelAnchorV();
             TextUtilities.drawRotatedString(label, g2, (float) labelx,
-                    (float) labely, TextAnchor.CENTER,
-                    getLabelAngle() - Math.PI / 2.0, TextAnchor.CENTER);
+                    (float) labely, anchor, getLabelAngle() - Math.PI / 2.0, 
+                    anchor);
             state.cursorLeft(insets.getLeft() + labelBounds.getWidth()
                     + insets.getRight());
-        } else if (edge == RectangleEdge.RIGHT) {
-
+        }
+        else if (edge == RectangleEdge.RIGHT) {
             AffineTransform t = AffineTransform.getRotateInstance(
                     getLabelAngle() + Math.PI / 2.0,
                     labelBounds.getCenterX(), labelBounds.getCenterY());
             Shape rotatedLabelBounds = t.createTransformedShape(labelBounds);
             labelBounds = rotatedLabelBounds.getBounds2D();
             double labelx = state.getCursor()
-                    + insets.getLeft() + labelBounds.getWidth() / 2.0;
-            double labely = dataArea.getY() + dataArea.getHeight() / 2.0;
+                            + insets.getLeft() + labelBounds.getWidth() / 2.0;
+            double labely = this.labelLocation.labelLocationY(dataArea);
+            TextAnchor anchor = this.labelLocation.labelAnchorV();
             TextUtilities.drawRotatedString(label, g2, (float) labelx,
-                    (float) labely, TextAnchor.CENTER,
-                    getLabelAngle() + Math.PI / 2.0, TextAnchor.CENTER);
+                    (float) labely, anchor, getLabelAngle() + Math.PI / 2.0, 
+                    anchor);
             state.cursorRight(insets.getLeft() + labelBounds.getWidth()
                     + insets.getRight());
 
@@ -1288,19 +1336,22 @@ public abstract class Axis implements Cloneable, Serializable {
      * @param edge  the edge.
      */
     protected void drawAxisLine(Graphics2D g2, double cursor,
-                                Rectangle2D dataArea, RectangleEdge edge) {
+            Rectangle2D dataArea, RectangleEdge edge) {
 
         Line2D axisLine = null;
         if (edge == RectangleEdge.TOP) {
             axisLine = new Line2D.Double(dataArea.getX(), cursor,
                     dataArea.getMaxX(), cursor);
-        } else if (edge == RectangleEdge.BOTTOM) {
+        }
+        else if (edge == RectangleEdge.BOTTOM) {
             axisLine = new Line2D.Double(dataArea.getX(), cursor,
                     dataArea.getMaxX(), cursor);
-        } else if (edge == RectangleEdge.LEFT) {
+        }
+        else if (edge == RectangleEdge.LEFT) {
             axisLine = new Line2D.Double(cursor, dataArea.getY(), cursor,
                     dataArea.getMaxY());
-        } else if (edge == RectangleEdge.RIGHT) {
+        }
+        else if (edge == RectangleEdge.RIGHT) {
             axisLine = new Line2D.Double(cursor, dataArea.getY(), cursor,
                     dataArea.getMaxY());
         }
@@ -1346,41 +1397,44 @@ public abstract class Axis implements Cloneable, Serializable {
         if (this.visible != that.visible) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.label, that.label)) {
+        if (!AttributedStringUtils.equal(this.label, that.label)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.labelFont, that.labelFont)) {
+        if (!ObjectUtils.equal(this.labelFont, that.labelFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.labelPaint, that.labelPaint)) {
+        if (!PaintUtils.equal(this.labelPaint, that.labelPaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.labelInsets, that.labelInsets)) {
+        if (!ObjectUtils.equal(this.labelInsets, that.labelInsets)) {
             return false;
         }
         if (this.labelAngle != that.labelAngle) {
             return false;
         }
+        if (!this.labelLocation.equals(that.labelLocation)) {
+            return false;
+        }
         if (this.axisLineVisible != that.axisLineVisible) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.axisLineStroke, that.axisLineStroke)) {
+        if (!ObjectUtils.equal(this.axisLineStroke, that.axisLineStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.axisLinePaint, that.axisLinePaint)) {
+        if (!PaintUtils.equal(this.axisLinePaint, that.axisLinePaint)) {
             return false;
         }
         if (this.tickLabelsVisible != that.tickLabelsVisible) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.tickLabelFont, that.tickLabelFont)) {
+        if (!ObjectUtils.equal(this.tickLabelFont, that.tickLabelFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.tickLabelPaint, that.tickLabelPaint)) {
+        if (!PaintUtils.equal(this.tickLabelPaint, that.tickLabelPaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(
-                this.tickLabelInsets, that.tickLabelInsets
+        if (!ObjectUtils.equal(
+            this.tickLabelInsets, that.tickLabelInsets
         )) {
             return false;
         }
@@ -1393,10 +1447,10 @@ public abstract class Axis implements Cloneable, Serializable {
         if (this.tickMarkOutsideLength != that.tickMarkOutsideLength) {
             return false;
         }
-        if (!PaintUtilities.equal(this.tickMarkPaint, that.tickMarkPaint)) {
+        if (!PaintUtils.equal(this.tickMarkPaint, that.tickMarkPaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.tickMarkStroke, that.tickMarkStroke)) {
+        if (!ObjectUtils.equal(this.tickMarkStroke, that.tickMarkStroke)) {
             return false;
         }
         if (this.minorTickMarksVisible != that.minorTickMarksVisible) {
@@ -1416,6 +1470,21 @@ public abstract class Axis implements Cloneable, Serializable {
     }
 
     /**
+     * Returns a hash code for this object.
+     *
+     * @return A hash code.
+     */
+    @Override
+    public int hashCode() {
+        if (getLabel() != null) {
+            String s = AttributedStringUtils.toString(
+                    getLabel().getIterator());
+            return s.hashCode();
+        }
+        return 0;
+    }
+
+    /**
      * Provides serialization support.
      *
      * @param stream  the output stream.
@@ -1424,12 +1493,13 @@ public abstract class Axis implements Cloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.labelPaint, stream);
-        SerialUtilities.writePaint(this.tickLabelPaint, stream);
-        SerialUtilities.writeStroke(this.axisLineStroke, stream);
-        SerialUtilities.writePaint(this.axisLinePaint, stream);
-        SerialUtilities.writeStroke(this.tickMarkStroke, stream);
-        SerialUtilities.writePaint(this.tickMarkPaint, stream);
+        SerialUtils.writeAttributedString(this.label, stream);
+        SerialUtils.writePaint(this.labelPaint, stream);
+        SerialUtils.writePaint(this.tickLabelPaint, stream);
+        SerialUtils.writeStroke(this.axisLineStroke, stream);
+        SerialUtils.writePaint(this.axisLinePaint, stream);
+        SerialUtils.writeStroke(this.tickMarkStroke, stream);
+        SerialUtils.writePaint(this.tickMarkPaint, stream);
     }
 
     /**
@@ -1441,14 +1511,15 @@ public abstract class Axis implements Cloneable, Serializable {
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-            throws IOException, ClassNotFoundException {
+        throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.labelPaint = SerialUtilities.readPaint(stream);
-        this.tickLabelPaint = SerialUtilities.readPaint(stream);
-        this.axisLineStroke = SerialUtilities.readStroke(stream);
-        this.axisLinePaint = SerialUtilities.readPaint(stream);
-        this.tickMarkStroke = SerialUtilities.readStroke(stream);
-        this.tickMarkPaint = SerialUtilities.readPaint(stream);
+        this.label = SerialUtils.readAttributedString(stream);
+        this.labelPaint = SerialUtils.readPaint(stream);
+        this.tickLabelPaint = SerialUtils.readPaint(stream);
+        this.axisLineStroke = SerialUtils.readStroke(stream);
+        this.axisLinePaint = SerialUtils.readPaint(stream);
+        this.tickMarkStroke = SerialUtils.readStroke(stream);
+        this.tickMarkPaint = SerialUtils.readPaint(stream);
         this.listenerList = new EventListenerList();
     }
 

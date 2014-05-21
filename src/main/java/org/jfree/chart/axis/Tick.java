@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------
  * Tick.java
  * ---------
- * (C) Copyright 2000-2012, by Object Refinery Limited.
+ * (C) Copyright 2000-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Nicolas Brodu;
@@ -48,11 +48,12 @@ package org.jfree.chart.axis;
 
 import java.io.Serializable;
 
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 
 /**
- * The base class used to represent labelled ticks along an axis.
+ * The base class used to represent labeled ticks along an axis.
  */
 public abstract class Tick implements Serializable, Cloneable {
 
@@ -74,7 +75,8 @@ public abstract class Tick implements Serializable, Cloneable {
     /**
      * Creates a new tick.
      *
-     * @param text  the formatted version of the tick value.
+     * @param text  the formatted version of the tick value (<code>null</code> 
+     *     permitted).
      * @param textAnchor  the text anchor (<code>null</code> not permitted).
      * @param rotationAnchor  the rotation anchor (<code>null</code> not
      *                        permitted).
@@ -82,14 +84,8 @@ public abstract class Tick implements Serializable, Cloneable {
      */
     public Tick(String text, TextAnchor textAnchor, TextAnchor rotationAnchor,
                 double angle) {
-        if (textAnchor == null) {
-            throw new IllegalArgumentException("Null 'textAnchor' argument.");
-        }
-        if (rotationAnchor == null) {
-            throw new IllegalArgumentException(
-                "Null 'rotationAnchor' argument."
-            );
-        }
+        ParamChecks.nullNotPermitted(textAnchor, "textAnchor");
+        ParamChecks.nullNotPermitted(rotationAnchor, "rotationAnchor");
         this.text = text;
         this.textAnchor = textAnchor;
         this.rotationAnchor = rotationAnchor;
@@ -99,7 +95,7 @@ public abstract class Tick implements Serializable, Cloneable {
     /**
      * Returns the text version of the tick value.
      *
-     * @return A string (possibly <code>null</code>;
+     * @return A string (possibly <code>null</code>);
      */
     public String getText() {
         return this.text;
@@ -147,13 +143,13 @@ public abstract class Tick implements Serializable, Cloneable {
         }
         if (obj instanceof Tick) {
             Tick t = (Tick) obj;
-            if (!ObjectUtilities.equal(this.text, t.text)) {
+            if (!ObjectUtils.equal(this.text, t.text)) {
                 return false;
             }
-            if (!ObjectUtilities.equal(this.textAnchor, t.textAnchor)) {
+            if (!ObjectUtils.equal(this.textAnchor, t.textAnchor)) {
                 return false;
             }
-            if (!ObjectUtilities.equal(this.rotationAnchor, t.rotationAnchor)) {
+            if (!ObjectUtils.equal(this.rotationAnchor, t.rotationAnchor)) {
                 return false;
             }
             if (!(this.angle == t.angle)) {

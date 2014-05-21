@@ -53,7 +53,9 @@
 
 package org.jfree.data.xy;
 
-import org.jfree.chart.HashUtilities;
+import java.io.Serializable;
+
+import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.DomainInfo;
 import org.jfree.data.Range;
@@ -61,8 +63,6 @@ import org.jfree.data.RangeInfo;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.general.DatasetUtilities;
-
-import java.io.Serializable;
 
 /**
  * A delegate that handles the specification or automatic calculation of the
@@ -241,7 +241,8 @@ public class IntervalXYDelegate implements DatasetChangeListener,
             // everything is fine: autoWidth is on, and an autoIntervalWidth
             // was set.
             return this.autoIntervalWidth;
-        } else {
+        }
+        else {
             // either autoWidth is off or autoIntervalWidth was not set.
             return this.fixedIntervalWidth;
         }
@@ -371,7 +372,7 @@ public class IntervalXYDelegate implements DatasetChangeListener,
             double lowerAdj = getIntervalWidth() * getIntervalPositionFactor();
             double upperAdj = getIntervalWidth() - lowerAdj;
             range = new Range(range.getLowerBound() - lowerAdj,
-                    range.getUpperBound() + upperAdj);
+                range.getUpperBound() + upperAdj);
         }
         return range;
     }
@@ -479,9 +480,9 @@ public class IntervalXYDelegate implements DatasetChangeListener,
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = HashUtilities.hashCode(hash, this.autoWidth);
-        hash = HashUtilities.hashCode(hash, this.intervalPositionFactor);
-        hash = HashUtilities.hashCode(hash, this.fixedIntervalWidth);
+        hash = HashUtils.hashCode(hash, this.autoWidth);
+        hash = HashUtils.hashCode(hash, this.intervalPositionFactor);
+        hash = HashUtils.hashCode(hash, this.fixedIntervalWidth);
         return hash;
     }
 

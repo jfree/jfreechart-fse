@@ -47,7 +47,11 @@
 
 package org.jfree.chart.renderer.xy;
 
-import org.jfree.chart.*;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartRenderingInfo;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.TestUtils;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.XYItemEntity;
@@ -58,18 +62,31 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link StandardXYItemRenderer} class.
  */
-public class StandardXYItemRendererTest {
+public class StandardXYItemRendererTest  {
+
+
+
 
 
     /**
@@ -186,15 +203,15 @@ public class StandardXYItemRendererTest {
     public void testSerialization() throws IOException, ClassNotFoundException {
         StandardXYItemRenderer r1 = new StandardXYItemRenderer();
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(r1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(r1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(
+                    new ByteArrayInputStream(buffer.toByteArray()));
         StandardXYItemRenderer r2 = (StandardXYItemRenderer) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(r1, r2);
     }
@@ -228,8 +245,7 @@ public class StandardXYItemRendererTest {
         XYPlot plot = new XYPlot(d1, new NumberAxis("x"),
                 new NumberAxis("y"), r);
         plot.setDataset(1, d2);
-        /*JFreeChart chart =*/
-        new JFreeChart(plot);
+        /*JFreeChart chart =*/ new JFreeChart(plot);
         LegendItem li = r.getLegendItem(1, 2);
         assertEquals("S5", li.getLabel());
         assertEquals(1, li.getDatasetIndex());
@@ -254,14 +270,14 @@ public class StandardXYItemRendererTest {
         xAxis.setRange(0.0, 5.0);
         NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
         yAxis.setRange(0.0, 5.0);
-        BufferedImage image = new BufferedImage(200, 100,
+        BufferedImage image = new BufferedImage(200 , 100,
                 BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = image.createGraphics();
         ChartRenderingInfo info = new ChartRenderingInfo();
         chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, info);
         g2.dispose();
         EntityCollection ec = info.getEntityCollection();
-        assertFalse(TestUtilities.containsInstanceOf(ec.getEntities(),
+        assertFalse(TestUtils.containsInstanceOf(ec.getEntities(),
                 XYItemEntity.class));
     }
 

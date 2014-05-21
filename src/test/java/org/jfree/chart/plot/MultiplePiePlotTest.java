@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * MultiplePiePlotTests.java
  * -------------------------
- * (C) Copyright 2005-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -47,18 +47,30 @@ package org.jfree.chart.plot;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.event.PlotChangeListener;
 import org.jfree.chart.util.TableOrder;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.geom.Rectangle2D;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Some tests for the {@link MultiplePiePlot} class.
@@ -68,6 +80,7 @@ public class MultiplePiePlotTest
 
     /** The last event received. */
     PlotChangeEvent lastEvent;
+
 
 
     /**
@@ -80,6 +93,7 @@ public class MultiplePiePlotTest
     public void plotChanged(PlotChangeEvent event) {
         this.lastEvent = event;
     }
+
 
 
     /**
@@ -142,6 +156,7 @@ public class MultiplePiePlotTest
 
     /**
      * Some basic checks for the clone() method.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning() throws CloneNotSupportedException {
@@ -160,6 +175,8 @@ public class MultiplePiePlotTest
 
     /**
      * Serialize an instance, restore it, and check for equality.
+     * @throws IOException
+     * @throws ClassNotFoundException  
      */
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
@@ -167,15 +184,15 @@ public class MultiplePiePlotTest
         p1.setAggregatedItemsPaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
                 3.0f, 4.0f, Color.RED));
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(p1);
-        out.close();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutput out = new ObjectOutputStream(buffer);
+            out.writeObject(p1);
+            out.close();
 
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
+            ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
+                    buffer.toByteArray()));
         MultiplePiePlot p2 = (MultiplePiePlot) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(p1, p2);
     }
@@ -191,8 +208,8 @@ public class MultiplePiePlotTest
         dataset.addValue(55.0, "S2", "C1");
         dataset.addValue(15.0, "S2", "C2");
         MultiplePiePlot plot = new MultiplePiePlot(dataset);
-        LegendItemCollection legendItems = plot.getLegendItems();
-        assertEquals(2, legendItems.getItemCount());
+        List<LegendItem> legendItems = plot.getLegendItems();
+        assertEquals(2, legendItems.size());
         LegendItem item1 = legendItems.get(0);
         assertEquals("S1", item1.getLabel());
         assertEquals("S1", item1.getSeriesKey());

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * CategoryAnnotation.java
  * -----------------------
- * (C) Copyright 2003-2009, by Object Refinery Limited.
+ * (C) Copyright 2003-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -65,6 +65,6 @@ public interface CategoryAnnotation extends Annotation {
      * @param rangeAxis  the range axis.
      */
     public void draw(Graphics2D g2, CategoryPlot plot, Rectangle2D dataArea,
-                     CategoryAxis domainAxis, ValueAxis rangeAxis);
+            CategoryAxis domainAxis, ValueAxis rangeAxis);
 
 }

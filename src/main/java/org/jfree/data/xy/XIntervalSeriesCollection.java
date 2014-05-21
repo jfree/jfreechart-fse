@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------------------
  * XIntervalSeriesCollection.java
  * ------------------------------
- * (C) Copyright 2006-2012, by Object Refinery Limited.
+ * (C) Copyright 2006-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -44,13 +44,12 @@
 
 package org.jfree.data.xy;
 
-import org.jfree.chart.util.ObjectUtilities;
+import java.io.Serializable;
+import java.util.List;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.general.DatasetChangeEvent;
-
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * A collection of {@link XIntervalSeries} objects.
@@ -323,7 +322,7 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset
         // Unregister the collection as a change listener to each series in
         // the collection.
         for (XIntervalSeries series : this.data) {
-            series.removeChangeListener(this);
+          series.removeChangeListener(this);
         }
         this.data.clear();
         fireDatasetChanged();
@@ -345,7 +344,7 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset
             return false;
         }
         XIntervalSeriesCollection that = (XIntervalSeriesCollection) obj;
-        return ObjectUtilities.equal(this.data, that.data);
+        return ObjectUtils.equal(this.data, that.data);
     }
 
     /**
@@ -359,7 +358,7 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset
     public Object clone() throws CloneNotSupportedException {
         XIntervalSeriesCollection clone
                 = (XIntervalSeriesCollection) super.clone();
-        clone.data = (List) ObjectUtilities.deepClone(this.data);
+        clone.data = (List) ObjectUtils.deepClone(this.data);
         return clone;
     }
 

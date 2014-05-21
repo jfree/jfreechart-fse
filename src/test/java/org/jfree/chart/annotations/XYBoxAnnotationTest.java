@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * XYBoxAnnotationTests.java
  * -------------------------
- * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -42,32 +42,42 @@
 
 package org.jfree.chart.annotations;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.TestUtils;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.xy.DefaultTableXYDataset;
 import org.jfree.data.xy.XYSeries;
-import org.junit.Test;
-
-import java.awt.*;
-import java.io.*;
-
-import static org.junit.Assert.*;
 
 /**
  * Some tests for the {@link XYBoxAnnotation} class.
  */
-public class XYBoxAnnotationTest {
-
+public class XYBoxAnnotationTest  {
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
     @Test
     public void testEquals() {
-
         XYBoxAnnotation a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
                 new BasicStroke(1.2f), Color.RED, Color.BLUE);
         XYBoxAnnotation a2 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
@@ -159,21 +169,10 @@ public class XYBoxAnnotationTest {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() throws IOException, ClassNotFoundException {
-
+    public void testSerialization() {
         XYBoxAnnotation a1 = new XYBoxAnnotation(1.0, 2.0, 3.0, 4.0,
                 new BasicStroke(1.2f), Color.RED, Color.BLUE);
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(a1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
-        XYBoxAnnotation a2 = (XYBoxAnnotation) in.readObject();
-        in.close();
-
+        XYBoxAnnotation a2 = (XYBoxAnnotation) TestUtils.serialised(a1);
         assertEquals(a1, a2);
     }
 
@@ -198,17 +197,13 @@ public class XYBoxAnnotationTest {
         s2.add(15.0, 9.5);
         s2.add(20.0, 3.5);
         dataset.addSeries(s2);
-        XYPlot plot = new XYPlot(dataset,
-                new NumberAxis("X"), new NumberAxis("Y"),
-                new XYLineAndShapeRenderer());
+        XYPlot plot = new XYPlot(dataset, new NumberAxis("X"), 
+                new NumberAxis("Y"), new XYLineAndShapeRenderer());
         plot.addAnnotation(new XYBoxAnnotation(10.0, 12.0, 3.0, 4.0,
                 new BasicStroke(1.2f), Color.RED, Color.BLUE));
         JFreeChart chart = new JFreeChart(plot);
-            /* BufferedImage image = */
-        chart.createBufferedImage(300, 200,
+        /* BufferedImage image = */ chart.createBufferedImage(300, 200,
                 null);
-
-        //FIXME we should really assert a value here
     }
 
 }

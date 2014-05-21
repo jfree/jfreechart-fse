@@ -43,25 +43,24 @@
 
 package org.jfree.data;
 
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PublicCloneable;
-
 import java.io.Serializable;
+
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.PublicCloneable;
 
 /**
  * A (key, object) pair.
  */
-public class KeyedObject<Key extends Comparable, Value>
-        implements Cloneable, PublicCloneable, Serializable {
+public class KeyedObject implements Cloneable, PublicCloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 2677930479256885863L;
 
     /** The key. */
-    private Key key;
+    private Comparable key;
 
     /** The object. */
-    private Value object;
+    private Object object;
 
     /**
      * Creates a new (key, object) pair.
@@ -69,7 +68,7 @@ public class KeyedObject<Key extends Comparable, Value>
      * @param key  the key.
      * @param object  the object (<code>null</code> permitted).
      */
-    public KeyedObject(Key key, Value object) {
+    public KeyedObject(Comparable key, Object object) {
         this.key = key;
         this.object = object;
     }
@@ -79,7 +78,7 @@ public class KeyedObject<Key extends Comparable, Value>
      *
      * @return The key.
      */
-    public Key getKey() {
+    public Comparable getKey() {
         return this.key;
     }
 
@@ -88,7 +87,7 @@ public class KeyedObject<Key extends Comparable, Value>
      *
      * @return The object (possibly <code>null</code>).
      */
-    public Value getObject() {
+    public Object getObject() {
         return this.object;
     }
 
@@ -97,7 +96,7 @@ public class KeyedObject<Key extends Comparable, Value>
      *
      * @param object  the object (<code>null</code> permitted).
      */
-    public void setObject(Value object) {
+    public void setObject(Object object) {
         this.object = object;
     }
 
@@ -128,7 +127,6 @@ public class KeyedObject<Key extends Comparable, Value>
      *
      * @return A boolean.
      */
-    @SuppressWarnings("SimplifiableIfStatement")
     @Override
     public boolean equals(Object obj) {
 
@@ -140,12 +138,15 @@ public class KeyedObject<Key extends Comparable, Value>
             return false;
         }
         KeyedObject that = (KeyedObject) obj;
-        if (!ObjectUtilities.equal(this.key, that.key)) {
+        if (!ObjectUtils.equal(this.key, that.key)) {
             return false;
         }
 
-        return ObjectUtilities.equal(this.object, that.object);
+        if (!ObjectUtils.equal(this.object, that.object)) {
+            return false;
+        }
 
+        return true;
     }
 
 }

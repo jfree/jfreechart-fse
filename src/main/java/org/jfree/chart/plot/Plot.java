@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------
  * Plot.java
  * ---------
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Sylvain Vieujot;
@@ -128,6 +128,7 @@
  * 24-Jun-2009 : Implemented AnnotationChangeListener (see patch 2809117 by
  *               PK) (DG);
  * 13-Jul-2009 : Plot background image should be clipped if necessary (DG);
+ * 10-Mar-2014 : Remove LegendItemCollection (DG);
  *
  */
 
@@ -138,7 +139,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Font;
-import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Paint;
@@ -151,21 +151,18 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.event.EventListenerList;
 
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemSource;
 import org.jfree.chart.annotations.Annotation;
 import org.jfree.chart.axis.AxisLocation;
-import org.jfree.chart.ui.Align;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.drawable.ColorPainter;
+import org.jfree.chart.drawable.Drawable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.PlotEntity;
 import org.jfree.chart.event.AnnotationChangeEvent;
@@ -181,10 +178,21 @@ import org.jfree.chart.text.G2TextMeasurer;
 import org.jfree.chart.text.TextBlock;
 import org.jfree.chart.text.TextBlockAnchor;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.ui.Align;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.Size2D;
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.PaintUtils;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.general.DatasetGroup;
+import org.jfree.data.general.LabelChangeEvent;
+import org.jfree.data.general.LabelChangeListener;
+import org.jfree.data.general.SelectionChangeEvent;
+import org.jfree.data.general.SelectionChangeListener;
 
 /**
  * The base class for all plots in JFreeChart.  The {@link JFreeChart} class
@@ -192,8 +200,9 @@ import org.jfree.data.general.DatasetGroup;
  * provides facilities common to most plot types.
  */
 public abstract class Plot implements AxisChangeListener,
-        DatasetChangeListener, AnnotationChangeListener, MarkerChangeListener,
-        LegendItemSource, PublicCloneable, Cloneable, Serializable {
+        DatasetChangeListener, SelectionChangeListener, LabelChangeListener, 
+        AnnotationChangeListener, MarkerChangeListener, LegendItemSource, 
+        PublicCloneable, Cloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -8831571430103671324L;
@@ -217,9 +226,6 @@ public abstract class Plot implements AxisChangeListener,
 
     /** The default background alpha transparency. */
     public static final float DEFAULT_BACKGROUND_ALPHA = 1.0f;
-
-    /** The default background color. */
-    public static final Paint DEFAULT_BACKGROUND_PAINT = Color.WHITE;
 
     /** The minimum width at which the plot should be drawn. */
     public static final int MINIMUM_WIDTH_TO_DRAW = 10;
@@ -278,9 +284,9 @@ public abstract class Plot implements AxisChangeListener,
     /** The Paint used to draw an outline around the plot. */
     private transient Paint outlinePaint;
 
-    /** An optional color used to fill the plot background. */
-    private transient Paint backgroundPaint;
-
+    /** An optional painter used to fill the plot background. */
+    private Drawable backgroundPainter;
+    
     /** An optional image for the plot background. */
     private transient Image backgroundImage;  // not currently serialized
 
@@ -315,10 +321,9 @@ public abstract class Plot implements AxisChangeListener,
      * Creates a new plot.
      */
     protected Plot() {
-
         this.parent = null;
         this.insets = DEFAULT_INSETS;
-        this.backgroundPaint = DEFAULT_BACKGROUND_PAINT;
+        this.backgroundPainter = new ColorPainter(Color.WHITE);
         this.backgroundAlpha = DEFAULT_BACKGROUND_ALPHA;
         this.backgroundImage = null;
         this.outlineVisible = true;
@@ -334,7 +339,6 @@ public abstract class Plot implements AxisChangeListener,
 
         this.notify = true;
         this.listenerList = new EventListenerList();
-
     }
 
     /**
@@ -533,6 +537,35 @@ public abstract class Plot implements AxisChangeListener,
     public void setInsets(RectangleInsets insets) {
         setInsets(insets, true);
     }
+    
+    /**
+     * Returns the background painter.  The default value is 
+     * <code>new ColorPainter(Color.WHITE)</code>.
+     * 
+     * @return The background painter (possibly <code>null</code>). 
+     */
+    public Drawable getBackgroundPainter() {
+        return this.backgroundPainter;
+    }
+    
+    /**
+     * Sets the background painter and sends a change event to all registered
+     * listeners.
+     * 
+     * @param painter  the new painter (<code>null</code> permitted). 
+     */
+    public void setBackgroundPainter(Drawable painter) {
+        this.backgroundPainter = painter;
+        fireChangeEvent();
+    }
+    
+    public void setBackgroundColor(Color color) {
+        if (color != null) {
+            setBackgroundPainter(new ColorPainter(color));
+        } else {
+            setBackgroundPainter(null);
+        }
+    }
 
     /**
      * Sets the insets for the plot and, if requested,  and sends a
@@ -636,44 +669,6 @@ public abstract class Plot implements AxisChangeListener,
         plotSizeValid = valid;
     }
 
-    /**
-     * Returns the background color of the plot area.
-     *
-     * @return The paint (possibly <code>null</code>).
-     *
-     * @see #setBackgroundPaint(Paint)
-     */
-    public Paint getBackgroundPaint() {
-        return this.backgroundPaint;
-    }
-
-    /**
-     * Sets the background color of the plot area and sends a
-     * {@link PlotChangeEvent} to all registered listeners.
-     *
-     * @param paint  the paint (<code>null</code> permitted).
-     *
-     * @see #getBackgroundPaint()
-     */
-    public void setBackgroundPaint(Paint paint) {
-
-        if (paint == null) {
-            if (this.backgroundPaint != null) {
-                this.backgroundPaint = null;
-                fireChangeEvent();
-            }
-        }
-        else {
-            if (this.backgroundPaint != null) {
-                if (this.backgroundPaint.equals(paint)) {
-                    return;  // nothing to do
-                }
-            }
-            this.backgroundPaint = paint;
-            fireChangeEvent();
-        }
-
-    }
 
     /**
      * Returns the alpha transparency of the plot area background.
@@ -985,14 +980,15 @@ public abstract class Plot implements AxisChangeListener,
 
     /**
      * Returns the legend items for the plot.  By default, this method returns
-     * <code>null</code>.  Subclasses should override to return a
-     * {@link LegendItemCollection}.
+     * <code>null</code>.  Subclasses should override to return a list of 
+     * legend items for the plot.
      *
-     * @return The legend items for the plot (possibly <code>null</code>).
+     * @return The legend items for the plot (possibly empty, but never 
+     *     <code>null</code>).
      */
     @Override
-    public LegendItemCollection getLegendItems() {
-        return null;
+    public List<LegendItem> getLegendItems() {
+        return new ArrayList<LegendItem>();
     }
 
     /**
@@ -1110,66 +1106,10 @@ public abstract class Plot implements AxisChangeListener,
     public void drawBackground(Graphics2D g2, Rectangle2D area) {
         // some subclasses override this method completely, so don't put
         // anything here that *must* be done
-        fillBackground(g2, area);
+        if (this.backgroundPainter != null) {
+            this.backgroundPainter.draw(g2, area);
+        }
         drawBackgroundImage(g2, area);
-    }
-
-    /**
-     * Fills the specified area with the background paint.
-     *
-     * @param g2  the graphics device.
-     * @param area  the area.
-     *
-     * @see #getBackgroundPaint()
-     * @see #getBackgroundAlpha()
-     * @see #fillBackground(Graphics2D, Rectangle2D, PlotOrientation)
-     */
-    protected void fillBackground(Graphics2D g2, Rectangle2D area) {
-        fillBackground(g2, area, PlotOrientation.VERTICAL);
-    }
-
-    /**
-     * Fills the specified area with the background paint.  If the background
-     * paint is an instance of <code>GradientPaint</code>, the gradient will
-     * run in the direction suggested by the plot's orientation.
-     *
-     * @param g2  the graphics target.
-     * @param area  the plot area.
-     * @param orientation  the plot orientation (<code>null</code> not
-     *         permitted).
-     *
-     * @since 1.0.6
-     */
-    protected void fillBackground(Graphics2D g2, Rectangle2D area,
-            PlotOrientation orientation) {
-        if (orientation == null) {
-            throw new IllegalArgumentException("Null 'orientation' argument.");
-        }
-        if (this.backgroundPaint == null) {
-            return;
-        }
-        Paint p = this.backgroundPaint;
-        if (p instanceof GradientPaint) {
-            GradientPaint gp = (GradientPaint) p;
-            if (orientation == PlotOrientation.VERTICAL) {
-                p = new GradientPaint((float) area.getCenterX(),
-                        (float) area.getMaxY(), gp.getColor1(),
-                        (float) area.getCenterX(), (float) area.getMinY(),
-                        gp.getColor2());
-            }
-            else if (orientation == PlotOrientation.HORIZONTAL) {
-                p = new GradientPaint((float) area.getMinX(),
-                        (float) area.getCenterY(), gp.getColor1(),
-                        (float) area.getMaxX(), (float) area.getCenterY(),
-                        gp.getColor2());
-            }
-        }
-        Composite originalComposite = g2.getComposite();
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
-                this.backgroundAlpha));
-        g2.setPaint(p);
-        g2.fill(area);
-        g2.setComposite(originalComposite);
     }
 
     /**
@@ -1314,7 +1254,6 @@ public abstract class Plot implements AxisChangeListener,
      */
     @Override
     public void axisChanged(AxisChangeEvent event) {
-        plotSizeValid = false;
         fireChangeEvent();
     }
 
@@ -1330,6 +1269,38 @@ public abstract class Plot implements AxisChangeListener,
     public void datasetChanged(DatasetChangeEvent event) {
         PlotChangeEvent newEvent = new PlotChangeEvent(this);
         newEvent.setType(ChartChangeEventType.DATASET_UPDATED);
+        notifyListeners(newEvent);
+    }
+
+    /**
+     * Receives notification of a change to the selection state of the plot's data
+     * <P>
+     * The plot reacts by passing on a plot change event to all registered
+     * listeners.
+     *
+     * @param event  information about the event (not used here).
+     */
+    @Override
+    public void selectionChanged(SelectionChangeEvent event) {
+        //could be typed but would require typing Plot and its decendents with a DatasetCursor
+        PlotChangeEvent newEvent = new PlotChangeEvent(this);
+        newEvent.setType(ChartChangeEventType.GENERAL);
+        notifyListeners(newEvent);
+    }
+    
+    /**
+     * Receives notification of a change to the label information of the plot's data
+     * <P>
+     * The plot reacts by passing on a plot change event to all registered
+     * listeners.
+     *
+     * @param event  information about the event (not used here).
+     */
+    @Override
+    public void labelChanged(LabelChangeEvent event) {
+        //could be typed but would require typing Plot and its decendents with a DatasetCursor
+        PlotChangeEvent newEvent = new PlotChangeEvent(this);
+        newEvent.setType(ChartChangeEventType.GENERAL);
         notifyListeners(newEvent);
     }
 
@@ -1358,7 +1329,6 @@ public abstract class Plot implements AxisChangeListener,
      */
     protected double getRectX(double x, double w1, double w2,
                               RectangleEdge edge) {
-
         double result = x;
         if (edge == RectangleEdge.LEFT) {
             result = result + w1;
@@ -1367,7 +1337,6 @@ public abstract class Plot implements AxisChangeListener,
             result = result + w2;
         }
         return result;
-
     }
 
     /**
@@ -1382,7 +1351,6 @@ public abstract class Plot implements AxisChangeListener,
      */
     protected double getRectY(double y, double h1, double h2,
                               RectangleEdge edge) {
-
         double result = y;
         if (edge == RectangleEdge.TOP) {
             result = result + h1;
@@ -1391,7 +1359,6 @@ public abstract class Plot implements AxisChangeListener,
             result = result + h2;
         }
         return result;
-
     }
 
     /**
@@ -1410,34 +1377,35 @@ public abstract class Plot implements AxisChangeListener,
             return false;
         }
         Plot that = (Plot) obj;
-        if (!ObjectUtilities.equal(this.noDataMessage, that.noDataMessage)) {
+        if (!ObjectUtils.equal(this.noDataMessage, that.noDataMessage)) {
             return false;
         }
-        if (!ObjectUtilities.equal(
+        if (!ObjectUtils.equal(
             this.noDataMessageFont, that.noDataMessageFont
         )) {
             return false;
         }
-        if (!PaintUtilities.equal(this.noDataMessagePaint,
+        if (!PaintUtils.equal(this.noDataMessagePaint,
                 that.noDataMessagePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.insets, that.insets)) {
+        if (!ObjectUtils.equal(this.insets, that.insets)) {
             return false;
         }
         if (this.outlineVisible != that.outlineVisible) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.outlineStroke, that.outlineStroke)) {
+        if (!ObjectUtils.equal(this.outlineStroke, that.outlineStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.outlinePaint, that.outlinePaint)) {
+        if (!PaintUtils.equal(this.outlinePaint, that.outlinePaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.backgroundPaint, that.backgroundPaint)) {
+        if (!ObjectUtils.equal(this.backgroundPainter, 
+                that.backgroundPainter)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.backgroundImage,
+        if (!ObjectUtils.equal(this.backgroundImage,
                 that.backgroundImage)) {
             return false;
         }
@@ -1472,19 +1440,17 @@ public abstract class Plot implements AxisChangeListener,
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
-
         Plot clone = (Plot) super.clone();
         // private Plot parent <-- don't clone the parent plot, but take care
         // childs in combined plots instead
         if (this.datasetGroup != null) {
             clone.datasetGroup
-                = ObjectUtilities.clone(this.datasetGroup);
+                = ObjectUtils.clone(this.datasetGroup);
         }
         clone.drawingSupplier
-            = ObjectUtilities.clone(this.drawingSupplier);
+            = ObjectUtils.clone(this.drawingSupplier);
         clone.listenerList = new EventListenerList();
         return clone;
-
     }
 
     /**
@@ -1496,11 +1462,10 @@ public abstract class Plot implements AxisChangeListener,
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.noDataMessagePaint, stream);
-        SerialUtilities.writeStroke(this.outlineStroke, stream);
-        SerialUtilities.writePaint(this.outlinePaint, stream);
+        SerialUtils.writePaint(this.noDataMessagePaint, stream);
+        SerialUtils.writeStroke(this.outlineStroke, stream);
+        SerialUtils.writePaint(this.outlinePaint, stream);
         // backgroundImage
-        SerialUtilities.writePaint(this.backgroundPaint, stream);
     }
 
     /**
@@ -1514,14 +1479,11 @@ public abstract class Plot implements AxisChangeListener,
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.noDataMessagePaint = SerialUtilities.readPaint(stream);
-        this.outlineStroke = SerialUtilities.readStroke(stream);
-        this.outlinePaint = SerialUtilities.readPaint(stream);
+        this.noDataMessagePaint = SerialUtils.readPaint(stream);
+        this.outlineStroke = SerialUtils.readStroke(stream);
+        this.outlinePaint = SerialUtils.readPaint(stream);
         // backgroundImage
-        this.backgroundPaint = SerialUtilities.readPaint(stream);
-
         this.listenerList = new EventListenerList();
-
     }
 
     /**

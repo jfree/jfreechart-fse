@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * WaferMapRenderer.java
  * ---------------------
- * (C) Copyright 2003-2008, by Robert Redburn and Contributors.
+ * (C) Copyright 2003-2014, by Robert Redburn and Contributors.
  *
  * Original Author:  Robert Redburn;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -39,26 +39,31 @@
  * 20-Apr-2005 : Small update for changes to LegendItem class (DG);
  * ------------- JFREECHART 1.0.x ---------------------------------------------
  * 02-Feb-2007 : Removed author tags from all over JFreeChart sources (DG);
- *
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
+ * 
  */
 
 package org.jfree.chart.renderer;
 
+import java.awt.Color;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.plot.DrawingSupplier;
 import org.jfree.chart.plot.WaferMapPlot;
 import org.jfree.data.general.WaferMapDataset;
 
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 /**
- * A renderer for wafer map plots.  Provides color managment facilities.
+ * A renderer for wafer map plots.  Provides color management facilities.
  */
 public class WaferMapRenderer extends AbstractRenderer {
 
@@ -103,7 +108,8 @@ public class WaferMapRenderer extends AbstractRenderer {
 
         if (paintLimit == null) {
             this.paintLimit = DEFAULT_PAINT_LIMIT;
-        } else {
+        }
+        else {
             this.paintLimit = paintLimit;
         }
 
@@ -124,12 +130,9 @@ public class WaferMapRenderer extends AbstractRenderer {
      */
     private boolean isMethodValid(int method) {
         switch (method) {
-            case POSITION_INDEX:
-                return true;
-            case VALUE_INDEX:
-                return true;
-            default:
-                return false;
+            case POSITION_INDEX: return true;
+            case VALUE_INDEX:    return true;
+            default: return false;
         }
     }
 
@@ -206,7 +209,8 @@ public class WaferMapRenderer extends AbstractRenderer {
             for (Number uniqueValue : uniqueValues) {
                 this.paintIndex.put(uniqueValue, count++);
             }
-        } else {
+        }
+        else {
             // more values than paints so map
             // multiple values to the same color
             switch (this.paintIndexMethod) {
@@ -230,7 +234,7 @@ public class WaferMapRenderer extends AbstractRenderer {
      */
     private void makePositionIndex(Set<Number> uniqueValues) {
         int valuesPerColor = (int) Math.ceil(
-                (double) uniqueValues.size() / this.paintLimit
+            (double) uniqueValues.size() / this.paintLimit
         );
         int count = 0; // assign a color for each unique value
         int paint = 0;
@@ -276,8 +280,8 @@ public class WaferMapRenderer extends AbstractRenderer {
      *
      * @return The legend items.
      */
-    public LegendItemCollection getLegendCollection() {
-        LegendItemCollection result = new LegendItemCollection();
+    public List<LegendItem> getLegendCollection() {
+        List<LegendItem> result = new ArrayList<LegendItem>();
         if (this.paintIndex != null && this.paintIndex.size() > 0) {
             if (this.paintIndex.size() <= this.paintLimit) {
                 for (Map.Entry<Number, Integer> entry : this.paintIndex.entrySet()) {
@@ -294,7 +298,8 @@ public class WaferMapRenderer extends AbstractRenderer {
                             null, shape, paint, outlineStroke, outlinePaint));
 
                 }
-            } else {
+            }
+            else {
                 // in this case, every color has a range of values
                 Set<Integer> unique = new HashSet<Integer>();
                 for (Map.Entry<Number, Integer> entry : this.paintIndex.entrySet()) {

@@ -45,20 +45,23 @@
 
 package org.jfree.chart.axis;
 
-import org.jfree.chart.event.AxisChangeEvent;
-import org.jfree.chart.text.TextBlock;
-import org.jfree.chart.text.TextFragment;
-import org.jfree.chart.text.TextLine;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.SerialUtilities;
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Paint;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.util.PaintUtils;
+import org.jfree.chart.event.AxisChangeEvent;
+import org.jfree.chart.text.TextBlock;
+import org.jfree.chart.text.TextFragment;
+import org.jfree.chart.text.TextLine;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * An extended version of the {@link CategoryAxis} class that supports
@@ -175,7 +178,8 @@ public class ExtendedCategoryAxis extends CategoryAxis {
                 TextLine line = new TextLine(s, this.sublabelFont,
                         this.sublabelPaint);
                 label.addLine(line);
-            } else if (edge == RectangleEdge.LEFT
+            }
+            else if (edge == RectangleEdge.LEFT
                     || edge == RectangleEdge.RIGHT) {
                 TextLine line = label.getLastLine();
                 if (line != null) {
@@ -206,7 +210,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
         if (!this.sublabelFont.equals(that.sublabelFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.sublabelPaint, that.sublabelPaint)) {
+        if (!PaintUtils.equal(this.sublabelPaint, that.sublabelPaint)) {
             return false;
         }
         if (!this.sublabels.equals(that.sublabels)) {
@@ -238,7 +242,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.sublabelPaint, stream);
+        SerialUtils.writePaint(this.sublabelPaint, stream);
     }
 
     /**
@@ -250,9 +254,9 @@ public class ExtendedCategoryAxis extends CategoryAxis {
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-            throws IOException, ClassNotFoundException {
+        throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.sublabelPaint = SerialUtilities.readPaint(stream);
+        this.sublabelPaint = SerialUtils.readPaint(stream);
     }
 
 }

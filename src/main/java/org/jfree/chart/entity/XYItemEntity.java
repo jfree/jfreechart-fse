@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------
  * XYItemEntity.java
  * -----------------
- * (C) Copyright 2002-2008, by Object Refinery Limited.
+ * (C) Copyright 2002-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Richard Atkinson;
@@ -52,13 +52,16 @@ package org.jfree.chart.entity;
 
 import java.awt.Shape;
 
+import org.jfree.data.extension.DatasetCursor;
+import org.jfree.data.extension.impl.XYCursor;
+import org.jfree.data.general.Dataset;
 import org.jfree.data.xy.XYDataset;
 
 /**
  * A chart entity that represents one item within an
  * {@link org.jfree.chart.plot.XYPlot}.
  */
-public class XYItemEntity extends ChartEntity {
+public class XYItemEntity extends DataItemEntity {
 
     /** For serialization. */
     private static final long serialVersionUID = -3870862224880283771L;
@@ -82,8 +85,7 @@ public class XYItemEntity extends ChartEntity {
      * @param toolTipText  the tool tip text.
      * @param urlText  the URL text for HTML image maps.
      */
-    public XYItemEntity(Shape area,
-                        XYDataset dataset, int series, int item,
+    public XYItemEntity(Shape area, XYDataset dataset, int series, int item,
                         String toolTipText, String urlText) {
         super(area, toolTipText, urlText);
         this.dataset = dataset;
@@ -97,6 +99,13 @@ public class XYItemEntity extends ChartEntity {
      * @return The dataset.
      */
     public XYDataset getDataset() {
+        return this.dataset;
+    }
+
+    /**
+     * @see DataItemEntity#getGeneralDataset() 
+     */
+    public Dataset getGeneralDataset() {
         return this.dataset;
     }
 
@@ -180,6 +189,11 @@ public class XYItemEntity extends ChartEntity {
     public String toString() {
         return "XYItemEntity: series = " + getSeriesIndex() + ", item = "
             + getItem() + ", dataset = " + getDataset();
+    }
+
+    @Override
+    public DatasetCursor getItemCursor() {
+        return new XYCursor(series, item);
     }
 
 }

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------
  * XYPlotTests.java
  * ----------------
- * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -47,15 +47,37 @@
  * 10-May-2009 : Extended testEquals(), added testCloning3() (DG);
  * 06-Jul-2009 : Added testBug2817504() (DG);
  * 17-Jul-2012 : Removed JCommon dependencies (DG);
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
  *
  */
 
 package org.jfree.chart.plot;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import org.junit.Test;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.TestUtils;
 import org.jfree.chart.annotations.XYTextAnnotation;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.DateAxis;
@@ -63,49 +85,41 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.date.MonthConstants;
 import org.jfree.chart.event.MarkerChangeListener;
 import org.jfree.chart.labels.StandardXYToolTipGenerator;
-import org.jfree.chart.renderer.xy.*;
+import org.jfree.chart.renderer.xy.DefaultXYItemRenderer;
+import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
+import org.jfree.chart.renderer.xy.XYBarRenderer;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.ui.Layer;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.DefaultShadowGenerator;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.data.xy.*;
-import org.junit.Test;
-
-import java.awt.*;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.Assert.*;
+import org.jfree.data.xy.DefaultXYDataset;
+import org.jfree.data.xy.IntervalXYDataset;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  * Tests for the {@link XYPlot} class.
  */
-public class XYPlotTest {
+public class XYPlotTest  {
 
-
-// FIXME: the getDatasetCount() method is returning a count of the slots
-// available for datasets, rather than the number of datasets actually
-// specified...see if there is some way to clean this up.
-//    /**
-//     * Added this test in response to a bug report.
-//     */
-//    public void testGetDatasetCount() {
-//        XYPlot plot = new XYPlot();
-//        assertEquals(0, plot.getDatasetCount());
-//    }
+    /**
+     * Added this test in response to a bug report.
+     */
+    public void testGetDatasetCount() {
+        XYPlot plot = new XYPlot();
+        assertEquals(0, plot.getDatasetCount());
+    }
 
     /**
      * Some checks for the equals() method.
      */
     @Test
     public void testEquals() {
-
         XYPlot plot1 = new XYPlot();
         XYPlot plot2 = new XYPlot();
         assertEquals(plot1, plot2);
@@ -305,9 +319,9 @@ public class XYPlotTest {
         assertEquals(plot1, plot2);
 
         // fixed legend items
-        plot1.setFixedLegendItems(new LegendItemCollection());
+        plot1.setFixedLegendItems(new ArrayList<LegendItem>());
         assertFalse(plot1.equals(plot2));
-        plot2.setFixedLegendItems(new LegendItemCollection());
+        plot2.setFixedLegendItems(new ArrayList<LegendItem>());
         assertEquals(plot1, plot2);
 
         // weight
@@ -398,7 +412,7 @@ public class XYPlotTest {
         assertFalse(plot1.equals(plot2));
         plot2.mapDatasetToRangeAxes(0, axisIndices);
         assertEquals(plot1, plot2);
-
+        
         // shadowGenerator
         plot1.setShadowGenerator(new DefaultShadowGenerator(5, Color.gray,
                 0.6f, 4, -Math.PI / 4));
@@ -412,18 +426,89 @@ public class XYPlotTest {
         plot2.setShadowGenerator(null);
         assertEquals(plot1, plot2);
 
-        LegendItemCollection lic1 = new LegendItemCollection();
+        List<LegendItem> lic1 = new ArrayList<LegendItem>();
         lic1.add(new LegendItem("XYZ", Color.RED));
         plot1.setFixedLegendItems(lic1);
         assertFalse(plot1.equals(plot2));
-        LegendItemCollection lic2 = new LegendItemCollection();
+        List<LegendItem> lic2 = new ArrayList<LegendItem>();
         lic2.add(new LegendItem("XYZ", Color.RED));
         plot2.setFixedLegendItems(lic2);
         assertEquals(plot1, plot2);
     }
 
     /**
+     * This test covers a flaw in the ObjectList equals() method.
+     */
+    @Test
+    public void testEquals_ObjectList() {
+        XYPlot p1 = new XYPlot();
+        p1.setDomainAxis(new NumberAxis("A"));
+        XYPlot p2 = new XYPlot();
+        p2.setDomainAxis(new NumberAxis("A"));
+        assertEquals(p1, p2);
+        p2.setDomainAxis(1, new NumberAxis("B"));
+        assertNotEquals(p1, p2);
+    }
+    
+    /**
+     * This test covers a flaw in the ObjectList equals() method.
+     */
+    @Test
+    public void testEquals_ObjectList2() {
+        XYPlot p1 = new XYPlot();
+        p1.setDomainAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+        XYPlot p2 = new XYPlot();
+        p2.setDomainAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+        assertEquals(p1, p2);
+        p2.setDomainAxisLocation(1, AxisLocation.TOP_OR_LEFT);
+        assertNotEquals(p1, p2);
+    }
+
+    /**
+     * This test covers a flaw in the ObjectList equals() method.
+     */
+    @Test
+    public void testEquals_ObjectList3() {
+        XYPlot p1 = new XYPlot();
+        p1.setRangeAxis(new NumberAxis("A"));
+        XYPlot p2 = new XYPlot();
+        p2.setRangeAxis(new NumberAxis("A"));
+        assertEquals(p1, p2);
+        p2.setRangeAxis(1, new NumberAxis("B"));
+        assertNotEquals(p1, p2);
+    }
+    
+    /**
+     * This test covers a flaw in the ObjectList equals() method.
+     */
+    @Test
+    public void testEquals_ObjectList4() {
+        XYPlot p1 = new XYPlot();
+        p1.setRangeAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+        XYPlot p2 = new XYPlot();
+        p2.setRangeAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+        assertEquals(p1, p2);
+        p2.setRangeAxisLocation(1, AxisLocation.TOP_OR_LEFT);
+        assertNotEquals(p1, p2);
+    }
+
+    /**
+     * This test covers a flaw in the ObjectList equals() method.
+     */
+    @Test
+    public void testEquals_ObjectList5() {
+        XYPlot p1 = new XYPlot();
+        p1.setRenderer(new XYBarRenderer());
+        XYPlot p2 = new XYPlot();
+        p2.setRenderer(new XYBarRenderer());
+        assertEquals(p1, p2);
+        p2.setRenderer(1, new XYLineAndShapeRenderer());
+        assertNotEquals(p1, p2);
+    }
+
+    /**
      * Confirm that basic cloning works.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning() throws CloneNotSupportedException {
@@ -437,6 +522,7 @@ public class XYPlotTest {
 
     /**
      * Tests cloning for a more complex plot.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning2() throws CloneNotSupportedException {
@@ -462,7 +548,7 @@ public class XYPlotTest {
     public void testCloning3() throws CloneNotSupportedException {
         XYPlot p1 = new XYPlot(null, new NumberAxis("Domain Axis"),
                 new NumberAxis("Range Axis"), new StandardXYItemRenderer());
-        LegendItemCollection c1 = new LegendItemCollection();
+        List<LegendItem> c1 = new ArrayList<LegendItem>();
         p1.setFixedLegendItems(c1);
         XYPlot p2 = (XYPlot) p1.clone();
 
@@ -478,6 +564,7 @@ public class XYPlotTest {
     /**
      * Tests cloning to ensure that the cloned plot is registered as a listener
      * on the cloned renderer.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning4() throws CloneNotSupportedException {
@@ -496,6 +583,7 @@ public class XYPlotTest {
 
     /**
      * Confirm that cloning captures the quadrantOrigin field.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning_QuadrantOrigin() throws CloneNotSupportedException {
@@ -512,6 +600,7 @@ public class XYPlotTest {
 
     /**
      * Confirm that cloning captures the quadrantOrigin field.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning_QuadrantPaint() throws CloneNotSupportedException {
@@ -534,6 +623,7 @@ public class XYPlotTest {
     /**
      * Renderers that belong to the plot are being cloned but they are
      * retaining a reference to the original plot.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testBug2817504() throws CloneNotSupportedException {
@@ -541,7 +631,6 @@ public class XYPlotTest {
         XYLineAndShapeRenderer r1 = new XYLineAndShapeRenderer();
         p1.setRenderer(r1);
         XYPlot p2 = (XYPlot) p1.clone();
-
 
         assertNotSame(p1, p2);
         assertSame(p1.getClass(), p2.getClass());
@@ -554,6 +643,7 @@ public class XYPlotTest {
 
     /**
      * Tests the independence of the clones.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloneIndependence() throws CloneNotSupportedException {
@@ -607,7 +697,6 @@ public class XYPlotTest {
         assertFalse(p1.equals(p2));
         p2.mapDatasetToRangeAxis(2, 1);
         assertEquals(p1, p2);
-
     }
 
     /**
@@ -619,33 +708,22 @@ public class XYPlotTest {
         XYPlot plot = new XYPlot(null, new NumberAxis("X"),
                 new NumberAxis("Y"), null);
         plot.setRenderer(null);
-
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
+     * @throws IOException
+     * @throws ClassNotFoundException  
      */
     @Test
     public void testSerialization1() throws IOException, ClassNotFoundException {
-
         XYDataset data = new XYSeriesCollection();
         NumberAxis domainAxis = new NumberAxis("Domain");
         NumberAxis rangeAxis = new NumberAxis("Range");
         StandardXYItemRenderer renderer = new StandardXYItemRenderer();
         XYPlot p1 = new XYPlot(data, domainAxis, rangeAxis, renderer);
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(p1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
-        XYPlot p2 = (XYPlot) in.readObject();
-        in.close();
-
+        XYPlot p2 = (XYPlot) TestUtils.serialised(p1);
         assertEquals(p1, p2);
-
     }
 
     /**
@@ -653,26 +731,14 @@ public class XYPlotTest {
      * uses a {@link DateAxis} and a {@link StandardXYToolTipGenerator}.
      */
     @Test
-    public void testSerialization2() throws IOException, ClassNotFoundException {
-
+    public void testSerialization2() {
         IntervalXYDataset data1 = createDataset1();
         XYItemRenderer renderer1 = new XYBarRenderer(0.20);
         renderer1.setDefaultToolTipGenerator(
                 StandardXYToolTipGenerator.getTimeSeriesInstance());
         XYPlot p1 = new XYPlot(data1, new DateAxis("Date"), null, renderer1);
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(p1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
-        XYPlot p2 = (XYPlot) in.readObject();
-        in.close();
-
+        XYPlot p2 = (XYPlot) TestUtils.serialised(p1);
         assertEquals(p1, p2);
-
     }
 
     /**
@@ -686,28 +752,13 @@ public class XYPlotTest {
      * reproduce the bug (now fixed).
      */
     @Test
-    public void testSerialization3() throws IOException, ClassNotFoundException {
-
+    public void testSerialization3() {
         XYSeriesCollection dataset = new XYSeriesCollection();
         JFreeChart chart = ChartFactory.createXYLineChart("Test Chart",
                 "Domain Axis", "Range Axis", dataset);
-
-        // serialize and deserialize the chart....
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(chart);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
-        JFreeChart chart2 = (JFreeChart) in.readObject();
-        in.close();
-
+        JFreeChart chart2 = (JFreeChart) TestUtils.serialised(chart);
         assertEquals(chart, chart2);
         chart2.createBufferedImage(300, 200);
-
-        //FIXME we should really be asserting a value here
     }
 
     /**
@@ -715,8 +766,7 @@ public class XYPlotTest {
      * markers for a plot are not being serialized.
      */
     @Test
-    public void testSerialization4() throws IOException, ClassNotFoundException {
-
+    public void testSerialization4() {
         XYSeriesCollection dataset = new XYSeriesCollection();
         JFreeChart chart = ChartFactory.createXYLineChart("Test Chart",
                 "Domain Axis", "Range Axis", dataset);
@@ -724,22 +774,10 @@ public class XYPlotTest {
         plot.addDomainMarker(new ValueMarker(1.0), Layer.FOREGROUND);
         plot.addDomainMarker(new IntervalMarker(2.0, 3.0), Layer.BACKGROUND);
         plot.addRangeMarker(new ValueMarker(4.0), Layer.FOREGROUND);
-        plot.addRangeMarker(new IntervalMarker(5.0, 6.0), Layer.BACKGROUND);
-
-        // serialize and deserialize the chart....
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(chart);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
-        JFreeChart chart2 = (JFreeChart) in.readObject();
-        in.close();
-
+        plot.addRangeMarker(new IntervalMarker(5.0, 6.0), Layer.BACKGROUND);    
+        JFreeChart chart2 = (JFreeChart) TestUtils.serialised(chart);
         assertEquals(chart, chart2);
         chart2.createBufferedImage(300, 200);
-        //FIXME we should be asserting a value here
     }
 
     /**
@@ -748,7 +786,7 @@ public class XYPlotTest {
      * at SourceForge.
      */
     @Test
-    public void testSerialization5() throws IOException, ClassNotFoundException {
+    public void testSerialization5() {
         XYSeriesCollection dataset1 = new XYSeriesCollection();
         NumberAxis domainAxis1 = new NumberAxis("Domain 1");
         NumberAxis rangeAxis1 = new NumberAxis("Range 1");
@@ -762,17 +800,7 @@ public class XYPlotTest {
         p1.setDomainAxis(1, domainAxis2);
         p1.setRangeAxis(1, rangeAxis2);
         p1.setRenderer(1, renderer2);
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(p1);
-        out.close();
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-        );
-        XYPlot p2 = (XYPlot) in.readObject();
-        in.close();
-
+        XYPlot p2 = (XYPlot) TestUtils.serialised(p1);
         assertEquals(p1, p2);
 
         // now check that all datasets, renderers and axes are being listened
@@ -781,12 +809,12 @@ public class XYPlotTest {
         NumberAxis rangeAxisA = (NumberAxis) p2.getRangeAxis(0);
         XYSeriesCollection datasetA = (XYSeriesCollection) p2.getDataset(0);
         StandardXYItemRenderer rendererA
-                = (StandardXYItemRenderer) p2.getRenderer(0);
+            = (StandardXYItemRenderer) p2.getRenderer(0);
         NumberAxis domainAxisB = (NumberAxis) p2.getDomainAxis(1);
         NumberAxis rangeAxisB = (NumberAxis) p2.getRangeAxis(1);
         XYSeriesCollection datasetB = (XYSeriesCollection) p2.getDataset(1);
         StandardXYItemRenderer rendererB
-                = (StandardXYItemRenderer) p2.getRenderer(1);
+            = (StandardXYItemRenderer) p2.getRenderer(1);
         assertTrue(datasetA.hasListener(p2));
         assertTrue(domainAxisA.hasListener(p2));
         assertTrue(rangeAxisA.hasListener(p2));
@@ -836,8 +864,8 @@ public class XYPlotTest {
         plot.setDataset(0, d0);
         plot.setDataset(1, d1);
         plot.setRenderer(0, r0);
-        LegendItemCollection items = plot.getLegendItems();
-        assertEquals(2, items.getItemCount());
+        List<LegendItem> items = plot.getLegendItems();
+        assertEquals(2, items.size());
     }
 
     /**
@@ -846,8 +874,6 @@ public class XYPlotTest {
      * @return Series 1.
      */
     private IntervalXYDataset createDataset1() {
-
-        // create dataset 1...
         TimeSeries series1 = new TimeSeries("Series 1");
         series1.add(new Day(1, MonthConstants.MARCH, 2002), 12353.3);
         series1.add(new Day(2, MonthConstants.MARCH, 2002), 13734.4);
@@ -864,10 +890,7 @@ public class XYPlotTest {
         series1.add(new Day(13, MonthConstants.MARCH, 2002), 13102.2);
         series1.add(new Day(14, MonthConstants.MARCH, 2002), 14230.2);
         series1.add(new Day(15, MonthConstants.MARCH, 2002), 11235.2);
-
-        TimeSeriesCollection collection = new TimeSeriesCollection(series1);
-        return collection;
-
+        return new TimeSeriesCollection(series1);
     }
 
     /**
@@ -876,11 +899,9 @@ public class XYPlotTest {
      * @return A sample dataset.
      */
     private XYDataset createDataset2() {
-        // create dataset 1...
         XYSeries series = new XYSeries("Series 2");
         XYSeriesCollection collection = new XYSeriesCollection(series);
         return collection;
-
     }
 
     /**
@@ -968,8 +989,8 @@ public class XYPlotTest {
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setRenderer(1, new XYLineAndShapeRenderer());
 
-        BufferedImage image = new BufferedImage(200, 100,
-                BufferedImage.TYPE_INT_RGB);
+        BufferedImage image = new BufferedImage(200 , 100,
+                    BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = image.createGraphics();
         chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
         g2.dispose();
@@ -987,7 +1008,7 @@ public class XYPlotTest {
                 dataset);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setRenderer(null);
-        BufferedImage image = new BufferedImage(200, 100,
+        BufferedImage image = new BufferedImage(200 , 100,
                 BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = image.createGraphics();
         chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
@@ -1002,16 +1023,16 @@ public class XYPlotTest {
     @Test
     public void testDrawSeriesWithZeroItems() {
         DefaultXYDataset dataset = new DefaultXYDataset();
-        dataset.addSeries("Series 1", new double[][]{{1.0, 2.0}, {3.0, 4.0}});
-        dataset.addSeries("Series 2", new double[][]{{}, {}});
+        dataset.addSeries("Series 1", new double[][] {{1.0, 2.0}, {3.0, 4.0}});
+        dataset.addSeries("Series 2", new double[][] {{}, {}});
         JFreeChart chart = ChartFactory.createXYLineChart("Title", "X", "Y",
                 dataset);
 
-        BufferedImage image = new BufferedImage(200, 100,
-                BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2 = image.createGraphics();
-        chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
-        g2.dispose();
+            BufferedImage image = new BufferedImage(200 , 100,
+                    BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2 = image.createGraphics();
+            chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
+            g2.dispose();
     }
 
     /**
@@ -1050,7 +1071,8 @@ public class XYPlotTest {
         try {
             plot.getDomainAxisForDataset(-1);
             fail("Should have thrown an IllegalArgumentException on negative index");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Index -1 out of bounds.", e.getMessage());
         }
 
@@ -1058,7 +1080,8 @@ public class XYPlotTest {
         try {
             plot.getDomainAxisForDataset(1);
             fail("Should have thrown an IllegalArgumentException on index out of bounds");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Index 1 out of bounds.", e.getMessage());
         }
 
@@ -1096,7 +1119,8 @@ public class XYPlotTest {
         try {
             plot.getRangeAxisForDataset(-1);
             fail("Should have thrown an IllegalArgumentException on negative value");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Index -1 out of bounds.", e.getMessage());
         }
 
@@ -1104,7 +1128,8 @@ public class XYPlotTest {
         try {
             plot.getRangeAxisForDataset(1);
             fail("Should have thrown an IllegalArgumentException on index out of bounds");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Index 1 out of bounds.", e.getMessage());
         }
 

@@ -182,7 +182,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     /** The plot that the renderer is assigned to. */
     private CategoryPlot plot;
 
-    /**
+    /** 
      * Storage for item label generators by series (if there is no generator
      * for a series, the defaultItemLabelGenerator will be used). 
      */
@@ -191,7 +191,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     /** The default item label generator. */
     private CategoryItemLabelGenerator defaultItemLabelGenerator;
 
-    /**
+    /** 
      * Storage for tool tip generators by series (if there is no generator
      * for a series, the defaultToolTipGenerator will be used). 
      */
@@ -200,7 +200,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     /** The default tool tip generator. */
     private CategoryToolTipGenerator defaultToolTipGenerator;
 
-    /**
+    /** 
      * Storage for URL generators by series (if there is no generator
      * for a series, the defaultURLGenerator will be used). 
      */
@@ -232,9 +232,9 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * generators.
      */
     protected AbstractCategoryItemRenderer() {
-        this.itemLabelGeneratorMap
+        this.itemLabelGeneratorMap 
                 = new HashMap<Integer, CategoryItemLabelGenerator>();
-        this.toolTipGeneratorMap
+        this.toolTipGeneratorMap 
                 = new HashMap<Integer, CategoryToolTipGenerator>();
         this.urlGeneratorMap = new HashMap<Integer, CategoryURLGenerator>();
         this.legendItemLabelGenerator
@@ -297,7 +297,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public CategoryItemLabelGenerator getItemLabelGenerator(int row,
-                                                            int column) {
+            int column) {
         return getSeriesItemLabelGenerator(row);
     }
 
@@ -330,7 +330,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public void setSeriesItemLabelGenerator(int series,
-                                            CategoryItemLabelGenerator generator) {
+            CategoryItemLabelGenerator generator) {
         setSeriesItemLabelGenerator(series, generator, true);
     }
 
@@ -346,7 +346,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public void setSeriesItemLabelGenerator(int series,
-                                            CategoryItemLabelGenerator generator, boolean notify) {
+                CategoryItemLabelGenerator generator, boolean notify) {
         this.itemLabelGeneratorMap.put(series, generator);
         if (notify) {
             fireChangeEvent();
@@ -463,7 +463,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public void setSeriesToolTipGenerator(int series,
-                                          CategoryToolTipGenerator generator, boolean notify) {
+                CategoryToolTipGenerator generator, boolean notify) {
         this.toolTipGeneratorMap.put(series, generator);
         if (notify) {
             fireChangeEvent();
@@ -506,7 +506,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public void setDefaultToolTipGenerator(CategoryToolTipGenerator generator,
-                                           boolean notify) {
+            boolean notify) {
         this.defaultToolTipGenerator = generator;
         if (notify) {
             fireChangeEvent();
@@ -575,7 +575,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public void setSeriesItemURLGenerator(int series,
-                                          CategoryURLGenerator generator, boolean notify) {
+                CategoryURLGenerator generator, boolean notify) {
         this.urlGeneratorMap.put(series, generator);
         if (notify) {
             fireChangeEvent();
@@ -618,7 +618,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public void setDefaultURLGenerator(CategoryURLGenerator generator,
-                                       boolean notify) {
+            boolean notify) {
         this.defaultURLGenerator = generator;
         if (notify) {
             fireChangeEvent();
@@ -678,8 +678,8 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public CategoryItemRendererState initialise(Graphics2D g2,
-                                                Rectangle2D dataArea, CategoryPlot plot, int rendererIndex,
-                                                PlotRenderingInfo info) {
+            Rectangle2D dataArea, CategoryPlot plot, int rendererIndex,
+            PlotRenderingInfo info) {
 
         setPlot(plot);
         CategoryDataset data = plot.getDataset(rendererIndex);
@@ -734,7 +734,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @since 1.0.13
      */
     protected Range findRangeBounds(CategoryDataset dataset,
-                                    boolean includeInterval) {
+            boolean includeInterval) {
         if (dataset == null) {
             return null;
         }
@@ -770,8 +770,8 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public double getItemMiddle(Comparable rowKey, Comparable columnKey,
-                                CategoryDataset dataset, CategoryAxis axis, Rectangle2D area,
-                                RectangleEdge edge) {
+            CategoryDataset dataset, CategoryAxis axis, Rectangle2D area,
+            RectangleEdge edge) {
         return axis.getCategoryMiddle(columnKey, dataset.getColumnKeys(), area,
                 edge);
     }
@@ -828,7 +828,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public void drawDomainGridline(Graphics2D g2, CategoryPlot plot,
-                                   Rectangle2D dataArea, double value) {
+            Rectangle2D dataArea, double value) {
 
         Line2D line = null;
         PlotOrientation orientation = plot.getOrientation();
@@ -872,7 +872,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public void drawRangeGridline(Graphics2D g2, CategoryPlot plot,
-                                  ValueAxis axis, Rectangle2D dataArea, double value) {
+            ValueAxis axis, Rectangle2D dataArea, double value) {
 
         Range range = axis.getRange();
         if (!range.contains(value)) {
@@ -924,7 +924,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @since 1.0.13
      */
     public void drawRangeGridline(Graphics2D g2, CategoryPlot plot, ValueAxis axis,
-                                  Rectangle2D dataArea, double value, Paint paint, Stroke stroke) {
+            Rectangle2D dataArea, double value, Paint paint, Stroke stroke) {
 
         // TODO: In JFreeChart 1.2.0, put this method in the
         // CategoryItemRenderer interface
@@ -965,7 +965,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public void drawDomainMarker(Graphics2D g2, CategoryPlot plot,
-                                 CategoryAxis axis, CategoryMarker marker, Rectangle2D dataArea) {
+            CategoryAxis axis, CategoryMarker marker, Rectangle2D dataArea) {
 
         Comparable category = marker.getKey();
         CategoryDataset dataset = plot.getDataset(plot.getIndexOf(this));
@@ -993,7 +993,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
                 line = new Line2D.Double(v, dataArea.getMinY(), v,
                         dataArea.getMaxY());
             } else {
-                throw new IllegalStateException("Unrecognised orientation: "
+                throw new IllegalStateException("Unrecognised orientation: " 
                         + orientation);
             }
             g2.setPaint(marker.getPaint());
@@ -1052,7 +1052,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public void drawRangeMarker(Graphics2D g2, CategoryPlot plot,
-                                ValueAxis axis, Marker marker, Rectangle2D dataArea) {
+            ValueAxis axis, Marker marker, Rectangle2D dataArea) {
 
         if (marker instanceof ValueMarker) {
             ValueMarker vm = (ValueMarker) marker;
@@ -1079,7 +1079,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
                 line = new Line2D.Double(dataArea.getMinX(), v,
                         dataArea.getMaxX(), v);
             } else {
-                throw new IllegalStateException("Unrecognised orientation: "
+                throw new IllegalStateException("Unrecognised orientation: " 
                         + orientation);
             }
 
@@ -1222,12 +1222,12 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @return The coordinates for drawing the marker label.
      */
     protected Point2D calculateDomainMarkerTextAnchorPoint(Graphics2D g2,
-                                                           PlotOrientation orientation,
-                                                           Rectangle2D dataArea,
-                                                           Rectangle2D markerArea,
-                                                           RectangleInsets markerOffset,
-                                                           LengthAdjustmentType labelOffsetType,
-                                                           RectangleAnchor anchor) {
+                                      PlotOrientation orientation,
+                                      Rectangle2D dataArea,
+                                      Rectangle2D markerArea,
+                                      RectangleInsets markerOffset,
+                                      LengthAdjustmentType labelOffsetType,
+                                      RectangleAnchor anchor) {
 
         Rectangle2D anchorRect = null;
         if (orientation == PlotOrientation.HORIZONTAL) {
@@ -1256,12 +1256,12 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @return The coordinates for drawing the marker label.
      */
     protected Point2D calculateRangeMarkerTextAnchorPoint(Graphics2D g2,
-                                                          PlotOrientation orientation,
-                                                          Rectangle2D dataArea,
-                                                          Rectangle2D markerArea,
-                                                          RectangleInsets markerOffset,
-                                                          LengthAdjustmentType labelOffsetType,
-                                                          RectangleAnchor anchor) {
+                                      PlotOrientation orientation,
+                                      Rectangle2D dataArea,
+                                      Rectangle2D markerArea,
+                                      RectangleInsets markerOffset,
+                                      LengthAdjustmentType labelOffsetType,
+                                      RectangleAnchor anchor) {
 
         Rectangle2D anchorRect = null;
         if (orientation == PlotOrientation.HORIZONTAL) {
@@ -1368,7 +1368,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
                 that.defaultToolTipGenerator)) {
             return false;
         }
-        if (!ObjectUtils.equal(this.urlGeneratorMap,
+        if (!ObjectUtils.equal(this.urlGeneratorMap, 
                 that.urlGeneratorMap)) {
             return false;
         }
@@ -1436,9 +1436,9 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @since 1.0.11
      */
     protected void updateCrosshairValues(CategoryCrosshairState crosshairState,
-                                         Comparable rowKey, Comparable columnKey, double value,
-                                         int datasetIndex,
-                                         double transX, double transY, PlotOrientation orientation) {
+            Comparable rowKey, Comparable columnKey, double value,
+            int datasetIndex,
+            double transX, double transY, PlotOrientation orientation) {
 
         if (orientation == null) {
             throw new IllegalArgumentException("Null 'orientation' argument.");
@@ -1471,8 +1471,8 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      *                  label position).
      */
     protected void drawItemLabel(Graphics2D g2, PlotOrientation orientation,
-                                 CategoryDataset dataset, int row, int column,
-                                 double x, double y, boolean negative) {
+            CategoryDataset dataset, int row, int column,
+            double x, double y, boolean negative) {
 
         CategoryItemLabelGenerator generator = getItemLabelGenerator(row,
                 column);

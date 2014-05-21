@@ -57,7 +57,7 @@ package org.jfree.chart.urls;
 
 import java.io.Serializable;
 
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.data.category.CategoryDataset;
 
 /**
@@ -184,15 +184,15 @@ public class StandardCategoryURLGenerator implements CategoryURLGenerator,
             return false;
         }
         StandardCategoryURLGenerator that = (StandardCategoryURLGenerator) obj;
-        if (!ObjectUtilities.equal(this.prefix, that.prefix)) {
+        if (!ObjectUtils.equal(this.prefix, that.prefix)) {
             return false;
         }
 
-        if (!ObjectUtilities.equal(this.seriesParameterName,
+        if (!ObjectUtils.equal(this.seriesParameterName,
                 that.seriesParameterName)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.categoryParameterName,
+        if (!ObjectUtils.equal(this.categoryParameterName,
                 that.categoryParameterName)) {
             return false;
         }

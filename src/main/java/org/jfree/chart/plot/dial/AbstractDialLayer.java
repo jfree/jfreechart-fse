@@ -42,14 +42,15 @@
 
 package org.jfree.chart.plot.dial;
 
-import org.jfree.chart.HashUtilities;
-
-import javax.swing.event.EventListenerList;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Arrays;
 import java.util.EventListener;
 import java.util.List;
+
+import javax.swing.event.EventListenerList;
+
+import org.jfree.chart.util.HashUtils;
 
 /**
  * A base class that can be used to implement a {@link DialLayer}.  It includes
@@ -127,7 +128,7 @@ public abstract class AbstractDialLayer implements DialLayer {
     @Override
     public int hashCode() {
         int result = 23;
-        result = HashUtilities.hashCode(result, this.visible);
+        result = HashUtils.hashCode(result, this.visible);
         return result;
     }
 
@@ -211,7 +212,7 @@ public abstract class AbstractDialLayer implements DialLayer {
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-            throws IOException, ClassNotFoundException {
+        throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.listenerList = new EventListenerList();
     }

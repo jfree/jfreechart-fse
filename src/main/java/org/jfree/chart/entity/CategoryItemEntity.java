@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * CategoryItemEntity.java
  * -----------------------
- * (C) Copyright 2002-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2002-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Richard Atkinson;
@@ -56,13 +56,16 @@ package org.jfree.chart.entity;
 import java.awt.Shape;
 import java.io.Serializable;
 
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.extension.DatasetCursor;
+import org.jfree.data.extension.impl.CategoryCursor;
+import org.jfree.data.general.Dataset;
 
 /**
  * A chart entity that represents one item within a category plot.
  */
-public class CategoryItemEntity extends ChartEntity
+public class CategoryItemEntity extends DataItemEntity
         implements Cloneable, Serializable {
 
     /** For serialization. */
@@ -121,6 +124,13 @@ public class CategoryItemEntity extends ChartEntity
         return this.dataset;
     }
 
+    /**
+     * @see DataItemEntity#getGeneralDataset() 
+     */
+    public Dataset getGeneralDataset() {
+        return this.dataset;
+    }
+    
     /**
      * Sets the dataset this entity refers to.
      *
@@ -221,11 +231,17 @@ public class CategoryItemEntity extends ChartEntity
         if (!this.columnKey.equals(that.columnKey)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.dataset, that.dataset)) {
+        if (!ObjectUtils.equal(this.dataset, that.dataset)) {
             return false;
         }
 
         return super.equals(obj);
+    }
+
+    @Override
+    public DatasetCursor getItemCursor() {
+        //category item entities are not yet typed
+        return new CategoryCursor(rowKey, columnKey);
     }
 
 }

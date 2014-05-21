@@ -110,7 +110,7 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -120,7 +120,7 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.renderer.Outlier;
 import org.jfree.chart.renderer.OutlierList;
 import org.jfree.chart.renderer.OutlierListCollection;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.statistics.BoxAndWhiskerCategoryDataset;
@@ -1076,7 +1076,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
         if (this.whiskerWidth != that.whiskerWidth) {
             return false;
         }
-        if (!PaintUtilities.equal(this.artifactPaint, that.artifactPaint)) {
+        if (!PaintUtils.equal(this.artifactPaint, that.artifactPaint)) {
             return false;
         }
         return super.equals(obj);
@@ -1091,7 +1091,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.artifactPaint, stream);
+        SerialUtils.writePaint(this.artifactPaint, stream);
     }
 
     /**
@@ -1105,7 +1105,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.artifactPaint = SerialUtilities.readPaint(stream);
+        this.artifactPaint = SerialUtils.readPaint(stream);
     }
 
 }

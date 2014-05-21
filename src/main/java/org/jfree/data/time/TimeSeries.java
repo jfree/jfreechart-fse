@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * TimeSeries.java
  * ---------------
- * (C) Copyright 2001-2012, by Object Refinery Limited.
+ * (C) Copyright 2001-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Bryan Scott;
@@ -90,13 +90,20 @@
 
 package org.jfree.data.time;
 
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.data.general.Series;
-import org.jfree.data.general.SeriesChangeEvent;
-import org.jfree.data.general.SeriesException;
-
 import java.io.Serializable;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.ParamChecks;
+import org.jfree.data.Range;
+import org.jfree.data.general.Series;
+import org.jfree.data.general.SeriesException;
 
 /**
  * Represents a sequence of zero or more data items in the form (period, value)
@@ -105,7 +112,7 @@ import java.util.*;
  * period (for example, {@link Day}) and (b) that each period appears at
  * most one time in the series.
  */
-public class TimeSeries extends Series<Comparable> implements Cloneable, Serializable {
+public class TimeSeries extends Series implements Cloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -5032960206869675528L;
@@ -325,9 +332,96 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
     }
 
     /**
-     * Returns the smallest y-value in the series, ignoring any null and
-     * Double.NaN values.  This method returns Double.NaN if there is no
-     * smallest y-value (for example, when the series is empty).
+     * Returns the range of y-values in the time series.  Any <code>null</code> 
+     * data values in the series will be ignored (except for the special case 
+     * where all data values are <code>null</code>, in which case the return 
+     * value is <code>Range(Double.NaN, Double.NaN)</code>).  If the time 
+     * series contains no items, this method will return <code>null</code>.
+     * 
+     * @return The range of y-values in the time series (possibly 
+     *     <code>null</code>).
+     * 
+     * @since 1.0.18
+     */
+    public Range findValueRange() {
+        if (this.data.isEmpty()) {
+            return null;
+        }
+        return new Range(this.minY, this.maxY);
+    }
+    
+    /**
+     * Returns the range of y-values in the time series that fall within 
+     * the specified range of x-values.  This is equivalent to
+     * <code>findValueRange(xRange, TimePeriodAnchor.MIDDLE, timeZone)</code>.
+     * 
+     * @param xRange  the subrange of x-values (<code>null</code> not 
+     *     permitted).
+     * @param timeZone  the time zone used to convert x-values to time periods
+     *     (<code>null</code> not permitted).
+     * 
+     * @return The range. 
+     * 
+     * @since 1.0.18
+     */
+    public Range findValueRange(Range xRange, TimeZone timeZone) {
+        return findValueRange(xRange, TimePeriodAnchor.MIDDLE, timeZone);
+    }
+    
+    /**
+     * Finds the range of y-values that fall within the specified range of
+     * x-values (where the x-values are interpreted as milliseconds since the
+     * epoch and converted to time periods using the specified timezone).
+     * 
+     * @param xRange  the subset of x-values to use (<coded>null</code> not
+     *     permitted).
+     * @param xAnchor  the anchor point for the x-values (<code>null</code>
+     *     not permitted).
+     * @param zone  the time zone (<code>null</code> not permitted).
+     * 
+     * @return The range of y-values.
+     * 
+     * @since 1.0.18
+     */
+    public Range findValueRange(Range xRange, TimePeriodAnchor xAnchor, 
+            TimeZone zone) {
+        ParamChecks.nullNotPermitted(xRange, "xRange");
+        ParamChecks.nullNotPermitted(xAnchor, "xAnchor");
+        ParamChecks.nullNotPermitted(zone, "zone");
+        if (this.data.isEmpty()) {
+            return null;
+        }
+        Calendar calendar = Calendar.getInstance(zone);
+        // since the items are ordered, we could be more clever here and avoid
+        // iterating over all the data
+        double lowY = Double.POSITIVE_INFINITY;
+        double highY = Double.NEGATIVE_INFINITY;
+        for (TimeSeriesDataItem item : this.data) {
+            long millis = item.getPeriod().getMillisecond(xAnchor, calendar);
+            if (xRange.contains(millis)) {
+                Number n = item.getValue();
+                if (n != null) {
+                    double v = n.doubleValue();
+                    lowY = Math.min(lowY, v);
+                    highY = Math.max(highY, v);
+                }
+            }
+        }
+        if (Double.isInfinite(lowY) && Double.isInfinite(highY)) {
+            if (lowY < highY) {
+                return new Range(lowY, highY);
+            } else {
+                return new Range(Double.NaN, Double.NaN);
+            }
+        }
+        return new Range(lowY, highY);
+    }
+
+    /**
+     * Returns the smallest y-value in the series, ignoring any 
+     * <code>null</code> and <code>Double.NaN</code> values.  This method 
+     * returns <code>Double.NaN</code> if there is no smallest y-value (for 
+     * example, when the series is empty).
      *
      * @return The smallest y-value.
      *
@@ -340,8 +434,9 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
     }
 
     /**
-     * Returns the largest y-value in the series, ignoring any Double.NaN
-     * values.  This method returns Double.NaN if there is no largest y-value
+     * Returns the largest y-value in the series, ignoring any 
+     * <code>null</code> and <code>Double.NaN</code> values.  This method 
+     * returns <code>Double.NaN</code> if there is no largest y-value
      * (for example, when the series is empty).
      *
      * @return The largest y-value.
@@ -504,11 +599,9 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
      * @return The index.
      */
     public int getIndex(RegularTimePeriod period) {
-        if (period == null) {
-            throw new IllegalArgumentException("Null 'period' argument.");
-        }
+        ParamChecks.nullNotPermitted(period, "period");
         TimeSeriesDataItem dummy = new TimeSeriesDataItem(
-                period, Integer.MIN_VALUE);
+              period, Integer.MIN_VALUE);
         return Collections.binarySearch(this.data, dummy);
     }
 
@@ -559,14 +652,13 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
      * @param notify  notify listeners?
      */
     public void add(TimeSeriesDataItem item, boolean notify) {
-        if (item == null) {
-            throw new IllegalArgumentException("Null 'item' argument.");
-        }
+        ParamChecks.nullNotPermitted(item, "item");
         item = (TimeSeriesDataItem) item.clone();
         Class<? extends TimePeriod> c = item.getPeriod().getClass();
         if (this.timePeriodClass == null) {
             this.timePeriodClass = c;
-        } else if (!this.timePeriodClass.equals(c)) {
+        }
+        else if (!this.timePeriodClass.equals(c)) {
             StringBuilder b = new StringBuilder();
             b.append("You are trying to add data where the time period class ");
             b.append("is ");
@@ -578,22 +670,25 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
         }
 
         // make the change (if it's not a duplicate time period)...
-        boolean added = false;
+        boolean added;
         int count = getItemCount();
         if (count == 0) {
             this.data.add(item);
             added = true;
-        } else {
+        }
+        else {
             RegularTimePeriod last = getTimePeriod(getItemCount() - 1);
             if (item.getPeriod().compareTo(last) > 0) {
                 this.data.add(item);
                 added = true;
-            } else {
+            }
+            else {
                 int index = Collections.binarySearch(this.data, item);
                 if (index < 0) {
                     this.data.add(-index - 1, item);
                     added = true;
-                } else {
+                }
+                else {
                     StringBuilder b = new StringBuilder();
                     b.append("You are attempting to add an observation for ");
                     b.append("the time period ");
@@ -614,8 +709,8 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
             }
 
             removeAgedItems(false);  // remove old items if necessary, but
-            // don't notify anyone, because that
-            // happens next anyway...
+                                     // don't notify anyone, because that
+                                     // happens next anyway...
             if (notify) {
                 fireSeriesChanged();
             }
@@ -686,7 +781,7 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
      * @since 1.0.14
      */
     public void update(RegularTimePeriod period, double value) {
-        update(period, new Double(value));
+      update(period, new Double(value));
     }
 
     /**
@@ -724,8 +819,9 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
         }
         item.setValue(value);
         if (iterate) {
-            findBoundsByIteration();
-        } else if (value != null) {
+            updateMinMaxYByIteration();
+        }
+        else if (value != null) {
             double yy = value.doubleValue();
             this.minY = minIgnoreNaN(this.minY, yy);
             this.maxY = maxIgnoreNaN(this.maxY, yy);
@@ -800,13 +896,12 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
      */
     public TimeSeriesDataItem addOrUpdate(TimeSeriesDataItem item) {
 
-        if (item == null) {
-            throw new IllegalArgumentException("Null 'period' argument.");
-        }
+        ParamChecks.nullNotPermitted(item, "item");
         Class<? extends TimePeriod> periodClass = item.getPeriod().getClass();
         if (this.timePeriodClass == null) {
             this.timePeriodClass = periodClass;
-        } else if (!this.timePeriodClass.equals(periodClass)) {
+        }
+        else if (!this.timePeriodClass.equals(periodClass)) {
             String msg = "You are trying to add data where the time "
                     + "period class is " + periodClass.getName()
                     + ", but the TimeSeries is expecting an instance of "
@@ -829,13 +924,15 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
             }
             existing.setValue(item.getValue());
             if (iterate) {
-                findBoundsByIteration();
-            } else if (item.getValue() != null) {
+                updateMinMaxYByIteration();
+            }
+            else if (item.getValue() != null) {
                 double yy = item.getValue().doubleValue();
                 this.minY = minIgnoreNaN(this.minY, yy);
                 this.maxY = maxIgnoreNaN(this.maxY, yy);
             }
-        } else {
+        }
+        else {
             item = (TimeSeriesDataItem) item.clone();
             this.data.add(-index - 1, item);
             updateBoundsForAddedItem(item);
@@ -847,8 +944,8 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
             }
         }
         removeAgedItems(false);  // remove old items if necessary, but
-        // don't notify anyone, because that
-        // happens next anyway...
+                                 // don't notify anyone, because that
+                                 // happens next anyway...
         fireSeriesChanged();
         return overwritten;
 
@@ -874,7 +971,7 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
                 removed = true;
             }
             if (removed) {
-                findBoundsByIteration();
+                updateMinMaxYByIteration();
                 if (notify) {
                     fireSeriesChanged();
                 }
@@ -911,7 +1008,7 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
             removed = true;
         }
         if (removed) {
-            findBoundsByIteration();
+            updateMinMaxYByIteration();
             if (notify) {
                 fireSeriesChanged();
             }
@@ -923,7 +1020,7 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
      * {@link SeriesChangeEvent} to all registered listeners.
      */
     public void clear() {
-        if (!this.data.isEmpty()) {
+        if (this.data.size() > 0) {
             this.data.clear();
             this.timePeriodClass = null;
             this.minY = Double.NaN;
@@ -979,7 +1076,7 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
         for (int i = 0; i <= (end - start); i++) {
             this.data.remove(start);
         }
-        findBoundsByIteration();
+        updateMinMaxYByIteration();
         if (this.data.isEmpty()) {
             this.timePeriodClass = null;
         }
@@ -1006,7 +1103,7 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
     @Override
     public Object clone() throws CloneNotSupportedException {
         TimeSeries clone = (TimeSeries) super.clone();
-        clone.data = ObjectUtilities.deepClone(this.data);
+        clone.data = ObjectUtils.deepClone(this.data);
         return clone;
     }
 
@@ -1034,15 +1131,16 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
         copy.minY = Double.NaN;
         copy.maxY = Double.NaN;
         copy.data = new java.util.ArrayList<TimeSeriesDataItem>();
-        if (!this.data.isEmpty()) {
+        if (this.data.size() > 0) {
             for (int index = start; index <= end; index++) {
                 TimeSeriesDataItem item
                         = this.data.get(index);
                 TimeSeriesDataItem clone = (TimeSeriesDataItem) item.clone();
                 try {
                     copy.add(clone);
-                } catch (SeriesException e) {
-                    throw new RuntimeException("Could not add cloned item to series", e);
+                }
+                catch (SeriesException e) {
+                     throw new RuntimeException("Could not add cloned item to series", e);
                 }
             }
         }
@@ -1064,14 +1162,10 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
      * @throws CloneNotSupportedException if there is a cloning problem.
      */
     public TimeSeries createCopy(RegularTimePeriod start, RegularTimePeriod end)
-            throws CloneNotSupportedException {
+        throws CloneNotSupportedException {
 
-        if (start == null) {
-            throw new IllegalArgumentException("Null 'start' argument.");
-        }
-        if (end == null) {
-            throw new IllegalArgumentException("Null 'end' argument.");
-        }
+        ParamChecks.nullNotPermitted(start, "start");
+        ParamChecks.nullNotPermitted(end, "end");
         if (start.compareTo(end) > 0) {
             throw new IllegalArgumentException(
                     "Requires start on or before end.");
@@ -1089,7 +1183,7 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
             endIndex = -(endIndex + 1); // this is first item AFTER end period
             endIndex = endIndex - 1;    // so this is last item BEFORE end
         }
-        if ((endIndex < 0) || (endIndex < startIndex)) {
+        if ((endIndex < 0)  || (endIndex < startIndex)) {
             emptyRange = true;
         }
         if (emptyRange) {
@@ -1116,15 +1210,15 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
             return false;
         }
         TimeSeries that = (TimeSeries) obj;
-        if (!ObjectUtilities.equal(getDomainDescription(),
+        if (!ObjectUtils.equal(getDomainDescription(),
                 that.getDomainDescription())) {
             return false;
         }
-        if (!ObjectUtilities.equal(getRangeDescription(),
+        if (!ObjectUtils.equal(getRangeDescription(),
                 that.getRangeDescription())) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.timePeriodClass,
+        if (!ObjectUtils.equal(this.timePeriodClass,
                 that.timePeriodClass)) {
             return false;
         }
@@ -1138,7 +1232,10 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
         if (count != that.getItemCount()) {
             return false;
         }
-        return ObjectUtilities.equal(this.data, that.data) && super.equals(obj);
+        if (!ObjectUtils.equal(this.data, that.data)) {
+            return false;
+        }
+        return super.equals(obj);
     }
 
     /**
@@ -1204,7 +1301,7 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
             double y = yN.doubleValue();
             if (!Double.isNaN(y)) {
                 if (y <= this.minY || y >= this.maxY) {
-                    findBoundsByIteration();
+                    updateMinMaxYByIteration();
                 }
             }
         }
@@ -1216,10 +1313,11 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
      *
      * @since 1.0.14
      */
-    private void findBoundsByIteration() {
+    private void updateMinMaxYByIteration() {
         this.minY = Double.NaN;
         this.maxY = Double.NaN;
-        for (TimeSeriesDataItem item : this.data) {
+        for (TimeSeriesDataItem aData : this.data) {
+            TimeSeriesDataItem item = aData;
             updateBoundsForAddedItem(item);
         }
     }
@@ -1258,7 +1356,8 @@ public class TimeSeries extends Series<Comparable> implements Cloneable, Seriali
         }
         if (Double.isNaN(b)) {
             return a;
-        } else {
+        }
+        else {
             return Math.max(a, b);
         }
     }

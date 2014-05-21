@@ -51,7 +51,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtilities;
+import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.ui.RectangleEdge;
 
 /**
@@ -157,7 +157,7 @@ public class GradientBarPainter implements BarPainter, Serializable {
                     this.g3);
             GradientPaint gp = new GradientPaint(0.0f,
                     (float) regions[0].getMinY(), c0, 0.0f,
-                    (float) regions[0].getMaxX(), Color.WHITE);
+                    (float) regions[0].getMaxY(), Color.WHITE);
             g2.setPaint(gp);
             g2.fill(regions[0]);
 
@@ -372,9 +372,9 @@ public class GradientBarPainter implements BarPainter, Serializable {
     @Override
     public int hashCode() {
         int hash = 37;
-        hash = HashUtilities.hashCode(hash, this.g1);
-        hash = HashUtilities.hashCode(hash, this.g2);
-        hash = HashUtilities.hashCode(hash, this.g3);
+        hash = HashUtils.hashCode(hash, this.g1);
+        hash = HashUtils.hashCode(hash, this.g2);
+        hash = HashUtils.hashCode(hash, this.g3);
         return hash;
     }
 

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------
  * Range.java
  * ----------
- * (C) Copyright 2002-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2002-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Chuanhao Chiu;
@@ -57,12 +57,14 @@
  * 18-Dec-2007 : New methods intersects(Range) and scale(...) thanks to Sergei
  *               Ivanov (DG);
  * 08-Jan-2012 : New method combineIgnoringNaN() (DG);
+ * 23-Feb-2014 : Added isNaNRange() method (DG);
  *
  */
 
 package org.jfree.data;
 
 import java.io.Serializable;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * Represents an immutable range of values.
@@ -224,7 +226,9 @@ public strictfp class Range implements Serializable {
     }
 
     /**
-     * Combines two ranges.  This method has a special handling for Double.NaN.
+     * Returns a new range that spans both <code>range1</code> and 
+     * <code>range2</code>.  This method has a special handling to ignore
+     * Double.NaN values.
      *
      * @param range1  the first range (<code>null</code> permitted).
      * @param range2  the second range (<code>null</code> permitted).
@@ -235,16 +239,34 @@ public strictfp class Range implements Serializable {
      */
     public static Range combineIgnoringNaN(Range range1, Range range2) {
         if (range1 == null) {
+            if (range2 != null && range2.isNaNRange()) {
+                return null;
+            }
             return range2;
         }
         if (range2 == null) {
+            if (range1.isNaNRange()) {
+                return null;
+            }
             return range1;
         }
         double l = min(range1.getLowerBound(), range2.getLowerBound());
         double u = max(range1.getUpperBound(), range2.getUpperBound());
+        if (Double.isNaN(l) && Double.isNaN(u)) {
+            return null;
+        }
         return new Range(l, u);
     }
 
+    /**
+     * Returns the minimum value.  If either value is NaN, the other value is 
+     * returned.  If both are NaN, NaN is returned.
+     * 
+     * @param d1  value 1.
+     * @param d2  value 2.
+     * 
+     * @return The minimum of the two values. 
+     */
     private static double min(double d1, double d2) {
         if (Double.isNaN(d1)) {
             return d2;
@@ -342,9 +364,7 @@ public strictfp class Range implements Serializable {
      */
     public static Range shift(Range base, double delta,
                               boolean allowZeroCrossing) {
-        if (base == null) {
-            throw new IllegalArgumentException("Null 'base' argument.");
-        }
+        ParamChecks.nullNotPermitted(base, "base");
         if (allowZeroCrossing) {
             return new Range(base.getLowerBound() + delta,
                     base.getUpperBound() + delta);
@@ -388,9 +408,7 @@ public strictfp class Range implements Serializable {
      * @since 1.0.9
      */
     public static Range scale(Range base, double factor) {
-        if (base == null) {
-            throw new IllegalArgumentException("Null 'base' argument.");
-        }
+        ParamChecks.nullNotPermitted(base, "base");
         if (factor < 0) {
             throw new IllegalArgumentException("Negative 'factor' argument.");
         }
@@ -420,6 +438,18 @@ public strictfp class Range implements Serializable {
         return true;
     }
 
+    /**
+     * Returns <code>true</code> if both the lower and upper bounds are 
+     * <code>Double.NaN</code>, and <code>false</code> otherwise.
+     * 
+     * @return A boolean.
+     * 
+     * @since 1.0.18
+     */
+    public boolean isNaNRange() {
+        return Double.isNaN(this.lower) && Double.isNaN(this.upper);
+    }
+    
     /**
      * Returns a hash code.
      *

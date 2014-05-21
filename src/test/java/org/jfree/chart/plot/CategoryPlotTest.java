@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -24,10 +24,10 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * ----------------------
- * CategoryPlotTests.java
- * ----------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
+ * ---------------------
+ * CategoryPlotTest.java
+ * ---------------------
+ * (C) Copyright 2003-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -47,20 +47,51 @@
  * 21-Jan-2009 : Updated testEquals() for new fields (DG);
  * 10-Jul-2009 : Updated testEquals() for new field (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
  *
  */
 
 package org.jfree.chart.plot;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Test;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.annotations.CategoryLineAnnotation;
 import org.jfree.chart.annotations.CategoryTextAnnotation;
-import org.jfree.chart.axis.*;
+import org.jfree.chart.axis.AxisLocation;
+import org.jfree.chart.axis.AxisSpace;
+import org.jfree.chart.axis.CategoryAnchor;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.event.MarkerChangeListener;
-import org.jfree.chart.renderer.category.*;
+import org.jfree.chart.renderer.category.AreaRenderer;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.category.CategoryItemRenderer;
+import org.jfree.chart.renderer.category.DefaultCategoryItemRenderer;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.chart.ui.Layer;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.DefaultShadowGenerator;
@@ -68,24 +99,14 @@ import org.jfree.chart.util.SortOrder;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.junit.Test;
 
-import java.awt.*;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.Assert.*;
+import org.jfree.chart.TestUtils;
 
 /**
  * Tests for the {@link CategoryPlot} class.
  */
 public class CategoryPlotTest {
-
-
+ 
     /**
      * Some checks for the constructor.
      */
@@ -378,9 +399,9 @@ public class CategoryPlotTest {
         assertEquals(plot1, plot2);
 
         // fixed legend items
-        plot1.setFixedLegendItems(new LegendItemCollection());
+        plot1.setFixedLegendItems(new ArrayList<LegendItem>());
         assertFalse(plot1.equals(plot2));
-        plot2.setFixedLegendItems(new LegendItemCollection());
+        plot2.setFixedLegendItems(new ArrayList<LegendItem>());
         assertEquals(plot1, plot2);
 
         // crosshairDatasetIndex
@@ -470,7 +491,78 @@ public class CategoryPlotTest {
     }
 
     /**
+     * This test covers a flaw in the ObjectList equals() method.
+     */
+    @Test
+    public void testEquals_ObjectList() {
+        CategoryPlot p1 = new CategoryPlot();
+        p1.setDomainAxis(new CategoryAxis("A"));
+        CategoryPlot p2 = new CategoryPlot();
+        p2.setDomainAxis(new CategoryAxis("A"));
+        assertEquals(p1, p2);
+        p2.setDomainAxis(1, new CategoryAxis("B"));
+        assertNotEquals(p1, p2);
+    }
+    
+    /**
+     * This test covers a flaw in the ObjectList equals() method.
+     */
+    @Test
+    public void testEquals_ObjectList2() {
+        CategoryPlot p1 = new CategoryPlot();
+        p1.setDomainAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+        CategoryPlot p2 = new CategoryPlot();
+        p2.setDomainAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+        assertEquals(p1, p2);
+        p2.setDomainAxisLocation(1, AxisLocation.TOP_OR_LEFT);
+        assertNotEquals(p1, p2);
+    }
+
+    /**
+     * This test covers a flaw in the ObjectList equals() method.
+     */
+    @Test
+    public void testEquals_ObjectList3() {
+        CategoryPlot p1 = new CategoryPlot();
+        p1.setRangeAxis(new NumberAxis("A"));
+        CategoryPlot p2 = new CategoryPlot();
+        p2.setRangeAxis(new NumberAxis("A"));
+        assertEquals(p1, p2);
+        p2.setRangeAxis(1, new NumberAxis("B"));
+        assertNotEquals(p1, p2);
+    }
+    
+    /**
+     * This test covers a flaw in the ObjectList equals() method.
+     */
+    @Test
+    public void testEquals_ObjectList4() {
+        CategoryPlot p1 = new CategoryPlot();
+        p1.setRangeAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+        CategoryPlot p2 = new CategoryPlot();
+        p2.setRangeAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+        assertEquals(p1, p2);
+        p2.setRangeAxisLocation(1, AxisLocation.TOP_OR_LEFT);
+        assertNotEquals(p1, p2);
+    }
+
+    /**
+     * This test covers a flaw in the ObjectList equals() method.
+     */
+    @Test
+    public void testEquals_ObjectList5() {
+        CategoryPlot p1 = new CategoryPlot();
+        p1.setRenderer(new BarRenderer());
+        CategoryPlot p2 = new CategoryPlot();
+        p2.setRenderer(new BarRenderer());
+        assertEquals(p1, p2);
+        p2.setRenderer(1, new LineAndShapeRenderer());
+        assertNotEquals(p1, p2);
+    }
+
+    /**
      * Confirm that cloning works.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning() throws CloneNotSupportedException {
@@ -518,6 +610,7 @@ public class CategoryPlotTest {
 
     /**
      * Some more cloning checks.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning2() throws CloneNotSupportedException {
@@ -545,10 +638,11 @@ public class CategoryPlotTest {
 
     /**
      * Some more cloning checks.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning3() throws CloneNotSupportedException {
-        LegendItemCollection c1 = new LegendItemCollection();
+        List<LegendItem> c1 = new ArrayList<LegendItem>();
         CategoryPlot p1 = new CategoryPlot();
         p1.setFixedLegendItems(c1);
         CategoryPlot p2 = (CategoryPlot) p1.clone();
@@ -574,6 +668,7 @@ public class CategoryPlotTest {
     /**
      * Renderers that belong to the plot are being cloned but they are
      * retaining a reference to the original plot.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testBug2817504() throws CloneNotSupportedException {
@@ -593,9 +688,11 @@ public class CategoryPlotTest {
 
     /**
      * Serialize an instance, restore it, and check for equality.
+     * @throws IOException
+     * @throws ClassNotFoundException  
      */
     @Test
-    public void testSerialization() throws IOException, ClassNotFoundException {
+    public void testSerialization() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         CategoryAxis domainAxis = new CategoryAxis("Domain");
         NumberAxis rangeAxis = new NumberAxis("Range");
@@ -603,24 +700,15 @@ public class CategoryPlotTest {
         CategoryPlot p1 = new CategoryPlot(dataset, domainAxis, rangeAxis,
                 renderer);
         p1.setOrientation(PlotOrientation.HORIZONTAL);
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(p1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
-        CategoryPlot p2 = (CategoryPlot) in.readObject();
-        in.close();
-        assertEquals(p1, p2);
+        CategoryPlot p2 = (CategoryPlot) TestUtils.serialised(p1);
+        assertTrue(p1.equals(p2));
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization2() throws IOException, ClassNotFoundException {
+    public void testSerialization2() {
         DefaultCategoryDataset data = new DefaultCategoryDataset();
         CategoryAxis domainAxis = new CategoryAxis("Domain");
         NumberAxis rangeAxis = new NumberAxis("Range");
@@ -628,17 +716,7 @@ public class CategoryPlotTest {
         CategoryPlot p1 = new CategoryPlot(data, domainAxis, rangeAxis,
                 renderer);
         p1.setOrientation(PlotOrientation.VERTICAL);
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(p1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
-        CategoryPlot p2 = (CategoryPlot) in.readObject();
-        in.close();
-
+        CategoryPlot p2 = (CategoryPlot) TestUtils.serialised(p1);
         assertEquals(p1, p2);
     }
 
@@ -648,48 +726,31 @@ public class CategoryPlotTest {
     @Test
     public void testSerialization3() throws IOException, ClassNotFoundException {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        JFreeChart chart = ChartFactory.createBarChart("Test Chart",
+        JFreeChart chart = ChartFactory.createBarChart("Test Chart", 
                 "Category Axis", "Value Axis", dataset);
 
-        // serialize and deserialize the chart....
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(chart);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
-        JFreeChart chart2 = (JFreeChart) in.readObject();
-        in.close();
-
-
+        JFreeChart chart2 = (JFreeChart) TestUtils.serialised(chart);
         // now check that the chart is usable...
-        chart2.createBufferedImage(300, 200);
-        //FIXME we should really assert a value here
+        try {
+            chart2.createBufferedImage(300, 200);
+        }
+        catch (Exception e) {
+            fail("No exception should be thrown.");
+        }
     }
 
     /**
      * This test ensures that a plot with markers is serialized correctly.
      */
     @Test
-    public void testSerialization4() throws IOException, ClassNotFoundException {
+    public void testSerialization4() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        JFreeChart chart = ChartFactory.createBarChart("Test Chart",
+        JFreeChart chart = ChartFactory.createBarChart("Test Chart", 
                 "Category Axis", "Value Axis", dataset);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         plot.addRangeMarker(new ValueMarker(1.1), Layer.FOREGROUND);
         plot.addRangeMarker(new IntervalMarker(2.2, 3.3), Layer.BACKGROUND);
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(chart);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
-        JFreeChart chart2 = (JFreeChart) in.readObject();
-        in.close();
-
+        JFreeChart chart2 = (JFreeChart) TestUtils.serialised(chart);
         assertEquals(chart, chart2);
 
         // now check that the chart is usable...
@@ -702,7 +763,7 @@ public class CategoryPlotTest {
      * at SourceForge.
      */
     @Test
-    public void testSerialization5() throws IOException, ClassNotFoundException {
+    public void testSerialization5() {
         DefaultCategoryDataset dataset1 = new DefaultCategoryDataset();
         CategoryAxis domainAxis1 = new CategoryAxis("Domain 1");
         NumberAxis rangeAxis1 = new NumberAxis("Range 1");
@@ -717,15 +778,7 @@ public class CategoryPlotTest {
         p1.setDomainAxis(1, domainAxis2);
         p1.setRangeAxis(1, rangeAxis2);
         p1.setRenderer(1, renderer2);
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(p1);
-        out.close();
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
-        CategoryPlot p2 = (CategoryPlot) in.readObject();
-        in.close();
+        CategoryPlot p2 = (CategoryPlot) TestUtils.serialised(p1);
         assertEquals(p1, p2);
 
         // now check that all datasets, renderers and axes are being listened
@@ -739,7 +792,7 @@ public class CategoryPlotTest {
         NumberAxis rangeAxisB = (NumberAxis) p2.getRangeAxis(1);
         DefaultCategoryDataset datasetB
                 = (DefaultCategoryDataset) p2.getDataset(1);
-        BarRenderer rendererB = (BarRenderer) p2.getRenderer(1);
+        BarRenderer rendererB  = (BarRenderer) p2.getRenderer(1);
         assertTrue(datasetA.hasListener(p2));
         assertTrue(domainAxisA.hasListener(p2));
         assertTrue(rangeAxisA.hasListener(p2));
@@ -823,7 +876,7 @@ public class CategoryPlotTest {
                 dataset);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         plot.setRenderer(1, new LineAndShapeRenderer());
-        BufferedImage image = new BufferedImage(200, 100,
+        BufferedImage image = new BufferedImage(200 , 100,
                 BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = image.createGraphics();
         chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
@@ -849,7 +902,8 @@ public class CategoryPlotTest {
         try {
             plot.getDomainAxisIndex(null);
             fail("IllegalArgumentException should have been thrown on null parameter");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'axis' argument.", e.getMessage());
         }
     }
@@ -873,7 +927,8 @@ public class CategoryPlotTest {
         try {
             plot.getRangeAxisIndex(null);
             fail("IllegalArgumentException should have been thrown on null parameter");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'axis' argument.", e.getMessage());
         }
     }
@@ -914,7 +969,8 @@ public class CategoryPlotTest {
         try {
             plot.getDomainAxisForDataset(-1);
             fail("IllegalArgumentException should have been thrown on null parameter");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Negative 'index'.", e.getMessage());
         }
 
@@ -952,7 +1008,8 @@ public class CategoryPlotTest {
         try {
             plot.getRangeAxisForDataset(-1);
             fail("IllegalArgumentException should have been thrown on negative parameter");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Negative 'index'.", e.getMessage());
         }
 

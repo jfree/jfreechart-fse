@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -55,7 +55,8 @@ public interface XYDomainInfo {
     /**
      * Returns the range of the values in this dataset's domain.
      *
-     * @param visibleSeriesKeys  the keys of the visible series.
+     * @param visibleSeriesKeys  the keys of the visible series
+     *                           (<code>null</code> not permitted).
      * @param includeInterval  a flag that determines whether or not the
      *                         y-interval is taken into account.
      *

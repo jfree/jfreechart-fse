@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------
  * PiePlot.java
  * ------------
- * (C) Copyright 2000-2012, by Andrzej Porebski and Contributors.
+ * (C) Copyright 2000-2014, by Andrzej Porebski and Contributors.
  *
  * Original Author:  Andrzej Porebski;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -169,13 +169,43 @@
  * 20-Nov-2011 : Initialise shadow generator as null (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
  * 01-Jul-2012 : Removed deprecated code (DG);
- *
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
+ * 
  */
 
 package org.jfree.chart.plot;
 
+import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Composite;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.RadialGradientPaint;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.geom.Arc2D;
+import java.awt.geom.CubicCurve2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.QuadCurve2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.TreeMap;
+import org.jfree.chart.JFreeChart;
+
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.PaintMap;
 import org.jfree.chart.StrokeMap;
 import org.jfree.chart.entity.EntityCollection;
@@ -192,26 +222,21 @@ import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.urls.PieURLGenerator;
-import org.jfree.chart.util.*;
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.PaintUtils;
+import org.jfree.chart.util.ParamChecks;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.ResourceBundleWrapper;
+import org.jfree.chart.util.Rotation;
+import org.jfree.chart.util.SerialUtils;
+import org.jfree.chart.util.ShadowGenerator;
+import org.jfree.chart.util.ShapeUtils;
+import org.jfree.chart.util.UnitType;
 import org.jfree.data.DefaultKeyedValues;
 import org.jfree.data.KeyedValues;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.general.PieDataset;
-
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.TreeMap;
 
 /**
  * A plot that displays data in the form of a pie chart, using data from any
@@ -274,7 +299,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
     public static final double DEFAULT_MINIMUM_ARC_ANGLE_TO_DRAW = 0.00001;
 
     /** The dataset for the pie chart. */
-    private PieDataset<Comparable> dataset;
+    private PieDataset dataset;
 
     /** The pie index (used by the {@link MultiplePiePlot} class). */
     private int pieIndex;
@@ -352,7 +377,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
     private double shadowYOffset = 4.0f;
 
     /** The percentage amount to explode each pie section. */
-    private Map<Comparable, Number> explodePercentages;
+    private Map<Comparable<?>, Number> explodePercentages;
 
     /** The section label generator. */
     private PieSectionLabelGenerator labelGenerator;
@@ -499,7 +524,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
     /** The resourceBundle for the localization. */
     protected static ResourceBundle localizationResources
             = ResourceBundleWrapper.getBundle(
-            "org.jfree.chart.plot.LocalizationBundle");
+                    "org.jfree.chart.plot.LocalizationBundle");
 
     /**
      * This debug flag controls whether or not an outline is drawn showing the
@@ -560,7 +585,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         this.baseSectionOutlineStroke = DEFAULT_OUTLINE_STROKE;
         this.autoPopulateSectionOutlineStroke = false;
 
-        this.explodePercentages = new TreeMap<Comparable, Number>();
+        this.explodePercentages = new TreeMap<Comparable<?>, Number>();
 
         this.labelGenerator = new StandardPieSectionLabelGenerator();
         this.labelFont = DEFAULT_LABEL_FONT;
@@ -700,9 +725,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @see #getDirection()
      */
     public void setDirection(Rotation direction) {
-        if (direction == null) {
-            throw new IllegalArgumentException("Null 'direction' argument.");
-        }
+        ParamChecks.nullNotPermitted(direction, "direction");
         this.direction = direction;
         fireChangeEvent();
 
@@ -734,7 +757,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
 
         if ((percent < 0.0) || (percent > MAX_INTERIOR_GAP)) {
             throw new IllegalArgumentException(
-                    "Invalid 'percent' (" + percent + ") argument.");
+                "Invalid 'percent' (" + percent + ") argument.");
         }
 
         if (this.interiorGap != percent) {
@@ -895,10 +918,12 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             if (ds != null) {
                 result = ds.getNextPaint();
                 this.sectionPaintMap.put(key, result);
-            } else {
+            }
+            else {
                 result = this.baseSectionPaint;
             }
-        } else {
+        }
+        else {
             result = this.baseSectionPaint;
         }
         return result;
@@ -1012,9 +1037,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @see #getBaseSectionPaint()
      */
     public void setBaseSectionPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.baseSectionPaint = paint;
         fireChangeEvent();
     }
@@ -1116,7 +1139,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @since 1.0.3
      */
     protected Paint lookupSectionOutlinePaint(Comparable key,
-                                              boolean autoPopulate) {
+            boolean autoPopulate) {
 
         // check if there is a paint defined for the specified key
         Paint result = this.sectionOutlinePaintMap.getPaint(key);
@@ -1130,10 +1153,12 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             if (ds != null) {
                 result = ds.getNextOutlinePaint();
                 this.sectionOutlinePaintMap.put(key, result);
-            } else {
+            }
+            else {
                 result = this.baseSectionOutlinePaint;
             }
-        } else {
+        }
+        else {
             result = this.baseSectionOutlinePaint;
         }
         return result;
@@ -1219,9 +1244,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @see #getBaseSectionOutlinePaint()
      */
     public void setBaseSectionOutlinePaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.baseSectionOutlinePaint = paint;
         fireChangeEvent();
     }
@@ -1297,7 +1320,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @since 1.0.3
      */
     protected Stroke lookupSectionOutlineStroke(Comparable key,
-                                                boolean autoPopulate) {
+            boolean autoPopulate) {
 
         // check if there is a stroke defined for the specified key
         Stroke result = this.sectionOutlineStrokeMap.getStroke(key);
@@ -1311,10 +1334,12 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             if (ds != null) {
                 result = ds.getNextOutlineStroke();
                 this.sectionOutlineStrokeMap.put(key, result);
-            } else {
+            }
+            else {
                 result = this.baseSectionOutlineStroke;
             }
-        } else {
+        }
+        else {
             result = this.baseSectionOutlineStroke;
         }
         return result;
@@ -1400,9 +1425,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @see #getBaseSectionOutlineStroke()
      */
     public void setBaseSectionOutlineStroke(Stroke stroke) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         this.baseSectionOutlineStroke = stroke;
         fireChangeEvent();
     }
@@ -1545,11 +1568,9 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @see #getExplodePercent(Comparable)
      */
     public void setExplodePercent(Comparable key, double percent) {
-        if (key == null) {
-            throw new IllegalArgumentException("Null 'key' argument.");
-        }
+        ParamChecks.nullNotPermitted(key, "key");
         if (this.explodePercentages == null) {
-            this.explodePercentages = new TreeMap<Comparable, Number>();
+            this.explodePercentages = new TreeMap<Comparable<?>, Number>();
         }
         this.explodePercentages.put(key, percent);
         fireChangeEvent();
@@ -1700,9 +1721,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @since 1.0.10
      */
     public void setLabelLinkStyle(PieLabelLinkStyle style) {
-        if (style == null) {
-            throw new IllegalArgumentException("Null 'style' argument.");
-        }
+        ParamChecks.nullNotPermitted(style, "style");
         this.labelLinkStyle = style;
         fireChangeEvent();
     }
@@ -1781,9 +1800,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @see #getLabelLinkStroke()
      */
     public void setLabelLinkStroke(Stroke stroke) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         this.labelLinkStroke = stroke;
         fireChangeEvent();
     }
@@ -1850,9 +1867,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @see #getLabelPaint()
      */
     public void setLabelPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.labelPaint = paint;
         fireChangeEvent();
     }
@@ -2034,9 +2049,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @see #getSimpleLabelOffset()
      */
     public void setSimpleLabelOffset(RectangleInsets offset) {
-        if (offset == null) {
-            throw new IllegalArgumentException("Null 'offset' argument.");
-        }
+        ParamChecks.nullNotPermitted(offset, "offset");
         this.simpleLabelOffset = offset;
         fireChangeEvent();
     }
@@ -2062,9 +2075,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @since 1.0.6
      */
     public void setLabelDistributor(AbstractPieLabelDistributor distributor) {
-        if (distributor == null) {
-            throw new IllegalArgumentException("Null 'distributor' argument.");
-        }
+        ParamChecks.nullNotPermitted(distributor, "distributor");
         this.labelDistributor = distributor;
         fireChangeEvent();
     }
@@ -2201,9 +2212,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @see #getLegendLabelGenerator()
      */
     public void setLegendLabelGenerator(PieSectionLabelGenerator generator) {
-        if (generator == null) {
-            throw new IllegalArgumentException("Null 'generator' argument.");
-        }
+        ParamChecks.nullNotPermitted(generator, "generator");
         this.legendLabelGenerator = generator;
         fireChangeEvent();
     }
@@ -2316,7 +2325,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      *         chart drawing).
      */
     public PiePlotState initialise(Graphics2D g2, Rectangle2D plotArea,
-                                   PiePlot plot, Integer index, PlotRenderingInfo info) {
+            PiePlot plot, Integer index, PlotRenderingInfo info) {
 
         PiePlotState state = new PiePlotState(info);
         state.setPassesRequired(2);
@@ -2342,7 +2351,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      */
     @Override
     public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
-                     PlotState parentState, PlotRenderingInfo info) {
+            PlotState parentState, PlotRenderingInfo info) {
 
         // adjust for insets...
         RectangleInsets insets = getInsets();
@@ -2365,26 +2374,30 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
 
         if (!DatasetUtilities.isEmptyOrNull(this.dataset)) {
             Graphics2D savedG2 = g2;
+            boolean suppressShadow = Boolean.TRUE.equals(g2.getRenderingHint(
+                    JFreeChart.KEY_SUPPRESS_SHADOW_GENERATION));
             BufferedImage dataImage = null;
-            if (this.shadowGenerator != null) {
+            if (this.shadowGenerator != null && !suppressShadow) {
                 dataImage = new BufferedImage((int) area.getWidth(),
-                        (int) area.getHeight(), BufferedImage.TYPE_INT_ARGB);
+                    (int) area.getHeight(), BufferedImage.TYPE_INT_ARGB);
                 g2 = dataImage.createGraphics();
                 g2.translate(-area.getX(), -area.getY());
                 g2.setRenderingHints(savedG2.getRenderingHints());
             }
             drawPie(g2, area, info);
-            if (this.shadowGenerator != null) {
-                BufferedImage shadowImage = this.shadowGenerator.createDropShadow(dataImage);
+            if (this.shadowGenerator != null && !suppressShadow) {
+                BufferedImage shadowImage 
+                        = this.shadowGenerator.createDropShadow(dataImage);
                 g2 = savedG2;
                 g2.drawImage(shadowImage, (int) area.getX()
                         + this.shadowGenerator.calculateOffsetX(),
                         (int) area.getY()
-                                + this.shadowGenerator.calculateOffsetY(), null);
+                        + this.shadowGenerator.calculateOffsetY(), null);
                 g2.drawImage(dataImage, (int) area.getX(), (int) area.getY(),
                         null);
             }
-        } else {
+        }
+        else {
             drawNoDataMessage(g2, area);
         }
 
@@ -2518,11 +2531,13 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             if (this.simpleLabels) {
                 drawSimpleLabels(g2, keys, totalValue, plotArea, linkArea,
                         state);
-            } else {
+            }
+            else {
                 drawLabels(g2, keys, totalValue, plotArea, linkArea, state);
             }
 
-        } else {
+        }
+        else {
             drawNoDataMessage(g2, plotArea);
         }
     }
@@ -2550,10 +2565,12 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         if (this.direction == Rotation.CLOCKWISE) {
             angle1 = state.getLatestAngle();
             angle2 = angle1 - value / state.getTotal() * 360.0;
-        } else if (this.direction == Rotation.ANTICLOCKWISE) {
+        }
+        else if (this.direction == Rotation.ANTICLOCKWISE) {
             angle1 = state.getLatestAngle();
             angle2 = angle1 + value / state.getTotal() * 360.0;
-        } else {
+        }
+        else {
             throw new IllegalStateException("Rotation type not recognised.");
         }
 
@@ -2562,7 +2579,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             double ep = 0.0;
             double mep = getMaximumExplodePercent();
             if (mep > 0.0) {
-                ep = getExplodePercent(section) / mep;
+                ep = getExplodePercent(this.getSectionKey(section)) / mep;
             }
             Rectangle2D arcBounds = getArcBounds(state.getPieArea(),
                     state.getExplodedPieArea(), angle1, angle, ep);
@@ -2571,13 +2588,14 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
 
             if (currentPass == 0) {
                 if (this.shadowPaint != null && this.shadowGenerator == null) {
-                    Shape shadowArc = ShapeUtilities.createTranslatedShape(
+                    Shape shadowArc = ShapeUtils.createTranslatedShape(
                             arc, (float) this.shadowXOffset,
                             (float) this.shadowYOffset);
                     g2.setPaint(this.shadowPaint);
                     g2.fill(shadowArc);
                 }
-            } else if (currentPass == 1) {
+            }
+            else if (currentPass == 1) {
                 Comparable key = getSectionKey(section);
                 Paint paint = lookupSectionPaint(key, state);
                 g2.setPaint(paint);
@@ -2630,8 +2648,8 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @since 1.0.7
      */
     protected void drawSimpleLabels(Graphics2D g2, List<Comparable> keys,
-                                    double totalValue, Rectangle2D plotArea, Rectangle2D pieArea,
-                                    PiePlotState state) {
+            double totalValue, Rectangle2D plotArea, Rectangle2D pieArea,
+            PiePlotState state) {
 
         Composite originalComposite = g2.getComposite();
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
@@ -2646,7 +2664,8 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             Number n = getDataset().getValue(key);
             if (n == null) {
                 include = !getIgnoreNullValues();
-            } else {
+            }
+            else {
                 v = n.doubleValue();
                 include = getIgnoreZeroValues() ? v > 0.0 : v >= 0.0;
             }
@@ -2677,11 +2696,11 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
                 Rectangle2D bounds = TextUtilities.getTextBounds(label, g2, fm);
                 Rectangle2D out = this.labelPadding.createOutsetRectangle(
                         bounds);
-                Shape bg = ShapeUtilities.createTranslatedShape(out,
+                Shape bg = ShapeUtils.createTranslatedShape(out,
                         x - bounds.getCenterX(), y - bounds.getCenterY());
                 if (this.labelShadowPaint != null
                         && this.shadowGenerator == null) {
-                    Shape shadow = ShapeUtilities.createTranslatedShape(bg,
+                    Shape shadow = ShapeUtils.createTranslatedShape(bg,
                             this.shadowXOffset, this.shadowYOffset);
                     g2.setPaint(this.labelShadowPaint);
                     g2.fill(shadow);
@@ -2720,8 +2739,8 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @param state  the state.
      */
     protected void drawLabels(Graphics2D g2, List<Comparable> keys,
-                              double totalValue, Rectangle2D plotArea, Rectangle2D linkArea,
-                              PiePlotState state) {
+            double totalValue, Rectangle2D plotArea, Rectangle2D linkArea,
+            PiePlotState state) {
 
         Composite originalComposite = g2.getComposite();
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
@@ -2738,7 +2757,8 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             Number n = this.dataset.getValue(key);
             if (n == null) {
                 include = !this.ignoreNullValues;
-            } else {
+            }
+            else {
                 v = n.doubleValue();
                 include = this.ignoreZeroValues ? v > 0.0 : v >= 0.0;
             }
@@ -2751,7 +2771,8 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
                         * ((runningTotal - v / 2.0) * 360) / totalValue);
                 if (Math.cos(Math.toRadians(mid)) < 0.0) {
                     leftKeys.addValue(key, new Double(mid));
-                } else {
+                }
+                else {
                     rightKeys.addValue(key, new Double(mid));
                 }
             }
@@ -2810,14 +2831,15 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
                 labelBox.setOutlineStroke(this.labelOutlineStroke);
                 if (this.shadowGenerator == null) {
                     labelBox.setShadowPaint(this.labelShadowPaint);
-                } else {
+                }
+                else {
                     labelBox.setShadowPaint(null);
                 }
                 labelBox.setInteriorGap(this.labelPadding);
                 double theta = Math.toRadians(
                         leftKeys.getValue(i).doubleValue());
                 double baseY = state.getPieCenterY() - Math.sin(theta)
-                        * verticalLinkRadius;
+                               * verticalLinkRadius;
                 double hh = labelBox.getHeight(g2);
 
                 this.labelDistributor.addPieLabelRecord(new PieLabelRecord(
@@ -2870,23 +2892,24 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
                 labelBox.setOutlineStroke(this.labelOutlineStroke);
                 if (this.shadowGenerator == null) {
                     labelBox.setShadowPaint(this.labelShadowPaint);
-                } else {
+                }
+                else {
                     labelBox.setShadowPaint(null);
                 }
                 labelBox.setInteriorGap(this.labelPadding);
                 double theta = Math.toRadians(keys.getValue(i).doubleValue());
                 double baseY = state.getPieCenterY()
-                        - Math.sin(theta) * verticalLinkRadius;
+                              - Math.sin(theta) * verticalLinkRadius;
                 double hh = labelBox.getHeight(g2);
                 this.labelDistributor.addPieLabelRecord(new PieLabelRecord(
                         keys.getKey(i), theta, baseY, labelBox, hh,
                         lGap / 2.0 + lGap / 2.0 * Math.cos(theta),
                         1.0 - getLabelLinkDepth()
-                                + getExplodePercent(keys.getKey(i))));
+                        + getExplodePercent(keys.getKey(i))));
             }
         }
         double hh = plotArea.getHeight();
-        double gap = hh * getInteriorGap();
+        double gap = 0.00; //hh * getInteriorGap();
         this.labelDistributor.distributeLabels(plotArea.getMinY() + gap,
                 hh - 2 * gap);
         for (int i = 0; i < this.labelDistributor.getItemCount(); i++) {
@@ -2896,65 +2919,65 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
 
     }
 
+    private boolean includeForLegend(Comparable key) {
+        boolean result;
+        Number n = this.dataset.getValue(key);
+        if (n == null) {
+            result = !getIgnoreNullValues();
+        } else {
+            double v = n.doubleValue();
+            if (v == 0.0) {
+                result = !getIgnoreZeroValues();
+            } else {
+                result = v > 0.0;
+            }
+        }
+        return result;
+    }
+    
     /**
      * Returns a collection of legend items for the pie chart.
      *
      * @return The legend items (never <code>null</code>).
      */
     @Override
-    public LegendItemCollection getLegendItems() {
-
-        LegendItemCollection result = new LegendItemCollection();
+    public List<LegendItem> getLegendItems() {
+        List<LegendItem> result = new ArrayList<LegendItem>();
         if (this.dataset == null) {
             return result;
         }
         List<Comparable> keys = this.dataset.getKeys();
-        int section = 0;
         Shape shape = getLegendItemShape();
         for (Comparable key : keys) {
-            Number n = this.dataset.getValue(key);
-            boolean include;
-            if (n == null) {
-                include = !this.ignoreNullValues;
-            } else {
-                double v = n.doubleValue();
-                if (v == 0.0) {
-                    include = !this.ignoreZeroValues;
-                } else {
-                    include = v > 0.0;
-                }
+            if (!includeForLegend(key)) {
+                continue;
             }
-            if (include) {
-                String label = this.legendLabelGenerator.generateSectionLabel(
-                        this.dataset, key);
-                if (label != null) {
-                    String description = label;
-                    String toolTipText = null;
-                    if (this.legendLabelToolTipGenerator != null) {
-                        toolTipText = this.legendLabelToolTipGenerator
-                                .generateSectionLabel(this.dataset, key);
-                    }
-                    String urlText = null;
-                    if (this.legendLabelURLGenerator != null) {
-                        urlText = this.legendLabelURLGenerator.generateURL(
-                                this.dataset, key, this.pieIndex);
-                    }
-                    Paint paint = lookupSectionPaint(key);
-                    Paint outlinePaint = lookupSectionOutlinePaint(key);
-                    Stroke outlineStroke = lookupSectionOutlineStroke(key);
-                    LegendItem item = new LegendItem(label, description,
-                            toolTipText, urlText, true, shape, true, paint,
-                            true, outlinePaint, outlineStroke,
-                            false,          // line not visible
-                            new Line2D.Float(), new BasicStroke(), Color.BLACK);
-                    item.setDataset(getDataset());
-                    item.setSeriesIndex(this.dataset.getIndex(key));
-                    item.setSeriesKey(key);
-                    result.add(item);
+            String label = this.legendLabelGenerator.generateSectionLabel(
+                    this.dataset, key);
+            if (label != null) {
+                String description = label;
+                String toolTipText = null;
+                if (this.legendLabelToolTipGenerator != null) {
+                    toolTipText = this.legendLabelToolTipGenerator
+                            .generateSectionLabel(this.dataset, key);
                 }
-                section++;
-            } else {
-                section++;
+                String urlText = null;
+                if (this.legendLabelURLGenerator != null) {
+                    urlText = this.legendLabelURLGenerator.generateURL(
+                            this.dataset, key, this.pieIndex);
+                }
+                Paint paint = lookupSectionPaint(key);
+                Paint outlinePaint = lookupSectionOutlinePaint(key);
+                Stroke outlineStroke = lookupSectionOutlineStroke(key);
+                LegendItem item = new LegendItem(label, description,
+                        toolTipText, urlText, true, shape, true, paint,
+                        true, outlinePaint, outlineStroke,
+                        false,          // line not visible
+                        new Line2D.Float(), new BasicStroke(), Color.BLACK);
+                item.setDataset(getDataset());
+                item.setSeriesIndex(this.dataset.getIndex(key));
+                item.setSeriesKey(key);
+                result.add(item);
             }
         }
         return result;
@@ -2985,9 +3008,8 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @return A rectangle that can be used to create a pie section.
      */
     protected Rectangle2D getArcBounds(Rectangle2D unexploded,
-                                       Rectangle2D exploded,
-                                       double angle, double extent,
-                                       double explodePercent) {
+            Rectangle2D exploded, double angle, double extent, 
+            double explodePercent) {
 
         if (explodePercent == 0.0) {
             return unexploded;
@@ -3037,13 +3059,15 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
                 g2.draw(new Line2D.Double(linkX, linkY, elbowX, elbowY));
                 g2.draw(new Line2D.Double(anchorX, anchorY, elbowX, elbowY));
                 g2.draw(new Line2D.Double(anchorX, anchorY, targetX, targetY));
-            } else if (style.equals(PieLabelLinkStyle.QUAD_CURVE)) {
+            }
+            else if (style.equals(PieLabelLinkStyle.QUAD_CURVE)) {
                 QuadCurve2D q = new QuadCurve2D.Float();
                 q.setCurve(targetX, targetY, anchorX, anchorY, elbowX, elbowY);
                 g2.draw(q);
                 g2.draw(new Line2D.Double(elbowX, elbowY, linkX, linkY));
-            } else if (style.equals(PieLabelLinkStyle.CUBIC_CURVE)) {
-                CubicCurve2D c = new CubicCurve2D.Float();
+            }
+            else if (style.equals(PieLabelLinkStyle.CUBIC_CURVE)) {
+                CubicCurve2D c = new CubicCurve2D .Float();
                 c.setCurve(targetX, targetY, anchorX, anchorY, elbowX, elbowY,
                         linkX, linkY);
                 g2.draw(c);
@@ -3086,13 +3110,15 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
                 g2.draw(new Line2D.Double(linkX, linkY, elbowX, elbowY));
                 g2.draw(new Line2D.Double(anchorX, anchorY, elbowX, elbowY));
                 g2.draw(new Line2D.Double(anchorX, anchorY, targetX, targetY));
-            } else if (style.equals(PieLabelLinkStyle.QUAD_CURVE)) {
+            }
+            else if (style.equals(PieLabelLinkStyle.QUAD_CURVE)) {
                 QuadCurve2D q = new QuadCurve2D.Float();
                 q.setCurve(targetX, targetY, anchorX, anchorY, elbowX, elbowY);
                 g2.draw(q);
                 g2.draw(new Line2D.Double(elbowX, elbowY, linkX, linkY));
-            } else if (style.equals(PieLabelLinkStyle.CUBIC_CURVE)) {
-                CubicCurve2D c = new CubicCurve2D.Float();
+            }
+            else if (style.equals(PieLabelLinkStyle.CUBIC_CURVE)) {
+                CubicCurve2D c = new CubicCurve2D .Float();
                 c.setCurve(targetX, targetY, anchorX, anchorY, elbowX, elbowY,
                         linkX, linkY);
                 g2.draw(c);
@@ -3118,7 +3144,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      */
     protected Point2D getArcCenter(PiePlotState state, Comparable key) {
         Point2D center = new Point2D.Double(state.getPieCenterX(), state
-                .getPieCenterY());
+            .getPieCenterY());
 
         double ep = getExplodePercent(key);
         double mep = getMaximumExplodePercent();
@@ -3153,7 +3179,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             double deltaY = (point1.getY() - point2.getY()) * ep;
 
             center = new Point2D.Double(state.getPieCenterX() - deltaX,
-                    state.getPieCenterY() - deltaY);
+                     state.getPieCenterY() - deltaY);
 
         }
         return center;
@@ -3174,31 +3200,17 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      */
     protected Paint lookupSectionPaint(Comparable key, PiePlotState state) {
         Paint paint = lookupSectionPaint(key, getAutoPopulateSectionPaint());
-        // If using JDK 1.6 or later the passed Paint Object can be a RadialGradientPaint
-        // We need to adjust the radius and center for this object to match the Pie.
-        try {
-            Class c = Class.forName("java.awt.RadialGradientPaint");
-            Constructor cc = c.getConstructor(new Class[]{
-                    Point2D.class, float.class, float[].class, Color[].class});
-
-            if (c.isInstance(paint)) {
-                // User did pass a RadialGradientPaint object
-                Method m = c.getMethod("getFractions", new Class[]{});
-                Object fractions = m.invoke(paint, new Object[]{});
-                m = c.getMethod("getColors", new Class[]{});
-                Object clrs = m.invoke(paint, new Object[]{});
-                Point2D center = getArcCenter(state, key);
-                float radius = new Float(state.getPieHRadius());
-
-                Paint radialPaint = (Paint) cc.newInstance(new Object[]{
-                        center, radius,
-                        fractions, clrs});
-                // return the new RadialGradientPaint
-                return radialPaint;
-            }
-        } catch (Exception e) {
-        }
-        // Return whatever it was
+        // for a RadialGradientPaint we adjust the center and radius to match
+        // the current pie segment...
+        if (paint instanceof RadialGradientPaint) {
+            RadialGradientPaint rgp = (RadialGradientPaint) paint;
+                 Point2D center = getArcCenter(state, key);
+            float radius = (float) Math.max(state.getPieHRadius(), 
+                    state.getPieWRadius());
+            float[] fractions = rgp.getFractions();
+            Color[] colors = rgp.getColors();
+            paint = new RadialGradientPaint(center, radius, fractions, colors);
+             }
         return paint;
     }
 
@@ -3243,34 +3255,34 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         if (this.ignoreNullValues != that.ignoreNullValues) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.sectionPaintMap,
+        if (!ObjectUtils.equal(this.sectionPaintMap,
                 that.sectionPaintMap)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.baseSectionPaint,
+        if (!PaintUtils.equal(this.baseSectionPaint,
                 that.baseSectionPaint)) {
             return false;
         }
         if (this.sectionOutlinesVisible != that.sectionOutlinesVisible) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.sectionOutlinePaintMap,
+        if (!ObjectUtils.equal(this.sectionOutlinePaintMap,
                 that.sectionOutlinePaintMap)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.baseSectionOutlinePaint,
+        if (!PaintUtils.equal(this.baseSectionOutlinePaint,
                 that.baseSectionOutlinePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.sectionOutlineStrokeMap,
+        if (!ObjectUtils.equal(this.sectionOutlineStrokeMap,
                 that.sectionOutlineStrokeMap)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.baseSectionOutlineStroke,
+        if (!ObjectUtils.equal(this.baseSectionOutlineStroke,
                 that.baseSectionOutlineStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.shadowPaint, that.shadowPaint)) {
+        if (!PaintUtils.equal(this.shadowPaint, that.shadowPaint)) {
             return false;
         }
         if (!(this.shadowXOffset == that.shadowXOffset)) {
@@ -3279,33 +3291,33 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         if (!(this.shadowYOffset == that.shadowYOffset)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.explodePercentages,
+        if (!ObjectUtils.equal(this.explodePercentages,
                 that.explodePercentages)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.labelGenerator,
+        if (!ObjectUtils.equal(this.labelGenerator,
                 that.labelGenerator)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.labelFont, that.labelFont)) {
+        if (!ObjectUtils.equal(this.labelFont, that.labelFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.labelPaint, that.labelPaint)) {
+        if (!PaintUtils.equal(this.labelPaint, that.labelPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.labelBackgroundPaint,
+        if (!PaintUtils.equal(this.labelBackgroundPaint,
                 that.labelBackgroundPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.labelOutlinePaint,
+        if (!PaintUtils.equal(this.labelOutlinePaint,
                 that.labelOutlinePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.labelOutlineStroke,
+        if (!ObjectUtils.equal(this.labelOutlineStroke,
                 that.labelOutlineStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.labelShadowPaint,
+        if (!PaintUtils.equal(this.labelShadowPaint,
                 that.labelShadowPaint)) {
             return false;
         }
@@ -3333,35 +3345,35 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
         if (!this.labelLinkStyle.equals(that.labelLinkStyle)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.labelLinkPaint, that.labelLinkPaint)) {
+        if (!PaintUtils.equal(this.labelLinkPaint, that.labelLinkPaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.labelLinkStroke,
+        if (!ObjectUtils.equal(this.labelLinkStroke,
                 that.labelLinkStroke)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.toolTipGenerator,
+        if (!ObjectUtils.equal(this.toolTipGenerator,
                 that.toolTipGenerator)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.urlGenerator, that.urlGenerator)) {
+        if (!ObjectUtils.equal(this.urlGenerator, that.urlGenerator)) {
             return false;
         }
         if (!(this.minimumArcAngleToDraw == that.minimumArcAngleToDraw)) {
             return false;
         }
-        if (!ShapeUtilities.equal(this.legendItemShape, that.legendItemShape)) {
+        if (!ShapeUtils.equal(this.legendItemShape, that.legendItemShape)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.legendLabelGenerator,
+        if (!ObjectUtils.equal(this.legendLabelGenerator,
                 that.legendLabelGenerator)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.legendLabelToolTipGenerator,
+        if (!ObjectUtils.equal(this.legendLabelToolTipGenerator,
                 that.legendLabelToolTipGenerator)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.legendLabelURLGenerator,
+        if (!ObjectUtils.equal(this.legendLabelURLGenerator,
                 that.legendLabelURLGenerator)) {
             return false;
         }
@@ -3376,7 +3388,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
                 != that.autoPopulateSectionOutlineStroke) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.shadowGenerator,
+        if (!ObjectUtils.equal(this.shadowGenerator,
                 that.shadowGenerator)) {
             return false;
         }
@@ -3395,22 +3407,35 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
     @Override
     public Object clone() throws CloneNotSupportedException {
         PiePlot clone = (PiePlot) super.clone();
+        clone.sectionPaintMap = (PaintMap) this.sectionPaintMap.clone();
+        clone.sectionOutlinePaintMap 
+                = (PaintMap) this.sectionOutlinePaintMap.clone();
+        clone.sectionOutlineStrokeMap 
+                = (StrokeMap) this.sectionOutlineStrokeMap.clone();
+        clone.explodePercentages 
+                = new TreeMap<Comparable<?>, Number>(this.explodePercentages);
+        if (this.labelGenerator != null) {
+            clone.labelGenerator = ObjectUtils.clone(this.labelGenerator);
+        }
         if (clone.dataset != null) {
             clone.dataset.addChangeListener(clone);
         }
         if (this.urlGenerator instanceof PublicCloneable) {
-            clone.urlGenerator = ObjectUtilities.clone(
+            clone.urlGenerator = ObjectUtils.clone(
                     this.urlGenerator);
         }
-        clone.legendItemShape = ShapeUtilities.clone(this.legendItemShape);
+        clone.legendItemShape = ShapeUtils.clone(this.legendItemShape);
         if (this.legendLabelGenerator != null) {
-            clone.legendLabelGenerator = ObjectUtilities.clone(this.legendLabelGenerator);
+            clone.legendLabelGenerator = ObjectUtils.clone(
+                    this.legendLabelGenerator);
         }
         if (this.legendLabelToolTipGenerator != null) {
-            clone.legendLabelToolTipGenerator = ObjectUtilities.clone(this.legendLabelToolTipGenerator);
+            clone.legendLabelToolTipGenerator = ObjectUtils.clone(
+                    this.legendLabelToolTipGenerator);
         }
         if (this.legendLabelURLGenerator instanceof PublicCloneable) {
-            clone.legendLabelURLGenerator = ObjectUtilities.clone(this.legendLabelURLGenerator);
+            clone.legendLabelURLGenerator = ObjectUtils.clone(
+                    this.legendLabelURLGenerator);
         }
         return clone;
     }
@@ -3424,18 +3449,18 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.baseSectionPaint, stream);
-        SerialUtilities.writePaint(this.baseSectionOutlinePaint, stream);
-        SerialUtilities.writeStroke(this.baseSectionOutlineStroke, stream);
-        SerialUtilities.writePaint(this.shadowPaint, stream);
-        SerialUtilities.writePaint(this.labelPaint, stream);
-        SerialUtilities.writePaint(this.labelBackgroundPaint, stream);
-        SerialUtilities.writePaint(this.labelOutlinePaint, stream);
-        SerialUtilities.writeStroke(this.labelOutlineStroke, stream);
-        SerialUtilities.writePaint(this.labelShadowPaint, stream);
-        SerialUtilities.writePaint(this.labelLinkPaint, stream);
-        SerialUtilities.writeStroke(this.labelLinkStroke, stream);
-        SerialUtilities.writeShape(this.legendItemShape, stream);
+        SerialUtils.writePaint(this.baseSectionPaint, stream);
+        SerialUtils.writePaint(this.baseSectionOutlinePaint, stream);
+        SerialUtils.writeStroke(this.baseSectionOutlineStroke, stream);
+        SerialUtils.writePaint(this.shadowPaint, stream);
+        SerialUtils.writePaint(this.labelPaint, stream);
+        SerialUtils.writePaint(this.labelBackgroundPaint, stream);
+        SerialUtils.writePaint(this.labelOutlinePaint, stream);
+        SerialUtils.writeStroke(this.labelOutlineStroke, stream);
+        SerialUtils.writePaint(this.labelShadowPaint, stream);
+        SerialUtils.writePaint(this.labelLinkPaint, stream);
+        SerialUtils.writeStroke(this.labelLinkStroke, stream);
+        SerialUtils.writeShape(this.legendItemShape, stream);
     }
 
     /**
@@ -3447,20 +3472,20 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-            throws IOException, ClassNotFoundException {
+        throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.baseSectionPaint = SerialUtilities.readPaint(stream);
-        this.baseSectionOutlinePaint = SerialUtilities.readPaint(stream);
-        this.baseSectionOutlineStroke = SerialUtilities.readStroke(stream);
-        this.shadowPaint = SerialUtilities.readPaint(stream);
-        this.labelPaint = SerialUtilities.readPaint(stream);
-        this.labelBackgroundPaint = SerialUtilities.readPaint(stream);
-        this.labelOutlinePaint = SerialUtilities.readPaint(stream);
-        this.labelOutlineStroke = SerialUtilities.readStroke(stream);
-        this.labelShadowPaint = SerialUtilities.readPaint(stream);
-        this.labelLinkPaint = SerialUtilities.readPaint(stream);
-        this.labelLinkStroke = SerialUtilities.readStroke(stream);
-        this.legendItemShape = SerialUtilities.readShape(stream);
+        this.baseSectionPaint = SerialUtils.readPaint(stream);
+        this.baseSectionOutlinePaint = SerialUtils.readPaint(stream);
+        this.baseSectionOutlineStroke = SerialUtils.readStroke(stream);
+        this.shadowPaint = SerialUtils.readPaint(stream);
+        this.labelPaint = SerialUtils.readPaint(stream);
+        this.labelBackgroundPaint = SerialUtils.readPaint(stream);
+        this.labelOutlinePaint = SerialUtils.readPaint(stream);
+        this.labelOutlineStroke = SerialUtils.readStroke(stream);
+        this.labelShadowPaint = SerialUtils.readPaint(stream);
+        this.labelLinkPaint = SerialUtils.readPaint(stream);
+        this.labelLinkStroke = SerialUtils.readStroke(stream);
+        this.legendItemShape = SerialUtils.readShape(stream);
     }
 
 }

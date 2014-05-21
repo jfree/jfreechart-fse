@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------
  * TextLine.java
  * -------------
- * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -58,12 +58,11 @@ import java.util.List;
 
 import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * A sequence of {@link TextFragment} objects that together form a line of
  * text.  A sequence of text lines is managed by the {@link TextBlock} class.
- *
- * @author David Gilbert
  */
 public class TextLine implements Serializable {
 
@@ -85,7 +84,7 @@ public class TextLine implements Serializable {
      *
      * @param text  the text (<code>null</code> not permitted).
      */
-    public TextLine(final String text) {
+    public TextLine(String text) {
         this(text, TextFragment.DEFAULT_FONT);
     }
 
@@ -95,9 +94,9 @@ public class TextLine implements Serializable {
      * @param text  the text (<code>null</code> not permitted).
      * @param font  the text font (<code>null</code> not permitted).
      */
-    public TextLine(final String text, final Font font) {
+    public TextLine(String text, Font font) {
         this.fragments = new java.util.ArrayList<TextFragment>();
-        final TextFragment fragment = new TextFragment(text, font);
+        TextFragment fragment = new TextFragment(text, font);
         this.fragments.add(fragment);
     }
 
@@ -108,18 +107,12 @@ public class TextLine implements Serializable {
      * @param font  the text font (<code>null</code> not permitted).
      * @param paint  the text color (<code>null</code> not permitted).
      */
-    public TextLine(final String text, final Font font, final Paint paint) {
-        if (text == null) {
-            throw new IllegalArgumentException("Null 'text' argument.");
-        }
-        if (font == null) {
-            throw new IllegalArgumentException("Null 'font' argument.");
-        }
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+    public TextLine(String text, Font font, Paint paint) {
+        ParamChecks.nullNotPermitted(text, "text");
+        ParamChecks.nullNotPermitted(font, "font");
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.fragments = new java.util.ArrayList<TextFragment>();
-        final TextFragment fragment = new TextFragment(text, font, paint);
+        TextFragment fragment = new TextFragment(text, font, paint);
         this.fragments.add(fragment);
     }
 
@@ -128,7 +121,7 @@ public class TextLine implements Serializable {
      *
      * @param fragment  the text fragment (<code>null</code> not permitted).
      */
-    public void addFragment(final TextFragment fragment) {
+    public void addFragment(TextFragment fragment) {
         this.fragments.add(fragment);
     }
 
@@ -137,7 +130,7 @@ public class TextLine implements Serializable {
      *
      * @param fragment  the fragment to remove.
      */
-    public void removeFragment(final TextFragment fragment) {
+    public void removeFragment(TextFragment fragment) {
         this.fragments.remove(fragment);
     }
 
@@ -153,20 +146,22 @@ public class TextLine implements Serializable {
      * @param rotateY  the y-coordinate for the rotation point.
      * @param angle  the rotation angle (in radians).
      */
-    public void draw(final Graphics2D g2,
-                     final float anchorX, final float anchorY,
-                     final TextAnchor anchor,
-                     final float rotateX, final float rotateY,
-                     final double angle) {
-
-        float x = anchorX;
-        final float yOffset = calculateBaselineOffset(g2, anchor);
+    public void draw(Graphics2D g2, float anchorX, float anchorY, 
+            TextAnchor anchor, float rotateX, float rotateY, double angle) {
+        Size2D dim = calculateDimensions(g2);
+        float xAdj = 0.0f;
+        if (anchor.isHorizontalCenter()) {
+            xAdj = (float) -dim.getWidth() / 2.0f;
+        }
+        else if (anchor.isHorizontalRight()) {
+            xAdj = (float) -dim.getWidth();
+        }
+        float x = anchorX + xAdj;
+        float yOffset = calculateBaselineOffset(g2, anchor);
         for (TextFragment fragment : this.fragments) {
-            final Size2D d = fragment.calculateDimensions(g2);
-            fragment.draw(
-                    g2, x, anchorY + yOffset, TextAnchor.BASELINE_LEFT,
-                    rotateX, rotateY, angle
-            );
+            Size2D d = fragment.calculateDimensions(g2);
+            fragment.draw(g2, x, anchorY + yOffset, TextAnchor.BASELINE_LEFT,
+                    rotateX, rotateY, angle);
             x = x + (float) d.getWidth();
         }
 
@@ -179,7 +174,7 @@ public class TextLine implements Serializable {
      *
      * @return The width and height.
      */
-    public Size2D calculateDimensions(final Graphics2D g2) {
+    public Size2D calculateDimensions(Graphics2D g2) {
         double width = 0.0;
         double height = 0.0;
         for (TextFragment fragment : this.fragments) {
@@ -226,8 +221,7 @@ public class TextLine implements Serializable {
      *
      * @return The offsets.
      */
-    private float calculateBaselineOffset(final Graphics2D g2,
-                                          final TextAnchor anchor) {
+    private float calculateBaselineOffset(Graphics2D g2, TextAnchor anchor) {
         float result = 0.0f;
         for (TextFragment fragment : this.fragments) {
             result = Math.max(result,
@@ -244,7 +238,7 @@ public class TextLine implements Serializable {
      * @return A boolean.
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
@@ -252,7 +246,7 @@ public class TextLine implements Serializable {
             return true;
         }
         if (obj instanceof TextLine) {
-            final TextLine line = (TextLine) obj;
+            TextLine line = (TextLine) obj;
             return this.fragments.equals(line.fragments);
         }
         return false;

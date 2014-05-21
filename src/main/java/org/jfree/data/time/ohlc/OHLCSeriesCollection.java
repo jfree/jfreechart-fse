@@ -44,17 +44,17 @@
 
 package org.jfree.data.time.ohlc;
 
-import org.jfree.chart.HashUtilities;
-import org.jfree.chart.util.ObjectUtilities;
+import java.io.Serializable;
+import java.util.List;
+
+import org.jfree.chart.util.HashUtils;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.time.RegularTimePeriod;
 import org.jfree.data.time.TimePeriodAnchor;
 import org.jfree.data.xy.AbstractXYDataset;
 import org.jfree.data.xy.OHLCDataset;
 import org.jfree.data.xy.XYDataset;
-
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * A collection of {@link OHLCSeries} objects.
@@ -64,7 +64,7 @@ import java.util.List;
  * @see OHLCSeries
  */
 public class OHLCSeriesCollection extends AbstractXYDataset
-        implements OHLCDataset, Serializable {
+                                implements OHLCDataset, Serializable {
 
     /** Storage for the data series. */
     private List<OHLCSeries> data;
@@ -193,9 +193,11 @@ public class OHLCSeriesCollection extends AbstractXYDataset
         long result = 0L;
         if (this.xPosition == TimePeriodAnchor.START) {
             result = period.getFirstMillisecond();
-        } else if (this.xPosition == TimePeriodAnchor.MIDDLE) {
+        }
+        else if (this.xPosition == TimePeriodAnchor.MIDDLE) {
             result = period.getMiddleMillisecond();
-        } else if (this.xPosition == TimePeriodAnchor.END) {
+        }
+        else if (this.xPosition == TimePeriodAnchor.END) {
             result = period.getLastMillisecond();
         }
         return result;
@@ -466,7 +468,7 @@ public class OHLCSeriesCollection extends AbstractXYDataset
         if (!this.xPosition.equals(that.xPosition)) {
             return false;
         }
-        return ObjectUtilities.equal(this.data, that.data);
+        return ObjectUtils.equal(this.data, that.data);
     }
 
     /**
@@ -477,9 +479,9 @@ public class OHLCSeriesCollection extends AbstractXYDataset
     @Override
     public int hashCode() {
         int result = 137;
-        result = HashUtilities.hashCode(result, this.xPosition);
+        result = HashUtils.hashCode(result, this.xPosition);
         for (OHLCSeries aData : this.data) {
-            result = HashUtilities.hashCode(result, aData);
+            result = HashUtils.hashCode(result, aData);
         }
         return result;
     }
@@ -495,7 +497,7 @@ public class OHLCSeriesCollection extends AbstractXYDataset
     public Object clone() throws CloneNotSupportedException {
         OHLCSeriesCollection clone
                 = (OHLCSeriesCollection) super.clone();
-        clone.data = ObjectUtilities.deepClone(this.data);
+        clone.data = ObjectUtils.deepClone(this.data);
         return clone;
     }
 

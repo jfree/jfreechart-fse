@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -24,10 +24,10 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
- * --------------------
- * PieDatasetTests.java
- * --------------------
- * (C) Copyright 2003-2007, by Object Refinery Limited and Contributors.
+ * ---------------------------
+ * DefaultPieDatasetTests.java
+ * ---------------------------
+ * (C) Copyright 2003-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -42,18 +42,22 @@
 
 package org.jfree.data.general;
 
+import java.io.IOException;
 import org.junit.Test;
+import org.jfree.chart.TestUtils;
+import org.jfree.data.UnknownKeyException;
 
-import java.io.*;
-
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link org.jfree.data.general.PieDataset} class.
  */
-public class DefaultPieDatasetTest
-        implements DatasetChangeListener {
+public class DefaultPieDatasetTest implements DatasetChangeListener {
 
     private DatasetChangeEvent lastEvent;
 
@@ -67,7 +71,24 @@ public class DefaultPieDatasetTest
         this.lastEvent = event;
     }
 
-
+    private static final double EPSILON = 0.00000001;
+    
+    @Test
+    public void testGetValue() {
+        DefaultPieDataset d = new DefaultPieDataset();
+        d.setValue("A", 5.0);
+        assertEquals(5.0, d.getValue("A").doubleValue(), EPSILON);
+        
+        // fetching the value for a key that does not exist
+        try {
+            d.getValue("KEY_THAT_DOES_NOT_EXIST");
+            fail("Expected an UnknownKeyException.");
+        } catch (UnknownKeyException e) {
+            // expected in this case
+        }
+        
+    }
+    
     /**
      * Some tests for the clear() method.
      */
@@ -100,14 +121,16 @@ public class DefaultPieDatasetTest
         try {
             d.getKey(-1);
             fail("IndexOutOfBoundsException should have been thrown on negative key");
-        } catch (IndexOutOfBoundsException e) {
+        }
+        catch (IndexOutOfBoundsException e) {
             assertEquals("-1", e.getMessage());
         }
 
         try {
             d.getKey(2);
             fail("IndexOutOfBoundsException should have been thrown on key out of range");
-        } catch (IndexOutOfBoundsException e) {
+        }
+        catch (IndexOutOfBoundsException e) {
             assertEquals("Index: 2, Size: 2", e.getMessage());
         }
     }
@@ -127,7 +150,8 @@ public class DefaultPieDatasetTest
         try {
             d.getIndex(null);
             fail("IllegalArgumentException should have been thrown on null key");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }
@@ -152,27 +176,13 @@ public class DefaultPieDatasetTest
      */
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
-
         DefaultPieDataset d1 = new DefaultPieDataset();
         d1.setValue("C1", new Double(234.2));
         d1.setValue("C2", null);
         d1.setValue("C3", new Double(345.9));
         d1.setValue("C4", new Double(452.7));
-
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(d1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray())
-        );
-        DefaultPieDataset d2 = (DefaultPieDataset) in.readObject();
-        in.close();
-
+        DefaultPieDataset d2 = (DefaultPieDataset) TestUtils.serialised(d1);
         assertEquals(d1, d2);
-
     }
 
 }

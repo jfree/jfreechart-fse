@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * PeriodAxis.java
  * ---------------
- * (C) Copyright 2004-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -94,7 +94,8 @@ import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.ValueAxisPlot;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.ParamChecks;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.Month;
@@ -174,7 +175,7 @@ public class PeriodAxis extends ValueAxis
     /** The paint used to draw tick marks. */
     private transient Paint minorTickMarkPaint = Color.BLACK;
 
-    /** Info for each labelling band. */
+    /** Info for each labeling band. */
     private PeriodAxisLabelInfo[] labelInfo;
 
     /**
@@ -216,12 +217,8 @@ public class PeriodAxis extends ValueAxis
     public PeriodAxis(String label, RegularTimePeriod first,
             RegularTimePeriod last, TimeZone timeZone, Locale locale) {
         super(label, null);
-        if (timeZone == null) {
-            throw new IllegalArgumentException("Null 'timeZone' argument.");
-        }
-        if (locale == null) {
-            throw new IllegalArgumentException("Null 'locale' argument.");
-        }
+        ParamChecks.nullNotPermitted(timeZone, "timeZone");
+        ParamChecks.nullNotPermitted(locale, "locale");
         this.first = first;
         this.last = last;
         this.timeZone = timeZone;
@@ -236,10 +233,12 @@ public class PeriodAxis extends ValueAxis
                 this.majorTickTimePeriodClass);
         setAutoRange(true);
         this.labelInfo = new PeriodAxisLabelInfo[2];
-        this.labelInfo[0] = new PeriodAxisLabelInfo(Month.class,
-                new SimpleDateFormat("MMM", locale));
-        this.labelInfo[1] = new PeriodAxisLabelInfo(Year.class,
-                new SimpleDateFormat("yyyy", locale));
+        SimpleDateFormat df0 = new SimpleDateFormat("MMM", locale);
+        df0.setTimeZone(timeZone);
+        this.labelInfo[0] = new PeriodAxisLabelInfo(Month.class, df0);
+        SimpleDateFormat df1 = new SimpleDateFormat("yyyy", locale);
+        df1.setTimeZone(timeZone);
+        this.labelInfo[1] = new PeriodAxisLabelInfo(Year.class, df1);
     }
 
     /**
@@ -258,12 +257,10 @@ public class PeriodAxis extends ValueAxis
      * @param first  the time period (<code>null</code> not permitted).
      */
     public void setFirst(RegularTimePeriod first) {
-        if (first == null) {
-            throw new IllegalArgumentException("Null 'first' argument.");
-        }
+        ParamChecks.nullNotPermitted(first, "first");
         this.first = first;
         this.first.peg(this.calendar);
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -282,12 +279,10 @@ public class PeriodAxis extends ValueAxis
      * @param last  the time period (<code>null</code> not permitted).
      */
     public void setLast(RegularTimePeriod last) {
-        if (last == null) {
-            throw new IllegalArgumentException("Null 'last' argument.");
-        }
+        ParamChecks.nullNotPermitted(last, "last");
         this.last = last;
         this.last.peg(this.calendar);
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -307,14 +302,12 @@ public class PeriodAxis extends ValueAxis
      * @param zone  the time zone (<code>null</code> not permitted).
      */
     public void setTimeZone(TimeZone zone) {
-        if (zone == null) {
-            throw new IllegalArgumentException("Null 'zone' argument.");
-        }
+        ParamChecks.nullNotPermitted(zone, "zone");
         this.timeZone = zone;
         this.calendar = Calendar.getInstance(zone, this.locale);
         this.first.peg(this.calendar);
         this.last.peg(this.calendar);
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -346,11 +339,9 @@ public class PeriodAxis extends ValueAxis
      * @param c  the class (<code>null</code> not permitted).
      */
     public void setAutoRangeTimePeriodClass(Class c) {
-        if (c == null) {
-            throw new IllegalArgumentException("Null 'c' argument.");
-        }
+        ParamChecks.nullNotPermitted(c, "c");
         this.autoRangeTimePeriodClass = c;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -370,11 +361,9 @@ public class PeriodAxis extends ValueAxis
      *           expected).
      */
     public void setMajorTickTimePeriodClass(Class c) {
-        if (c == null) {
-            throw new IllegalArgumentException("Null 'c' argument.");
-        }
+        ParamChecks.nullNotPermitted(c, "c");
         this.majorTickTimePeriodClass = c;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -398,7 +387,7 @@ public class PeriodAxis extends ValueAxis
     @Override
     public void setMinorTickMarksVisible(boolean visible) {
         this.minorTickMarksVisible = visible;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -418,11 +407,9 @@ public class PeriodAxis extends ValueAxis
      *           expected).
      */
     public void setMinorTickTimePeriodClass(Class c) {
-        if (c == null) {
-            throw new IllegalArgumentException("Null 'c' argument.");
-        }
+        ParamChecks.nullNotPermitted(c, "c");
         this.minorTickTimePeriodClass = c;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -443,11 +430,9 @@ public class PeriodAxis extends ValueAxis
      * @param stroke  the stroke (<code>null</code> not permitted).
      */
     public void setMinorTickMarkStroke(Stroke stroke) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         this.minorTickMarkStroke = stroke;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -468,11 +453,9 @@ public class PeriodAxis extends ValueAxis
      * @param paint  the paint (<code>null</code> not permitted).
      */
     public void setMinorTickMarkPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.minorTickMarkPaint = paint;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -494,7 +477,7 @@ public class PeriodAxis extends ValueAxis
     @Override
     public void setMinorTickMarkInsideLength(float length) {
         this.minorTickMarkInsideLength = length;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -516,7 +499,7 @@ public class PeriodAxis extends ValueAxis
     @Override
     public void setMinorTickMarkOutsideLength(float length) {
         this.minorTickMarkOutsideLength = length;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -536,7 +519,7 @@ public class PeriodAxis extends ValueAxis
      */
     public void setLabelInfo(PeriodAxisLabelInfo[] info) {
         this.labelInfo = info;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -610,8 +593,7 @@ public class PeriodAxis extends ValueAxis
 
         // get the axis label size and update the space object...
         Rectangle2D labelEnclosure = getLabelEnclosure(g2, edge);
-        double labelHeight = 0.0;
-        double labelWidth = 0.0;
+        double labelHeight, labelWidth;
         double tickLabelBandsDimension = 0.0;
 
         for (PeriodAxisLabelInfo info : this.labelInfo) {
@@ -816,8 +798,7 @@ public class PeriodAxis extends ValueAxis
      * @return The updated axis state.
      */
     protected AxisState drawTickLabels(int band, Graphics2D g2, AxisState state,
-                                       Rectangle2D dataArea,
-                                       RectangleEdge edge) {
+            Rectangle2D dataArea, RectangleEdge edge) {
 
         // work out the initial gap
         double delta1 = 0.0;
@@ -841,10 +822,10 @@ public class PeriodAxis extends ValueAxis
                 new Date(axisMin), this.timeZone, this.locale);
         RegularTimePeriod p2 = this.labelInfo[band].createInstance(
                 new Date(axisMax), this.timeZone, this.locale);
-        String label1 = this.labelInfo[band].getDateFormat().format(
-                new Date(p1.getMiddleMillisecond()));
-        String label2 = this.labelInfo[band].getDateFormat().format(
-                new Date(p2.getMiddleMillisecond()));
+        DateFormat df = this.labelInfo[band].getDateFormat();
+        df.setTimeZone(this.timeZone);
+        String label1 = df.format(new Date(p1.getMiddleMillisecond()));
+        String label2 = df.format(new Date(p2.getMiddleMillisecond()));
         Rectangle2D b1 = TextUtilities.getTextBounds(label1, g2,
                 g2.getFontMetrics());
         Rectangle2D b2 = TextUtilities.getTextBounds(label2, g2,
@@ -876,7 +857,6 @@ public class PeriodAxis extends ValueAxis
         while (p.getFirstMillisecond() <= axisMax) {
             float x = (float) valueToJava2D(p.getMiddleMillisecond(), dataArea,
                     edge);
-            DateFormat df = this.labelInfo[band].getDateFormat();
             String label = df.format(new Date(p.getMiddleMillisecond()));
             long first = p.getFirstMillisecond();
             long last = p.getLastMillisecond();
@@ -1028,7 +1008,7 @@ public class PeriodAxis extends ValueAxis
     public double java2DToValue(double java2DValue, Rectangle2D area,
             RectangleEdge edge) {
 
-        double result = Double.NaN;
+        double result;
         double min = 0.0;
         double max = 0.0;
         double axisMin = this.first.getFirstMillisecond();
@@ -1137,19 +1117,9 @@ public class PeriodAxis extends ValueAxis
         return super.equals(obj);
     }
 
-    /**
-     * Returns a hash code for this object.
-     *
-     * @return A hash code.
-     */
     @Override
     public int hashCode() {
-        if (getLabel() != null) {
-            return getLabel().hashCode();
-        }
-        else {
-            return 0;
-        }
+        return super.hashCode();
     }
 
     /**
@@ -1164,11 +1134,7 @@ public class PeriodAxis extends ValueAxis
     public Object clone() throws CloneNotSupportedException {
         PeriodAxis clone = (PeriodAxis) super.clone();
         clone.timeZone = (TimeZone) this.timeZone.clone();
-        clone.labelInfo = new PeriodAxisLabelInfo[this.labelInfo.length];
-        for (int i = 0; i < this.labelInfo.length; i++) {
-            clone.labelInfo[i] = this.labelInfo[i];  // copy across references
-                                                     // to immutable objs
-        }
+        clone.labelInfo = (PeriodAxisLabelInfo[]) this.labelInfo.clone();
         return clone;
     }
 
@@ -1216,8 +1182,8 @@ public class PeriodAxis extends ValueAxis
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeStroke(this.minorTickMarkStroke, stream);
-        SerialUtilities.writePaint(this.minorTickMarkPaint, stream);
+        SerialUtils.writeStroke(this.minorTickMarkStroke, stream);
+        SerialUtils.writePaint(this.minorTickMarkPaint, stream);
     }
 
     /**
@@ -1231,8 +1197,8 @@ public class PeriodAxis extends ValueAxis
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.minorTickMarkStroke = SerialUtilities.readStroke(stream);
-        this.minorTickMarkPaint = SerialUtilities.readPaint(stream);
+        this.minorTickMarkStroke = SerialUtils.readStroke(stream);
+        this.minorTickMarkPaint = SerialUtils.readPaint(stream);
     }
 
 }

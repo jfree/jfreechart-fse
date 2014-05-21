@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,422 +27,368 @@
  * ---------------------
  * HistogramDataset.java
  * ---------------------
- * (C) Copyright 2003-2012, by Jelai Wang and Contributors.
+ * (C) Copyright 2005-2014, by Object Refinery Limited and Contributors.
  *
- * Original Author:  Jelai Wang (jelaiw AT mindspring.com);
- * Contributor(s):   David Gilbert (for Object Refinery Limited);
- *                   Cameron Hayne;
- *                   Rikard Bj?rklind;
- *                   Thomas A Caswell (patch 2902842);
+ * Original Author:  David Gilbert (for Object Refinery Limited);
+ * Contributor(s):   Sergei Ivanov;
  *
  * Changes
  * -------
- * 06-Jul-2003 : Version 1, contributed by Jelai Wang (DG);
- * 07-Jul-2003 : Changed package and added Javadocs (DG);
- * 15-Oct-2003 : Updated Javadocs and removed array sorting (JW);
- * 09-Jan-2004 : Added fix by "Z." posted in the JFreeChart forum (DG);
- * 01-Mar-2004 : Added equals() and clone() methods and implemented
- *               Serializable.  Also added new addSeries() method (DG);
- * 06-May-2004 : Now extends AbstractIntervalXYDataset (DG);
- * 15-Jul-2004 : Switched getX() with getXValue() and getY() with
- *               getYValue() (DG);
- * 20-May-2005 : Speed up binning - see patch 1026151 contributed by Cameron
- *               Hayne (DG);
- * 08-Jun-2005 : Fixed bug in getSeriesKey() method (DG);
- * 22-Nov-2005 : Fixed cast in getSeriesKey() method - see patch 1329287 (DG);
- * ------------- JFREECHART 1.0.x ---------------------------------------------
- * 03-Aug-2006 : Improved precision of bin boundary calculation (DG);
- * 07-Sep-2006 : Fixed bug 1553088 (DG);
- * 22-May-2008 : Implemented clone() method override (DG);
- * 08-Dec-2009 : Fire change event in addSeries() - see patch 2902842
- *               contributed by Thomas A Caswell (DG);
+ * 10-Jan-2005 : Version 1 (DG);
+ * 21-May-2007 : Added clearObservations() and removeAllBins() (SI);
+ * 10-Jul-2007 : Added null argument check to constructor (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
  *
  */
 
 package org.jfree.data.statistics;
 
-import org.jfree.chart.util.ObjectUtilities;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.DomainOrder;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.xy.AbstractIntervalXYDataset;
 import org.jfree.data.xy.IntervalXYDataset;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
- * A dataset that can be used for creating histograms.
- *
- * @see SimpleHistogramDataset
+ * A dataset used for creating simple histograms with custom defined bins.
  */
 public class HistogramDataset extends AbstractIntervalXYDataset
         implements IntervalXYDataset, Cloneable, PublicCloneable,
         Serializable {
 
     /** For serialization. */
-    private static final long serialVersionUID = -6341668077370231153L;
+    private static final long serialVersionUID = 7997996479768018443L;
 
-    /** A list of maps. */
-    private List<Map<String, Object>> list; //FIXME MMC this should really be an internal historgram type rather than object
+    /** The series key. */
+    private Comparable key;
 
-    /** The histogram type. */
-    private HistogramType type;
+    /** The bins. */
+    private List<HistogramBin> bins;
 
     /**
-     * Creates a new (empty) dataset with a default type of
-     * {@link HistogramType}.FREQUENCY.
+     * A flag that controls whether or not the bin count is divided by the
+     * bin size.
      */
-    public HistogramDataset() {
-        this.list = new ArrayList<Map<String, Object>>();
-        this.type = HistogramType.FREQUENCY;
-    }
+    private boolean adjustForBinSize;
 
     /**
-     * Returns the histogram type.
-     *
-     * @return The type (never <code>null</code>).
-     */
-    public HistogramType getType() {
-        return this.type;
-    }
-
-    /**
-     * Sets the histogram type and sends a {@link DatasetChangeEvent} to all
-     * registered listeners.
-     *
-     * @param type  the type (<code>null</code> not permitted).
-     */
-    public void setType(HistogramType type) {
-        if (type == null) {
-            throw new IllegalArgumentException("Null 'type' argument");
-        }
-        this.type = type;
-        fireDatasetChanged();
-    }
-
-    /**
-     * Adds a series to the dataset, using the specified number of bins,
-     * and sends a {@link DatasetChangeEvent} to all registered listeners.
+     * Creates a new histogram dataset.  Note that the
+     * <code>adjustForBinSize</code> flag defaults to <code>true</code>.
      *
      * @param key  the series key (<code>null</code> not permitted).
-     * @param values the values (<code>null</code> not permitted).
-     * @param bins  the number of bins (must be at least 1).
      */
-    public void addSeries(Comparable key, double[] values, int bins) {
-        // defer argument checking...
-        double minimum = getMinimum(values);
-        double maximum = getMaximum(values);
-        addSeries(key, values, bins, minimum, maximum);
+    public HistogramDataset(Comparable key) {
+        ParamChecks.nullNotPermitted(key, "key");
+        this.key = key;
+        this.bins = new ArrayList<HistogramBin>();
+        this.adjustForBinSize = true;
     }
 
     /**
-     * Adds a series to the dataset. Any data value less than minimum will be
-     * assigned to the first bin, and any data value greater than maximum will
-     * be assigned to the last bin.  Values falling on the boundary of
-     * adjacent bins will be assigned to the higher indexed bin.
+     * Returns a flag that controls whether or not the bin count is divided by
+     * the bin size in the {@link #getXValue(int, int)} method.
      *
-     * @param key  the series key (<code>null</code> not permitted).
-     * @param values  the raw observations.
-     * @param bins  the number of bins (must be at least 1).
-     * @param minimum  the lower bound of the bin range.
-     * @param maximum  the upper bound of the bin range.
+     * @return A boolean.
+     *
+     * @see #setAdjustForBinSize(boolean)
      */
-    public void addSeries(Comparable key, double[] values, int bins,
-                          double minimum, double maximum) {
-
-        if (key == null) {
-            throw new IllegalArgumentException("Null 'key' argument.");
-        }
-        if (values == null) {
-            throw new IllegalArgumentException("Null 'values' argument.");
-        } else if (bins < 1) {
-            throw new IllegalArgumentException(
-                    "The 'bins' value must be at least 1.");
-        }
-        double binWidth = (maximum - minimum) / bins;
-
-        double lower = minimum;
-        double upper;
-        List<HistogramBin> binList = new ArrayList<HistogramBin>(bins);
-        for (int i = 0; i < bins; i++) {
-            HistogramBin bin;
-            // make sure bins[bins.length]'s upper boundary ends at maximum
-            // to avoid the rounding issue. the bins[0] lower boundary is
-            // guaranteed start from min
-            if (i == bins - 1) {
-                bin = new HistogramBin(lower, maximum);
-            } else {
-                upper = minimum + (i + 1) * binWidth;
-                bin = new HistogramBin(lower, upper);
-                lower = upper;
-            }
-            binList.add(bin);
-        }
-        // fill the bins
-        for (double value : values) {
-            int binIndex = bins - 1;
-            if (value < maximum) {
-                double fraction = (value - minimum) / (maximum - minimum);
-                if (fraction < 0.0) {
-                    fraction = 0.0;
-                }
-                binIndex = (int) (fraction * bins);
-                // rounding could result in binIndex being equal to bins
-                // which will cause an IndexOutOfBoundsException - see bug
-                // report 1553088
-                if (binIndex >= bins) {
-                    binIndex = bins - 1;
-                }
-            }
-            HistogramBin bin = binList.get(binIndex);
-            bin.incrementCount();
-        }
-        // generic map for each series
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("key", key);
-        map.put("bins", binList);
-        map.put("values.length", values.length);
-        map.put("bin width", binWidth);
-        this.list.add(map);
-        fireDatasetChanged();
+    public boolean getAdjustForBinSize() {
+        return this.adjustForBinSize;
     }
 
     /**
-     * Returns the minimum value in an array of values.
+     * Sets the flag that controls whether or not the bin count is divided by
+     * the bin size in the {@link #getYValue(int, int)} method, and sends a
+     * {@link DatasetChangeEvent} to all registered listeners.
      *
-     * @param values  the values (<code>null</code> not permitted and
-     *                zero-length array not permitted).
+     * @param adjust  the flag.
      *
-     * @return The minimum value.
+     * @see #getAdjustForBinSize()
      */
-    private double getMinimum(double[] values) {
-        if (values == null || values.length < 1) {
-            throw new IllegalArgumentException(
-                    "Null or zero length 'values' argument.");
-        }
-        double min = Double.MAX_VALUE;
-        for (double value : values) {
-            if (value < min) {
-                min = value;
-            }
-        }
-        return min;
+    public void setAdjustForBinSize(boolean adjust) {
+        this.adjustForBinSize = adjust;
+        notifyListeners(new DatasetChangeEvent(this, this));
     }
 
     /**
-     * Returns the maximum value in an array of values.
-     *
-     * @param values  the values (<code>null</code> not permitted and
-     *                zero-length array not permitted).
-     *
-     * @return The maximum value.
-     */
-    private double getMaximum(double[] values) {
-        if (values == null || values.length < 1) {
-            throw new IllegalArgumentException(
-                    "Null or zero length 'values' argument.");
-        }
-        double max = -Double.MAX_VALUE;
-        for (double value : values) {
-            if (value > max) {
-                max = value;
-            }
-        }
-        return max;
-    }
-
-    /**
-     * Returns the bins for a series.
-     *
-     * @param series  the series index (in the range <code>0</code> to
-     *     <code>getSeriesCount() - 1</code>).
-     *
-     * @return A list of bins.
-     *
-     * @throws IndexOutOfBoundsException if <code>series</code> is outside the
-     *     specified range.
-     */
-    List<HistogramBin> getBins(int series) {
-        Map<String, Object> map = this.list.get(series);
-        return (List<HistogramBin>) map.get("bins");
-    }
-
-    /**
-     * Returns the total number of observations for a series.
-     *
-     * @param series  the series index.
-     *
-     * @return The total.
-     */
-    private int getTotal(int series) {
-        Map<String, Object> map = this.list.get(series);
-        return (Integer) map.get("values.length");
-    }
-
-    /**
-     * Returns the bin width for a series.
-     *
-     * @param series  the series index (zero based).
-     *
-     * @return The bin width.
-     */
-    private double getBinWidth(int series) {
-        Map<String, Object> map = this.list.get(series);
-        return (Double) map.get("bin width");
-    }
-
-    /**
-     * Returns the number of series in the dataset.
+     * Returns the number of series in the dataset (always 1 for this dataset).
      *
      * @return The series count.
      */
     @Override
     public int getSeriesCount() {
-        return this.list.size();
+        return 1;
     }
 
     /**
-     * Returns the key for a series.
+     * Returns the key for a series.  Since this dataset only stores a single
+     * series, the <code>series</code> argument is ignored.
      *
-     * @param series  the series index (in the range <code>0</code> to
-     *     <code>getSeriesCount() - 1</code>).
+     * @param series  the series (zero-based index, ignored in this dataset).
      *
-     * @return The series key.
-     *
-     * @throws IndexOutOfBoundsException if <code>series</code> is outside the
-     *     specified range.
+     * @return The key for the series.
      */
     @Override
     public Comparable getSeriesKey(int series) {
-        Map<String, Object> map = this.list.get(series);
-        return (Comparable) map.get("key");
+        return this.key;
     }
 
     /**
-     * Returns the number of data items for a series.
+     * Returns the order of the domain (or X) values returned by the dataset.
      *
-     * @param series  the series index (in the range <code>0</code> to
-     *     <code>getSeriesCount() - 1</code>).
+     * @return The order (never <code>null</code>).
+     */
+    @Override
+    public DomainOrder getDomainOrder() {
+        return DomainOrder.ASCENDING;
+    }
+
+    /**
+     * Returns the number of items in a series.  Since this dataset only stores
+     * a single series, the <code>series</code> argument is ignored.
+     *
+     * @param series  the series index (zero-based, ignored in this dataset).
      *
      * @return The item count.
-     *
-     * @throws IndexOutOfBoundsException if <code>series</code> is outside the
-     *     specified range.
      */
     @Override
     public int getItemCount(int series) {
-        return getBins(series).size();
+        return this.bins.size();
     }
 
     /**
-     * Returns the X value for a bin.  This value won't be used for plotting
-     * histograms, since the renderer will ignore it.  But other renderers can
-     * use it (for example, you could use the dataset to create a line
-     * chart).
+     * Adds a bin to the dataset.  An exception is thrown if the bin overlaps
+     * with any existing bin in the dataset.
      *
-     * @param series  the series index (in the range <code>0</code> to
-     *     <code>getSeriesCount() - 1</code>).
-     * @param item  the item index (zero based).
+     * @param bin  the bin (<code>null</code> not permitted).
      *
-     * @return The start value.
-     *
-     * @throws IndexOutOfBoundsException if <code>series</code> is outside the
-     *     specified range.
+     * @see #removeAllBins()
      */
-    @Override
-    public Number getX(int series, int item) {
-        List<HistogramBin> bins = getBins(series);
-        HistogramBin bin = bins.get(item);
-        double x = (bin.getStartBoundary() + bin.getEndBoundary()) / 2.;
-        return x;
+    public void addBin(HistogramBin bin) {
+        // check that the new bin doesn't overlap with any existing bin
+        for (HistogramBin existingBin : this.bins) {
+            if (bin.overlapsWith(existingBin)) {
+                throw new RuntimeException("Overlapping bin");
+            }
+        }
+        this.bins.add(bin);
+        Collections.sort(this.bins);
     }
 
     /**
-     * Returns the y-value for a bin (calculated to take into account the
-     * histogram type).
+     * Adds an observation to the dataset (by incrementing the item count for
+     * the appropriate bin).  A runtime exception is thrown if the value does
+     * not fit into any bin.
      *
-     * @param series  the series index (in the range <code>0</code> to
-     *     <code>getSeriesCount() - 1</code>).
-     * @param item  the item index (zero based).
-     *
-     * @return The y-value.
-     *
-     * @throws IndexOutOfBoundsException if <code>series</code> is outside the
-     *     specified range.
+     * @param value  the value.
      */
-    @Override
-    public Number getY(int series, int item) {
-        List<HistogramBin> bins = getBins(series);
-        HistogramBin bin = bins.get(item);
-        double total = getTotal(series);
-        double binWidth = getBinWidth(series);
+    public void addObservation(double value) {
+        addObservation(value, true);
+    }
 
-        if (this.type == HistogramType.FREQUENCY) {
-            return (double) bin.getCount();
-        } else if (this.type == HistogramType.RELATIVE_FREQUENCY) {
-            return bin.getCount() / total;
-        } else if (this.type == HistogramType.SCALE_AREA_TO_1) {
-            return bin.getCount() / (binWidth * total);
-        } else { // pretty sure this shouldn't ever happen
-            throw new IllegalStateException();
+    /**
+     * Adds an observation to the dataset (by incrementing the item count for
+     * the appropriate bin).  A runtime exception is thrown if the value does
+     * not fit into any bin.
+     *
+     * @param value  the value.
+     * @param notify  send {@link DatasetChangeEvent} to listeners?
+     */
+    public void addObservation(double value, boolean notify) {
+        boolean placed = false;
+        for (HistogramBin bin : this.bins) {
+            if (bin.accepts(value)) {
+                bin.setItemCount(bin.getItemCount() + 1);
+                placed = true;
+                break;
+            }
+        }
+        if (!placed) {
+            throw new RuntimeException("No bin.");
+        }
+        if (notify) {
+            notifyListeners(new DatasetChangeEvent(this, this));
         }
     }
 
     /**
-     * Returns the start value for a bin.
+     * Adds a set of values to the dataset and sends a
+     * {@link DatasetChangeEvent} to all registered listeners.
      *
-     * @param series  the series index (in the range <code>0</code> to
-     *     <code>getSeriesCount() - 1</code>).
-     * @param item  the item index (zero based).
+     * @param values  the values (<code>null</code> not permitted).
      *
-     * @return The start value.
-     *
-     * @throws IndexOutOfBoundsException if <code>series</code> is outside the
-     *     specified range.
+     * @see #clearObservations()
      */
-    @Override
-    public Number getStartX(int series, int item) {
-        List<HistogramBin> bins = getBins(series);
-        HistogramBin bin = bins.get(item);
-        return bin.getStartBoundary();
+    public void addObservations(double[] values) {
+        for (double value : values) {
+            addObservation(value, false);
+        }
+        notifyListeners(new DatasetChangeEvent(this, this));
     }
 
     /**
-     * Returns the end value for a bin.
+     * Removes all current observation data and sends a
+     * {@link DatasetChangeEvent} to all registered listeners.
      *
-     * @param series  the series index (in the range <code>0</code> to
-     *     <code>getSeriesCount() - 1</code>).
-     * @param item  the item index (zero based).
+     * @since 1.0.6
      *
-     * @return The end value.
-     *
-     * @throws IndexOutOfBoundsException if <code>series</code> is outside the
-     *     specified range.
+     * @see #addObservations(double[])
+     * @see #removeAllBins()
      */
-    @Override
-    public Number getEndX(int series, int item) {
-        List<HistogramBin> bins = getBins(series);
-        HistogramBin bin = bins.get(item);
-        return bin.getEndBoundary();
+    public void clearObservations() {
+        for (HistogramBin bin : this.bins) {
+            bin.setItemCount(0);
+        }
+        notifyListeners(new DatasetChangeEvent(this, this));
     }
 
     /**
-     * Returns the start y-value for a bin (which is the same as the y-value,
-     * this method exists only to support the general form of the
-     * {@link IntervalXYDataset} interface).
+     * Removes all bins and sends a {@link DatasetChangeEvent} to all
+     * registered listeners.
      *
-     * @param series  the series index (in the range <code>0</code> to
-     *     <code>getSeriesCount() - 1</code>).
-     * @param item  the item index (zero based).
+     * @since 1.0.6
+     *
+     * @see #addBin(SimpleHistogramBin)
+     */
+    public void removeAllBins() {
+        this.bins = new ArrayList<HistogramBin>();
+        notifyListeners(new DatasetChangeEvent(this, this));
+    }
+
+    /**
+     * Returns the x-value for an item within a series.  The x-values may or
+     * may not be returned in ascending order, that is up to the class
+     * implementing the interface.
+     *
+     * @param series  the series index (zero-based).
+     * @param item  the item index (zero-based).
+     *
+     * @return The x-value (never <code>null</code>).
+     */
+    @Override
+    public Number getX(int series, int item) {
+        return getXValue(series, item);
+    }
+
+    /**
+     * Returns the x-value (as a double primitive) for an item within a series.
+     *
+     * @param series  the series index (zero-based).
+     * @param item  the item index (zero-based).
+     *
+     * @return The x-value.
+     */
+    @Override
+    public double getXValue(int series, int item) {
+        HistogramBin bin = this.bins.get(item);
+        return (bin.getLowerBound() + bin.getUpperBound()) / 2.0;
+    }
+
+    /**
+     * Returns the y-value for an item within a series.
+     *
+     * @param series  the series index (zero-based).
+     * @param item  the item index (zero-based).
+     *
+     * @return The y-value (possibly <code>null</code>).
+     */
+    @Override
+    public Number getY(int series, int item) {
+        return getYValue(series, item);
+    }
+
+    /**
+     * Returns the y-value (as a double primitive) for an item within a series.
+     *
+     * @param series  the series index (zero-based).
+     * @param item  the item index (zero-based).
      *
      * @return The y-value.
      *
-     * @throws IndexOutOfBoundsException if <code>series</code> is outside the
-     *     specified range.
+     * @see #getAdjustForBinSize()
+     */
+    @Override
+    public double getYValue(int series, int item) {
+        HistogramBin bin = this.bins.get(item);
+        if (this.adjustForBinSize) {
+            return bin.getItemCount()
+                   / (bin.getUpperBound() - bin.getLowerBound());
+        }
+        else {
+            return bin.getItemCount();
+        }
+    }
+
+    /**
+     * Returns the starting X value for the specified series and item.
+     *
+     * @param series  the series index (zero-based).
+     * @param item  the item index (zero-based).
+     *
+     * @return The value.
+     */
+    @Override
+    public Number getStartX(int series, int item) {
+        return getStartXValue(series, item);
+    }
+
+    /**
+     * Returns the start x-value (as a double primitive) for an item within a
+     * series.
+     *
+     * @param series  the series (zero-based index).
+     * @param item  the item (zero-based index).
+     *
+     * @return The start x-value.
+     */
+    @Override
+    public double getStartXValue(int series, int item) {
+        HistogramBin bin = this.bins.get(item);
+        return bin.getLowerBound();
+    }
+
+    /**
+     * Returns the ending X value for the specified series and item.
+     *
+     * @param series  the series index (zero-based).
+     * @param item  the item index (zero-based).
+     *
+     * @return The value.
+     */
+    @Override
+    public Number getEndX(int series, int item) {
+        return getEndXValue(series, item);
+    }
+
+    /**
+     * Returns the end x-value (as a double primitive) for an item within a
+     * series.
+     *
+     * @param series  the series index (zero-based).
+     * @param item  the item index (zero-based).
+     *
+     * @return The end x-value.
+     */
+    @Override
+    public double getEndXValue(int series, int item) {
+        HistogramBin bin = this.bins.get(item);
+        return bin.getUpperBound();
+    }
+
+    /**
+     * Returns the starting Y value for the specified series and item.
+     *
+     * @param series  the series index (zero-based).
+     * @param item  the item index (zero-based).
+     *
+     * @return The value.
      */
     @Override
     public Number getStartY(int series, int item) {
@@ -450,18 +396,26 @@ public class HistogramDataset extends AbstractIntervalXYDataset
     }
 
     /**
-     * Returns the end y-value for a bin (which is the same as the y-value,
-     * this method exists only to support the general form of the
-     * {@link IntervalXYDataset} interface).
+     * Returns the start y-value (as a double primitive) for an item within a
+     * series.
      *
-     * @param series  the series index (in the range <code>0</code> to
-     *     <code>getSeriesCount() - 1</code>).
-     * @param item  the item index (zero based).
+     * @param series  the series index (zero-based).
+     * @param item  the item index (zero-based).
      *
-     * @return The Y value.
+     * @return The start y-value.
+     */
+    @Override
+    public double getStartYValue(int series, int item) {
+        return getYValue(series, item);
+    }
+
+    /**
+     * Returns the ending Y value for the specified series and item.
      *
-     * @throws IndexOutOfBoundsException if <code>series</code> is outside the
-     *     specified range.
+     * @param series  the series index (zero-based).
+     * @param item  the item index (zero-based).
+     *
+     * @return The value.
      */
     @Override
     public Number getEndY(int series, int item) {
@@ -469,9 +423,23 @@ public class HistogramDataset extends AbstractIntervalXYDataset
     }
 
     /**
-     * Tests this dataset for equality with an arbitrary object.
+     * Returns the end y-value (as a double primitive) for an item within a
+     * series.
      *
-     * @param obj  the object to test against (<code>null</code> permitted).
+     * @param series  the series index (zero-based).
+     * @param item  the item index (zero-based).
+     *
+     * @return The end y-value.
+     */
+    @Override
+    public double getEndYValue(int series, int item) {
+        return getYValue(series, item);
+    }
+
+    /**
+     * Compares the dataset for equality with an arbitrary object.
+     *
+     * @param obj  the object (<code>null</code> permitted).
      *
      * @return A boolean.
      */
@@ -484,10 +452,13 @@ public class HistogramDataset extends AbstractIntervalXYDataset
             return false;
         }
         HistogramDataset that = (HistogramDataset) obj;
-        if (!ObjectUtilities.equal(this.type, that.type)) {
+        if (!this.key.equals(that.key)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.list, that.list)) {
+        if (this.adjustForBinSize != that.adjustForBinSize) {
+            return false;
+        }
+        if (!this.bins.equals(that.bins)) {
             return false;
         }
         return true;
@@ -496,18 +467,15 @@ public class HistogramDataset extends AbstractIntervalXYDataset
     /**
      * Returns a clone of the dataset.
      *
-     * @return A clone of the dataset.
+     * @return A clone.
      *
-     * @throws CloneNotSupportedException if the object cannot be cloned.
+     * @throws CloneNotSupportedException not thrown by this class, but maybe
+     *         by subclasses (if any).
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
         HistogramDataset clone = (HistogramDataset) super.clone();
-        int seriesCount = getSeriesCount();
-        clone.list = new java.util.ArrayList<Map<String, Object>>(seriesCount);
-        for (int i = 0; i < seriesCount; i++) {
-            clone.list.add(new HashMap<String, Object>(this.list.get(i)));
-        }
+        clone.bins = ObjectUtils.deepClone(this.bins);
         return clone;
     }
 

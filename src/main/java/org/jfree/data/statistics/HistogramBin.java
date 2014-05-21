@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,18 +27,16 @@
  * -----------------
  * HistogramBin.java
  * -----------------
- * (C) Copyright 2003-2008, by Jelai Wang and Contributors.
+ * (C) Copyright 2005-2014, by Object Refinery Limited and Contributors.
  *
- * Original Author:  Jelai Wang (jelaiw AT mindspring.com);
- * Contributor(s):   David Gilbert (for Object Refinery Limited);
+ * Original Author:  David Gilbert (for Object Refinery Limited);
+ * Contributor(s):   -;
  *
  * Changes
  * -------
- * 06-Jul-2003 : Version 1, contributed by Jelai Wang (DG);
- * 07-Jul-2003 : Changed package and added Javadocs (DG);
- * 01-Mar-2004 : Moved from org.jfree.data --> org.jfree.data.statistics (DG);
- * ------------- JFREECHART 1.0.x ---------------------------------------------
- * 02-Feb-2007 : Removed author tags from all over JFreeChart sources (DG);
+ * 10-Jan-2005 : Version 1 (DG);
+ * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 22-Mar-2014 : Renamed SimpleHistogramBin --> HistogramBin (DG);
  *
  */
 
@@ -46,105 +44,216 @@ package org.jfree.data.statistics;
 
 import java.io.Serializable;
 
+import org.jfree.chart.util.PublicCloneable;
+
 /**
- * A bin for the {@link HistogramDataset} class.
+ * A bin for the {@link HistogramDataset}.
  */
-public class HistogramBin implements Cloneable, Serializable {
+public class HistogramBin implements Comparable,
+        Cloneable, PublicCloneable, Serializable {
 
     /** For serialization. */
-    private static final long serialVersionUID = 7614685080015589931L;
+    private static final long serialVersionUID = 3480862537505941742L;
 
-    /** The number of items in the bin. */
-    private int count;
+    /** The lower bound for the bin. */
+    private double lowerBound;
 
-    /** The start boundary. */
-    private double startBoundary;
+    /** The upper bound for the bin. */
+    private double upperBound;
 
-    /** The end boundary. */
-    private double endBoundary;
+    /**
+     * A flag that controls whether the lower bound is included in the bin
+     * range.
+     */
+    private boolean includeLowerBound;
+
+    /**
+     * A flag that controls whether the upper bound is included in the bin
+     * range.
+     */
+    private boolean includeUpperBound;
+
+    /** The item count. */
+    private int itemCount;
 
     /**
      * Creates a new bin.
      *
-     * @param startBoundary  the start boundary.
-     * @param endBoundary  the end boundary.
+     * @param lowerBound  the lower bound (inclusive).
+     * @param upperBound  the upper bound (inclusive);
      */
-    public HistogramBin(double startBoundary, double endBoundary) {
-        if (startBoundary > endBoundary) {
-            throw new IllegalArgumentException(
-                    "HistogramBin():  startBoundary > endBoundary.");
-        }
-        this.count = 0;
-        this.startBoundary = startBoundary;
-        this.endBoundary = endBoundary;
+    public HistogramBin(double lowerBound, double upperBound) {
+        this(lowerBound, upperBound, true, true);
     }
 
     /**
-     * Returns the number of items in the bin.
+     * Creates a new bin.
+     *
+     * @param lowerBound  the lower bound.
+     * @param upperBound  the upper bound.
+     * @param includeLowerBound  include the lower bound?
+     * @param includeUpperBound  include the upper bound?
+     */
+    public HistogramBin(double lowerBound, double upperBound,
+                              boolean includeLowerBound,
+                              boolean includeUpperBound) {
+        if (lowerBound >= upperBound) {
+            throw new IllegalArgumentException("Invalid bounds");
+        }
+        this.lowerBound = lowerBound;
+        this.upperBound = upperBound;
+        this.includeLowerBound = includeLowerBound;
+        this.includeUpperBound = includeUpperBound;
+        this.itemCount = 0;
+    }
+
+    /**
+     * Returns the lower bound.
+     *
+     * @return The lower bound.
+     */
+    public double getLowerBound() {
+        return this.lowerBound;
+    }
+
+    /**
+     * Return the upper bound.
+     *
+     * @return The upper bound.
+     */
+    public double getUpperBound() {
+        return this.upperBound;
+    }
+
+    /**
+     * Returns the item count.
      *
      * @return The item count.
      */
-    public int getCount() {
-        return this.count;
+    public int getItemCount() {
+        return this.itemCount;
     }
 
     /**
-     * Increments the item count.
-     */
-    public void incrementCount() {
-        this.count++;
-    }
-
-    /**
-     * Returns the start boundary.
+     * Sets the item count.
      *
-     * @return The start boundary.
+     * @param count  the item count.
      */
-    public double getStartBoundary() {
-        return this.startBoundary;
+    public void setItemCount(int count) {
+        this.itemCount = count;
     }
 
     /**
-     * Returns the end boundary.
+     * Returns <code>true</code> if the specified value belongs in the bin,
+     * and <code>false</code> otherwise.
      *
-     * @return The end boundary.
+     * @param value  the value.
+     *
+     * @return A boolean.
      */
-    public double getEndBoundary() {
-        return this.endBoundary;
+    public boolean accepts(double value) {
+        if (Double.isNaN(value)) {
+            return false;
+        }
+        if (value < this.lowerBound) {
+            return false;
+        }
+        if (value > this.upperBound) {
+            return false;
+        }
+        if (value == this.lowerBound) {
+            return this.includeLowerBound;
+        }
+        if (value == this.upperBound) {
+            return this.includeUpperBound;
+        }
+        return true;
     }
 
     /**
-     * Returns the bin width.
+     * Returns <code>true</code> if this bin overlaps with the specified bin,
+     * and <code>false</code> otherwise.
      *
-     * @return The bin width.
+     * @param bin  the other bin (<code>null</code> not permitted).
+     *
+     * @return A boolean.
      */
-    public double getBinWidth() {
-        return this.endBoundary - this.startBoundary;
+    public boolean overlapsWith(HistogramBin bin) {
+        if (this.upperBound < bin.lowerBound) {
+            return false;
+        }
+        if (this.lowerBound > bin.upperBound) {
+            return false;
+        }
+        if (this.upperBound == bin.lowerBound) {
+            return this.includeUpperBound && bin.includeLowerBound;
+        }
+        if (this.lowerBound == bin.upperBound) {
+            return this.includeLowerBound && bin.includeUpperBound;
+        }
+        return true;
     }
 
     /**
-     * Tests this object for equality with an arbitrary object.
+     * Compares the bin to an arbitrary object and returns the relative
+     * ordering.
      *
-     * @param obj  the object to test against.
+     * @param obj  the object.
+     *
+     * @return An integer indicating the relative ordering of the this bin and
+     *         the given object.
+     */
+    @Override
+    public int compareTo(Object obj) {
+        if (!(obj instanceof HistogramBin)) {
+            return 0;
+        }
+        HistogramBin bin = (HistogramBin) obj;
+        if (this.lowerBound < bin.lowerBound) {
+            return -1;
+        }
+        if (this.lowerBound > bin.lowerBound) {
+            return 1;
+        }
+        // lower bounds are the same
+        if (this.upperBound < bin.upperBound) {
+            return -1;
+        }
+        if (this.upperBound > bin.upperBound) {
+            return 1;
+        }
+        return 0;
+    }
+
+    /**
+     * Tests this bin for equality with an arbitrary object.
+     *
+     * @param obj  the object (<code>null</code> permitted).
      *
      * @return A boolean.
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
+        if (!(obj instanceof HistogramBin)) {
             return false;
         }
-        if (obj == this) {
-            return true;
+        HistogramBin that = (HistogramBin) obj;
+        if (this.lowerBound != that.lowerBound) {
+            return false;
         }
-        if (obj instanceof HistogramBin) {
-            HistogramBin bin = (HistogramBin) obj;
-            boolean b0 = bin.startBoundary == this.startBoundary;
-            boolean b1 = bin.endBoundary == this.endBoundary;
-            boolean b2 = bin.count == this.count;
-            return b0 && b1 && b2;
+        if (this.upperBound != that.upperBound) {
+            return false;
         }
-        return false;
+        if (this.includeLowerBound != that.includeLowerBound) {
+            return false;
+        }
+        if (this.includeUpperBound != that.includeUpperBound) {
+            return false;
+        }
+        if (this.itemCount != that.itemCount) {
+            return false;
+        }
+        return true;
     }
 
     /**

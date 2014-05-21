@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------------
  * StandardChartThemeTests.java
  * ----------------------------
- * (C) Copyright 2008, by Object Refinery Limited.
+ * (C) Copyright 2008-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -41,25 +41,34 @@
 
 package org.jfree.chart;
 
-import org.jfree.chart.plot.DefaultDrawingSupplier;
-import org.jfree.chart.plot.PieLabelLinkStyle;
-import org.jfree.chart.renderer.category.StandardBarPainter;
-import org.jfree.chart.renderer.xy.StandardXYBarPainter;
-import org.jfree.chart.ui.RectangleInsets;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
-import java.io.*;
 
-import static org.junit.Assert.*;
+import org.jfree.chart.drawable.ColorPainter;
+import org.jfree.chart.plot.DefaultDrawingSupplier;
+import org.jfree.chart.plot.PieLabelLinkStyle;
+import org.jfree.chart.renderer.category.GradientBarPainter;
+import org.jfree.chart.renderer.xy.GradientXYBarPainter;
+import org.jfree.chart.ui.RectangleInsets;
 
 /**
  * Tests for the {@link StandardChartTheme} class.
  */
-public class StandardChartThemeTest {
-
-
+public class StandardChartThemeTest  {
+ 
     /**
      * Confirm that the equals method can distinguish all the required fields.
      */
@@ -95,61 +104,71 @@ public class StandardChartThemeTest {
         assertEquals(t1, t2);
 
         //titlePaint;
-        t1.setTitlePaint(new GradientPaint(0f, 1f, Color.RED, 2f, 3f, Color.BLUE));
+        t1.setTitlePaint(new GradientPaint(0f, 1f, Color.RED, 2f, 3f, 
+                Color.BLUE));
         assertFalse(t1.equals(t2));
-        t2.setTitlePaint(new GradientPaint(0f, 1f, Color.RED, 2f, 3f, Color.BLUE));
+        t2.setTitlePaint(new GradientPaint(0f, 1f, Color.RED, 2f, 3f, 
+                Color.BLUE));
         assertEquals(t1, t2);
 
         //subtitlePaint;
-        t1.setSubtitlePaint(new GradientPaint(1f, 2f, Color.RED, 3f, 4f, Color.BLUE));
+        t1.setSubtitlePaint(new GradientPaint(1f, 2f, Color.RED, 3f, 4f, 
+                Color.BLUE));
         assertFalse(t1.equals(t2));
-        t2.setSubtitlePaint(new GradientPaint(1f, 2f, Color.RED, 3f, 4f, Color.BLUE));
+        t2.setSubtitlePaint(new GradientPaint(1f, 2f, Color.RED, 3f, 4f, 
+                Color.BLUE));
         assertEquals(t1, t2);
 
         //chartBackgroundPaint;
-        t1.setChartBackgroundPaint(new GradientPaint(2f, 3f, Color.BLUE, 4f, 5f, Color.RED));
+        t1.setChartBackgroundPainter(new ColorPainter(Color.RED));
         assertFalse(t1.equals(t2));
-        t2.setChartBackgroundPaint(new GradientPaint(2f, 3f, Color.BLUE, 4f, 5f, Color.RED));
+        t2.setChartBackgroundPainter(new ColorPainter(Color.RED));
         assertEquals(t1, t2);
 
         //legendBackgroundPaint;
-        t1.setLegendBackgroundPaint(new GradientPaint(3f, 4f, Color.gray, 1f, 2f, Color.RED));
+        t1.setLegendBackgroundPaint(new GradientPaint(3f, 4f, Color.gray, 
+                1f, 2f, Color.RED));
         assertFalse(t1.equals(t2));
-        t2.setLegendBackgroundPaint(new GradientPaint(3f, 4f, Color.gray, 1f, 2f, Color.RED));
+        t2.setLegendBackgroundPaint(new GradientPaint(3f, 4f, Color.gray, 
+                1f, 2f, Color.RED));
         assertEquals(t1, t2);
 
         //legendItemPaint;
-        t1.setLegendItemPaint(new GradientPaint(9f, 8f, Color.RED, 7f, 6f, Color.BLUE));
+        t1.setLegendItemPaint(new GradientPaint(9f, 8f, Color.RED, 7f, 6f, 
+                Color.BLUE));
         assertFalse(t1.equals(t2));
-        t2.setLegendItemPaint(new GradientPaint(9f, 8f, Color.RED, 7f, 6f, Color.BLUE));
+        t2.setLegendItemPaint(new GradientPaint(9f, 8f, Color.RED, 7f, 6f, 
+                Color.BLUE));
         assertEquals(t1, t2);
 
         //drawingSupplier;
         t1.setDrawingSupplier(new DefaultDrawingSupplier(
-                new Paint[]{Color.RED},
-                new Paint[]{Color.BLUE},
-                new Stroke[]{new BasicStroke(1.0f)},
-                new Stroke[]{new BasicStroke(1.0f)},
-                new Shape[]{new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0)}));
+                new Paint[] {Color.RED},
+                new Paint[] {Color.BLUE},
+                new Stroke[] {new BasicStroke(1.0f)},
+                new Stroke[] {new BasicStroke(1.0f)},
+                new Shape[] {new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0)}));
         assertFalse(t1.equals(t2));
         t2.setDrawingSupplier(new DefaultDrawingSupplier(
-                new Paint[]{Color.RED},
-                new Paint[]{Color.BLUE},
-                new Stroke[]{new BasicStroke(1.0f)},
-                new Stroke[]{new BasicStroke(1.0f)},
-                new Shape[]{new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0)}));
+                new Paint[] {Color.RED},
+                new Paint[] {Color.BLUE},
+                new Stroke[] {new BasicStroke(1.0f)},
+                new Stroke[] {new BasicStroke(1.0f)},
+                new Shape[] {new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0)}));
         assertEquals(t1, t2);
 
-        //plotBackgroundPaint;
-        t1.setPlotBackgroundPaint(new GradientPaint(4f, 3f, Color.RED, 6f, 7f, Color.BLUE));
+        //plotBackgroundPainter;
+        t1.setPlotBackgroundPainter(new ColorPainter(Color.RED));
         assertFalse(t1.equals(t2));
-        t2.setPlotBackgroundPaint(new GradientPaint(4f, 3f, Color.RED, 6f, 7f, Color.BLUE));
+        t2.setPlotBackgroundPainter(new ColorPainter(Color.RED));
         assertEquals(t1, t2);
 
         //plotOutlinePaint;
-        t1.setPlotOutlinePaint(new GradientPaint(5f, 2f, Color.BLUE, 6f, 7f, Color.RED));
+        t1.setPlotOutlinePaint(new GradientPaint(5f, 2f, Color.BLUE, 6f, 7f, 
+                Color.RED));
         assertFalse(t1.equals(t2));
-        t2.setPlotOutlinePaint(new GradientPaint(5f, 2f, Color.BLUE, 6f, 7f, Color.RED));
+        t2.setPlotOutlinePaint(new GradientPaint(5f, 2f, Color.BLUE, 6f, 7f, 
+                Color.RED));
         assertEquals(t1, t2);
 
         //labelLinkStyle;
@@ -159,9 +178,11 @@ public class StandardChartThemeTest {
         assertEquals(t1, t2);
 
         //labelLinkPaint;
-        t1.setLabelLinkPaint(new GradientPaint(4f, 3f, Color.RED, 2f, 9f, Color.BLUE));
+        t1.setLabelLinkPaint(new GradientPaint(4f, 3f, Color.RED, 2f, 9f, 
+                Color.BLUE));
         assertFalse(t1.equals(t2));
-        t2.setLabelLinkPaint(new GradientPaint(4f, 3f, Color.RED, 2f, 9f, Color.BLUE));
+        t2.setLabelLinkPaint(new GradientPaint(4f, 3f, Color.RED, 2f, 9f, 
+                Color.BLUE));
         assertEquals(t1, t2);
 
         //domainGridlinePaint;
@@ -183,21 +204,27 @@ public class StandardChartThemeTest {
         assertEquals(t1, t2);
 
         //axisLabelPaint;
-        t1.setAxisLabelPaint(new GradientPaint(8f, 4f, Color.gray, 2f, 9f, Color.BLUE));
+        t1.setAxisLabelPaint(new GradientPaint(8f, 4f, Color.gray, 2f, 9f, 
+                Color.BLUE));
         assertFalse(t1.equals(t2));
-        t2.setAxisLabelPaint(new GradientPaint(8f, 4f, Color.gray, 2f, 9f, Color.BLUE));
+        t2.setAxisLabelPaint(new GradientPaint(8f, 4f, Color.gray, 2f, 9f, 
+                Color.BLUE));
         assertEquals(t1, t2);
 
         //tickLabelPaint;
-        t1.setTickLabelPaint(new GradientPaint(3f, 4f, Color.RED, 5f, 6f, Color.yellow));
+        t1.setTickLabelPaint(new GradientPaint(3f, 4f, Color.RED, 5f, 6f, 
+                Color.yellow));
         assertFalse(t1.equals(t2));
-        t2.setTickLabelPaint(new GradientPaint(3f, 4f, Color.RED, 5f, 6f, Color.yellow));
+        t2.setTickLabelPaint(new GradientPaint(3f, 4f, Color.RED, 5f, 6f, 
+                Color.yellow));
         assertEquals(t1, t2);
 
         //itemLabelPaint;
-        t1.setItemLabelPaint(new GradientPaint(2f, 5f, Color.gray, 1f, 2f, Color.BLUE));
+        t1.setItemLabelPaint(new GradientPaint(2f, 5f, Color.gray, 1f, 2f, 
+                Color.BLUE));
         assertFalse(t1.equals(t2));
-        t2.setItemLabelPaint(new GradientPaint(2f, 5f, Color.gray, 1f, 2f, Color.BLUE));
+        t2.setItemLabelPaint(new GradientPaint(2f, 5f, Color.gray, 1f, 2f, 
+                Color.BLUE));
         assertEquals(t1, t2);
 
         //shadowVisible;
@@ -207,51 +234,55 @@ public class StandardChartThemeTest {
         assertEquals(t1, t2);
 
         //shadowPaint;
-        t1.setShadowPaint(new GradientPaint(7f, 1f, Color.BLUE, 4f, 6f, Color.RED));
+        t1.setShadowPaint(new GradientPaint(7f, 1f, Color.BLUE, 4f, 6f, 
+                Color.RED));
         assertFalse(t1.equals(t2));
-        t2.setShadowPaint(new GradientPaint(7f, 1f, Color.BLUE, 4f, 6f, Color.RED));
+        t2.setShadowPaint(new GradientPaint(7f, 1f, Color.BLUE, 4f, 6f, 
+                Color.RED));
         assertEquals(t1, t2);
 
         //barPainter;
-        t1.setBarPainter(new StandardBarPainter());
+        t1.setBarPainter(new GradientBarPainter());
         assertFalse(t1.equals(t2));
-        t2.setBarPainter(new StandardBarPainter());
+        t2.setBarPainter(new GradientBarPainter());
         assertEquals(t1, t2);
 
         //xyBarPainter;
-        t1.setXYBarPainter(new StandardXYBarPainter());
+        t1.setXYBarPainter(new GradientXYBarPainter());
         assertFalse(t1.equals(t2));
-        t2.setXYBarPainter(new StandardXYBarPainter());
+        t2.setXYBarPainter(new GradientXYBarPainter());
         assertEquals(t1, t2);
 
         //thermometerPaint;
-        t1.setThermometerPaint(new GradientPaint(9f, 7f, Color.RED, 5f, 1f, Color.BLUE));
+        t1.setThermometerPaint(new GradientPaint(9f, 7f, Color.RED, 5f, 1f, 
+                Color.BLUE));
         assertFalse(t1.equals(t2));
-        t2.setThermometerPaint(new GradientPaint(9f, 7f, Color.RED, 5f, 1f, Color.BLUE));
-        assertEquals(t1, t2);
-
-        //wallPaint;
-        t1.setWallPaint(new GradientPaint(4f, 5f, Color.RED, 1f, 0f, Color.gray));
-        assertFalse(t1.equals(t2));
-        t2.setWallPaint(new GradientPaint(4f, 5f, Color.RED, 1f, 0f, Color.gray));
+        t2.setThermometerPaint(new GradientPaint(9f, 7f, Color.RED, 5f, 1f, 
+                Color.BLUE));
         assertEquals(t1, t2);
 
         //errorIndicatorPaint;
-        t1.setErrorIndicatorPaint(new GradientPaint(0f, 1f, Color.WHITE, 2f, 3f, Color.BLUE));
+        t1.setErrorIndicatorPaint(new GradientPaint(0f, 1f, Color.WHITE, 2f, 3f, 
+                Color.BLUE));
         assertFalse(t1.equals(t2));
-        t2.setErrorIndicatorPaint(new GradientPaint(0f, 1f, Color.WHITE, 2f, 3f, Color.BLUE));
+        t2.setErrorIndicatorPaint(new GradientPaint(0f, 1f, Color.WHITE, 2f, 3f, 
+                Color.BLUE));
         assertEquals(t1, t2);
 
         //gridBandPaint
-        t1.setGridBandPaint(new GradientPaint(1f, 2f, Color.WHITE, 4f, 8f, Color.RED));
+        t1.setGridBandPaint(new GradientPaint(1f, 2f, Color.WHITE, 4f, 8f, 
+                Color.RED));
         assertFalse(t1.equals(t2));
-        t2.setGridBandPaint(new GradientPaint(1f, 2f, Color.WHITE, 4f, 8f, Color.RED));
+        t2.setGridBandPaint(new GradientPaint(1f, 2f, Color.WHITE, 4f, 8f, 
+                Color.RED));
         assertEquals(t1, t2);
 
         //gridBandAlternatePaint
-        t1.setGridBandAlternatePaint(new GradientPaint(1f, 4f, Color.green, 1f, 2f, Color.RED));
+        t1.setGridBandAlternatePaint(new GradientPaint(1f, 4f, Color.green, 
+                1f, 2f, Color.RED));
         assertFalse(t1.equals(t2));
-        t2.setGridBandAlternatePaint(new GradientPaint(1f, 4f, Color.green, 1f, 2f, Color.RED));
+        t2.setGridBandAlternatePaint(new GradientPaint(1f, 4f, Color.green, 
+                1f, 2f, Color.RED));
         assertEquals(t1, t2);
 
     }
@@ -260,18 +291,10 @@ public class StandardChartThemeTest {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() throws IOException, ClassNotFoundException {
+    public void testSerialization() {
         StandardChartTheme t1 = new StandardChartTheme("Name");
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(t1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
-        StandardChartTheme t2 = (StandardChartTheme) in.readObject();
-        in.close();
-
+        StandardChartTheme t2 
+                = (StandardChartTheme) TestUtils.serialised(t1);
         assertEquals(t1, t2);
     }
 

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * CombinedDomainXYPlot.java
  * -------------------------
- * (C) Copyright 2001-2012, by Bill Kelemen and Contributors.
+ * (C) Copyright 2001-2014, by Bill Kelemen and Contributors.
  *
  * Original Author:  Bill Kelemen;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -93,29 +93,33 @@
  *               required (DG);
  * 21-Dec-2011 : Apply patch 3447161 by Ulrich Voigt and Martin Hoeller (MH);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
  *
  */
 
 package org.jfree.chart.plot;
 
-import org.jfree.chart.LegendItemCollection;
+import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import org.jfree.chart.LegendItem;
+
 import org.jfree.chart.axis.AxisSpace;
 import org.jfree.chart.axis.AxisState;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.event.PlotChangeListener;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ParamChecks;
+import org.jfree.chart.util.ShadowGenerator;
 import org.jfree.data.Range;
-
-import java.awt.*;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * An extension of {@link XYPlot} that contains multiple subplots that share a
@@ -154,9 +158,9 @@ public class CombinedDomainXYPlot extends XYPlot
     public CombinedDomainXYPlot(ValueAxis domainAxis) {
 
         super(null,        // no data in the parent plot
-                domainAxis,
-                null,          // no range axis
-                null);         // no rendereer
+            domainAxis,
+            null,          // no range axis
+            null);         // no rendereer
 
         this.subplots = new java.util.ArrayList<XYPlot>();
 
@@ -187,6 +191,22 @@ public class CombinedDomainXYPlot extends XYPlot
     }
 
     /**
+     * Sets the shadow generator for the plot (and all subplots) and sends
+     * a {@link PlotChangeEvent} to all registered listeners.
+     * 
+     * @param generator  the new generator (<code>null</code> permitted).
+     */
+    @Override
+    public void setShadowGenerator(ShadowGenerator generator) {
+        setNotify(false);
+        super.setShadowGenerator(generator);
+        for (XYPlot plot : this.subplots) {
+            plot.setShadowGenerator(generator);
+        }
+        setNotify(true);
+    }
+
+    /**
      * Returns a range representing the extent of the data values in this plot
      * (obtained from the subplots) that will be rendered against the specified
      * axis.  NOTE: This method is intended for internal JFreeChart use, and
@@ -214,6 +234,8 @@ public class CombinedDomainXYPlot extends XYPlot
      * Returns the gap between subplots, measured in Java2D units.
      *
      * @return The gap (in Java2D units).
+     *
+     * @see #setGap(double)
      */
     public double getGap() {
         return this.gap;
@@ -224,6 +246,8 @@ public class CombinedDomainXYPlot extends XYPlot
      * {@link PlotChangeEvent} to all registered listeners.
      *
      * @param gap  the gap between subplots (in Java2D units).
+     *
+     * @see #getGap()
      */
     public void setGap(double gap) {
         this.gap = gap;
@@ -257,10 +281,7 @@ public class CombinedDomainXYPlot extends XYPlot
      * @param weight  the weight (must be >= 1).
      */
     public void add(XYPlot subplot, int weight) {
-
-        if (subplot == null) {
-            throw new IllegalArgumentException("Null 'subplot' argument.");
-        }
+        ParamChecks.nullNotPermitted(subplot, "subplot");
         if (weight <= 0) {
             throw new IllegalArgumentException("Require weight >= 1.");
         }
@@ -268,7 +289,7 @@ public class CombinedDomainXYPlot extends XYPlot
         // store the plot and its weight
         subplot.setParent(this);
         subplot.setWeight(weight);
-        subplot.setInsets(new RectangleInsets(0.0, 0.0, 0.0, 0.0), false);
+        subplot.setInsets(RectangleInsets.ZERO_INSETS, false);
         subplot.setDomainAxis(null);
         subplot.addChangeListener(this);
         this.subplots.add(subplot);
@@ -287,9 +308,7 @@ public class CombinedDomainXYPlot extends XYPlot
      * @param subplot  the subplot (<code>null</code> not permitted).
      */
     public void remove(XYPlot subplot) {
-        if (subplot == null) {
-            throw new IllegalArgumentException(" Null 'subplot' argument.");
-        }
+        ParamChecks.nullNotPermitted(subplot, "subplot");
         int position = -1;
         int size = this.subplots.size();
         int i = 0;
@@ -320,7 +339,8 @@ public class CombinedDomainXYPlot extends XYPlot
     public List<XYPlot> getSubplots() {
         if (this.subplots != null) {
             return Collections.unmodifiableList(this.subplots);
-        } else {
+        }
+        else {
             return Collections.EMPTY_LIST;
         }
     }
@@ -346,11 +366,13 @@ public class CombinedDomainXYPlot extends XYPlot
             if (orientation == PlotOrientation.HORIZONTAL) {
                 space.setLeft(fixed.getLeft());
                 space.setRight(fixed.getRight());
-            } else if (orientation == PlotOrientation.VERTICAL) {
+            }
+            else if (orientation == PlotOrientation.VERTICAL) {
                 space.setTop(fixed.getTop());
                 space.setBottom(fixed.getBottom());
             }
-        } else {
+        }
+        else {
             ValueAxis xAxis = getDomainAxis();
             RectangleEdge xEdge = Plot.resolveDomainAxisLocation(
                     getDomainAxisLocation(), orientation);
@@ -373,7 +395,8 @@ public class CombinedDomainXYPlot extends XYPlot
         double usableSize = 0.0;
         if (orientation == PlotOrientation.HORIZONTAL) {
             usableSize = adjustedPlotArea.getWidth() - this.gap * (n - 1);
-        } else if (orientation == PlotOrientation.VERTICAL) {
+        }
+        else if (orientation == PlotOrientation.VERTICAL) {
             usableSize = adjustedPlotArea.getHeight() - this.gap * (n - 1);
         }
 
@@ -386,7 +409,8 @@ public class CombinedDomainXYPlot extends XYPlot
                 this.subplotAreas[i] = new Rectangle2D.Double(x, y, w,
                         adjustedPlotArea.getHeight());
                 x = x + w + this.gap;
-            } else if (orientation == PlotOrientation.VERTICAL) {
+            }
+            else if (orientation == PlotOrientation.VERTICAL) {
                 double h = usableSize * plot.getWeight() / totalWeight;
                 this.subplotAreas[i] = new Rectangle2D.Double(x, y,
                         adjustedPlotArea.getWidth(), h);
@@ -416,7 +440,7 @@ public class CombinedDomainXYPlot extends XYPlot
      */
     @Override
     public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
-                     PlotState parentState, PlotRenderingInfo info) {
+            PlotState parentState, PlotRenderingInfo info) {
 
         // set up info collection...
         if (info != null) {
@@ -468,13 +492,13 @@ public class CombinedDomainXYPlot extends XYPlot
      * @return The legend items.
      */
     @Override
-    public LegendItemCollection getLegendItems() {
-        LegendItemCollection result = getFixedLegendItems();
+    public List<LegendItem> getLegendItems() {
+        List<LegendItem> result = getFixedLegendItems();
         if (result == null) {
-            result = new LegendItemCollection();
+            result = new ArrayList<LegendItem>();
             if (this.subplots != null) {
                 for (XYPlot plot : this.subplots) {
-                    LegendItemCollection more = plot.getLegendItems();
+                    List<LegendItem> more = plot.getLegendItems();
                     result.addAll(more);
                 }
             }
@@ -510,7 +534,8 @@ public class CombinedDomainXYPlot extends XYPlot
         XYPlot subplot = findSubplot(state, source);
         if (subplot != null) {
             subplot.zoomRangeAxes(factor, state, source, useAnchor);
-        } else {
+        }
+        else {
             // if the source point doesn't fall within a subplot, we do the
             // zoom on all subplots...
             for (XYPlot subPlot : getSubplots()) {
@@ -534,7 +559,8 @@ public class CombinedDomainXYPlot extends XYPlot
         XYPlot subplot = findSubplot(info, source);
         if (subplot != null) {
             subplot.zoomRangeAxes(lowerPercent, upperPercent, info, source);
-        } else {
+        }
+        else {
             // if the source point doesn't fall within a subplot, we do the
             // zoom on all subplots...
             for (XYPlot sp : getSubplots()) {
@@ -544,7 +570,8 @@ public class CombinedDomainXYPlot extends XYPlot
     }
 
     /**
-     * Pans all range axes by the specified percentage.
+     * Pans the range axis (or axes) of the plot under the mouse pointer by the
+     * specified percentage.
      *
      * @param panRange the distance to pan (as a percentage of the axis length).
      * @param info the plot info
@@ -554,19 +581,25 @@ public class CombinedDomainXYPlot extends XYPlot
      */
     @Override
     public void panRangeAxes(double panRange, PlotRenderingInfo info,
-                             Point2D source) {
-
-        XYPlot subplot = findSubplot(info, source);
-        if (subplot != null) {
-            PlotRenderingInfo subplotInfo = info.getSubplotInfo(
-                    info.getSubplotIndex(source));
-            if (subplotInfo == null) {
-                return;
+            Point2D source) {
+        // if the isRangePannable flag is set for the combined plot, we should
+        // pan for all the subplots, otherwise just the one under the mouse
+        // pointer
+        List<XYPlot> plotsToPan = new ArrayList<XYPlot>();
+        if (isRangePannable()) {
+            plotsToPan.addAll(this.subplots);
+        } else {
+            plotsToPan.add(findSubplot(info, source));
+        }
+        for (XYPlot subplot : plotsToPan) {
+            if (subplot == null) {
+                continue;
             }
-
-            for (int i = 0; i < subplot.getRangeAxisCount(); i++) {
-                ValueAxis rangeAxis = subplot.getRangeAxis(i);
-                rangeAxis.pan(panRange);
+            if (isRangePannable() || subplot.isRangePannable()) {
+                for (int i = 0; i < subplot.getRangeAxisCount(); i++) {
+                    ValueAxis rangeAxis = subplot.getRangeAxis(i);
+                    rangeAxis.pan(panRange);
+                }
             }
         }
     }
@@ -581,12 +614,8 @@ public class CombinedDomainXYPlot extends XYPlot
      * @return A subplot (possibly <code>null</code>).
      */
     public XYPlot findSubplot(PlotRenderingInfo info, Point2D source) {
-        if (info == null) {
-            throw new IllegalArgumentException("Null 'info' argument.");
-        }
-        if (source == null) {
-            throw new IllegalArgumentException("Null 'source' argument.");
-        }
+        ParamChecks.nullNotPermitted(info, "info");
+        ParamChecks.nullNotPermitted(source, "source");
         XYPlot result = null;
         int subplotIndex = info.getSubplotIndex(source);
         if (subplotIndex >= 0) {
@@ -607,8 +636,8 @@ public class CombinedDomainXYPlot extends XYPlot
     @Override
     public void setRenderer(XYItemRenderer renderer) {
         super.setRenderer(renderer);  // not strictly necessary, since the
-        // renderer set for the
-        // parent plot is not used
+                                      // renderer set for the
+                                      // parent plot is not used
         for (XYPlot subplot : this.subplots) {
             subplot.setRenderer(renderer);
         }
@@ -688,7 +717,7 @@ public class CombinedDomainXYPlot extends XYPlot
         if (this.gap != that.gap) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.subplots, that.subplots)) {
+        if (!ObjectUtils.equal(this.subplots, that.subplots)) {
             return false;
         }
         return super.equals(obj);
@@ -706,10 +735,9 @@ public class CombinedDomainXYPlot extends XYPlot
     public Object clone() throws CloneNotSupportedException {
 
         CombinedDomainXYPlot result = (CombinedDomainXYPlot) super.clone();
-        result.subplots = (List) ObjectUtilities.deepClone(this.subplots);
-        for (XYPlot subplot : result.subplots) {
-            Plot child = subplot;
-            child.setParent(result);
+        result.subplots = (List<XYPlot>) ObjectUtils.deepClone(this.subplots);
+        for (XYPlot p : result.subplots) {
+            p.setParent(result);
         }
 
         // after setting up all the subplots, the shared domain axis may need

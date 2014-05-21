@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------------
  * CombinedDomainCategoryPlot.java
  * -------------------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Nicolas Brodu;
@@ -61,28 +61,32 @@
  * 11-Aug-2008 : Don't store totalWeight of subplots, calculate it as
  *               required (DG);
  * 12-Jun-2012 : Removed JCommon dependencies (DG);
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
  *
  */
 
 package org.jfree.chart.plot;
 
-import org.jfree.chart.LegendItemCollection;
+import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import org.jfree.chart.LegendItem;
+
 import org.jfree.chart.axis.AxisSpace;
 import org.jfree.chart.axis.AxisState;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.event.PlotChangeEvent;
-import org.jfree.chart.event.PlotChangeListener;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.event.PlotChangeEvent;
+import org.jfree.chart.event.PlotChangeListener;
+import org.jfree.chart.util.ParamChecks;
+import org.jfree.chart.util.ShadowGenerator;
 import org.jfree.data.Range;
-
-import java.awt.*;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * A combined category plot where the domain axis is shared.
@@ -170,9 +174,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @param weight  the weight (must be >= 1).
      */
     public void add(CategoryPlot subplot, int weight) {
-        if (subplot == null) {
-            throw new IllegalArgumentException("Null 'subplot' argument.");
-        }
+        ParamChecks.nullNotPermitted(subplot, "subplot");
         if (weight < 1) {
             throw new IllegalArgumentException("Require weight >= 1.");
         }
@@ -199,9 +201,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @param subplot  the subplot (<code>null</code> not permitted).
      */
     public void remove(CategoryPlot subplot) {
-        if (subplot == null) {
-            throw new IllegalArgumentException("Null 'subplot' argument.");
-        }
+        ParamChecks.nullNotPermitted(subplot, "subplot");
         int position = -1;
         int size = this.subplots.size();
         int i = 0;
@@ -232,7 +232,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
     public List<CategoryPlot> getSubplots() {
         if (this.subplots != null) {
             return Collections.unmodifiableList(this.subplots);
-        } else {
+        }
+        else {
             return Collections.EMPTY_LIST;
         }
     }
@@ -247,12 +248,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @return A subplot (possibly <code>null</code>).
      */
     public CategoryPlot findSubplot(PlotRenderingInfo info, Point2D source) {
-        if (info == null) {
-            throw new IllegalArgumentException("Null 'info' argument.");
-        }
-        if (source == null) {
-            throw new IllegalArgumentException("Null 'source' argument.");
-        }
+        ParamChecks.nullNotPermitted(info, "info");
+        ParamChecks.nullNotPermitted(source, "source");
         CategoryPlot result = null;
         int subplotIndex = info.getSubplotIndex(source);
         if (subplotIndex >= 0) {
@@ -289,7 +286,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
         CategoryPlot subplot = findSubplot(info, source);
         if (subplot != null) {
             subplot.zoomRangeAxes(factor, info, source, useAnchor);
-        } else {
+        }
+        else {
             // if the source point doesn't fall within a subplot, we do the
             // zoom on all subplots...
             for (CategoryPlot categoryPlot : getSubplots()) {
@@ -314,7 +312,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
         CategoryPlot subplot = findSubplot(info, source);
         if (subplot != null) {
             subplot.zoomRangeAxes(lowerPercent, upperPercent, info, source);
-        } else {
+        }
+        else {
             // if the source point doesn't fall within a subplot, we do the
             // zoom on all subplots...
             for (CategoryPlot categoryPlot : getSubplots()) {
@@ -345,18 +344,21 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
             if (orientation == PlotOrientation.HORIZONTAL) {
                 space.setLeft(fixed.getLeft());
                 space.setRight(fixed.getRight());
-            } else if (orientation == PlotOrientation.VERTICAL) {
+            }
+            else if (orientation == PlotOrientation.VERTICAL) {
                 space.setTop(fixed.getTop());
                 space.setBottom(fixed.getBottom());
             }
-        } else {
+        }
+        else {
             CategoryAxis categoryAxis = getDomainAxis();
             RectangleEdge categoryEdge = Plot.resolveDomainAxisLocation(
                     getDomainAxisLocation(), orientation);
             if (categoryAxis != null) {
                 space = categoryAxis.reserveSpace(g2, this, plotArea,
                         categoryEdge, space);
-            } else {
+            }
+            else {
                 if (getDrawSharedDomainAxis()) {
                     space = getDomainAxis().reserveSpace(g2, this, plotArea,
                             categoryEdge, space);
@@ -378,7 +380,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
         double usableSize = 0.0;
         if (orientation == PlotOrientation.HORIZONTAL) {
             usableSize = adjustedPlotArea.getWidth() - this.gap * (n - 1);
-        } else if (orientation == PlotOrientation.VERTICAL) {
+        }
+        else if (orientation == PlotOrientation.VERTICAL) {
             usableSize = adjustedPlotArea.getHeight() - this.gap * (n - 1);
         }
 
@@ -391,7 +394,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
                 this.subplotAreas[i] = new Rectangle2D.Double(x, y, w,
                         adjustedPlotArea.getHeight());
                 x = x + w + this.gap;
-            } else if (orientation == PlotOrientation.VERTICAL) {
+            }
+            else if (orientation == PlotOrientation.VERTICAL) {
                 double h = usableSize * plot.getWeight() / totalWeight;
                 this.subplotAreas[i] = new Rectangle2D.Double(x, y,
                         adjustedPlotArea.getWidth(), h);
@@ -422,7 +426,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      */
     @Override
     public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
-                     PlotState parentState, PlotRenderingInfo info) {
+            PlotState parentState, PlotRenderingInfo info) {
 
         // set up info collection...
         if (info != null) {
@@ -504,6 +508,22 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
     }
 
     /**
+     * Sets the shadow generator for the plot (and all subplots) and sends
+     * a {@link PlotChangeEvent} to all registered listeners.
+     * 
+     * @param generator  the new generator (<code>null</code> permitted).
+     */
+    @Override
+    public void setShadowGenerator(ShadowGenerator generator) {
+        setNotify(false);
+        super.setShadowGenerator(generator);
+        for (CategoryPlot plot : this.subplots) {
+            plot.setShadowGenerator(generator);
+        }
+        setNotify(true);
+    }
+
+    /**
      * Returns a range representing the extent of the data values in this plot
      * (obtained from the subplots) that will be rendered against the specified
      * axis.  NOTE: This method is intended for internal JFreeChart use, and
@@ -529,13 +549,13 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
      * @return The legend items.
      */
     @Override
-    public LegendItemCollection getLegendItems() {
-        LegendItemCollection result = getFixedLegendItems();
+    public List<LegendItem> getLegendItems() {
+        List<LegendItem> result = getFixedLegendItems();
         if (result == null) {
-            result = new LegendItemCollection();
+            result = new ArrayList<LegendItem>();
             if (this.subplots != null) {
                 for (CategoryPlot plot : this.subplots) {
-                    LegendItemCollection more = plot.getLegendItems();
+                    List<LegendItem> more = plot.getLegendItems();
                     result.addAll(more);
                 }
             }
@@ -632,7 +652,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
         if (this.gap != that.gap) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.subplots, that.subplots)) {
+        if (!ObjectUtils.equal(this.subplots, that.subplots)) {
             return false;
         }
         return super.equals(obj);
@@ -649,8 +669,8 @@ public class CombinedDomainCategoryPlot extends CategoryPlot
     @Override
     public Object clone() throws CloneNotSupportedException {
         CombinedDomainCategoryPlot result
-                = (CombinedDomainCategoryPlot) super.clone();
-        result.subplots = ObjectUtilities.deepClone(this.subplots);
+            = (CombinedDomainCategoryPlot) super.clone();
+        result.subplots = ObjectUtils.deepClone(this.subplots);
         for (CategoryPlot child : this.subplots) {
             child.setParent(result);
         }

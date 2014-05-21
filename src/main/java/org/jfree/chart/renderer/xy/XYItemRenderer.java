@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  *
- * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
+ * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
  * -------------------
@@ -36,9 +36,9 @@
  *                   Richard Atkinson;
  *
  * Changes:
- * For history prior to the release of JFreeChart 1.0.0 in December 2005, 
+ * For history prior to the release of JFreeChart 1.0.0 in December 2005,
  * please refer to the source files in the JFreeChart 1.0.x release.
- * 
+ *
  * ------------- JFREECHART 1.0.x ---------------------------------------------
  * 19-Apr-2007 : Deprecated seriesVisible and seriesVisibleInLegend flags (DG);
  * 20-Apr-2007 : Deprecated paint, fillPaint, outlinePaint, stroke,
@@ -47,10 +47,10 @@
  *               negativeItemLabelPosition and createEntities override
  *               fields (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
- * 
+ *
  * ------------- JFREECHART Future State Edition (1.2.0?) ---------------------
  *               < under development >
- * 
+ *
  */
 
 package org.jfree.chart.renderer.xy;
@@ -59,6 +59,7 @@ import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
+import java.util.Collection;
 
 import org.jfree.chart.annotations.XYAnnotation;
 import org.jfree.chart.axis.ValueAxis;
@@ -123,7 +124,7 @@ public interface XYItemRenderer extends Renderer {
      *         <code>null</code> or empty).
      */
     public Range findRangeBounds(XYDataset dataset);
- 
+
 
     //// LEGEND ITEM LABEL GENERATOR //////////////////////////////////////////
 
@@ -147,7 +148,7 @@ public interface XYItemRenderer extends Renderer {
     public void setLegendItemLabelGenerator(XYSeriesLabelGenerator generator,
             boolean notify);
 
-    
+
     //// TOOL TIP GENERATOR ///////////////////////////////////////////////////
 
     /**
@@ -205,7 +206,7 @@ public interface XYItemRenderer extends Renderer {
      */
     public void setDefaultToolTipGenerator(XYToolTipGenerator generator);
 
-    public void setDefaultToolTipGenerator(XYToolTipGenerator generator, 
+    public void setDefaultToolTipGenerator(XYToolTipGenerator generator,
             boolean notify);
 
 
@@ -266,7 +267,7 @@ public interface XYItemRenderer extends Renderer {
      */
     public void setDefaultItemLabelGenerator(XYItemLabelGenerator generator);
 
-    public void setDefaultItemLabelGenerator(XYItemLabelGenerator generator, 
+    public void setDefaultItemLabelGenerator(XYItemLabelGenerator generator,
             boolean notify);
 
 
@@ -290,7 +291,7 @@ public interface XYItemRenderer extends Renderer {
 
     // FIXME: series level
 
-    
+
     //// ANNOTATIONS //////////////////////////////////////////////////////////
 
     /**
@@ -327,6 +328,15 @@ public interface XYItemRenderer extends Renderer {
      * to all registered listeners.
      */
     public void removeAnnotations();
+
+    /**
+     * Returns a collection of the annotations that are assigned to the
+     * renderer.
+     *
+     * @return A collection of annotations (possibly empty but never
+     *     <code>null</code>).
+     */
+    public Collection<XYAnnotation> getAnnotations();
 
     /**
      * Draws all the annotations for the specified layer.

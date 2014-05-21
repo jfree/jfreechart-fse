@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * LegendGraphicTests.java
  * -----------------------
- * (C) Copyright 2005-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -41,23 +41,29 @@
 
 package org.jfree.chart.title;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+
+import org.junit.Test;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Rectangle;
+import java.awt.Stroke;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import org.jfree.chart.TestUtils;
+
 import org.jfree.chart.ui.GradientPaintTransformType;
 import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.StandardGradientPaintTransformer;
-import org.junit.Test;
-
-import java.awt.*;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.io.*;
-
-import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link LegendGraphic} class.
  */
-public class LegendGraphicTest {
-
+public class LegendGraphicTest  {
 
     /**
      * Check that the equals() method distinguishes all fields.
@@ -156,7 +162,6 @@ public class LegendGraphicTest {
         g2.setFillPaintTransformer(new StandardGradientPaintTransformer(
                 GradientPaintTransformType.CENTER_HORIZONTAL));
         assertEquals(g1, g2);
-
     }
 
     /**
@@ -208,31 +213,18 @@ public class LegendGraphicTest {
         // check independence
         l.setLine(4.0, 3.0, 2.0, 1.0);
         assertFalse(g1.equals(g2));
-
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() throws IOException, ClassNotFoundException {
-
+    public void testSerialization() {
         Stroke s = new BasicStroke(1.23f);
         LegendGraphic g1 = new LegendGraphic(new Rectangle2D.Double(1.0, 2.0, 3.0, 4.0), Color.BLACK);
         g1.setOutlineStroke(s);
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(g1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
-        LegendGraphic g2 = (LegendGraphic) in.readObject();
-        in.close();
-
+        LegendGraphic g2 = (LegendGraphic) TestUtils.serialised(g1);
         assertEquals(g1, g2);
-
     }
 
 }

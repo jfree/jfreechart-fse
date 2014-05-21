@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------
  * SamplingXYLineRenderer.java
  * ---------------------------
- * (C) Copyright 2008-2012, by Object Refinery Limited.
+ * (C) Copyright 2008-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -59,13 +59,12 @@ import java.io.Serializable;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
-import org.jfree.chart.event.RendererChangeEvent;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.plot.CrosshairState;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.xy.XYDataset;
 
 /**
@@ -230,18 +229,10 @@ public class SamplingXYLineRenderer extends AbstractXYItemRenderer
      * @param pass  the pass index.
      */
     @Override
-    public void drawItem(Graphics2D g2,
-                         XYItemRendererState state,
-                         Rectangle2D dataArea,
-                         PlotRenderingInfo info,
-                         XYPlot plot,
-                         ValueAxis domainAxis,
-                         ValueAxis rangeAxis,
-                         XYDataset dataset,
-                         int series,
-                         int item,
-                         CrosshairState crosshairState,
-                         int pass) {
+    public void drawItem(Graphics2D g2, XYItemRendererState state, 
+            Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot, 
+            ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
+            int series, int item, CrosshairState crosshairState, int pass) {
 
         // do nothing if item is not visible
         if (!getItemVisible(series, item)) {
@@ -325,7 +316,7 @@ public class SamplingXYLineRenderer extends AbstractXYItemRenderer
     public Object clone() throws CloneNotSupportedException {
         SamplingXYLineRenderer clone = (SamplingXYLineRenderer) super.clone();
         if (this.legendLine != null) {
-            clone.legendLine = ShapeUtilities.clone(this.legendLine);
+            clone.legendLine = ShapeUtils.clone(this.legendLine);
         }
         return clone;
     }
@@ -349,7 +340,7 @@ public class SamplingXYLineRenderer extends AbstractXYItemRenderer
             return false;
         }
         SamplingXYLineRenderer that = (SamplingXYLineRenderer) obj;
-        if (!ShapeUtilities.equal(this.legendLine, that.legendLine)) {
+        if (!ShapeUtils.equal(this.legendLine, that.legendLine)) {
             return false;
         }
         return true;
@@ -366,7 +357,7 @@ public class SamplingXYLineRenderer extends AbstractXYItemRenderer
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.legendLine = SerialUtilities.readShape(stream);
+        this.legendLine = SerialUtils.readShape(stream);
     }
 
     /**
@@ -378,7 +369,7 @@ public class SamplingXYLineRenderer extends AbstractXYItemRenderer
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeShape(this.legendLine, stream);
+        SerialUtils.writeShape(this.legendLine, stream);
     }
 
 }

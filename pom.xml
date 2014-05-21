@@ -39,6 +39,14 @@
           <argLine>-XX:-OmitStackTraceInFastThrow</argLine>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9</version>
+        <configuration>
+          <overview>src/main/java/overview.html</overview>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
@@ -52,7 +60,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.10</version>
+      <version>4.11</version>
       <scope>test</scope>
     </dependency>
     <dependency>

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * RectangleAnchor.java
  * --------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -46,6 +46,7 @@ package org.jfree.chart.ui;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * Used to indicate an anchor point for a rectangle.
@@ -80,17 +81,49 @@ public enum RectangleAnchor {
     RIGHT("RectangleAnchor.RIGHT");
 
     /** The name. */
-    private String name;
+    private final String name;
 
     /**
      * Private constructor.
      *
      * @param name  the name.
      */
-    private RectangleAnchor(final String name) {
+    private RectangleAnchor(String name) {
         this.name = name;
     }
 
+    /**
+     * Returns the anchor point relative to the specified rectangle.
+     * 
+     * @param rectangle  the rectangle (<code>null</code> not permitted).
+     * 
+     * @return The anchor point (never <code>null</code>). 
+     */
+    public Point2D getAnchorPoint(Rectangle2D rectangle) {
+        ParamChecks.nullNotPermitted(rectangle, "rectangle");
+        Point2D result = new Point2D.Double();
+        if (this == RectangleAnchor.CENTER) {
+            result.setLocation(rectangle.getCenterX(), rectangle.getCenterY());
+        } else if (this == RectangleAnchor.TOP) {
+            result.setLocation(rectangle.getCenterX(), rectangle.getMinY());
+        } else if (this == RectangleAnchor.BOTTOM) {
+            result.setLocation(rectangle.getCenterX(), rectangle.getMaxY());
+        } else if (this == RectangleAnchor.LEFT) {
+            result.setLocation(rectangle.getMinX(), rectangle.getCenterY());
+        } else if (this == RectangleAnchor.RIGHT) {
+            result.setLocation(rectangle.getMaxX(), rectangle.getCenterY());
+        } else if (this == RectangleAnchor.TOP_LEFT) {
+            result.setLocation(rectangle.getMinX(), rectangle.getMinY());
+        } else if (this == RectangleAnchor.TOP_RIGHT) {
+            result.setLocation(rectangle.getMaxX(), rectangle.getMinY());
+        } else if (this == RectangleAnchor.BOTTOM_LEFT) {
+            result.setLocation(rectangle.getMinX(), rectangle.getMaxY());
+        } else if (this == RectangleAnchor.BOTTOM_RIGHT) {
+            result.setLocation(rectangle.getMaxX(), rectangle.getMaxY());
+        }
+        return result;
+    }
+    
     /**
      * Returns a string representing the object.
      *
@@ -108,30 +141,12 @@ public enum RectangleAnchor {
      * @param anchor  the anchor.
      *
      * @return The (x, y) coordinates.
+     * 
+     * @deprecated Use {@link #getAnchorPoint(java.awt.geom.Rectangle2D)}.
      */
-    public static Point2D coordinates(final Rectangle2D rectangle,
-                                      final RectangleAnchor anchor) {
-        Point2D result = new Point2D.Double();
-        if (anchor == RectangleAnchor.CENTER) {
-            result.setLocation(rectangle.getCenterX(), rectangle.getCenterY());
-        } else if (anchor == RectangleAnchor.TOP) {
-            result.setLocation(rectangle.getCenterX(), rectangle.getMinY());
-        } else if (anchor == RectangleAnchor.BOTTOM) {
-            result.setLocation(rectangle.getCenterX(), rectangle.getMaxY());
-        } else if (anchor == RectangleAnchor.LEFT) {
-            result.setLocation(rectangle.getMinX(), rectangle.getCenterY());
-        } else if (anchor == RectangleAnchor.RIGHT) {
-            result.setLocation(rectangle.getMaxX(), rectangle.getCenterY());
-        } else if (anchor == RectangleAnchor.TOP_LEFT) {
-            result.setLocation(rectangle.getMinX(), rectangle.getMinY());
-        } else if (anchor == RectangleAnchor.TOP_RIGHT) {
-            result.setLocation(rectangle.getMaxX(), rectangle.getMinY());
-        } else if (anchor == RectangleAnchor.BOTTOM_LEFT) {
-            result.setLocation(rectangle.getMinX(), rectangle.getMaxY());
-        } else if (anchor == RectangleAnchor.BOTTOM_RIGHT) {
-            result.setLocation(rectangle.getMaxX(), rectangle.getMaxY());
-        }
-        return result;
+    public static Point2D coordinates(Rectangle2D rectangle, 
+            RectangleAnchor anchor) {
+        return anchor.getAnchorPoint(rectangle);
     }
 
     /**
@@ -145,51 +160,39 @@ public enum RectangleAnchor {
      *
      * @return A rectangle.
      */
-    public static Rectangle2D createRectangle(final Size2D dimensions,
-                                              final double anchorX,
-                                              final double anchorY,
-                                              final RectangleAnchor anchor) {
+    public static Rectangle2D createRectangle(Size2D dimensions, double anchorX,
+            double anchorY, RectangleAnchor anchor) {
         Rectangle2D result = null;
-        final double w = dimensions.getWidth();
-        final double h = dimensions.getHeight();
+        double w = dimensions.getWidth();
+        double h = dimensions.getHeight();
         if (anchor == RectangleAnchor.CENTER) {
-            result = new Rectangle2D.Double(
-                    anchorX - w / 2.0, anchorY - h / 2.0, w, h
-            );
+            result = new Rectangle2D.Double(anchorX - w / 2.0, 
+                    anchorY - h / 2.0, w, h);
         } else if (anchor == RectangleAnchor.TOP) {
-            result = new Rectangle2D.Double(
-                    anchorX - w / 2.0, anchorY - h / 2.0, w, h
-            );
+            result = new Rectangle2D.Double(anchorX - w / 2.0, 
+                    anchorY - h / 2.0, w, h);
         } else if (anchor == RectangleAnchor.BOTTOM) {
-            result = new Rectangle2D.Double(
-                    anchorX - w / 2.0, anchorY - h / 2.0, w, h
-            );
+            result = new Rectangle2D.Double(anchorX - w / 2.0, 
+                    anchorY - h / 2.0, w, h);
         } else if (anchor == RectangleAnchor.LEFT) {
-            result = new Rectangle2D.Double(
-                    anchorX, anchorY - h / 2.0, w, h
-            );
+            result = new Rectangle2D.Double(anchorX, anchorY - h / 2.0, w, h);
         } else if (anchor == RectangleAnchor.RIGHT) {
-            result = new Rectangle2D.Double(
-                    anchorX - w, anchorY - h / 2.0, w, h
-            );
+            result = new Rectangle2D.Double(anchorX - w, anchorY - h / 2.0, w, 
+                    h);
         } else if (anchor == RectangleAnchor.TOP_LEFT) {
-            result = new Rectangle2D.Double(
-                    anchorX - w / 2.0, anchorY - h / 2.0, w, h
-            );
+            result = new Rectangle2D.Double(anchorX - w / 2.0, 
+                    anchorY - h / 2.0, w, h);
         } else if (anchor == RectangleAnchor.TOP_RIGHT) {
-            result = new Rectangle2D.Double(
-                    anchorX - w / 2.0, anchorY - h / 2.0, w, h
-            );
+            result = new Rectangle2D.Double(anchorX - w / 2.0, 
+                    anchorY - h / 2.0, w, h);
         } else if (anchor == RectangleAnchor.BOTTOM_LEFT) {
-            result = new Rectangle2D.Double(
-                    anchorX - w / 2.0, anchorY - h / 2.0, w, h
-            );
+            result = new Rectangle2D.Double(anchorX - w / 2.0, 
+                    anchorY - h / 2.0, w, h);
         } else if (anchor == RectangleAnchor.BOTTOM_RIGHT) {
-            result = new Rectangle2D.Double(
-                    anchorX - w / 2.0, anchorY - h / 2.0, w, h
-            );
+            result = new Rectangle2D.Double(anchorX - w / 2.0, 
+                    anchorY - h / 2.0, w, h);
         }
         return result;
     }
-
+    
 }

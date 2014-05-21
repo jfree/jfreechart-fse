@@ -61,22 +61,22 @@
 
 package org.jfree.data.statistics;
 
-import org.jfree.chart.util.ObjectUtilities;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.data.Range;
 import org.jfree.data.RangeInfo;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.xy.AbstractXYDataset;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * A simple implementation of the {@link BoxAndWhiskerXYDataset} interface.
  * This dataset implementation can hold only one series.
  */
 public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
-        implements BoxAndWhiskerXYDataset, RangeInfo {
+            implements BoxAndWhiskerXYDataset, RangeInfo {
 
     /** The series key. */
     private Comparable seriesKey;
@@ -185,10 +185,11 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
 
         if (faroutCoefficient > getOutlierCoefficient()) {
             this.faroutCoefficient = faroutCoefficient;
-        } else {
+        }
+        else {
             throw new IllegalArgumentException("Farout value must be greater "
-                    + "than the outlier value, which is currently set at: ("
-                    + getOutlierCoefficient() + ")");
+                + "than the outlier value, which is currently set at: ("
+                + getOutlierCoefficient() + ")");
         }
     }
 
@@ -228,7 +229,8 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
         this.items.add(item);
         if (this.minimumRangeValue == null) {
             this.minimumRangeValue = item.getMinRegularValue();
-        } else {
+        }
+        else {
             if (item.getMinRegularValue().doubleValue()
                     < this.minimumRangeValue.doubleValue()) {
                 this.minimumRangeValue = item.getMinRegularValue();
@@ -236,7 +238,8 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
         }
         if (this.maximumRangeValue == null) {
             this.maximumRangeValue = item.getMaxRegularValue();
-        } else {
+        }
+        else {
             if (item.getMaxRegularValue().doubleValue()
                     > this.maximumRangeValue.doubleValue()) {
                 this.maximumRangeValue = item.getMaxRegularValue();
@@ -545,7 +548,7 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset
         }
         DefaultBoxAndWhiskerXYDataset that
                 = (DefaultBoxAndWhiskerXYDataset) obj;
-        if (!ObjectUtilities.equal(this.seriesKey, that.seriesKey)) {
+        if (!ObjectUtils.equal(this.seriesKey, that.seriesKey)) {
             return false;
         }
         if (!this.dates.equals(that.dates)) {

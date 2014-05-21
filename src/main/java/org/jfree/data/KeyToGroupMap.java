@@ -45,14 +45,18 @@
 
 package org.jfree.data;
 
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PublicCloneable;
-
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.PublicCloneable;
 
 /**
  * A class that maps keys (instances of <code>Comparable</code>) to groups.
@@ -133,7 +137,8 @@ public class KeyToGroupMap implements Cloneable, PublicCloneable, Serializable {
             if (this.defaultGroup.equals(group)) {
                 result = 0;
             }
-        } else {
+        }
+        else {
             result = result + 1;
         }
         return result;
@@ -181,7 +186,8 @@ public class KeyToGroupMap implements Cloneable, PublicCloneable, Serializable {
         }
         if (group == null) {
             this.keyToGroupMap.remove(key);
-        } else {
+        }
+        else {
             if (!this.groups.contains(group)) {
                 if (!this.defaultGroup.equals(group)) {
                     this.groups.add(group);
@@ -229,7 +235,7 @@ public class KeyToGroupMap implements Cloneable, PublicCloneable, Serializable {
             return false;
         }
         KeyToGroupMap that = (KeyToGroupMap) obj;
-        if (!ObjectUtilities.equal(this.defaultGroup, that.defaultGroup)) {
+        if (!ObjectUtils.equal(this.defaultGroup, that.defaultGroup)) {
             return false;
         }
         if (!this.keyToGroupMap.equals(that.keyToGroupMap)) {
@@ -250,7 +256,7 @@ public class KeyToGroupMap implements Cloneable, PublicCloneable, Serializable {
     public Object clone() throws CloneNotSupportedException {
         KeyToGroupMap result = (KeyToGroupMap) super.clone();
         result.defaultGroup
-                = KeyToGroupMap.clone(this.defaultGroup);
+            = KeyToGroupMap.clone(this.defaultGroup);
         result.groups = (List<Comparable>) KeyToGroupMap.clone(this.groups);
         result.keyToGroupMap = KeyToGroupMap.clone(this.keyToGroupMap);
         return result;
@@ -274,13 +280,16 @@ public class KeyToGroupMap implements Cloneable, PublicCloneable, Serializable {
             if (Modifier.isPublic(m.getModifiers())) {
                 try {
                     result = (T) m.invoke(object, (Object[]) null);
-                } catch (InvocationTargetException e) {
+                }
+                catch (InvocationTargetException e) {
                     throw new RuntimeException("Could not clone object", e);
-                } catch (IllegalAccessException e) {
+                }
+                catch (IllegalAccessException e) {
                     throw new RuntimeException("Could not clone object", e);
                 }
             }
-        } catch (NoSuchMethodException e) {
+        }
+        catch (NoSuchMethodException e) {
             result = object;
         }
         return result;
@@ -296,7 +305,7 @@ public class KeyToGroupMap implements Cloneable, PublicCloneable, Serializable {
      * @throws CloneNotSupportedException if the list could not be cloned.
      */
     private static <T> Collection<T> clone(Collection<T> list)
-            throws CloneNotSupportedException {
+        throws CloneNotSupportedException {
         Collection<T> result = null;
         if (list != null) {
             try {
@@ -305,7 +314,8 @@ public class KeyToGroupMap implements Cloneable, PublicCloneable, Serializable {
                     clone.add(KeyToGroupMap.clone(aList));
                 }
                 result = clone;
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 throw new CloneNotSupportedException("Exception.");
             }
         }

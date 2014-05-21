@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * XYDataItem.java
  * ---------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -48,14 +48,15 @@
 package org.jfree.data.xy;
 
 import java.io.Serializable;
-
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * Represents one (x, y) data item for an {@link XYSeries}.  Note that
  * subclasses are REQUIRED to support cloning.
  */
-public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializable {
+public class XYDataItem implements Cloneable, Comparable<XYDataItem>, 
+        Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 2751513470325494890L;
@@ -73,9 +74,7 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
      * @param y  the y-value (<code>null</code> permitted).
      */
     public XYDataItem(Number x, Number y) {
-        if (x == null) {
-            throw new IllegalArgumentException("Null 'x' argument.");
-        }
+        ParamChecks.nullNotPermitted(x, "x");
         this.x = x;
         this.y = y;
     }
@@ -175,14 +174,12 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
      */
     @Override
     public int compareTo(XYDataItem dataItem) {
-       int result;
-
+        int result;
         double compare = this.x.doubleValue()
                          - dataItem.getX().doubleValue();
         if (compare > 0.0) {
             result = 1;
-        }
-        else {
+        } else {
             if (compare < 0.0) {
                 result = -1;
             }
@@ -190,10 +187,7 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
                 result = 0;
             }
         }
-
-
         return result;
-
     }
 
     /**
@@ -234,7 +228,7 @@ public class XYDataItem implements Cloneable, Comparable<XYDataItem>, Serializab
         if (!this.x.equals(that.x)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.y, that.y)) {
+        if (!ObjectUtils.equal(this.y, that.y)) {
             return false;
         }
         return true;

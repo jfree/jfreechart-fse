@@ -51,23 +51,27 @@
 
 package org.jfree.chart.axis;
 
-import org.jfree.chart.event.AxisChangeEvent;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.data.category.CategoryDataset;
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.Paint;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
+
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.event.AxisChangeEvent;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.util.SerialUtils;
+import org.jfree.data.category.CategoryDataset;
 
 /**
  * A specialised category axis that can display sub-categories.
@@ -195,7 +199,8 @@ public class SubCategoryAxis extends CategoryAxis
         double maxdim = getMaxDim(g2, edge);
         if (RectangleEdge.isTopOrBottom(edge)) {
             space.add(maxdim, edge);
-        } else if (RectangleEdge.isLeftOrRight(edge)) {
+        }
+        else if (RectangleEdge.isLeftOrRight(edge)) {
             space.add(maxdim, edge);
         }
         return space;
@@ -322,21 +327,24 @@ public class SubCategoryAxis extends CategoryAxis
                         edge);
                 y1 = state.getCursor();
                 y0 = y1 - maxdim;
-            } else if (edge == RectangleEdge.BOTTOM) {
+            }
+            else if (edge == RectangleEdge.BOTTOM) {
                 x0 = getCategoryStart(categoryIndex, categoryCount, dataArea,
                         edge);
                 x1 = getCategoryEnd(categoryIndex, categoryCount, dataArea,
                         edge);
                 y0 = state.getCursor();
                 y1 = y0 + maxdim;
-            } else if (edge == RectangleEdge.LEFT) {
+            }
+            else if (edge == RectangleEdge.LEFT) {
                 y0 = getCategoryStart(categoryIndex, categoryCount, dataArea,
                         edge);
                 y1 = getCategoryEnd(categoryIndex, categoryCount, dataArea,
                         edge);
                 x1 = state.getCursor();
                 x0 = x1 - maxdim;
-            } else if (edge == RectangleEdge.RIGHT) {
+            }
+            else if (edge == RectangleEdge.RIGHT) {
                 y0 = getCategoryStart(categoryIndex, categoryCount, dataArea,
                         edge);
                 y1 = getCategoryEnd(categoryIndex, categoryCount, dataArea,
@@ -355,7 +363,8 @@ public class SubCategoryAxis extends CategoryAxis
                 if (RectangleEdge.isTopOrBottom(edge)) {
                     xx = (float) (x0 + (i + 0.5) * width);
                     yy = (float) area.getCenterY();
-                } else {
+                }
+                else {
                     xx = (float) area.getCenterX();
                     yy = (float) (y0 + (i + 0.5) * height);
                 }
@@ -368,13 +377,16 @@ public class SubCategoryAxis extends CategoryAxis
         if (edge.equals(RectangleEdge.TOP)) {
             double h = maxdim;
             state.cursorUp(h);
-        } else if (edge.equals(RectangleEdge.BOTTOM)) {
+        }
+        else if (edge.equals(RectangleEdge.BOTTOM)) {
             double h = maxdim;
             state.cursorDown(h);
-        } else if (edge == RectangleEdge.LEFT) {
+        }
+        else if (edge == RectangleEdge.LEFT) {
             double w = maxdim;
             state.cursorLeft(w);
-        } else if (edge == RectangleEdge.RIGHT) {
+        }
+        else if (edge == RectangleEdge.RIGHT) {
             double w = maxdim;
             state.cursorRight(w);
         }
@@ -418,7 +430,7 @@ public class SubCategoryAxis extends CategoryAxis
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.subLabelPaint, stream);
+        SerialUtils.writePaint(this.subLabelPaint, stream);
     }
 
     /**
@@ -430,9 +442,9 @@ public class SubCategoryAxis extends CategoryAxis
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-            throws IOException, ClassNotFoundException {
+        throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.subLabelPaint = SerialUtilities.readPaint(stream);
+        this.subLabelPaint = SerialUtils.readPaint(stream);
     }
 
 }

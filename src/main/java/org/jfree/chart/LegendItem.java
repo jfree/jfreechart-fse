@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * LegendItem.java
  * ---------------
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Andrzej Porebski;
@@ -64,12 +64,12 @@
 
 package org.jfree.chart;
 
-import org.jfree.chart.ui.GradientPaintTransformer;
-import org.jfree.chart.ui.StandardGradientPaintTransformer;
-import org.jfree.chart.util.*;
-import org.jfree.data.general.Dataset;
-
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -78,6 +78,17 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.AttributedString;
 import java.text.CharacterIterator;
+
+import org.jfree.chart.ui.GradientPaintTransformer;
+import org.jfree.chart.ui.StandardGradientPaintTransformer;
+import org.jfree.chart.util.AttributedStringUtils;
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.PaintUtils;
+import org.jfree.chart.util.ParamChecks;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.ShapeUtils;
+import org.jfree.chart.util.SerialUtils;
+import org.jfree.data.general.Dataset;
 
 /**
  * A temporary storage object for recording the properties of a legend item,
@@ -229,9 +240,8 @@ public class LegendItem implements Cloneable, Serializable {
      * @param fillPaint  the paint used to fill the shape (<code>null</code>
      *                   not permitted).
      */
-    public LegendItem(String label, String description,
-                      String toolTipText, String urlText,
-                      Shape shape, Paint fillPaint) {
+    public LegendItem(String label, String description, String toolTipText, 
+            String urlText, Shape shape, Paint fillPaint) {
 
         this(label, description, toolTipText, urlText,
                 /* shape visible = */ true, shape,
@@ -257,10 +267,9 @@ public class LegendItem implements Cloneable, Serializable {
      * @param outlinePaint  the outline paint (<code>null</code> not
      *                      permitted).
      */
-    public LegendItem(String label, String description,
-                      String toolTipText, String urlText,
-                      Shape shape, Paint fillPaint,
-                      Stroke outlineStroke, Paint outlinePaint) {
+    public LegendItem(String label, String description, String toolTipText, 
+            String urlText, Shape shape, Paint fillPaint,
+            Stroke outlineStroke, Paint outlinePaint) {
 
         this(label, description, toolTipText, urlText,
                 /* shape visible = */ true, shape,
@@ -282,9 +291,8 @@ public class LegendItem implements Cloneable, Serializable {
      * @param lineStroke  the line stroke (<code>null</code> not permitted).
      * @param linePaint  the line paint (<code>null</code> not permitted).
      */
-    public LegendItem(String label, String description,
-                      String toolTipText, String urlText,
-                      Shape line, Stroke lineStroke, Paint linePaint) {
+    public LegendItem(String label, String description, String toolTipText, 
+            String urlText, Shape line, Stroke lineStroke, Paint linePaint) {
 
         this(label, description, toolTipText, urlText,
                 /* shape visible = */ false, UNUSED_SHAPE,
@@ -318,14 +326,11 @@ public class LegendItem implements Cloneable, Serializable {
      * @param lineStroke  the stroke (<code>null</code> not permitted).
      * @param linePaint  the line paint (<code>null</code> not permitted).
      */
-    public LegendItem(String label, String description,
-                      String toolTipText, String urlText,
-                      boolean shapeVisible, Shape shape,
-                      boolean shapeFilled, Paint fillPaint,
-                      boolean shapeOutlineVisible, Paint outlinePaint,
-                      Stroke outlineStroke,
-                      boolean lineVisible, Shape line,
-                      Stroke lineStroke, Paint linePaint) {
+    public LegendItem(String label, String description, String toolTipText, 
+            String urlText, boolean shapeVisible, Shape shape,
+            boolean shapeFilled, Paint fillPaint, boolean shapeOutlineVisible, 
+            Paint outlinePaint, Stroke outlineStroke, boolean lineVisible, 
+            Shape line, Stroke lineStroke, Paint linePaint) {
 
         ParamChecks.nullNotPermitted(label, "label");
         ParamChecks.nullNotPermitted(fillPaint, "fillPaint");
@@ -367,9 +372,8 @@ public class LegendItem implements Cloneable, Serializable {
      * @param fillPaint  the paint used to fill the shape (<code>null</code>
      *                   not permitted).
      */
-    public LegendItem(AttributedString label, String description,
-                      String toolTipText, String urlText,
-                      Shape shape, Paint fillPaint) {
+    public LegendItem(AttributedString label, String description, 
+            String toolTipText, String urlText, Shape shape, Paint fillPaint) {
 
         this(label, description, toolTipText, urlText,
                 /* shape visible = */ true, shape,
@@ -396,9 +400,8 @@ public class LegendItem implements Cloneable, Serializable {
      *                      permitted).
      */
     public LegendItem(AttributedString label, String description,
-                      String toolTipText, String urlText,
-                      Shape shape, Paint fillPaint,
-                      Stroke outlineStroke, Paint outlinePaint) {
+            String toolTipText, String urlText, Shape shape, Paint fillPaint,
+            Stroke outlineStroke, Paint outlinePaint) {
 
         this(label, description, toolTipText, urlText,
                 /* shape visible = */ true, shape,
@@ -420,8 +423,8 @@ public class LegendItem implements Cloneable, Serializable {
      * @param linePaint  the line paint (<code>null</code> not permitted).
      */
     public LegendItem(AttributedString label, String description,
-                      String toolTipText, String urlText,
-                      Shape line, Stroke lineStroke, Paint linePaint) {
+            String toolTipText, String urlText, Shape line, Stroke lineStroke, 
+            Paint linePaint) {
 
         this(label, description, toolTipText, urlText,
                 /* shape visible = */ false, UNUSED_SHAPE,
@@ -455,14 +458,12 @@ public class LegendItem implements Cloneable, Serializable {
      * @param lineStroke  the stroke (<code>null</code> not permitted).
      * @param linePaint  the line paint (<code>null</code> not permitted).
      */
-    public LegendItem(AttributedString label, String description,
-                      String toolTipText, String urlText,
-                      boolean shapeVisible, Shape shape,
-                      boolean shapeFilled, Paint fillPaint,
-                      boolean shapeOutlineVisible, Paint outlinePaint,
-                      Stroke outlineStroke,
-                      boolean lineVisible, Shape line, Stroke lineStroke,
-                      Paint linePaint) {
+    public LegendItem(AttributedString label, String description, 
+            String toolTipText, String urlText, boolean shapeVisible, 
+            Shape shape, boolean shapeFilled, Paint fillPaint,
+            boolean shapeOutlineVisible, Paint outlinePaint, 
+            Stroke outlineStroke, boolean lineVisible, Shape line, 
+            Stroke lineStroke, Paint linePaint) {
 
         ParamChecks.nullNotPermitted(label, "label");
         ParamChecks.nullNotPermitted(fillPaint, "fillPaint");
@@ -1014,26 +1015,26 @@ public class LegendItem implements Cloneable, Serializable {
         if (!this.label.equals(that.label)) {
             return false;
         }
-        if (!AttributedStringUtilities.equal(this.attributedLabel,
+        if (!AttributedStringUtils.equal(this.attributedLabel,
                 that.attributedLabel)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.description, that.description)) {
+        if (!ObjectUtils.equal(this.description, that.description)) {
             return false;
         }
         if (this.shapeVisible != that.shapeVisible) {
             return false;
         }
-        if (!ShapeUtilities.equal(this.shape, that.shape)) {
+        if (!ShapeUtils.equal(this.shape, that.shape)) {
             return false;
         }
         if (this.shapeFilled != that.shapeFilled) {
             return false;
         }
-        if (!PaintUtilities.equal(this.fillPaint, that.fillPaint)) {
+        if (!PaintUtils.equal(this.fillPaint, that.fillPaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.fillPaintTransformer,
+        if (!ObjectUtils.equal(this.fillPaintTransformer,
                 that.fillPaintTransformer)) {
             return false;
         }
@@ -1043,25 +1044,25 @@ public class LegendItem implements Cloneable, Serializable {
         if (!this.outlineStroke.equals(that.outlineStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.outlinePaint, that.outlinePaint)) {
+        if (!PaintUtils.equal(this.outlinePaint, that.outlinePaint)) {
             return false;
         }
         if (!this.lineVisible == that.lineVisible) {
             return false;
         }
-        if (!ShapeUtilities.equal(this.line, that.line)) {
+        if (!ShapeUtils.equal(this.line, that.line)) {
             return false;
         }
         if (!this.lineStroke.equals(that.lineStroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.linePaint, that.linePaint)) {
+        if (!PaintUtils.equal(this.linePaint, that.linePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.labelFont, that.labelFont)) {
+        if (!ObjectUtils.equal(this.labelFont, that.labelFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.labelPaint, that.labelPaint)) {
+        if (!PaintUtils.equal(this.labelPaint, that.labelPaint)) {
             return false;
         }
         return true;
@@ -1070,10 +1071,8 @@ public class LegendItem implements Cloneable, Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash
-                + (this.seriesKey != null ? this.seriesKey.hashCode() : 0);
-        hash = 29 * hash + this.datasetIndex;
-        hash = 29 * hash + this.series;
+        hash = 47 * hash + (this.seriesKey != null ? this.seriesKey.hashCode() : 0);
+        hash = 47 * hash + this.datasetIndex;
         return hash;
     }
 
@@ -1096,13 +1095,13 @@ public class LegendItem implements Cloneable, Serializable {
             clone.seriesKey = (Comparable) pc.clone();
         }
         // FIXME: Clone the attributed string if it is not null
-        clone.shape = ShapeUtilities.clone(this.shape);
+        clone.shape = ShapeUtils.clone(this.shape);
         if (this.fillPaintTransformer instanceof PublicCloneable) {
             PublicCloneable pc = (PublicCloneable) this.fillPaintTransformer;
             clone.fillPaintTransformer = (GradientPaintTransformer) pc.clone();
 
         }
-        clone.line = ShapeUtilities.clone(this.line);
+        clone.line = ShapeUtils.clone(this.line);
         return clone;
     }
 
@@ -1115,15 +1114,15 @@ public class LegendItem implements Cloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeAttributedString(this.attributedLabel, stream);
-        SerialUtilities.writeShape(this.shape, stream);
-        SerialUtilities.writePaint(this.fillPaint, stream);
-        SerialUtilities.writeStroke(this.outlineStroke, stream);
-        SerialUtilities.writePaint(this.outlinePaint, stream);
-        SerialUtilities.writeShape(this.line, stream);
-        SerialUtilities.writeStroke(this.lineStroke, stream);
-        SerialUtilities.writePaint(this.linePaint, stream);
-        SerialUtilities.writePaint(this.labelPaint, stream);
+        SerialUtils.writeAttributedString(this.attributedLabel, stream);
+        SerialUtils.writeShape(this.shape, stream);
+        SerialUtils.writePaint(this.fillPaint, stream);
+        SerialUtils.writeStroke(this.outlineStroke, stream);
+        SerialUtils.writePaint(this.outlinePaint, stream);
+        SerialUtils.writeShape(this.line, stream);
+        SerialUtils.writeStroke(this.lineStroke, stream);
+        SerialUtils.writePaint(this.linePaint, stream);
+        SerialUtils.writePaint(this.labelPaint, stream);
     }
 
     /**
@@ -1135,17 +1134,17 @@ public class LegendItem implements Cloneable, Serializable {
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-            throws IOException, ClassNotFoundException {
+        throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.attributedLabel = SerialUtilities.readAttributedString(stream);
-        this.shape = SerialUtilities.readShape(stream);
-        this.fillPaint = SerialUtilities.readPaint(stream);
-        this.outlineStroke = SerialUtilities.readStroke(stream);
-        this.outlinePaint = SerialUtilities.readPaint(stream);
-        this.line = SerialUtilities.readShape(stream);
-        this.lineStroke = SerialUtilities.readStroke(stream);
-        this.linePaint = SerialUtilities.readPaint(stream);
-        this.labelPaint = SerialUtilities.readPaint(stream);
+        this.attributedLabel = SerialUtils.readAttributedString(stream);
+        this.shape = SerialUtils.readShape(stream);
+        this.fillPaint = SerialUtils.readPaint(stream);
+        this.outlineStroke = SerialUtils.readStroke(stream);
+        this.outlinePaint = SerialUtils.readPaint(stream);
+        this.line = SerialUtils.readShape(stream);
+        this.lineStroke = SerialUtils.readStroke(stream);
+        this.linePaint = SerialUtils.readPaint(stream);
+        this.labelPaint = SerialUtils.readPaint(stream);
     }
 
 }

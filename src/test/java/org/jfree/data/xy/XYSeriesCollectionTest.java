@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------
  * XYSeriesCollectionTest.java
  * ---------------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -53,15 +53,20 @@ import org.jfree.data.Range;
 import org.jfree.data.UnknownKeyException;
 import org.junit.Test;
 
-import java.io.*;
+import org.jfree.chart.TestUtils;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link XYSeriesCollection} class.
  */
 public class XYSeriesCollectionTest {
-
 
     private static final double EPSILON = 0.0000000001;
 
@@ -146,22 +151,13 @@ public class XYSeriesCollectionTest {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() throws IOException, ClassNotFoundException {
+    public void testSerialization() {
         XYSeries s1 = new XYSeries("Series");
         s1.add(1.0, 1.1);
         XYSeriesCollection c1 = new XYSeriesCollection();
         c1.addSeries(s1);
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(c1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
-        XYSeriesCollection c2 = (XYSeriesCollection) in.readObject();
-        in.close();
-
+        XYSeriesCollection c2 = (XYSeriesCollection) 
+                TestUtils.serialised(c1);
         assertEquals(c1, c2);
     }
 
@@ -174,11 +170,12 @@ public class XYSeriesCollectionTest {
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(s1);
         try {
-            /* XYSeries s = */
-            dataset.getSeries(1);
-        } catch (IllegalArgumentException e) {
+            /* XYSeries s = */ dataset.getSeries(1);
+        }
+        catch (IllegalArgumentException e) {
             // correct outcome
-        } catch (IndexOutOfBoundsException e) {
+        }
+        catch (IndexOutOfBoundsException e) {
             assertTrue(false);  // wrong outcome
         }
     }
@@ -196,14 +193,16 @@ public class XYSeriesCollectionTest {
         try {
             c.getSeries(-1);
             fail("Should have thrown IndexOutOfBoundsException on negative key");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Series index out of bounds", e.getMessage());
         }
 
         try {
             c.getSeries(1);
             fail("Should have thrown IndexOutOfBoundsException on key out of range");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Series index out of bounds", e.getMessage());
         }
     }
@@ -221,14 +220,16 @@ public class XYSeriesCollectionTest {
         try {
             c.getSeries("s2");
             fail("Should have thrown UnknownKeyException on unknown key");
-        } catch (UnknownKeyException e) {
+        }
+        catch (UnknownKeyException e) {
             assertEquals("Key not found: s2", e.getMessage());
         }
 
         try {
             c.getSeries(null);
             fail("Should have thrown IndexOutOfBoundsException on null key");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Null 'key' argument.", e.getMessage());
         }
     }
@@ -269,14 +270,16 @@ public class XYSeriesCollectionTest {
         try {
             c.removeSeries(-1);
             fail("Should have thrown IndexOutOfBoundsException on negative key");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Series index out of bounds.", e.getMessage());
         }
 
         try {
             c.removeSeries(1);
             fail("Should have thrown IndexOutOfBoundsException on key out of range");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             assertEquals("Series index out of bounds.", e.getMessage());
         }
     }
@@ -345,31 +348,120 @@ public class XYSeriesCollectionTest {
     @Test
     public void testGetRangeBounds() {
         XYSeriesCollection dataset = new XYSeriesCollection();
-        Range r = dataset.getRangeBounds(false);
-        assertNull(r);
-        r = dataset.getRangeBounds(true);
-        assertNull(r);
 
+        // when the dataset contains no series, we expect the value range to 
+        // be null
+        assertNull(dataset.getRangeBounds(false));
+        assertNull(dataset.getRangeBounds(true));
+
+        // when the dataset contains one or more series, but those series 
+        // contain no items, we expect the value range to be null
         XYSeries series = new XYSeries("S1");
         dataset.addSeries(series);
-        r = dataset.getRangeBounds(false);
-        assertNull(r);
-        r = dataset.getRangeBounds(true);
-        assertNull(r);
+        assertNull(dataset.getRangeBounds(false));
+        assertNull(dataset.getRangeBounds(true));
 
+        // tests with values
         series.add(1.0, 1.1);
-        r = dataset.getRangeBounds(false);
-        assertEquals(new Range(1.1, 1.1), r);
-        r = dataset.getRangeBounds(true);
-        assertEquals(new Range(1.1, 1.1), r);
+        assertEquals(new Range(1.1, 1.1), dataset.getRangeBounds(false));
+        assertEquals(new Range(1.1, 1.1), dataset.getRangeBounds(true));
 
         series.add(-1.0, -1.1);
-        r = dataset.getRangeBounds(false);
-        assertEquals(new Range(-1.1, 1.1), r);
-        r = dataset.getRangeBounds(true);
-        assertEquals(new Range(-1.1, 1.1), r);
+        assertEquals(new Range(-1.1, 1.1), dataset.getRangeBounds(false));
+        assertEquals(new Range(-1.1, 1.1), dataset.getRangeBounds(true));
+        
+        series.add(0.0, null);
+        assertEquals(new Range(-1.1, 1.1), dataset.getRangeBounds(false));
+        assertEquals(new Range(-1.1, 1.1), dataset.getRangeBounds(true));
+        
+        XYSeries s2 = new XYSeries("S2");
+        dataset.addSeries(s2);
+        assertEquals(new Range(-1.1, 1.1), dataset.getRangeBounds(false));
+        assertEquals(new Range(-1.1, 1.1), dataset.getRangeBounds(true));
+        
+        s2.add(2.0, 5.0);
+        assertEquals(new Range(-1.1, 5.0), dataset.getRangeBounds(false));
+        assertEquals(new Range(-1.1, 5.0), dataset.getRangeBounds(true));
     }
 
+    @Test
+    public void testGetRangeLowerBound() {
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        
+        // when the dataset contains no series, we expect the value range to 
+        // be null
+        assertTrue(Double.isNaN(dataset.getRangeLowerBound(false)));
+        assertTrue(Double.isNaN(dataset.getRangeLowerBound(true)));
+
+        // when the dataset contains one or more series, but those series 
+        // contain no items, we expect the value range to be null
+        XYSeries series = new XYSeries("S1");
+        dataset.addSeries(series);
+        assertTrue(Double.isNaN(dataset.getRangeLowerBound(false)));
+        assertTrue(Double.isNaN(dataset.getRangeLowerBound(true)));
+
+        // tests with values
+        series.add(1.0, 1.1);
+        assertEquals(1.1, dataset.getRangeLowerBound(false), EPSILON);
+        assertEquals(1.1, dataset.getRangeLowerBound(true), EPSILON);
+
+        series.add(-1.0, -1.1);
+        assertEquals(-1.1, dataset.getRangeLowerBound(false), EPSILON);
+        assertEquals(-1.1, dataset.getRangeLowerBound(true), EPSILON);
+        
+        series.add(0.0, null);
+        assertEquals(-1.1, dataset.getRangeLowerBound(false), EPSILON);
+        assertEquals(-1.1, dataset.getRangeLowerBound(true), EPSILON);
+        
+        XYSeries s2 = new XYSeries("S2");
+        dataset.addSeries(s2);
+        assertEquals(-1.1, dataset.getRangeLowerBound(false), EPSILON);
+        assertEquals(-1.1, dataset.getRangeLowerBound(true), EPSILON);
+        
+        s2.add(2.0, 5.0);
+        assertEquals(-1.1, dataset.getRangeLowerBound(false), EPSILON);
+        assertEquals(-1.1, dataset.getRangeLowerBound(true), EPSILON);
+    }
+    
+    @Test
+    public void testGetRangeUpperBound() {
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        
+        // when the dataset contains no series, we expect the value range to 
+        // be null
+        assertTrue(Double.isNaN(dataset.getRangeUpperBound(false)));
+        assertTrue(Double.isNaN(dataset.getRangeUpperBound(true)));
+
+        // when the dataset contains one or more series, but those series 
+        // contain no items, we expect the value range to be null
+        XYSeries series = new XYSeries("S1");
+        dataset.addSeries(series);
+        assertTrue(Double.isNaN(dataset.getRangeUpperBound(false)));
+        assertTrue(Double.isNaN(dataset.getRangeUpperBound(true)));
+
+        // tests with values
+        series.add(1.0, 1.1);
+        assertEquals(1.1, dataset.getRangeUpperBound(false), EPSILON);
+        assertEquals(1.1, dataset.getRangeUpperBound(true), EPSILON);
+
+        series.add(-1.0, -1.1);
+        assertEquals(1.1, dataset.getRangeUpperBound(false), EPSILON);
+        assertEquals(1.1, dataset.getRangeUpperBound(true), EPSILON);
+        
+        series.add(0.0, null);
+        assertEquals(1.1, dataset.getRangeUpperBound(false), EPSILON);
+        assertEquals(1.1, dataset.getRangeUpperBound(true), EPSILON);
+        
+        XYSeries s2 = new XYSeries("S2");
+        dataset.addSeries(s2);
+        assertEquals(1.1, dataset.getRangeUpperBound(false), EPSILON);
+        assertEquals(1.1, dataset.getRangeUpperBound(true), EPSILON);
+        
+        s2.add(2.0, 5.0);
+        assertEquals(5.0, dataset.getRangeUpperBound(false), EPSILON);
+        assertEquals(5.0, dataset.getRangeUpperBound(true), EPSILON);
+    }
+    
     /**
      * A check that the dataset prevents renaming a series to the name of an
      * existing series in the dataset.
@@ -385,13 +477,14 @@ public class XYSeriesCollectionTest {
         try {
             s2.setKey("S1");
             fail("Should have thrown IndexOutOfBoundsException on negative key");
-        } catch (IllegalArgumentException e) {
-            assertEquals("java.beans.PropertyVetoException: Duplicate key", e.getMessage());
+        }
+        catch (IllegalArgumentException e) {
+           assertEquals("java.beans.PropertyVetoException: Duplicate key", e.getMessage());
         }
     }
 
     /**
-     * A test to cover bug 3445507.  The issue does not affact
+     * A test to cover bug 3445507.  The issue does not affect
      * XYSeriesCollection.
      */
     @Test
@@ -431,12 +524,13 @@ public class XYSeriesCollectionTest {
         // next, check that setting a duplicate key fails
         try {
             series2.setKey("C");
-        } catch (IllegalArgumentException e) {
+            fail("Expected an IllegalArgumentException.");
+        }
+        catch (IllegalArgumentException e) {
             // expected
         }
         assertEquals("B", series2.getKey());  // the series name should not
         // change because "C" is already the key for the other series in the
         // collection
     }
-
 }

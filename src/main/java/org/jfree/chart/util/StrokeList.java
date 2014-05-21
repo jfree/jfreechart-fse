@@ -41,7 +41,7 @@
 
 package org.jfree.chart.util;
 
-import java.awt.*;
+import java.awt.Stroke;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -143,8 +143,9 @@ public class StrokeList extends AbstractObjectList<Stroke> {
             final Stroke stroke = getStroke(i);
             if (stroke != null) {
                 stream.writeInt(i);
-                SerialUtilities.writeStroke(stroke, stream);
-            } else {
+                SerialUtils.writeStroke(stroke, stream);
+            }
+            else {
                 stream.writeInt(-1);
             }
         }
@@ -166,7 +167,7 @@ public class StrokeList extends AbstractObjectList<Stroke> {
         for (int i = 0; i < count; i++) {
             final int index = stream.readInt();
             if (index != -1) {
-                setStroke(index, SerialUtilities.readStroke(stream));
+                setStroke(index, SerialUtils.readStroke(stream));
             }
         }
 

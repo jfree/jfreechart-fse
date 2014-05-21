@@ -50,8 +50,8 @@ import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 
-import org.jfree.chart.HashUtilities;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.HashUtils;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.renderer.xy.XYBubbleRenderer;
 import org.jfree.data.xy.XYDataset;
@@ -256,10 +256,10 @@ public class BubbleXYItemLabelGenerator extends AbstractXYItemLabelGenerator
             return false;
         }
         BubbleXYItemLabelGenerator that = (BubbleXYItemLabelGenerator) obj;
-        if (!ObjectUtilities.equal(this.zFormat, that.zFormat)) {
+        if (!ObjectUtils.equal(this.zFormat, that.zFormat)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.zDateFormat, that.zDateFormat)) {
+        if (!ObjectUtils.equal(this.zDateFormat, that.zDateFormat)) {
             return false;
         }
         return true;
@@ -273,8 +273,8 @@ public class BubbleXYItemLabelGenerator extends AbstractXYItemLabelGenerator
     @Override
     public int hashCode() {
         int h = super.hashCode();
-        h = HashUtilities.hashCode(h, this.zFormat);
-        h = HashUtilities.hashCode(h, this.zDateFormat);
+        h = HashUtils.hashCode(h, this.zFormat);
+        h = HashUtils.hashCode(h, this.zDateFormat);
         return h;
     }
 

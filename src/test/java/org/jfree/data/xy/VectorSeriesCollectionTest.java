@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------------------
  * VectorSeriesCollectionTests.java
  * --------------------------------
- * (C) Copyright 2007-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2007-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -43,18 +43,21 @@
 
 package org.jfree.data.xy;
 
-import org.jfree.chart.util.PublicCloneable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
-import java.io.*;
-
-import static org.junit.Assert.*;
+import org.jfree.chart.TestUtils;
+import org.jfree.chart.util.PublicCloneable;
 
 /**
  * Tests for the {@link VectorSeriesCollection} class.
  */
-public class VectorSeriesCollectionTest {
-
+public class VectorSeriesCollectionTest  {
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
@@ -111,22 +114,13 @@ public class VectorSeriesCollectionTest {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() throws IOException, ClassNotFoundException {
+    public void testSerialization() {
         VectorSeries s1 = new VectorSeries("Series");
         s1.add(1.0, 1.1, 1.2, 1.3);
         VectorSeriesCollection c1 = new VectorSeriesCollection();
         c1.addSeries(s1);
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(c1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(
-                new ByteArrayInputStream(buffer.toByteArray()));
-        VectorSeriesCollection c2 = (VectorSeriesCollection) in.readObject();
-        in.close();
-
+        VectorSeriesCollection c2 
+                = (VectorSeriesCollection) TestUtils.serialised(c1);
         assertEquals(c1, c2);
     }
 

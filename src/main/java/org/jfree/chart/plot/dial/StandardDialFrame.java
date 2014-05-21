@@ -57,10 +57,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtilities;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.HashUtils;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A simple circular frame for the {@link DialPlot} class.
@@ -288,10 +288,10 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame,
             return false;
         }
         StandardDialFrame that = (StandardDialFrame) obj;
-        if (!PaintUtilities.equal(this.backgroundPaint, that.backgroundPaint)) {
+        if (!PaintUtils.equal(this.backgroundPaint, that.backgroundPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.foregroundPaint, that.foregroundPaint)) {
+        if (!PaintUtils.equal(this.foregroundPaint, that.foregroundPaint)) {
             return false;
         }
         if (this.radius != that.radius) {
@@ -313,9 +313,9 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame,
         int result = 193;
         long temp = Double.doubleToLongBits(this.radius);
         result = 37 * result + (int) (temp ^ (temp >>> 32));
-        result = 37 * result + HashUtilities.hashCodeForPaint(
+        result = 37 * result + HashUtils.hashCodeForPaint(
                 this.backgroundPaint);
-        result = 37 * result + HashUtilities.hashCodeForPaint(
+        result = 37 * result + HashUtils.hashCodeForPaint(
                 this.foregroundPaint);
         result = 37 * result + this.stroke.hashCode();
         return result;
@@ -343,9 +343,9 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame,
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.backgroundPaint, stream);
-        SerialUtilities.writePaint(this.foregroundPaint, stream);
-        SerialUtilities.writeStroke(this.stroke, stream);
+        SerialUtils.writePaint(this.backgroundPaint, stream);
+        SerialUtils.writePaint(this.foregroundPaint, stream);
+        SerialUtils.writeStroke(this.stroke, stream);
     }
 
     /**
@@ -359,9 +359,9 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame,
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.backgroundPaint = SerialUtilities.readPaint(stream);
-        this.foregroundPaint = SerialUtilities.readPaint(stream);
-        this.stroke = SerialUtilities.readStroke(stream);
+        this.backgroundPaint = SerialUtils.readPaint(stream);
+        this.foregroundPaint = SerialUtils.readPaint(stream);
+        this.stroke = SerialUtils.readStroke(stream);
     }
 
 }

@@ -47,9 +47,8 @@
 
 package org.jfree.data;
 
-import org.jfree.data.general.DatasetUtilities;
-
 import java.util.Arrays;
+import org.jfree.data.general.DatasetUtilities;
 
 /**
  * Utility methods for use with some of the data classes (but not the datasets,
@@ -269,11 +268,11 @@ public abstract class DataUtilities {
      *
      * @return The cumulative percentages.
      */
-    public static <Key extends Comparable> KeyedValues<Key> getCumulativePercentages(KeyedValues<Key> data) {
+    public static KeyedValues getCumulativePercentages(KeyedValues data) {
         if (data == null) {
             throw new IllegalArgumentException("Null 'data' argument.");
         }
-        DefaultKeyedValues<Key> result = new DefaultKeyedValues<Key>();
+        DefaultKeyedValues result = new DefaultKeyedValues();
         double total = 0.0;
         for (int i = 0; i < data.getItemCount(); i++) {
             Number v = data.getValue(i);
@@ -287,7 +286,7 @@ public abstract class DataUtilities {
             if (v != null) {
                 runningTotal = runningTotal + v.doubleValue();
             }
-            result.addValue(data.getKey(i), runningTotal / total);
+            result.addValue(data.getKey(i), new Double(runningTotal / total));
         }
         return result;
     }

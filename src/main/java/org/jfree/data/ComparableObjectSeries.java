@@ -43,27 +43,25 @@
 
 package org.jfree.data;
 
-import org.jfree.chart.util.ObjectUtilities;
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
+
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.data.general.Series;
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesException;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * A (possibly ordered) list of (Comparable, Object) data items.
  *
  * @since 1.0.3
  */
-public class ComparableObjectSeries<Key extends Comparable, Value>
-        extends Series<Key>
+public class ComparableObjectSeries extends Series
         implements Cloneable, Serializable {
 
     /** Storage for the data items in the series. */
-    protected List<ComparableObjectItem<Key, Value>> data;
+    protected List<ComparableObjectItem> data;
 
     /** The maximum number of items for the series. */
     private int maximumItemCount = Integer.MAX_VALUE;
@@ -81,7 +79,7 @@ public class ComparableObjectSeries<Key extends Comparable, Value>
      *
      * @param key  the series key (<code>null</code> not permitted).
      */
-    public ComparableObjectSeries(Key key) {
+    public ComparableObjectSeries(Comparable key) {
         this(key, true, true);
     }
 
@@ -95,10 +93,10 @@ public class ComparableObjectSeries<Key extends Comparable, Value>
      * @param allowDuplicateXValues  a flag that controls whether duplicate
      *                               x-values are allowed.
      */
-    public ComparableObjectSeries(Key key, boolean autoSort,
-                                  boolean allowDuplicateXValues) {
+    public ComparableObjectSeries(Comparable key, boolean autoSort,
+            boolean allowDuplicateXValues) {
         super(key);
-        this.data = new ArrayList<ComparableObjectItem<Key, Value>>();
+        this.data = new java.util.ArrayList<ComparableObjectItem>();
         this.autoSort = autoSort;
         this.allowDuplicateXValues = allowDuplicateXValues;
     }
@@ -181,7 +179,7 @@ public class ComparableObjectSeries<Key extends Comparable, Value>
      * @param x  the x-value (<code>null</code> not permitted).
      * @param y  the y-value (<code>null</code> permitted).
      */
-    protected void add(Key x, Value y) {
+    protected void add(Comparable x, Object y) {
         // argument checking delegated...
         add(x, y, true);
     }
@@ -199,10 +197,9 @@ public class ComparableObjectSeries<Key extends Comparable, Value>
      *                {@link SeriesChangeEvent} is sent to all registered
      *                listeners.
      */
-    protected void add(Key x, Value y, boolean notify) {
+    protected void add(Comparable x, Object y, boolean notify) {
         // delegate argument checking to XYDataItem...
-        ComparableObjectItem<Key, Value> item
-                = new ComparableObjectItem<Key, Value>(x, y);
+        ComparableObjectItem item = new ComparableObjectItem(x, y);
         add(item, notify);
     }
 
@@ -215,34 +212,38 @@ public class ComparableObjectSeries<Key extends Comparable, Value>
      *                {@link SeriesChangeEvent} is sent to all registered
      *                listeners.
      */
-    protected void add(ComparableObjectItem<Key, Value> item, boolean notify) {
+    protected void add(ComparableObjectItem item, boolean notify) {
 
         if (item == null) {
             throw new IllegalArgumentException("Null 'item' argument.");
         }
 
         if (this.autoSort) {
-            int index = Collections.binarySearch(this.data, item, null);
+            int index = Collections.binarySearch(this.data, item);
             if (index < 0) {
                 this.data.add(-index - 1, item);
-            } else {
+            }
+            else {
                 if (this.allowDuplicateXValues) {
                     // need to make sure we are adding *after* any duplicates
                     int size = this.data.size();
                     while (index < size
-                            && item.compareTo(this.data.get(index)) == 0) {
+                           && item.compareTo(this.data.get(index)) == 0) {
                         index++;
                     }
                     if (index < this.data.size()) {
                         this.data.add(index, item);
-                    } else {
+                    }
+                    else {
                         this.data.add(item);
                     }
-                } else {
+                }
+                else {
                     throw new SeriesException("X-value already exists.");
                 }
             }
-        } else {
+        }
+        else {
             if (!this.allowDuplicateXValues) {
                 // can't allow duplicate values, so we need to check whether
                 // there is an item with the given x-value already
@@ -271,14 +272,14 @@ public class ComparableObjectSeries<Key extends Comparable, Value>
      *
      * @return The index.
      */
-    public int indexOf(Key x) {
+    public int indexOf(Comparable x) {
         if (this.autoSort) {
-            ComparableObjectItem<Key, Value> item
-                    = new ComparableObjectItem<Key, Value>(x, null);
-            return Collections.binarySearch(this.data, item, null);
-        } else {
+            return Collections.binarySearch(this.data, new ComparableObjectItem(
+                    x, null));
+        }
+        else {
             for (int i = 0; i < this.data.size(); i++) {
-                ComparableObjectItem<Key, Value> item = this.data.get(i);
+                ComparableObjectItem item = this.data.get(i);
                 if (item.getComparable().equals(x)) {
                     return i;
                 }
@@ -296,12 +297,13 @@ public class ComparableObjectSeries<Key extends Comparable, Value>
      * @throws SeriesException if there is no existing item with the specified
      *         x-value.
      */
-    protected void update(Key x, Value y) {
+    protected void update(Comparable x, Object y) {
         int index = indexOf(x);
         if (index < 0) {
             throw new SeriesException("No observation for x = " + x);
-        } else {
-            ComparableObjectItem<Key, Value> item = getDataItem(index);
+        }
+        else {
+            ComparableObjectItem item = getDataItem(index);
             item.setObject(y);
             fireSeriesChanged();
         }
@@ -314,8 +316,8 @@ public class ComparableObjectSeries<Key extends Comparable, Value>
      * @param index  the item (zero based index).
      * @param y  the new value (<code>null</code> permitted).
      */
-    protected void updateByIndex(int index, Value y) {
-        ComparableObjectItem<Key, Value> item = getDataItem(index);
+    protected void updateByIndex(int index, Object y) {
+        ComparableObjectItem item = getDataItem(index);
         item.setObject(y);
         fireSeriesChanged();
     }
@@ -327,7 +329,7 @@ public class ComparableObjectSeries<Key extends Comparable, Value>
      *
      * @return The data item with the specified index.
      */
-    protected ComparableObjectItem<Key, Value> getDataItem(int index) {
+    protected ComparableObjectItem getDataItem(int index) {
         return this.data.get(index);
     }
 
@@ -365,8 +367,9 @@ public class ComparableObjectSeries<Key extends Comparable, Value>
      *
      * @return The item removed.
      */
-    protected ComparableObjectItem<Key, Value> remove(int index) {
-        ComparableObjectItem<Key, Value> result = this.data.remove(index);
+    protected ComparableObjectItem remove(int index) {
+        ComparableObjectItem result = this.data.remove(
+                index);
         fireSeriesChanged();
         return result;
     }
@@ -379,7 +382,7 @@ public class ComparableObjectSeries<Key extends Comparable, Value>
 
      * @return The item removed.
      */
-    public ComparableObjectItem<Key, Value> remove(Key x) {
+    public ComparableObjectItem remove(Comparable x) {
         return remove(indexOf(x));
     }
 
@@ -391,7 +394,6 @@ public class ComparableObjectSeries<Key extends Comparable, Value>
      *
      * @return A boolean.
      */
-    @SuppressWarnings("SimplifiableIfStatement")
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
@@ -413,7 +415,10 @@ public class ComparableObjectSeries<Key extends Comparable, Value>
         if (this.allowDuplicateXValues != that.allowDuplicateXValues) {
             return false;
         }
-        return ObjectUtilities.equal(this.data, that.data);
+        if (!ObjectUtils.equal(this.data, that.data)) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -428,15 +433,15 @@ public class ComparableObjectSeries<Key extends Comparable, Value>
         // the first, middle and last items...
         int count = getItemCount();
         if (count > 0) {
-            ComparableObjectItem<Key, Value> item = getDataItem(0);
+            ComparableObjectItem item = getDataItem(0);
             result = 29 * result + item.hashCode();
         }
         if (count > 1) {
-            ComparableObjectItem<Key, Value> item = getDataItem(count - 1);
+            ComparableObjectItem item = getDataItem(count - 1);
             result = 29 * result + item.hashCode();
         }
         if (count > 2) {
-            ComparableObjectItem<Key, Value> item = getDataItem(count / 2);
+            ComparableObjectItem item = getDataItem(count / 2);
             result = 29 * result + item.hashCode();
         }
         result = 29 * result + this.maximumItemCount;

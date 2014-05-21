@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------
  * Title.java
  * ----------
- * (C) Copyright 2000-2012, by David Berry and Contributors.
+ * (C) Copyright 2000-2014, by David Berry and Contributors.
  *
  * Original Author:  David Berry;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -76,9 +76,10 @@ import org.jfree.chart.ui.HorizontalAlignment;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.VerticalAlignment;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.event.TitleChangeEvent;
 import org.jfree.chart.event.TitleChangeListener;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * The base class for all chart titles.  A chart can have multiple titles,
@@ -98,7 +99,7 @@ public abstract class Title extends AbstractBlock
 
     /** The default horizontal alignment. */
     public static final HorizontalAlignment
-            DEFAULT_HORIZONTAL_ALIGNMENT = HorizontalAlignment.CENTER;
+            DEFAULT_HORIZONTAL_ALIGNMENT = HorizontalAlignment.LEFT;
 
     /** The default vertical alignment. */
     public static final VerticalAlignment
@@ -152,12 +153,10 @@ public abstract class Title extends AbstractBlock
      *                           (<code>null</code> not permitted).
      */
     protected Title(RectangleEdge position,
-                    HorizontalAlignment horizontalAlignment,
-                    VerticalAlignment verticalAlignment) {
-
+            HorizontalAlignment horizontalAlignment, 
+            VerticalAlignment verticalAlignment) {
         this(position, horizontalAlignment, verticalAlignment,
                 Title.DEFAULT_PADDING);
-
     }
 
     /**
@@ -166,36 +165,21 @@ public abstract class Title extends AbstractBlock
      * @param position  the position of the title (<code>null</code> not
      *                  permitted).
      * @param horizontalAlignment  the horizontal alignment of the title (LEFT,
-     *                             CENTER or RIGHT, <code>null</code> not
-     *                             permitted).
+     *     CENTER or RIGHT, <code>null</code> not permitted).
      * @param verticalAlignment  the vertical alignment of the title (TOP,
-     *                           MIDDLE or BOTTOM, <code>null</code> not
-     *                           permitted).
+     *     MIDDLE or BOTTOM, <code>null</code> not permitted).
      * @param padding  the amount of space to leave around the outside of the
-     *                 title (<code>null</code> not permitted).
+     *     title (<code>null</code> not permitted).
      */
-    protected Title(RectangleEdge position,
-                    HorizontalAlignment horizontalAlignment,
-                    VerticalAlignment verticalAlignment,
-                    RectangleInsets padding) {
+    protected Title(RectangleEdge position, 
+            HorizontalAlignment horizontalAlignment,
+            VerticalAlignment verticalAlignment, RectangleInsets padding) {
 
-        // check arguments...
-        if (position == null) {
-            throw new IllegalArgumentException("Null 'position' argument.");
-        }
-        if (horizontalAlignment == null) {
-            throw new IllegalArgumentException(
-                    "Null 'horizontalAlignment' argument.");
-        }
-
-        if (verticalAlignment == null) {
-            throw new IllegalArgumentException(
-                    "Null 'verticalAlignment' argument.");
-        }
-        if (padding == null) {
-            throw new IllegalArgumentException("Null 'spacer' argument.");
-        }
-
+        ParamChecks.nullNotPermitted(position, "position");
+        ParamChecks.nullNotPermitted(horizontalAlignment, 
+                "horizontalAlignment");
+        ParamChecks.nullNotPermitted(verticalAlignment, "verticalAlignment");
+        ParamChecks.nullNotPermitted(padding, "padding");
         this.visible = true;
         this.position = position;
         this.horizontalAlignment = horizontalAlignment;
@@ -203,7 +187,6 @@ public abstract class Title extends AbstractBlock
         setPadding(padding);
         this.listenerList = new EventListenerList();
         this.notify = true;
-
     }
 
     /**
@@ -232,7 +215,7 @@ public abstract class Title extends AbstractBlock
      */
     public void setVisible(boolean visible) {
         this.visible = visible;
-        notifyListeners(new TitleChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -251,13 +234,9 @@ public abstract class Title extends AbstractBlock
      * @param position  the position (<code>null</code> not permitted).
      */
     public void setPosition(RectangleEdge position) {
-        if (position == null) {
-            throw new IllegalArgumentException("Null 'position' argument.");
-        }
-        if (this.position != position) {
-            this.position = position;
-            notifyListeners(new TitleChangeEvent(this));
-        }
+        ParamChecks.nullNotPermitted(position, "position");
+        this.position = position;
+        fireChangeEvent();
     }
 
     /**
@@ -277,13 +256,9 @@ public abstract class Title extends AbstractBlock
      *                   permitted).
      */
     public void setHorizontalAlignment(HorizontalAlignment alignment) {
-        if (alignment == null) {
-            throw new IllegalArgumentException("Null 'alignment' argument.");
-        }
-        if (this.horizontalAlignment != alignment) {
-            this.horizontalAlignment = alignment;
-            notifyListeners(new TitleChangeEvent(this));
-        }
+        ParamChecks.nullNotPermitted(alignment, "alignment");
+        this.horizontalAlignment = alignment;
+        fireChangeEvent();
     }
 
     /**
@@ -303,13 +278,9 @@ public abstract class Title extends AbstractBlock
      *                   <code>null</code> not permitted).
      */
     public void setVerticalAlignment(VerticalAlignment alignment) {
-        if (alignment == null) {
-            throw new IllegalArgumentException("Null 'alignment' argument.");
-        }
-        if (this.verticalAlignment != alignment) {
-            this.verticalAlignment = alignment;
-            notifyListeners(new TitleChangeEvent(this));
-        }
+        ParamChecks.nullNotPermitted(alignment, "alignment");
+        this.verticalAlignment = alignment;
+        fireChangeEvent();
     }
 
     /**
@@ -332,7 +303,7 @@ public abstract class Title extends AbstractBlock
     public void setNotify(boolean flag) {
         this.notify = flag;
         if (flag) {
-            notifyListeners(new TitleChangeEvent(this));
+            fireChangeEvent();
         }
     }
 
@@ -385,6 +356,15 @@ public abstract class Title extends AbstractBlock
         this.listenerList.remove(TitleChangeListener.class, listener);
     }
 
+    /**
+     * Sends a {@link TitleChangeEvent} to all registered listeners (unless the
+     * <code>notify</code> flag is set to <code>false</code> in which case this
+     * method does nothing).
+     */
+    protected void fireChangeEvent() {
+        notifyListeners(new TitleChangeEvent(this));
+    }
+    
     /**
      * Notifies all registered listeners that the chart title has changed in
      * some way.
@@ -446,10 +426,10 @@ public abstract class Title extends AbstractBlock
     @Override
     public int hashCode() {
         int result = 193;
-        result = 37 * result + ObjectUtilities.hashCode(this.position);
+        result = 37 * result + ObjectUtils.hashCode(this.position);
         result = 37 * result
-                + ObjectUtilities.hashCode(this.horizontalAlignment);
-        result = 37 * result + ObjectUtilities.hashCode(this.verticalAlignment);
+                + ObjectUtils.hashCode(this.horizontalAlignment);
+        result = 37 * result + ObjectUtils.hashCode(this.verticalAlignment);
         return result;
     }
 

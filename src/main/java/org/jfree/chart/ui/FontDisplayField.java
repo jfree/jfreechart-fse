@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * FontDisplayField.java
  * ---------------------
- * (C) Copyright 2000-2012, by Object Refinery Limited.
+ * (C) Copyright 2000-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Arnaud Lelievre;
@@ -66,7 +66,7 @@ public class FontDisplayField extends JTextField {
 
     /** The resourceBundle for the localization. */
     protected static final ResourceBundle localizationResources =
-            ResourceBundleWrapper.getBundle("org.jfree.ui.LocalizationBundle");
+            ResourceBundleWrapper.getBundle("org.jfree.chart.ui.LocalizationBundle");
 
     /**
      * Standard constructor - builds a FontDescriptionField initialised with
@@ -74,7 +74,7 @@ public class FontDisplayField extends JTextField {
      *
      * @param font  the font.
      */
-    public FontDisplayField(final Font font) {
+    public FontDisplayField(Font font) {
         super("");
         setDisplayFont(font);
         setEnabled(false);
@@ -94,7 +94,7 @@ public class FontDisplayField extends JTextField {
      *
      * @param font  the font.
      */
-    public void setDisplayFont(final Font font) {
+    public void setDisplayFont(Font font) {
         this.displayFont = font;
         setText(fontToString(this.displayFont));
     }
@@ -106,7 +106,7 @@ public class FontDisplayField extends JTextField {
      *
      * @return a string describing the font.
      */
-    private String fontToString(final Font font) {
+    private String fontToString(Font font) {
         if (font != null) {
             return font.getFontName() + ", " + font.getSize();
         }

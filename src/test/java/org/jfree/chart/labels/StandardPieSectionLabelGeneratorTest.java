@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------------------------------
  * StandardPieSectionLabelGeneratorTests.java
  * ------------------------------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -44,21 +44,26 @@
 
 package org.jfree.chart.labels;
 
-import org.jfree.chart.util.PublicCloneable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
-import java.io.*;
 import java.text.AttributedString;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import static org.junit.Assert.*;
+import org.jfree.chart.TestUtils;
+import org.jfree.chart.util.PublicCloneable;
 
 /**
  * Tests for the {@link StandardPieSectionLabelGenerator} class.
  */
-public class StandardPieSectionLabelGeneratorTest {
-
+public class StandardPieSectionLabelGeneratorTest  {
 
     /**
      * Test that the equals() method distinguishes all fields.
@@ -126,16 +131,20 @@ public class StandardPieSectionLabelGeneratorTest {
 
     /**
      * Confirm that cloning works.
+     * @throws java.lang.CloneNotSupportedException
      */
     @Test
     public void testCloning() throws CloneNotSupportedException {
         StandardPieSectionLabelGenerator g1
                 = new StandardPieSectionLabelGenerator();
-        StandardPieSectionLabelGenerator g2 = (StandardPieSectionLabelGenerator) g1.clone();
-
+        g1.setAttributedLabel(1, new AttributedString("123"));
+        StandardPieSectionLabelGenerator g2 
+                = (StandardPieSectionLabelGenerator) g1.clone();
         assertNotSame(g1, g2);
         assertSame(g1.getClass(), g2.getClass());
         assertEquals(g1, g2);
+        g2.setAttributedLabel(1, new AttributedString("XYZ"));
+        assertNotEquals(g1, g2);
     }
 
     /**
@@ -152,22 +161,12 @@ public class StandardPieSectionLabelGeneratorTest {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() throws IOException, ClassNotFoundException {
-
+    public void testSerialization() {
         StandardPieSectionLabelGenerator g1
                 = new StandardPieSectionLabelGenerator();
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(g1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
-        StandardPieSectionLabelGenerator g2 = (StandardPieSectionLabelGenerator) in.readObject();
-        in.close();
-        assertEquals(g1, g2);
-
+        StandardPieSectionLabelGenerator g2 
+                = (StandardPieSectionLabelGenerator) TestUtils.serialised(g1);
+         assertEquals(g1, g2);
     }
 
 

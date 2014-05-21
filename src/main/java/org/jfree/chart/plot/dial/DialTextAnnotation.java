@@ -56,12 +56,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtilities;
+import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A text annotation for a {@link DialPlot}.
@@ -338,7 +338,7 @@ public class DialTextAnnotation extends AbstractDialLayer implements DialLayer,
         if (!this.font.equals(that.font)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.paint, that.paint)) {
+        if (!PaintUtils.equal(this.paint, that.paint)) {
             return false;
         }
         if (this.radius != that.radius) {
@@ -361,7 +361,7 @@ public class DialTextAnnotation extends AbstractDialLayer implements DialLayer,
     @Override
     public int hashCode() {
         int result = 193;
-        result = 37 * result + HashUtilities.hashCodeForPaint(this.paint);
+        result = 37 * result + HashUtils.hashCodeForPaint(this.paint);
         result = 37 * result + this.font.hashCode();
         result = 37 * result + this.label.hashCode();
         result = 37 * result + this.anchor.hashCode();
@@ -394,7 +394,7 @@ public class DialTextAnnotation extends AbstractDialLayer implements DialLayer,
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.paint, stream);
+        SerialUtils.writePaint(this.paint, stream);
     }
 
     /**
@@ -408,7 +408,7 @@ public class DialTextAnnotation extends AbstractDialLayer implements DialLayer,
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.paint = SerialUtilities.readPaint(stream);
+        this.paint = SerialUtils.readPaint(stream);
     }
 
 }

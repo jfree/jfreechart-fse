@@ -51,14 +51,14 @@
 
 package org.jfree.data.gantt;
 
-import org.jfree.chart.util.ObjectUtilities;
+import java.io.Serializable;
+import java.util.List;
+
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.general.AbstractSeriesDataset;
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.time.TimePeriod;
-
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * A collection of {@link TaskSeries} objects.  This class provides one
@@ -66,7 +66,7 @@ import java.util.List;
  */
 public class TaskSeriesCollection extends AbstractSeriesDataset
         implements GanttCategoryDataset, Cloneable, PublicCloneable,
-        Serializable {
+                   Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -2065799050738449903L;
@@ -302,7 +302,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
     public void remove(int series) {
         if ((series < 0) || (series >= getSeriesCount())) {
             throw new IllegalArgumentException(
-                    "TaskSeriesCollection.remove(): index outside valid range.");
+                "TaskSeriesCollection.remove(): index outside valid range.");
         }
 
         // fetch the series, remove the change listener, then remove the series.
@@ -678,7 +678,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
             return false;
         }
         TaskSeriesCollection that = (TaskSeriesCollection) obj;
-        if (!ObjectUtilities.equal(this.data, that.data)) {
+        if (!ObjectUtils.equal(this.data, that.data)) {
             return false;
         }
         return true;
@@ -695,7 +695,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset
     @Override
     public Object clone() throws CloneNotSupportedException {
         TaskSeriesCollection clone = (TaskSeriesCollection) super.clone();
-        clone.data = ObjectUtilities.deepClone(this.data);
+        clone.data = ObjectUtils.deepClone(this.data);
         clone.keys = new java.util.ArrayList<Comparable>(this.keys);
         return clone;
     }

@@ -41,21 +41,25 @@
 
 package org.jfree.chart.plot;
 
-import org.jfree.chart.HashUtilities;
-import org.jfree.chart.labels.CrosshairLabelGenerator;
-import org.jfree.chart.labels.StandardCrosshairLabelGenerator;
-import org.jfree.chart.ui.RectangleAnchor;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtilities;
-
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Paint;
+import java.awt.Stroke;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+
+import org.jfree.chart.util.HashUtils;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.util.PaintUtils;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.labels.CrosshairLabelGenerator;
+import org.jfree.chart.labels.StandardCrosshairLabelGenerator;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A crosshair for display on a plot.
@@ -140,7 +144,7 @@ public class Crosshair implements Cloneable, PublicCloneable, Serializable {
      * @param value  the value.
      */
     public Crosshair(double value) {
-        this(value, Color.BLACK, new BasicStroke(1.0f));
+       this(value, Color.BLACK, new BasicStroke(1.0f));
     }
 
     /**
@@ -592,7 +596,7 @@ public class Crosshair implements Cloneable, PublicCloneable, Serializable {
         if (this.value != that.value) {
             return false;
         }
-        if (!PaintUtilities.equal(this.paint, that.paint)) {
+        if (!PaintUtils.equal(this.paint, that.paint)) {
             return false;
         }
         if (!this.stroke.equals(that.stroke)) {
@@ -616,17 +620,17 @@ public class Crosshair implements Cloneable, PublicCloneable, Serializable {
         if (!this.labelFont.equals(that.labelFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.labelPaint, that.labelPaint)) {
+        if (!PaintUtils.equal(this.labelPaint, that.labelPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.labelBackgroundPaint,
+        if (!PaintUtils.equal(this.labelBackgroundPaint,
                 that.labelBackgroundPaint)) {
             return false;
         }
         if (this.labelOutlineVisible != that.labelOutlineVisible) {
             return false;
         }
-        if (!PaintUtilities.equal(this.labelOutlinePaint,
+        if (!PaintUtils.equal(this.labelOutlinePaint,
                 that.labelOutlinePaint)) {
             return false;
         }
@@ -644,21 +648,21 @@ public class Crosshair implements Cloneable, PublicCloneable, Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = HashUtilities.hashCode(hash, this.visible);
-        hash = HashUtilities.hashCode(hash, this.value);
-        hash = HashUtilities.hashCode(hash, this.paint);
-        hash = HashUtilities.hashCode(hash, this.stroke);
-        hash = HashUtilities.hashCode(hash, this.labelVisible);
-        hash = HashUtilities.hashCode(hash, this.labelAnchor);
-        hash = HashUtilities.hashCode(hash, this.labelGenerator);
-        hash = HashUtilities.hashCode(hash, this.labelXOffset);
-        hash = HashUtilities.hashCode(hash, this.labelYOffset);
-        hash = HashUtilities.hashCode(hash, this.labelFont);
-        hash = HashUtilities.hashCode(hash, this.labelPaint);
-        hash = HashUtilities.hashCode(hash, this.labelBackgroundPaint);
-        hash = HashUtilities.hashCode(hash, this.labelOutlineVisible);
-        hash = HashUtilities.hashCode(hash, this.labelOutlineStroke);
-        hash = HashUtilities.hashCode(hash, this.labelOutlinePaint);
+        hash = HashUtils.hashCode(hash, this.visible);
+        hash = HashUtils.hashCode(hash, this.value);
+        hash = HashUtils.hashCode(hash, this.paint);
+        hash = HashUtils.hashCode(hash, this.stroke);
+        hash = HashUtils.hashCode(hash, this.labelVisible);
+        hash = HashUtils.hashCode(hash, this.labelAnchor);
+        hash = HashUtils.hashCode(hash, this.labelGenerator);
+        hash = HashUtils.hashCode(hash, this.labelXOffset);
+        hash = HashUtils.hashCode(hash, this.labelYOffset);
+        hash = HashUtils.hashCode(hash, this.labelFont);
+        hash = HashUtils.hashCode(hash, this.labelPaint);
+        hash = HashUtils.hashCode(hash, this.labelBackgroundPaint);
+        hash = HashUtils.hashCode(hash, this.labelOutlineVisible);
+        hash = HashUtils.hashCode(hash, this.labelOutlineStroke);
+        hash = HashUtils.hashCode(hash, this.labelOutlinePaint);
         return hash;
     }
 
@@ -706,12 +710,12 @@ public class Crosshair implements Cloneable, PublicCloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.paint, stream);
-        SerialUtilities.writeStroke(this.stroke, stream);
-        SerialUtilities.writePaint(this.labelPaint, stream);
-        SerialUtilities.writePaint(this.labelBackgroundPaint, stream);
-        SerialUtilities.writeStroke(this.labelOutlineStroke, stream);
-        SerialUtilities.writePaint(this.labelOutlinePaint, stream);
+        SerialUtils.writePaint(this.paint, stream);
+        SerialUtils.writeStroke(this.stroke, stream);
+        SerialUtils.writePaint(this.labelPaint, stream);
+        SerialUtils.writePaint(this.labelBackgroundPaint, stream);
+        SerialUtils.writeStroke(this.labelOutlineStroke, stream);
+        SerialUtils.writePaint(this.labelOutlinePaint, stream);
     }
 
     /**
@@ -725,12 +729,12 @@ public class Crosshair implements Cloneable, PublicCloneable, Serializable {
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.paint = SerialUtilities.readPaint(stream);
-        this.stroke = SerialUtilities.readStroke(stream);
-        this.labelPaint = SerialUtilities.readPaint(stream);
-        this.labelBackgroundPaint = SerialUtilities.readPaint(stream);
-        this.labelOutlineStroke = SerialUtilities.readStroke(stream);
-        this.labelOutlinePaint = SerialUtilities.readPaint(stream);
+        this.paint = SerialUtils.readPaint(stream);
+        this.stroke = SerialUtils.readStroke(stream);
+        this.labelPaint = SerialUtils.readPaint(stream);
+        this.labelBackgroundPaint = SerialUtils.readPaint(stream);
+        this.labelOutlineStroke = SerialUtils.readStroke(stream);
+        this.labelOutlinePaint = SerialUtils.readPaint(stream);
         this.pcs = new PropertyChangeSupport(this);
     }
 

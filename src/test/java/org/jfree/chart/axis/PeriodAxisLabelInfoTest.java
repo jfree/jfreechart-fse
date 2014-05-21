@@ -150,20 +150,6 @@ public class PeriodAxisLabelInfoTest {
     }
 
     /**
-     * Confirm that cloning works.
-     */
-    @Test
-    public void testCloning() throws CloneNotSupportedException {
-        PeriodAxisLabelInfo info1 = new PeriodAxisLabelInfo(Day.class,
-                new SimpleDateFormat("d"));
-        PeriodAxisLabelInfo info2 = (PeriodAxisLabelInfo) info1.clone();
-
-        assertNotSame(info1, info2);
-        assertSame(info1.getClass(), info2.getClass());
-        assertEquals(info1, info2);
-    }
-
-    /**
      * Serialize an instance, restore it, and check for equality.
      */
     @Test

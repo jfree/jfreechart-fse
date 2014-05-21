@@ -42,18 +42,18 @@
 
 package org.jfree.chart.axis;
 
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.text.TextBlock;
 import org.jfree.chart.text.TextBlockAnchor;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
 
 /**
  * A tick for a {@link CategoryAxis}.
  */
-public class CategoryTick<Category extends Comparable> extends Tick {
+public class CategoryTick extends Tick {
 
     /** The category. */
-    private Category category;
+    private Comparable category;
 
     /** The label. */
     private TextBlock label;
@@ -70,7 +70,7 @@ public class CategoryTick<Category extends Comparable> extends Tick {
      * @param rotationAnchor  the rotation anchor.
      * @param angle  the rotation angle (in radians).
      */
-    public CategoryTick(Category category,
+    public CategoryTick(Comparable category,
                         TextBlock label,
                         TextBlockAnchor labelAnchor,
                         TextAnchor rotationAnchor,
@@ -88,7 +88,7 @@ public class CategoryTick<Category extends Comparable> extends Tick {
      *
      * @return The category.
      */
-    public Category getCategory() {
+    public Comparable getCategory() {
         return this.category;
     }
 
@@ -124,13 +124,13 @@ public class CategoryTick<Category extends Comparable> extends Tick {
         }
         if (obj instanceof CategoryTick && super.equals(obj)) {
             CategoryTick that = (CategoryTick) obj;
-            if (!ObjectUtilities.equal(this.category, that.category)) {
+            if (!ObjectUtils.equal(this.category, that.category)) {
                 return false;
             }
-            if (!ObjectUtilities.equal(this.label, that.label)) {
+            if (!ObjectUtils.equal(this.label, that.label)) {
                 return false;
             }
-            if (!ObjectUtilities.equal(this.labelAnchor, that.labelAnchor)) {
+            if (!ObjectUtils.equal(this.labelAnchor, that.labelAnchor)) {
                 return false;
            }
             return true;

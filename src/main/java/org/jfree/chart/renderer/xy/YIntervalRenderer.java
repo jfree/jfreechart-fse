@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * YIntervalRenderer.java
  * ----------------------
- * (C) Copyright 2002-2012, by Object Refinery Limited.
+ * (C) Copyright 2002-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -63,9 +63,9 @@ import java.io.Serializable;
 
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.ItemLabelPosition;
@@ -176,18 +176,10 @@ public class YIntervalRenderer extends AbstractXYItemRenderer
      * @param pass  the pass index (ignored here).
      */
     @Override
-    public void drawItem(Graphics2D g2,
-                         XYItemRendererState state,
-                         Rectangle2D dataArea,
-                         PlotRenderingInfo info,
-                         XYPlot plot,
-                         ValueAxis domainAxis,
-                         ValueAxis rangeAxis,
-                         XYDataset dataset,
-                         int series,
-                         int item,
-                         CrosshairState crosshairState,
-                         int pass) {
+    public void drawItem(Graphics2D g2, XYItemRendererState state, 
+            Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
+            ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
+            int series, int item, CrosshairState crosshairState, int pass) {
 
         // setup for collecting optional entity info...
         EntityCollection entities = null;
@@ -218,13 +210,13 @@ public class YIntervalRenderer extends AbstractXYItemRenderer
         PlotOrientation orientation = plot.getOrientation();
         if (orientation == PlotOrientation.HORIZONTAL) {
             line = new Line2D.Double(yyLow, xx, yyHigh, xx);
-            top = ShapeUtilities.createTranslatedShape(shape, yyHigh, xx);
-            bottom = ShapeUtilities.createTranslatedShape(shape, yyLow, xx);
+            top = ShapeUtils.createTranslatedShape(shape, yyHigh, xx);
+            bottom = ShapeUtils.createTranslatedShape(shape, yyLow, xx);
         }
         else if (orientation == PlotOrientation.VERTICAL) {
             line = new Line2D.Double(xx, yyLow, xx, yyHigh);
-            top = ShapeUtilities.createTranslatedShape(shape, xx, yyHigh);
-            bottom = ShapeUtilities.createTranslatedShape(shape, xx, yyLow);
+            top = ShapeUtils.createTranslatedShape(shape, xx, yyHigh);
+            bottom = ShapeUtils.createTranslatedShape(shape, xx, yyLow);
         }
         g2.setPaint(p);
         g2.setStroke(s);
@@ -303,7 +295,7 @@ public class YIntervalRenderer extends AbstractXYItemRenderer
             return false;
         }
         YIntervalRenderer that = (YIntervalRenderer) obj;
-        if (!ObjectUtilities.equal(this.additionalItemLabelGenerator,
+        if (!ObjectUtils.equal(this.additionalItemLabelGenerator,
                 that.additionalItemLabelGenerator)) {
             return false;
         }

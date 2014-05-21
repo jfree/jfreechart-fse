@@ -47,10 +47,6 @@
 
 package org.jfree.chart.plot;
 
-import org.jfree.chart.ChartRenderingInfo;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.SerialUtilities;
-
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -58,6 +54,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
+
+import org.jfree.chart.ChartRenderingInfo;
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * Stores information about the dimensions of a plot and its subplots.
@@ -224,13 +224,13 @@ public class PlotRenderingInfo implements Cloneable, Serializable {
             return false;
         }
         PlotRenderingInfo that = (PlotRenderingInfo) obj;
-        if (!ObjectUtilities.equal(this.dataArea, that.dataArea)) {
+        if (!ObjectUtils.equal(this.dataArea, that.dataArea)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.plotArea, that.plotArea)) {
+        if (!ObjectUtils.equal(this.plotArea, that.plotArea)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.subplotInfo, that.subplotInfo)) {
+        if (!ObjectUtils.equal(this.subplotInfo, that.subplotInfo)) {
             return false;
         }
         return true;
@@ -256,7 +256,7 @@ public class PlotRenderingInfo implements Cloneable, Serializable {
         for (int i = 0; i < this.subplotInfo.size(); i++) {
             PlotRenderingInfo info
                     = this.subplotInfo.get(i);
-            clone.subplotInfo.add((PlotRenderingInfo) info.clone());
+            clone.subplotInfo.add((PlotRenderingInfo)info.clone());
         }
         return clone;
     }
@@ -270,8 +270,8 @@ public class PlotRenderingInfo implements Cloneable, Serializable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeShape(this.dataArea, stream);
-        SerialUtilities.writeShape(this.plotArea, stream);
+        SerialUtils.writeShape(this.dataArea, stream);
+        SerialUtils.writeShape(this.plotArea, stream);
     }
 
     /**
@@ -285,8 +285,8 @@ public class PlotRenderingInfo implements Cloneable, Serializable {
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.dataArea = (Rectangle2D) SerialUtilities.readShape(stream);
-        this.plotArea = (Rectangle2D) SerialUtilities.readShape(stream);
+        this.dataArea = (Rectangle2D) SerialUtils.readShape(stream);
+        this.plotArea = (Rectangle2D) SerialUtils.readShape(stream);
     }
 
 }

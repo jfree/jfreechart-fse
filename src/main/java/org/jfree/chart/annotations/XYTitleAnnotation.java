@@ -51,7 +51,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtilities;
+import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.block.BlockParams;
@@ -60,7 +60,7 @@ import org.jfree.chart.block.RectangleConstraint;
 import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.event.AnnotationChangeEvent;
 import org.jfree.chart.plot.Plot;
@@ -364,7 +364,7 @@ public class XYTitleAnnotation extends AbstractXYAnnotation
         if (this.maxHeight != that.maxHeight) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.title, that.title)) {
+        if (!ObjectUtils.equal(this.title, that.title)) {
             return false;
         }
         if (!this.anchor.equals(that.anchor)) {
@@ -381,13 +381,13 @@ public class XYTitleAnnotation extends AbstractXYAnnotation
     @Override
     public int hashCode() {
         int result = 193;
-        result = HashUtilities.hashCode(result, this.anchor);
-        result = HashUtilities.hashCode(result, this.coordinateType);
-        result = HashUtilities.hashCode(result, this.x);
-        result = HashUtilities.hashCode(result, this.y);
-        result = HashUtilities.hashCode(result, this.maxWidth);
-        result = HashUtilities.hashCode(result, this.maxHeight);
-        result = HashUtilities.hashCode(result, this.title);
+        result = HashUtils.hashCode(result, this.anchor);
+        result = HashUtils.hashCode(result, this.coordinateType);
+        result = HashUtils.hashCode(result, this.x);
+        result = HashUtils.hashCode(result, this.y);
+        result = HashUtils.hashCode(result, this.maxWidth);
+        result = HashUtils.hashCode(result, this.maxHeight);
+        result = HashUtils.hashCode(result, this.title);
         return result;
     }
 

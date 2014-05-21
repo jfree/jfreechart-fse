@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * LineAndShapeRenderer.java
  * -------------------------
- * (C) Copyright 2001-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2001-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Mark Watson (www.markwatson.com);
@@ -107,9 +107,9 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.util.BooleanList;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CategoryPlot;
@@ -800,18 +800,16 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
         if (pass == 1) {
             Shape shape = getItemShape(row, column);
             if (orientation == PlotOrientation.HORIZONTAL) {
-                shape = ShapeUtilities.createTranslatedShape(shape, y1, x1);
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
-                shape = ShapeUtilities.createTranslatedShape(shape, x1, y1);
+                shape = ShapeUtils.createTranslatedShape(shape, y1, x1);
+            } else if (orientation == PlotOrientation.VERTICAL) {
+                shape = ShapeUtils.createTranslatedShape(shape, x1, y1);
             }
 
             if (getItemShapeVisible(row, column)) {
                 if (getItemShapeFilled(row, column)) {
                     if (this.useFillPaint) {
                         g2.setPaint(getItemFillPaint(row, column));
-                    }
-                    else {
+                    } else {
                         g2.setPaint(getItemPaint(row, column));
                     }
                     g2.fill(shape);
@@ -819,8 +817,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
                 if (this.drawOutlines) {
                     if (this.useOutlinePaint) {
                         g2.setPaint(getItemOutlinePaint(row, column));
-                    }
-                    else {
+                    } else {
                         g2.setPaint(getItemPaint(row, column));
                     }
                     g2.setStroke(getItemOutlineStroke(row, column));
@@ -833,8 +830,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
                 if (orientation == PlotOrientation.HORIZONTAL) {
                     drawItemLabel(g2, orientation, dataset, row, column, y1,
                             x1, (value < 0.0));
-                }
-                else if (orientation == PlotOrientation.VERTICAL) {
+                } else if (orientation == PlotOrientation.VERTICAL) {
                     drawItemLabel(g2, orientation, dataset, row, column, x1,
                             y1, (value < 0.0));
                 }
@@ -876,18 +872,18 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
         if (this.baseLinesVisible != that.baseLinesVisible) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.seriesLinesVisible,
+        if (!ObjectUtils.equal(this.seriesLinesVisible,
                 that.seriesLinesVisible)) {
             return false;
         }
         if (this.baseShapesVisible != that.baseShapesVisible) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.seriesShapesVisible,
+        if (!ObjectUtils.equal(this.seriesShapesVisible,
                 that.seriesShapesVisible)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.seriesShapesFilled,
+        if (!ObjectUtils.equal(this.seriesShapesFilled,
                 that.seriesShapesFilled)) {
             return false;
         }

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * RangeTests.java
  * ---------------
- * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Sergei Ivanov;
@@ -37,22 +37,25 @@
  * 14-Aug-2003 : Version 1 (DG);
  * 18-Dec-2007 : Additional tests from Sergei Ivanov (DG);
  * 08-Jan-2012 : Added test for combine() method (DG);
+ * 23-Feb-2014 : Added isNaNRange() test (DG);
  *
  */
 
 package org.jfree.data;
 
+import org.jfree.chart.TestUtils;
 import org.junit.Test;
 
-import java.io.*;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link Range} class.
  */
-public class RangeTest {
-
+public class RangeTest  {
 
     /**
      * Confirm that the constructor initializes all the required fields.
@@ -64,10 +67,10 @@ public class RangeTest {
         assertEquals(r1.getUpperBound(), 1000.0, 0.0d);
 
         try {
-            /*Range r2 =*/
-            new Range(10.0, 0.0);
+            /*Range r2 =*/ new Range(10.0, 0.0);
             fail("Lower bound cannot be greater than the upper");
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             // expected
         }
     }
@@ -77,7 +80,6 @@ public class RangeTest {
      */
     @Test
     public void testEquals() {
-
         Range r1 = new Range(0.0, 1.0);
         Range r2 = new Range(0.0, 1.0);
         assertEquals(r1, r2);
@@ -195,7 +197,8 @@ public class RangeTest {
         try {
             Range.expand(null, 0.1, 0.1);
             fail("Null value is accepted");
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
         }
 
         // Lower > upper: mid point is used
@@ -246,7 +249,8 @@ public class RangeTest {
         try {
             Range.shift(null, 0.1);
             fail("Null value is accepted");
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
         }
     }
 
@@ -272,13 +276,15 @@ public class RangeTest {
         try {
             Range.scale(null, 0.1);
             fail("Null value is accepted");
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
         }
 
         try {
             Range.scale(r1, -0.5);
             fail("Negative factor accepted");
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
         }
     }
 
@@ -286,22 +292,10 @@ public class RangeTest {
      * Serialize an instance, restore it, and check for equality.
      */
     @Test
-    public void testSerialization() throws IOException, ClassNotFoundException {
-
+    public void testSerialization() {
         Range r1 = new Range(25.0, 133.42);
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(buffer);
-        out.writeObject(r1);
-        out.close();
-
-        ObjectInput in = new ObjectInputStream(new ByteArrayInputStream(
-                buffer.toByteArray()));
-        Range r2 = (Range) in.readObject();
-        in.close();
-
+        Range r2 = (Range) TestUtils.serialised(r1);
         assertEquals(r1, r2);
-
     }
 
     private static final double EPSILON = 0.0000000001;
@@ -352,5 +346,13 @@ public class RangeTest {
         rr = Range.combineIgnoringNaN(r4, r1);
         assertEquals(1.0, rr.getLowerBound(), EPSILON);
         assertEquals(2.0, rr.getUpperBound(), EPSILON);
+    }
+    
+    @Test
+    public void testIsNaNRange() {
+        assertTrue(new Range(Double.NaN, Double.NaN).isNaNRange());
+        assertFalse(new Range(1.0, 2.0).isNaNRange());
+        assertFalse(new Range(Double.NaN, 2.0).isNaNRange());
+        assertFalse(new Range(1.0, Double.NaN).isNaNRange());
     }
 }

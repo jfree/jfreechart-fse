@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------
  * MeterPlot.java
  * --------------
- * (C) Copyright 2000-2012, by Hari and Contributors.
+ * (C) Copyright 2000-2014, by Hari and Contributors.
  *
  * Original Author:  Hari (ourhari@hotmail.com);
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -82,35 +82,50 @@
  * 18-Dec-2008 : Use ResourceBundleWrapper - see patch 1607918 by
  *               Jess Thrysoee (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 10-Mar-2014 : Removed LegendItemCollection (DG);
  *
  */
 
 package org.jfree.chart.plot;
 
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
-import org.jfree.chart.event.PlotChangeEvent;
-import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.TextAnchor;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.ResourceBundleWrapper;
-import org.jfree.chart.util.SerialUtilities;
-import org.jfree.data.Range;
-import org.jfree.data.general.DatasetChangeEvent;
-import org.jfree.data.general.ValueDataset;
-
-import java.awt.*;
-import java.awt.geom.*;
+import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Composite;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Polygon;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.geom.Arc2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.PaintUtils;
+import org.jfree.chart.event.PlotChangeEvent;
+import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.util.ResourceBundleWrapper;
+import org.jfree.chart.util.SerialUtils;
+import org.jfree.data.Range;
+import org.jfree.data.general.DatasetChangeEvent;
+import org.jfree.data.general.ValueDataset;
 
 /**
  * A plot that displays a single value in the form of a needle on a dial.
@@ -201,7 +216,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
     /** The resourceBundle for the localization. */
     protected static ResourceBundle localizationResources
             = ResourceBundleWrapper.getBundle(
-            "org.jfree.chart.plot.LocalizationBundle");
+                    "org.jfree.chart.plot.LocalizationBundle");
 
     /**
      * A (possibly empty) list of the {@link MeterInterval}s to be highlighted
@@ -762,8 +777,8 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      * @return A collection of legend items.
      */
     @Override
-    public LegendItemCollection getLegendItems() {
-        LegendItemCollection result = new LegendItemCollection();
+    public List<LegendItem> getLegendItems() {
+        List<LegendItem> result = new ArrayList<LegendItem>();
         for (MeterInterval mi : this.intervals) {
             Paint color = mi.getBackgroundPaint();
             if (color == null) {
@@ -869,7 +884,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
                     g2.setStroke(new BasicStroke(2.0f));
 
                     double radius = (meterArea.getWidth() / 2)
-                            + DEFAULT_BORDER_SIZE + 15;
+                                    + DEFAULT_BORDER_SIZE + 15;
                     double valueAngle = valueToAngle(value);
                     double valueP1 = meterMiddleX
                             + (radius * Math.cos(Math.PI * (valueAngle / 180)));
@@ -878,7 +893,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
 
                     Polygon arrow = new Polygon();
                     if ((valueAngle > 135 && valueAngle < 225)
-                            || (valueAngle < 45 && valueAngle > -45)) {
+                        || (valueAngle < 45 && valueAngle > -45)) {
 
                         double valueP3 = (meterMiddleY
                                 - DEFAULT_CIRCLE_SIZE / 4);
@@ -887,7 +902,8 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
                         arrow.addPoint((int) meterMiddleX, (int) valueP3);
                         arrow.addPoint((int) meterMiddleX, (int) valueP4);
 
-                    } else {
+                    }
+                    else {
                         arrow.addPoint((int) (meterMiddleX
                                 - DEFAULT_CIRCLE_SIZE / 4), (int) meterMiddleY);
                         arrow.addPoint((int) (meterMiddleX
@@ -1005,18 +1021,22 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
         int joinType;
         if (this.shape == DialShape.PIE) {
             joinType = Arc2D.PIE;
-        } else if (this.shape == DialShape.CHORD) {
+        }
+        else if (this.shape == DialShape.CHORD) {
             if (dial && this.meterAngle > 180) {
                 joinType = Arc2D.CHORD;
-            } else {
+            }
+            else {
                 joinType = Arc2D.PIE;
             }
-        } else if (this.shape == DialShape.CIRCLE) {
+        }
+        else if (this.shape == DialShape.CIRCLE) {
             joinType = Arc2D.PIE;
             if (dial) {
                 extent = 360;
             }
-        } else {
+        }
+        else {
             throw new IllegalStateException("DialShape not recognised.");
         }
 
@@ -1062,7 +1082,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      * @param value  the value.
      */
     protected void drawTick(Graphics2D g2, Rectangle2D meterArea,
-                            double value) {
+            double value) {
         drawTick(g2, meterArea, value, false);
     }
 
@@ -1107,25 +1127,27 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
 
         if (this.tickLabelsVisible && label) {
 
-            String tickLabel = this.tickLabelFormat.format(value);
+            String tickLabel =  this.tickLabelFormat.format(value);
             g2.setFont(this.tickLabelFont);
             g2.setPaint(this.tickLabelPaint);
 
             FontMetrics fm = g2.getFontMetrics();
             Rectangle2D tickLabelBounds
-                    = TextUtilities.getTextBounds(tickLabel, g2, fm);
+                = TextUtilities.getTextBounds(tickLabel, g2, fm);
 
             double x = valueP2X;
             double y = valueP2Y;
             if (valueAngle == 90 || valueAngle == 270) {
                 x = x - tickLabelBounds.getWidth() / 2;
-            } else if (valueAngle < 90 || valueAngle > 270) {
+            }
+            else if (valueAngle < 90 || valueAngle > 270) {
                 x = x - tickLabelBounds.getWidth();
             }
             if ((valueAngle > 135 && valueAngle < 225)
                     || valueAngle > 315 || valueAngle < 45) {
                 y = y - tickLabelBounds.getHeight() / 2;
-            } else {
+            }
+            else {
                 y = y + tickLabelBounds.getHeight() / 2;
             }
             g2.drawString(tickLabel, (float) x, (float) y);
@@ -1146,7 +1168,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
             Number n = this.dataset.getValue();
             if (n != null) {
                 valueStr = this.tickLabelFormat.format(n.doubleValue()) + " "
-                        + this.units;
+                         + this.units;
             }
         }
         float x = (float) area.getCenterX();
@@ -1197,36 +1219,36 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
             return false;
         }
         MeterPlot that = (MeterPlot) obj;
-        if (!ObjectUtilities.equal(this.units, that.units)) {
+        if (!ObjectUtils.equal(this.units, that.units)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.range, that.range)) {
+        if (!ObjectUtils.equal(this.range, that.range)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.intervals, that.intervals)) {
+        if (!ObjectUtils.equal(this.intervals, that.intervals)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.dialOutlinePaint,
+        if (!PaintUtils.equal(this.dialOutlinePaint,
                 that.dialOutlinePaint)) {
             return false;
         }
         if (this.shape != that.shape) {
             return false;
         }
-        if (!PaintUtilities.equal(this.dialBackgroundPaint,
+        if (!PaintUtils.equal(this.dialBackgroundPaint,
                 that.dialBackgroundPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.needlePaint, that.needlePaint)) {
+        if (!PaintUtils.equal(this.needlePaint, that.needlePaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.valueFont, that.valueFont)) {
+        if (!ObjectUtils.equal(this.valueFont, that.valueFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.valuePaint, that.valuePaint)) {
+        if (!PaintUtils.equal(this.valuePaint, that.valuePaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.tickPaint, that.tickPaint)) {
+        if (!PaintUtils.equal(this.tickPaint, that.tickPaint)) {
             return false;
         }
         if (this.tickSize != that.tickSize) {
@@ -1235,13 +1257,13 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
         if (this.tickLabelsVisible != that.tickLabelsVisible) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.tickLabelFont, that.tickLabelFont)) {
+        if (!ObjectUtils.equal(this.tickLabelFont, that.tickLabelFont)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.tickLabelPaint, that.tickLabelPaint)) {
+        if (!PaintUtils.equal(this.tickLabelPaint, that.tickLabelPaint)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.tickLabelFormat,
+        if (!ObjectUtils.equal(this.tickLabelFormat,
                 that.tickLabelFormat)) {
             return false;
         }
@@ -1263,12 +1285,12 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.dialBackgroundPaint, stream);
-        SerialUtilities.writePaint(this.dialOutlinePaint, stream);
-        SerialUtilities.writePaint(this.needlePaint, stream);
-        SerialUtilities.writePaint(this.valuePaint, stream);
-        SerialUtilities.writePaint(this.tickPaint, stream);
-        SerialUtilities.writePaint(this.tickLabelPaint, stream);
+        SerialUtils.writePaint(this.dialBackgroundPaint, stream);
+        SerialUtils.writePaint(this.dialOutlinePaint, stream);
+        SerialUtils.writePaint(this.needlePaint, stream);
+        SerialUtils.writePaint(this.valuePaint, stream);
+        SerialUtils.writePaint(this.tickPaint, stream);
+        SerialUtils.writePaint(this.tickLabelPaint, stream);
     }
 
     /**
@@ -1280,14 +1302,14 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-            throws IOException, ClassNotFoundException {
+        throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.dialBackgroundPaint = SerialUtilities.readPaint(stream);
-        this.dialOutlinePaint = SerialUtilities.readPaint(stream);
-        this.needlePaint = SerialUtilities.readPaint(stream);
-        this.valuePaint = SerialUtilities.readPaint(stream);
-        this.tickPaint = SerialUtilities.readPaint(stream);
-        this.tickLabelPaint = SerialUtilities.readPaint(stream);
+        this.dialBackgroundPaint = SerialUtils.readPaint(stream);
+        this.dialOutlinePaint = SerialUtils.readPaint(stream);
+        this.needlePaint = SerialUtils.readPaint(stream);
+        this.valuePaint = SerialUtils.readPaint(stream);
+        this.tickPaint = SerialUtils.readPaint(stream);
+        this.tickLabelPaint = SerialUtils.readPaint(stream);
         if (this.dataset != null) {
             this.dataset.addChangeListener(this);
         }

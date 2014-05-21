@@ -41,19 +41,11 @@
 
 package org.jfree.chart.annotations;
 
-import org.jfree.chart.HashUtilities;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.PlotRenderingInfo;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtilities;
-
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Stroke;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -61,6 +53,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
+
+import org.jfree.chart.util.HashUtils;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.PaintUtils;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.util.SerialUtils;
 
 /**
  * A polygon annotation that can be placed on an {@link XYPlot}.  The
@@ -232,7 +236,8 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
                 area.lineTo((float) y, (float) x);
             }
             area.closePath();
-        } else if (orientation == PlotOrientation.VERTICAL) {
+        }
+        else if (orientation == PlotOrientation.VERTICAL) {
             area.moveTo((float) x, (float) y);
             for (int i = 2; i < this.polygon.length; i += 2) {
                 x = domainAxis.valueToJava2D(this.polygon[i], dataArea,
@@ -242,7 +247,7 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
                 area.lineTo((float) x, (float) y);
             }
             area.closePath();
-        }
+       }
 
 
         if (this.fillPaint != null) {
@@ -282,13 +287,13 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
         if (!Arrays.equals(this.polygon, that.polygon)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.stroke, that.stroke)) {
+        if (!ObjectUtils.equal(this.stroke, that.stroke)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.outlinePaint, that.outlinePaint)) {
+        if (!PaintUtils.equal(this.outlinePaint, that.outlinePaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.fillPaint, that.fillPaint)) {
+        if (!PaintUtils.equal(this.fillPaint, that.fillPaint)) {
             return false;
         }
         // seem to be the same
@@ -303,10 +308,10 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
     @Override
     public int hashCode() {
         int result = 193;
-        result = 37 * result + HashUtilities.hashCodeForDoubleArray(
+        result = 37 * result + HashUtils.hashCodeForDoubleArray(
                 this.polygon);
-        result = 37 * result + HashUtilities.hashCodeForPaint(this.fillPaint);
-        result = 37 * result + HashUtilities.hashCodeForPaint(
+        result = 37 * result + HashUtils.hashCodeForPaint(this.fillPaint);
+        result = 37 * result + HashUtils.hashCodeForPaint(
                 this.outlinePaint);
         if (this.stroke != null) {
             result = 37 * result + this.stroke.hashCode();
@@ -336,9 +341,9 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeStroke(this.stroke, stream);
-        SerialUtilities.writePaint(this.outlinePaint, stream);
-        SerialUtilities.writePaint(this.fillPaint, stream);
+        SerialUtils.writeStroke(this.stroke, stream);
+        SerialUtils.writePaint(this.outlinePaint, stream);
+        SerialUtils.writePaint(this.fillPaint, stream);
     }
 
     /**
@@ -352,9 +357,9 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.stroke = SerialUtilities.readStroke(stream);
-        this.outlinePaint = SerialUtilities.readPaint(stream);
-        this.fillPaint = SerialUtilities.readPaint(stream);
+        this.stroke = SerialUtils.readStroke(stream);
+        this.outlinePaint = SerialUtils.readPaint(stream);
+        this.fillPaint = SerialUtils.readPaint(stream);
     }
 
 }

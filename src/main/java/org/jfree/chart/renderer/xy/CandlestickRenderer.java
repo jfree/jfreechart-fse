@@ -88,7 +88,23 @@
 
 package org.jfree.chart.renderer.xy;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Composite;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Stroke;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.util.PaintUtils;
+import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.labels.HighLowItemLabelGenerator;
@@ -97,22 +113,11 @@ import org.jfree.chart.plot.CrosshairState;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.OHLCDataset;
 import org.jfree.data.xy.XYDataset;
-
-import java.awt.*;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
 /**
  * A renderer that draws candlesticks on an {@link XYPlot} (requires a
@@ -239,7 +244,7 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
         this.upPaint = Color.GREEN;
         this.downPaint = Color.RED;
         this.useOutlinePaint = false;  // false preserves the old behaviour
-        // prior to introducing this flag
+                                       // prior to introducing this flag
     }
 
     /**
@@ -600,8 +605,8 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
         double xx1 = axis.valueToJava2D(x1, dataArea, edge);
         double xx2 = axis.valueToJava2D(x2, dataArea, edge);
         this.maxCandleWidth = Math.abs(xx2 - xx1);
-        // Absolute value, since the relative x
-        // positions are reversed for horizontal orientation
+            // Absolute value, since the relative x
+            // positions are reversed for horizontal orientation
 
         // calculate the highest volume in the dataset...
         if (this.drawVolume) {
@@ -659,9 +664,11 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
         PlotOrientation orientation = plot.getOrientation();
         if (orientation == PlotOrientation.HORIZONTAL) {
             horiz = true;
-        } else if (orientation == PlotOrientation.VERTICAL) {
+        }
+        else if (orientation == PlotOrientation.VERTICAL) {
             horiz = false;
-        } else {
+        }
+        else {
             return;
         }
 
@@ -695,7 +702,8 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
             //  retain old behaviour.
             volumeWidth = this.candleWidth;
             stickWidth = this.candleWidth;
-        } else {
+        }
+        else {
             double xxWidth = 0;
             int itemCount;
             switch (this.autoWidthMethod) {
@@ -704,7 +712,8 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
                     itemCount = highLowData.getItemCount(series);
                     if (horiz) {
                         xxWidth = dataArea.getHeight() / itemCount;
-                    } else {
+                    }
+                    else {
                         xxWidth = dataArea.getWidth() / itemCount;
                     }
                     break;
@@ -763,7 +772,8 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
             if (horiz) {
                 min = dataArea.getMinX();
                 max = dataArea.getMaxX();
-            } else {
+            }
+            else {
                 min = dataArea.getMinY();
                 max = dataArea.getMaxY();
             }
@@ -778,7 +788,8 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
             if (horiz) {
                 g2.fill(new Rectangle2D.Double(min, xx - volumeWidth / 2,
                         zzVolume, volumeWidth));
-            } else {
+            }
+            else {
                 g2.fill(new Rectangle2D.Double(xx - volumeWidth / 2,
                         max - zzVolume, volumeWidth, zzVolume));
             }
@@ -788,7 +799,8 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
 
         if (this.useOutlinePaint) {
             g2.setPaint(outlinePaint);
-        } else {
+        }
+        else {
             g2.setPaint(p);
         }
 
@@ -801,7 +813,8 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
         if (yHigh > maxOpenClose) {
             if (horiz) {
                 g2.draw(new Line2D.Double(yyHigh, xx, yyMaxOpenClose, xx));
-            } else {
+            }
+            else {
                 g2.draw(new Line2D.Double(xx, yyHigh, xx, yyMaxOpenClose));
             }
         }
@@ -810,7 +823,8 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
         if (yLow < minOpenClose) {
             if (horiz) {
                 g2.draw(new Line2D.Double(yyLow, xx, yyMinOpenClose, xx));
-            } else {
+            }
+            else {
                 g2.draw(new Line2D.Double(xx, yyLow, xx, yyMinOpenClose));
             }
         }
@@ -825,7 +839,8 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
                     yyMaxOpenClose - yyMinOpenClose, stickWidth);
             hotspot = new Rectangle2D.Double(base, xx - stickWidth / 2,
                     length, stickWidth);
-        } else {
+        }
+        else {
             body = new Rectangle2D.Double(xx - stickWidth / 2, yyMinOpenClose,
                     stickWidth, yyMaxOpenClose - yyMinOpenClose);
             hotspot = new Rectangle2D.Double(xx - stickWidth / 2,
@@ -834,21 +849,25 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
         if (yClose > yOpen) {
             if (this.upPaint != null) {
                 g2.setPaint(this.upPaint);
-            } else {
+            }
+            else {
                 g2.setPaint(p);
             }
             g2.fill(body);
-        } else {
+        }
+        else {
             if (this.downPaint != null) {
                 g2.setPaint(this.downPaint);
-            } else {
+            }
+            else {
                 g2.setPaint(p);
             }
             g2.fill(body);
         }
         if (this.useOutlinePaint) {
             g2.setPaint(outlinePaint);
-        } else {
+        }
+        else {
             g2.setPaint(p);
         }
         g2.draw(body);
@@ -879,10 +898,10 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
         if (this.candleWidth != that.candleWidth) {
             return false;
         }
-        if (!PaintUtilities.equal(this.upPaint, that.upPaint)) {
+        if (!PaintUtils.equal(this.upPaint, that.upPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.downPaint, that.downPaint)) {
+        if (!PaintUtils.equal(this.downPaint, that.downPaint)) {
             return false;
         }
         if (this.drawVolume != that.drawVolume) {
@@ -904,7 +923,7 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
         if (this.useOutlinePaint != that.useOutlinePaint) {
             return false;
         }
-        if (!PaintUtilities.equal(this.volumePaint, that.volumePaint)) {
+        if (!PaintUtils.equal(this.volumePaint, that.volumePaint)) {
             return false;
         }
         return super.equals(obj);
@@ -931,9 +950,9 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.upPaint, stream);
-        SerialUtilities.writePaint(this.downPaint, stream);
-        SerialUtilities.writePaint(this.volumePaint, stream);
+        SerialUtils.writePaint(this.upPaint, stream);
+        SerialUtils.writePaint(this.downPaint, stream);
+        SerialUtils.writePaint(this.volumePaint, stream);
     }
 
     /**
@@ -947,9 +966,9 @@ public class CandlestickRenderer extends AbstractXYItemRenderer
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.upPaint = SerialUtilities.readPaint(stream);
-        this.downPaint = SerialUtilities.readPaint(stream);
-        this.volumePaint = SerialUtilities.readPaint(stream);
+        this.upPaint = SerialUtils.readPaint(stream);
+        this.downPaint = SerialUtils.readPaint(stream);
+        this.volumePaint = SerialUtils.readPaint(stream);
     }
 
 }

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * CategoryAxisTests.java
  * ----------------------
- * (C) Copyright 2003-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2013, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -105,6 +105,12 @@ public class CategoryAxisTest {
         a1.addCategoryLabelToolTip("Test", "Check");
         assertFalse(a1.equals(a2));
         a2.addCategoryLabelToolTip("Test", "Check");
+        assertEquals(a1, a2);
+
+        // categoryLabelURLs
+        a1.addCategoryLabelURL("Test", "http://www.jfree.org/");
+        assertFalse(a1.equals(a2));
+        a2.addCategoryLabelURL("Test", "http://www.jfree.org/");
         assertEquals(a1, a2);
 
         // tickLabelFont

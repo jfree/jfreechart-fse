@@ -82,7 +82,7 @@ import java.io.Serializable;
 
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -90,7 +90,7 @@ import org.jfree.chart.plot.CrosshairState;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.xy.OHLCDataset;
@@ -489,10 +489,10 @@ public class HighLowRenderer extends AbstractXYItemRenderer
         if (this.drawCloseTicks != that.drawCloseTicks) {
             return false;
         }
-        if (!PaintUtilities.equal(this.openTickPaint, that.openTickPaint)) {
+        if (!PaintUtils.equal(this.openTickPaint, that.openTickPaint)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.closeTickPaint, that.closeTickPaint)) {
+        if (!PaintUtils.equal(this.closeTickPaint, that.closeTickPaint)) {
             return false;
         }
         if (this.tickLength != that.tickLength) {
@@ -515,8 +515,8 @@ public class HighLowRenderer extends AbstractXYItemRenderer
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.openTickPaint = SerialUtilities.readPaint(stream);
-        this.closeTickPaint = SerialUtilities.readPaint(stream);
+        this.openTickPaint = SerialUtils.readPaint(stream);
+        this.closeTickPaint = SerialUtils.readPaint(stream);
     }
 
     /**
@@ -528,8 +528,8 @@ public class HighLowRenderer extends AbstractXYItemRenderer
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.openTickPaint, stream);
-        SerialUtilities.writePaint(this.closeTickPaint, stream);
+        SerialUtils.writePaint(this.openTickPaint, stream);
+        SerialUtils.writePaint(this.closeTickPaint, stream);
     }
 
 }

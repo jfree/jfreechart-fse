@@ -81,12 +81,12 @@ import javax.swing.Icon;
 
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.category.CategoryDataset;
 
 /**
@@ -449,7 +449,7 @@ public class MinMaxCategoryRenderer extends AbstractCategoryItemRenderer {
         if (this.plotLines != that.plotLines) {
             return false;
         }
-        if (!PaintUtilities.equal(this.groupPaint, that.groupPaint)) {
+        if (!PaintUtils.equal(this.groupPaint, that.groupPaint)) {
             return false;
         }
         if (!this.groupStroke.equals(that.groupStroke)) {
@@ -551,8 +551,8 @@ public class MinMaxCategoryRenderer extends AbstractCategoryItemRenderer {
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeStroke(this.groupStroke, stream);
-        SerialUtilities.writePaint(this.groupPaint, stream);
+        SerialUtils.writeStroke(this.groupStroke, stream);
+        SerialUtils.writePaint(this.groupPaint, stream);
     }
 
     /**
@@ -566,8 +566,8 @@ public class MinMaxCategoryRenderer extends AbstractCategoryItemRenderer {
     private void readObject(ObjectInputStream stream)
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.groupStroke = SerialUtilities.readStroke(stream);
-        this.groupPaint = SerialUtilities.readPaint(stream);
+        this.groupStroke = SerialUtils.readStroke(stream);
+        this.groupPaint = SerialUtils.readPaint(stream);
 
         this.minIcon = getIcon(new Arc2D.Double(-4, -4, 8, 8, 0, 360,
                 Arc2D.OPEN), null, Color.BLACK);

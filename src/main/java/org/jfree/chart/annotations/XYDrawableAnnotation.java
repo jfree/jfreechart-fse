@@ -50,9 +50,9 @@ import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.ui.Drawable;
+import org.jfree.chart.drawable.Drawable;
 import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
@@ -220,7 +220,7 @@ public class XYDrawableAnnotation extends AbstractXYAnnotation
         if (this.drawScaleFactor != that.drawScaleFactor) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.drawable, that.drawable)) {
+        if (!ObjectUtils.equal(this.drawable, that.drawable)) {
             return false;
         }
         // seem to be the same...

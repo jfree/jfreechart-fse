@@ -56,12 +56,17 @@
 
 package org.jfree.data.general;
 
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.ParamChecks;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.beans.PropertyVetoException;
+import java.beans.VetoableChangeListener;
+import java.beans.VetoableChangeSupport;
+import java.io.Serializable;
 
 import javax.swing.event.EventListenerList;
-import java.beans.*;
-import java.io.Serializable;
+
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * Base class representing a data series.  Subclasses are left to implement the
@@ -73,13 +78,13 @@ import java.io.Serializable;
  * You can also register a {@link SeriesChangeListener} to receive notification
  * of changes to the series data.
  */
-public abstract class Series<Key extends Comparable> implements Cloneable, Serializable {
+public abstract class Series implements Cloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = -6906561437538683581L;
 
     /** The key for the series. */
-    private Key key;
+    private Comparable key;
 
     /** A description of the series. */
     private String description;
@@ -101,7 +106,7 @@ public abstract class Series<Key extends Comparable> implements Cloneable, Seria
      *
      * @param key  the series key (<code>null</code> not permitted).
      */
-    protected Series(Key key) {
+    protected Series(Comparable key) {
         this(key, null);
     }
 
@@ -111,7 +116,7 @@ public abstract class Series<Key extends Comparable> implements Cloneable, Seria
      * @param key  the series key (<code>null</code> NOT permitted).
      * @param description  the series description (<code>null</code> permitted).
      */
-    protected Series(Key key, String description) {
+    protected Series(Comparable key, String description) {
         ParamChecks.nullNotPermitted(key, "key");       
         this.key = key;
         this.description = description;
@@ -142,7 +147,7 @@ public abstract class Series<Key extends Comparable> implements Cloneable, Seria
      *
      * @see #getKey()
      */
-    public void setKey(Key key) {
+    public void setKey(Comparable key) {
         ParamChecks.nullNotPermitted(key, "key");
         Comparable old = this.key;
         try {
@@ -273,7 +278,7 @@ public abstract class Series<Key extends Comparable> implements Cloneable, Seria
         if (!getKey().equals(that.getKey())) {
             return false;
         }
-        if (!ObjectUtilities.equal(getDescription(), that.getDescription())) {
+        if (!ObjectUtils.equal(getDescription(), that.getDescription())) {
             return false;
         }
         return true;

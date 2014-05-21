@@ -57,15 +57,15 @@
 
 package org.jfree.data.statistics;
 
-import org.jfree.chart.util.ObjectUtilities;
+import java.util.List;
+
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.KeyedObjects2D;
 import org.jfree.data.Range;
 import org.jfree.data.RangeInfo;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DatasetChangeEvent;
-
-import java.util.List;
 
 /**
  * A convenience class that provides a default implementation of the
@@ -140,7 +140,7 @@ public class DefaultBoxAndWhiskerCategoryDataset extends AbstractDataset
      * @see #add(List, Comparable, Comparable)
      */
     public void add(BoxAndWhiskerItem item, Comparable rowKey,
-                    Comparable columnKey) {
+            Comparable columnKey) {
 
         this.data.addObject(item, rowKey, columnKey);
 
@@ -149,9 +149,10 @@ public class DefaultBoxAndWhiskerCategoryDataset extends AbstractDataset
         int c = this.data.getColumnIndex(columnKey);
         if ((this.maximumRangeValueRow == r && this.maximumRangeValueColumn
                 == c) || (this.minimumRangeValueRow == r
-                && this.minimumRangeValueColumn == c)) {
+                && this.minimumRangeValueColumn == c))  {
             updateBounds();
-        } else {
+        }
+        else {
 
             double minval = Double.NaN;
             if (item.getMinOutlier() != null) {
@@ -166,7 +167,8 @@ public class DefaultBoxAndWhiskerCategoryDataset extends AbstractDataset
                 this.maximumRangeValue = maxval;
                 this.maximumRangeValueRow = r;
                 this.maximumRangeValueColumn = c;
-            } else if (maxval > this.maximumRangeValue) {
+            }
+            else if (maxval > this.maximumRangeValue) {
                 this.maximumRangeValue = maxval;
                 this.maximumRangeValueRow = r;
                 this.maximumRangeValueColumn = c;
@@ -176,7 +178,8 @@ public class DefaultBoxAndWhiskerCategoryDataset extends AbstractDataset
                 this.minimumRangeValue = minval;
                 this.minimumRangeValueRow = r;
                 this.minimumRangeValueColumn = c;
-            } else if (minval < this.minimumRangeValue) {
+            }
+            else if (minval < this.minimumRangeValue) {
                 this.minimumRangeValue = minval;
                 this.minimumRangeValueRow = r;
                 this.minimumRangeValueColumn = c;
@@ -208,7 +211,7 @@ public class DefaultBoxAndWhiskerCategoryDataset extends AbstractDataset
         // update the cached bounds...
         if ((this.maximumRangeValueRow == r && this.maximumRangeValueColumn
                 == c) || (this.minimumRangeValueRow == r
-                && this.minimumRangeValueColumn == c)) {
+                && this.minimumRangeValueColumn == c))  {
             updateBounds();
         }
 
@@ -924,7 +927,7 @@ public class DefaultBoxAndWhiskerCategoryDataset extends AbstractDataset
         if (obj instanceof DefaultBoxAndWhiskerCategoryDataset) {
             DefaultBoxAndWhiskerCategoryDataset dataset
                     = (DefaultBoxAndWhiskerCategoryDataset) obj;
-            return ObjectUtilities.equal(this.data, dataset.data);
+            return ObjectUtils.equal(this.data, dataset.data);
         }
         return false;
     }

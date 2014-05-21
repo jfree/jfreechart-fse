@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -94,6 +94,11 @@ public class XYStepAreaRendererTest {
         r1.setRangeBase(-1.0);
         assertFalse(r1.equals(r2));
         r2.setRangeBase(-1.0);
+        assertEquals(r1, r2);
+        
+        r1.setStepPoint(0.33);
+        assertFalse(r1.equals(r2));
+        r2.setStepPoint(0.33);
         assertEquals(r1, r2);
     }
 

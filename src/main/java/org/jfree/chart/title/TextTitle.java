@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------
  * TextTitle.java
  * --------------
- * (C) Copyright 2000-2012, by David Berry and Contributors.
+ * (C) Copyright 2000-2014, by David Berry and Contributors.
  *
  * Original Author:  David Berry;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -94,19 +94,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
 import org.jfree.chart.block.BlockResult;
 import org.jfree.chart.block.EntityBlockParams;
 import org.jfree.chart.block.LengthConstraintType;
 import org.jfree.chart.block.RectangleConstraint;
-import org.jfree.chart.ui.HorizontalAlignment;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.ui.VerticalAlignment;
-import org.jfree.chart.util.ObjectUtilities;
-import org.jfree.chart.util.PaintUtilities;
-import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.entity.ChartEntity;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.StandardEntityCollection;
@@ -116,15 +107,24 @@ import org.jfree.chart.text.G2TextMeasurer;
 import org.jfree.chart.text.TextBlock;
 import org.jfree.chart.text.TextBlockAnchor;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.ui.HorizontalAlignment;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.Size2D;
+import org.jfree.chart.ui.VerticalAlignment;
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.PaintUtils;
+import org.jfree.chart.util.ParamChecks;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 
 /**
  * A chart title that displays a text string with automatic wrapping as
  * required.
  */
-public class TextTitle extends Title
-                       implements Serializable, Cloneable, PublicCloneable {
+public class TextTitle extends Title implements Serializable, Cloneable, 
+        PublicCloneable {
 
     /** For serialization. */
     private static final long serialVersionUID = 8372008692127477443L;
@@ -216,23 +216,13 @@ public class TextTitle extends Title
      *                           permitted).
      * @param padding  the space to leave around the outside of the title.
      */
-    public TextTitle(String text, Font font, Paint paint,
-                     RectangleEdge position,
-                     HorizontalAlignment horizontalAlignment,
-                     VerticalAlignment verticalAlignment,
-                     RectangleInsets padding) {
-
+    public TextTitle(String text, Font font, Paint paint, 
+            RectangleEdge position, HorizontalAlignment horizontalAlignment,
+            VerticalAlignment verticalAlignment, RectangleInsets padding) {
         super(position, horizontalAlignment, verticalAlignment, padding);
-
-        if (text == null) {
-            throw new NullPointerException("Null 'text' argument.");
-        }
-        if (font == null) {
-            throw new NullPointerException("Null 'font' argument.");
-        }
-        if (paint == null) {
-            throw new NullPointerException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(text, "text");
+        ParamChecks.nullNotPermitted(font, "font");
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.text = text;
         this.font = font;
         this.paint = paint;
@@ -244,7 +234,6 @@ public class TextTitle extends Title
         this.content = null;
         this.toolTipText = null;
         this.urlText = null;
-
     }
 
     /**
@@ -265,13 +254,9 @@ public class TextTitle extends Title
      * @param text  the text (<code>null</code> not permitted).
      */
     public void setText(String text) {
-        if (text == null) {
-            throw new IllegalArgumentException("Null 'text' argument.");
-        }
-        if (!this.text.equals(text)) {
-            this.text = text;
-            notifyListeners(new TitleChangeEvent(this));
-        }
+        ParamChecks.nullNotPermitted(text, "text");
+        this.text = text;
+        fireChangeEvent();
     }
 
     /**
@@ -293,11 +278,9 @@ public class TextTitle extends Title
      * @param alignment  the alignment (<code>null</code> not permitted).
      */
     public void setTextAlignment(HorizontalAlignment alignment) {
-        if (alignment == null) {
-            throw new IllegalArgumentException("Null 'alignment' argument.");
-        }
+        ParamChecks.nullNotPermitted(alignment, "alignment");
         this.textAlignment = alignment;
-        notifyListeners(new TitleChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -320,13 +303,9 @@ public class TextTitle extends Title
      * @see #getFont()
      */
     public void setFont(Font font) {
-        if (font == null) {
-            throw new IllegalArgumentException("Null 'font' argument.");
-        }
-        if (!this.font.equals(font)) {
-            this.font = font;
-            notifyListeners(new TitleChangeEvent(this));
-        }
+        ParamChecks.nullNotPermitted(font, "font");
+        this.font = font;
+        fireChangeEvent();
     }
 
     /**
@@ -349,13 +328,9 @@ public class TextTitle extends Title
      * @see #getPaint()
      */
     public void setPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
-        if (!this.paint.equals(paint)) {
-            this.paint = paint;
-            notifyListeners(new TitleChangeEvent(this));
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
+        this.paint = paint;
+        fireChangeEvent();
     }
 
     /**
@@ -376,7 +351,7 @@ public class TextTitle extends Title
      */
     public void setBackgroundPaint(Paint paint) {
         this.backgroundPaint = paint;
-        notifyListeners(new TitleChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -396,7 +371,7 @@ public class TextTitle extends Title
      */
     public void setToolTipText(String text) {
         this.toolTipText = text;
-        notifyListeners(new TitleChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -416,7 +391,7 @@ public class TextTitle extends Title
      */
     public void setURLText(String text) {
         this.urlText = text;
-        notifyListeners(new TitleChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -438,7 +413,7 @@ public class TextTitle extends Title
      */
     public void setExpandToFitSpace(boolean expand) {
         this.expandToFitSpace = expand;
-        notifyListeners(new TitleChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -466,7 +441,7 @@ public class TextTitle extends Title
      */
     public void setMaximumLinesToDisplay(int max) {
         this.maximumLinesToDisplay = max;
-        notifyListeners(new TitleChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -841,19 +816,19 @@ public class TextTitle extends Title
             return false;
         }
         TextTitle that = (TextTitle) obj;
-        if (!ObjectUtilities.equal(this.text, that.text)) {
+        if (!ObjectUtils.equal(this.text, that.text)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.font, that.font)) {
+        if (!ObjectUtils.equal(this.font, that.font)) {
             return false;
         }
-        if (!PaintUtilities.equal(this.paint, that.paint)) {
+        if (!PaintUtils.equal(this.paint, that.paint)) {
             return false;
         }
         if (this.textAlignment != that.textAlignment) {
             return false;
         }
-        if (!PaintUtilities.equal(this.backgroundPaint, that.backgroundPaint)) {
+        if (!PaintUtils.equal(this.backgroundPaint, that.backgroundPaint)) {
             return false;
         }
         if (this.maximumLinesToDisplay != that.maximumLinesToDisplay) {
@@ -862,10 +837,10 @@ public class TextTitle extends Title
         if (this.expandToFitSpace != that.expandToFitSpace) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.toolTipText, that.toolTipText)) {
+        if (!ObjectUtils.equal(this.toolTipText, that.toolTipText)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.urlText, that.urlText)) {
+        if (!ObjectUtils.equal(this.urlText, that.urlText)) {
             return false;
         }
         return super.equals(obj);
@@ -908,8 +883,8 @@ public class TextTitle extends Title
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.paint, stream);
-        SerialUtilities.writePaint(this.backgroundPaint, stream);
+        SerialUtils.writePaint(this.paint, stream);
+        SerialUtils.writePaint(this.backgroundPaint, stream);
     }
 
     /**
@@ -923,8 +898,8 @@ public class TextTitle extends Title
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.paint = SerialUtilities.readPaint(stream);
-        this.backgroundPaint = SerialUtilities.readPaint(stream);
+        this.paint = SerialUtils.readPaint(stream);
+        this.backgroundPaint = SerialUtils.readPaint(stream);
     }
 
 }

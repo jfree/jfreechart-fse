@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------
  * PolarPlotTests.java
  * -------------------
- * (C) Copyright 2005-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -47,7 +47,6 @@
 package org.jfree.chart.plot;
 
 import org.jfree.chart.LegendItem;
-import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.LogAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
@@ -58,17 +57,33 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Point;
+import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Some tests for the {@link PolarPlot} class.
  */
-public class PolarPlotTest {
-
+public class PolarPlotTest  {
 
     /**
      * Some checks for the getLegendItems() method.
@@ -82,8 +97,8 @@ public class PolarPlotTest {
         PolarPlot plot = new PolarPlot();
         plot.setDataset(d);
         plot.setRenderer(r);
-        LegendItemCollection items = plot.getLegendItems();
-        assertEquals(2, items.getItemCount());
+        List<LegendItem> items = plot.getLegendItems();
+        assertEquals(2, items.size());
         LegendItem item1 = items.get(0);
         assertEquals("A", item1.getLabel());
         LegendItem item2 = items.get(1);
@@ -107,8 +122,8 @@ public class PolarPlotTest {
         plot.setDataset(1, d2);
         plot.setRenderer(r);
         plot.setRenderer(1, new DefaultPolarItemRenderer());
-        LegendItemCollection items = plot.getLegendItems();
-        assertEquals(4, items.getItemCount());
+        List<LegendItem> items = plot.getLegendItems();
+        assertEquals(4, items.size());
         LegendItem item1 = items.get(0);
         assertEquals("A", item1.getLabel());
         LegendItem item2 = items.get(1);
@@ -206,18 +221,63 @@ public class PolarPlotTest {
         plot2.setMargin(6);
         assertEquals(plot1, plot2);
 
-        LegendItemCollection lic1 = new LegendItemCollection();
+        List<LegendItem> lic1 = new ArrayList<LegendItem>();
         lic1.add(new LegendItem("XYZ", Color.RED));
         plot1.setFixedLegendItems(lic1);
         assertFalse(plot1.equals(plot2));
-        LegendItemCollection lic2 = new LegendItemCollection();
+        List<LegendItem> lic2 = new ArrayList<LegendItem>();
         lic2.add(new LegendItem("XYZ", Color.RED));
         plot2.setFixedLegendItems(lic2);
         assertEquals(plot1, plot2);
     }
 
+    @Test
+    public void testEquals_Axes() {
+        PolarPlot p1 = new PolarPlot();
+        p1.setAxis(0, new NumberAxis("Axis1"));
+        PolarPlot p2 = new PolarPlot();
+        p2.setAxis(0, new NumberAxis("Axis1"));
+        assertEquals(p1, p2);
+        p2.setAxis(1, new NumberAxis("Axis2"));
+        assertNotEquals(p1, p2);
+    }
+
+    @Test
+    public void testEquals_AxisLocation() {
+        PolarPlot p1 = new PolarPlot();
+        p1.setAxisLocation(0, PolarAxisLocation.NORTH_LEFT);
+        PolarPlot p2 = new PolarPlot();
+        p2.setAxisLocation(0, PolarAxisLocation.NORTH_LEFT);
+        assertEquals(p1, p2);
+        p2.setAxisLocation(8, PolarAxisLocation.EAST_ABOVE);
+        assertNotEquals(p1, p2);
+    }
+
+    @Test
+    public void testEquals_Dataset() {
+        PolarPlot p1 = new PolarPlot();
+        p1.setDataset(0, new XYSeriesCollection());
+        PolarPlot p2 = new PolarPlot();
+        p2.setDataset(0, new XYSeriesCollection());
+        assertEquals(p1, p2);
+        p2.setDataset(1, new XYSeriesCollection());
+        assertNotEquals(p1, p2);
+    }
+
+    @Test
+    public void testEquals_Renderer() {
+        PolarPlot p1 = new PolarPlot();
+        p1.setRenderer(0, new DefaultPolarItemRenderer());
+        PolarPlot p2 = new PolarPlot();
+        p2.setRenderer(0, new DefaultPolarItemRenderer());
+        assertEquals(p1, p2);
+        p2.setRenderer(1, new DefaultPolarItemRenderer());
+        assertNotEquals(p1, p2);
+    }
+    
     /**
      * Some basic checks for the clone() method.
+     * @throws CloneNotSupportedException 
      */
     @Test
     public void testCloning() throws CloneNotSupportedException {
@@ -246,11 +306,12 @@ public class PolarPlotTest {
         assertFalse(p1.equals(p2));
         p2.getAxis().setLabel("ABC");
         assertEquals(p1, p2);
-
     }
 
     /**
      * Serialize an instance, restore it, and check for equality.
+     * @throws IOException
+     * @throws ClassNotFoundException  
      */
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
@@ -271,16 +332,14 @@ public class PolarPlotTest {
         ObjectInput in = new ObjectInputStream(
                 new ByteArrayInputStream(buffer.toByteArray()));
         PolarPlot p2 = (PolarPlot) in.readObject();
-        in.close();
+            in.close();
 
         assertEquals(p1, p2);
-
     }
 
     @Test
-
     public void testTranslateToJava2D_NumberAxis() {
-
+        
         Rectangle2D dataArea = new Rectangle2D.Double(0.0, 0.0, 100.0, 100.0);
         ValueAxis axis = new NumberAxis();
         axis.setRange(0.0, 20.0);
@@ -289,44 +348,42 @@ public class PolarPlotTest {
         plot.setMargin(0);
         plot.setAngleOffset(0.0);
 
-        Point point = plot.translateToJava2D(0.0, 10.0, axis, dataArea);
+        Point point = plot.translateToJava2D(0.0, 10.0, axis, dataArea );
         assertEquals(75.0, point.getX(), 0.5);
         assertEquals(50.0, point.getY(), 0.5);
 
-        point = plot.translateToJava2D(90.0, 5.0, axis, dataArea);
+        point = plot.translateToJava2D(90.0, 5.0, axis, dataArea );
         assertEquals(50.0, point.getX(), 0.5);
         assertEquals(62.5, point.getY(), 0.5);
 
-        point = plot.translateToJava2D(45.0, 20.0, axis, dataArea);
+        point = plot.translateToJava2D(45.0, 20.0, axis, dataArea );
         assertEquals(85.0, point.getX(), 0.5);
         assertEquals(85.0, point.getY(), 0.5);
 
-        point = plot.translateToJava2D(135.0, 20.0, axis, dataArea);
+        point = plot.translateToJava2D(135.0, 20.0, axis, dataArea );
         assertEquals(15.0, point.getX(), 0.5);
         assertEquals(85.0, point.getY(), 0.5);
 
-        point = plot.translateToJava2D(225.0, 15.0, axis, dataArea);
+        point = plot.translateToJava2D(225.0, 15.0, axis, dataArea );
         assertEquals(23.0, point.getX(), 0.5);
         assertEquals(23.0, point.getY(), 0.5);
 
-        point = plot.translateToJava2D(315.0, 15.0, axis, dataArea);
+        point = plot.translateToJava2D(315.0, 15.0, axis, dataArea );
         assertEquals(77.0, point.getX(), 0.5);
         assertEquals(23.0, point.getY(), 0.5);
-
-        point = plot.translateToJava2D(21.0, 11.5, axis, dataArea);
+        
+        point = plot.translateToJava2D(21.0, 11.5, axis, dataArea );
         assertEquals(77.0, point.getX(), 0.5);
         assertEquals(60.0, point.getY(), 0.5);
-
-        point = plot.translateToJava2D(162.0, 7.0, axis, dataArea);
+        
+        point = plot.translateToJava2D(162.0, 7.0, axis, dataArea );
         assertEquals(33.0, point.getX(), 0.5);
         assertEquals(55.0, point.getY(), 0.5);
-
+        
     }
 
     @Test
-
     public void testTranslateToJava2D_NumberAxisAndMargin() {
-
         Rectangle2D dataArea = new Rectangle2D.Double(10.0, 10.0, 80.0, 80.0);
         ValueAxis axis = new NumberAxis();
         axis.setRange(-2.0, 2.0);
@@ -334,44 +391,41 @@ public class PolarPlotTest {
         PolarPlot plot = new PolarPlot(null, axis, null);
         plot.setAngleOffset(0.0);
 
-        Point point = plot.translateToJava2D(0.0, 10.0, axis, dataArea);
+        Point point = plot.translateToJava2D(0.0, 10.0, axis, dataArea );
         assertEquals(110.0, point.getX(), 0.5);
         assertEquals(50.0, point.getY(), 0.5);
 
-        point = plot.translateToJava2D(90.0, 5.0, axis, dataArea);
+        point = plot.translateToJava2D(90.0, 5.0, axis, dataArea );
         assertEquals(50.0, point.getX(), 0.5);
         assertEquals(85.0, point.getY(), 0.5);
 
-        point = plot.translateToJava2D(45.0, 20.0, axis, dataArea);
+        point = plot.translateToJava2D(45.0, 20.0, axis, dataArea );
         assertEquals(128.0, point.getX(), 0.5);
         assertEquals(128.0, point.getY(), 0.5);
 
-        point = plot.translateToJava2D(135.0, 20.0, axis, dataArea);
+        point = plot.translateToJava2D(135.0, 20.0, axis, dataArea );
         assertEquals(-28.0, point.getX(), 0.5);
         assertEquals(128.0, point.getY(), 0.5);
 
-        point = plot.translateToJava2D(225.0, 15.0, axis, dataArea);
+        point = plot.translateToJava2D(225.0, 15.0, axis, dataArea );
         assertEquals(-10.0, point.getX(), 0.5);
         assertEquals(-10.0, point.getY(), 0.5);
 
-        point = plot.translateToJava2D(315.0, 15.0, axis, dataArea);
+        point = plot.translateToJava2D(315.0, 15.0, axis, dataArea );
         assertEquals(110.0, point.getX(), 0.5);
         assertEquals(-10.0, point.getY(), 0.5);
-
-        point = plot.translateToJava2D(21.0, 11.5, axis, dataArea);
+        
+        point = plot.translateToJava2D(21.0, 11.5, axis, dataArea );
         assertEquals(113.0, point.getX(), 0.5);
         assertEquals(74.0, point.getY(), 0.5);
-
-        point = plot.translateToJava2D(162.0, 7.0, axis, dataArea);
+        
+        point = plot.translateToJava2D(162.0, 7.0, axis, dataArea );
         assertEquals(7.0, point.getX(), 0.5);
         assertEquals(64.0, point.getY(), 0.5);
-
     }
 
     @Test
-
     public void testTranslateToJava2D_LogAxis() {
-
         Rectangle2D dataArea = new Rectangle2D.Double(0.0, 0.0, 100.0, 100.0);
         ValueAxis axis = new LogAxis();
         axis.setRange(1.0, 100.0);
@@ -380,15 +434,15 @@ public class PolarPlotTest {
         plot.setMargin(0);
         plot.setAngleOffset(0.0);
 
-        Point point = plot.translateToJava2D(0.0, 10.0, axis, dataArea);
+        Point point = plot.translateToJava2D(0.0, 10.0, axis, dataArea );
         assertEquals(75.0, point.getX(), 0.5);
         assertEquals(50.0, point.getY(), 0.5);
 
-        point = plot.translateToJava2D(90.0, 5.0, axis, dataArea);
+        point = plot.translateToJava2D(90.0, 5.0, axis, dataArea );
         assertEquals(50.0, point.getX(), 0.5);
         assertEquals(67.5, point.getY(), 0.5);
 
-        point = plot.translateToJava2D(45.0, 20.0, axis, dataArea);
+        point = plot.translateToJava2D(45.0, 20.0, axis, dataArea );
         assertEquals(73.0, point.getX(), 0.5);
         assertEquals(73.0, point.getY(), 0.5);
     }

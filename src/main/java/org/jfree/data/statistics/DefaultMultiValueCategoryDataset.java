@@ -46,7 +46,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.jfree.chart.axis.NumberComparartor;
+import org.jfree.chart.axis.NumberComparator;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.KeyedObjects2D;
 import org.jfree.data.Range;
@@ -119,7 +119,7 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset
                 vlist.add(n);
             }
         }
-        Collections.sort(vlist, new NumberComparartor());
+        Collections.sort(vlist, new NumberComparator());
         this.data.addObject(vlist, rowKey, columnKey);
 
         if (vlist.size() > 0) {

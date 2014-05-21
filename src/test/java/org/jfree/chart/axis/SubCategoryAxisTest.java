@@ -47,18 +47,28 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
  * Tests for the {@link SubCategoryAxis} class.
  */
-public class SubCategoryAxisTest {
-
+public class SubCategoryAxisTest  {
 
     /**
      * Confirm that the equals method can distinguish all the required fields.
@@ -150,11 +160,11 @@ public class SubCategoryAxisTest {
         plot.setDomainAxis(new SubCategoryAxis("SubCategoryAxis"));
 
 
-        BufferedImage image = new BufferedImage(200, 100,
-                BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2 = image.createGraphics();
-        chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
-        g2.dispose();
+            BufferedImage image = new BufferedImage(200 , 100,
+                    BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2 = image.createGraphics();
+            chart.draw(g2, new Rectangle2D.Double(0, 0, 200, 100), null, null);
+            g2.dispose();
 
         //FIXME we should be asserting a value here
     }

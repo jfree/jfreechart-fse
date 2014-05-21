@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -61,7 +61,7 @@ import java.io.Serializable;
 
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.util.PublicCloneable;
-import org.jfree.chart.util.ShapeUtilities;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CrosshairState;
@@ -70,7 +70,7 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.LookupPaintScale;
 import org.jfree.chart.renderer.PaintScale;
-import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.xy.XYDataset;
@@ -433,7 +433,7 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
             ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
             int series, int item, CrosshairState crosshairState, int pass) {
 
-        Shape hotspot = null;
+        Shape hotspot;
         EntityCollection entities = null;
         if (info != null) {
             entities = info.getOwner().getEntityCollection();
@@ -462,8 +462,7 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
                         dataArea.getMaxY()));
                 g2.draw(new Line2D.Double(dataArea.getMinX(), transX,
                         dataArea.getMaxX(), transX));
-            }
-            else {
+            } else {
                 g2.draw(new Line2D.Double(transX, dataArea.getMinY(), transX,
                         dataArea.getMaxY()));
                 g2.draw(new Line2D.Double(dataArea.getMinX(), transY,
@@ -473,12 +472,9 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
         else if (pass == 1) {
             Shape shape = getItemShape(series, item);
             if (orientation == PlotOrientation.HORIZONTAL) {
-                shape = ShapeUtilities.createTranslatedShape(shape, transY,
-                        transX);
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
-                shape = ShapeUtilities.createTranslatedShape(shape, transX,
-                        transY);
+                shape = ShapeUtils.createTranslatedShape(shape, transY, transX);
+            } else if (orientation == PlotOrientation.VERTICAL) {
+                shape = ShapeUtils.createTranslatedShape(shape, transX, transY);
             }
             hotspot = shape;
             if (shape.intersects(dataArea)) {
@@ -516,16 +512,14 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      * @return The paint.
      */
     protected Paint getPaint(XYDataset dataset, int series, int item) {
-        Paint p = null;
+        Paint p;
         if (dataset instanceof XYZDataset) {
             double z = ((XYZDataset) dataset).getZValue(series, item);
             p = this.paintScale.getPaint(z);
-        }
-        else {
+        } else {
             if (this.useFillPaint) {
                 p = getItemFillPaint(series, item);
-            }
-            else {
+            } else {
                 p = getItemPaint(series, item);
             }
         }
@@ -608,8 +602,8 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.guideLinePaint = SerialUtilities.readPaint(stream);
-        this.guideLineStroke = SerialUtilities.readStroke(stream);
+        this.guideLinePaint = SerialUtils.readPaint(stream);
+        this.guideLineStroke = SerialUtils.readStroke(stream);
     }
 
     /**
@@ -621,8 +615,8 @@ public class XYShapeRenderer extends AbstractXYItemRenderer
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writePaint(this.guideLinePaint, stream);
-        SerialUtilities.writeStroke(this.guideLineStroke, stream);
+        SerialUtils.writePaint(this.guideLinePaint, stream);
+        SerialUtils.writeStroke(this.guideLineStroke, stream);
     }
 
 }

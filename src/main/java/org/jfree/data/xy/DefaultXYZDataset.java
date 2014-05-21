@@ -45,13 +45,14 @@
 
 package org.jfree.data.xy;
 
-import org.jfree.chart.util.PublicCloneable;
-import org.jfree.data.DomainOrder;
-import org.jfree.data.general.DatasetChangeEvent;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.jfree.chart.util.ParamChecks;
+
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.DomainOrder;
+import org.jfree.data.general.DatasetChangeEvent;
 
 /**
  * A default implementation of the {@link XYZDataset} interface that stores
@@ -293,13 +294,8 @@ public class DefaultXYZDataset extends AbstractXYZDataset
      *     z-values).
      */
     public void addSeries(Comparable seriesKey, double[][] data) {
-        if (seriesKey == null) {
-            throw new IllegalArgumentException(
-                    "The 'seriesKey' cannot be null.");
-        }
-        if (data == null) {
-            throw new IllegalArgumentException("The 'data' is null.");
-        }
+        ParamChecks.nullNotPermitted(seriesKey, "seriesKey");
+        ParamChecks.nullNotPermitted(data, "data");
         if (data.length != 3) {
             throw new IllegalArgumentException(
                     "The 'data' array must have length == 3.");
@@ -313,7 +309,8 @@ public class DefaultXYZDataset extends AbstractXYZDataset
         if (seriesIndex == -1) {  // add a new series
             this.seriesKeys.add(seriesKey);
             this.seriesList.add(data);
-        } else {  // replace an existing series
+        }
+        else {  // replace an existing series
             this.seriesList.remove(seriesIndex);
             this.seriesList.add(seriesIndex, data);
         }
@@ -423,7 +420,7 @@ public class DefaultXYZDataset extends AbstractXYZDataset
             System.arraycopy(x, 0, xx, 0, x.length);
             System.arraycopy(y, 0, yy, 0, y.length);
             System.arraycopy(z, 0, zz, 0, z.length);
-            clone.seriesList.add(i, new double[][]{xx, yy, zz});
+            clone.seriesList.add(i, new double[][] {xx, yy, zz});
         }
         return clone;
     }

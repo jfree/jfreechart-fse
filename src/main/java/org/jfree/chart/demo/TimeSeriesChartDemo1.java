@@ -48,12 +48,11 @@ import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.drawable.ColorPainter;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.StandardChartTheme;
 import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.ui.ApplicationFrame;
 import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.RefineryUtilities;
+import org.jfree.chart.ui.WindowUtils;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -70,13 +69,6 @@ import org.jfree.data.xy.XYDataset;
 public class TimeSeriesChartDemo1 extends ApplicationFrame {
 
     private static final long serialVersionUID = 1L;
-
-    {
-        // set a theme using the new shadow generator feature available in
-        // 1.0.14 - for backwards compatibility it is not enabled by default
-        ChartFactory.setChartTheme(new StandardChartTheme("JFree/Shadow",
-                true));
-    }
 
     /**
      * A demonstration application showing how to create a simple time series
@@ -105,12 +97,11 @@ public class TimeSeriesChartDemo1 extends ApplicationFrame {
                 "Date", "Price Per Unit", 
                 dataset);
 
-        chart.setBackgroundPaint(Color.WHITE);
+        chart.setBackgroundPainter(new ColorPainter(Color.WHITE));
 
         XYPlot plot = (XYPlot) chart.getPlot();
-        plot.setBackgroundPaint(Color.LIGHT_GRAY);
-        plot.setDomainGridlinePaint(Color.WHITE);
-        plot.setRangeGridlinePaint(Color.WHITE);
+        plot.setDomainGridlinePaint(Color.LIGHT_GRAY);
+        plot.setRangeGridlinePaint(Color.LIGHT_GRAY);
         plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
         plot.setDomainCrosshairVisible(true);
         plot.setRangeCrosshairVisible(true);
@@ -216,7 +207,7 @@ public class TimeSeriesChartDemo1 extends ApplicationFrame {
         TimeSeriesChartDemo1 demo = new TimeSeriesChartDemo1(
                 "Time Series Chart Demo 1");
         demo.pack();
-        RefineryUtilities.centerFrameOnScreen(demo);
+        WindowUtils.centerFrameOnScreen(demo);
         demo.setVisible(true);
 
     }

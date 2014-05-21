@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * PieSectionEntity.java
  * ---------------------
- * (C) Copyright 2002-2012, by Object Refinery Limited.
+ * (C) Copyright 2002-2013, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Richard Atkinson;
@@ -58,14 +58,17 @@ package org.jfree.chart.entity;
 import java.awt.Shape;
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtilities;
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.HashUtils;
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.data.extension.DatasetCursor;
+import org.jfree.data.extension.impl.PieCursor;
+import org.jfree.data.general.Dataset;
 import org.jfree.data.general.PieDataset;
 
 /**
  * A chart entity that represents one section within a pie plot.
  */
-public class PieSectionEntity extends ChartEntity
+public class PieSectionEntity extends DataItemEntity
                               implements Serializable {
 
     /** For serialization. */
@@ -94,11 +97,9 @@ public class PieSectionEntity extends ChartEntity
      * @param toolTipText  the tool tip text.
      * @param urlText  the URL text for HTML image maps.
      */
-    public PieSectionEntity(Shape area,
-                            PieDataset dataset,
-                            int pieIndex, int sectionIndex,
-                            Comparable sectionKey,
-                            String toolTipText, String urlText) {
+    public PieSectionEntity(Shape area, PieDataset dataset,
+            int pieIndex, int sectionIndex, Comparable sectionKey,
+            String toolTipText, String urlText) {
 
         super(area, toolTipText, urlText);
         this.dataset = dataset;
@@ -116,6 +117,13 @@ public class PieSectionEntity extends ChartEntity
      * @see #setDataset(PieDataset)
      */
     public PieDataset getDataset() {
+        return this.dataset;
+    }
+
+    /**
+     * @see DataItemEntity#getGeneralDataset() 
+     */
+    public Dataset getGeneralDataset() {
         return this.dataset;
     }
 
@@ -214,7 +222,7 @@ public class PieSectionEntity extends ChartEntity
             return false;
         }
         PieSectionEntity that = (PieSectionEntity) obj;
-        if (!ObjectUtilities.equal(this.dataset, that.dataset)) {
+        if (!ObjectUtils.equal(this.dataset, that.dataset)) {
             return false;
         }
         if (this.pieIndex != that.pieIndex) {
@@ -223,7 +231,7 @@ public class PieSectionEntity extends ChartEntity
         if (this.sectionIndex != that.sectionIndex) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.sectionKey, that.sectionKey)) {
+        if (!ObjectUtils.equal(this.sectionKey, that.sectionKey)) {
             return false;
         }
         return super.equals(obj);
@@ -237,8 +245,8 @@ public class PieSectionEntity extends ChartEntity
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = HashUtilities.hashCode(result, this.pieIndex);
-        result = HashUtilities.hashCode(result, this.sectionIndex);
+        result = HashUtils.hashCode(result, this.pieIndex);
+        result = HashUtils.hashCode(result, this.sectionIndex);
         return result;
     }
 
@@ -251,6 +259,12 @@ public class PieSectionEntity extends ChartEntity
     public String toString() {
         return "PieSection: " + this.pieIndex + ", " + this.sectionIndex + "("
                               + this.sectionKey.toString() + ")";
+    }
+
+    @Override
+    public DatasetCursor getItemCursor() {
+        //pie item entities are not yet typed
+        return new PieCursor(sectionKey);
     }
 
 }

@@ -63,7 +63,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.jfree.chart.util.ObjectUtilities;
+import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 
 /**
@@ -587,7 +587,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable,
         clone.rowKeys = new java.util.ArrayList<Comparable>(this.rowKeys);
 
         // but the row data requires a deep copy
-        clone.rows = ObjectUtilities.deepClone(this.rows);
+        clone.rows = ObjectUtils.deepClone(this.rows);
         return clone;
     }
 

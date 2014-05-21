@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------
  * StandardXYItemRenderer.java
  * ---------------------------
- * (C) Copyright 2001-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2001-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Mark Watson (www.markwatson.com);
@@ -109,18 +109,12 @@
 
 package org.jfree.chart.renderer.xy;
 
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.entity.EntityCollection;
-import org.jfree.chart.event.RendererChangeEvent;
-import org.jfree.chart.labels.XYToolTipGenerator;
-import org.jfree.chart.plot.*;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.urls.XYURLGenerator;
-import org.jfree.chart.util.*;
-import org.jfree.data.xy.XYDataset;
-
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Paint;
+import java.awt.Point;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -128,6 +122,25 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.util.BooleanList;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.ShapeUtils;
+import org.jfree.chart.util.UnitType;
+import org.jfree.chart.entity.EntityCollection;
+import org.jfree.chart.event.RendererChangeEvent;
+import org.jfree.chart.labels.XYToolTipGenerator;
+import org.jfree.chart.plot.CrosshairState;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.urls.XYURLGenerator;
+import org.jfree.chart.util.SerialUtils;
+import org.jfree.data.xy.XYDataset;
 
 /**
  * Standard item renderer for an {@link XYPlot}.  This class can draw (a)
@@ -315,7 +328,8 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
         Boolean flag = this.seriesShapesFilled.getBoolean(series);
         if (flag != null) {
             return flag;
-        } else {
+        }
+        else {
             return this.baseShapesFilled;
         }
     }
@@ -784,11 +798,13 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
                     if (s.isLastPointGood()) {
                         // TODO: check threshold
                         s.seriesPath.lineTo(x, y);
-                    } else {
+                    }
+                    else {
                         s.seriesPath.moveTo(x, y);
                     }
                     s.setLastPointGood(true);
-                } else {
+                }
+                else {
                     s.setLastPointGood(false);
                 }
                 if (item == dataset.getItemCount(series) - 1) {
@@ -799,7 +815,9 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
                         g2.draw(s.seriesPath);
                     }
                 }
-            } else if (item != 0 && itemVisible) {
+            }
+
+            else if (item != 0 && itemVisible) {
                 // get the previous data point...
                 double x0 = dataset.getXValue(series, item - 1);
                 double y0 = dataset.getYValue(series, item - 1);
@@ -813,9 +831,10 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
                         double maxX = dataset.getXValue(series, numX - 1);
                         if (this.gapThresholdType == UnitType.ABSOLUTE) {
                             drawLine = Math.abs(x1 - x0) <= this.gapThreshold;
-                        } else {
+                        }
+                        else {
                             drawLine = Math.abs(x1 - x0) <= ((maxX - minX)
-                                    / numX * getGapThreshold());
+                                / numX * getGapThreshold());
                         }
                     }
                     if (drawLine) {
@@ -826,14 +845,15 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
 
                         // only draw if we have good values
                         if (Double.isNaN(transX0) || Double.isNaN(transY0)
-                                || Double.isNaN(transX1) || Double.isNaN(transY1)) {
+                            || Double.isNaN(transX1) || Double.isNaN(transY1)) {
                             return;
                         }
 
                         if (orientation == PlotOrientation.HORIZONTAL) {
                             state.workingLine.setLine(transY0, transX0,
                                     transY1, transX1);
-                        } else if (orientation == PlotOrientation.VERTICAL) {
+                        }
+                        else if (orientation == PlotOrientation.VERTICAL) {
                             state.workingLine.setLine(transX0, transY0,
                                     transX1, transY1);
                         }
@@ -857,16 +877,18 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
 
             Shape shape = getItemShape(series, item);
             if (orientation == PlotOrientation.HORIZONTAL) {
-                shape = ShapeUtilities.createTranslatedShape(shape, transY1,
+                shape = ShapeUtils.createTranslatedShape(shape, transY1,
                         transX1);
-            } else if (orientation == PlotOrientation.VERTICAL) {
-                shape = ShapeUtilities.createTranslatedShape(shape, transX1,
+            }
+            else if (orientation == PlotOrientation.VERTICAL) {
+                shape = ShapeUtils.createTranslatedShape(shape, transX1,
                         transY1);
             }
             if (shape.intersects(dataArea)) {
                 if (getItemShapeFilled(series, item)) {
                     g2.fill(shape);
-                } else {
+                }
+                else {
                     g2.draw(shape);
                 }
             }
@@ -957,7 +979,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
         if (this.drawSeriesLineAsPath != that.drawSeriesLineAsPath) {
             return false;
         }
-        if (!ShapeUtilities.equal(this.legendLine, that.legendLine)) {
+        if (!ShapeUtils.equal(this.legendLine, that.legendLine)) {
             return false;
         }
         return super.equals(obj);
@@ -976,7 +998,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
         StandardXYItemRenderer clone = (StandardXYItemRenderer) super.clone();
         clone.seriesShapesFilled
                 = (BooleanList) this.seriesShapesFilled.clone();
-        clone.legendLine = ShapeUtilities.clone(this.legendLine);
+        clone.legendLine = ShapeUtils.clone(this.legendLine);
         return clone;
     }
 
@@ -1043,7 +1065,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.legendLine = SerialUtilities.readShape(stream);
+        this.legendLine = SerialUtils.readShape(stream);
     }
 
     /**
@@ -1055,7 +1077,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeShape(this.legendLine, stream);
+        SerialUtils.writeShape(this.legendLine, stream);
     }
 
 }

@@ -54,7 +54,7 @@ import java.util.List;
  * @see Values
  * @see DefaultKeyedValues
  */
-public interface KeyedValues<Key extends Comparable> extends Values {
+public interface KeyedValues extends Values {
 
     /**
      * Returns the key associated with the item at a given position.  Note
@@ -69,7 +69,7 @@ public interface KeyedValues<Key extends Comparable> extends Values {
      * @throws IndexOutOfBoundsException if <code>index</code> is not in the
      *     specified range.
      */
-    public Key getKey(int index);
+    public Comparable getKey(int index);
 
     /**
      * Returns the index for a given key.
@@ -81,7 +81,7 @@ public interface KeyedValues<Key extends Comparable> extends Values {
      * @throws IllegalArgumentException if <code>key</code> is
      *     <code>null</code>.
      */
-    public int getIndex(Key key);
+    public int getIndex(Comparable key);
 
     /**
      * Returns the keys for the values in the collection.  Note that you can
@@ -91,7 +91,7 @@ public interface KeyedValues<Key extends Comparable> extends Values {
      *
      * @return The keys (never <code>null</code>).
      */
-    public List<Key> getKeys();
+    public List<Comparable> getKeys();
 
     /**
      * Returns the value for a given key.
@@ -102,6 +102,6 @@ public interface KeyedValues<Key extends Comparable> extends Values {
      *
      * @throws UnknownKeyException if the key is not recognised.
      */
-    public Number getValue(Key key);
+    public Number getValue(Comparable key);
 
 }

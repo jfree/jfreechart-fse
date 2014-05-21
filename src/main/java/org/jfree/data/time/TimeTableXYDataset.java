@@ -57,6 +57,11 @@
 
 package org.jfree.data.time;
 
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.DefaultKeyedValues2D;
 import org.jfree.data.DomainInfo;
@@ -65,11 +70,6 @@ import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.xy.AbstractIntervalXYDataset;
 import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.TableXYDataset;
-
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * A dataset for regular time periods that implements the
@@ -92,7 +92,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * and symmetrical anyway), each row contains values for the same
      * {@link RegularTimePeriod} (the rows are sorted into ascending order).
      */
-    private DefaultKeyedValues2D<Comparable, Comparable> values;
+    private DefaultKeyedValues2D values;
 
     /**
      * A flag that indicates that the domain is 'points in time'.  If this flag
@@ -142,7 +142,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
         if (locale == null) {
             throw new IllegalArgumentException("Null 'locale' argument.");
         }
-        this.values = new DefaultKeyedValues2D<Comparable, Comparable>(true);
+        this.values = new DefaultKeyedValues2D(true);
         this.workingCalendar = Calendar.getInstance(zone, locale);
         this.xPosition = TimePeriodAnchor.START;
     }
@@ -492,11 +492,13 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
         long result = 0L;
         if (this.xPosition == TimePeriodAnchor.START) {
             result = period.getStart().getTime();
-        } else if (this.xPosition == TimePeriodAnchor.MIDDLE) {
+        }
+        else if (this.xPosition == TimePeriodAnchor.MIDDLE) {
             long t0 = period.getStart().getTime();
             long t1 = period.getEnd().getTime();
             result = t0 + (t1 - t0) / 2L;
-        } else if (this.xPosition == TimePeriodAnchor.END) {
+        }
+        else if (this.xPosition == TimePeriodAnchor.END) {
             result = period.getEnd().getTime();
         }
         return result;
@@ -558,7 +560,8 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
 
         if (!includeInterval || this.domainIsPointsInTime) {
             return new Range(getXValue(first), getXValue(last));
-        } else {
+        }
+        else {
             return new Range(first.getStart().getTime(),
                     last.getEnd().getTime());
         }
@@ -586,9 +589,15 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
         if (this.xPosition != that.xPosition) {
             return false;
         }
-        boolean timeZoneEquals = this.workingCalendar.getTimeZone().equals(
-                that.workingCalendar.getTimeZone());
-        return timeZoneEquals && this.values.equals(that.values);
+        if (!this.workingCalendar.getTimeZone().equals(
+                that.workingCalendar.getTimeZone())
+                ) {
+            return false;
+        }
+        if (!this.values.equals(that.values)) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -598,12 +607,10 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      *
      * @throws CloneNotSupportedException if the dataset cannot be cloned.
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Object clone() throws CloneNotSupportedException {
         TimeTableXYDataset clone = (TimeTableXYDataset) super.clone();
-        clone.values = (DefaultKeyedValues2D<Comparable, Comparable>)
-                this.values.clone();
+        clone.values = (DefaultKeyedValues2D) this.values.clone();
         clone.workingCalendar = (Calendar) this.workingCalendar.clone();
         return clone;
     }

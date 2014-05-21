@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------
  * XYStepRenderer.java
  * -------------------
- * (C) Copyright 2002-2012, by Roger Studner and Contributors.
+ * (C) Copyright 2002-2013, by Roger Studner and Contributors.
  *
  * Original Author:  Roger Studner;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -78,7 +78,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
-import org.jfree.chart.HashUtilities;
+import org.jfree.chart.util.HashUtils;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.util.PublicCloneable;
@@ -132,7 +132,7 @@ public class XYStepRenderer extends XYLineAndShapeRenderer
      * @param urlGenerator  the URL generator (<code>null</code> permitted).
      */
     public XYStepRenderer(XYToolTipGenerator toolTipGenerator,
-                          XYURLGenerator urlGenerator) {
+            XYURLGenerator urlGenerator) {
         super();
         setDefaultToolTipGenerator(toolTipGenerator);
         setURLGenerator(urlGenerator);
@@ -194,18 +194,10 @@ public class XYStepRenderer extends XYLineAndShapeRenderer
      * @param pass  the pass index.
      */
     @Override
-    public void drawItem(Graphics2D g2,
-                         XYItemRendererState state,
-                         Rectangle2D dataArea,
-                         PlotRenderingInfo info,
-                         XYPlot plot,
-                         ValueAxis domainAxis,
-                         ValueAxis rangeAxis,
-                         XYDataset dataset,
-                         int series,
-                         int item,
-                         CrosshairState crosshairState,
-                         int pass) {
+    public void drawItem(Graphics2D g2, XYItemRendererState state, 
+            Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
+            ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
+            int series, int item, CrosshairState crosshairState, int pass) {
 
         // do nothing if item is not visible
         if (!getItemVisible(series, item)) {
@@ -357,7 +349,7 @@ public class XYStepRenderer extends XYLineAndShapeRenderer
      */
     @Override
     public int hashCode() {
-        return HashUtilities.hashCode(super.hashCode(), this.stepPoint);
+        return HashUtils.hashCode(super.hashCode(), this.stepPoint);
     }
 
     /**

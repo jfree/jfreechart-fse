@@ -58,7 +58,7 @@ public class CategorySeriesHandler extends DefaultHandler
     private Comparable seriesKey;
 
     /** The values. */
-    private DefaultKeyedValues<Comparable> values;
+    private DefaultKeyedValues values;
 
     /**
      * Creates a new item handler.
@@ -67,7 +67,7 @@ public class CategorySeriesHandler extends DefaultHandler
      */
     public CategorySeriesHandler(RootHandler root) {
         this.root = root;
-        this.values = new DefaultKeyedValues<Comparable>();
+        this.values = new DefaultKeyedValues();
     }
 
     /**
@@ -109,11 +109,14 @@ public class CategorySeriesHandler extends DefaultHandler
             setSeriesKey(atts.getValue("name"));
             ItemHandler subhandler = new ItemHandler(this.root, this);
             this.root.pushSubHandler(subhandler);
-        } else if (qName.equals(ITEM_TAG)) {
+        }
+        else if (qName.equals(ITEM_TAG)) {
             ItemHandler subhandler = new ItemHandler(this.root, this);
             this.root.pushSubHandler(subhandler);
             subhandler.startElement(namespaceURI, localName, qName, atts);
-        } else {
+        }
+
+        else {
             throw new SAXException(
                     "Expecting <Series> or <Item> tag...found " + qName
             );

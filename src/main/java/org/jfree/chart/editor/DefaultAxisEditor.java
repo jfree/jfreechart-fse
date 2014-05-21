@@ -200,7 +200,7 @@ class DefaultAxisEditor extends JPanel implements ActionListener {
         JPanel interior = new JPanel(new LCBLayout(5));
         interior.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
         interior.add(new JLabel(localizationResources.getString("Label")));
-        this.label = new JTextField(axis.getLabel());
+        this.label = new JTextField(axis.getLabel().toString());
         interior.add(this.label);
         interior.add(new JPanel());
 

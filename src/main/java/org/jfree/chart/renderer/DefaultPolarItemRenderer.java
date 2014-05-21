@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------------
  * DefaultPolarItemRenderer.java
  * -----------------------------
- * (C) Copyright 2004-2012, by Solution Engineering, Inc. and
+ * (C) Copyright 2004-2014, by Solution Engineering, Inc. and
  *     Contributors.
  *
  * Original Author:  Daniel Bridenbecker, Solution Engineering, Inc.;
@@ -61,10 +61,32 @@
 
 package org.jfree.chart.renderer;
 
+import java.awt.AlphaComposite;
+import java.awt.Composite;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Point;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Line2D;
+import java.awt.geom.PathIterator;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.List;
+
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.NumberTick;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.axis.ValueTick;
+import org.jfree.chart.util.BooleanList;
+import org.jfree.chart.util.ObjectList;
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.PublicCloneable;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.entity.XYItemEntity;
 import org.jfree.chart.event.RendererChangeEvent;
@@ -77,15 +99,9 @@ import org.jfree.chart.plot.PolarPlot;
 import org.jfree.chart.renderer.xy.AbstractXYItemRenderer;
 import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.urls.XYURLGenerator;
-import org.jfree.chart.util.*;
+import org.jfree.chart.util.ParamChecks;
+import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.xy.XYDataset;
-
-import java.awt.*;
-import java.awt.geom.*;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.List;
 
 /**
  * A renderer that can be used with the {@link PolarPlot} class.
@@ -181,7 +197,6 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      */
     private XYSeriesLabelGenerator legendItemURLGenerator;
 
-
     /**
      * Creates a new instance of DefaultPolarItemRenderer
      */
@@ -263,7 +278,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     }
 
     /**
-     * Set the composite which will be used for filling polygons and sends a
+     * Sets the composite which will be used for filling polygons and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param composite  the composite to use (<code>null</code> not
@@ -272,9 +287,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @since 1.0.14
      */
     public void setFillComposite(Composite composite) {
-        if (composite == null) {
-            throw new IllegalArgumentException("Null 'composite' argument.");
-        }
+        ParamChecks.nullNotPermitted(composite, "composite");
         this.fillComposite = composite;
         fireChangeEvent();
     }
@@ -422,9 +435,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @see #getLegendLine()
      */
     public void setLegendLine(Shape line) {
-        if (line == null) {
-            throw new IllegalArgumentException("Null 'line' argument.");
-        }
+        ParamChecks.nullNotPermitted(line, "line");
         this.legendLine = line;
         fireChangeEvent();
     }
@@ -443,7 +454,6 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * @param entityY  the entity's center y-coordinate in user space (only
      *                 used if <code>area</code> is <code>null</code>).
      */
-    // this method was copied from AbstractXYItemRenderer on 03-Oct-2011
     protected void addEntity(EntityCollection entities, Shape area,
                              XYDataset dataset, int series, int item,
                              double entityX, double entityY) {
@@ -456,7 +466,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
             double w = r * 2;
             if (getPlot().getOrientation() == PlotOrientation.VERTICAL) {
                 hotspot = new Ellipse2D.Double(entityX - r, entityY - r, w, w);
-            } else {
+            }
+            else {
                 hotspot = new Ellipse2D.Double(entityY - r, entityX - r, w, w);
             }
         }
@@ -486,12 +497,15 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      */
     @Override
     public void drawSeries(Graphics2D g2, Rectangle2D dataArea,
-                           PlotRenderingInfo info, PolarPlot plot, XYDataset dataset,
-                           int seriesIndex) {
+            PlotRenderingInfo info, PolarPlot plot, XYDataset dataset,
+            int seriesIndex) {
 
+        final int numPoints = dataset.getItemCount(seriesIndex);
+        if (numPoints == 0) {
+            return;
+        }
         GeneralPath poly = null;
         ValueAxis axis = plot.getAxisForDataset(plot.indexOf(dataset));
-        final int numPoints = dataset.getItemCount(seriesIndex);
         for (int i = 0; i < numPoints; i++) {
             double theta = dataset.getXValue(seriesIndex, i);
             double radius = dataset.getYValue(seriesIndex, i);
@@ -499,7 +513,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
             if (poly == null) {
                 poly = new GeneralPath();
                 poly.moveTo(p.x, p.y);
-            } else {
+            }
+            else {
                 poly.lineTo(p.x, p.y);
             }
         }
@@ -520,7 +535,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
                 g2.setPaint(lookupSeriesOutlinePaint(seriesIndex));
                 g2.draw(poly);
             }
-        } else {
+        }
+        else {
             // just the lines, no filling
             g2.draw(poly);
         }
@@ -545,13 +561,14 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
                 }
                 final int x = Math.round(coords[0]);
                 final int y = Math.round(coords[1]);
-                final Shape shape = ShapeUtilities.createTranslatedShape(
-                        getItemShape(seriesIndex, i++), x, y);
+                final Shape shape = ShapeUtils.createTranslatedShape(
+                        getItemShape(seriesIndex, i++), x,  y);
 
                 Paint paint;
                 if (useFillPaint) {
                     paint = lookupSeriesFillPaint(seriesIndex);
-                } else {
+                }
+                else {
                     paint = lookupSeriesPaint(seriesIndex);
                 }
                 g2.setPaint(paint);
@@ -566,7 +583,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
                 // data area...
                 if (entities != null &&
                         AbstractXYItemRenderer.isPointInRect(dataArea, x, y)) {
-                    addEntity(entities, shape, dataset, seriesIndex, i - 1, x, y);
+                    addEntity(entities, shape, dataset, seriesIndex, i-1, x, y);
                 }
             }
         }
@@ -576,24 +593,30 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      * Draw the angular gridlines - the spokes.
      *
      * @param g2  the drawing surface.
-     * @param plot  the plot.
-     * @param ticks  the ticks.
+     * @param plot  the plot (<code>null</code> not permitted).
+     * @param ticks  the ticks (<code>null</code> not permitted).
      * @param dataArea  the data area.
      */
     @Override
     public void drawAngularGridLines(Graphics2D g2, PolarPlot plot,
-                                     List<ValueTick> ticks, Rectangle2D dataArea) {
+                List<ValueTick> ticks, Rectangle2D dataArea) {
         g2.setFont(plot.getAngleLabelFont());
         g2.setStroke(plot.getAngleGridlineStroke());
         g2.setPaint(plot.getAngleGridlinePaint());
 
-        double axisMin = plot.getAxis().getLowerBound();
-        double maxRadius = plot.getAxis().getUpperBound();
-        Point center = plot.translateToJava2D(axisMin, axisMin, plot.getAxis(),
-                dataArea);
+        ValueAxis axis = plot.getAxis();
+        double centerValue, outerValue;
+        if (axis.isInverted()) {
+            outerValue = axis.getLowerBound();
+            centerValue = axis.getUpperBound();
+        } else {
+            outerValue = axis.getUpperBound();
+            centerValue = axis.getLowerBound();
+        }
+        Point center = plot.translateToJava2D(0, centerValue, axis, dataArea);
         for (ValueTick tick : ticks) {
             double tickVal = tick.getValue();
-            Point p = plot.translateToJava2D(tickVal, maxRadius, plot.getAxis(),
+            Point p = plot.translateToJava2D(tickVal, outerValue, plot.getAxis(),
                     dataArea);
             g2.setPaint(plot.getAngleGridlinePaint());
             g2.drawLine(center.x, center.y, p.x, p.y);
@@ -610,29 +633,34 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     /**
      * Draw the radial gridlines - the rings.
      *
-     * @param g2  the drawing surface.
-     * @param plot  the plot.
-     * @param radialAxis  the radial axis.
-     * @param ticks  the ticks.
+     * @param g2  the drawing surface (<code>null</code> not permitted).
+     * @param plot  the plot (<code>null</code> not permitted).
+     * @param radialAxis  the radial axis (<code>null</code> not permitted).
+     * @param ticks  the ticks (<code>null</code> not permitted).
      * @param dataArea  the data area.
      */
     @Override
     public void drawRadialGridLines(Graphics2D g2, PolarPlot plot,
-                                    ValueAxis radialAxis, List<ValueTick> ticks, Rectangle2D dataArea) {
+            ValueAxis radialAxis, List<ValueTick> ticks, Rectangle2D dataArea) {
 
+        ParamChecks.nullNotPermitted(radialAxis, "radialAxis");
         g2.setFont(radialAxis.getTickLabelFont());
         g2.setPaint(plot.getRadiusGridlinePaint());
         g2.setStroke(plot.getRadiusGridlineStroke());
 
-        double axisMin = radialAxis.getLowerBound();
-        Point center = plot.translateToJava2D(axisMin, axisMin, radialAxis,
-                dataArea);
+        double centerValue;
+        if (radialAxis.isInverted()) {
+            centerValue = radialAxis.getUpperBound();
+        } else {
+            centerValue = radialAxis.getLowerBound();
+        }
+        Point center = plot.translateToJava2D(0, centerValue, radialAxis, dataArea);
 
         for (ValueTick tick : ticks) {
             double angleDegrees = plot.isCounterClockwise()
                     ? plot.getAngleOffset() : -plot.getAngleOffset();
             Point p = plot.translateToJava2D(angleDegrees,
-                    ((NumberTick) tick).getNumber().doubleValue(), radialAxis, dataArea);
+                    ((NumberTick)tick).getNumber().doubleValue(), radialAxis, dataArea);
             int r = p.x - center.x;
             int upperLeftX = center.x - r;
             int upperLeftY = center.y - r;
@@ -680,7 +708,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         Paint paint;
         if (this.useFillPaint) {
             paint = lookupSeriesFillPaint(series);
-        } else {
+        }
+        else {
             paint = lookupSeriesPaint(series);
         }
         Stroke stroke = lookupSeriesStroke(series);
@@ -702,12 +731,19 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     }
 
     /**
+     * Returns the tooltip generator for the specified series and item.
+     * 
+     * @param series  the series index.
+     * @param item  the item index.
+     * 
+     * @return The tooltip generator (possibly <code>null</code>).
+     * 
      * @since 1.0.14
      */
     @Override
     public XYToolTipGenerator getToolTipGenerator(int series, int item) {
         XYToolTipGenerator generator
-                = this.toolTipGeneratorList.get(series);
+            = this.toolTipGeneratorList.get(series);
         if (generator == null) {
             generator = this.baseToolTipGenerator;
         }
@@ -715,6 +751,10 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     }
 
     /**
+     * Returns the tool tip generator for the specified series.
+     * 
+     * @return The tooltip generator (possibly <code>null</code>).
+     *
      * @since 1.0.14
      */
     @Override
@@ -723,16 +763,25 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     }
 
     /**
+     * Sets the tooltip generator for the specified series.
+     * 
+     * @param series  the series index.
+     * @param generator  the tool tip generator (<code>null</code> permitted).
+     * 
      * @since 1.0.14
      */
     @Override
     public void setSeriesToolTipGenerator(int series,
-                                          XYToolTipGenerator generator) {
+            XYToolTipGenerator generator) {
         this.toolTipGeneratorList.set(series, generator);
         fireChangeEvent();
     }
 
     /**
+     * Returns the default tool tip generator.
+     * 
+     * @return The default tool tip generator (possibly <code>null</code>).
+     * 
      * @since 1.0.14
      */
     @Override
@@ -741,6 +790,11 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     }
 
     /**
+     * Sets the default tool tip generator and sends a 
+     * {@link RendererChangeEvent} to all registered listeners.
+     * 
+     * @param generator  the generator (<code>null</code> permitted).
+     * 
      * @since 1.0.14
      */
     @Override
@@ -750,6 +804,10 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     }
 
     /**
+     * Returns the URL generator.
+     * 
+     * @return The URL generator (possibly <code>null</code>).
+     * 
      * @since 1.0.14
      */
     @Override
@@ -758,6 +816,10 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     }
 
     /**
+     * Sets the URL generator.
+     * 
+     * @param urlGenerator  the generator (<code>null</code> permitted)
+     * 
      * @since 1.0.14
      */
     @Override
@@ -842,13 +904,13 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         if (this.drawOutlineWhenFilled != that.drawOutlineWhenFilled) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.fillComposite, that.fillComposite)) {
+        if (!ObjectUtils.equal(this.fillComposite, that.fillComposite)) {
             return false;
         }
         if (this.useFillPaint != that.useFillPaint) {
             return false;
         }
-        if (!ShapeUtilities.equal(this.legendLine, that.legendLine)) {
+        if (!ShapeUtils.equal(this.legendLine, that.legendLine)) {
             return false;
         }
         if (this.shapesVisible != that.shapesVisible) {
@@ -860,18 +922,18 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         if (!this.toolTipGeneratorList.equals(that.toolTipGeneratorList)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.baseToolTipGenerator,
+        if (!ObjectUtils.equal(this.baseToolTipGenerator,
                 that.baseToolTipGenerator)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.urlGenerator, that.urlGenerator)) {
+        if (!ObjectUtils.equal(this.urlGenerator, that.urlGenerator)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.legendItemToolTipGenerator,
+        if (!ObjectUtils.equal(this.legendItemToolTipGenerator,
                 that.legendItemToolTipGenerator)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.legendItemURLGenerator,
+        if (!ObjectUtils.equal(this.legendItemURLGenerator,
                 that.legendItemURLGenerator)) {
             return false;
         }
@@ -890,22 +952,22 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
         DefaultPolarItemRenderer clone
                 = (DefaultPolarItemRenderer) super.clone();
         if (this.legendLine != null) {
-            clone.legendLine = ShapeUtilities.clone(this.legendLine);
+            clone.legendLine = ShapeUtils.clone(this.legendLine);
         }
         clone.seriesFilled = (BooleanList) this.seriesFilled.clone();
         clone.toolTipGeneratorList
                 = (ObjectList<XYToolTipGenerator>) this.toolTipGeneratorList.clone();
         if (clone.baseToolTipGenerator instanceof PublicCloneable) {
-            clone.baseToolTipGenerator = ObjectUtilities.clone(this.baseToolTipGenerator);
+            clone.baseToolTipGenerator = ObjectUtils.clone(this.baseToolTipGenerator);
         }
         if (clone.urlGenerator instanceof PublicCloneable) {
-            clone.urlGenerator = ObjectUtilities.clone(this.urlGenerator);
+            clone.urlGenerator = ObjectUtils.clone(this.urlGenerator);
         }
         if (clone.legendItemToolTipGenerator instanceof PublicCloneable) {
-            clone.legendItemToolTipGenerator = ObjectUtilities.clone(this.legendItemToolTipGenerator);
+            clone.legendItemToolTipGenerator = ObjectUtils.clone(this.legendItemToolTipGenerator);
         }
         if (clone.legendItemURLGenerator instanceof PublicCloneable) {
-            clone.legendItemURLGenerator = ObjectUtilities.clone(this.legendItemURLGenerator);
+            clone.legendItemURLGenerator = ObjectUtils.clone(this.legendItemURLGenerator);
         }
         return clone;
     }
@@ -921,8 +983,8 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
     private void readObject(ObjectInputStream stream)
             throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
-        this.legendLine = SerialUtilities.readShape(stream);
-        this.fillComposite = SerialUtilities.readComposite(stream);
+        this.legendLine = SerialUtils.readShape(stream);
+        this.fillComposite = SerialUtils.readComposite(stream);
     }
 
     /**
@@ -934,7 +996,7 @@ public class DefaultPolarItemRenderer extends AbstractRenderer
      */
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
-        SerialUtilities.writeShape(this.legendLine, stream);
-        SerialUtilities.writeComposite(this.fillComposite, stream);
+        SerialUtils.writeShape(this.legendLine, stream);
+        SerialUtils.writeComposite(this.fillComposite, stream);
     }
 }

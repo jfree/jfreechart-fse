@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------
  * CategoryAxis.java
  * -----------------
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert;
  * Contributor(s):   Pady Srinivasan (patch 1217634);
@@ -100,6 +100,28 @@
 
 package org.jfree.chart.axis;
 
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.Size2D;
+import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.entity.CategoryLabelEntity;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.event.AxisChangeEvent;
@@ -109,29 +131,16 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.text.G2TextMeasurer;
 import org.jfree.chart.text.TextBlock;
 import org.jfree.chart.text.TextUtilities;
-import org.jfree.chart.ui.RectangleAnchor;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.Size2D;
-import org.jfree.chart.util.*;
+import org.jfree.chart.util.ParamChecks;
+import org.jfree.chart.util.SerialUtils;
+import org.jfree.chart.util.ShapeUtils;
 import org.jfree.data.category.CategoryDataset;
-
-import java.awt.*;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.*;
-import java.util.List;
 
 /**
  * An axis that displays categories.  This is used with the {@link CategoryPlot}
  * class.
  */
-public class CategoryAxis<Category extends Comparable> extends Axis implements Cloneable, Serializable {
+public class CategoryAxis extends Axis implements Cloneable, Serializable {
 
     /** For serialization. */
     private static final long serialVersionUID = 5886554608114265863L;
@@ -175,14 +184,17 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
     private CategoryLabelPositions categoryLabelPositions;
 
     /** Storage for tick label font overrides (if any). */
-    private Map<Category, Font> tickLabelFontMap;
+    private Map<Comparable, Font> tickLabelFontMap;
 
     /** Storage for tick label paint overrides (if any). */
-    private transient Map<Category, Paint> tickLabelPaintMap;
+    private transient Map<Comparable, Paint> tickLabelPaintMap;
 
     /** Storage for the category label tooltips (if any). */
-    private Map<Category, String> categoryLabelToolTips;
+    private Map<Comparable, String> categoryLabelToolTips;
 
+    /** Storage for the category label URLs (if any). */
+    private Map<Comparable, String> categoryLabelURLs;
+    
     /**
      * Creates a new category axis with no label.
      */
@@ -204,9 +216,10 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
         this.maximumCategoryLabelWidthRatio = 0.0f;
         this.categoryLabelPositionOffset = 4;
         this.categoryLabelPositions = CategoryLabelPositions.STANDARD;
-        this.tickLabelFontMap = new HashMap<Category, Font>();
-        this.tickLabelPaintMap = new HashMap<Category, Paint>();
-        this.categoryLabelToolTips = new HashMap<Category, String>();
+        this.tickLabelFontMap = new HashMap<Comparable, Font>();
+        this.tickLabelPaintMap = new HashMap<Comparable, Paint>();
+        this.categoryLabelToolTips = new HashMap<Comparable, String>();
+        this.categoryLabelURLs = new HashMap<Comparable, String>();
     }
 
     /**
@@ -232,7 +245,7 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      */
     public void setLowerMargin(double margin) {
         this.lowerMargin = margin;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -258,7 +271,7 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      */
     public void setUpperMargin(double margin) {
         this.upperMargin = margin;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -284,7 +297,7 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      */
     public void setCategoryMargin(double margin) {
         this.categoryMargin = margin;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -308,7 +321,7 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      */
     public void setMaximumCategoryLabelLines(int lines) {
         this.maximumCategoryLabelLines = lines;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -332,7 +345,7 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      */
     public void setMaximumCategoryLabelWidthRatio(float ratio) {
         this.maximumCategoryLabelWidthRatio = ratio;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -349,7 +362,8 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
 
     /**
      * Sets the offset between the axis and the category labels (before label
-     * positioning is taken into account).
+     * positioning is taken into account) and sends a change event to all 
+     * registered listeners.
      *
      * @param offset  the offset (in Java2D units).
      *
@@ -357,7 +371,7 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      */
     public void setCategoryLabelPositionOffset(int offset) {
         this.categoryLabelPositionOffset = offset;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -383,7 +397,7 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
     public void setCategoryLabelPositions(CategoryLabelPositions positions) {
         ParamChecks.nullNotPermitted(positions, "positions");
         this.categoryLabelPositions = positions;
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -393,9 +407,9 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      *
      * @return The font (never <code>null</code>).
      *
-     * @see #setTickLabelFont(Category, Font)
+     * @see #setTickLabelFont(Comparable, Font)
      */
-    public Font getTickLabelFont(Category category) {
+    public Font getTickLabelFont(Comparable category) {
         ParamChecks.nullNotPermitted(category, "category");
         Font result = this.tickLabelFontMap.get(category);
         // if there is no specific font, use the general one...
@@ -412,16 +426,17 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      * @param category  the category (<code>null</code> not permitted).
      * @param font  the font (<code>null</code> permitted).
      *
-     * @see #getTickLabelFont(Category)
+     * @see #getTickLabelFont(Comparable)
      */
-    public void setTickLabelFont(Category category, Font font) {
+    public void setTickLabelFont(Comparable category, Font font) {
         ParamChecks.nullNotPermitted(category, "category");
         if (font == null) {
             this.tickLabelFontMap.remove(category);
-        } else {
+        }
+        else {
             this.tickLabelFontMap.put(category, font);
         }
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -433,7 +448,7 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      *
      * @see #setTickLabelPaint(Paint)
      */
-    public Paint getTickLabelPaint(Category category) {
+    public Paint getTickLabelPaint(Comparable category) {
         ParamChecks.nullNotPermitted(category, "category");
         Paint result = this.tickLabelPaintMap.get(category);
         // if there is no specific paint, use the general one...
@@ -450,16 +465,17 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      * @param category  the category (<code>null</code> not permitted).
      * @param paint  the paint (<code>null</code> permitted).
      *
-     * @see #getTickLabelPaint(Category)
+     * @see #getTickLabelPaint(Comparable)
      */
-    public void setTickLabelPaint(Category category, Paint paint) {
+    public void setTickLabelPaint(Comparable category, Paint paint) {
         ParamChecks.nullNotPermitted(category, "category");
         if (paint == null) {
             this.tickLabelPaintMap.remove(category);
-        } else {
+        }
+        else {
             this.tickLabelPaintMap.put(category, paint);
         }
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -469,12 +485,12 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      * @param category  the category (<code>null</code> not permitted).
      * @param tooltip  the tooltip text (<code>null</code> permitted).
      *
-     * @see #removeCategoryLabelToolTip(Category)
+     * @see #removeCategoryLabelToolTip(Comparable)
      */
-    public void addCategoryLabelToolTip(Category category, String tooltip) {
+    public void addCategoryLabelToolTip(Comparable category, String tooltip) {
         ParamChecks.nullNotPermitted(category, "category");
         this.categoryLabelToolTips.put(category, tooltip);
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
     /**
@@ -485,41 +501,110 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      *
      * @return The tool tip text (possibly <code>null</code>).
      *
-     * @see #addCategoryLabelToolTip(Category, String)
-     * @see #removeCategoryLabelToolTip(Category)
+     * @see #addCategoryLabelToolTip(Comparable, String)
+     * @see #removeCategoryLabelToolTip(Comparable)
      */
-    public String getCategoryLabelToolTip(Category category) {
+    public String getCategoryLabelToolTip(Comparable category) {
         ParamChecks.nullNotPermitted(category, "category");
         return this.categoryLabelToolTips.get(category);
     }
 
     /**
-     * Removes the tooltip for the specified category and sends an
-     * {@link AxisChangeEvent} to all registered listeners.
+     * Removes the tooltip for the specified category and, if there was a value
+     * associated with that category, sends an {@link AxisChangeEvent} to all 
+     * registered listeners.
      *
      * @param category  the category (<code>null</code> not permitted).
      *
-     * @see #addCategoryLabelToolTip(Category, String)
+     * @see #addCategoryLabelToolTip(Comparable, String)
      * @see #clearCategoryLabelToolTips()
      */
-    public void removeCategoryLabelToolTip(Category category) {
+    public void removeCategoryLabelToolTip(Comparable category) {
         ParamChecks.nullNotPermitted(category, "category");
-        this.categoryLabelToolTips.remove(category);
-        notifyListeners(new AxisChangeEvent(this));
+        if (this.categoryLabelToolTips.remove(category) != null) {
+            fireChangeEvent();
+        }
     }
 
     /**
      * Clears the category label tooltips and sends an {@link AxisChangeEvent}
      * to all registered listeners.
      *
-     * @see #addCategoryLabelToolTip(Category, String)
-     * @see #removeCategoryLabelToolTip(Category)
+     * @see #addCategoryLabelToolTip(Comparable, String)
+     * @see #removeCategoryLabelToolTip(Comparable)
      */
     public void clearCategoryLabelToolTips() {
         this.categoryLabelToolTips.clear();
-        notifyListeners(new AxisChangeEvent(this));
+        fireChangeEvent();
     }
 
+    /**
+     * Adds a URL (to be used in image maps) to the specified category and 
+     * sends an {@link AxisChangeEvent} to all registered listeners.
+     *
+     * @param category  the category (<code>null</code> not permitted).
+     * @param url  the URL text (<code>null</code> permitted).
+     *
+     * @see #removeCategoryLabelURL(Comparable)
+     * 
+     * @since 1.0.16
+     */
+    public void addCategoryLabelURL(Comparable category, String url) {
+        ParamChecks.nullNotPermitted(category, "category");
+        this.categoryLabelURLs.put(category, url);
+        fireChangeEvent();
+    }
+
+    /**
+     * Returns the URL for the label belonging to the specified category.
+     *
+     * @param category  the category (<code>null</code> not permitted).
+     *
+     * @return The URL text (possibly <code>null</code>).
+     * 
+     * @see #addCategoryLabelURL(Comparable, String)
+     * @see #removeCategoryLabelURL(Comparable)
+     * 
+     * @since 1.0.16
+     */
+    public String getCategoryLabelURL(Comparable category) {
+        ParamChecks.nullNotPermitted(category, "category");
+        return this.categoryLabelURLs.get(category);
+    }
+
+    /**
+     * Removes the URL for the specified category and, if there was a URL 
+     * associated with that category, sends an {@link AxisChangeEvent} to all 
+     * registered listeners.
+     *
+     * @param category  the category (<code>null</code> not permitted).
+     *
+     * @see #addCategoryLabelURL(Comparable, String)
+     * @see #clearCategoryLabelURLs()
+     * 
+     * @since 1.0.16
+     */
+    public void removeCategoryLabelURL(Comparable category) {
+        ParamChecks.nullNotPermitted(category, "category");
+        if (this.categoryLabelURLs.remove(category) != null) {
+            fireChangeEvent();
+        }
+    }
+
+    /**
+     * Clears the category label URLs and sends an {@link AxisChangeEvent}
+     * to all registered listeners.
+     *
+     * @see #addCategoryLabelURL(Comparable, String)
+     * @see #removeCategoryLabelURL(Comparable)
+     * 
+     * @since 1.0.16
+     */
+    public void clearCategoryLabelURLs() {
+        this.categoryLabelURLs.clear();
+        fireChangeEvent();
+    }
+    
     /**
      * Returns the Java 2D coordinate for a category.
      *
@@ -532,15 +617,17 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      * @return The coordinate.
      */
     public double getCategoryJava2DCoordinate(CategoryAnchor anchor,
-                                              int category, int categoryCount, Rectangle2D area,
-                                              RectangleEdge edge) {
+           int category, int categoryCount, Rectangle2D area,
+           RectangleEdge edge) {
 
         double result = 0.0;
         if (anchor == CategoryAnchor.START) {
             result = getCategoryStart(category, categoryCount, area, edge);
-        } else if (anchor == CategoryAnchor.MIDDLE) {
+        }
+        else if (anchor == CategoryAnchor.MIDDLE) {
             result = getCategoryMiddle(category, categoryCount, area, edge);
-        } else if (anchor == CategoryAnchor.END) {
+        }
+        else if (anchor == CategoryAnchor.END) {
             result = getCategoryEnd(category, categoryCount, area, edge);
         }
         return result;
@@ -561,12 +648,13 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      * @see #getCategoryEnd(int, int, Rectangle2D, RectangleEdge)
      */
     public double getCategoryStart(int category, int categoryCount,
-                                   Rectangle2D area, RectangleEdge edge) {
+            Rectangle2D area, RectangleEdge edge) {
 
         double result = 0.0;
         if ((edge == RectangleEdge.TOP) || (edge == RectangleEdge.BOTTOM)) {
             result = area.getX() + area.getWidth() * getLowerMargin();
-        } else if ((edge == RectangleEdge.LEFT)
+        }
+        else if ((edge == RectangleEdge.LEFT)
                 || (edge == RectangleEdge.RIGHT)) {
             result = area.getMinY() + area.getHeight() * getLowerMargin();
         }
@@ -594,14 +682,14 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      * @see #getCategoryEnd(int, int, Rectangle2D, RectangleEdge)
      */
     public double getCategoryMiddle(int category, int categoryCount,
-                                    Rectangle2D area, RectangleEdge edge) {
+            Rectangle2D area, RectangleEdge edge) {
 
         if (category < 0 || category >= categoryCount) {
             throw new IllegalArgumentException("Invalid category index: "
                     + category);
         }
         return getCategoryStart(category, categoryCount, area, edge)
-                + calculateCategorySize(categoryCount, area, edge) / 2;
+               + calculateCategorySize(categoryCount, area, edge) / 2;
 
     }
 
@@ -619,10 +707,10 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      * @see #getCategoryMiddle(int, int, Rectangle2D, RectangleEdge)
      */
     public double getCategoryEnd(int category, int categoryCount,
-                                 Rectangle2D area, RectangleEdge edge) {
+            Rectangle2D area, RectangleEdge edge) {
 
         return getCategoryStart(category, categoryCount, area, edge)
-                + calculateCategorySize(categoryCount, area, edge);
+               + calculateCategorySize(categoryCount, area, edge);
 
     }
 
@@ -640,11 +728,11 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      *
      * @since 1.0.11
      *
-     * @see #getCategorySeriesMiddle(Category, Category, CategoryDataset,
+     * @see #getCategorySeriesMiddle(Comparable, Comparable, CategoryDataset,
      *     double, Rectangle2D, RectangleEdge)
      */
-    public double getCategoryMiddle(Category category,
-                                    List<Category> categories, Rectangle2D area, RectangleEdge edge) {
+    public double getCategoryMiddle(Comparable category,
+            List<Comparable> categories, Rectangle2D area, RectangleEdge edge) {
         ParamChecks.nullNotPermitted(categories, "categories");
         int categoryIndex = categories.indexOf(category);
         int categoryCount = categories.size();
@@ -666,9 +754,9 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      *
      * @since 1.0.7
      */
-    public  <ColumnKey extends Comparable> double getCategorySeriesMiddle(Category category,
-                                          ColumnKey seriesKey, CategoryDataset<ColumnKey, Category> dataset, double itemMargin,
-                                          Rectangle2D area, RectangleEdge edge) {
+    public double getCategorySeriesMiddle(Comparable category,
+            Comparable seriesKey, CategoryDataset dataset, double itemMargin,
+            Rectangle2D area, RectangleEdge edge) {
 
         int categoryIndex = dataset.getColumnIndex(category);
         int categoryCount = dataset.getColumnCount();
@@ -703,8 +791,8 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      * @since 1.0.13
      */
     public double getCategorySeriesMiddle(int categoryIndex, int categoryCount,
-                                          int seriesIndex, int seriesCount, double itemMargin,
-                                          Rectangle2D area, RectangleEdge edge) {
+            int seriesIndex, int seriesCount, double itemMargin,
+            Rectangle2D area, RectangleEdge edge) {
 
         double start = getCategoryStart(categoryIndex, categoryCount, area,
                 edge);
@@ -729,22 +817,24 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      * @return The category size.
      */
     protected double calculateCategorySize(int categoryCount, Rectangle2D area,
-                                           RectangleEdge edge) {
+            RectangleEdge edge) {
 
         double result;
         double available = 0.0;
 
         if ((edge == RectangleEdge.TOP) || (edge == RectangleEdge.BOTTOM)) {
             available = area.getWidth();
-        } else if ((edge == RectangleEdge.LEFT)
+        }
+        else if ((edge == RectangleEdge.LEFT)
                 || (edge == RectangleEdge.RIGHT)) {
             available = area.getHeight();
         }
         if (categoryCount > 1) {
             result = available * (1 - getLowerMargin() - getUpperMargin()
-                    - getCategoryMargin());
+                     - getCategoryMargin());
             result = result / categoryCount;
-        } else {
+        }
+        else {
             result = available * (1 - getLowerMargin() - getUpperMargin());
         }
         return result;
@@ -762,14 +852,15 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      * @return The category gap width.
      */
     protected double calculateCategoryGapSize(int categoryCount,
-                                              Rectangle2D area, RectangleEdge edge) {
+            Rectangle2D area, RectangleEdge edge) {
 
         double result = 0.0;
         double available = 0.0;
 
         if ((edge == RectangleEdge.TOP) || (edge == RectangleEdge.BOTTOM)) {
             available = area.getWidth();
-        } else if ((edge == RectangleEdge.LEFT)
+        }
+        else if ((edge == RectangleEdge.LEFT)
                 || (edge == RectangleEdge.RIGHT)) {
             available = area.getHeight();
         }
@@ -795,7 +886,7 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      */
     @Override
     public AxisSpace reserveSpace(Graphics2D g2, Plot plot,
-                                  Rectangle2D plotArea, RectangleEdge edge, AxisSpace space) {
+            Rectangle2D plotArea, RectangleEdge edge, AxisSpace space) {
 
         // create a new space object if one wasn't supplied...
         if (space == null) {
@@ -817,11 +908,14 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
             refreshTicks(g2, state, plotArea, edge);
             if (edge == RectangleEdge.TOP) {
                 tickLabelHeight = state.getMax();
-            } else if (edge == RectangleEdge.BOTTOM) {
+            }
+            else if (edge == RectangleEdge.BOTTOM) {
                 tickLabelHeight = state.getMax();
-            } else if (edge == RectangleEdge.LEFT) {
+            }
+            else if (edge == RectangleEdge.LEFT) {
                 tickLabelWidth = state.getMax();
-            } else if (edge == RectangleEdge.RIGHT) {
+            }
+            else if (edge == RectangleEdge.RIGHT) {
                 tickLabelWidth = state.getMax();
             }
         }
@@ -833,7 +927,8 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
             labelHeight = labelEnclosure.getHeight();
             space.add(labelHeight + tickLabelHeight
                     + this.categoryLabelPositionOffset, edge);
-        } else if (RectangleEdge.isLeftOrRight(edge)) {
+        }
+        else if (RectangleEdge.isLeftOrRight(edge)) {
             labelWidth = labelEnclosure.getWidth();
             space.add(labelWidth + tickLabelWidth
                     + this.categoryLabelPositionOffset, edge);
@@ -868,8 +963,8 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      */
     @Override
     public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
-                          Rectangle2D dataArea, RectangleEdge edge,
-                          PlotRenderingInfo plotState) {
+            Rectangle2D dataArea, RectangleEdge edge,
+            PlotRenderingInfo plotState) {
 
         // if the axis is not visible, don't draw it...
         if (!isVisible()) {
@@ -909,21 +1004,19 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      * @return The updated axis state (never <code>null</code>).
      */
     protected AxisState drawCategoryLabels(Graphics2D g2, Rectangle2D plotArea,
-                                           Rectangle2D dataArea, RectangleEdge edge, AxisState state,
-                                           PlotRenderingInfo plotState) {
+            Rectangle2D dataArea, RectangleEdge edge, AxisState state,
+            PlotRenderingInfo plotState) {
 
-        if (state == null) {
-            throw new IllegalArgumentException("Null 'state' argument.");
-        }
-
+        ParamChecks.nullNotPermitted(state, "state");
         if (!isTickLabelsVisible()) {
             return state;
         }
-        List<CategoryTick<Category>> ticks = refreshTicks(g2, state, plotArea, edge);
-        //state.setTicks(ticks);        //FIXME MMC had to remove this as the types don't match
+        List<CategoryTick> ticks = refreshTicks(g2, state, plotArea, edge);
+        //state.setTicks(ticks);        
+        //FIXME MMC had to remove this as the types don't match
 
         int categoryIndex = 0;
-        for (CategoryTick<Category> tick : ticks) {
+        for (CategoryTick tick : ticks) {
 
             g2.setFont(getTickLabelFont(tick.getCategory()));
             g2.setPaint(getTickLabelPaint(tick.getCategory()));
@@ -982,23 +1075,27 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
                 if (entities != null) {
                     String tooltip = getCategoryLabelToolTip(
                             tick.getCategory());
+                    String url = getCategoryLabelURL(tick.getCategory());
                     entities.add(new CategoryLabelEntity(tick.getCategory(),
-                            bounds, tooltip, null));
+                            bounds, tooltip, url));
                 }
             }
             categoryIndex++;
         }
 
-        if (edge == RectangleEdge.TOP) {
+        if (edge.equals(RectangleEdge.TOP)) {
             double h = state.getMax() + this.categoryLabelPositionOffset;
             state.cursorUp(h);
-        } else if (edge == RectangleEdge.BOTTOM) {
+        }
+        else if (edge.equals(RectangleEdge.BOTTOM)) {
             double h = state.getMax() + this.categoryLabelPositionOffset;
             state.cursorDown(h);
-        } else if (edge == RectangleEdge.LEFT) {
+        }
+        else if (edge == RectangleEdge.LEFT) {
             double w = state.getMax() + this.categoryLabelPositionOffset;
             state.cursorLeft(w);
-        } else if (edge == RectangleEdge.RIGHT) {
+        }
+        else if (edge == RectangleEdge.RIGHT) {
             double w = state.getMax() + this.categoryLabelPositionOffset;
             state.cursorRight(w);
         }
@@ -1016,10 +1113,10 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      * @return A list of ticks.
      */
     @Override
-    public List<CategoryTick<Category>> refreshTicks(Graphics2D g2, AxisState state,
-                                           Rectangle2D dataArea, RectangleEdge edge) {
+    public List<CategoryTick> refreshTicks(Graphics2D g2, AxisState state,
+            Rectangle2D dataArea, RectangleEdge edge) {
 
-        List<CategoryTick<Category>> ticks = new ArrayList<CategoryTick<Category>>();
+        List<CategoryTick> ticks = new java.util.ArrayList<CategoryTick>();
 
         // sanity check for data area...
         if (dataArea.getHeight() <= 0.0 || dataArea.getWidth() < 0.0) {
@@ -1027,7 +1124,7 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
         }
 
         CategoryPlot plot = (CategoryPlot) getPlot();
-        List<Category> categories = plot.getCategoriesForAxis(this);
+        List<Comparable> categories = plot.getCategoriesForAxis(this);
         double max = 0.0;
 
         if (categories != null) {
@@ -1042,15 +1139,17 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
             if (position.getWidthType() == CategoryLabelWidthType.CATEGORY) {
                 l = (float) calculateCategorySize(categories.size(), dataArea,
                         edge);
-            } else {
+            }
+            else {
                 if (RectangleEdge.isLeftOrRight(edge)) {
                     l = (float) dataArea.getWidth();
-                } else {
+                }
+                else {
                     l = (float) dataArea.getHeight();
                 }
             }
             int categoryIndex = 0;
-            for (Category category : categories) {
+            for (Comparable category : categories) {
                 g2.setFont(getTickLabelFont(category));
                 TextBlock label = createLabel(category, l * r, edge, g2);
                 if (edge == RectangleEdge.TOP || edge == RectangleEdge.BOTTOM) {
@@ -1086,7 +1185,7 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      * @since 1.0.13
      */
     public void drawTickMarks(Graphics2D g2, double cursor,
-                              Rectangle2D dataArea, RectangleEdge edge, AxisState state) {
+            Rectangle2D dataArea, RectangleEdge edge, AxisState state) {
 
         Plot p = getPlot();
         if (p == null) {
@@ -1096,11 +1195,11 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
         double il = getTickMarkInsideLength();
         double ol = getTickMarkOutsideLength();
         Line2D line = new Line2D.Double();
-        List<Category> categories = plot.getCategoriesForAxis(this);
+        List<Comparable> categories = plot.getCategoriesForAxis(this);
         g2.setPaint(getTickMarkPaint());
         g2.setStroke(getTickMarkStroke());
         if (edge.equals(RectangleEdge.TOP)) {
-            for (Category key : categories) {
+            for (Comparable key : categories) {
                 double x = getCategoryMiddle(key, categories, dataArea, edge);
                 line.setLine(x, cursor, x, cursor + il);
                 g2.draw(line);
@@ -1108,8 +1207,9 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
                 g2.draw(line);
             }
             state.cursorUp(ol);
-        } else if (edge.equals(RectangleEdge.BOTTOM)) {
-            for (Category key : categories) {
+        }
+        else if (edge.equals(RectangleEdge.BOTTOM)) {
+            for (Comparable key : categories) {
                 double x = getCategoryMiddle(key, categories, dataArea, edge);
                 line.setLine(x, cursor, x, cursor - il);
                 g2.draw(line);
@@ -1117,8 +1217,9 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
                 g2.draw(line);
             }
             state.cursorDown(ol);
-        } else if (edge.equals(RectangleEdge.LEFT)) {
-            for (Category key : categories) {
+        }
+        else if (edge.equals(RectangleEdge.LEFT)) {
+            for (Comparable key : categories) {
                 double y = getCategoryMiddle(key, categories, dataArea, edge);
                 line.setLine(cursor, y, cursor + il, y);
                 g2.draw(line);
@@ -1126,8 +1227,9 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
                 g2.draw(line);
             }
             state.cursorLeft(ol);
-        } else if (edge.equals(RectangleEdge.RIGHT)) {
-            for (Category key : categories) {
+        }
+        else if (edge.equals(RectangleEdge.RIGHT)) {
+            for (Comparable key : categories) {
                 double y = getCategoryMiddle(key, categories, dataArea, edge);
                 line.setLine(cursor, y, cursor - il, y);
                 g2.draw(line);
@@ -1148,8 +1250,8 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      *
      * @return A label.
      */
-    protected TextBlock createLabel(Category category, float width,
-                                    RectangleEdge edge, Graphics2D g2) {
+    protected TextBlock createLabel(Comparable category, float width,
+            RectangleEdge edge, Graphics2D g2) {
         TextBlock label = TextUtilities.createTextBlock(category.toString(),
                 getTickLabelFont(category), getTickLabelPaint(category), width,
                 this.maximumCategoryLabelLines, new G2TextMeasurer(g2));
@@ -1166,13 +1268,13 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      * @return The width.
      */
     protected double calculateTextBlockWidth(TextBlock block,
-                                             CategoryLabelPosition position, Graphics2D g2) {
+            CategoryLabelPosition position, Graphics2D g2) {
 
         RectangleInsets insets = getTickLabelInsets();
         Size2D size = block.calculateDimensions(g2);
         Rectangle2D box = new Rectangle2D.Double(0.0, 0.0, size.getWidth(),
                 size.getHeight());
-        Shape rotatedBox = ShapeUtilities.rotateShape(box, position.getAngle(),
+        Shape rotatedBox = ShapeUtils.rotateShape(box, position.getAngle(),
                 0.0f, 0.0f);
         double w = rotatedBox.getBounds2D().getWidth() + insets.getLeft()
                 + insets.getRight();
@@ -1190,16 +1292,16 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      * @return The height.
      */
     protected double calculateTextBlockHeight(TextBlock block,
-                                              CategoryLabelPosition position, Graphics2D g2) {
+            CategoryLabelPosition position, Graphics2D g2) {
 
         RectangleInsets insets = getTickLabelInsets();
         Size2D size = block.calculateDimensions(g2);
         Rectangle2D box = new Rectangle2D.Double(0.0, 0.0, size.getWidth(),
                 size.getHeight());
-        Shape rotatedBox = ShapeUtilities.rotateShape(box, position.getAngle(),
+        Shape rotatedBox = ShapeUtils.rotateShape(box, position.getAngle(),
                 0.0f, 0.0f);
         double h = rotatedBox.getBounds2D().getHeight()
-                + insets.getTop() + insets.getBottom();
+                   + insets.getTop() + insets.getBottom();
         return h;
 
     }
@@ -1215,9 +1317,10 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
     @Override
     public Object clone() throws CloneNotSupportedException {
         CategoryAxis clone = (CategoryAxis) super.clone();
-        clone.tickLabelFontMap = new HashMap<Category, Font>(this.tickLabelFontMap);
-        clone.tickLabelPaintMap = new HashMap<Category, Paint>(this.tickLabelPaintMap);
-        clone.categoryLabelToolTips = new HashMap<Category, String>(this.categoryLabelToolTips);
+        clone.tickLabelFontMap = new HashMap<Comparable, Font>(this.tickLabelFontMap);
+        clone.tickLabelPaintMap = new HashMap<Comparable, Paint>(this.tickLabelPaintMap);
+        clone.categoryLabelToolTips = new HashMap<Comparable, String>(this.categoryLabelToolTips);
+        clone.categoryLabelURLs = new HashMap<Comparable, String>(this.categoryLabelToolTips);
         return clone;
     }
 
@@ -1257,15 +1360,19 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
                 != this.categoryLabelPositionOffset) {
             return false;
         }
-        if (!ObjectUtilities.equal(that.categoryLabelPositions,
+        if (!ObjectUtils.equal(that.categoryLabelPositions,
                 this.categoryLabelPositions)) {
             return false;
         }
-        if (!ObjectUtilities.equal(that.categoryLabelToolTips,
+        if (!ObjectUtils.equal(that.categoryLabelToolTips,
                 this.categoryLabelToolTips)) {
             return false;
         }
-        if (!ObjectUtilities.equal(this.tickLabelFontMap,
+        if (!ObjectUtils.equal(this.categoryLabelURLs, 
+                that.categoryLabelURLs)) {
+            return false;
+        }
+        if (!ObjectUtils.equal(this.tickLabelFontMap,
                 that.tickLabelFontMap)) {
             return false;
         }
@@ -1275,19 +1382,11 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
         return true;
     }
 
-    /**
-     * Returns a hash code for this object.
-     *
-     * @return A hash code.
-     */
     @Override
     public int hashCode() {
-        if (getLabel() != null) {
-            return getLabel().hashCode();
-        }
-        return 0;
-    }
-
+        return super.hashCode();
+    }    
+    
     /**
      * Provides serialization support.
      *
@@ -1309,13 +1408,13 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      * @throws ClassNotFoundException  if there is a classpath problem.
      */
     private void readObject(ObjectInputStream stream)
-            throws IOException, ClassNotFoundException {
+        throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.tickLabelPaintMap = readPaintMap(stream);
     }
 
     /**
-     * Reads a <code>Map</code> of (<code>Category</code>, <code>Paint</code>)
+     * Reads a <code>Map</code> of (<code>Comparable</code>, <code>Paint</code>)
      * elements from a stream.
      *
      * @param in  the input stream.
@@ -1327,24 +1426,24 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      *
      * @see #writePaintMap(Map, ObjectOutputStream)
      */
-    private Map<Category, Paint> readPaintMap(ObjectInputStream in)
+    private Map<Comparable, Paint> readPaintMap(ObjectInputStream in)
             throws IOException, ClassNotFoundException {
         boolean isNull = in.readBoolean();
         if (isNull) {
             return null;
         }
-        Map<Category, Paint> result = new HashMap<Category, Paint>();
+        Map<Comparable, Paint> result = new HashMap<Comparable, Paint>();
         int count = in.readInt();
         for (int i = 0; i < count; i++) {
-            Category category = (Category) in.readObject();
-            Paint paint = SerialUtilities.readPaint(in);
+            Comparable category = (Comparable) in.readObject();
+            Paint paint = SerialUtils.readPaint(in);
             result.put(category, paint);
         }
         return result;
     }
 
     /**
-     * Writes a map of (<code>Category</code>, <code>Paint</code>)
+     * Writes a map of (<code>Comparable</code>, <code>Paint</code>)
      * elements to a stream.
      *
      * @param map  the map (<code>null</code> permitted).
@@ -1354,24 +1453,25 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      *
      * @see #readPaintMap(ObjectInputStream)
      */
-    private void writePaintMap(Map<Category, Paint> map, ObjectOutputStream out)
+    private void writePaintMap(Map<Comparable, Paint> map, ObjectOutputStream out)
             throws IOException {
         if (map == null) {
             out.writeBoolean(true);
-        } else {
+        }
+        else {
             out.writeBoolean(false);
-            Set<Category> keys = map.keySet();
+            Set<Comparable> keys = map.keySet();
             int count = keys.size();
             out.writeInt(count);
-            for (Category key : keys) {
+            for (Comparable key : keys) {
                 out.writeObject(key);
-                SerialUtilities.writePaint(map.get(key), out);
+                SerialUtils.writePaint(map.get(key), out);
             }
         }
     }
 
     /**
-     * Tests two maps containing (<code>Category</code>, <code>Paint</code>)
+     * Tests two maps containing (<code>Comparable</code>, <code>Paint</code>)
      * elements for equality.
      *
      * @param map1  the first map (<code>null</code> not permitted).
@@ -1379,14 +1479,14 @@ public class CategoryAxis<Category extends Comparable> extends Axis implements C
      *
      * @return A boolean.
      */
-    private boolean equalPaintMaps(Map<Category, Paint> map1, Map<Category, Paint> map2) {
+    private boolean equalPaintMaps(Map<Comparable, Paint> map1, Map<Comparable, Paint> map2) {
         if (map1.size() != map2.size()) {
             return false;
         }
-        for (Map.Entry<Category, Paint> entry : map1.entrySet()) {
+        for (Map.Entry<Comparable, Paint> entry : map1.entrySet()) {
             Paint p1 = entry.getValue();
             Paint p2 = map2.get(entry.getKey());
-            if (!PaintUtilities.equal(p1, p2)) {
+            if (!PaintUtils.equal(p1, p2)) {
                 return false;
             }
         }
