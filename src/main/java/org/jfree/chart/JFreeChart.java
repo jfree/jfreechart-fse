@@ -378,6 +378,10 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         this.renderingHints = new RenderingHints(
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
+        // added the following hint because of 
+        // http://stackoverflow.com/questions/7785082/
+        this.renderingHints.put(RenderingHints.KEY_STROKE_CONTROL,
+                RenderingHints.VALUE_STROKE_PURE);
 
         this.borderPainter = null;
         this.backgroundPainter = new ColorPainter();
@@ -805,26 +809,10 @@ public class JFreeChart implements Drawable, TitleChangeListener,
      * @see #getAntiAlias()
      */
     public void setAntiAlias(boolean flag) {
-
-        Object val = this.renderingHints.get(RenderingHints.KEY_ANTIALIASING);
-        if (val == null) {
-            val = RenderingHints.VALUE_ANTIALIAS_DEFAULT;
-        }
-        if (!flag && RenderingHints.VALUE_ANTIALIAS_OFF.equals(val)
-            || flag && RenderingHints.VALUE_ANTIALIAS_ON.equals(val)) {
-            // no change, do nothing
-            return;
-        }
-        if (flag) {
-            this.renderingHints.put(RenderingHints.KEY_ANTIALIASING,
-                                    RenderingHints.VALUE_ANTIALIAS_ON);
-        }
-        else {
-            this.renderingHints.put(RenderingHints.KEY_ANTIALIASING,
-                                    RenderingHints.VALUE_ANTIALIAS_OFF);
-        }
+        Object hint = flag ? RenderingHints.VALUE_ANTIALIAS_ON 
+                : RenderingHints.VALUE_ANTIALIAS_OFF;
+        this.renderingHints.put(RenderingHints.KEY_ANTIALIASING, hint);
         fireChartChanged();
-
     }
 
     /**
@@ -1534,6 +1522,8 @@ public class JFreeChart implements Drawable, TitleChangeListener,
         this.renderingHints = new RenderingHints(
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
+        this.renderingHints.put(RenderingHints.KEY_STROKE_CONTROL,
+                RenderingHints.VALUE_STROKE_PURE);
 
         // register as a listener with sub-components...
         if (this.title != null) {
