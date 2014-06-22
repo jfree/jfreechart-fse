@@ -147,7 +147,7 @@ public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable,
      * paint, stroke and shapes.
      */
     public DefaultDrawingSupplier() {
-        this(Colors.getDefaultColors(), DEFAULT_FILL_PAINT_SEQUENCE,
+        this(DEFAULT_PAINT_SEQUENCE, DEFAULT_FILL_PAINT_SEQUENCE,
                 DEFAULT_OUTLINE_PAINT_SEQUENCE,
                 DEFAULT_STROKE_SEQUENCE,
                 DEFAULT_OUTLINE_STROKE_SEQUENCE,

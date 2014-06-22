@@ -239,6 +239,7 @@ import org.jfree.chart.renderer.category.CategoryItemRendererState;
 import org.jfree.chart.ui.Layer;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.util.CloneUtils;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtils;
@@ -534,6 +535,16 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
 
     /** The fixed space for the range axis. */
     private AxisSpace fixedRangeAxisSpace;
+
+    /** The fixed size for a category. */
+    private double fixedCategoryWidth;
+
+    /**
+     * A flag that indicates whether the fixed size for a category should be used
+     * to determine a fixed size of the data area.
+     */
+    private boolean useFixedCategoryWidth;
+
 
     /**
      * An optional collection of legend items that can be returned by the
@@ -2293,6 +2304,9 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      */
     @Override
     public void datasetChanged(DatasetChangeEvent event) {
+        if (useFixedCategoryWidth) {
+            setPlotSizeValid(false);
+        }
 
         int count = this.rangeAxes.size();
         for (int axisIndex = 0; axisIndex < count; axisIndex++) {
@@ -3477,6 +3491,39 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
     }
 
     /**
+     * Calculates a size by expanding the data area size with the space
+     * required for the axes and the insets.
+     *
+     * @return The size (never <code>null</code>).
+     */
+    protected Size2D calculatePreferredPlotAreaSize(Graphics2D g2) {
+        Size2D dataAreaSize = getFixedDataAreaSize();
+        Rectangle2D.Double dataArea = new Rectangle2D.Double(0, 0, dataAreaSize.getWidth(), dataAreaSize.getHeight());
+        AxisSpace domainSpace = calculateDomainAxisSpace(g2, dataArea, null);
+        Rectangle2D expanded = domainSpace.expand(dataArea, null);
+        AxisSpace rangeSpace = calculateRangeAxisSpace(g2, expanded, null);
+        expanded = rangeSpace.expand(expanded, null);
+        double leftRightOffset = getInsets().getLeft() + getInsets().getRight() + axisOffset.getLeft() + axisOffset.getRight();
+        double topBottomOffset = getInsets().getTop() + getInsets().getBottom() + axisOffset.getTop() + axisOffset.getBottom();
+        return new Size2D(expanded.getWidth() + leftRightOffset, expanded.getHeight() + topBottomOffset);
+    }
+
+    public Size2D getFixedDataAreaSize() {
+        CategoryAxis axis = getDomainAxis();
+        CategoryDataset dataset = getDataset();
+        Size2D size = super.getFixedDataAreaSize();
+        if (!useFixedCategoryWidth && axis == null && dataset == null) {
+            return size;
+        }
+        int count = dataset.getColumnCount();
+        double width = count > 0 ? count * fixedCategoryWidth : fixedCategoryWidth;
+        if (this.orientation == PlotOrientation.VERTICAL) {
+            return new Size2D(width, size.height);
+        }
+        return new Size2D(size.width, width);
+    }
+
+    /**
      * Draws the plot on a Java 2D graphics device (such as the screen or a
      * printer).
      * <P>
@@ -4402,6 +4449,46 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
         if (notify) {
             fireChangeEvent();
         }
+    }
+
+    /**
+     * Sets the fixed width for a category and sends a {@link PlotChangeEvent} to
+     * all registered listeners.
+     *
+     * @param width the size .
+     *
+     * @see #getFixedCategoryWidth()
+     */
+    public void setFixedCategoryWidth(double width) {
+        this.fixedCategoryWidth = width;
+        if (useFixedCategoryWidth) {
+            setPlotSizeValid(false);
+            fireChangeEvent();
+        }
+    }
+
+    public double getFixedCategoryWidth() {
+        return this.fixedCategoryWidth;
+    }
+
+    /**
+     * Sets a flag that indicates whether the fixed category width should be used
+     * to calculate the data area size of the plotfixed width for a category
+     * and sends a {@link PlotChangeEvent} to
+     * all registered listeners.
+     *
+     * @param flag the flag.
+     *
+     * @see #getFixedCategoryWidth()
+     */
+    public void setUseFixedCategoryWidth(boolean flag) {
+        this.useFixedCategoryWidth = flag;
+        setPlotSizeValid(false);
+        fireChangeEvent();
+    }
+
+    public boolean getUseFixedCategoryWidth() {
+        return this.useFixedCategoryWidth;
     }
 
     /**
