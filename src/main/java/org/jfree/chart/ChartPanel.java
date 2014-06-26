@@ -435,12 +435,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /** The minimum distance required to drag the mouse to trigger a zoom. */
     private int zoomTriggerDistance;
 
-    /** A flag that controls whether or not horizontal tracing is enabled. */
-    private boolean horizontalAxisTrace = false;
-
-    /** A flag that controls whether or not vertical tracing is enabled. */
-    private boolean verticalAxisTrace = false;
-
     /** A vertical trace line. */
     private transient Line2D verticalTraceLine;
 
@@ -1162,82 +1156,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      */
     public void setZoomTriggerDistance(int distance) {
         this.zoomTriggerDistance = distance;
-    }
-
-    /**
-     * Returns the flag that controls whether or not a horizontal axis trace
-     * line is drawn over the plot area at the current mouse location.
-     *
-     * @return A boolean.
-     */
-    public boolean getHorizontalAxisTrace() {
-        return this.horizontalAxisTrace;
-    }
-
-    /**
-     * A flag that controls trace lines on the horizontal axis.
-     *
-     * @param flag  <code>true</code> enables trace lines for the mouse
-     *      pointer on the horizontal axis.
-     */
-    public void setHorizontalAxisTrace(boolean flag) {
-        this.horizontalAxisTrace = flag;
-    }
-
-    /**
-     * Returns the horizontal trace line.
-     *
-     * @return The horizontal trace line (possibly <code>null</code>).
-     */
-    protected Line2D getHorizontalTraceLine() {
-        return this.horizontalTraceLine;
-    }
-
-    /**
-     * Sets the horizontal trace line.
-     *
-     * @param line  the line (<code>null</code> permitted).
-     */
-    protected void setHorizontalTraceLine(Line2D line) {
-        this.horizontalTraceLine = line;
-    }
-
-    /**
-     * Returns the flag that controls whether or not a vertical axis trace
-     * line is drawn over the plot area at the current mouse location.
-     *
-     * @return A boolean.
-     */
-    public boolean getVerticalAxisTrace() {
-        return this.verticalAxisTrace;
-    }
-
-    /**
-     * A flag that controls trace lines on the vertical axis.
-     *
-     * @param flag  <code>true</code> enables trace lines for the mouse
-     *              pointer on the vertical axis.
-     */
-    public void setVerticalAxisTrace(boolean flag) {
-        this.verticalAxisTrace = flag;
-    }
-
-    /**
-     * Returns the vertical trace line.
-     *
-     * @return The vertical trace line (possibly <code>null</code>).
-     */
-    protected Line2D getVerticalTraceLine() {
-        return this.verticalTraceLine;
-    }
-
-    /**
-     * Sets the vertical trace line.
-     *
-     * @param line  the line (<code>null</code> permitted).
-     */
-    protected void setVerticalTraceLine(Line2D line) {
-        this.verticalTraceLine = line;
     }
 
     /**
@@ -2074,15 +1992,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      */
     @Override
     public void mouseMoved(MouseEvent e) {
-        Graphics2D g2 = (Graphics2D) getGraphics();
-        if (this.horizontalAxisTrace) {
-            drawHorizontalAxisTrace(g2, e.getX());
-        }
-        if (this.verticalAxisTrace) {
-            drawVerticalAxisTrace(g2, e.getY());
-        }
-        g2.dispose();
-
         Object[] listeners = this.chartMouseListeners.getListeners(
                 ChartMouseListener.class);
         if (listeners.length > 0) {
@@ -2591,67 +2500,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                }
           }
      }
-
-    /**
-     * Draws a vertical line used to trace the mouse position to the horizontal
-     * axis.
-     *
-     * @param g2 the graphics device.
-     * @param x  the x-coordinate of the trace line.
-     */
-    private void drawHorizontalAxisTrace(Graphics2D g2, int x) {
-
-        Rectangle2D dataArea = getScreenDataArea();
-
-        g2.setXORMode(Color.ORANGE);
-        if (((int) dataArea.getMinX() < x) && (x < (int) dataArea.getMaxX())) {
-
-            if (this.verticalTraceLine != null) {
-                g2.draw(this.verticalTraceLine);
-                this.verticalTraceLine.setLine(x, (int) dataArea.getMinY(), x,
-                        (int) dataArea.getMaxY());
-            }
-            else {
-                this.verticalTraceLine = new Line2D.Float(x,
-                        (int) dataArea.getMinY(), x, (int) dataArea.getMaxY());
-            }
-            g2.draw(this.verticalTraceLine);
-        }
-
-        // Reset to the default 'overwrite' mode
-        g2.setPaintMode();
-    }
-
-    /**
-     * Draws a horizontal line used to trace the mouse position to the vertical
-     * axis.
-     *
-     * @param g2 the graphics device.
-     * @param y  the y-coordinate of the trace line.
-     */
-    private void drawVerticalAxisTrace(Graphics2D g2, int y) {
-
-        Rectangle2D dataArea = getScreenDataArea();
-
-        g2.setXORMode(Color.ORANGE);
-        if (((int) dataArea.getMinY() < y) && (y < (int) dataArea.getMaxY())) {
-
-            if (this.horizontalTraceLine != null) {
-                g2.draw(this.horizontalTraceLine);
-                this.horizontalTraceLine.setLine((int) dataArea.getMinX(), y,
-                        (int) dataArea.getMaxX(), y);
-            }
-            else {
-                this.horizontalTraceLine = new Line2D.Float(
-                        (int) dataArea.getMinX(), y, (int) dataArea.getMaxX(),
-                        y);
-            }
-            g2.draw(this.horizontalTraceLine);
-        }
-
-        // Reset to the default 'overwrite' mode
-        g2.setPaintMode();
-    }
 
     /**
      * Displays a dialog that allows the user to edit the properties for the
@@ -3474,8 +3322,11 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      }
 
      /**
-      * @return the zoom handler that is installed per default on each chart 
-      *     panel
+      * Returns the zoom handler that is installed by default in the 
+      * constructor.  You can remove this handler by calling the 
+      * removeMouseHandler() method.
+      * 
+      * @return The zoom handler.
       */
      public ZoomHandler getZoomHandler() {
          return this.zoomHandler;
