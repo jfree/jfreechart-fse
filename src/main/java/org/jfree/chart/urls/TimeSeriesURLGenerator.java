@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------
  * TimeSeriesURLGenerator.java
  * ---------------------------
- * (C) Copyright 2002-2008, by Richard Atkinson and Contributors.
+ * (C) Copyright 2002-2014, by Richard Atkinson and Contributors.
  *
  * Original Author:  Richard Atkinson;
  * Contributors:     David Gilbert (for Object Refinery Limited);
@@ -51,8 +51,13 @@
 package org.jfree.chart.urls;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.jfree.chart.util.ParamChecks;
 
 import org.jfree.data.xy.XYDataset;
 
@@ -71,10 +76,10 @@ public class TimeSeriesURLGenerator implements XYURLGenerator, Serializable {
     private String prefix = "index.html";
 
     /** Name to use to identify the series */
-    private String seriesParameterName = "series";
+    private String seriesParamName = "series";
 
     /** Name to use to identify the item */
-    private String itemParameterName = "item";
+    private String itemParamName = "item";
 
     /**
      * Default constructor.
@@ -89,34 +94,23 @@ public class TimeSeriesURLGenerator implements XYURLGenerator, Serializable {
      * @param dateFormat  a formatter for the date (<code>null</code> not
      *         permitted).
      * @param prefix  the prefix of the URL (<code>null</code> not permitted).
-     * @param seriesParameterName  the name of the series parameter in the URL
+     * @param seriesParamName  the name of the series parameter in the URL
      *         (<code>null</code> not permitted).
-     * @param itemParameterName  the name of the item parameter in the URL
+     * @param itemParamName  the name of the item parameter in the URL
      *         (<code>null</code> not permitted).
      */
     public TimeSeriesURLGenerator(DateFormat dateFormat, String prefix,
-            String seriesParameterName, String itemParameterName) {
+            String seriesParamName, String itemParamName) {
 
-        if (dateFormat == null) {
-            throw new IllegalArgumentException("Null 'dateFormat' argument.");
-        }
-        if (prefix == null) {
-            throw new IllegalArgumentException("Null 'prefix' argument.");
-        }
-        if (seriesParameterName == null) {
-            throw new IllegalArgumentException(
-                    "Null 'seriesParameterName' argument.");
-        }
-        if (itemParameterName == null) {
-            throw new IllegalArgumentException(
-                    "Null 'itemParameterName' argument.");
-        }
+        ParamChecks.nullNotPermitted(dateFormat, "dateFormat");
+        ParamChecks.nullNotPermitted(prefix, "prefix");
+        ParamChecks.nullNotPermitted(seriesParamName, "seriesParamName");
+        ParamChecks.nullNotPermitted(itemParamName, "itemParamName");
 
         this.dateFormat = (DateFormat) dateFormat.clone();
         this.prefix = prefix;
-        this.seriesParameterName = seriesParameterName;
-        this.itemParameterName = itemParameterName;
-
+        this.seriesParamName = seriesParamName;
+        this.itemParamName = itemParamName;
     }
 
     /**
@@ -148,8 +142,8 @@ public class TimeSeriesURLGenerator implements XYURLGenerator, Serializable {
      *
      * @since 1.0.6
      */
-    public String getSeriesParameterName() {
-        return this.seriesParameterName;
+    public String getSeriesParamName() {
+        return this.seriesParamName;
     }
 
     /**
@@ -159,8 +153,8 @@ public class TimeSeriesURLGenerator implements XYURLGenerator, Serializable {
      *
      * @since 1.0.6
      */
-    public String getItemParameterName() {
-        return this.itemParameterName;
+    public String getItemParamName() {
+        return this.itemParamName;
     }
 
     /**
@@ -175,21 +169,24 @@ public class TimeSeriesURLGenerator implements XYURLGenerator, Serializable {
     @Override
     public String generateURL(XYDataset dataset, int series, int item) {
         String result = this.prefix;
-        boolean firstParameter = result.indexOf("?") == -1;
-        Comparable seriesKey = dataset.getSeriesKey(series);
-        if (seriesKey != null) {
+        try {
+            boolean firstParameter = !result.contains("?");
+            Comparable seriesKey = dataset.getSeriesKey(series);
+            if (seriesKey != null) {
+                result += firstParameter ? "?" : "&amp;";
+                result += this.seriesParamName + "=" + URLEncoder.encode(
+                        seriesKey.toString(), "UTF-8");
+                firstParameter = false;
+            }
+
+            long x = (long) dataset.getXValue(series, item);
+            String xValue = this.dateFormat.format(new Date(x));
             result += firstParameter ? "?" : "&amp;";
-            result += this.seriesParameterName + "=" + URLUtilities.encode(
-                    seriesKey.toString(), "UTF-8");
-            firstParameter = false;
+            result += this.itemParamName + "=" + URLEncoder.encode(xValue,
+                    "UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            throw new RuntimeException(ex);
         }
-
-        long x = (long) dataset.getXValue(series, item);
-        String xValue = this.dateFormat.format(new Date(x));
-        result += firstParameter ? "?" : "&amp;";
-        result += this.itemParameterName + "=" + URLUtilities.encode(xValue,
-                "UTF-8");
-
         return result;
     }
 
@@ -212,13 +209,13 @@ public class TimeSeriesURLGenerator implements XYURLGenerator, Serializable {
         if (!this.dateFormat.equals(that.dateFormat)) {
             return false;
         }
-        if (!this.itemParameterName.equals(that.itemParameterName)) {
+        if (!this.itemParamName.equals(that.itemParamName)) {
             return false;
         }
         if (!this.prefix.equals(that.prefix)) {
             return false;
         }
-        if (!this.seriesParameterName.equals(that.seriesParameterName)) {
+        if (!this.seriesParamName.equals(that.seriesParamName)) {
             return false;
         }
         return true;
