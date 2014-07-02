@@ -883,7 +883,8 @@ public final class DatasetUtilities {
      * @since 1.0.13
      */
     public static Range findRangeBounds(XYDataset dataset,
-            List<Comparable> visibleSeriesKeys, Range xRange, boolean includeInterval) {
+            List<Comparable> visibleSeriesKeys, Range xRange, 
+            boolean includeInterval) {
         ParamChecks.nullNotPermitted(dataset, "dataset");
         Range result;
         if (dataset instanceof XYRangeInfo) {
