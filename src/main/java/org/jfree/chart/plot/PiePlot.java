@@ -578,7 +578,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
 
         this.sectionOutlinesVisible = true;
         this.sectionOutlinePaintMap = new PaintMap();
-        this.baseSectionOutlinePaint = DEFAULT_OUTLINE_PAINT;
+        this.baseSectionOutlinePaint = Color.GRAY;
         this.autoPopulateSectionOutlinePaint = false;
 
         this.sectionOutlineStrokeMap = new StrokeMap();
