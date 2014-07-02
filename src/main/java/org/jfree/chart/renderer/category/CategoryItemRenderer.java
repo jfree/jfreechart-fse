@@ -361,16 +361,6 @@ public interface CategoryItemRenderer extends Renderer {
       Rectangle2D dataArea);
 
   /**
-   * Draws an outline for the data area.
-   *
-   * @param g2  the graphics device.
-   * @param plot  the plot.
-   * @param dataArea  the data area.
-   */
-  public void drawOutline(Graphics2D g2, CategoryPlot plot,
-      Rectangle2D dataArea);
-
-  /**
    * Draws a single data item.
    *
    * @param g2  the graphics device.

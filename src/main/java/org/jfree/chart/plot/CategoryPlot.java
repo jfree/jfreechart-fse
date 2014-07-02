@@ -3698,14 +3698,9 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
         }
 
         // draw an outline around the plot area...
-        if (isOutlineVisible()) {
-            if (getRenderer() != null) {
-                getRenderer().drawOutline(g2, this, dataArea);
-            }
-            else {
-                drawOutline(g2, dataArea);
-            }
-        }
+ //       if (isOutlineVisible()) {
+            drawOutline(g2, dataArea);
+ //       }
 
     }
 
