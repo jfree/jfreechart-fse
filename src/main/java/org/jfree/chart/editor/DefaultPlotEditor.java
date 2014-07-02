@@ -67,6 +67,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import org.jfree.chart.axis.Axis;
+import org.jfree.chart.drawable.BorderPainter;
 import org.jfree.chart.ui.LCBLayout;
 import org.jfree.chart.ui.PaintSample;
 import org.jfree.chart.ui.RectangleInsets;
@@ -174,8 +175,8 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
     protected JPanel createPlotPanel(Plot plot) {
         this.plotInsets = plot.getInsets();
         this.backgroundPaintSample = new PaintSample(Color.WHITE);
-        this.outlineStrokeSample = new StrokeSample(plot.getOutlineStroke());
-        this.outlinePaintSample = new PaintSample(plot.getOutlinePaint());
+        this.outlineStrokeSample = new StrokeSample(new BasicStroke(1.0f));
+        this.outlinePaintSample = new PaintSample(Color.WHITE);
         if (plot instanceof CategoryPlot) {
             this.plotOrientation = ((CategoryPlot) plot).getOrientation();
         }
@@ -540,8 +541,8 @@ class DefaultPlotEditor extends JPanel implements ActionListener {
     public void updatePlotProperties(Plot plot) {
 
         // set the plot properties...
-        plot.setOutlinePaint(getOutlinePaint());
-        plot.setOutlineStroke(getOutlineStroke());
+        plot.setBorderPainter(new BorderPainter((Color) getOutlinePaint(), 
+                getOutlineStroke()));
         plot.setBackgroundColor((Color) getBackgroundPaint());
         plot.setInsets(getPlotInsets());
 
