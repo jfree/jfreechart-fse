@@ -66,6 +66,7 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.block.Block;
 import org.jfree.chart.block.BlockContainer;
 import org.jfree.chart.block.LabelBlock;
+import org.jfree.chart.drawable.BorderPainter;
 import org.jfree.chart.drawable.ColorPainter;
 import org.jfree.chart.drawable.Drawable;
 import org.jfree.chart.ui.RectangleInsets;
@@ -196,7 +197,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
     private Drawable plotBackgroundPainter;
 
     /** The plot outline paint. */
-    private transient Paint plotOutlinePaint;
+    private Drawable plotBorderPainter;
 
     /** The label link style for pie charts. */
     private PieLabelLinkStyle labelLinkStyle;
@@ -290,11 +291,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         theme.legendItemPaint = Color.WHITE;
         theme.chartBackgroundPainter = new ColorPainter(Color.BLACK);
         theme.plotBackgroundPainter = new ColorPainter(Color.BLACK);
-        theme.plotOutlinePaint = Color.YELLOW;
-        theme.baselinePaint = Color.WHITE;
-        theme.crosshairPaint = Color.RED;
-        theme.labelLinkPaint = Color.LIGHT_GRAY;
-        theme.tickLabelPaint = Color.WHITE;
+        theme.plotBorderPainter = new BorderPainter(Color.YELLOW, new BasicStroke(1.0f));
         theme.axisLabelPaint = Color.WHITE;
         theme.shadowPaint = Color.DARK_GRAY;
         theme.itemLabelPaint = Color.WHITE;
@@ -366,7 +363,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         this.chartBackgroundPainter = new ColorPainter(Color.WHITE);
         this.drawingSupplier = new DefaultDrawingSupplier();
         this.plotBackgroundPainter = new ColorPainter(Color.WHITE);
-        this.plotOutlinePaint = new Color(0, 0, 0, 0);
+        this.plotBorderPainter = null;
         this.labelLinkPaint = Color.BLACK;
         this.labelLinkStyle = PieLabelLinkStyle.CUBIC_CURVE;
         this.axisOffset = new RectangleInsets(4, 4, 4, 4);
@@ -626,26 +623,26 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
     }
 
     /**
-     * Returns the plot outline paint.
+     * Returns the plot border painter.
      *
-     * @return The plot outline paint (never <code>null</code>).
+     * @return The plot border painter (possibly <code>null</code>).
      *
-     * @see #setPlotOutlinePaint(Paint)
+     * @see #setPlotBorderPainter(Drawable)
      */
-    public Paint getPlotOutlinePaint() {
-        return this.plotOutlinePaint;
+    public Drawable getPlotBorderPainter() {
+        return this.plotBorderPainter;
     }
 
     /**
-     * Sets the plot outline paint.
+     * Sets the plot border painter.
      *
-     * @param paint  the paint (<code>null</code> not permitted).
+     * @param painter  the painter (<code>null</code> not permitted).
      *
-     * @see #getPlotOutlinePaint()
+     * @see #getPlotBorderPainter()
      */
-    public void setPlotOutlinePaint(Paint paint) {
-        ParamChecks.nullNotPermitted(paint, "paint");
-        this.plotOutlinePaint = paint;
+    public void setPlotBorderPainter(Drawable painter) {
+        ParamChecks.nullNotPermitted(painter, "painter");
+        this.plotBorderPainter = painter;
     }
 
     /**
@@ -1215,7 +1212,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
             plot.setDrawingSupplier(getDrawingSupplier());
         }
         plot.setBackgroundPainter(this.plotBackgroundPainter);
-        plot.setOutlinePaint(this.plotOutlinePaint);
+        plot.setBorderPainter(this.plotBorderPainter);
 
         // now handle specific plot types (and yes, I know this is some
         // really ugly code that has to be manually updated any time a new
@@ -1462,7 +1459,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         //plot.setDialBackgroundPaint(this.plotBackgroundPaint); FIXME
         plot.setValueFont(this.largeFont);
         plot.setValuePaint(this.axisLabelPaint);
-        plot.setDialOutlinePaint(this.plotOutlinePaint);
+        plot.setDialOutlinePaint(Color.LIGHT_GRAY); // FIXME
         plot.setNeedlePaint(this.thermometerPaint);
         plot.setTickLabelFont(this.regularFont);
         plot.setTickLabelPaint(this.tickLabelPaint);
@@ -1686,8 +1683,8 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
                 that.plotBackgroundPainter)) {
             return false;
         }
-        if (!PaintUtils.equal(this.plotOutlinePaint,
-                that.plotOutlinePaint)) {
+        if (!ObjectUtils.equal(this.plotBorderPainter, 
+                that.plotBorderPainter)) {
             return false;
         }
         if (!this.labelLinkStyle.equals(that.labelLinkStyle)) {
@@ -1774,7 +1771,6 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         SerialUtils.writePaint(this.subtitlePaint, stream);
         SerialUtils.writePaint(this.legendBackgroundPaint, stream);
         SerialUtils.writePaint(this.legendItemPaint, stream);
-        SerialUtils.writePaint(this.plotOutlinePaint, stream);
         SerialUtils.writePaint(this.labelLinkPaint, stream);
         SerialUtils.writePaint(this.baselinePaint, stream);
         SerialUtils.writePaint(this.domainGridlinePaint, stream);
@@ -1805,7 +1801,6 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
         this.subtitlePaint = SerialUtils.readPaint(stream);
         this.legendBackgroundPaint = SerialUtils.readPaint(stream);
         this.legendItemPaint = SerialUtils.readPaint(stream);
-        this.plotOutlinePaint = SerialUtils.readPaint(stream);
         this.labelLinkPaint = SerialUtils.readPaint(stream);
         this.baselinePaint = SerialUtils.readPaint(stream);
         this.domainGridlinePaint = SerialUtils.readPaint(stream);
