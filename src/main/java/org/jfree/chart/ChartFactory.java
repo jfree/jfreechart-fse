@@ -182,6 +182,7 @@ import org.jfree.chart.renderer.category.WaterfallBarRenderer;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.GradientXYBarPainter;
 import org.jfree.chart.renderer.xy.HighLowRenderer;
+import org.jfree.chart.renderer.xy.ScaleType;
 import org.jfree.chart.renderer.xy.StackedXYAreaRenderer2;
 import org.jfree.chart.renderer.xy.StandardXYBarPainter;
 import org.jfree.chart.renderer.xy.WindItemRenderer;
@@ -599,8 +600,8 @@ public abstract class ChartFactory {
         ParamChecks.nullNotPermitted(order, "order");
         MultiplePiePlot plot = new MultiplePiePlot(dataset);
         plot.setDataExtractOrder(order);
-        plot.setBackgroundColor(null);
-        plot.setOutlineStroke(null);
+        plot.setBackgroundPainter(null);
+        plot.setBorderPainter(null);
 
         PieToolTipGenerator tooltipGenerator
                 = new StandardPieToolTipGenerator();
@@ -678,8 +679,8 @@ public abstract class ChartFactory {
         ParamChecks.nullNotPermitted(order, "order");
         MultiplePiePlot plot = new MultiplePiePlot(dataset);
         plot.setDataExtractOrder(order);
-        plot.setBackgroundColor(null);
-        plot.setOutlineStroke(null);
+        plot.setBackgroundPainter(null);
+        plot.setBorderPainter(null);
 
         JFreeChart pieChart = new JFreeChart(new PiePlot3D(null));
         TextTitle seriesTitle = new TextTitle("Series Title",
@@ -1390,8 +1391,7 @@ public abstract class ChartFactory {
 
         XYPlot plot = new XYPlot(dataset, xAxis, yAxis, null);
 
-        XYItemRenderer renderer = new XYBubbleRenderer(
-                XYBubbleRenderer.SCALE_ON_RANGE_AXIS);
+        XYItemRenderer renderer = new XYBubbleRenderer(ScaleType.Y_AXIS);
         renderer.setDefaultToolTipGenerator(new StandardXYZToolTipGenerator());
         plot.setRenderer(renderer);
 
