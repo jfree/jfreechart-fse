@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------
  * ParamChecks.java
  * ----------------
- * (C) Copyright 2011, 2013, by Object Refinery Limited.
+ * (C) Copyright 2011-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -67,6 +67,19 @@ public class ParamChecks {
         }
     }
 
+    /**
+     * Throws an {@code IllegalArgumentException} if param is not positive.
+     * 
+     * @param value  the value.
+     * @param name  the parameter name (to use in the exception message).
+     */
+    public static void requireNonNegative(int value, String name) {
+        if (value < 0) {
+            throw new IllegalArgumentException("Require '" + name + "' (" 
+                    + value + ") to be non-negative.");
+        }
+    }
+    
     /**
      * Throws an <code>IllegalArgumentException</code> if the supplied
      * <code>value</code> is not in the range <code>lowerBound</code> to
