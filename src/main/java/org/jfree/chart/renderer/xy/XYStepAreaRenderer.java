@@ -544,8 +544,8 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer
 
             // draw an outline around the Area.
             if (isOutline()) {
-                g2.setStroke(plot.getOutlineStroke());
-                g2.setPaint(plot.getOutlinePaint());
+                g2.setStroke(lookupSeriesOutlineStroke(series));
+                g2.setPaint(lookupSeriesOutlinePaint(series));
                 g2.draw(this.pArea);
             }
 
