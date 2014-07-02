@@ -123,14 +123,14 @@ public class LegendItem implements Cloneable, Serializable {
     private String label;
 
     /**
-     * The label font (<code>null</code> is permitted).
+     * The label font ({@code null} is permitted).
      *
      * @since 1.0.11
      */
     private Font labelFont;
 
     /**
-     * The label paint (<code>null</code> is permitted).
+     * The label paint ({@code null} is permitted).
      *
      * @since 1.0.11
      */
@@ -206,7 +206,7 @@ public class LegendItem implements Cloneable, Serializable {
      * Creates a legend item with the specified label.  The remaining
      * attributes take default values.
      *
-     * @param label  the label (<code>null</code> not permitted).
+     * @param label  the label ({@code null} not permitted).
      *
      * @since 1.0.10
      */
@@ -218,8 +218,8 @@ public class LegendItem implements Cloneable, Serializable {
      * Creates a legend item with the specified label and fill paint.  The
      * remaining attributes take default values.
      *
-     * @param label  the label (<code>null</code> not permitted).
-     * @param paint  the paint (<code>null</code> not permitted).
+     * @param label  the label ({@code null} not permitted).
+     * @param paint  the paint ({@code null} not permitted).
      *
      * @since 1.0.12
      */
@@ -232,16 +232,17 @@ public class LegendItem implements Cloneable, Serializable {
      * Creates a legend item with a filled shape.  The shape is not outlined,
      * and no line is visible.
      *
-     * @param label  the label (<code>null</code> not permitted).
-     * @param description  the description (<code>null</code> permitted).
-     * @param toolTipText  the tool tip text (<code>null</code> permitted).
-     * @param urlText  the URL text (<code>null</code> permitted).
-     * @param shape  the shape (<code>null</code> not permitted).
-     * @param fillPaint  the paint used to fill the shape (<code>null</code>
+     * @param label  the label ({@code null} not permitted).
+     * @param description  the description ({@code null} permitted).
+     * @param toolTipText  the tool tip text ({@code null} permitted).
+     * @param urlText  the URL text ({@code null} permitted).
+     * @param shape  the shape ({@code null} not permitted).
+     * @param fillPaint  the paint used to fill the shape ({@code null}
      *                   not permitted).
      */
-    public LegendItem(String label, String description, String toolTipText, 
-            String urlText, Shape shape, Paint fillPaint) {
+    public LegendItem(String label, String description,
+                      String toolTipText, String urlText,
+                      Shape shape, Paint fillPaint) {
 
         this(label, description, toolTipText, urlText,
                 /* shape visible = */ true, shape,
@@ -255,16 +256,16 @@ public class LegendItem implements Cloneable, Serializable {
     /**
      * Creates a legend item with a filled and outlined shape.
      *
-     * @param label  the label (<code>null</code> not permitted).
-     * @param description  the description (<code>null</code> permitted).
-     * @param toolTipText  the tool tip text (<code>null</code> permitted).
-     * @param urlText  the URL text (<code>null</code> permitted).
-     * @param shape  the shape (<code>null</code> not permitted).
-     * @param fillPaint  the paint used to fill the shape (<code>null</code>
+     * @param label  the label ({@code null} not permitted).
+     * @param description  the description ({@code null} permitted).
+     * @param toolTipText  the tool tip text ({@code null} permitted).
+     * @param urlText  the URL text ({@code null} permitted).
+     * @param shape  the shape ({@code null} not permitted).
+     * @param fillPaint  the paint used to fill the shape ({@code null}
      *                   not permitted).
-     * @param outlineStroke  the outline stroke (<code>null</code> not
+     * @param outlineStroke  the outline stroke ({@code null} not
      *                       permitted).
-     * @param outlinePaint  the outline paint (<code>null</code> not
+     * @param outlinePaint  the outline paint ({@code null} not
      *                      permitted).
      */
     public LegendItem(String label, String description, String toolTipText, 
@@ -283,13 +284,13 @@ public class LegendItem implements Cloneable, Serializable {
     /**
      * Creates a legend item using a line.
      *
-     * @param label  the label (<code>null</code> not permitted).
-     * @param description  the description (<code>null</code> permitted).
-     * @param toolTipText  the tool tip text (<code>null</code> permitted).
-     * @param urlText  the URL text (<code>null</code> permitted).
-     * @param line  the line (<code>null</code> not permitted).
-     * @param lineStroke  the line stroke (<code>null</code> not permitted).
-     * @param linePaint  the line paint (<code>null</code> not permitted).
+     * @param label  the label ({@code null} not permitted).
+     * @param description  the description ({@code null} permitted).
+     * @param toolTipText  the tool tip text ({@code null} permitted).
+     * @param urlText  the URL text ({@code null} permitted).
+     * @param line  the line ({@code null} not permitted).
+     * @param lineStroke  the line stroke ({@code null} not permitted).
+     * @param linePaint  the line paint ({@code null} not permitted).
      */
     public LegendItem(String label, String description, String toolTipText, 
             String urlText, Shape line, Stroke lineStroke, Paint linePaint) {
@@ -304,7 +305,7 @@ public class LegendItem implements Cloneable, Serializable {
     /**
      * Creates a new legend item.
      *
-     * @param label  the label (<code>null</code> not permitted).
+     * @param label  the label ({@code null} not permitted).
      * @param description  the description (not currently used,
      *        <code>null</code> permitted).
      * @param toolTipText  the tool tip text (<code>null</code> permitted).
@@ -326,11 +327,14 @@ public class LegendItem implements Cloneable, Serializable {
      * @param lineStroke  the stroke (<code>null</code> not permitted).
      * @param linePaint  the line paint (<code>null</code> not permitted).
      */
-    public LegendItem(String label, String description, String toolTipText, 
-            String urlText, boolean shapeVisible, Shape shape,
-            boolean shapeFilled, Paint fillPaint, boolean shapeOutlineVisible, 
-            Paint outlinePaint, Stroke outlineStroke, boolean lineVisible, 
-            Shape line, Stroke lineStroke, Paint linePaint) {
+    public LegendItem(String label, String description,
+                      String toolTipText, String urlText,
+                      boolean shapeVisible, Shape shape,
+                      boolean shapeFilled, Paint fillPaint,
+                      boolean shapeOutlineVisible, Paint outlinePaint,
+                      Stroke outlineStroke,
+                      boolean lineVisible, Shape line,
+                      Stroke lineStroke, Paint linePaint) {
 
         ParamChecks.nullNotPermitted(label, "label");
         ParamChecks.nullNotPermitted(fillPaint, "fillPaint");
@@ -843,6 +847,18 @@ public class LegendItem implements Cloneable, Serializable {
      */
     public Stroke getLineStroke() {
         return this.lineStroke;
+    }
+
+    /**
+     * Sets the line stroke.
+     * 
+     * @param stroke  the stroke (<code>null</code> not permitted).
+     * 
+     * @since 1.0.18
+     */
+    public void setLineStroke(Stroke stroke) {
+        ParamChecks.nullNotPermitted(stroke, "stroke");
+        this.lineStroke = stroke;
     }
 
     /**
