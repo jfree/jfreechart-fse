@@ -794,23 +794,6 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     }
 
     /**
-     * Draws an outline for the data area.  The default implementation just
-     * gets the plot to draw the outline, but some renderers will override this
-     * behaviour.
-     *
-     * @param g2  the graphics device.
-     * @param plot  the plot.
-     * @param dataArea  the data area.
-     */
-    @Override
-    public void drawOutline(Graphics2D g2, CategoryPlot plot,
-                            Rectangle2D dataArea) {
-
-        plot.drawOutline(g2, dataArea);
-
-    }
-
-    /**
      * Draws a grid line against the domain axis.
      * <P>
      * Note that this default implementation assumes that the horizontal axis
