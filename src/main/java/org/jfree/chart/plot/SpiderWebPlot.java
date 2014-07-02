@@ -301,7 +301,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
         this.baseSeriesPaint = null;
 
         this.seriesOutlinePaintMap = new HashMap<Integer, Paint>();
-        this.baseSeriesOutlinePaint = DEFAULT_OUTLINE_PAINT;
+        this.baseSeriesOutlinePaint = Color.GRAY;
 
         this.seriesOutlineStrokeList = new StrokeList();
         this.baseSeriesOutlineStroke = DEFAULT_OUTLINE_STROKE;
