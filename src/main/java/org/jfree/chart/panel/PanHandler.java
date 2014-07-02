@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * PanHandler.java
  * ---------------
- * (C) Copyright 2009-2013, by Object Refinery Limited.
+ * (C) Copyright 2009-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -70,15 +70,23 @@ public class PanHandler extends AbstractMouseHandler {
     /** The last mouse position during panning. */
     private Point panLast;
 
+    /**
+     * Default constructor (creates an instance with no modifier keys).
+     */
+    public PanHandler() {
+        this(0);
+    }
+
+    /**
+     * Creates a new instance.
+     * 
+     * @param modifier  the modifier keys that select this handler. 
+     */
     public PanHandler(int modifier) {
         super(modifier);
         this.panLast = null;
     }
     
-    public PanHandler() {
-        super();
-        this.panLast = null;
-    }
 
     @Override
     public void mousePressed(MouseEvent e) {
