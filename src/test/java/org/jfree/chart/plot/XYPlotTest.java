@@ -49,7 +49,7 @@
  * 17-Jul-2012 : Removed JCommon dependencies (DG);
  * 10-Mar-2014 : Removed LegendItemCollection (DG);
  *
- */
+ */ 
 
 package org.jfree.chart.plot;
 
@@ -1073,16 +1073,8 @@ public class XYPlotTest  {
             fail("Should have thrown an IllegalArgumentException on negative index");
         }
         catch (IllegalArgumentException e) {
-            assertEquals("Index -1 out of bounds.", e.getMessage());
-        }
-
-        // should get IllegalArgumentException for index too high
-        try {
-            plot.getDomainAxisForDataset(1);
-            fail("Should have thrown an IllegalArgumentException on index out of bounds");
-        }
-        catch (IllegalArgumentException e) {
-            assertEquals("Index 1 out of bounds.", e.getMessage());
+            assertEquals("Require 'index' (-1) to be non-negative.", 
+                    e.getMessage());
         }
 
         // if multiple axes are mapped, the first in the list should be
@@ -1121,16 +1113,8 @@ public class XYPlotTest  {
             fail("Should have thrown an IllegalArgumentException on negative value");
         }
         catch (IllegalArgumentException e) {
-            assertEquals("Index -1 out of bounds.", e.getMessage());
-        }
-
-        // should get IllegalArgumentException for index too high
-        try {
-            plot.getRangeAxisForDataset(1);
-            fail("Should have thrown an IllegalArgumentException on index out of bounds");
-        }
-        catch (IllegalArgumentException e) {
-            assertEquals("Index 1 out of bounds.", e.getMessage());
+            assertEquals("Require 'index' (-1) to be non-negative.", 
+                    e.getMessage());
         }
 
         // if multiple axes are mapped, the first in the list should be
@@ -1149,5 +1133,206 @@ public class XYPlotTest  {
         axisIndices = Arrays.asList(1, 2);
         plot.mapDatasetToRangeAxes(0, axisIndices);
         assertEquals(yAxis2, plot.getRangeAxisForDataset(0));
+    }
+    
+    /**
+     * Datasets are now stored in a Map, and it should be possible to assign
+     * them an arbitrary key (index).
+     */
+    @Test
+    public void testDatasetIndices() {
+        XYDataset dataset = new XYSeriesCollection();
+        NumberAxis xAxis = new NumberAxis("X");
+        NumberAxis yAxis = new NumberAxis("Y");
+        XYItemRenderer renderer = new DefaultXYItemRenderer();
+        XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
+        
+        assertEquals(dataset, plot.getDataset(0));
+        
+        XYSeriesCollection dataset2 = new XYSeriesCollection();
+        dataset2.addSeries(new XYSeries("Series in dataset 2"));
+        
+        // we should be able to give a dataset an arbitrary index
+        plot.setDataset(99, dataset2);
+        assertEquals(2, plot.getDatasetCount());
+        assertEquals(dataset2, plot.getDataset(99));
+        
+        assertEquals(0, plot.indexOf(dataset));
+        assertEquals(99, plot.indexOf(dataset2));
+    }
+    
+    @Test
+    public void testAxisIndices() {
+        XYDataset dataset = new XYSeriesCollection();
+        NumberAxis xAxis = new NumberAxis("X");
+        NumberAxis yAxis = new NumberAxis("Y");
+        XYItemRenderer renderer = new DefaultXYItemRenderer();
+        XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
+        assertEquals(xAxis, plot.getDomainAxis(0));        
+        assertEquals(yAxis, plot.getRangeAxis(0)); 
+        
+        NumberAxis xAxis2 = new NumberAxis("X2");
+        plot.setDomainAxis(99, xAxis2);
+        assertEquals(xAxis2, plot.getDomainAxis(99));
+        
+        NumberAxis yAxis2 = new NumberAxis("Y2");
+        plot.setRangeAxis(99, yAxis2);
+        assertEquals(yAxis2, plot.getRangeAxis(99));
+    }
+    
+    @Test 
+    public void testAxisLocationIndices() {
+        XYDataset dataset = new XYSeriesCollection();
+        NumberAxis xAxis = new NumberAxis("X");
+        NumberAxis yAxis = new NumberAxis("Y");
+        XYItemRenderer renderer = new DefaultXYItemRenderer();
+        XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
+
+        NumberAxis xAxis2 = new NumberAxis("X2");
+        NumberAxis yAxis2 = new NumberAxis("Y2");
+        plot.setDomainAxis(99, xAxis2);
+        plot.setRangeAxis(99, yAxis2);
+        
+        plot.setDomainAxisLocation(99, AxisLocation.BOTTOM_OR_RIGHT);
+        assertEquals(AxisLocation.BOTTOM_OR_RIGHT, 
+                plot.getDomainAxisLocation(99));
+        plot.setRangeAxisLocation(99, AxisLocation.BOTTOM_OR_LEFT);
+        assertEquals(AxisLocation.BOTTOM_OR_LEFT, 
+                plot.getRangeAxisLocation(99));
+    }
+    
+    @Test 
+    public void testRendererIndices() {
+        XYDataset dataset = new XYSeriesCollection();
+        NumberAxis xAxis = new NumberAxis("X");
+        NumberAxis yAxis = new NumberAxis("Y");
+        XYItemRenderer renderer = new DefaultXYItemRenderer();
+        XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
+        
+        assertEquals(renderer, plot.getRenderer(0));
+        
+        // we should be able to give a renderer an arbitrary index
+        XYLineAndShapeRenderer renderer2 = new XYLineAndShapeRenderer();
+        plot.setRenderer(20, renderer2);
+        assertEquals(2, plot.getRendererCount());
+        assertEquals(renderer2, plot.getRenderer(20));
+        
+        assertEquals(20, plot.getIndexOf(renderer2));
+    }
+
+    @Test 
+    public void testGetRendererForDataset2() {
+        XYDataset dataset = new XYSeriesCollection();
+        NumberAxis xAxis = new NumberAxis("X");
+        NumberAxis yAxis = new NumberAxis("Y");
+        XYItemRenderer renderer = new DefaultXYItemRenderer();
+        XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
+
+        // add a second dataset
+        XYSeriesCollection dataset2 = new XYSeriesCollection();
+        dataset2.addSeries(new XYSeries("Series in dataset 2"));
+        plot.setDataset(99, dataset2);
+       
+        // by default, the renderer with index 0 is used
+        assertEquals(renderer, plot.getRendererForDataset(dataset2));
+        
+        // add a second renderer with the same index as dataset2, now it will
+        // be used
+        XYLineAndShapeRenderer renderer2 = new XYLineAndShapeRenderer();
+        plot.setRenderer(99, renderer);
+        assertEquals(renderer2, plot.getRendererForDataset(dataset2));
+    }
+    
+    @Test
+    public void testMapDatasetToDomainAxis() {
+        XYDataset dataset = new XYSeriesCollection();
+        NumberAxis xAxis = new NumberAxis("X");
+        NumberAxis yAxis = new NumberAxis("Y");
+        XYItemRenderer renderer = new DefaultXYItemRenderer();
+        XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
+
+        NumberAxis xAxis2 = new NumberAxis("X2");
+        plot.setDomainAxis(11, xAxis2);
+        
+        // add a second dataset
+        XYSeriesCollection dataset2 = new XYSeriesCollection();
+        dataset2.addSeries(new XYSeries("Series in dataset 2"));
+        plot.setDataset(99, dataset);    
+        
+        assertEquals(xAxis, plot.getDomainAxisForDataset(99));
+
+        // now map the dataset to the second xAxis
+        plot.mapDatasetToDomainAxis(99, 11);
+        assertEquals(xAxis2, plot.getDomainAxisForDataset(99));
+    }
+
+    @Test
+    public void testMapDatasetToRangeAxis() {
+        XYDataset dataset = new XYSeriesCollection();
+        NumberAxis xAxis = new NumberAxis("X");
+        NumberAxis yAxis = new NumberAxis("Y");
+        XYItemRenderer renderer = new DefaultXYItemRenderer();
+        XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
+
+        NumberAxis yAxis2 = new NumberAxis("Y2");
+        plot.setRangeAxis(22, yAxis2);
+        
+        // add a second dataset
+        XYSeriesCollection dataset2 = new XYSeriesCollection();
+        dataset2.addSeries(new XYSeries("Series in dataset 2"));
+        plot.setDataset(99, dataset);    
+        
+        assertEquals(yAxis, plot.getRangeAxisForDataset(99));
+
+        // now map the dataset to the second xAxis
+        plot.mapDatasetToRangeAxis(99, 22);
+        assertEquals(yAxis2, plot.getRangeAxisForDataset(99));
+    }
+    
+    @Test
+    public void testDomainMarkerIndices() {
+        XYDataset dataset = new XYSeriesCollection();
+        NumberAxis xAxis = new NumberAxis("X");
+        NumberAxis yAxis = new NumberAxis("Y");
+        XYItemRenderer renderer = new DefaultXYItemRenderer();
+        XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
+        
+        // add a second dataset, plotted against a second x axis
+        XYSeriesCollection dataset2 = new XYSeriesCollection();
+        dataset2.addSeries(new XYSeries("Series in dataset 2"));
+        plot.setDataset(99, dataset);    
+        NumberAxis xAxis2 = new NumberAxis("X2");
+        plot.setDomainAxis(1, xAxis2);
+        XYLineAndShapeRenderer renderer2 = new XYLineAndShapeRenderer();
+        plot.setRenderer(99, renderer2);
+        plot.mapDatasetToDomainAxis(99, 1);
+        
+        ValueMarker xMarker1 = new ValueMarker(123);
+        plot.addDomainMarker(99, xMarker1, Layer.FOREGROUND);
+        assertTrue(plot.getDomainMarkers(99, Layer.FOREGROUND).contains(
+                xMarker1));
+    }
+
+    @Test
+    public void testRangeMarkerIndices() {
+        XYDataset dataset = new XYSeriesCollection();
+        NumberAxis xAxis = new NumberAxis("X");
+        NumberAxis yAxis = new NumberAxis("Y");
+        XYItemRenderer renderer = new DefaultXYItemRenderer();
+        XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
+        
+        // add a second dataset, plotted against a second axis
+        XYSeriesCollection dataset2 = new XYSeriesCollection();
+        dataset2.addSeries(new XYSeries("Series in dataset 2"));
+        plot.setDataset(99, dataset);    
+        NumberAxis yAxis2 = new NumberAxis("Y2");
+        plot.setRangeAxis(1, yAxis2);
+        XYLineAndShapeRenderer renderer2 = new XYLineAndShapeRenderer();
+        plot.setRenderer(99, renderer2);
+        plot.mapDatasetToRangeAxis(99, 1);
+        
+        ValueMarker yMarker1 = new ValueMarker(123);
+        plot.addRangeMarker(99, yMarker1, Layer.FOREGROUND);
+        assertTrue(plot.getRangeMarkers(99, Layer.FOREGROUND).contains(yMarker1));
     }
 }
