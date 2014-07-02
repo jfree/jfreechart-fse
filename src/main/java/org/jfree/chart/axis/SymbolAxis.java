@@ -351,10 +351,10 @@ public class SymbolAxis extends NumberAxis implements Serializable {
 
         //gets the outline stroke width of the plot
         double outlineStrokeWidth = 1.0;
-        Stroke outlineStroke = getPlot().getOutlineStroke();
-        if (outlineStroke != null && outlineStroke instanceof BasicStroke) {
-            outlineStrokeWidth = ((BasicStroke) outlineStroke).getLineWidth();
-        }
+//        Stroke outlineStroke = getPlot().getOutlineStroke();
+//        if (outlineStroke != null && outlineStroke instanceof BasicStroke) {
+//            outlineStrokeWidth = ((BasicStroke) outlineStroke).getLineWidth();
+//        }
 
         for (ValueTick tick : ticks) {
             xx1 = valueToJava2D(tick.getValue() - 0.5d, dataArea,
@@ -397,10 +397,10 @@ public class SymbolAxis extends NumberAxis implements Serializable {
 
         //gets the outline stroke width of the plot
         double outlineStrokeWidth = 1.0;
-        Stroke outlineStroke = getPlot().getOutlineStroke();
-        if (outlineStroke != null && outlineStroke instanceof BasicStroke) {
-            outlineStrokeWidth = ((BasicStroke) outlineStroke).getLineWidth();
-        }
+//        Stroke outlineStroke = getPlot().getOutlineStroke();
+//        if (outlineStroke != null && outlineStroke instanceof BasicStroke) {
+//            outlineStrokeWidth = ((BasicStroke) outlineStroke).getLineWidth();
+//        }
 
         for (ValueTick tick : ticks) {
             yy1 = valueToJava2D(tick.getValue() + 0.5d, dataArea,
