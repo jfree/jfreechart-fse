@@ -780,9 +780,8 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      * @param info  collects info about the drawing.
      */
     @Override
-    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
-                     PlotState parentState,
-                     PlotRenderingInfo info) {
+    public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor, 
+            PlotState parentState, PlotRenderingInfo info) {
 
         if (info != null) {
             info.setPlotArea(area);
@@ -795,7 +794,8 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
         area.setRect(area.getX() + 4, area.getY() + 4, area.getWidth() - 8,
                 area.getHeight() - 8);
 
-        // draw the background
+        // FIXME : the 'drawBorder' flag is unnecessary, because the background
+        // will be drawn by painters...if they are null, nothing is drawn
         if (this.drawBorder) {
             drawBackground(g2, area);
         }
