@@ -161,6 +161,7 @@ import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemSource;
 import org.jfree.chart.annotations.Annotation;
 import org.jfree.chart.axis.AxisLocation;
+import org.jfree.chart.drawable.BorderPainter;
 import org.jfree.chart.drawable.ColorPainter;
 import org.jfree.chart.drawable.Drawable;
 import org.jfree.chart.entity.EntityCollection;
@@ -217,7 +218,7 @@ public abstract class Plot implements AxisChangeListener,
             BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
     /** The default outline color. */
-    public static final Paint DEFAULT_OUTLINE_PAINT = Color.GRAY;
+    public static final Color DEFAULT_OUTLINE_COLOR = Color.GRAY;
 
     /** The default foreground alpha transparency. */
     public static final float DEFAULT_FOREGROUND_ALPHA = 1.0f;
@@ -253,20 +254,9 @@ public abstract class Plot implements AxisChangeListener,
 
     /** Amount of blank space around the plot area. */
     private RectangleInsets insets;
-
-    /**
-     * A flag that controls whether or not the plot outline is drawn.
-     *
-     * @since 1.0.6
-     */
-    private boolean outlineVisible;
-
-    /** The Stroke used to draw an outline around the plot. */
-    private transient Stroke outlineStroke;
-
-    /** The Paint used to draw an outline around the plot. */
-    private transient Paint outlinePaint;
-
+  
+    private Drawable borderPainter;
+    
     /** An optional painter used to fill the plot background. */
     private Drawable backgroundPainter;
     
@@ -309,9 +299,8 @@ public abstract class Plot implements AxisChangeListener,
         this.backgroundPainter = new ColorPainter(Color.WHITE);
         this.backgroundAlpha = DEFAULT_BACKGROUND_ALPHA;
         this.backgroundImage = null;
-        this.outlineVisible = true;
-        this.outlineStroke = DEFAULT_OUTLINE_STROKE;
-        this.outlinePaint = DEFAULT_OUTLINE_PAINT;
+        this.borderPainter = new BorderPainter(Color.GRAY, 
+                DEFAULT_OUTLINE_STROKE);
         this.foregroundAlpha = DEFAULT_FOREGROUND_ALPHA;
 
         this.noDataMessage = null;
@@ -726,112 +715,13 @@ public abstract class Plot implements AxisChangeListener,
         }
     }
 
-    /**
-     * Returns the flag that controls whether or not the plot outline is
-     * drawn.  The default value is <code>true</code>.  Note that for
-     * historical reasons, the plot's outline paint and stroke can take on
-     * <code>null</code> values, in which case the outline will not be drawn
-     * even if this flag is set to <code>true</code>.
-     *
-     * @return The outline visibility flag.
-     *
-     * @since 1.0.6
-     *
-     * @see #setOutlineVisible(boolean)
-     */
-    public boolean isOutlineVisible() {
-        return this.outlineVisible;
+    public Drawable getBorderPainter() {
+        return this.borderPainter;
     }
-
-    /**
-     * Sets the flag that controls whether or not the plot's outline is
-     * drawn, and sends a {@link PlotChangeEvent} to all registered listeners.
-     *
-     * @param visible  the new flag value.
-     *
-     * @since 1.0.6
-     *
-     * @see #isOutlineVisible()
-     */
-    public void setOutlineVisible(boolean visible) {
-        this.outlineVisible = visible;
+    
+    public void setBorderPainter(Drawable painter) {
+        this.borderPainter = painter;
         fireChangeEvent();
-    }
-
-    /**
-     * Returns the stroke used to outline the plot area.
-     *
-     * @return The stroke (possibly <code>null</code>).
-     *
-     * @see #setOutlineStroke(Stroke)
-     */
-    public Stroke getOutlineStroke() {
-        return this.outlineStroke;
-    }
-
-    /**
-     * Sets the stroke used to outline the plot area and sends a
-     * {@link PlotChangeEvent} to all registered listeners. If you set this
-     * attribute to <code>null</code>, no outline will be drawn.
-     *
-     * @param stroke  the stroke (<code>null</code> permitted).
-     *
-     * @see #getOutlineStroke()
-     */
-    public void setOutlineStroke(Stroke stroke) {
-        if (stroke == null) {
-            if (this.outlineStroke != null) {
-                this.outlineStroke = null;
-                fireChangeEvent();
-            }
-        }
-        else {
-            if (this.outlineStroke != null) {
-                if (this.outlineStroke.equals(stroke)) {
-                    return;  // nothing to do
-                }
-            }
-            this.outlineStroke = stroke;
-            fireChangeEvent();
-        }
-    }
-
-    /**
-     * Returns the color used to draw the outline of the plot area.
-     *
-     * @return The color (possibly <code>null</code>).
-     *
-     * @see #setOutlinePaint(Paint)
-     */
-    public Paint getOutlinePaint() {
-        return this.outlinePaint;
-    }
-
-    /**
-     * Sets the paint used to draw the outline of the plot area and sends a
-     * {@link PlotChangeEvent} to all registered listeners.  If you set this
-     * attribute to <code>null</code>, no outline will be drawn.
-     *
-     * @param paint  the paint (<code>null</code> permitted).
-     *
-     * @see #getOutlinePaint()
-     */
-    public void setOutlinePaint(Paint paint) {
-        if (paint == null) {
-            if (this.outlinePaint != null) {
-                this.outlinePaint = null;
-                fireChangeEvent();
-            }
-        }
-        else {
-            if (this.outlinePaint != null) {
-                if (this.outlinePaint.equals(paint)) {
-                    return;  // nothing to do
-                }
-            }
-            this.outlinePaint = paint;
-            fireChangeEvent();
-        }
     }
 
     /**
@@ -1034,14 +924,9 @@ public abstract class Plot implements AxisChangeListener,
      * @param g2  the graphics device.
      * @param area  the area within which the plot should be drawn.
      */
-    public void drawOutline(Graphics2D g2, Rectangle2D area) {
-        if (!this.outlineVisible) {
-            return;
-        }
-        if ((this.outlineStroke != null) && (this.outlinePaint != null)) {
-            g2.setStroke(this.outlineStroke);
-            g2.setPaint(this.outlinePaint);
-            g2.draw(area);
+    public void drawOutline(Graphics2D g2, Rectangle2D area) { // FIXME : rename this drawBorder
+        if (this.borderPainter != null) {
+            this.borderPainter.draw(g2, area);
         }
     }
 
@@ -1274,14 +1159,8 @@ public abstract class Plot implements AxisChangeListener,
         if (!ObjectUtils.equal(this.insets, that.insets)) {
             return false;
         }
-        if (this.outlineVisible != that.outlineVisible) {
-            return false;
-        }
-        if (!ObjectUtils.equal(this.outlineStroke, that.outlineStroke)) {
-            return false;
-        }
-        if (!PaintUtils.equal(this.outlinePaint, that.outlinePaint)) {
-            return false;
+        if (!ObjectUtils.equal(this.borderPainter, that.borderPainter)) {
+            return false;   
         }
         if (!ObjectUtils.equal(this.backgroundPainter, 
                 that.backgroundPainter)) {
@@ -1340,8 +1219,8 @@ public abstract class Plot implements AxisChangeListener,
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
         SerialUtils.writePaint(this.noDataMessagePaint, stream);
-        SerialUtils.writeStroke(this.outlineStroke, stream);
-        SerialUtils.writePaint(this.outlinePaint, stream);
+        //SerialUtils.writeStroke(this.outlineStroke, stream);
+        //SerialUtils.writePaint(this.outlinePaint, stream);
         // backgroundImage
     }
 
@@ -1357,8 +1236,8 @@ public abstract class Plot implements AxisChangeListener,
         throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         this.noDataMessagePaint = SerialUtils.readPaint(stream);
-        this.outlineStroke = SerialUtils.readStroke(stream);
-        this.outlinePaint = SerialUtils.readPaint(stream);
+        //this.outlineStroke = SerialUtils.readStroke(stream);
+        //this.outlinePaint = SerialUtils.readPaint(stream);
         // backgroundImage
         this.listenerList = new EventListenerList();
     }
