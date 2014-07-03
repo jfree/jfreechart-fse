@@ -238,7 +238,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      */
     private boolean autoPopulateSeriesPaint;
 
-    /** The base paint. */
+    /** The default paint, used when there is no paint assigned for a series. */
     private transient Paint defaultPaint;
 
     /** Storage for the fill paint assigned to each series. */
