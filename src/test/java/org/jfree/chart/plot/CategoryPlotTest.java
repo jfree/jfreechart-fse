@@ -53,14 +53,15 @@
 
 package org.jfree.chart.plot;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import org.junit.Test;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -73,12 +74,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.junit.Test;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
+import org.jfree.chart.TestUtils;
 import org.jfree.chart.annotations.CategoryLineAnnotation;
 import org.jfree.chart.annotations.CategoryTextAnnotation;
 import org.jfree.chart.axis.AxisLocation;
@@ -99,8 +98,6 @@ import org.jfree.chart.util.SortOrder;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
-
-import org.jfree.chart.TestUtils;
 
 /**
  * Tests for the {@link CategoryPlot} class.
@@ -1029,6 +1026,208 @@ public class CategoryPlotTest {
         axisIndices = Arrays.asList(1, 2);
         plot.mapDatasetToRangeAxes(0, axisIndices);
         assertEquals(yAxis2, plot.getRangeAxisForDataset(0));
+    }
+    
+    /**
+     * Datasets are now stored in a Map, and it should be possible to assign
+     * them an arbitrary key (index).
+     */
+    @Test
+    public void testDatasetIndices() {
+        CategoryDataset dataset = new DefaultCategoryDataset();
+        CategoryAxis xAxis = new CategoryAxis("X");
+        NumberAxis yAxis = new NumberAxis("Y");
+        CategoryItemRenderer renderer = new BarRenderer();
+        CategoryPlot plot = new CategoryPlot(dataset, xAxis, yAxis, renderer);
+        
+        assertEquals(dataset, plot.getDataset(0));
+        
+        DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
+        dataset2.setValue(1, "R1", "C1");
+        
+        // we should be able to give a dataset an arbitrary index
+        plot.setDataset(99, dataset2);
+        assertEquals(2, plot.getDatasetCount());
+        assertEquals(dataset2, plot.getDataset(99));
+        
+        assertEquals(0, plot.indexOf(dataset));
+        assertEquals(99, plot.indexOf(dataset2));
+    }
+    
+    @Test
+    public void testAxisIndices() {
+        CategoryDataset dataset = new DefaultCategoryDataset();
+        CategoryAxis xAxis = new CategoryAxis("X");
+        NumberAxis yAxis = new NumberAxis("Y");
+        CategoryItemRenderer renderer = new BarRenderer();
+        CategoryPlot plot = new CategoryPlot(dataset, xAxis, yAxis, renderer);
+        assertEquals(xAxis, plot.getDomainAxis(0));        
+        assertEquals(yAxis, plot.getRangeAxis(0)); 
+        
+        CategoryAxis xAxis2 = new CategoryAxis("X2");
+        plot.setDomainAxis(99, xAxis2);
+        assertEquals(xAxis2, plot.getDomainAxis(99));
+        
+        NumberAxis yAxis2 = new NumberAxis("Y2");
+        plot.setRangeAxis(99, yAxis2);
+        assertEquals(yAxis2, plot.getRangeAxis(99));
+    }
+    
+    @Test 
+    public void testAxisLocationIndices() {
+        CategoryDataset dataset = new DefaultCategoryDataset();
+        CategoryAxis xAxis = new CategoryAxis("X");
+        NumberAxis yAxis = new NumberAxis("Y");
+        CategoryItemRenderer renderer = new BarRenderer();
+        CategoryPlot plot = new CategoryPlot(dataset, xAxis, yAxis, renderer);
+
+        CategoryAxis xAxis2 = new CategoryAxis("X2");
+        NumberAxis yAxis2 = new NumberAxis("Y2");
+        plot.setDomainAxis(99, xAxis2);
+        plot.setRangeAxis(99, yAxis2);
+        
+        plot.setDomainAxisLocation(99, AxisLocation.BOTTOM_OR_RIGHT);
+        assertEquals(AxisLocation.BOTTOM_OR_RIGHT, 
+                plot.getDomainAxisLocation(99));
+        plot.setRangeAxisLocation(99, AxisLocation.BOTTOM_OR_LEFT);
+        assertEquals(AxisLocation.BOTTOM_OR_LEFT, 
+                plot.getRangeAxisLocation(99));
+    }
+    
+    @Test 
+    public void testRendererIndices() {
+        CategoryDataset dataset = new DefaultCategoryDataset();
+        CategoryAxis xAxis = new CategoryAxis("X");
+        NumberAxis yAxis = new NumberAxis("Y");
+        CategoryItemRenderer renderer = new BarRenderer();
+        CategoryPlot plot = new CategoryPlot(dataset, xAxis, yAxis, renderer);
+        
+        assertEquals(renderer, plot.getRenderer(0));
+        
+        // we should be able to give a renderer an arbitrary index
+        CategoryItemRenderer renderer2 = new LineAndShapeRenderer();
+        plot.setRenderer(20, renderer2);
+        assertEquals(2, plot.getRendererCount());
+        assertEquals(renderer2, plot.getRenderer(20));
+        
+        assertEquals(20, plot.getIndexOf(renderer2));
+    }
+
+    @Test 
+    public void testGetRendererForDataset2() {
+        CategoryDataset dataset = new DefaultCategoryDataset();
+        CategoryAxis xAxis = new CategoryAxis("X");
+        NumberAxis yAxis = new NumberAxis("Y");
+        CategoryItemRenderer renderer = new BarRenderer();
+        CategoryPlot plot = new CategoryPlot(dataset, xAxis, yAxis, renderer);
+
+        // add a second dataset
+        DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
+        dataset2.setValue(1, "R1", "C1");
+        plot.setDataset(99, dataset2);
+       
+        // by default, the renderer with index 0 is used
+        assertEquals(renderer, plot.getRendererForDataset(dataset2));
+        
+        // add a second renderer with the same index as dataset2, now it will
+        // be used
+        CategoryItemRenderer renderer2 = new LineAndShapeRenderer();
+        plot.setRenderer(99, renderer2);
+        assertEquals(renderer2, plot.getRendererForDataset(dataset2));
+    }
+    
+    @Test
+    public void testMapDatasetToDomainAxis() {
+        CategoryDataset dataset = new DefaultCategoryDataset();
+        CategoryAxis xAxis = new CategoryAxis("X");
+        NumberAxis yAxis = new NumberAxis("Y");
+        CategoryItemRenderer renderer = new BarRenderer();
+        CategoryPlot plot = new CategoryPlot(dataset, xAxis, yAxis, renderer);
+
+        CategoryAxis xAxis2 = new CategoryAxis("X2");
+        plot.setDomainAxis(11, xAxis2);
+        
+        // add a second dataset
+        DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
+        dataset2.setValue(1, "R1", "C1");
+        plot.setDataset(99, dataset);    
+        
+        assertEquals(xAxis, plot.getDomainAxisForDataset(99));
+
+        // now map the dataset to the second xAxis
+        plot.mapDatasetToDomainAxis(99, 11);
+        assertEquals(xAxis2, plot.getDomainAxisForDataset(99));
+    }
+
+    @Test
+    public void testMapDatasetToRangeAxis() {
+        CategoryDataset dataset = new DefaultCategoryDataset();
+        CategoryAxis xAxis = new CategoryAxis("X");
+        NumberAxis yAxis = new NumberAxis("Y");
+        CategoryItemRenderer renderer = new BarRenderer();
+        CategoryPlot plot = new CategoryPlot(dataset, xAxis, yAxis, renderer);
+
+        NumberAxis yAxis2 = new NumberAxis("Y2");
+        plot.setRangeAxis(22, yAxis2);
+        
+        // add a second dataset
+        DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
+        dataset2.setValue(1, "R1", "C1");
+        plot.setDataset(99, dataset);    
+        
+        assertEquals(yAxis, plot.getRangeAxisForDataset(99));
+
+        // now map the dataset to the second xAxis
+        plot.mapDatasetToRangeAxis(99, 22);
+        assertEquals(yAxis2, plot.getRangeAxisForDataset(99));
+    }
+    
+    @Test
+    public void testDomainMarkerIndices() {
+        CategoryDataset dataset = new DefaultCategoryDataset();
+        CategoryAxis xAxis = new CategoryAxis("X");
+        NumberAxis yAxis = new NumberAxis("Y");
+        CategoryItemRenderer renderer = new BarRenderer();
+        CategoryPlot plot = new CategoryPlot(dataset, xAxis, yAxis, renderer);
+        
+        // add a second dataset, plotted against a second x axis
+        DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
+        dataset2.setValue(1, "R1", "C1");
+        plot.setDataset(99, dataset);    
+        CategoryAxis xAxis2 = new CategoryAxis("X2");
+        plot.setDomainAxis(1, xAxis2);
+        LineAndShapeRenderer renderer2 = new LineAndShapeRenderer();
+        plot.setRenderer(99, renderer2);
+        plot.mapDatasetToDomainAxis(99, 1);
+        
+        CategoryMarker xMarker1 = new CategoryMarker(123);
+        plot.addDomainMarker(99, xMarker1, Layer.FOREGROUND);
+        assertTrue(plot.getDomainMarkers(99, Layer.FOREGROUND).contains(
+                xMarker1));
+    }
+
+    @Test
+    public void testRangeMarkerIndices() {
+        CategoryDataset dataset = new DefaultCategoryDataset();
+        CategoryAxis xAxis = new CategoryAxis("X");
+        NumberAxis yAxis = new NumberAxis("Y");
+        CategoryItemRenderer renderer = new BarRenderer();
+        CategoryPlot plot = new CategoryPlot(dataset, xAxis, yAxis, renderer);
+        
+        // add a second dataset, plotted against a second axis
+        DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
+        dataset2.setValue(1, "R1", "C1");
+        plot.setDataset(99, dataset);    
+        NumberAxis yAxis2 = new NumberAxis("Y2");
+        plot.setRangeAxis(1, yAxis2);
+        LineAndShapeRenderer renderer2 = new LineAndShapeRenderer();
+        plot.setRenderer(99, renderer2);
+        plot.mapDatasetToRangeAxis(99, 1);
+        
+        ValueMarker yMarker1 = new ValueMarker(123);
+        plot.addRangeMarker(99, yMarker1, Layer.FOREGROUND);
+        assertTrue(plot.getRangeMarkers(99, Layer.FOREGROUND).contains(
+                yMarker1));
     }
 
 }
