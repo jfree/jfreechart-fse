@@ -65,6 +65,7 @@ import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import org.jfree.chart.Colors;
 import org.jfree.chart.TestUtils;
 
 import org.junit.Test;
@@ -716,10 +717,10 @@ public class AbstractRendererTest  {
 
         // now check autoPopulate==true
         r.setAutoPopulateSeriesPaint(true);
-        /*CategoryPlot plot =*/ new CategoryPlot(null, new CategoryAxis(
+        CategoryPlot plot = new CategoryPlot(null, new CategoryAxis(
                 "Category"), new NumberAxis("Value"), r);
-            assertEquals(DefaultDrawingSupplier.DEFAULT_PAINT_SEQUENCE[0],
-                r.lookupSeriesPaint(0));
+        
+        assertEquals(Colors.getDefaultColors()[0], r.lookupSeriesPaint(0));
         assertNotNull(r.getSeriesPaint(0));
     }
 
