@@ -59,6 +59,7 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.net.URL;
 import javax.swing.ImageIcon;
+import org.jfree.chart.drawable.BorderPainter;
 import org.jfree.chart.drawable.ColorPainter;
 
 import org.jfree.chart.ui.Align;
@@ -121,25 +122,9 @@ public class PlotTest  {
         plot2.setInsets(new RectangleInsets(1.0, 2.0, 3.0, 4.0));
         assertEquals(plot1, plot2);
 
-        // outlineVisible
-        plot1.setOutlineVisible(false);
+        plot1.setBorderPainter(new BorderPainter(Color.RED, new BasicStroke(1.0f)));
         assertFalse(plot1.equals(plot2));
-        plot2.setOutlineVisible(false);
-        assertEquals(plot1, plot2);
-
-        // outlineStroke
-        BasicStroke s = new BasicStroke(1.23f);
-        plot1.setOutlineStroke(s);
-        assertFalse(plot1.equals(plot2));
-        plot2.setOutlineStroke(s);
-        assertEquals(plot1, plot2);
-
-        // outlinePaint
-        plot1.setOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
-                3.0f, 4.0f, Color.green));
-        assertFalse(plot1.equals(plot2));
-        plot2.setOutlinePaint(new GradientPaint(1.0f, 2.0f, Color.yellow,
-                3.0f, 4.0f, Color.green));
+        plot2.setBorderPainter(new BorderPainter(Color.RED, new BasicStroke(1.0f)));
         assertEquals(plot1, plot2);
 
         // backgroundPainter
