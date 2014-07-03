@@ -751,8 +751,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     }
 
     /**
-     * Returns the lower and upper bounds (range) of the x-values in the
-     * specified dataset.
+     * Returns the range that should be set on the domain axis (x-axis) in
+     * order for this renderer to display all the items in the dataset.
      *
      * @param dataset  the dataset (<code>null</code> permitted).
      *
@@ -767,9 +767,12 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     }
 
     /**
-     * Returns the lower and upper bounds (range) of the x-values in the
-     * specified dataset.
-     *
+     * Returns the range of x-values in the specified dataset, either for 
+     * all series or just the visible series (according to the setting of the
+     * 'dataBoundsIncludesVisibleSeriesOnly' flag).  This method exists to
+     * support subclasses implementing the {@link findDomainBounds(XYDataset)}
+     * method.
+     * 
      * @param dataset  the dataset (<code>null</code> permitted).
      * @param includeInterval  include the interval (if any) for the dataset?
      *
@@ -1057,12 +1060,9 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
                     dataArea.getMaxY());
         }
 
-        Paint paint = plot.getDomainGridlinePaint();
-        Stroke stroke = plot.getDomainGridlineStroke();
-        g2.setPaint(paint != null ? paint : Plot.DEFAULT_OUTLINE_PAINT);
-        g2.setStroke(stroke != null ? stroke : Plot.DEFAULT_OUTLINE_STROKE);
+        g2.setPaint(plot.getDomainGridlinePaint());
+        g2.setStroke(plot.getDomainGridlineStroke());
         g2.draw(line);
-
     }
 
     /**
