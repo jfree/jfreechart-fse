@@ -83,9 +83,9 @@ public class XYBubbleRendererTest  {
         XYBubbleRenderer r2 = new XYBubbleRenderer();
         assertEquals(r1, r2);
 
-        r1 = new XYBubbleRenderer(XYBubbleRenderer.SCALE_ON_RANGE_AXIS);
+        r1 = new XYBubbleRenderer(ScaleType.Y_AXIS);
         assertFalse(r1.equals(r2));
-        r2 = new XYBubbleRenderer(XYBubbleRenderer.SCALE_ON_RANGE_AXIS);
+        r2 = new XYBubbleRenderer(ScaleType.Y_AXIS);
         assertEquals(r1, r2);
     }
 
