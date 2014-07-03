@@ -90,6 +90,7 @@ import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.renderer.xy.XYShapeRenderer;
 import org.jfree.chart.ui.Layer;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.util.DefaultShadowGenerator;
@@ -1238,8 +1239,8 @@ public class XYPlotTest  {
         
         // add a second renderer with the same index as dataset2, now it will
         // be used
-        XYLineAndShapeRenderer renderer2 = new XYLineAndShapeRenderer();
-        plot.setRenderer(99, renderer);
+        XYShapeRenderer renderer2 = new XYShapeRenderer();
+        plot.setRenderer(99, renderer2);
         assertEquals(renderer2, plot.getRendererForDataset(dataset2));
     }
     
