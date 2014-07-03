@@ -123,7 +123,7 @@ public class DefaultPieDatasetTest implements DatasetChangeListener {
             fail("IndexOutOfBoundsException should have been thrown on negative key");
         }
         catch (IndexOutOfBoundsException e) {
-            assertEquals("-1", e.getMessage());
+            // expected
         }
 
         try {
