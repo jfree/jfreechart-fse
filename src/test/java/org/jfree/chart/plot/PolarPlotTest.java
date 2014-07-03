@@ -254,17 +254,6 @@ public class PolarPlotTest  {
     }
 
     @Test
-    public void testEquals_Dataset() {
-        PolarPlot p1 = new PolarPlot();
-        p1.setDataset(0, new XYSeriesCollection());
-        PolarPlot p2 = new PolarPlot();
-        p2.setDataset(0, new XYSeriesCollection());
-        assertEquals(p1, p2);
-        p2.setDataset(1, new XYSeriesCollection());
-        assertNotEquals(p1, p2);
-    }
-
-    @Test
     public void testEquals_Renderer() {
         PolarPlot p1 = new PolarPlot();
         p1.setRenderer(0, new DefaultPolarItemRenderer());
