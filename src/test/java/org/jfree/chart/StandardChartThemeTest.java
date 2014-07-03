@@ -57,6 +57,7 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
 
+import org.jfree.chart.drawable.BorderPainter;
 import org.jfree.chart.drawable.ColorPainter;
 import org.jfree.chart.plot.DefaultDrawingSupplier;
 import org.jfree.chart.plot.PieLabelLinkStyle;
@@ -164,11 +165,11 @@ public class StandardChartThemeTest  {
         assertEquals(t1, t2);
 
         //plotOutlinePaint;
-        t1.setPlotOutlinePaint(new GradientPaint(5f, 2f, Color.BLUE, 6f, 7f, 
-                Color.RED));
+        t1.setPlotBorderPainter(new BorderPainter(Color.RED, 
+                new BasicStroke(1.0f)));
         assertFalse(t1.equals(t2));
-        t2.setPlotOutlinePaint(new GradientPaint(5f, 2f, Color.BLUE, 6f, 7f, 
-                Color.RED));
+        t2.setPlotBorderPainter(new BorderPainter(Color.RED, 
+                new BasicStroke(1.0f)));
         assertEquals(t1, t2);
 
         //labelLinkStyle;
