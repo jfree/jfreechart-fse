@@ -254,8 +254,7 @@ public class ValueAxisTest  {
         g2.dispose();
         Rectangle2D rect = info.getPlotInfo().getDataArea();
         double x = rect.getMinX();
-        assertEquals(100.0, x, 1.0);
+        assertEquals(104.0, x, 1.0);  // 4 padding + 100 for axis
     }
-
 
 }
