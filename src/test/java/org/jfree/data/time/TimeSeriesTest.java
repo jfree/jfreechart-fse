@@ -686,8 +686,8 @@ public class TimeSeriesTest implements SeriesChangeListener {
             /*item = */series.getDataItem(-1);
             fail("IllegalArgumentException should have been thrown on negative key");
         }
-        catch (IndexOutOfBoundsException e) {
-            assertEquals("-1", e.getMessage());
+        catch (IllegalArgumentException e) {
+            // expected
         }
 
         try {
