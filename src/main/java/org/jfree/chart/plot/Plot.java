@@ -255,6 +255,9 @@ public abstract class Plot implements AxisChangeListener,
     /** Amount of blank space around the plot area. */
     private RectangleInsets insets;
   
+    /** 
+     * An object that draws the plot's border (can be {@code null}).
+     */
     private Drawable borderPainter;
     
     /** An optional painter used to fill the plot background. */
