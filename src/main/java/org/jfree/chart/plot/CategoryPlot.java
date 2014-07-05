@@ -1359,7 +1359,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @since 1.0.11
      */
-    public int indexOf(CategoryDataset dataset) { // FIXME: rename this findDatasetIndex()
+    public int findDatasetIndex(CategoryDataset dataset) {
         for (Map.Entry<Integer, CategoryDataset> entry: 
                 this.datasets.entrySet()) {
             if (dataset == entry.getValue()) {
@@ -1658,7 +1658,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      * @return The renderer (possibly {@code null}).
      */
     public CategoryItemRenderer getRendererForDataset(CategoryDataset dataset) {
-        int datasetIndex = indexOf(dataset);
+        int datasetIndex = findDatasetIndex(dataset);
         if (datasetIndex < 0) {
             return null;
         } 
@@ -1677,7 +1677,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @return The renderer index.
      */
-    public int getIndexOf(CategoryItemRenderer renderer) {
+    public int findRendererIndex(CategoryItemRenderer renderer) {
         for (Map.Entry<Integer, CategoryItemRenderer> entry 
                 : this.renderers.entrySet()) {
             if (entry.getValue() == renderer) {
@@ -2179,7 +2179,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
             if (dataset == null) {
                 continue;
             }
-            int datasetIndex = indexOf(dataset);
+            int datasetIndex = findDatasetIndex(dataset);
             CategoryItemRenderer renderer = getRenderer(datasetIndex);
             if (renderer != null) {
                 result.addAll(renderer.getLegendItems());
@@ -3401,8 +3401,8 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
         } else {
             // reserve space for the range axes (if any)...
             for (ValueAxis yAxis : this.rangeAxes.values()) {
-                int i = findRangeAxisIndex(yAxis);
                 if (yAxis != null) {
+                    int i = findRangeAxisIndex(yAxis);
                     RectangleEdge edge = getRangeAxisEdge(i);
                     space = yAxis.reserveSpace(g2, this, plotArea, edge, space);
                 }
@@ -3571,11 +3571,11 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
 
         // draw the markers...
         for (CategoryItemRenderer renderer : this.renderers.values()) {
-            int i = this.getIndexOf(renderer);
+            int i = findRendererIndex(renderer);
             drawDomainMarkers(g2, dataArea, i, Layer.BACKGROUND);
         }
         for (CategoryItemRenderer renderer : this.renderers.values()) {
-            int i = this.getIndexOf(renderer);
+            int i = findRendererIndex(renderer);
             drawRangeMarkers(g2, dataArea, i, Layer.BACKGROUND);
         }
 
@@ -3688,6 +3688,14 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
         return result;
     }
     
+    /**
+     * Returns the indices of the non-null renderers for the plot, in the 
+     * specified order.
+     * 
+     * @param order  the rendering order {@code null} not permitted).
+     * 
+     * @return A list of indices.
+     */
     private List<Integer> getRendererIndices(DatasetRenderingOrder order) {
         List<Integer> result = new ArrayList<Integer>();
         for (Map.Entry<Integer, CategoryItemRenderer> entry: 
@@ -4242,7 +4250,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
             if (dataset == null) {
                 continue;
             }
-            int i = indexOf(dataset);
+            int i = findDatasetIndex(dataset);
             List<Integer> mappedAxes = this.datasetToDomainAxesMap.get(i);
             if (mappedAxes == null) {
                 if (axisIndex == 0) {
@@ -4268,7 +4276,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
     private List<CategoryDataset> datasetsMappedToRangeAxis(int axisIndex) {
         List<CategoryDataset> result = new ArrayList<CategoryDataset>();
         for (CategoryDataset dataset : this.datasets.values()) {
-            int i = indexOf(dataset);
+            int i = findDatasetIndex(dataset);
             List<Integer> mappedAxes = this.datasetToRangeAxesMap.get(i);
             if (mappedAxes == null) {
                 if (axisIndex == 0) {
@@ -4529,9 +4537,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
         if (!isRangePannable()) {
             return;
         }
-        int rangeAxisCount = getRangeAxisCount();
-        for (int i = 0; i < rangeAxisCount; i++) {
-            ValueAxis axis = getRangeAxis(i);
+        for (ValueAxis axis : this.rangeAxes.values()) {
             if (axis == null) {
                 continue;
             }

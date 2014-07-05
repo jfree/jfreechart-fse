@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -361,7 +361,7 @@ public class LevelRenderer extends AbstractCategoryItemRenderer
         }
 
         // submit the current data point as a crosshair candidate
-        int datasetIndex = plot.indexOf(dataset);
+        int datasetIndex = plot.findDatasetIndex(dataset);
         updateCrosshairValues(state.getCrosshairState(),
                 dataset.getRowKey(row), dataset.getColumnKey(column), value,
                 datasetIndex, barW0, barL, orientation);

@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -216,7 +216,7 @@ public class GroupedStackedBarRenderer extends StackedBarRenderer
         int groupCount = this.seriesToGroupMap.getGroupCount();
         int groupIndex = this.seriesToGroupMap.getGroupIndex(
                 this.seriesToGroupMap.getGroup(plot.getDataset(
-                        plot.getIndexOf(this)).getRowKey(row)));
+                        plot.findRendererIndex(this)).getRowKey(row)));
         int categoryCount = getColumnCount();
         if (groupCount > 1) {
             double groupGap = space * getItemMargin()

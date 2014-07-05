@@ -1050,8 +1050,8 @@ public class CategoryPlotTest {
         assertEquals(2, plot.getDatasetCount());
         assertEquals(dataset2, plot.getDataset(99));
         
-        assertEquals(0, plot.indexOf(dataset));
-        assertEquals(99, plot.indexOf(dataset2));
+        assertEquals(0, plot.findDatasetIndex(dataset));
+        assertEquals(99, plot.findDatasetIndex(dataset2));
     }
     
     @Test
@@ -1110,7 +1110,7 @@ public class CategoryPlotTest {
         assertEquals(2, plot.getRendererCount());
         assertEquals(renderer2, plot.getRenderer(20));
         
-        assertEquals(20, plot.getIndexOf(renderer2));
+        assertEquals(20, plot.findRendererIndex(renderer2));
     }
 
     @Test 

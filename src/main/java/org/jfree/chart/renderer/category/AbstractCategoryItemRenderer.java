@@ -951,7 +951,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             CategoryAxis axis, CategoryMarker marker, Rectangle2D dataArea) {
 
         Comparable category = marker.getKey();
-        CategoryDataset dataset = plot.getDataset(plot.getIndexOf(this));
+        CategoryDataset dataset = plot.getDataset(plot.findRendererIndex(this));
         int columnIndex = dataset.getColumnIndex(category);
         if (columnIndex < 0) {
             return;
@@ -1606,7 +1606,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
         if (this.plot == null) {
             return result;
         }
-        int index = this.plot.getIndexOf(this);
+        int index = this.plot.findRendererIndex(this);
         CategoryDataset dataset = this.plot.getDataset(index);
         if (dataset == null) {
             return result;

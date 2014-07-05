@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -392,7 +392,7 @@ public class GanttRenderer extends IntervalBarRenderer
 
             if (subinterval == count - 1) {
                 // submit the current data point as a crosshair candidate
-                int datasetIndex = plot.indexOf(dataset);
+                int datasetIndex = plot.findDatasetIndex(dataset);
                 Comparable columnKey = dataset.getColumnKey(column);
                 Comparable rowKey = dataset.getRowKey(row);
                 double xx = domainAxis.getCategorySeriesMiddle(columnKey,
@@ -542,7 +542,7 @@ public class GanttRenderer extends IntervalBarRenderer
         }
 
         // submit the current data point as a crosshair candidate
-        int datasetIndex = plot.indexOf(dataset);
+        int datasetIndex = plot.findDatasetIndex(dataset);
         Comparable columnKey = dataset.getColumnKey(column);
         Comparable rowKey = dataset.getRowKey(row);
         double xx = domainAxis.getCategorySeriesMiddle(columnKey, rowKey,

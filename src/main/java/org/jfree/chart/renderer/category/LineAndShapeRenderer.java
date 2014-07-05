@@ -837,7 +837,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
             }
 
             // submit the current data point as a crosshair candidate
-            int datasetIndex = plot.indexOf(dataset);
+            int datasetIndex = plot.findDatasetIndex(dataset);
             updateCrosshairValues(state.getCrosshairState(),
                     dataset.getRowKey(row), dataset.getColumnKey(column),
                     value, datasetIndex, x1, y1, orientation);

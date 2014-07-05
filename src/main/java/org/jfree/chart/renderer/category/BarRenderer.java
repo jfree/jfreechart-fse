@@ -1086,7 +1086,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
         }
 
         // submit the current data point as a crosshair candidate
-        int datasetIndex = plot.indexOf(dataset);
+        int datasetIndex = plot.findDatasetIndex(dataset);
         updateCrosshairValues(state.getCrosshairState(),
                 dataset.getRowKey(row), dataset.getColumnKey(column), value,
                 datasetIndex, barW0, barL0, orientation);
