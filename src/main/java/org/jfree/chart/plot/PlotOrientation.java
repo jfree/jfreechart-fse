@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * PlotOrientation.java
  * --------------------
- * (C) Copyright 2003-2013, by Object Refinery Limited.
+ * (C) Copyright 2003-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -66,9 +66,31 @@ public enum PlotOrientation {
     }
 
     /**
+     * Returns {@code true} if the orientation is {@code HORIZONTAL} and 
+     * {@code false} otherwise.  This method isn't strictly required but using
+     * it can improve code readability in some cases.
+     * 
+     * @return A boolean. 
+     */
+    public boolean isHorizontal() {
+        return this.name.equals("PlotOrientation.HORIZONTAL");
+    }
+    
+    /**
+     * Returns {@code true} if the orientation is {@code VERTICAL} and 
+     * {@code false} otherwise.  This method isn't strictly required but using
+     * it can improve code readability in some cases.
+     * 
+     * @return A boolean. 
+     */
+    public boolean isVertical() {
+        return this.name.equals("PlotOrientation.VERTICAL");
+    }
+    
+    /**
      * Returns a string representing the object.
      *
-     * @return The string.
+     * @return The string (never {@code null}).
      */
     @Override
     public String toString() {
