@@ -357,7 +357,7 @@ public class MeterPlot extends Plot implements Serializable, Cloneable {
      * Sets the tick size and sends a {@link PlotChangeEvent} to all
      * registered listeners.
      *
-     * @param size  the tick size (must be > 0).
+     * @param size  the tick size (must be &gt; 0).
      *
      * @see #getTickSize()
      */
