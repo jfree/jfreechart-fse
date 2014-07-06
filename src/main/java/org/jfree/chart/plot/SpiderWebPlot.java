@@ -109,6 +109,7 @@ import org.jfree.chart.util.StrokeList;
 import org.jfree.chart.util.TableOrder;
 import org.jfree.chart.entity.CategoryItemEntity;
 import org.jfree.chart.entity.EntityCollection;
+import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.labels.CategoryItemLabelGenerator;
 import org.jfree.chart.labels.CategoryToolTipGenerator;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
