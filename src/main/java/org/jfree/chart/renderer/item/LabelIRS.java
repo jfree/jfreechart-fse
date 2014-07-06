@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,10 +27,10 @@
  * -------------
  * LabelIRS.java
  * -------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
- * Contributor(s):   -;
+ * Contributor(s):   David Gilbert (for Object Refinery Limited);
  *
  * Changes
  * -------
@@ -64,7 +64,7 @@ public interface LabelIRS extends Serializable {
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
      * 
-     * @return a Font (never <code>null<code>)
+     * @return A Font (never {@code null}).
      */
     public Font getItemLabelFont(int row, int column);
 
@@ -75,7 +75,7 @@ public interface LabelIRS extends Serializable {
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
      * 
-     * @return true if the label should be rendered
+     * @return {@code true} if the label should be rendered.
      */
     public boolean isItemLabelVisible(int row, int column);
 
@@ -86,7 +86,7 @@ public interface LabelIRS extends Serializable {
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
      * 
-     * @return The item label position (never <code>null</code>).
+     * @return The item label position (never {@code null}).
      */
     public ItemLabelPosition getPositiveItemLabelPosition(int row, int column);
 
@@ -97,7 +97,7 @@ public interface LabelIRS extends Serializable {
      * @param row  the row (or series) index (zero-based).
      * @param column  the column (or category) index (zero-based).
      * 
-     * @return The item label position (never <code>null</code>).
+     * @return The item label position (never {@code null}).
      */
     public ItemLabelPosition getNegativeItemLabelPosition(int row, int column);
 
