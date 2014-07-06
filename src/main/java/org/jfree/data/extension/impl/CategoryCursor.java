@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------
  * CategoryCursor.java
  * -------------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, 2014 by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   -;
@@ -70,8 +70,8 @@ public class CategoryCursor<ROW_KEY extends Comparable<ROW_KEY>,
      * Default category cursor constructor. Sets the cursor position to the 
      * specified values.
      * 
-     * @param rowKey
-     * @param columnKey
+     * @param rowKey  the row key ({@code null} not permitted).
+     * @param columnKey  the column key ({@code null} not permitted).
      */
     public CategoryCursor(ROW_KEY rowKey, COLUMN_KEY columnKey) {
         this.rowKey = rowKey;
@@ -81,8 +81,8 @@ public class CategoryCursor<ROW_KEY extends Comparable<ROW_KEY>,
     /**
      * Sets the cursor position to the specified values.
      * 
-     * @param rowKey
-     * @param columnKey
+     * @param rowKey  the row key ({@code null} not permitted).
+     * @param columnKey  the column key ({@code null} not permitted).
      */
     public void setPosition(ROW_KEY rowKey, COLUMN_KEY columnKey) {
         this.rowKey = rowKey;
