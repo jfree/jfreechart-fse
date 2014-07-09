@@ -60,7 +60,7 @@ public class ColorPainter implements Drawable, Serializable {
     
     /**
      * Creates a new instance using the background color for a panel under
-     * the currently installed Swing Look & Feel.
+     * the currently installed Swing Look &amp; Feel.
      */
     public ColorPainter() {
         this(UIManager.getColor("Panel.background"));
