@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,10 +27,10 @@
  * ---------------------
  * LabelChangeEvent.java
  * ---------------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier and Contributors.
  *
  * Original Author:  Michael Zinsmaier;
- * Contributor(s):   -;
+ * Contributor(s):   David Gilbert (for Object Refinery Limited);
  *
  * Changes
  * -------
@@ -64,15 +64,15 @@ public class LabelChangeEvent<CURSOR extends DatasetCursor>
      *     changed (the object has to be of type DatasetLabelExtension and 
      * must not be null!)
      */
-     public LabelChangeEvent(Object labelExtension) {
-          super(labelExtension);
+     public LabelChangeEvent(Object source) {
+          super(source);
      }
 
     /**
      * @return the label selection extension that triggered the event.
      */
     public DatasetSelectionExtension<CURSOR> getLabelExtension() {
-         if (this.getSource() instanceof DatasetLabelExtension) {
+         if (getSource() instanceof DatasetLabelExtension) {
               return (DatasetSelectionExtension<CURSOR>) this.getSource();
          }
          //implementation error
