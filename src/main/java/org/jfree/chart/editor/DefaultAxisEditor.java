@@ -147,7 +147,7 @@ class DefaultAxisEditor extends JPanel implements ActionListener {
      * @param axis  the axis whose properties are to be displayed/edited in
      *              the panel.
      *
-     * @return A panel or <code>null</code< if axis is <code>null</code>.
+     * @return A panel or {@code null} if axis is {@code null}.
      */
     public static DefaultAxisEditor getInstance(Axis axis) {
 
