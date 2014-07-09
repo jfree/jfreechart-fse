@@ -79,10 +79,7 @@ public final class GradientPainter implements Drawable, Serializable {
     private final RectangleAnchor anchor2;
     
     /**
-     * Creates a new instance.  
-     * <br><br>
-     * NOTE:  some useful standard anchor points are defined in the 
-     * {@link TitleAnchor} class.
+     * Creates a new instance.
      * 
      * @param color1  the first color for the gradient (<code>null</code> not 
      *     permitted).
