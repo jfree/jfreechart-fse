@@ -746,7 +746,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      * @param category  the category (<code>null</code> not permitted).
      * @param seriesKey  the series key (<code>null</code> not permitted).
      * @param dataset  the dataset (<code>null</code> not permitted).
-     * @param itemMargin  the item margin (0.0 <= itemMargin < 1.0);
+     * @param itemMargin  the item margin (0.0 &lt;= itemMargin &lt; 1.0);
      * @param area  the area (<code>null</code> not permitted).
      * @param edge  the edge (<code>null</code> not permitted).
      *
@@ -782,7 +782,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      * @param categoryCount  the category count.
      * @param seriesIndex the series index.
      * @param seriesCount the series count.
-     * @param itemMargin  the item margin (0.0 <= itemMargin < 1.0);
+     * @param itemMargin  the item margin (0.0 &lt;= itemMargin &lt; 1.0);
      * @param area  the area (<code>null</code> not permitted).
      * @param edge  the edge (<code>null</code> not permitted).
      *
