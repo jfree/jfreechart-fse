@@ -53,14 +53,22 @@ public interface DatasetSelectionExtension<CURSOR extends DatasetCursor>
         WithChangeListener<SelectionChangeListener<CURSOR>> {
     
     /**
-     * @param cursor specifies the position of the data item
-     * @return true if the data item is selected
+     * Returns {@code true} if the data item that the cursor points to is
+     * selected, and {@code false} otherwise.
+     * 
+     * @param cursor specifies the position of the data item ({@code null} not 
+     *     permitted).
+     * 
+     * @return A boolean.
      */
     public boolean isSelected(CURSOR cursor);
     
     /**
-     * sets the selection state of a data item
-     * @param cursor specifies the position of the data item
+     * Sets the selection state of a data item.
+     * 
+     * @param cursor specifies the position of the data item ({@code null} not
+     *     permitted).
+     * @param selected  the new selection state.
      */
     public void setSelected(CURSOR cursor, boolean selected);
     
