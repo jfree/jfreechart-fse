@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------
  * ChartSelection.java
  * -------------------
- * (C) Copyright 2009, by Object Refinery Limited.
+ * (C) Copyright 2009-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -197,7 +197,7 @@ public class ChartTransferable implements Transferable {
      * @return The content.
      *
      * @throws java.awt.datatransfer.UnsupportedFlavorException
-     * @throws java.io.IOException
+     * @throws java.io.IOException if there is an IO problem.
      */
     @Override
     public Object getTransferData(DataFlavor flavor)
