@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------------------
  * XYDatasetSelectionExtension.java
  * --------------------------------
- * (C) Copyright 2013, by Michael Zinsmaier and Contributors.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier and Contributors.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -91,8 +91,8 @@ public class XYDatasetSelectionExtension extends
      * adds an initial selection change listener, e.g. a plot that should be 
      * redrawn on selection changes.
      * 
-     * @param dataset
-     * @param initialListener
+     * @param dataset  the dataset ({@code null} not permitted).
+     * @param initialListener  a change listener.
      */
     public XYDatasetSelectionExtension(XYDataset dataset,
             SelectionChangeListener<XYCursor> initialListener) {
@@ -106,29 +106,42 @@ public class XYDatasetSelectionExtension extends
      * 
      * @param event  the event details.
      */
+    @Override
     public void datasetChanged(DatasetChangeEvent event) {
         initSelection();
     }
 
     /**
-     * {@link DatasetSelectionExtension#isSelected(DatasetCursor)}
+     * Returns {@code true} if the data item that the cursor points to is
+     * selected, and {@code false} otherwise.
+     * 
+     * @param cursor specifies the position of the data item ({@code null} not 
+     *     permitted).
+     * 
+     * @return A boolean.
      */
+    @Override
     public boolean isSelected(XYCursor cursor) {
         return (selectionData[cursor.series].get(cursor.item));
     }
 
     /**
-     * {@link DatasetSelectionExtension#setSelected(DatasetCursor, boolean)}
+     * Sets the selection state of a data item.
+     * 
+     * @param cursor specifies the position of the data item ({@code null} not
+     *     permitted).
+     * @param selected  the new selection state.
      */
+    @Override
     public void setSelected(XYCursor cursor, boolean selected) {
-        selectionData[cursor.series].set(cursor.item, 
-                Boolean.valueOf(selected));
+        selectionData[cursor.series].set(cursor.item, selected);
         notifyIfRequired();
     }
 
     /**
      * {@link DatasetSelectionExtension#clearSelection()}
      */
+    @Override
     public void clearSelection() {
         initSelection();
     }
@@ -151,6 +164,7 @@ public class XYDatasetSelectionExtension extends
     /**
      * {@link IterableSelection#getIterator()}
      */
+    @Override
     public DatasetIterator<XYCursor> getIterator() {
         return new XYDatasetSelectionIterator();
     }
@@ -158,6 +172,7 @@ public class XYDatasetSelectionExtension extends
     /**
      * {@link IterableSelection#getSelectionIterator(boolean)}
      */
+    @Override
     public DatasetIterator<XYCursor> getSelectionIterator(boolean selected) {
         return new XYDatasetSelectionIterator(selected);
     }
@@ -204,10 +219,11 @@ public class XYDatasetSelectionExtension extends
          *     data item positions
          */
         public XYDatasetSelectionIterator(boolean selected) {
-            this.filter = Boolean.valueOf(selected);
+            this.filter = selected;
         }
 
         /** {@link Iterator#hasNext() */
+        @Override
         public boolean hasNext() {
             if (nextPosition()[0] != -1) {
                 return true;
@@ -218,6 +234,7 @@ public class XYDatasetSelectionExtension extends
         /**
          * {@link Iterator#next()}
          */
+        @Override
         public XYCursor next() {
             int[] newPos = nextPosition();
             this.series = newPos[0];
@@ -228,6 +245,7 @@ public class XYDatasetSelectionExtension extends
         /**
          * iterator remove operation is not supported
          */
+        @Override
         public void remove() {
             throw new UnsupportedOperationException();
         }
