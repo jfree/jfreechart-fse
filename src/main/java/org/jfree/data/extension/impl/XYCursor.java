@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------
  * XYCursor.java
  * -------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   -;
@@ -67,8 +67,8 @@ public class XYCursor implements DatasetCursor {
      * Default xy cursor constructor. Sets the cursor position to the specified 
      * values.
      * 
-     * @param series
-     * @param item
+     * @param series  the series index.
+     * @param item  the item index.
      */
     public XYCursor(int series, int item) {
         this.series = series;
@@ -77,8 +77,8 @@ public class XYCursor implements DatasetCursor {
 
     /**
      * Sets the cursor position to the specified values.
-     * @param series
-     * @param item
+     * @param series  the series index.
+     * @param item  the item index.
      */
     public void setPosition(int series, int item) {
         this.series = series;
