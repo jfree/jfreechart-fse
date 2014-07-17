@@ -615,7 +615,7 @@ public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
      * (expressed as a percentage of the overall category width), and sends
      * a {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param margin  the margin (0.0 <= margin < 1.0).
+     * @param margin  the margin (0.0 &lt;= margin &lt; 1.0).
      *
      * @see #getItemMargin()
      * @see #getUseSeriesOffset()

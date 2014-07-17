@@ -138,7 +138,7 @@ import org.jfree.data.category.CategoryDataset;
  * program included in the JFreeChart Demo Collection:
  * <br><br>
  * <img src="../../../../../images/BarRendererSample.png"
- * alt="BarRendererSample.png" />
+ * alt="BarRendererSample.png">
  */
 public class BarRenderer extends AbstractCategoryItemRenderer
         implements Cloneable, PublicCloneable, Serializable {
@@ -447,7 +447,7 @@ public class BarRenderer extends AbstractCategoryItemRenderer
      * artificially increase the length of bars representing small values,
      * which may misrepresent your data.
      *
-     * @param min  the minimum bar length (in Java2D units, must be >= 0.0).
+     * @param min  the minimum bar length (in Java2D units, must be &gt;= 0.0).
      *
      * @see #getMinimumBarLength()
      */

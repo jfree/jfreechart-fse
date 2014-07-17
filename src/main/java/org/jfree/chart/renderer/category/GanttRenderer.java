@@ -84,7 +84,7 @@ import org.jfree.data.gantt.GanttCategoryDataset;
  * included in the JFreeChart Demo Collection:
  * <br><br>
  * <img src="../../../../../images/GanttRendererSample.png"
- * alt="GanttRendererSample.png" />
+ * alt="GanttRendererSample.png">
  */
 public class GanttRenderer extends IntervalBarRenderer
         implements Serializable {
