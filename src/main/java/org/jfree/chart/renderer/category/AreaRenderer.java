@@ -92,6 +92,7 @@ import org.jfree.chart.event.RendererChangeEvent;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.AreaRendererEndType;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.category.CategoryDataset;
 
 /**
@@ -101,7 +102,7 @@ import org.jfree.data.category.CategoryDataset;
  * Demo Collection:
  * <br><br>
  * <img src="../../../../../images/AreaRendererSample.png"
- * alt="AreaRendererSample.png" />
+ * alt="AreaRendererSample.png">
  */
 public class AreaRenderer extends AbstractCategoryItemRenderer
         implements Cloneable, PublicCloneable, Serializable {
@@ -142,9 +143,7 @@ public class AreaRenderer extends AbstractCategoryItemRenderer
      * @see #getEndType()
      */
     public void setEndType(AreaRendererEndType type) {
-        if (type == null) {
-            throw new IllegalArgumentException("Null 'type' argument.");
-        }
+        ParamChecks.nullNotPermitted(type, "type");
         this.endType = type;
         fireChangeEvent();
     }
