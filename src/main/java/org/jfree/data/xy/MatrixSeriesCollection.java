@@ -108,8 +108,6 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
      * @param seriesIndex zero-based series index.
      *
      * @return The series.
-     *
-     * @throws IllegalArgumentException
      */
     public MatrixSeries getSeries(int seriesIndex) {
         if ((seriesIndex < 0) || (seriesIndex > getSeriesCount())) {
@@ -201,9 +199,7 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
      * Notifies all registered listeners that the dataset has changed.
      * </p>
      *
-     * @param series the series.
-     *
-     * @throws IllegalArgumentException
+     * @param series the series (<code>null</code> not permitted).
      */
     public void addSeries(MatrixSeries series) {
         ParamChecks.nullNotPermitted(series, "series");
@@ -282,16 +278,10 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
      * Notifies all registered listeners that the dataset has changed.
      * </p>
      *
-     * @param series the series.
-     *
-     * @throws IllegalArgumentException
+     * @param series the series (<code>null</code>).
      */
     public void removeSeries(MatrixSeries series) {
-        if (series == null) {
-            throw new IllegalArgumentException("Cannot remove null series.");
-        }
-
-        // remove the series...
+        ParamChecks.nullNotPermitted(series, "series");
         if (this.seriesList.contains(series)) {
             series.removeChangeListener(this);
             this.seriesList.remove(series);
@@ -305,8 +295,6 @@ public class MatrixSeriesCollection extends AbstractXYZDataset
      * Notifies all registered listeners that the dataset has changed.
      *
      * @param seriesIndex the series (zero based index).
-     *
-     * @throws IllegalArgumentException
      */
     public void removeSeries(int seriesIndex) {
         if ((seriesIndex < 0) || (seriesIndex > getSeriesCount())) {
