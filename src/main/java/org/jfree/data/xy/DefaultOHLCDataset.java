@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * DefaultOHLCDataset.java
  * -----------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -50,10 +50,12 @@ import java.util.Arrays;
 import java.util.Date;
 
 import org.jfree.chart.util.PublicCloneable;
+import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 /**
  * A simple implementation of the {@link OHLCDataset} interface.  This
- * implementation supports only one series.
+ * implementation supports only one series.  It is recommended that you use
+ * the {@link OHLCSeriesCollection} dataset instead.
  */
 public class DefaultOHLCDataset extends AbstractXYDataset
         implements OHLCDataset, PublicCloneable {
@@ -344,7 +346,7 @@ public class DefaultOHLCDataset extends AbstractXYDataset
      *
      * @return A clone.
      *
-     * @throws CloneNotSupportedException
+     * @throws CloneNotSupportedException if there is a problem cloning.
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
