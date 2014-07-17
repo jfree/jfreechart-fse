@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------
  * Month.java
  * ----------
- * (C) Copyright 2001-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2001-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Chris Boek;
@@ -138,7 +138,7 @@ public class Month extends RegularTimePeriod implements Serializable {
      *
      * @param time  the date/time (<code>null</code> not permitted).
      *
-     * @see #Month(Date, TimeZone)
+     * @see #Month(Date, TimeZone, Locale)
      */
     public Month(Date time) {
         this(time, TimeZone.getDefault(), Locale.getDefault());
