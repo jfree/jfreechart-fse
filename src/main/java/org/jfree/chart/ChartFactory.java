@@ -136,7 +136,6 @@ import java.util.Locale;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.Timeline;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.ui.Layer;
 import org.jfree.chart.ui.RectangleEdge;
@@ -237,7 +236,7 @@ public abstract class ChartFactory {
      * Sets the current chart theme.  This will be applied to all new charts
      * created via methods in this class.
      *
-     * @param theme  the theme (<code>null</code> not permitted).
+     * @param theme  the theme ({@code null} not permitted).
      *
      * @see #getChartTheme()
      * @see ChartUtilities#applyCurrentTheme(JFreeChart)
@@ -269,9 +268,9 @@ public abstract class ChartFactory {
      * The chart object returned by this method uses a {@link PiePlot} instance
      * as the plot.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     * @param locale  the locale (<code>null</code> not permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
+     * @param locale  the locale ({@code null} not permitted).
      *
      * @return A pie chart.
      *
@@ -296,8 +295,8 @@ public abstract class ChartFactory {
      * The chart object returned by this method uses a {@link PiePlot} instance
      * as the plot.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return A pie chart.
      */
@@ -314,15 +313,15 @@ public abstract class ChartFactory {
 
     /**
      * Creates a pie chart with default settings that compares 2 datasets.
-     * The colour of each section will be determined by the move from the value
-     * for the same key in <code>previousDataset</code>. ie if value1 > value2
-     * then the section will be in green (unless <code>greenForIncrease</code>
-     * is <code>false</code>, in which case it would be <code>red</code>).
+     * The color of each section will be determined by the move from the value
+     * for the same key in {@code previousDataset}. ie if value1 &gt; value2
+     * then the section will be in green (unless {@code greenForIncrease}
+     * is {@code false}, in which case it would be {@code red}).
      * Each section can have a shade of red or green as the difference can be
      * tailored between 0% (black) and percentDiffForMaxScale% (bright
      * red/green).
      * <p>
-     * For instance if <code>percentDiffForMaxScale</code> is 10 (10%), a
+     * For instance if {@code percentDiffForMaxScale} is 10 (10%), a
      * difference of 5% will have a half shade of red/green, a difference of
      * 10% or more will have a maximum shade/brightness of red/green.
      * <P>
@@ -332,8 +331,8 @@ public abstract class ChartFactory {
      * Written by <a href="mailto:opensource@objectlab.co.uk">Benoit
      * Xhenseval</a>.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      * @param previousDataset  the dataset for the last run, this will be used
      *                         to compare each key in the dataset
      * @param percentDiffForMaxScale scale goes from bright red/green to black,
@@ -341,8 +340,8 @@ public abstract class ChartFactory {
      *                               required to reach top scale.
      * @param greenForIncrease  an increase since previousDataset will be
      *                          displayed in green (decrease red) if true.
-     * @param locale  the locale (<code>null</code> not permitted).
-     * @param subTitle displays a subtitle with colour scheme if true
+     * @param locale  the locale ({@code null} not permitted).
+     * @param subTitle displays a subtitle with color scheme if true
      * @param showDifference  create a new dataset that will show the %
      *                        difference between the two datasets.
      *
@@ -385,8 +384,8 @@ public abstract class ChartFactory {
             } else {
                 double percentChange = (newValue.doubleValue()
                         / oldValue.doubleValue() - 1.0) * 100.0;
-                double shade
-                        = (Math.abs(percentChange) >= percentDiffForMaxScale ? 255
+                double shade = (Math.abs(percentChange) 
+                        >= percentDiffForMaxScale ? 255
                         : Math.abs(percentChange) * colorPerPercent);
                 if (greenForIncrease
                         && newValue.doubleValue() > oldValue.doubleValue()
@@ -426,15 +425,15 @@ public abstract class ChartFactory {
 
     /**
      * Creates a pie chart with default settings that compares 2 datasets.
-     * The colour of each section will be determined by the move from the value
-     * for the same key in <code>previousDataset</code>. ie if value1 > value2
-     * then the section will be in green (unless <code>greenForIncrease</code>
-     * is <code>false</code>, in which case it would be <code>red</code>).
+     * The color of each section will be determined by the move from the value
+     * for the same key in {@code previousDataset}. ie if value1 &gt; value2
+     * then the section will be in green (unless {@code greenForIncrease}
+     * is {@code false}, in which case it would be {@code red}).
      * Each section can have a shade of red or green as the difference can be
      * tailored between 0% (black) and percentDiffForMaxScale% (bright
      * red/green).
      * <p>
-     * For instance if <code>percentDiffForMaxScale</code> is 10 (10%), a
+     * For instance if {@code percentDiffForMaxScale} is 10 (10%), a
      * difference of 5% will have a half shade of red/green, a difference of
      * 10% or more will have a maximum shade/brightness of red/green.
      * <P>
@@ -444,8 +443,8 @@ public abstract class ChartFactory {
      * Written by <a href="mailto:opensource@objectlab.co.uk">Benoit
      * Xhenseval</a>.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      * @param previousDataset  the dataset for the last run, this will be used
      *                         to compare each key in the dataset
      * @param percentDiffForMaxScale scale goes from bright red/green to black,
@@ -453,7 +452,7 @@ public abstract class ChartFactory {
      *                               required to reach top scale.
      * @param greenForIncrease  an increase since previousDataset will be
      *                          displayed in green (decrease red) if true.
-     * @param subTitle displays a subtitle with colour scheme if true
+     * @param subTitle displays a subtitle with color scheme if true
      * @param showDifference  create a new dataset that will show the %
      *                        difference between the two datasets.
      *
@@ -539,9 +538,9 @@ public abstract class ChartFactory {
      * The chart object returned by this method uses a {@link RingPlot}
      * instance as the plot.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     * @param locale  the locale (<code>null</code> not permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
+     * @param locale  the locale ({@code null} not permitted).
      *
      * @return A ring chart.
      *
@@ -565,8 +564,8 @@ public abstract class ChartFactory {
      * The chart object returned by this method uses a {@link RingPlot}
      * instance as the plot.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return A ring chart.
      */
@@ -587,10 +586,10 @@ public abstract class ChartFactory {
      * returned by this method uses a {@link MultiplePiePlot} instance as the
      * plot.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param dataset  the dataset (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param dataset  the dataset ({@code null} permitted).
      * @param order  the order that the data is extracted (by row or by column)
-     *               (<code>null</code> not permitted).
+     *               ({@code null} not permitted).
      *
      * @return A chart.
      */
@@ -619,9 +618,9 @@ public abstract class ChartFactory {
      * returned by this method uses a {@link PiePlot3D} instance as the
      * plot.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     * @param locale  the locale (<code>null</code> not permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
+     * @param locale  the locale ({@code null} not permitted).
      *
      * @return A pie chart.
      *
@@ -644,8 +643,8 @@ public abstract class ChartFactory {
      * returned by this method uses a {@link PiePlot3D} instance as the
      * plot.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return A pie chart.
      */
@@ -666,10 +665,10 @@ public abstract class ChartFactory {
      * returned by this method uses a {@link MultiplePiePlot} instance as the
      * plot.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param dataset  the dataset (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param dataset  the dataset ({@code null} permitted).
      * @param order  the order that the data is extracted (by row or by column)
-     *               (<code>null</code> not permitted).
+     *               ({@code null} not permitted).
      *
      * @return A chart.
      */
@@ -709,12 +708,12 @@ public abstract class ChartFactory {
      * {@link NumberAxis} as the range axis, and a {@link BarRenderer} as the
      * renderer.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param categoryAxisLabel  the label for the category axis
-     *                           (<code>null</code> permitted).
-     * @param valueAxisLabel  the label for the value axis
-     *                        (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param categoryAxisLabel  the label for the category axis ({@code null} 
+     *     permitted).
+     * @param valueAxisLabel  the label for the value axis ({@code null} 
+     *     permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return A bar chart.
      */
@@ -750,12 +749,12 @@ public abstract class ChartFactory {
      * {@link NumberAxis} as the range axis, and a {@link StackedBarRenderer}
      * as the renderer.
      *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
      * @param domainAxisLabel  the label for the category axis
-     *                         (<code>null</code> permitted).
+     *                         ({@code null} permitted).
      * @param rangeAxisLabel  the label for the value axis
-     *                        (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     *                        ({@code null} permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return A stacked bar chart.
      */
@@ -784,12 +783,12 @@ public abstract class ChartFactory {
      * {@link CategoryAxis} for the domain axis, a {@link NumberAxis} as the
      * range axis, and an {@link AreaRenderer} as the renderer.
      *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
      * @param categoryAxisLabel  the label for the category axis
-     *                           (<code>null</code> permitted).
-     * @param valueAxisLabel  the label for the value axis (<code>null</code>
+     *                           ({@code null} permitted).
+     * @param valueAxisLabel  the label for the value axis ({@code null}
      *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return An area chart.
      */
@@ -821,12 +820,12 @@ public abstract class ChartFactory {
      * {@link NumberAxis} as the range axis, and a {@link StackedAreaRenderer}
      * as the renderer.
      *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
      * @param categoryAxisLabel  the label for the category axis
-     *                           (<code>null</code> permitted).
-     * @param valueAxisLabel  the label for the value axis (<code>null</code>
+     *                           ({@code null} permitted).
+     * @param valueAxisLabel  the label for the value axis ({@code null}
      *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return A stacked area chart.
      */
@@ -856,12 +855,12 @@ public abstract class ChartFactory {
      * {@link CategoryAxis} for the domain axis, a {@link NumberAxis} as the
      * range axis, and a {@link LineAndShapeRenderer} as the renderer.
      *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
      * @param categoryAxisLabel  the label for the category axis
-     *                           (<code>null</code> permitted).
-     * @param valueAxisLabel  the label for the value axis (<code>null</code>
+     *                           ({@code null} permitted).
+     * @param valueAxisLabel  the label for the value axis ({@code null}
      *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return A line chart.
      */
@@ -890,12 +889,12 @@ public abstract class ChartFactory {
      * for the domain axis, a {@link DateAxis} as the range axis, and a
      * {@link GanttRenderer} as the renderer.
      *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
      * @param categoryAxisLabel  the label for the category axis
-     *                           (<code>null</code> permitted).
+     *                           ({@code null} permitted).
      * @param dateAxisLabel  the label for the date axis
-     *                       (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     *                       ({@code null} permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return A Gantt chart.
      */
@@ -926,12 +925,12 @@ public abstract class ChartFactory {
      * {@link CategoryAxis} for the domain axis, a {@link NumberAxis} as the
      * range axis, and a {@link WaterfallBarRenderer} as the renderer.
      *
-     * @param title  the chart title (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
      * @param categoryAxisLabel  the label for the category axis
-     *                           (<code>null</code> permitted).
-     * @param valueAxisLabel  the label for the value axis (<code>null</code>
+     *                           ({@code null} permitted).
+     * @param valueAxisLabel  the label for the value axis ({@code null}
      *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return A waterfall chart.
      */
@@ -986,7 +985,6 @@ public abstract class ChartFactory {
      * @return A chart.
      */
     public static JFreeChart createPolarChart(String title, XYDataset dataset) {
-
         PolarPlot plot = new PolarPlot();
         plot.setDataset(dataset);
         NumberAxis rangeAxis = new NumberAxis();
@@ -998,7 +996,6 @@ public abstract class ChartFactory {
         JFreeChart chart = new JFreeChart(title, plot);
         currentTheme.apply(chart);
         return chart;
-
     }
 
     /**
@@ -1008,10 +1005,10 @@ public abstract class ChartFactory {
      * as the range axis, and an {@link XYLineAndShapeRenderer} as the
      * renderer.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
-     * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param xAxisLabel  a label for the X-axis ({@code null} permitted).
+     * @param yAxisLabel  a label for the Y-axis ({@code null} permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return A scatter plot.
      */
@@ -1043,11 +1040,11 @@ public abstract class ChartFactory {
      * {@link NumberAxis} as the range axis, and a {@link XYBarRenderer} as the
      * renderer.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param xAxisLabel  a label for the X-axis ({@code null} permitted).
      * @param dateAxis  make the domain axis display dates?
-     * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param yAxisLabel  a label for the Y-axis ({@code null} permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return An XY bar chart.
      */
@@ -1091,10 +1088,10 @@ public abstract class ChartFactory {
      * {@link NumberAxis} as the range axis, and a {@link XYAreaRenderer} as
      * the renderer.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
-     * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param xAxisLabel  a label for the X-axis ({@code null} permitted).
+     * @param yAxisLabel  a label for the Y-axis ({@code null} permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return An XY area chart.
      */
@@ -1122,10 +1119,10 @@ public abstract class ChartFactory {
      * {@link NumberAxis} for the domain axis, a {@link NumberAxis} as the
      * range axis, and a {@link StackedXYAreaRenderer2} as the renderer.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
-     * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param xAxisLabel  a label for the X-axis ({@code null} permitted).
+     * @param yAxisLabel  a label for the Y-axis ({@code null} permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return A stacked XY area chart.
      */
@@ -1155,10 +1152,10 @@ public abstract class ChartFactory {
      * Creates a line chart (based on an {@link XYDataset}) with default
      * settings.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
-     * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param xAxisLabel  a label for the X-axis ({@code null} permitted).
+     * @param yAxisLabel  a label for the Y-axis ({@code null} permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return The chart.
      */
@@ -1181,10 +1178,10 @@ public abstract class ChartFactory {
     /**
      * Creates a stepped XY plot with default settings.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
-     * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param xAxisLabel  a label for the X-axis ({@code null} permitted).
+     * @param yAxisLabel  a label for the Y-axis ({@code null} permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return A chart.
      */
@@ -1211,10 +1208,10 @@ public abstract class ChartFactory {
     /**
      * Creates a filled stepped XY plot with default settings.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
-     * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param xAxisLabel  a label for the X-axis ({@code null} permitted).
+     * @param yAxisLabel  a label for the Y-axis ({@code null} permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return A chart.
      */
@@ -1248,19 +1245,17 @@ public abstract class ChartFactory {
      * A convenient dataset to use with this chart is a
      * {@link org.jfree.data.time.TimeSeriesCollection}.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param timeAxisLabel  a label for the time axis (<code>null</code>
+     * @param title  the chart title ({@code null} permitted).
+     * @param timeAxisLabel  a label for the time axis ({@code null}
      *                       permitted).
-     * @param valueAxisLabel  a label for the value axis (<code>null</code>
+     * @param valueAxisLabel  a label for the value axis ({@code null}
      *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return A time series chart.
      */
     public static JFreeChart createTimeSeriesChart(String title,
-                                                   String timeAxisLabel,
-                                                   String valueAxisLabel,
-                                                   XYDataset dataset) {
+            String timeAxisLabel, String valueAxisLabel, XYDataset dataset) {
 
         ValueAxis timeAxis = new DateAxis(timeAxisLabel);
         timeAxis.setLowerMargin(0.02);  // reduce the default margins
@@ -1286,18 +1281,17 @@ public abstract class ChartFactory {
     /**
      * Creates and returns a default instance of a candlesticks chart.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param timeAxisLabel  a label for the time axis (<code>null</code>
+     * @param title  the chart title ({@code null} permitted).
+     * @param timeAxisLabel  a label for the time axis ({@code null}
      *                       permitted).
-     * @param valueAxisLabel  a label for the value axis (<code>null</code>
+     * @param valueAxisLabel  a label for the value axis ({@code null}
      *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return A candlestick chart.
      */
     public static JFreeChart createCandlestickChart(String title,
             String timeAxisLabel, String valueAxisLabel, OHLCDataset dataset) {
-
         ValueAxis timeAxis = new DateAxis(timeAxisLabel);
         NumberAxis valueAxis = new NumberAxis(valueAxisLabel);
         XYPlot plot = new XYPlot(dataset, timeAxis, valueAxis, null);
@@ -1305,18 +1299,16 @@ public abstract class ChartFactory {
         JFreeChart chart = new JFreeChart(title, plot);
         currentTheme.apply(chart);
         return chart;
-
     }
 
     /**
      * Creates and returns a default instance of a high-low-open-close chart.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param timeAxisLabel  a label for the time axis (<code>null</code>
-     *                       permitted).
-     * @param valueAxisLabel  a label for the value axis (<code>null</code>
+     * @param title  the chart title ({@code null} permitted).
+     * @param timeAxisLabel  a label for the time axis ({@code null} permitted).
+     * @param valueAxisLabel  a label for the value axis ({@code null}
      *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return A high-low-open-close chart.
      */
@@ -1335,29 +1327,22 @@ public abstract class ChartFactory {
     }
 
     /**
-     * Creates and returns a default instance of a high-low-open-close chart
-     * with a special timeline. This timeline can be a
-     * {@link org.jfree.chart.axis.SegmentedTimeline} such as the Monday
-     * through Friday timeline that will remove Saturdays and Sundays from
-     * the axis.
+     * Creates and returns a default instance of a high-low-open-close chart.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param timeAxisLabel  a label for the time axis (<code>null</code>
-     *                       permitted).
-     * @param valueAxisLabel  a label for the value axis (<code>null</code>
-     *                        permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
-     * @param timeline  the timeline.
+     * @param title  the chart title ({@code null} permitted).
+     * @param timeAxisLabel  a label for the time axis ({@code null} permitted).
+     * @param valueAxisLabel  a label for the value axis ({@code null} 
+     *     permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      * @param legend  a flag specifying whether or not a legend is required.
      *
      * @return A high-low-open-close chart.
      */
     public static JFreeChart createHighLowChart(String title,
            String timeAxisLabel, String valueAxisLabel, OHLCDataset dataset,
-           Timeline timeline, boolean legend) {
+           boolean legend) {
 
         DateAxis timeAxis = new DateAxis(timeAxisLabel);
-        timeAxis.setTimeline(timeline);
         NumberAxis valueAxis = new NumberAxis(valueAxisLabel);
         HighLowRenderer renderer = new HighLowRenderer();
         renderer.setDefaultToolTipGenerator(new HighLowItemLabelGenerator());
@@ -1374,10 +1359,10 @@ public abstract class ChartFactory {
      * a {@link NumberAxis} for the range axis, and an {@link XYBubbleRenderer}
      * to draw the data items.
      *
-     * @param title  the chart title (<code>null</code> permitted).
-     * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
-     * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
-     * @param dataset  the dataset for the chart (<code>null</code> permitted).
+     * @param title  the chart title ({@code null} permitted).
+     * @param xAxisLabel  a label for the X-axis ({@code null} permitted).
+     * @param yAxisLabel  a label for the Y-axis ({@code null} permitted).
+     * @param dataset  the dataset for the chart ({@code null} permitted).
      *
      * @return A bubble chart.
      */
