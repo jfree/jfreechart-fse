@@ -109,7 +109,7 @@ import org.jfree.data.xy.XYDataset;
  * JFreeChart demo collection:
  * <br><br>
  * <img src="../../../../../images/XYLineAndShapeRendererSample.png"
- * alt="XYLineAndShapeRendererSample.png" />
+ * alt="XYLineAndShapeRendererSample.png">
  *
  */
 public class XYLineAndShapeRenderer extends AbstractXYItemRenderer

@@ -86,7 +86,7 @@ import org.jfree.data.xy.XYDataset;
  * demo collection:
  * <br><br>
  * <img src="../../../../../images/XYDotRendererSample.png"
- * alt="XYDotRendererSample.png" />
+ * alt="XYDotRendererSample.png">
  */
 public class XYDotRenderer extends AbstractXYItemRenderer
         implements XYItemRenderer, PublicCloneable {

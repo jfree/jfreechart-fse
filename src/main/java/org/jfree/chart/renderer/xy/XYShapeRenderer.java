@@ -88,7 +88,7 @@ import org.jfree.data.xy.XYZDataset;
  * demo collection:
  * <br><br>
  * <img src="../../../../../images/XYShapeRendererSample.png"
- * alt="XYShapeRendererSample.png" />
+ * alt="XYShapeRendererSample.png">
  * <br><br>
  * This renderer has similarities to, but also differences from, the
  * {@link XYLineAndShapeRenderer}.

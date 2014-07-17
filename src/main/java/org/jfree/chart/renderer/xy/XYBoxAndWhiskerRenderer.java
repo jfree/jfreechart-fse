@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------------
  * XYBoxAndWhiskerRenderer.java
  * ----------------------------
- * (C) Copyright 2003-2012, by David Browning and Contributors.
+ * (C) Copyright 2003-2014, by David Browning and Contributors.
  *
  * Original Author:  David Browning (for Australian Institute of Marine
  *                   Science);
@@ -122,7 +122,7 @@ import org.jfree.data.xy.XYDataset;
  * included in the JFreeChart demo collection:
  * <br><br>
  * <img src="../../../../../images/XYBoxAndWhiskerRendererSample.png"
- * alt="XYBoxAndWhiskerRendererSample.png" />
+ * alt="XYBoxAndWhiskerRendererSample.png">
  * <P>
  * This renderer does not include any code to calculate the crosshair point.
  */

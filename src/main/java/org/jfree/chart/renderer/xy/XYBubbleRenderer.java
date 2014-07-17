@@ -95,7 +95,7 @@ import org.jfree.data.xy.XYZDataset;
  * included in the JFreeChart demo collection:
  * <br><br>
  * <img src="../../../../../images/XYBubbleRendererSample.png"
- * alt="XYBubbleRendererSample.png" />
+ * alt="XYBubbleRendererSample.png">
  */
 public class XYBubbleRenderer extends AbstractXYItemRenderer
         implements XYItemRenderer, PublicCloneable {

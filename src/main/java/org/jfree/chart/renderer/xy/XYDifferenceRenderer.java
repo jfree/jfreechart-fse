@@ -27,7 +27,7 @@
  * -------------------------
  * XYDifferenceRenderer.java
  * -------------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2003-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Richard West, Advanced Micro Devices, Inc. (major rewrite
@@ -121,7 +121,7 @@ import org.jfree.data.xy.XYDataset;
  * demo collection:
  * <br><br>
  * <img src="../../../../../images/XYDifferenceRendererSample.png"
- * alt="XYDifferenceRendererSample.png" />
+ * alt="XYDifferenceRendererSample.png">
  */
 public class XYDifferenceRenderer extends AbstractXYItemRenderer
         implements XYItemRenderer, PublicCloneable {
