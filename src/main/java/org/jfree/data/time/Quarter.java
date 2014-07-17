@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------
  * Quarter.java
  * ------------
- * (C) Copyright 2001-2008, by Object Refinery Limited.
+ * (C) Copyright 2001-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -152,7 +152,7 @@ public class Quarter extends RegularTimePeriod implements Serializable {
      *
      * @param time  the date/time (<code>null</code> not permitted).
      *
-     * @see #Quarter(Date, TimeZone)
+     * @see #Quarter(Date, TimeZone, Locale)
      */
     public Quarter(Date time) {
         this(time, TimeZone.getDefault(), Locale.getDefault());
@@ -318,17 +318,12 @@ public class Quarter extends RegularTimePeriod implements Serializable {
      */
     @Override
     public boolean equals(Object obj) {
-
-        if (obj != null) {
-            if (obj instanceof Quarter) {
-                Quarter target = (Quarter) obj;
-                return (this.quarter == target.getQuarter()
-                        && (this.year == target.getYearValue()));
-            }
-            return false;
+        if (obj instanceof Quarter) {
+            Quarter target = (Quarter) obj;
+            return (this.quarter == target.getQuarter()
+                    && (this.year == target.getYearValue()));
         }
         return false;
-
     }
 
     /**
