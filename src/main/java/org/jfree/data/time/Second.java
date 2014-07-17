@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------
  * Second.java
  * -----------
- * (C) Copyright 2001-2009, by Object Refinery Limited.
+ * (C) Copyright 2001-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -65,6 +65,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * Represents a second in a particular day.  This class is immutable, which is
@@ -113,9 +114,7 @@ public class Second extends RegularTimePeriod implements Serializable {
      * @param minute  the minute (<code>null</code> not permitted).
      */
     public Second(int second, Minute minute) {
-        if (minute == null) {
-            throw new IllegalArgumentException("Null 'minute' argument.");
-        }
+        ParamChecks.nullNotPermitted(minute, "minute");
         this.day = minute.getDay();
         this.hour = (byte) minute.getHourValue();
         this.minute = (byte) minute.getMinute();
@@ -144,7 +143,7 @@ public class Second extends RegularTimePeriod implements Serializable {
      *
      * @param time  the time (<code>null</code> not permitted).
      *
-     * @see #Second(Date, TimeZone)
+     * @see #Second(Date, TimeZone, Locale)
      */
     public Second(Date time) {
         this(time, TimeZone.getDefault(), Locale.getDefault());
@@ -296,11 +295,10 @@ public class Second extends RegularTimePeriod implements Serializable {
     public long getFirstMillisecond(Calendar calendar) {
         int year = this.day.getYear();
         int month = this.day.getMonth() - 1;
-        int day = this.day.getDayOfMonth();
+        int d = this.day.getDayOfMonth();
         calendar.clear();
-        calendar.set(year, month, day, this.hour, this.minute, this.second);
+        calendar.set(year, month, d, this.hour, this.minute, this.second);
         calendar.set(Calendar.MILLISECOND, 0);
-        //return calendar.getTimeInMillis();  // this won't work for JDK 1.3
         return calendar.getTimeInMillis();
     }
 
