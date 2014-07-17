@@ -1,7 +1,7 @@
 /* -------------------
  * SelectionDemo1.java
  * -------------------
- * (C) Copyright 2009-2013, by Object Refinery Limited.
+ * (C) Copyright 2009-2014, by Object Refinery Limited.
  *
  */
 
@@ -91,7 +91,7 @@ public class SelectionDemo1 extends ApplicationFrame implements
     /**
      * The selection changed, so we change the table model
      * 
-     * @param event
+     * @param event  event information.
      */
     public void selectionChanged(SelectionChangeEvent<XYCursor> event) {
         while (this.model.getRowCount() > 0) {
