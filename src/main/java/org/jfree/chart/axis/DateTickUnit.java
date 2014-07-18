@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------
  * DateTickUnit.java
  * -----------------
- * (C) Copyright 2000-2012, by Object Refinery Limited.
+ * (C) Copyright 2000-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Chris Boek;
@@ -63,6 +63,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import org.jfree.chart.util.ObjectUtils;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * A tick unit for use by subclasses of {@link DateAxis}.  Instances of this
@@ -100,7 +101,7 @@ public class DateTickUnit extends TickUnit implements Serializable {
      * Creates a new date tick unit.
      *
      * @param unitType  the unit type (<code>null</code> not permitted).
-     * @param multiple  the multiple (of the unit type, must be > 0).
+     * @param multiple  the multiple (of the unit type, must be &gt; 0).
      *
      * @since 1.0.13
      */
@@ -112,7 +113,7 @@ public class DateTickUnit extends TickUnit implements Serializable {
      * Creates a new date tick unit.
      *
      * @param unitType  the unit type (<code>null</code> not permitted).
-     * @param multiple  the multiple (of the unit type, must be > 0).
+     * @param multiple  the multiple (of the unit type, must be &gt; 0).
      * @param formatter  the date formatter (<code>null</code> not permitted).
      *
      * @since 1.0.13
@@ -137,9 +138,7 @@ public class DateTickUnit extends TickUnit implements Serializable {
             DateTickUnitType rollUnitType, int rollMultiple,
             DateFormat formatter) {
         super(DateTickUnit.getMillisecondCount(unitType, multiple));
-        if (formatter == null) {
-            throw new IllegalArgumentException("Null 'formatter' argument.");
-        }
+        ParamChecks.nullNotPermitted(formatter, "formatter");
         if (multiple <= 0) {
             throw new IllegalArgumentException("Requires 'multiple' > 0.");
         }
@@ -167,7 +166,7 @@ public class DateTickUnit extends TickUnit implements Serializable {
     /**
      * Returns the unit multiple.
      *
-     * @return The unit multiple (always > 0).
+     * @return The unit multiple (always &gt; 0).
      */
     public int getMultiple() {
         return this.count;
