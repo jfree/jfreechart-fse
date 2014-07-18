@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * DefaultShapeIRS.java
  * --------------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, 2014 by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   -;
@@ -60,7 +60,7 @@ public class DefaultShapeIRS extends DefaultItemRenderingStrategy
      * Creates a new rendering strategy for the submitted renderer using its 
      * per series properties.
      * 
-     * @param renderer
+     * @param renderer  the renderer.
      */
     public DefaultShapeIRS(AbstractRenderer renderer) {
         super(renderer);
@@ -69,6 +69,7 @@ public class DefaultShapeIRS extends DefaultItemRenderingStrategy
     /**
      * @return the item shape the renderer defines for the series
      */
+    @Override
     public Shape getItemShape(int row, int column) {
         return renderer.lookupSeriesShape(row);
     }
