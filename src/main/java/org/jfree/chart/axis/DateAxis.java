@@ -147,6 +147,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import org.jfree.chart.event.AxisChangeEvent;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.chart.ui.TextAnchor;
