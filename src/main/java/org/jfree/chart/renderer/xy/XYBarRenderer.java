@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------
  * XYBarRenderer.java
  * ------------------
- * (C) Copyright 2001-2012, by Object Refinery Limited.
+ * (C) Copyright 2001-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Richard Atkinson;
@@ -131,6 +131,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.Range;
 import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.XYDataset;
@@ -142,7 +143,7 @@ import org.jfree.data.xy.XYDataset;
  * demo collection:
  * <br><br>
  * <img src="../../../../../images/XYBarRendererSample.png"
- * alt="XYBarRendererSample.png" />
+ * alt="XYBarRendererSample.png">
  */
 public class XYBarRenderer extends AbstractXYItemRenderer
         implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
@@ -176,9 +177,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @since 1.0.11
      */
     public static void setDefaultBarPainter(XYBarPainter painter) {
-        if (painter == null) {
-            throw new IllegalArgumentException("Null 'painter' argument.");
-        }
+        ParamChecks.nullNotPermitted(painter, "painter");
         XYBarRenderer.defaultBarPainter = painter;
     }
 
@@ -551,9 +550,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @since 1.0.11
      */
     public void setBarPainter(XYBarPainter painter) {
-        if (painter == null) {
-            throw new IllegalArgumentException("Null 'painter' argument.");
-        }
+        ParamChecks.nullNotPermitted(painter, "painter");
         this.barPainter = painter;
         fireChangeEvent();
     }
@@ -718,7 +715,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
             urlText = getLegendItemURLGenerator().generateLabel(dataset,
                     series);
         }
-        Shape shape = this.lookupLegendShape(series);
+        Shape shape = lookupLegendShape(series);
         Paint paint = lookupSeriesPaint(series);
         Paint outlinePaint = lookupSeriesOutlinePaint(series);
         Stroke outlineStroke = lookupSeriesOutlineStroke(series);
@@ -764,18 +761,10 @@ public class XYBarRenderer extends AbstractXYItemRenderer
      * @param pass  the pass index.
      */
     @Override
-    public void drawItem(Graphics2D g2,
-                         XYItemRendererState state,
-                         Rectangle2D dataArea,
-                         PlotRenderingInfo info,
-                         XYPlot plot,
-                         ValueAxis domainAxis,
-                         ValueAxis rangeAxis,
-                         XYDataset dataset,
-                         int series,
-                         int item,
-                         CrosshairState crosshairState,
-                         int pass) {
+    public void drawItem(Graphics2D g2, XYItemRendererState state,
+            Rectangle2D dataArea, PlotRenderingInfo info, XYPlot plot,
+            ValueAxis domainAxis, ValueAxis rangeAxis, XYDataset dataset,
+            int series, int item, CrosshairState crosshairState, int pass) {
 
         if (!getItemVisible(series, item)) {
             return;
@@ -787,8 +776,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
         if (this.useYInterval) {
             value0 = intervalDataset.getStartYValue(series, item);
             value1 = intervalDataset.getEndYValue(series, item);
-        }
-        else {
+        } else {
             value0 = this.base;
             value1 = intervalDataset.getYValue(series, item);
         }
@@ -799,8 +787,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
             if (!rangeAxis.getRange().intersects(value0, value1)) {
                 return;
             }
-        }
-        else {
+        } else {
             if (!rangeAxis.getRange().intersects(value1, value0)) {
                 return;
             }
@@ -825,8 +812,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
             if (!domainAxis.getRange().intersects(startX, endX)) {
                 return;
             }
-        }
-        else {
+        } else {
             if (!domainAxis.getRange().intersects(endX, startX)) {
                 return;
             }
@@ -879,16 +865,14 @@ public class XYBarRenderer extends AbstractXYItemRenderer
         if (orientation == PlotOrientation.HORIZONTAL) {
             if (positive && inverted || !positive && !inverted) {
                 barBase = RectangleEdge.RIGHT;
-            }
-            else {
+            } else {
                 barBase = RectangleEdge.LEFT;
             }
         }
         else {
             if (positive && !inverted || !positive && inverted) {
                 barBase = RectangleEdge.BOTTOM;
-            }
-            else {
+            } else {
                 barBase = RectangleEdge.TOP;
             }
         }
@@ -957,7 +941,7 @@ public class XYBarRenderer extends AbstractXYItemRenderer
         g2.setPaint(paint);
 
         // find out where to place the label...
-        ItemLabelPosition position = null;
+        ItemLabelPosition position;
         if (!negative) {
             position = getPositiveItemLabelPosition(series, item);
         }
