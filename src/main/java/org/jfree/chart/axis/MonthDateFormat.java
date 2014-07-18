@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * MonthDateFormat.java
  * --------------------
- * (C) Copyright 2005-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2005-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -52,8 +52,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import org.jfree.data.time.Month;
 
 /**
  * A formatter that formats dates to show the initial letter(s) of the month
@@ -80,7 +78,7 @@ public class MonthDateFormat extends DateFormat {
     /**
      * Creates a new instance for the specified time zone.
      *
-     * @param zone  the time zone (<code>null</code> not permitted).
+     * @param zone  the time zone ({@code null} not permitted).
      */
     public MonthDateFormat(TimeZone zone) {
         this(zone, Locale.getDefault(), 1, true, false);
@@ -90,7 +88,7 @@ public class MonthDateFormat extends DateFormat {
      * Creates a new instance for the specified time zone.
      *
      * @param locale  the locale used to obtain the month
-     *                names (<code>null</code> not permitted).
+     *                names ({@code null} not permitted).
      */
     public MonthDateFormat(Locale locale) {
         this(TimeZone.getDefault(), locale, 1, true, false);
@@ -99,10 +97,10 @@ public class MonthDateFormat extends DateFormat {
     /**
      * Creates a new instance for the specified time zone.
      *
-     * @param zone  the time zone (<code>null</code> not permitted).
+     * @param zone  the time zone ({@code null} not permitted).
      * @param chars  the maximum number of characters to use from the month
      *               names (that are obtained from the date symbols of the
-     *               default locale).  If this value is <= 0, the entire
+     *               default locale).  If this value is &lt;= 0, the entire
      *               month name is used in each case.
      */
     public MonthDateFormat(TimeZone zone, int chars) {
@@ -112,10 +110,10 @@ public class MonthDateFormat extends DateFormat {
     /**
      * Creates a new instance for the specified time zone.
      *
-     * @param locale  the locale (<code>null</code> not permitted).
+     * @param locale  the locale ({@code null} not permitted).
      * @param chars  the maximum number of characters to use from the month
      *               names (that are obtained from the date symbols of the
-     *               default locale).  If this value is <= 0, the entire
+     *               default locale).  If this value is &lt;= 0, the entire
      *               month name is used in each case.
      */
     public MonthDateFormat(Locale locale, int chars) {
@@ -126,9 +124,9 @@ public class MonthDateFormat extends DateFormat {
      * Creates a new formatter.
      *
      * @param zone  the time zone used to extract the month and year from dates
-     *              passed to this formatter (<code>null</code> not permitted).
+     *              passed to this formatter ({@code null} not permitted).
      * @param locale  the locale used to determine the month names
-     *                (<code>null</code> not permitted).
+     *                ({@code null} not permitted).
      * @param chars  the maximum number of characters to use from the month
      *               names, or zero to indicate that the entire month name
      *               should be used.
@@ -150,9 +148,9 @@ public class MonthDateFormat extends DateFormat {
      * Creates a new formatter.
      *
      * @param zone  the time zone used to extract the month and year from dates
-     *              passed to this formatter (<code>null</code> not permitted).
+     *              passed to this formatter ({@code null} not permitted).
      * @param locale  the locale used to determine the month names
-     *                (<code>null</code> not permitted).
+     *                ({@code null} not permitted).
      * @param chars  the maximum number of characters to use from the month
      *               names, or zero to indicate that the entire month name
      *               should be used.
@@ -252,61 +250,4 @@ public class MonthDateFormat extends DateFormat {
         return true;
     }
 
-    /**
-     * Some test code.
-     *
-     * @param args  ignored.
-     */
-    public static void main(String[] args) {
-        MonthDateFormat mdf = new MonthDateFormat(Locale.UK, 2);
-        System.out.println("UK:");
-        System.out.println(mdf.format(new Month(1, 2005).getStart()));
-        System.out.println(mdf.format(new Month(2, 2005).getStart()));
-        System.out.println(mdf.format(new Month(3, 2005).getStart()));
-        System.out.println(mdf.format(new Month(4, 2005).getStart()));
-        System.out.println(mdf.format(new Month(5, 2005).getStart()));
-        System.out.println(mdf.format(new Month(6, 2005).getStart()));
-        System.out.println(mdf.format(new Month(7, 2005).getStart()));
-        System.out.println(mdf.format(new Month(8, 2005).getStart()));
-        System.out.println(mdf.format(new Month(9, 2005).getStart()));
-        System.out.println(mdf.format(new Month(10, 2005).getStart()));
-        System.out.println(mdf.format(new Month(11, 2005).getStart()));
-        System.out.println(mdf.format(new Month(12, 2005).getStart()));
-        System.out.println();
-
-        mdf = new MonthDateFormat(Locale.GERMANY, 2);
-        System.out.println("GERMANY:");
-        System.out.println(mdf.format(new Month(1, 2005).getStart()));
-        System.out.println(mdf.format(new Month(2, 2005).getStart()));
-        System.out.println(mdf.format(new Month(3, 2005).getStart()));
-        System.out.println(mdf.format(new Month(4, 2005).getStart()));
-        System.out.println(mdf.format(new Month(5, 2005).getStart()));
-        System.out.println(mdf.format(new Month(6, 2005).getStart()));
-        System.out.println(mdf.format(new Month(7, 2005).getStart()));
-        System.out.println(mdf.format(new Month(8, 2005).getStart()));
-        System.out.println(mdf.format(new Month(9, 2005).getStart()));
-        System.out.println(mdf.format(new Month(10, 2005).getStart()));
-        System.out.println(mdf.format(new Month(11, 2005).getStart()));
-        System.out.println(mdf.format(new Month(12, 2005).getStart()));
-        System.out.println();
-
-        mdf = new MonthDateFormat(Locale.FRANCE, 2);
-        System.out.println("FRANCE:");
-        System.out.println(mdf.format(new Month(1, 2005).getStart()));
-        System.out.println(mdf.format(new Month(2, 2005).getStart()));
-        System.out.println(mdf.format(new Month(3, 2005).getStart()));
-        System.out.println(mdf.format(new Month(4, 2005).getStart()));
-        System.out.println(mdf.format(new Month(5, 2005).getStart()));
-        System.out.println(mdf.format(new Month(6, 2005).getStart()));
-        System.out.println(mdf.format(new Month(7, 2005).getStart()));
-        System.out.println(mdf.format(new Month(8, 2005).getStart()));
-        System.out.println(mdf.format(new Month(9, 2005).getStart()));
-        System.out.println(mdf.format(new Month(10, 2005).getStart()));
-        System.out.println(mdf.format(new Month(11, 2005).getStart()));
-        System.out.println(mdf.format(new Month(12, 2005).getStart()));
-        System.out.println();
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-        sdf.setNumberFormat(null);
-    }
 }
