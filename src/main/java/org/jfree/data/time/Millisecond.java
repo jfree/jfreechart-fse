@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------
  * Millisecond.java
  * ----------------
- * (C) Copyright 2001-2009, by Object Refinery Limited.
+ * (C) Copyright 2001-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -64,12 +64,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * Represents a millisecond.  This class is immutable, which is a requirement
  * for all {@link RegularTimePeriod} subclasses.
  */
-public class Millisecond extends RegularTimePeriod implements Serializable, Comparable<TimePeriod> {
+public class Millisecond extends RegularTimePeriod implements Serializable, 
+        Comparable<TimePeriod> {
 
     /** For serialization. */
     static final long serialVersionUID = -5316836467277638485L;
@@ -135,9 +137,7 @@ public class Millisecond extends RegularTimePeriod implements Serializable, Comp
      */
     public Millisecond(int millisecond, int second, int minute, int hour,
                        int day, int month, int year) {
-
         this(millisecond, new Second(second, minute, hour, day, month, year));
-
     }
 
     /**
@@ -145,7 +145,7 @@ public class Millisecond extends RegularTimePeriod implements Serializable, Comp
      *
      * @param time  the time.
      *
-     * @see #Millisecond(Date, TimeZone)
+     * @see #Millisecond(Date, TimeZone, Locale)
      */
     public Millisecond(Date time) {
         this(time, TimeZone.getDefault(), Locale.getDefault());
@@ -154,9 +154,9 @@ public class Millisecond extends RegularTimePeriod implements Serializable, Comp
     /**
      * Creates a millisecond.
      *
-     * @param time  the date-time (<code>null</code> not permitted).
-     * @param zone  the time zone (<code>null</code> not permitted).
-     * @param locale  the locale (<code>null</code> not permitted).
+     * @param time  the date-time ({@code null} not permitted).
+     * @param zone  the time zone ({@code null} not permitted).
+     * @param locale  the locale ({@code null} not permitted).
      *
      * @since 1.0.13
      */
@@ -391,15 +391,13 @@ public class Millisecond extends RegularTimePeriod implements Serializable, Comp
     /**
      * Returns the first millisecond of the time period.
      *
-     * @param calendar  the calendar (<code>null</code> not permitted).
+     * @param calendar  the calendar ({@code null} not permitted).
      *
      * @return The first millisecond of the time period.
-     *
-     * @throws NullPointerException if <code>calendar</code> is
-     *     <code>null</code>.
      */
     @Override
     public long getFirstMillisecond(Calendar calendar) {
+        ParamChecks.nullNotPermitted(calendar, "calendar");
         int year = this.day.getYear();
         int month = this.day.getMonth() - 1;
         int day = this.day.getDayOfMonth();

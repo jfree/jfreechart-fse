@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------
  * Hour.java
  * ---------
- * (C) Copyright 2001-2009, by Object Refinery Limited.
+ * (C) Copyright 2001-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -69,6 +69,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * Represents an hour in a specific day.  This class is immutable, which is a
@@ -111,9 +112,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
      * @param day  the day (<code>null</code> not permitted).
      */
     public Hour(int hour, Day day) {
-        if (day == null) {
-            throw new IllegalArgumentException("Null 'day' argument.");
-        }
+        ParamChecks.nullNotPermitted(day, "day");
         this.hour = (byte) hour;
         this.day = day;
         peg(Calendar.getInstance());
@@ -135,7 +134,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
      * Constructs a new instance, based on the supplied date/time and
      * the default time zone.
      *
-     * @param time  the date-time (<code>null</code> not permitted).
+     * @param time  the date-time ({@code null} not permitted).
      *
      * @see #Hour(Date, TimeZone)
      */
@@ -148,22 +147,16 @@ public class Hour extends RegularTimePeriod implements Serializable {
      * Constructs a new instance, based on the supplied date/time evaluated
      * in the specified time zone.
      *
-     * @param time  the date-time (<code>null</code> not permitted).
-     * @param zone  the time zone (<code>null</code> not permitted).
-     * @param locale  the locale (<code>null</code> not permitted).
+     * @param time  the date-time ({@code null} not permitted).
+     * @param zone  the time zone ({@code null} not permitted).
+     * @param locale  the locale ({@code null} not permitted).
      *
      * @since 1.0.13
      */
     public Hour(Date time, TimeZone zone, Locale locale) {
-        if (time == null) {
-            throw new IllegalArgumentException("Null 'time' argument.");
-        }
-        if (zone == null) {
-            throw new IllegalArgumentException("Null 'zone' argument.");
-        }
-        if (locale == null) {
-            throw new IllegalArgumentException("Null 'locale' argument.");
-        }
+        ParamChecks.nullNotPermitted(time, "time");
+        ParamChecks.nullNotPermitted(zone, "zone");
+        ParamChecks.nullNotPermitted(locale, "locale");
         Calendar calendar = Calendar.getInstance(zone, locale);
         calendar.setTime(time);
         this.hour = (byte) calendar.get(Calendar.HOUR_OF_DAY);
@@ -250,7 +243,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
      * Recalculates the start date/time and end date/time for this time period
      * relative to the supplied calendar (which incorporates a time zone).
      *
-     * @param calendar  the calendar (<code>null</code> not permitted).
+     * @param calendar  the calendar ({@code null} not permitted).
      *
      * @since 1.0.3
      */
@@ -319,7 +312,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
     /**
      * Returns the first millisecond of the hour.
      *
-     * @param calendar  the calendar/timezone (<code>null</code> not permitted).
+     * @param calendar  the calendar/timezone ({@code null} not permitted).
      *
      * @return The first millisecond.
      *
@@ -339,12 +332,11 @@ public class Hour extends RegularTimePeriod implements Serializable {
     /**
      * Returns the last millisecond of the hour.
      *
-     * @param calendar  the calendar/timezone (<code>null</code> not permitted).
+     * @param calendar  the calendar/timezone ({@code null} not permitted).
      *
      * @return The last millisecond.
      *
-     * @throws NullPointerException if <code>calendar</code> is
-     *     <code>null</code>.
+     * @throws NullPointerException if {@code calendar} is {@code null}.
      */
     @Override
     public long getLastMillisecond(Calendar calendar) {
@@ -362,9 +354,9 @@ public class Hour extends RegularTimePeriod implements Serializable {
      * This method will return true ONLY if the object is an Hour object
      * representing the same hour as this instance.
      *
-     * @param obj  the object to compare (<code>null</code> permitted).
+     * @param obj  the object to compare ({@code null} permitted).
      *
-     * @return <code>true</code> if the hour and day value of the object
+     * @return {@code true} if the hour and day value of the object
      *      is the same as this.
      */
     @Override
