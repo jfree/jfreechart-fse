@@ -103,6 +103,7 @@ import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.Range;
 import org.jfree.data.general.Series;
+import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesException;
 
 /**
@@ -206,8 +207,8 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     }
 
     /**
-     * Sets the domain description and sends a <code>PropertyChangeEvent</code>
-     * (with the property name <code>Domain</code>) to all registered
+     * Sets the domain description and sends a {@code PropertyChangeEvent}
+     * (with the property name {@code Domain}) to all registered
      * property change listeners.
      *
      * @param description  the description ({@code null} permitted).
@@ -232,8 +233,8 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     }
 
     /**
-     * Sets the range description and sends a <code>PropertyChangeEvent</code>
-     * (with the property name <code>Range</code>) to all registered listeners.
+     * Sets the range description and sends a {@code PropertyChangeEvent}
+     * (with the property name {@code Range}) to all registered listeners.
      *
      * @param description  the description ({@code null} permitted).
      *
@@ -268,7 +269,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
 
     /**
      * Returns the maximum number of items that will be retained in the series.
-     * The default value is <code>Integer.MAX_VALUE</code>.
+     * The default value is {@code Integer.MAX_VALUE}.
      *
      * @return The maximum item count.
      *
@@ -335,7 +336,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
      * Returns the range of y-values in the time series.  Any {@code null} 
      * data values in the series will be ignored (except for the special case 
      * where all data values are {@code null}, in which case the return 
-     * value is <code>Range(Double.NaN, Double.NaN)</code>).  If the time 
+     * value is {@code Range(Double.NaN, Double.NaN)}).  If the time 
      * series contains no items, this method will return {@code null}.
      * 
      * @return The range of y-values in the time series (possibly {@code null}).
@@ -352,7 +353,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     /**
      * Returns the range of y-values in the time series that fall within 
      * the specified range of x-values.  This is equivalent to
-     * <code>findValueRange(xRange, TimePeriodAnchor.MIDDLE, timeZone)</code>.
+     * {@code findValueRange(xRange, TimePeriodAnchor.MIDDLE, timeZone)}.
      * 
      * @param xRange  the subrange of x-values ({@code null} not permitted).
      * @param timeZone  the time zone used to convert x-values to time periods
@@ -417,8 +418,8 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
 
     /**
      * Returns the smallest y-value in the series, ignoring any 
-     * {@code null} and <code>Double.NaN</code> values.  This method 
-     * returns <code>Double.NaN</code> if there is no smallest y-value (for 
+     * {@code null} and {@code Double.NaN} values.  This method 
+     * returns {@code Double.NaN} if there is no smallest y-value (for 
      * example, when the series is empty).
      *
      * @return The smallest y-value.
@@ -433,8 +434,8 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
 
     /**
      * Returns the largest y-value in the series, ignoring any 
-     * {@code null} and <code>Double.NaN</code> values.  This method 
-     * returns <code>Double.NaN</code> if there is no largest y-value
+     * {@code null} and {@code Double.NaN} values.  This method 
+     * returns {@code Double.NaN} if there is no largest y-value
      * (for example, when the series is empty).
      *
      * @return The largest y-value.
