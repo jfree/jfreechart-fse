@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------
  * ImageEncoder.java
  * -----------------
- * (C) Copyright 2004-2008, by Richard Atkinson and Contributors.
+ * (C) Copyright 2004-2014, by Richard Atkinson and Contributors.
  *
  * Original Author:  Richard Atkinson;
  * Contributor(s):   -;
@@ -57,7 +57,7 @@ public interface ImageEncoder {
      *
      * @return The byte[] that is the encoded image.
      *
-     * @throws IOException
+     * @throws IOException if there is an IO problem.
      */
     public byte[] encode(BufferedImage bufferedImage) throws IOException;
 
@@ -67,10 +67,10 @@ public interface ImageEncoder {
      *
      * @param bufferedImage  The image to be encoded.
      * @param outputStream  The OutputStream to write the encoded image to.
-     * @throws IOException
+     * @throws IOException if there is an IO problem.
      */
     public void encode(BufferedImage bufferedImage, OutputStream outputStream)
-        throws IOException;
+            throws IOException;
 
     /**
      * Get the quality of the image encoding.
