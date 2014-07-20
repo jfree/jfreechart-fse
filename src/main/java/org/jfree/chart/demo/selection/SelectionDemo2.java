@@ -91,27 +91,28 @@ public class SelectionDemo2 extends ApplicationFrame
         setContentPane(split);
     }
 
-     /**
-      * The selection changed, so we change the table model
-      * 
-      * @param event
-      */
-     public void selectionChanged(SelectionChangeEvent<XYCursor> event) {
-         while (this.model.getRowCount() > 0) {
-             this.model.removeRow(0);
-         }
+    /**
+     * The selection changed, so we change the table model.
+     * 
+     * @param event  the event.
+     */
+    @Override
+    public void selectionChanged(SelectionChangeEvent<XYCursor> event) {
+        while (this.model.getRowCount() > 0) {
+            this.model.removeRow(0);
+        }
 
-         XYDatasetSelectionExtension ext = (XYDatasetSelectionExtension) 
-                 event.getSelectionExtension(); 
-         DatasetIterator<XYCursor> iter = ext.getSelectionIterator(true);
-         while (iter.hasNext()) {
-             XYCursor dc = iter.next();
-             Comparable seriesKey = this.dataset.getSeriesKey(dc.series);
-             Number x = this.dataset.getX(dc.series, dc.item);
-             Number y = this.dataset.getX(dc.series, dc.item);  
-             this.model.addRow(new Object[] { seriesKey, new Integer(dc.item), 
-                 x,  y});
-         }
+        XYDatasetSelectionExtension ext = (XYDatasetSelectionExtension) 
+                event.getSelectionExtension(); 
+        DatasetIterator<XYCursor> iter = ext.getSelectionIterator(true);
+        while (iter.hasNext()) {
+            XYCursor dc = iter.next();
+            Comparable seriesKey = this.dataset.getSeriesKey(dc.series);
+            Number x = this.dataset.getX(dc.series, dc.item);
+            Number y = this.dataset.getX(dc.series, dc.item);  
+            this.model.addRow(new Object[] { seriesKey, new Integer(dc.item), 
+                    x,  y});
+        }
     }
 
     private static JFreeChart createChart(XYDataset dataset, 
@@ -222,4 +223,3 @@ public class SelectionDemo2 extends ApplicationFrame
     }
 
 }
-
