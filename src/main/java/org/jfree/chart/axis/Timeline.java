@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------
  * Timeline.java
  * -------------
- * (C) Copyright 2000-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  Bill Kelemen;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -49,26 +49,17 @@ import java.util.Date;
  * <P>
  * A Timeline will present a series of values to be used for an axis. Each
  * Timeline must provide transformation methods between domain values and
- * timeline values. In theory many transformations are possible. This interface
- * has been implemented completely in
- * {@link org.jfree.chart.axis.SegmentedTimeline}.
+ * timeline values. In theory many transformations are possible.
  * <P>
  * A timeline can be used as parameter to a
  * {@link org.jfree.chart.axis.DateAxis} to define the values that this axis
- * supports. As an example, the {@link org.jfree.chart.axis.SegmentedTimeline}
- * implements a timeline formed by segments of equal length (ex. days, hours,
- * minutes) where some segments can be included in the timeline and others
- * excluded. Therefore timelines like "working days" or "working hours" can be
- * created where non-working days or non-working hours respectively can be
- * removed from the timeline, and therefore from the axis. This creates a smooth
- * plot with equal separation between all included segments.
+ * supports.
  * <P>
  * Because Timelines were created mainly for Date related axis, values are
  * represented as longs instead of doubles. In this case, the domain value is
  * just the number of milliseconds since January 1, 1970, 00:00:00 GMT as
  * defined by the getTime() method of {@link java.util.Date}.
  *
- * @see org.jfree.chart.axis.SegmentedTimeline
  * @see org.jfree.chart.axis.DateAxis
  */
 public interface Timeline {
@@ -99,8 +90,6 @@ public interface Timeline {
      * translateDomainValueToTimelineValue(domainValue).
      * This is because the original tranformation may not be complete
      * reversable.
-     *
-     * @see org.jfree.chart.axis.SegmentedTimeline
      *
      * @param timelineValue  a timeline value.
      *
