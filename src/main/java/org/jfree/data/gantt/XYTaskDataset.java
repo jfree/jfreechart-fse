@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------
  * XYTaskDataset.java
  * ------------------
- * (C) Copyright 2008, by Object Refinery Limited.
+ * (C) Copyright 2008-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -44,6 +44,7 @@ import java.util.Date;
 
 import org.jfree.chart.axis.SymbolAxis;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.time.TimePeriod;
@@ -66,7 +67,7 @@ public class XYTaskDataset extends AbstractXYDataset
     /** The underlying tasks. */
     private TaskSeriesCollection underlying;
 
-    /** The series interval width (typically 0.0 < w <= 1.0). */
+    /** The series interval width (typically 0.0 &lt; w &lt;= 1.0). */
     private double seriesWidth;
 
     /** A flag that controls whether or not the data values are transposed. */
@@ -75,12 +76,10 @@ public class XYTaskDataset extends AbstractXYDataset
     /**
      * Creates a new dataset based on the supplied collection of tasks.
      *
-     * @param tasks  the underlying dataset (<code>null</code> not permitted).
+     * @param tasks  the underlying dataset ({@code null} not permitted).
      */
     public XYTaskDataset(TaskSeriesCollection tasks) {
-        if (tasks == null) {
-            throw new IllegalArgumentException("Null 'tasks' argument.");
-        }
+        ParamChecks.nullNotPermitted(tasks, "tasks");
         this.underlying = tasks;
         this.seriesWidth = 0.8;
         this.underlying.addChangeListener(this);
@@ -90,7 +89,7 @@ public class XYTaskDataset extends AbstractXYDataset
      * Returns the underlying task series collection that was supplied to the
      * constructor.
      *
-     * @return The underlying collection (never <code>null</code>).
+     * @return The underlying collection (never {@code null}).
      */
     public TaskSeriesCollection getTasks() {
         return this.underlying;
@@ -125,10 +124,10 @@ public class XYTaskDataset extends AbstractXYDataset
 
     /**
      * Returns a flag that indicates whether or not the dataset is transposed.
-     * The default is <code>false</code> which means the x-values are integers
+     * The default is {@code false} which means the x-values are integers
      * corresponding to the series indices, and the y-values are millisecond
      * values corresponding to the task date/time intervals.  If the flag
-     * is set to <code>true</code>, the x and y-values are reversed.
+     * is set to {@code true}, the x and y-values are reversed.
      *
      * @return The flag.
      *
@@ -197,8 +196,7 @@ public class XYTaskDataset extends AbstractXYDataset
     public double getXValue(int series, int item) {
         if (!this.transposed) {
             return getSeriesValue(series);
-        }
-        else {
+        } else {
             return getItemValue(series, item);
         }
     }
@@ -217,8 +215,7 @@ public class XYTaskDataset extends AbstractXYDataset
     public double getStartXValue(int series, int item) {
         if (!this.transposed) {
             return getSeriesStartValue(series);
-        }
-        else {
+        } else {
             return getItemStartValue(series, item);
         }
     }
@@ -237,8 +234,7 @@ public class XYTaskDataset extends AbstractXYDataset
     public double getEndXValue(int series, int item) {
         if (!this.transposed) {
             return getSeriesEndValue(series);
-        }
-        else {
+        } else {
             return getItemEndValue(series, item);
         }
     }
@@ -298,8 +294,7 @@ public class XYTaskDataset extends AbstractXYDataset
     public double getYValue(int series, int item) {
         if (!this.transposed) {
             return getItemValue(series, item);
-        }
-        else {
+        } else {
             return getSeriesValue(series);
         }
     }
@@ -317,8 +312,7 @@ public class XYTaskDataset extends AbstractXYDataset
     public double getStartYValue(int series, int item) {
         if (!this.transposed) {
             return getItemStartValue(series, item);
-        }
-        else {
+        } else {
             return getSeriesStartValue(series);
         }
     }
@@ -336,8 +330,7 @@ public class XYTaskDataset extends AbstractXYDataset
     public double getEndYValue(int series, int item) {
         if (!this.transposed) {
             return getItemEndValue(series, item);
-        }
-        else {
+        } else {
             return getSeriesEndValue(series);
         }
     }
@@ -422,7 +415,6 @@ public class XYTaskDataset extends AbstractXYDataset
         return end.getTime();
     }
 
-
     /**
      * Receives a change event from the underlying dataset and responds by
      * firing a change event for this dataset.
@@ -437,7 +429,7 @@ public class XYTaskDataset extends AbstractXYDataset
     /**
      * Tests this dataset for equality with an arbitrary object.
      *
-     * @param obj  the object (<code>null</code> permitted).
+     * @param obj  the object ({@code null} permitted).
      *
      * @return A boolean.
      */
