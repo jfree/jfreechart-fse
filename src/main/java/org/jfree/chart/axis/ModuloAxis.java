@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * ModuloAxis.java
  * ---------------
- * (C) Copyright 2004-2012, by Object Refinery Limited.
+ * (C) Copyright 2004-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -61,8 +61,9 @@ public class ModuloAxis extends NumberAxis {
     private Range fixedRange;
 
     /**
-     * The display start value (this will sometimes be > displayEnd, in which
-     * case the axis wraps around at some point in the middle of the axis).
+     * The display start value (this will sometimes be after displayEnd, in 
+     * which case the axis wraps around at some point in the middle of the 
+     * axis).
      */
     private double displayStart;
 
