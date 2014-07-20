@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * TimeSeriesTableModel.java
  * -------------------------
- * (C) Copyright 2001-2008, by Object Refinery Limited.
+ * (C) Copyright 2001-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -53,7 +53,7 @@ import org.jfree.data.general.SeriesChangeListener;
  * a <code>JTable</code>.
  */
 public class TimeSeriesTableModel extends AbstractTableModel
-                                  implements SeriesChangeListener {
+        implements SeriesChangeListener {
 
     /** The series. */
     private TimeSeries series;
@@ -87,7 +87,7 @@ public class TimeSeriesTableModel extends AbstractTableModel
      * Creates a table model based on a time series.
      *
      * @param series  the time series.
-     * @param editable  if <ocde>true</code>, the table is editable.
+     * @param editable  if {@code true}, the table is editable.
      */
     public TimeSeriesTableModel(TimeSeries series, boolean editable) {
         this.series = series;
@@ -117,12 +117,10 @@ public class TimeSeriesTableModel extends AbstractTableModel
     public Class getColumnClass(int column) {
         if (column == 0) {
             return String.class;
-        }
-        else {
+        } else {
             if (column == 1) {
                 return Double.class;
-            }
-            else {
+            } else {
                 return null;
             }
         }
@@ -208,19 +206,17 @@ public class TimeSeriesTableModel extends AbstractTableModel
      * @param row  the row number.
      * @param column  the column number.
      *
-     * @return <code>true</code> if the specified cell is editable.
+     * @return {@code true} if the specified cell is editable.
      */
     @Override
     public boolean isCellEditable(int row, int column) {
         if (this.editable) {
             if ((column == 0) || (column == 1)) {
                 return true;
-            }
-            else {
+            } else {
                 return false;
             }
-        }
-        else {
+        } else {
             return false;
         }
     }
