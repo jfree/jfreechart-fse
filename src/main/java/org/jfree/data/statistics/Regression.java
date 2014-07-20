@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * Regression.java
  * ---------------
- * (C) Copyright 2002-2009, by Object Refinery Limited.
+ * (C) Copyright 2002-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Peter Kolb (patch 2795746);
@@ -45,6 +45,7 @@
 
 package org.jfree.data.statistics;
 
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.data.xy.XYDataset;
 
 /**
@@ -55,7 +56,7 @@ public abstract class Regression {
     /**
      * Returns the parameters 'a' and 'b' for an equation y = a + bx, fitted to
      * the data using ordinary least squares regression.  The result is
-     * returned as a double[], where result[0] --> a, and result[1] --> b.
+     * returned as a double[], where result[0] --&gt; a, and result[1] --&gt; b.
      *
      * @param data  the data.
      *
@@ -98,7 +99,7 @@ public abstract class Regression {
     /**
      * Returns the parameters 'a' and 'b' for an equation y = a + bx, fitted to
      * the data using ordinary least squares regression. The result is returned
-     * as a double[], where result[0] --> a, and result[1] --> b.
+     * as a double[], where result[0] --&gt; a, and result[1] --&gt; b.
      *
      * @param data  the data.
      * @param series  the series (zero-based index).
@@ -142,7 +143,7 @@ public abstract class Regression {
     /**
      * Returns the parameters 'a' and 'b' for an equation y = ax^b, fitted to
      * the data using a power regression equation.  The result is returned as
-     * an array, where double[0] --> a, and double[1] --> b.
+     * an array, where double[0] --&gt; a, and double[1] --&gt; b.
      *
      * @param data  the data.
      *
@@ -185,7 +186,7 @@ public abstract class Regression {
     /**
      * Returns the parameters 'a' and 'b' for an equation y = ax^b, fitted to
      * the data using a power regression equation.  The result is returned as
-     * an array, where double[0] --> a, and double[1] --> b.
+     * an array, where double[0] --&gt; a, and double[1] --&gt; b.
      *
      * @param data  the data.
      * @param series  the series to fit the regression line against.
@@ -231,7 +232,7 @@ public abstract class Regression {
      * function of order n, y = a0 + a1 * x + a2 * x^2 + ... + an * x^n,
      * fitted to the data using a polynomial regression equation.
      * The result is returned as an array with a length of n + 2,
-     * where double[0] --> a0, double[1] --> a1, .., double[n] --> an.
+     * where double[0] --&gt; a0, double[1] --&gt; a1, .., double[n] --&gt; an.
      * and double[n + 1] is the correlation coefficient R2
      * Reference: J. D. Faires, R. L. Burden, Numerische Methoden (german
      * edition), pp. 243ff and 327ff.
@@ -239,16 +240,15 @@ public abstract class Regression {
      * @param dataset  the dataset (<code>null</code> not permitted).
      * @param series  the series to fit the regression line against (the series
      *         must have at least order + 1 non-NaN items).
-     * @param order  the order of the function (> 0).
+     * @param order  the order of the function (&gt; 0).
      *
      * @return The parameters.
      *
      * @since 1.0.14
      */
-    public static double[] getPolynomialRegression(XYDataset dataset, int series, int order) {
-        if (dataset == null) {
-            throw new IllegalArgumentException("Null 'dataset' argument.");
-        }
+    public static double[] getPolynomialRegression(XYDataset dataset, 
+            int series, int order) {
+        ParamChecks.nullNotPermitted(dataset, "dataset");
         int itemCount = dataset.getItemCount(series);
         if (itemCount < order + 1) {
             throw new IllegalArgumentException("Not enough data.");
@@ -318,7 +318,7 @@ public abstract class Regression {
     /**
      * Returns a matrix with the following features: (1) the number of rows
      * and columns is 1 less than that of the original matrix; (2)the matrix
-     * is triangular, i.e. all elements a (row, column) with column > row are
+     * is triangular, i.e. all elements a (row, column) with column &gt; row are
      * zero.  This method is used for calculating a polynomial regression.
      * 
      * @param matrix  the start matrix.
@@ -346,7 +346,8 @@ public abstract class Regression {
                 if (result[i][0] != 0) {
                     found = true;
                     double[] temp = result[0];
-                    System.arraycopy(result[i], 0, result[0], 0, result[i].length);
+                    System.arraycopy(result[i], 0, result[0], 0, 
+                            result[i].length);
                     System.arraycopy(temp, 0, result[i], 0, temp.length);
                     break;
                 }
