@@ -116,7 +116,7 @@ import org.jfree.data.xy.XYDataset;
  * the JFreeChart demo collection:
  * <br><br>
  * <img src="../../../../../images/XYAreaRenderer2Sample.png"
- * alt="XYAreaRenderer2Sample.png" />
+ * alt="XYAreaRenderer2Sample.png">
  */
 public class XYAreaRenderer2 extends AbstractXYItemRenderer
         implements XYItemRenderer, PublicCloneable {
