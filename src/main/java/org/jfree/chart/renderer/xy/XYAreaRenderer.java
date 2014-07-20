@@ -27,7 +27,7 @@
  * -------------------
  * XYAreaRenderer.java
  * -------------------
- * (C) Copyright 2002-2012, by Hari and Contributors.
+ * (C) Copyright 2002-2014, by Hari and Contributors.
  *
  * Original Author:  Hari (ourhari@hotmail.com);
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -126,7 +126,7 @@ import org.jfree.data.xy.XYDataset;
  * in the JFreeChart demo collection:
  * <br><br>
  * <img src="../../../../../images/XYAreaRendererSample.png"
- * alt="XYAreaRendererSample.png" />
+ * alt="XYAreaRendererSample.png">
  */
 public class XYAreaRenderer extends AbstractXYItemRenderer
         implements XYItemRenderer, PublicCloneable {
