@@ -167,7 +167,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
     /**
      * Returns the hour.
      *
-     * @return The hour (0 <= hour <= 23).
+     * @return The hour (0 &lt;= hour &lt;= 23).
      */
     public int getHour() {
         return this.hour;
@@ -286,13 +286,11 @@ public class Hour extends RegularTimePeriod implements Serializable {
         Hour result;
         if (this.hour != LAST_HOUR_IN_DAY) {
             result = new Hour(this.hour + 1, this.day);
-        }
-        else { // we are at the last hour in the day...
+        } else { // we are at the last hour in the day...
             Day nextDay = (Day) this.day.next();
             if (nextDay != null) {
                 result = new Hour(FIRST_HOUR_IN_DAY, nextDay);
-            }
-            else {
+            } else {
                 result = null;
             }
         }
