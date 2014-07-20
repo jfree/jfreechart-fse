@@ -211,7 +211,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     /** The starting angle. */
     private double startAngle;
 
-    /** The direction for drawing the radar axis & plots. */
+    /** The direction for drawing the radar axis and plots. */
     private Rotation direction;
 
     /** The legend item shape. */
