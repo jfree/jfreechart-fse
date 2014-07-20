@@ -79,13 +79,11 @@ import org.jfree.data.xy.IntervalXYDataset;
  * real-time applications this subclass adds the ability to append new
  * data and discard the oldest.
  * In this class, the arrays used in FastTimeSeriesCollection become FIFO's.
- * NOTE:As presented here, all data is assumed >= 0, an assumption which is
+ * NOTE:As presented here, all data is assumed &gt;= 0, an assumption which is
  * embodied only in methods associated with interface RangeInfo.
  */
 public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
-                                         implements IntervalXYDataset,
-                                                    DomainInfo,
-                                                    RangeInfo {
+        implements IntervalXYDataset, DomainInfo, RangeInfo {
 
     /**
      * Useful constant for controlling the x-value returned for a time
@@ -189,7 +187,7 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      */
     private boolean domainIsPointsInTime;
 
-    /** index for mapping: points to the oldest valid time & data. */
+    /** index for mapping: points to the oldest valid time and data. */
     private int oldestAt;  // as a class variable, initializes == 0
 
     /** Index of the newest data item. */
