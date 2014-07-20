@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------------
  * DefaultHeatMapDataset.java
  * --------------------------
- * (C) Copyright 2009-2012, by Object Refinery Limited.
+ * (C) Copyright 2009-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -324,7 +324,8 @@ public class DefaultHeatMapDataset extends AbstractDataset
      *
      * @return A clone.
      *
-     * @throws java.lang.CloneNotSupportedException
+     * @throws java.lang.CloneNotSupportedException if there is a problem with
+     *    cloning.
      */
     @Override
     public Object clone() throws CloneNotSupportedException {

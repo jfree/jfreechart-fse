@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * SelectionChangeEvent.java
  * -------------------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   -;
@@ -58,9 +58,9 @@ public class SelectionChangeEvent<CURSOR extends DatasetCursor>
      /**
      * Constructs a new event. 
      *
-     * @param source the source of the event aka the selection extension that 
-     *     changed (the object has to be of type DatasetSelectionExtension and 
-     * must not be null!)
+     * @param selectionExtension the source of the event aka the selection 
+     *     extension that changed (the object has to be of type 
+     *     DatasetSelectionExtension and must not be null!)
      */
      public SelectionChangeEvent(Object selectionExtension) {
           super(selectionExtension);
