@@ -3173,191 +3173,207 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         if (this.chart != null) {
             this.chart.addChangeListener(this);
         }
-
     }
 
-     /**
-      * Returns the value of the <code>useBuffer</code> flag as set in the
-      * constructor.
-      * 
-      * @return A boolean.
-      * 
-      * @since 1.0.14
-      */
-     public boolean getUseBuffer() {
-          return this.useBuffer;
-     }
+    /**
+     * Returns the value of the <code>useBuffer</code> flag as set in the
+     * constructor.
+     * 
+     * @return A boolean.
+     * 
+     * @since 1.0.14
+     */
+    public boolean getUseBuffer() {
+        return this.useBuffer;
+    }
 
-     public PlotOrientation getOrientation() {
-         return this.orientation;
-     }
+    public PlotOrientation getOrientation() {
+        return this.orientation;
+    }
 
-     /**
-      * Adds a mouse handler.
-      * 
-      * @param handler  the handler (<code>null</code> not permitted).
-      * 
-      * @see #removeMouseHandler(org.jfree.chart.panel.AbstractMouseHandler)
-      */
-     public void addMouseHandler(AbstractMouseHandler handler) {
-         if (handler.isLiveHandler()) {
-             this.availableLiveMouseHandlers.add(handler);
-         } else {
-             this.auxiliaryMouseHandlers.add(handler);
-         }
-     }
+    /**
+     * Adds a mouse handler.
+     * 
+     * @param handler  the handler (<code>null</code> not permitted).
+     * 
+     * @see #removeMouseHandler(org.jfree.chart.panel.AbstractMouseHandler)
+     */
+    public void addMouseHandler(AbstractMouseHandler handler) {
+        if (handler.isLiveHandler()) {
+            this.availableLiveMouseHandlers.add(handler);
+        } else {
+            this.auxiliaryMouseHandlers.add(handler);
+        }
+    }
 
-     /**
-      * Removes a mouse handler.
-      * 
-      * @param handler  the handler (<code>null</code> not permitted).
-      * 
-      * @return A boolean.
-      * 
-      * @see #addMouseHandler(org.jfree.chart.panel.AbstractMouseHandler)
-      */
-     public boolean removeMouseHandler(AbstractMouseHandler handler) {
-         if (handler.isLiveHandler()) {
-             return this.availableLiveMouseHandlers.remove(handler);
-         } else {
-             return this.auxiliaryMouseHandlers.remove(handler);
-         }          
-     }
+    /**
+     * Removes a mouse handler.
+     * 
+     * @param handler  the handler (<code>null</code> not permitted).
+     * 
+     * @return A boolean.
+     * 
+     * @see #addMouseHandler(org.jfree.chart.panel.AbstractMouseHandler)
+     */
+    public boolean removeMouseHandler(AbstractMouseHandler handler) {
+        if (handler.isLiveHandler()) {
+            return this.availableLiveMouseHandlers.remove(handler);
+        } else {
+            return this.auxiliaryMouseHandlers.remove(handler);
+        }          
+    }
 
-     /**
-      * Clears the 'liveMouseHandler' field.  Each handler is responsible for
-      * calling this method when they have finished handling mouse events.
-      */
-     public void clearLiveMouseHandler() {
-         this.liveMouseHandler = null;
-     }
+    /**
+     * Clears the 'liveMouseHandler' field.  Each handler is responsible for
+     * calling this method when they have finished handling mouse events.
+     */
+    public void clearLiveMouseHandler() {
+        this.liveMouseHandler = null;
+    }
 
-     /**
-      * Returns the selection shape.
-      * 
-      * @return The selection shape (possibly <code>null</code>).
-      * 
-      * @see #setSelectionShape(java.awt.Shape)
-      */
-     public Shape getSelectionShape() {
-         return this.selectionShape;
-     }
+    /**
+     * Returns the selection shape.
+     * 
+     * @return The selection shape (possibly <code>null</code>).
+     * 
+     * @see #setSelectionShape(java.awt.Shape)
+     */
+    public Shape getSelectionShape() {
+        return this.selectionShape;
+    }
 
-     /**
-      * Sets the selection shape.
-      * 
-      * @param shape  the selection shape (<code>null</code> permitted).
-      * 
-      * @see #getSelectionShape()
-      */
-     public void setSelectionShape(Shape shape) {
-         this.selectionShape = shape;
-     }
+    /**
+     * Sets the selection shape.
+     * 
+     * @param shape  the selection shape (<code>null</code> permitted).
+     * 
+     * @see #getSelectionShape()
+     */
+    public void setSelectionShape(Shape shape) {
+        this.selectionShape = shape;
+    }
 
-     /**
-      * Returns the selection fill paint.
-      * 
-      * @return The selection fill paint (possibly <code>null</code>).
-      * 
-      * @see #setSelectionFillPaint(java.awt.Paint)
-      */
-     public Paint getSelectionFillPaint() {
-         return this.selectionFillPaint;
-     }
+    /**
+     * Returns the selection fill paint.
+     * 
+     * @return The selection fill paint (possibly {@code null}).
+     * 
+     * @see #setSelectionFillPaint(java.awt.Paint)
+     */
+    public Paint getSelectionFillPaint() {
+        return this.selectionFillPaint;
+    }
 
-     /**
-      * Sets the selection fill paint.
-      * 
-      * @param paint  the paint (<code>null</code> permitted).
-      * 
-      * @see #getSelectionFillPaint()
-      */
-     public void setSelectionFillPaint(Paint paint) {
-         this.selectionFillPaint = paint;
-     }
+    /**
+     * Sets the selection fill paint.
+     * 
+     * @param paint  the paint (<code>null</code> permitted).
+     * 
+     * @see #getSelectionFillPaint()
+     */
+    public void setSelectionFillPaint(Paint paint) {
+        this.selectionFillPaint = paint;
+    }
 
+    /**
+     * Returns the outline paint used to draw the selection.
+     * 
+     * @return The paint (possibly {@code null}). 
+     */
+    public Paint getSelectionOutlinePaint() {
+        return this.selectionOutlinePaint;
+    }
+    
+    /**
+     * Sets the selection outline paint.
+     * 
+     * @param paint  the paint ({@code null} permitted).
+     * 
+     * @see #getSelectionOutlinePaint()
+     */
+    public void setSelectionOutlinePaint(Paint paint) {
+        this.selectionOutlinePaint = paint;
+    }
 
-     /**
-      * Sets the selection outline paint.
-      * 
-      * @param paint  the paint (<code>null</code> permitted).
-      * 
-      * @see #getSelectionOutlinePaint()
-      */
-     public void setSelectionOutlinePaint(Paint paint) {
-         this.selectionOutlinePaint = paint;
-     }
+    /**
+     * Returns the stroke used to draw the selection outline.
+     * 
+     * @return The stroke (possibly {@code null}). 
+     */
+    public Stroke getSelectionOutlineStroke() {
+        return this.selectionOutlineStroke;
+    }
+    
+    /**
+     * Sets the selection outline stroke
+     * 
+     * @param stroke  the paint (<code>null</code> permitted).
+     * 
+     * @see #getSelectionOutlineStroke()
+     */
+    public void setSelectionOutlineStroke(Stroke stroke) {
+        this.selectionOutlineStroke = stroke;
+    }
 
-     /**
-      * Sets the selection outline stroke
-      * 
-      * @param stroke  the paint (<code>null</code> permitted).
-      * 
-      * @see #getSelectionOutlineStroke()
-      */
-     public void setSelectionOutlineStroke(Stroke stroke) {
-         this.selectionOutlineStroke = stroke;
-     }
+    /**
+     * Returns the zoom rectangle.
+     * 
+     * @return The zoom rectangle (possibly <code>null</code>).
+     * 
+     * @since 1.0.14
+     */
+    public Rectangle2D getZoomRectangle() {
+        return this.zoomRectangle;
+    }
 
-     /**
-      * Returns the zoom rectangle.
-      * 
-      * @return The zoom rectangle (possibly <code>null</code>).
-      * 
-      * @since 1.0.14
-      */
-     public Rectangle2D getZoomRectangle() {
-         return this.zoomRectangle;
-     }
+    /**
+     * Sets the zoom rectangle for the panel.
+     * 
+     * @param rect  the rectangle (<code>null</code> permitted).
+     * 
+     * @since 1.0.14
+     */
+    public void setZoomRectangle(Rectangle2D rect) {
+        this.zoomRectangle = rect;
+    }
 
-     /**
-      * Sets the zoom rectangle for the panel.
-      * 
-      * @param rect  the rectangle (<code>null</code> permitted).
-      * 
-      * @since 1.0.14
-      */
-     public void setZoomRectangle(Rectangle2D rect) {
-         this.zoomRectangle = rect;
-     }
+    /**
+     * Returns the zoom handler that is installed by default in the 
+     * constructor.  You can remove this handler by calling the 
+     * removeMouseHandler() method.
+     * 
+     * @return The zoom handler.
+     */
+    public ZoomHandler getZoomHandler() {
+        return this.zoomHandler;
+    }
 
-     /**
-      * Returns the zoom handler that is installed by default in the 
-      * constructor.  You can remove this handler by calling the 
-      * removeMouseHandler() method.
-      * 
-      * @return The zoom handler.
-      */
-     public ZoomHandler getZoomHandler() {
-         return this.zoomHandler;
-     }
+    /**
+     * Returns a selection manager that can be used for point or area selection. 
+     * (e.g. 
+     * {@link org.jfree.chart.panel.selectionhandler.RegionSelectionHandler 
+     * RegionSelectionHandlers})
+     * 
+     * @return the selection manager that has been set via setSelectionManager 
+     *     or null
+     */
+    public SelectionManager getSelectionManager() {
+        return this.selectionManager;
+    }
 
-     /**
-      * Returns a selection manager that can be used for point or area selection. 
-      * (e.g. 
-      * {@link org.jfree.chart.panel.selectionhandler.RegionSelectionHandler 
-      * RegionSelectionHandlers})
-      * 
-      * @return the selection manager that has been set via setSelectionManager 
-      *     or null
-      */
-     public SelectionManager getSelectionManager() {
-         return this.selectionManager;
-     }
-
-     /**
-      * Sets the selection manager of the ChartPanel. The manager can be 
-      * retrieved via the getSelectionManager method to be used for point or 
-      * area selection. 
-      * 
-      * (e.g. 
-      * {@link org.jfree.chart.panel.selectionhandler.RegionSelectionHandler 
-      * RegionSelectionHandlers})
-      * 
-      * @param manager
-      */
-     public void setSelectionManager(SelectionManager manager) {
-         this.selectionManager = manager;
-     }
+    /**
+     * Sets the selection manager of the ChartPanel. The manager can be 
+     * retrieved via the getSelectionManager method to be used for point or 
+     * area selection. 
+     * 
+     * (e.g. 
+     * {@link org.jfree.chart.panel.selectionhandler.RegionSelectionHandler 
+     * RegionSelectionHandlers})
+     * 
+     * @param manager  the manager.
+     */
+    public void setSelectionManager(SelectionManager manager) {
+        this.selectionManager = manager;
+    }
 
 }
