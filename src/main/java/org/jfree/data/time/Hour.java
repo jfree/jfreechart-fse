@@ -109,7 +109,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
      * Constructs a new Hour.
      *
      * @param hour  the hour (in the range 0 to 23).
-     * @param day  the day (<code>null</code> not permitted).
+     * @param day  the day ({@code null} not permitted).
      */
     public Hour(int hour, Day day) {
         ParamChecks.nullNotPermitted(day, "day");
@@ -136,7 +136,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
      *
      * @param time  the date-time ({@code null} not permitted).
      *
-     * @see #Hour(Date, TimeZone)
+     * @see #Hour(Date, TimeZone, Locale)
      */
     public Hour(Date time) {
         // defer argument checking...
