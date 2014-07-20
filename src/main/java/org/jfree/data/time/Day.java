@@ -123,7 +123,7 @@ public class Day extends RegularTimePeriod implements Serializable {
      *
      * @param day  the day-of-the-month.
      * @param month  the month (1 to 12).
-     * @param year  the year (1900 <= year <= 9999).
+     * @param year  the year (1900 &lt;= year &lt;= 9999).
      */
     public Day(int day, int month, int year) {
         this.serialDate = SerialDate.createInstance(day, month, year);
@@ -178,8 +178,7 @@ public class Day extends RegularTimePeriod implements Serializable {
      * Returns the day as a {@link SerialDate}.  Note: the reference that is
      * returned should be an instance of an immutable {@link SerialDate}
      * (otherwise the caller could use the reference to alter the state of
-     * this <code>Day</code> instance, and <code>Day</code> is supposed
-     * to be immutable).
+     * this {@code Day} instance, and {@code Day} is supposed to be immutable).
      *
      * @return The day as a {@link SerialDate}.
      */
@@ -325,7 +324,7 @@ public class Day extends RegularTimePeriod implements Serializable {
      * Returns the last millisecond of the day, evaluated using the supplied
      * calendar (which determines the time zone).
      *
-     * @param calendar  calendar to use (<code>null</code> not permitted).
+     * @param calendar  calendar to use ({@code null} not permitted).
      *
      * @return The end of the day as milliseconds since 01-01-1970.
      *
@@ -348,7 +347,7 @@ public class Day extends RegularTimePeriod implements Serializable {
      * representing the same day as this object. In all other cases,
      * returns false.
      *
-     * @param obj  the object (<code>null</code> permitted).
+     * @param obj  the object ({@code null} permitted).
      *
      * @return A flag indicating whether or not an object is equal to this day.
      */
@@ -371,8 +370,8 @@ public class Day extends RegularTimePeriod implements Serializable {
      * Returns a hash code for this object instance.  The approach described by
      * Joshua Bloch in "Effective Java" has been used here:
      * <p>
-     * <code>http://developer.java.sun.com/developer/Books/effectivejava
-     * /Chapter3.pdf</code>
+     * {@code http://developer.java.sun.com/developer/Books/effectivejava
+     * /Chapter3.pdf}
      *
      * @return A hash code.
      */
@@ -431,7 +430,7 @@ public class Day extends RegularTimePeriod implements Serializable {
      *
      * @param s  the date string to parse.
      *
-     * @return <code>null</code> if the string does not contain any parseable
+     * @return {@code null} if the string does not contain any parseable
      *      string, the day otherwise.
      */
     public static Day parseDay(String s) {
