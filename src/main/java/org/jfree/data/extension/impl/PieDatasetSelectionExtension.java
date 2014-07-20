@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------------
  * PieDatasetSelectionExtension.java
  * ---------------------------------
- * (C) Copyright 2013, by Michael Zinsmaier and Contributors.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier and Contributors.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -41,8 +41,8 @@
 package org.jfree.data.extension.impl;
 
 import java.util.HashMap;
-import org.jfree.data.UnknownKeyException;
 
+import org.jfree.data.UnknownKeyException;
 import org.jfree.data.extension.DatasetCursor;
 import org.jfree.data.extension.DatasetIterator;
 import org.jfree.data.extension.DatasetSelectionExtension;
@@ -74,7 +74,8 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>>
 
     /**
      * Creates a separate selection extension for the specified dataset.
-     * @param dataset
+     * 
+     * @param dataset  the underlying dataset ({@code null} not permitted).
      */
     public PieDatasetSelectionExtension(PieDataset dataset) {
         super(dataset);
@@ -87,8 +88,8 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>>
      * adds an initial selection change listener, e.g. a plot that should be 
      * redrawn on selection changes.
      * 
-     * @param dataset
-     * @param initialListener
+     * @param dataset  the underlying dataset ({@code null} not permitted).
+     * @param initialListener  the initial listener.
      */
     public PieDatasetSelectionExtension(PieDataset dataset, 
             SelectionChangeListener initialListener) {
@@ -99,6 +100,7 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>>
     /**
      * {@link DatasetSelectionExtension#isSelected(DatasetCursor)}
      */
+    @Override
     public boolean isSelected(PieCursor<KEY> cursor) {
         Boolean b = this.selectionData.get(cursor.key);
         if (b == null) {
@@ -110,6 +112,7 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>>
     /**
      * {@link DatasetSelectionExtension#setSelected(DatasetCursor, boolean)}
      */
+    @Override
     public void setSelected(PieCursor<KEY> cursor, boolean selected) {
         this.selectionData.put(cursor.key, Boolean.valueOf(selected));
         notifyIfRequired();
@@ -118,14 +121,18 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>>
     /**
      * {@link DatasetSelectionExtension#clearSelection()}
      */
+    @Override
     public void clearSelection() {
         initSelection();
     }
     
     /**
      * A change of the underlying dataset clears the selection and reinitializes
-     * it
+     * it.
+     * 
+     * @param event  event information.
      */
+    @Override
     public void datasetChanged(DatasetChangeEvent event) {
         initSelection();
     }
@@ -152,6 +159,7 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>>
     /**
      * {@link IterableSelection#getIterator()}
      */
+    @Override
     public DatasetIterator<PieCursor<KEY>> getIterator() {
         return new PieDatasetSelectionIterator();
     }
@@ -159,6 +167,7 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>>
     /**
      * {@link IterableSelection#getSelectionIterator(boolean)}
      */
+    @Override
     public DatasetIterator<PieCursor<KEY>> getSelectionIterator(
             boolean selected) {
         return new PieDatasetSelectionIterator(selected);
@@ -204,10 +213,11 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>>
          *     data item positions
          */
         public PieDatasetSelectionIterator(boolean selected) {
-            filter = Boolean.valueOf(selected);
+            filter = selected;
         }
 
         /** {@link Iterator#hasNext() */
+        @Override
         public boolean hasNext() {
             if (nextPosition() != -1) {
                 return true;
@@ -218,6 +228,7 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>>
         /**
          * {@link Iterator#next()}
          */
+        @Override
         public PieCursor<KEY> next() {
             this.section = nextPosition();
             //pie datasets are not yet typed therefore the cast is necessary 
@@ -229,6 +240,7 @@ public class PieDatasetSelectionExtension<KEY extends Comparable<KEY>>
         /**
          * iterator remove operation is not supported
          */
+        @Override
         public void remove() {
             throw new UnsupportedOperationException();
         }
