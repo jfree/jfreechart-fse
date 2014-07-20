@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * ImageTitle.java
  * ---------------
- * (C) Copyright 2000-2012, by David Berry and Contributors;
+ * (C) Copyright 2000-2014, by David Berry and Contributors;
  *
  * Original Author:  David Berry;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -71,6 +71,7 @@ import org.jfree.chart.ui.Size2D;
 import org.jfree.chart.ui.VerticalAlignment;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.event.TitleChangeEvent;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * A chart title that displays an image.  This is useful, for example, if you
@@ -95,7 +96,7 @@ public class ImageTitle extends Title {
     /**
      * Creates a new image title.
      *
-     * @param image  the image (<code>null</code> not permitted).
+     * @param image  the image ({@code null} not permitted).
      */
     public ImageTitle(Image image) {
         this(image, image.getHeight(null), image.getWidth(null),
@@ -106,15 +107,14 @@ public class ImageTitle extends Title {
     /**
      * Creates a new image title.
      *
-     * @param image  the image (<code>null</code> not permitted).
+     * @param image  the image ({@code null} not permitted).
      * @param position  the title position.
      * @param horizontalAlignment  the horizontal alignment.
      * @param verticalAlignment  the vertical alignment.
      */
     public ImageTitle(Image image, RectangleEdge position,
-                      HorizontalAlignment horizontalAlignment,
-                      VerticalAlignment verticalAlignment) {
-
+            HorizontalAlignment horizontalAlignment,
+            VerticalAlignment verticalAlignment) {
         this(image, image.getHeight(null), image.getWidth(null),
                 position, horizontalAlignment, verticalAlignment,
                 Title.DEFAULT_PADDING);
@@ -124,7 +124,7 @@ public class ImageTitle extends Title {
      * Creates a new image title with the given image scaled to the given
      * width and height in the given location.
      *
-     * @param image  the image (<code>null</code> not permitted).
+     * @param image  the image ({@code null} not permitted).
      * @param height  the height used to draw the image.
      * @param width  the width used to draw the image.
      * @param position  the title position.
@@ -133,26 +133,20 @@ public class ImageTitle extends Title {
      * @param padding  the amount of space to leave around the outside of the
      *                 title.
      */
-    public ImageTitle(Image image, int height, int width,
-                      RectangleEdge position,
-                      HorizontalAlignment horizontalAlignment,
-                      VerticalAlignment verticalAlignment,
-                      RectangleInsets padding) {
-
+    public ImageTitle(Image image, int height, int width, 
+            RectangleEdge position, HorizontalAlignment horizontalAlignment,
+            VerticalAlignment verticalAlignment, RectangleInsets padding) {
         super(position, horizontalAlignment, verticalAlignment, padding);
-        if (image == null) {
-            throw new NullPointerException("Null 'image' argument.");
-        }
+        ParamChecks.nullNotPermitted(image, "image");
         this.image = image;
         setHeight(height);
         setWidth(width);
-
     }
 
     /**
      * Returns the image for the title.
      *
-     * @return The image for the title (never <code>null</code>).
+     * @return The image for the title (never {@code null}).
      */
     public Image getImage() {
         return this.image;
@@ -162,12 +156,10 @@ public class ImageTitle extends Title {
      * Sets the image for the title and notifies registered listeners that the
      * title has been modified.
      *
-     * @param image  the new image (<code>null</code> not permitted).
+     * @param image  the new image ({@code null} not permitted).
      */
     public void setImage(Image image) {
-        if (image == null) {
-            throw new NullPointerException("Null 'image' argument.");
-        }
+        ParamChecks.nullNotPermitted(image, "image");
         this.image = image;
         notifyListeners(new TitleChangeEvent(this));
     }
@@ -177,9 +169,9 @@ public class ImageTitle extends Title {
      * returns the block size.
      *
      * @param g2  the graphics device.
-     * @param constraint  the constraint (<code>null</code> not permitted).
+     * @param constraint  the constraint ({@code null} not permitted).
      *
-     * @return The block size (in Java2D units, never <code>null</code>).
+     * @return The block size (in Java2D units, never {@code null}).
      */
     @Override
     public Size2D arrange(Graphics2D g2, RectangleConstraint constraint) {
@@ -223,11 +215,11 @@ public class ImageTitle extends Title {
      */
     protected Size2D drawHorizontal(Graphics2D g2, Rectangle2D chartArea) {
 
-        double startY = 0.0;
-        double topSpace = 0.0;
-        double bottomSpace = 0.0;
-        double leftSpace = 0.0;
-        double rightSpace = 0.0;
+        double startY;
+        double topSpace;
+        double bottomSpace;
+        double leftSpace;
+        double rightSpace;
 
         double w = getWidth();
         double h = getHeight();
@@ -239,8 +231,7 @@ public class ImageTitle extends Title {
 
         if (getPosition() == RectangleEdge.TOP) {
             startY = chartArea.getY() + topSpace;
-        }
-        else {
+        } else {
             startY = chartArea.getY() + chartArea.getHeight() - bottomSpace - h;
         }
 
@@ -250,18 +241,16 @@ public class ImageTitle extends Title {
         if (horizontalAlignment == HorizontalAlignment.CENTER) {
             startX = chartArea.getX() + leftSpace + chartArea.getWidth() / 2.0
                      - w / 2.0;
-        }
-        else if (horizontalAlignment == HorizontalAlignment.LEFT) {
+        } else if (horizontalAlignment == HorizontalAlignment.LEFT) {
             startX = chartArea.getX() + leftSpace;
-        }
-        else if (horizontalAlignment == HorizontalAlignment.RIGHT) {
+        } else if (horizontalAlignment == HorizontalAlignment.RIGHT) {
             startX = chartArea.getX() + chartArea.getWidth() - rightSpace - w;
         }
         g2.drawImage(this.image, (int) startX, (int) startY, (int) w, (int) h,
                 null);
 
         return new Size2D(chartArea.getWidth() + leftSpace + rightSpace,
-            h + topSpace + bottomSpace);
+                h + topSpace + bottomSpace);
 
     }
 
@@ -277,7 +266,7 @@ public class ImageTitle extends Title {
      */
     protected Size2D drawVertical(Graphics2D g2, Rectangle2D chartArea) {
 
-        double startX = 0.0;
+        double startX;
         double topSpace = 0.0;
         double bottomSpace = 0.0;
         double leftSpace = 0.0;
@@ -296,8 +285,7 @@ public class ImageTitle extends Title {
 
         if (getPosition() == RectangleEdge.LEFT) {
             startX = chartArea.getX() + leftSpace;
-        }
-        else {
+        } else {
             startX = chartArea.getMaxX() - rightSpace - w;
         }
 
@@ -307,11 +295,9 @@ public class ImageTitle extends Title {
         if (alignment == VerticalAlignment.CENTER) {
             startY = chartArea.getMinY() + topSpace
                      + chartArea.getHeight() / 2.0 - h / 2.0;
-        }
-        else if (alignment == VerticalAlignment.TOP) {
+        } else if (alignment == VerticalAlignment.TOP) {
             startY = chartArea.getMinY() + topSpace;
-        }
-        else if (alignment == VerticalAlignment.BOTTOM) {
+        } else if (alignment == VerticalAlignment.BOTTOM) {
             startY = chartArea.getMaxY() - bottomSpace - h;
         }
 
@@ -328,9 +314,9 @@ public class ImageTitle extends Title {
      *
      * @param g2  the graphics device.
      * @param area  the area.
-     * @param params  ignored (<code>null</code> permitted).
+     * @param params  ignored ({@code null} permitted).
      *
-     * @return Always <code>null</code>.
+     * @return Always {@code null}.
      */
     @Override
     public Object draw(Graphics2D g2, Rectangle2D area, Object params) {
@@ -339,16 +325,15 @@ public class ImageTitle extends Title {
     }
 
     /**
-     * Tests this <code>ImageTitle</code> for equality with an arbitrary
-     * object.  Returns <code>true</code> if:
+     * Tests this {@code ImageTitle} for equality with an arbitrary
+     * object.  Returns {@code true} if:
      * <ul>
-     * <li><code>obj</code> is an instance of <code>ImageTitle</code>;
-     * <li><code>obj</code> references the same image as this
-     *     <code>ImageTitle</code>;
-     * <li><code>super.equals(obj)<code> returns <code>true</code>;
+     * <li>{@code obj} is an instance of {@code ImageTitle};
+     * <li>{@code obj} references the same image as this {@code ImageTitle};
+     * <li>{@code super.equals(obj)} returns {@code true};
      * </ul>
      *
-     * @param obj  the object (<code>null</code> permitted).
+     * @param obj  the object ({@code null} permitted).
      *
      * @return A boolean.
      */
