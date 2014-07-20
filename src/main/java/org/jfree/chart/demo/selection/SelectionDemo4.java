@@ -1,7 +1,7 @@
 /* -------------------
  * SelectionDemo4.java
  * -------------------
- * (C) Copyright 2004-2013, by Object Refinery Limited.
+ * (C) Copyright 2004-2014, by Object Refinery Limited.
  *
  */
 
@@ -42,7 +42,6 @@ import org.jfree.data.extension.impl.XYDatasetSelectionExtension;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.SelectionChangeEvent;
 import org.jfree.data.general.SelectionChangeListener;
-import org.jfree.data.statistics.HistogramDataset;
 import org.jfree.data.statistics.HistogramBin;
 import org.jfree.data.statistics.HistogramDataset;
 import org.jfree.data.xy.IntervalXYDataset;
@@ -51,7 +50,7 @@ import org.jfree.data.xy.IntervalXYDataset;
  * A demo of the {@link HistogramDataset} class.
  */
 public class SelectionDemo4 extends ApplicationFrame implements
-          SelectionChangeListener<XYCursor> {
+        SelectionChangeListener<XYCursor> {
 
     private HistogramDataset dataset;
     private DefaultTableModel model;
@@ -88,8 +87,9 @@ public class SelectionDemo4 extends ApplicationFrame implements
     /**
      * The selection changed, so we change the table model.
      * 
-     * @param event
+     * @param event  the event.
      */
+    @Override
     public void selectionChanged(SelectionChangeEvent<XYCursor> event) {
         while (this.model.getRowCount() > 0) {
             this.model.removeRow(0);
