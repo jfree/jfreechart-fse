@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------------
  * DatasetExtensionManager.java
  * ----------------------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   -;
@@ -71,7 +71,7 @@ public class DatasetExtensionManager implements Serializable {
      * Registers a separate dataset extension at the extension manager (the 
      * extension is automatically paired with its dataset).
      * 
-     * @param extension 
+     * @param extension  the extension.
      */
     public void registerDatasetExtension(DatasetExtension extension) {
         List<DatasetExtension> extensionList = registeredExtensions.get(
@@ -86,8 +86,8 @@ public class DatasetExtensionManager implements Serializable {
     }
 
     /**
-     * @param dataset 
-     * @param interfaceClass
+     * @param dataset  the dataset.
+     * @param interfaceClass  the interface class.
      * @return true if a.) the dataset implements the interface class or b.) a 
      *     separate object that implements the interface for the dataset has 
      *     been registered. a is always checked before b
@@ -98,8 +98,8 @@ public class DatasetExtensionManager implements Serializable {
     }
     
     /**
-     * @param dataset
-     * @param interfaceClass
+     * @param dataset  the dataset.
+     * @param interfaceClass  the interface class.
      * @return the implementation of the interfaceClass for the specified 
      *     dataset or null if no supporting implementation could be found i.e. 
      *     the dataset does not implement the interface itself and there no 
