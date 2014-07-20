@@ -1,7 +1,7 @@
 /* -------------------
  * SelectionDemo3.java
  * -------------------
- * (C) Copyright 2009, by Object Refinery Limited.
+ * (C) Copyright 2009, 2014, by Object Refinery Limited.
  *
  */
 
@@ -77,7 +77,7 @@ public class SelectionDemo3 extends ApplicationFrame
         split.add(chartPanel);
 
         this.model = new DefaultTableModel(new String[] {"Series:", "Item:", 
-            "X:", "Y:"}, 0);
+                "X:", "Y:"}, 0);
         this.table = new JTable(this.model);
         TableColumnModel tcm = this.table.getColumnModel();
         tcm.getColumn(2).setCellRenderer(new NumberCellRenderer());
@@ -146,8 +146,9 @@ public class SelectionDemo3 extends ApplicationFrame
     /**
      * The selection changed, so we change the table model
      * 
-     * @param event
+     * @param event  the event.
      */
+    @Override
     public void selectionChanged(SelectionChangeEvent<XYCursor> event) {
         while (this.model.getRowCount() > 0) {
             this.model.removeRow(0);
