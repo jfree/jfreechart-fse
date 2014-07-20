@@ -86,7 +86,7 @@ import org.jfree.data.xy.XYDataset;
  * demo collection:
  * <br><br>
  * <img src="../../../../../images/XYStepAreaRendererSample.png"
- * alt="XYStepAreaRendererSample.png" />
+ * alt="XYStepAreaRendererSample.png">
  */
 public class XYStepAreaRenderer extends AbstractXYItemRenderer
         implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {

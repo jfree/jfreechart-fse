@@ -86,7 +86,7 @@ import org.jfree.data.xy.XYDataset;
  * demo collection:
  * <br><br>
  * <img src="../../../../../images/YIntervalRendererSample.png"
- * alt="YIntervalRendererSample.png" />
+ * alt="YIntervalRendererSample.png">
  */
 public class YIntervalRenderer extends AbstractXYItemRenderer
         implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
