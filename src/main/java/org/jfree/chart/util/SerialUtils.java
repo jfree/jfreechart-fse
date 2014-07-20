@@ -588,8 +588,8 @@ public class SerialUtils {
      * @param in  the input stream ({@code null} not permitted).
      * 
      * @return A map.
-     * @throws IOException
-     * @throws ClassNotFoundException  
+     * @throws IOException if there is an IO problem.
+     * @throws ClassNotFoundException if there is a problem loading a class. 
      */
     public static Map<Integer, Paint> readPaintMap(ObjectInputStream in) 
             throws IOException, ClassNotFoundException {
@@ -608,7 +608,7 @@ public class SerialUtils {
      * 
      * @param map  the map.
      * @param out  the output stream.
-     * @throws IOException  
+     * @throws IOException if there is an IO problem.
      */
     public static void writePaintMap(Map<Integer, Paint> map, 
             ObjectOutputStream out) throws IOException {
