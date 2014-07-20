@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------------
  * SelectionChangeListener.java
  * ----------------------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   -;
@@ -45,15 +45,16 @@ import java.util.EventListener;
 import org.jfree.data.extension.DatasetCursor;
 
 /**
- * A listener that wants to be informed about changes of the selection state of data items
- * 
- * @author zinsmaie
+ * A listener that wants to be informed about changes of the selection state of 
+ * data items.
  */
-public interface SelectionChangeListener<CURSOR extends DatasetCursor> extends EventListener {
+public interface SelectionChangeListener<CURSOR extends DatasetCursor> 
+        extends EventListener {
 
     /**
-     * called if the selection state of at least one observed data item changes
-     * @param event
+     * Called if the selection state of at least one observed data item changes.
+     * 
+     * @param event  the event.
      */
     public void selectionChanged(SelectionChangeEvent<CURSOR> event);
 
