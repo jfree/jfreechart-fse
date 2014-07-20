@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * GradientBarPainter.java
  * -----------------------
- * (C) Copyright 2008-2012, by Object Refinery Limited.
+ * (C) Copyright 2008-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -81,9 +81,9 @@ public class GradientBarPainter implements BarPainter, Serializable {
     /**
      * Creates a new instance.
      *
-     * @param g1
-     * @param g2
-     * @param g3
+     * @param g1 the first divider.
+     * @param g2 the second divider.
+     * @param g3 the third divider.
      */
     public GradientBarPainter(double g1, double g2, double g3) {
         this.g1 = g1;
@@ -112,13 +112,11 @@ public class GradientBarPainter implements BarPainter, Serializable {
         if (itemPaint instanceof Color) {
             c0 = (Color) itemPaint;
             c1 = c0.brighter();
-        }
-        else if (itemPaint instanceof GradientPaint) {
+        } else if (itemPaint instanceof GradientPaint) {
             GradientPaint gp = (GradientPaint) itemPaint;
             c0 = gp.getColor1();
             c1 = gp.getColor2();
-        }
-        else {
+        } else {
             c0 = Color.BLUE;
             c1 = Color.BLUE.brighter();
         }
@@ -151,8 +149,7 @@ public class GradientBarPainter implements BarPainter, Serializable {
                      (float) regions[3].getMaxX(), 0.0f, c0);
             g2.setPaint(gp);
             g2.fill(regions[3]);
-        }
-        else if (base == RectangleEdge.LEFT || base == RectangleEdge.RIGHT) {
+        } else if (base == RectangleEdge.LEFT || base == RectangleEdge.RIGHT) {
             Rectangle2D[] regions = splitHorizontalBar(bar, this.g1, this.g2,
                     this.g3);
             GradientPaint gp = new GradientPaint(0.0f,
@@ -175,7 +172,6 @@ public class GradientBarPainter implements BarPainter, Serializable {
                      0.0f, (float) regions[3].getMaxY(), c0);
             g2.setPaint(gp);
             g2.fill(regions[3]);
-
         }
 
         // draw the outline...
@@ -250,24 +246,21 @@ public class GradientBarPainter implements BarPainter, Serializable {
                 y0 += yOffset;
             }
             y1 += yOffset;
-        }
-        else if (base == RectangleEdge.BOTTOM) {
+        } else if (base == RectangleEdge.BOTTOM) {
             x0 += xOffset;
             x1 += xOffset;
             y0 += yOffset;
             if (!pegShadow) {
                 y1 += yOffset;
             }
-        }
-        else if (base == RectangleEdge.LEFT) {
+        } else if (base == RectangleEdge.LEFT) {
             if (!pegShadow) {
                 x0 += xOffset;
             }
             x1 += xOffset;
             y0 += yOffset;
             y1 += yOffset;
-        }
-        else if (base == RectangleEdge.RIGHT) {
+        } else if (base == RectangleEdge.RIGHT) {
             x0 += xOffset;
             if (!pegShadow) {
                 x1 += xOffset;
