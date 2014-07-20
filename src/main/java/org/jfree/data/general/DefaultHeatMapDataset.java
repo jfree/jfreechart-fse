@@ -125,7 +125,7 @@ public class DefaultHeatMapDataset extends AbstractDataset
      * values are evenly spaced between {@link #getMinimumXValue()} and
      * {@link #getMaximumXValue()}.
      *
-     * @return The number of x-values (always > 0).
+     * @return The number of x-values (always &gt; 0).
      */
     @Override
     public int getXSampleCount() {
@@ -137,7 +137,7 @@ public class DefaultHeatMapDataset extends AbstractDataset
      * values are evenly spaced between {@link #getMinimumYValue()} and
      * {@link #getMaximumYValue()}.
      *
-     * @return The number of y-values (always > 0).
+     * @return The number of y-values (always &gt; 0).
      */
     @Override
     public int getYSampleCount() {
@@ -281,7 +281,7 @@ public class DefaultHeatMapDataset extends AbstractDataset
     /**
      * Tests this dataset for equality with an arbitrary object.
      *
-     * @param obj  the object (<code>null</code> permitted).
+     * @param obj  the object ({@code null} permitted).
      *
      * @return A boolean.
      */
