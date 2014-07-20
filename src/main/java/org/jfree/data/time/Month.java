@@ -393,8 +393,7 @@ public class Month extends RegularTimePeriod implements Serializable {
      *
      * @return The first millisecond of the month.
      *
-     * @throws NullPointerException if <code>calendar</code> is
-     *     <code>null</code>.
+     * @throws NullPointerException if {@code calendar} is {@code null}.
      */
     @Override
     public long getFirstMillisecond(Calendar calendar) {
@@ -411,8 +410,7 @@ public class Month extends RegularTimePeriod implements Serializable {
      *
      * @return The last millisecond of the month.
      *
-     * @throws NullPointerException if <code>calendar</code> is
-     *     <code>null</code>.
+     * @throws NullPointerException if {@code calendar} is {@code null}.
      */
     @Override
     public long getLastMillisecond(Calendar calendar) {

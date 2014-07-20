@@ -394,10 +394,11 @@ public class Millisecond extends RegularTimePeriod implements Serializable,
      * @param calendar  the calendar ({@code null} not permitted).
      *
      * @return The first millisecond of the time period.
+     * 
+     * @throws NullPointerException if {@code calendar} is {@code null}.
      */
     @Override
     public long getFirstMillisecond(Calendar calendar) {
-        ParamChecks.nullNotPermitted(calendar, "calendar");
         int year = this.day.getYear();
         int month = this.day.getMonth() - 1;
         int day = this.day.getDayOfMonth();
@@ -414,8 +415,7 @@ public class Millisecond extends RegularTimePeriod implements Serializable,
      *
      * @return The last millisecond of the time period.
      *
-     * @throws NullPointerException if <code>calendar</code> is
-     *     <code>null</code>.
+     * @throws NullPointerException if {@code calendar} is {@code null}.
      */
     @Override
     public long getLastMillisecond(Calendar calendar) {

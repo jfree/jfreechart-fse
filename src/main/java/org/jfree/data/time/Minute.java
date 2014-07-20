@@ -321,10 +321,11 @@ public class Minute extends RegularTimePeriod implements Serializable {
      *     ({@code null} not permitted).
      *
      * @return The first millisecond.
+     * 
+     * @throws NullPointerException if {@code calendar} is {@code null}.
      */
     @Override
     public long getFirstMillisecond(Calendar calendar) {
-        ParamChecks.nullNotPermitted(calendar, "calendar");
         int year = this.day.getYear();
         int month = this.day.getMonth() - 1;
         int day = this.day.getDayOfMonth();
@@ -342,15 +343,17 @@ public class Minute extends RegularTimePeriod implements Serializable {
      * @param calendar  the calendar / timezone ({@code null} not permitted).
      *
      * @return The last millisecond.
+     * 
+     * @throws NullPointerException if {@code calendar} is {@code null}.
      */
     @Override
     public long getLastMillisecond(Calendar calendar) {
         int year = this.day.getYear();
         int month = this.day.getMonth() - 1;
-        int day = this.day.getDayOfMonth();
+        int d = this.day.getDayOfMonth();
 
         calendar.clear();
-        calendar.set(year, month, day, this.hour, this.minute, 59);
+        calendar.set(year, month, d, this.hour, this.minute, 59);
         calendar.set(Calendar.MILLISECOND, 999);
 
         return calendar.getTimeInMillis();

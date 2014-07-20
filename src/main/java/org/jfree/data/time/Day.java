@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------
  * Day.java
  * --------
- * (C) Copyright 2001-2009, by Object Refinery Limited.
+ * (C) Copyright 2001-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -73,6 +73,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import org.jfree.chart.date.SerialDate;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * Represents a single day in the range 1-Jan-1900 to 31-Dec-9999.  This class
@@ -132,12 +133,10 @@ public class Day extends RegularTimePeriod implements Serializable {
     /**
      * Constructs a new one day time period.
      *
-     * @param serialDate  the day (<code>null</code> not permitted).
+     * @param serialDate  the day ({@code null} not permitted).
      */
     public Day(SerialDate serialDate) {
-        if (serialDate == null) {
-            throw new IllegalArgumentException("Null 'serialDate' argument.");
-        }
+        ParamChecks.nullNotPermitted(serialDate, "serialDate");
         this.serialDate = serialDate;
         peg(Calendar.getInstance());
     }
@@ -146,9 +145,9 @@ public class Day extends RegularTimePeriod implements Serializable {
      * Constructs a new instance, based on a particular date/time and the
      * default time zone.
      *
-     * @param time  the time (<code>null</code> not permitted).
+     * @param time  the time ({@code null} not permitted).
      *
-     * @see #Day(Date, TimeZone)
+     * @see #Day(Date, TimeZone, Locale)
      */
     public Day(Date time) {
         // defer argument checking...
@@ -158,20 +157,14 @@ public class Day extends RegularTimePeriod implements Serializable {
     /**
      * Constructs a new instance, based on a particular date/time and time zone.
      *
-     * @param time  the date/time (<code>null</code> not permitted).
-     * @param zone  the time zone (<code>null</code> not permitted).
-     * @param locale  the locale (<code>null</code> not permitted).
+     * @param time  the date/time ({@code null} not permitted).
+     * @param zone  the time zone ({@code null} not permitted).
+     * @param locale  the locale ({@code null} not permitted).
      */
     public Day(Date time, TimeZone zone, Locale locale) {
-        if (time == null) {
-            throw new IllegalArgumentException("Null 'time' argument.");
-        }
-        if (zone == null) {
-            throw new IllegalArgumentException("Null 'zone' argument.");
-        }
-        if (locale == null) {
-            throw new IllegalArgumentException("Null 'locale' argument.");
-        }
+        ParamChecks.nullNotPermitted(time, "time");
+        ParamChecks.nullNotPermitted(zone, "zone");
+        ParamChecks.nullNotPermitted(locale, "locale");
         Calendar calendar = Calendar.getInstance(zone, locale);
         calendar.setTime(time);
         int d = calendar.get(Calendar.DAY_OF_MONTH);
@@ -255,7 +248,7 @@ public class Day extends RegularTimePeriod implements Serializable {
      * Recalculates the start date/time and end date/time for this time period
      * relative to the supplied calendar (which incorporates a time zone).
      *
-     * @param calendar  the calendar (<code>null</code> not permitted).
+     * @param calendar  the calendar ({@code null} not permitted).
      *
      * @since 1.0.3
      */
@@ -281,10 +274,10 @@ public class Day extends RegularTimePeriod implements Serializable {
     }
 
     /**
-     * Returns the day following this one, or <code>null</code> if some limit
+     * Returns the day following this one, or {@code null} if some limit
      * has been reached.
      *
-     * @return The day following this one, or <code>null</code> if some limit
+     * @return The day following this one, or {@code null} if some limit
      *         has been reached.
      */
     @Override
@@ -311,12 +304,11 @@ public class Day extends RegularTimePeriod implements Serializable {
      * Returns the first millisecond of the day, evaluated using the supplied
      * calendar (which determines the time zone).
      *
-     * @param calendar  calendar to use (<code>null</code> not permitted).
+     * @param calendar  calendar to use ({@code null} not permitted).
      *
      * @return The start of the day as milliseconds since 01-01-1970.
      *
-     * @throws NullPointerException if <code>calendar</code> is
-     *     <code>null</code>.
+     * @throws NullPointerException if {@code calendar} is {@code null}.
      */
     @Override
     public long getFirstMillisecond(Calendar calendar) {
@@ -337,8 +329,7 @@ public class Day extends RegularTimePeriod implements Serializable {
      *
      * @return The end of the day as milliseconds since 01-01-1970.
      *
-     * @throws NullPointerException if <code>calendar</code> is
-     *     <code>null</code>.
+     * @throws NullPointerException if {@code calendar} is {@code null}.
      */
     @Override
     public long getLastMillisecond(Calendar calendar) {

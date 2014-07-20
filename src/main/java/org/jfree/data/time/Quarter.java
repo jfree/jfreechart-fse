@@ -397,8 +397,7 @@ public class Quarter extends RegularTimePeriod implements Serializable {
      *
      * @return The first millisecond in the Quarter.
      *
-     * @throws NullPointerException if <code>calendar</code> is
-     *     <code>null</code>.
+     * @throws NullPointerException if {@code calendar} is {@code null}.
      */
     @Override
     public long getFirstMillisecond(Calendar calendar) {
@@ -416,8 +415,7 @@ public class Quarter extends RegularTimePeriod implements Serializable {
      *
      * @return The last millisecond of the Quarter.
      *
-     * @throws NullPointerException if <code>calendar</code> is
-     *     <code>null</code>.
+     * @throws NullPointerException if {@code calendar} is {@code null}.
      */
     @Override
     public long getLastMillisecond(Calendar calendar) {

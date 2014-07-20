@@ -288,8 +288,7 @@ public class Second extends RegularTimePeriod implements Serializable {
      *
      * @return The first millisecond.
      *
-     * @throws NullPointerException if <code>calendar</code> is
-     *     <code>null</code>.
+     * @throws NullPointerException if {@code calendar} is {@code null}.
      */
     @Override
     public long getFirstMillisecond(Calendar calendar) {
@@ -309,8 +308,7 @@ public class Second extends RegularTimePeriod implements Serializable {
      *
      * @return The last millisecond.
      *
-     * @throws NullPointerException if <code>calendar</code> is
-     *     <code>null</code>.
+     * @throws NullPointerException if {@code calendar} is {@code null}.
      */
     @Override
     public long getLastMillisecond(Calendar calendar) {

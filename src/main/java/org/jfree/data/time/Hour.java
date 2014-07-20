@@ -316,8 +316,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
      *
      * @return The first millisecond.
      *
-     * @throws NullPointerException if <code>calendar</code> is
-     *     <code>null</code>.
+     * @throws NullPointerException if {@code calendar} is {@code null}.
      */
     @Override
     public long getFirstMillisecond(Calendar calendar) {
