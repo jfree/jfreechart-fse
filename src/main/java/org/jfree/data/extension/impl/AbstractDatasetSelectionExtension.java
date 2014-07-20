@@ -83,7 +83,7 @@ public abstract class AbstractDatasetSelectionExtension<CURSOR extends
     /**
      * Creates a new instance.
      * 
-     * @param dataset  the underlying dataset (<code>null</code> not permitted).
+     * @param dataset  the underlying dataset ({@code null} not permitted).
      */
     public AbstractDatasetSelectionExtension(DATASET dataset) {
         ParamChecks.nullNotPermitted(dataset, "dataset");
