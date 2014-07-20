@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------
  * Year.java
  * ---------
- * (C) Copyright 2001-2008, by Object Refinery Limited.
+ * (C) Copyright 2001-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -126,7 +126,7 @@ public class Year extends RegularTimePeriod implements Serializable {
      *
      * @param time  the time (<code>null</code> not permitted).
      *
-     * @see #Year(Date, TimeZone)
+     * @see #Year(Date, TimeZone, Locale)
      */
     public Year(Date time) {
         this(time, TimeZone.getDefault(), Locale.getDefault());
@@ -226,8 +226,7 @@ public class Year extends RegularTimePeriod implements Serializable {
     public RegularTimePeriod next() {
         if (this.year < Year.MAXIMUM_YEAR) {
             return new Year(this.year + 1);
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -365,9 +364,7 @@ public class Year extends RegularTimePeriod implements Serializable {
     }
 
     /**
-     * Parses the string argument as a year.
-     * <P>
-     * The string format is YYYY.
+     * Parses the string argument as a year.  The string format is YYYY.
      *
      * @param s  a string representing the year.
      *
@@ -375,8 +372,6 @@ public class Year extends RegularTimePeriod implements Serializable {
      *         otherwise.
      */
     public static Year parseYear(String s) {
-
-        // parse the string...
         int y;
         try {
             y = Integer.parseInt(s.trim());
@@ -384,8 +379,6 @@ public class Year extends RegularTimePeriod implements Serializable {
         catch (NumberFormatException e) {
             throw new TimePeriodFormatException("Cannot parse string.");
         }
-
-        // create the year...
         try {
             return new Year(y);
         }
