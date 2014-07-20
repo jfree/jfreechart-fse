@@ -203,8 +203,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
-import org.jfree.chart.JFreeChart;
 
+import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.PaintMap;
 import org.jfree.chart.StrokeMap;
@@ -884,15 +884,13 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * Returns the paint for the specified section.  The lookup involves these
      * steps:
      * <ul>
-     * <li>if {@link #getSectionPaint()} is non-<code>null</code>, return
-     *         it;</li>
-     * <li>if {@link #getSectionPaint(int)} is non-<code>null</code> return
-     *         it;</li>
-     * <li>if {@link #getSectionPaint(int)} is <code>null</code> but
-     *         <code>autoPopulate</code> is <code>true</code>, attempt to fetch
+     * <li>if {@link #getSectionPaint(java.lang.Comparable) } is 
+     *     non-{@code null} return it;</li>
+     * <li>if {@link #getSectionPaint(java.lang.Comparable)} is {@code null} but
+     *         {@code autoPopulate} is {@code true}, attempt to fetch
      *         a new paint from the drawing supplier
-     *         ({@link #getDrawingSupplier()});
-     * <li>if all else fails, return {@link #getBaseSectionPaint()}.
+     *         ({@link #getDrawingSupplier()});</li>
+     * <li>if all else fails, return {@link #getBaseSectionPaint()}.</li>
      * </ul>
      *
      * @param key  the section key.
@@ -1118,15 +1116,13 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * Returns the outline paint for the specified section.  The lookup
      * involves these steps:
      * <ul>
-     * <li>if {@link #getSectionOutlinePaint()} is non-<code>null</code>,
-     *         return it;</li>
-     * <li>otherwise, if {@link #getSectionOutlinePaint(int)} is
-     *         non-<code>null</code> return it;</li>
-     * <li>if {@link #getSectionOutlinePaint(int)} is <code>null</code> but
-     *         <code>autoPopulate</code> is <code>true</code>, attempt to fetch
-     *         a new outline paint from the drawing supplier
-     *         ({@link #getDrawingSupplier()});
-     * <li>if all else fails, return {@link #getBaseSectionOutlinePaint()}.
+     * <li>if {@link #getSectionOutlinePaint(java.lang.Comparable)} is 
+     *     non-{@code null} return it;</li>
+     * <li>if {@link #getSectionOutlinePaint(java.lang.Comparable)} is 
+     *     {@code null} but {@code autoPopulate} is {@code true}, attempt to 
+     *     fetch a new outline paint from the drawing supplier
+     *     ({@link #getDrawingSupplier()});</li>
+     * <li>if all else fails, return {@link #getBaseSectionOutlinePaint()}.</li>
      * </ul>
      *
      * @param key  the section key.
@@ -1152,12 +1148,10 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
             if (ds != null) {
                 result = ds.getNextOutlinePaint();
                 this.sectionOutlinePaintMap.put(key, result);
-            }
-            else {
+            } else {
                 result = this.baseSectionOutlinePaint;
             }
-        }
-        else {
+        } else {
             result = this.baseSectionOutlinePaint;
         }
         return result;
@@ -1299,15 +1293,13 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
      * Returns the outline stroke for the specified section.  The lookup
      * involves these steps:
      * <ul>
-     * <li>if {@link #getSectionOutlineStroke()} is non-<code>null</code>,
-     *         return it;</li>
-     * <li>otherwise, if {@link #getSectionOutlineStroke(int)} is
-     *         non-<code>null</code> return it;</li>
-     * <li>if {@link #getSectionOutlineStroke(int)} is <code>null</code> but
-     *         <code>autoPopulate</code> is <code>true</code>, attempt to fetch
-     *         a new outline stroke from the drawing supplier
-     *         ({@link #getDrawingSupplier()});
-     * <li>if all else fails, return {@link #getBaseSectionOutlineStroke()}.
+     * <li>if {@link #getSectionOutlineStroke(java.lang.Comparable)} is
+     *     non-{@code null} return it;</li>
+     * <li>if {@link #getSectionOutlineStroke(java.lang.Comparable)} is 
+     *     {@code null} but {@code autoPopulate} is {@code true}, attempt to 
+     *     fetch a new outline stroke from the drawing supplier
+     *     ({@link #getDrawingSupplier()});</li>
+     * <li>if all else fails, return {@link #getBaseSectionOutlineStroke()}.</li>
      * </ul>
      *
      * @param key  the section key.
