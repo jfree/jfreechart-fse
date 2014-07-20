@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * XYSplineRenderer.java
  * ---------------------
- * (C) Copyright 2007-2013, by Klaus Rheinwald and Contributors.
+ * (C) Copyright 2007-2014, by Klaus Rheinwald and Contributors.
  *
  * Original Author:  Klaus Rheinwald;
  * Contributor(s):   Tobias von Petersdorff (tvp@math.umd.edu,
@@ -75,7 +75,7 @@ import org.jfree.data.xy.XYDataset;
  * demo collection:
  * <br><br>
  * <img src="../../../../../images/XYSplineRendererSample.png"
- * alt="XYSplineRendererSample.png" />
+ * alt="XYSplineRendererSample.png">
  *
  * @since 1.0.7
  */
@@ -199,9 +199,9 @@ public class XYSplineRenderer extends XYLineAndShapeRenderer {
     /**
      * Returns the type of fill that the renderer draws beneath the curve.
      *
-     * @return The type of fill (never <code>null</code>).
+     * @return The type of fill (never {@code null}).
      *
-     * @see #setFillMode(FillType)
+     * @see #setFillType(org.jfree.chart.renderer.xy.XYSplineRenderer.FillType) 
      * 
      * @since 1.0.17
      */
