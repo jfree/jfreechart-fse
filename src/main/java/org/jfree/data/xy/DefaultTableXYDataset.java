@@ -617,7 +617,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset
      * Sets the interval width to a fixed value, and sends a
      * {@link DatasetChangeEvent} to all registered listeners.
      *
-     * @param d  the new interval width (must be > 0).
+     * @param d  the new interval width (must be &gt; 0).
      */
     public void setIntervalWidth(double d) {
         this.intervalDelegate.setFixedIntervalWidth(d);
