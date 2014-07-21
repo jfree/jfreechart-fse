@@ -162,7 +162,7 @@ public class XYBlockRenderer extends AbstractXYItemRenderer
      * Sets the height of the blocks used to represent each data item and
      * sends a {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param height  the new height, in data/axis units (must be > 0.0).
+     * @param height  the new height, in data/axis units (must be &gt; 0.0).
      *
      * @see #getBlockHeight()
      */
