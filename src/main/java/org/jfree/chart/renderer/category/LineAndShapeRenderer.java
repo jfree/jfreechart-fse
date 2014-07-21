@@ -123,7 +123,7 @@ import org.jfree.data.category.CategoryDataset;
  * program included in the JFreeChart Demo Collection:
  * <br><br>
  * <img src="../../../../../images/LineAndShapeRendererSample.png"
- * alt="LineAndShapeRendererSample.png" />
+ * alt="LineAndShapeRendererSample.png">
  */
 public class LineAndShapeRenderer extends AbstractCategoryItemRenderer
         implements Cloneable, PublicCloneable, Serializable {
