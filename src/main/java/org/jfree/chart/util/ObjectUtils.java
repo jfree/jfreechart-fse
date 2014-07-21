@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * ObjectUtilitiess.java
  * ---------------------
- * (C) Copyright 2003-2013, by Object Refinery Limited.
+ * (C) Copyright 2003-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -105,6 +105,7 @@ public final class ObjectUtils {
      * Returns a clone of the specified object, if it can be cloned, otherwise
      * throws a CloneNotSupportedException.
      *
+     * @param <T> The object type.
      * @param object the object to clone (<code>null</code> not permitted).
      * @return A clone of the specified object.
      * @throws CloneNotSupportedException if the object cannot be cloned.
@@ -143,6 +144,8 @@ public final class ObjectUtils {
      * Returns a new collection containing clones of all the items in the
      * specified collection.
      *
+     * @param <T> The object type.
+     * @param <C> The collection type.
      * @param collection the collection (<code>null</code> not permitted).
      * @return A new collection containing clones of all the items in the
      *         specified collection.
