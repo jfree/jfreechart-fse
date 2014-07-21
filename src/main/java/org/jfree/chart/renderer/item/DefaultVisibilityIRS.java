@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * DefaultVisibilityIRS.java
  * -------------------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   -;
@@ -43,19 +43,19 @@ package org.jfree.chart.renderer.item;
 import org.jfree.chart.renderer.AbstractRenderer;
 
 /**
- * Implements a per series default item rendering strategy for the item visibility. 
- * {@link DefaultItemRenderingStrategy}
- * 
- * @author zinsmaie
+ * Implements a per series default item rendering strategy for the item 
+ * visibility. {@link DefaultItemRenderingStrategy}
  */
-public class DefaultVisibilityIRS extends DefaultItemRenderingStrategy implements VisibilityIRS {
+public class DefaultVisibilityIRS extends DefaultItemRenderingStrategy 
+        implements VisibilityIRS {
 
     /** a generated serial id */
     private static final long serialVersionUID = 559211600589929630L;
 
     /**
-     * creates a new rendering strategy for the submitted renderer using its per series properties
-     * @param renderer
+     * creates a new rendering strategy for the submitted renderer using its 
+     * per series properties
+     * @param renderer  the renderer.
      */
     public DefaultVisibilityIRS(AbstractRenderer renderer) {
         super(renderer);
@@ -64,6 +64,7 @@ public class DefaultVisibilityIRS extends DefaultItemRenderingStrategy implement
     /**
      * @return true if the renderer defines the series as visible 
      */
+    @Override
     public boolean getItemVisible(int row, int column) {
         return renderer.isSeriesVisible(row);
     }
