@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------
  * CategoryTableXYDataset.java
  * ---------------------------
- * (C) Copyright 2004-2012, by Andreas Schroeder and Contributors.
+ * (C) Copyright 2004-2014, by Andreas Schroeder and Contributors.
  *
  * Original Author:  Andreas Schroeder;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -245,7 +245,7 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
      * @param series  the series index (zero-based).
      * @param item  the item index (zero-based).
      *
-     * @return The y value (possibly <code>null</code>).
+     * @return The y value (possibly {@code null}).
      */
     @Override
     public Number getY(int series, int item) {
@@ -357,7 +357,7 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
      * Sets the interval width to a fixed value, and sends a
      * {@link DatasetChangeEvent} to all registered listeners.
      *
-     * @param d  the new interval width (must be > 0).
+     * @param d  the new interval width (must be &gt; 0).
      */
     public void setIntervalWidth(double d) {
         this.intervalDelegate.setFixedIntervalWidth(d);
@@ -387,7 +387,7 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset
     /**
      * Tests this dataset for equality with an arbitrary object.
      *
-     * @param obj  the object (<code>null</code> permitted).
+     * @param obj  the object ({@code null} permitted).
      *
      * @return A boolean.
      */
