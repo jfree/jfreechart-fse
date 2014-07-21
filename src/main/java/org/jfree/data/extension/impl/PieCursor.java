@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------
  * PieCursor.java
  * --------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   -;
@@ -44,7 +44,6 @@ import org.jfree.data.extension.DatasetCursor;
 
 /**
  * A DatasetCursor implementation for pie datasets.
- * @author zinsmaie
  */
 public class PieCursor<KEY extends Comparable<KEY>> implements DatasetCursor {
 
@@ -65,7 +64,7 @@ public class PieCursor<KEY extends Comparable<KEY>> implements DatasetCursor {
      * Default pie cursor constructor. Sets the cursor position to the 
      * specified value.
      * 
-     * @param key
+     * @param key  the key.
      */
     public PieCursor(KEY key) {
         this.key = key;
@@ -73,7 +72,7 @@ public class PieCursor<KEY extends Comparable<KEY>> implements DatasetCursor {
 
     /**
      * sets the cursor position to the specified value
-     * @param key
+     * @param key  the key.
      */
     public void setPosition(KEY key) {
         this.key = key;
