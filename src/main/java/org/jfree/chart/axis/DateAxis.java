@@ -358,8 +358,6 @@ public class DateAxis extends ValueAxis implements Cloneable, Serializable {
      * special transformations to occur between a domain of values and the
      * values included in the axis.
      *
-     * @see org.jfree.chart.axis.SegmentedTimeline
-     *
      * @param label  the axis label (<code>null</code> permitted).
      * @param zone  the time zone.
      * @param locale  the locale (<code>null</code> not permitted).
