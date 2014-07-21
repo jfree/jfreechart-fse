@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * DefaultStrokeIRS.java
  * ---------------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   -;
@@ -47,8 +47,6 @@ import org.jfree.chart.renderer.AbstractRenderer;
 /**
  * Implements a per series default item rendering strategy for the item stroke. 
  * {@link DefaultItemRenderingStrategy}
- * 
- * @author zinsmaie
  */
 public class DefaultStrokeIRS extends DefaultItemRenderingStrategy 
         implements StrokeIRS {
@@ -60,7 +58,7 @@ public class DefaultStrokeIRS extends DefaultItemRenderingStrategy
      * Creates a new rendering strategy for the submitted renderer using its 
      * per series properties.
      * 
-     * @param renderer
+     * @param renderer  the renderer.
      */
     public DefaultStrokeIRS(AbstractRenderer renderer) {
         super(renderer);
@@ -69,6 +67,7 @@ public class DefaultStrokeIRS extends DefaultItemRenderingStrategy
     /**
      * @return the item stroke the renderer defines for the series
      */
+    @Override
     public Stroke getItemStroke(int row, int column) {
         return renderer.lookupSeriesStroke(row);
     }
