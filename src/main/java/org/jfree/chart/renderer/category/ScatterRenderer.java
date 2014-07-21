@@ -216,7 +216,7 @@ public class ScatterRenderer extends AbstractCategoryItemRenderer
      * Sets the flag that controls whether outlines are drawn for
      * shapes, and sends a {@link RendererChangeEvent} to all registered
      * listeners.
-     * <p/>
+     * <p>
      * In some cases, shapes look better if they do NOT have an outline, but
      * this flag allows you to set your own preference.
      *
