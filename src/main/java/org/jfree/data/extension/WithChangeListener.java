@@ -27,7 +27,7 @@
  * -----------------------
  * WithChangeListener.java
  * -----------------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   -;
@@ -46,8 +46,6 @@ import org.jfree.data.general.SelectionChangeEvent;
 
 /**
  * DatasetExtensions that support change listeners can implement this interface.
- *  
- * @author zinsmaie
  */
 public interface WithChangeListener<T extends EventListener> {
 
@@ -59,14 +57,14 @@ public interface WithChangeListener<T extends EventListener> {
      * In the latter case a change event should be triggered as soon as the 
      * notify flag is set to true again.
      *  
-     * @param listener
+     * @param listener  the listener.
      */
     public void addChangeListener(T listener);
 
     /**
      * removes a change listener from the dataset extension<br>
      *  
-     * @param listener
+     * @param listener  the listener.
      */
     public void removeChangeListener(T listener);
     

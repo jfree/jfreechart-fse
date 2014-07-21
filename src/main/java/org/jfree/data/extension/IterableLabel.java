@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------
  * IterableLabel.java
  * ------------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, 2014 by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   -;
@@ -43,8 +43,6 @@ package org.jfree.data.extension;
 /**
  * A {@link DatasetLabelExtension} that provides iterators over all data item 
  * positions and over the data item position of a defined label.
- * 
- * @author zinsmaie
  */
 public interface IterableLabel<CURSOR extends DatasetCursor> {
 
@@ -54,7 +52,7 @@ public interface IterableLabel<CURSOR extends DatasetCursor> {
     public DatasetIterator<CURSOR> getIterator();
     
     /**
-     * @param label
+     * @param label  ??
      * @return an iterator over all data item positions with a label 
      * attribute equal to the specified parameter
      */
