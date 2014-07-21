@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * SelectionManager.java
  * ---------------------
- * (C) Copyright 2013, by Michael Zinsmaier and Contributors.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier and Contributors.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -47,15 +47,13 @@ import java.io.Serializable;
 /**
  * Provides methods to handle data item selection based on a selection region
  * or a selection point and to clear the current selection. 
- * 
- * @author zinsmaie
  */
 public interface SelectionManager extends Serializable {
 
     /**
      * selects the data item at the point x,y
-     * @param x
-     * @param y
+     * @param x  the x-coordinate.
+     * @param y  the y-coordinate.
      */
     public void select(double x, double y);
     
