@@ -68,8 +68,6 @@ public class Colors {
      * "i want hue" utility is given in the class description.
      * 
      * @return An array of ten colors (never <code>null</code>). 
-     * 
-     * @since 1.2
      */
     public static Color[] createFancyLightColors() {
         Color[] result = new Color[10]; 
@@ -93,8 +91,6 @@ public class Colors {
      * "i want hue" utility is given in the class description.
      * 
      * @return An array of ten colors (never <code>null</code>). 
-     * 
-     * @since 1.2
      */
     public static Color[] createFancyDarkColors() {
         Color[] result = new Color[10]; 
@@ -118,8 +114,6 @@ public class Colors {
      * in the class description.
      * 
      * @return An array of ten colors (never <code>null</code>). 
-     * 
-     * @since 1.2
      */
     public static Color[] createShadesColors() {
         Color[] result = new Color[10]; 
@@ -143,8 +137,6 @@ public class Colors {
      * in the class description.
      * 
      * @return An array of ten colors (never <code>null</code>). 
-     * 
-     * @since 1.2
      */
     public static Color[] createTarnishColors() {
         Color[] result = new Color[10]; 
@@ -168,8 +160,6 @@ public class Colors {
      * in the class description.
      * 
      * @return An array of ten colors (never <code>null</code>). 
-     * 
-     * @since 1.2
      */
     public static Color[] createPastelColors() {
         Color[] result = new Color[10]; 
@@ -193,8 +183,6 @@ public class Colors {
      * in the class description.
      * 
      * @return An array of ten colors (never <code>null</code>). 
-     * 
-     * @since 1.2
      */
     public static Color[] createPimpColors() {
         Color[] result = new Color[10]; 
@@ -218,8 +206,6 @@ public class Colors {
      * in the class description.
      * 
      * @return An array of ten colors (never <code>null</code>). 
-     * 
-     * @since 1.2
      */
     public static Color[] createIntenseColors() {
         Color[] result = new Color[10]; 
@@ -243,8 +229,6 @@ public class Colors {
      * in the class description.
      * 
      * @return An array of ten colors (never <code>null</code>). 
-     * 
-     * @since 1.2
      */
     public static Color[] createFluoColors() {
         Color[] result = new Color[10]; 
@@ -268,8 +252,6 @@ public class Colors {
      * given in the class description.
      * 
      * @return An array of ten colors (never <code>null</code>). 
-     * 
-     * @since 1.2
      */
     public static Color[] createRedRosesColors() {
         Color[] result = new Color[10]; 
@@ -293,8 +275,6 @@ public class Colors {
      * given in the class description.
      * 
      * @return An array of ten colors (never <code>null</code>). 
-     * 
-     * @since 1.2
      */
     public static Color[] createOchreSandColors() {
         Color[] result = new Color[10]; 
@@ -318,8 +298,6 @@ public class Colors {
      * given in the class description.
      * 
      * @return An array of ten colors (never <code>null</code>). 
-     * 
-     * @since 1.2
      */
     public static Color[] createYellowLimeColors() {
         Color[] result = new Color[10]; 
@@ -343,8 +321,6 @@ public class Colors {
      * given in the class description.
      * 
      * @return An array of ten colors (never <code>null</code>). 
-     * 
-     * @since 1.2
      */
     public static Color[] createGreenMintColors() {
         Color[] result = new Color[10]; 
@@ -368,8 +344,6 @@ public class Colors {
      * given in the class description.
      * 
      * @return An array of ten colors (never <code>null</code>). 
-     * 
-     * @since 1.2
      */
     public static Color[] createIceCubeColors() {
         Color[] result = new Color[10]; 
@@ -393,8 +367,6 @@ public class Colors {
      * given in the class description.
      * 
      * @return An array of ten colors (never <code>null</code>). 
-     * 
-     * @since 1.2
      */
     public static Color[] createBlueOceanColors() {
         Color[] result = new Color[10];
@@ -418,8 +390,6 @@ public class Colors {
      * utility is given in the class description.
      * 
      * @return An array of ten colors (never <code>null</code>). 
-     * 
-     * @since 1.2
      */
     public static Color[] createIndigoNightColors() {
         Color[] result = new Color[10];
@@ -443,8 +413,6 @@ public class Colors {
      * given in the class description.
      * 
      * @return An array of ten colors (never <code>null</code>). 
-     * 
-     * @since 1.2
      */
     public static Color[] createPurpleWineColors() {
         Color[] result = new Color[10];
@@ -483,7 +451,7 @@ public class Colors {
      * ColorBrewer tool.  This is a high-contrast set of colors, good for
      * pie charts.
      * 
-     * http://colorbrewer2.org/?type=qualitative&scheme=Set1&n=9
+     * http://colorbrewer2.org/?type=qualitative&amp;scheme=Set1&amp;n=9
      * 
      * @return A color array.
      */
@@ -505,7 +473,7 @@ public class Colors {
      * Returns a newly created array containing 12 colors from the the 
      * ColorBrewer tool.
      * 
-     * http://colorbrewer2.org/?type=qualitative&scheme=Paired&n=12
+     * http://colorbrewer2.org/?type=qualitative&amp;scheme=Paired&amp;n=12
      * 
      * @return A color array.
      */
@@ -531,7 +499,7 @@ public class Colors {
      * ColorBrewer tool.  Good for pie charts and bar charts, not so good for 
      * scatter plots.
      * 
-     * http://colorbrewer2.org/?type=qualitative&scheme=Set3&n=12 
+     * http://colorbrewer2.org/?type=qualitative&amp;scheme=Set3&amp;n=12 
      * 
      * @return A color array.
      */
