@@ -475,7 +475,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      *
      * @return The tool tip generator (possibly <code>null</code>).
      *
-     * @see #setBaseToolTipGenerator(CategoryToolTipGenerator)
+     * @see #setDefaultToolTipGenerator(CategoryToolTipGenerator)
      */
     @Override
     public CategoryToolTipGenerator getDefaultToolTipGenerator() {
@@ -600,7 +600,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      *
      * @param generator  the URL generator (<code>null</code> permitted).
      *
-     * @see #getDefaultItemURLGenerator()
+     * @see #getDefaultURLGenerator()
      */
     @Override
     public void setDefaultURLGenerator(CategoryURLGenerator generator) {
@@ -614,7 +614,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @param generator  the item URL generator (<code>null</code> permitted).
      * @param notify  notify listeners?
      *
-     * @see #getDefaultItemURLGenerator()
+     * @see #getDefaultURLGenerator()
      */
     @Override
     public void setDefaultURLGenerator(CategoryURLGenerator generator,
