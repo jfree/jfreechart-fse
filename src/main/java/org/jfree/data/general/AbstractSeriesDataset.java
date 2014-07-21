@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------------
  * AbstractSeriesDataset.java
  * --------------------------
- * (C) Copyright 2001-2008, by Object Refinery Limited.
+ * (C) Copyright 2001-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -89,7 +89,7 @@ public abstract class AbstractSeriesDataset extends AbstractDataset
     /**
      * Returns the index of the named series, or -1.
      *
-     * @param seriesKey  the series key (<code>null</code> permitted).
+     * @param seriesKey  the series key ({@code null} permitted).
      *
      * @return The index.
      */
