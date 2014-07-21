@@ -487,7 +487,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * Sets the default tool tip generator and sends a {@link RendererChangeEvent}
      * to all registered listeners.
      *
-     * @param generator  the generator (<code>null</code> permitted).
+     * @param generator  the generator ({@code null} permitted).
      *
      * @see #getDefaultToolTipGenerator()
      */
@@ -500,10 +500,10 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * Sets the base tool tip generator and sends a {@link RendererChangeEvent}
      * to all registered listeners.
      *
-     * @param generator  the generator (<code>null</code> permitted).
+     * @param generator  the generator ({@code null} permitted).
      * @param notify  notify listeners?
      *
-     * @see #getBaseToolTipGenerator()
+     * @see #getDefaultToolTipGenerator()
      */
     @Override
     public void setDefaultToolTipGenerator(XYToolTipGenerator generator,
@@ -770,7 +770,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
      * Returns the range of x-values in the specified dataset, either for 
      * all series or just the visible series (according to the setting of the
      * 'dataBoundsIncludesVisibleSeriesOnly' flag).  This method exists to
-     * support subclasses implementing the {@link findDomainBounds(XYDataset)}
+     * support subclasses implementing the {@link #findDomainBounds(XYDataset)}
      * method.
      * 
      * @param dataset  the dataset (<code>null</code> permitted).
