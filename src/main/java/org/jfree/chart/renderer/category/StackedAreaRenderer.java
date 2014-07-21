@@ -95,7 +95,7 @@ import org.jfree.data.general.DatasetUtilities;
  * JFreeChart Demo Collection:
  * <br><br>
  * <img src="../../../../../images/StackedAreaRendererSample.png"
- * alt="StackedAreaRendererSample.png" />
+ * alt="StackedAreaRendererSample.png">
  */
 public class StackedAreaRenderer extends AreaRenderer
         implements Cloneable, PublicCloneable, Serializable {
