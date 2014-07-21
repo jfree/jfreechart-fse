@@ -196,7 +196,8 @@ public class ChartTransferable implements Transferable {
      *
      * @return The content.
      *
-     * @throws java.awt.datatransfer.UnsupportedFlavorException
+     * @throws java.awt.datatransfer.UnsupportedFlavorException if the flavor is
+     *     not supported.
      * @throws java.io.IOException if there is an IO problem.
      */
     @Override
