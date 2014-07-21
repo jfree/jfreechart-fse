@@ -532,7 +532,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
      *
      * @return The chart background paint (never <code>null</code>).
      *
-     * @see #setChartBackgroundPaint(Paint)
+     * @see #setChartBackgroundPainter(Drawable)
      */
     public Drawable getChartBackgroundPainter() {
         return this.chartBackgroundPainter;
@@ -1406,7 +1406,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable,
 
     /**
      * Applies the attributes of this theme to a {@link FastScatterPlot}.
-     * @param plot
+     * @param plot  the plot.
      */
     protected void applyToFastScatterPlot(FastScatterPlot plot) {
         plot.setDomainGridlinePaint(this.domainGridlinePaint);
