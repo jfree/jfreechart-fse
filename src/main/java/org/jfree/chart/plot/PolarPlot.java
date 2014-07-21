@@ -1086,7 +1086,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable,
      *
      * @return The legend items (possibly <code>null</code>).
      *
-     * @see #setFixedLegendItems(LegendItemCollection)
+     * @see #setFixedLegendItems(java.util.List) 
      */
     public List<LegendItem> getFixedLegendItems() {
         return this.fixedLegendItems;
