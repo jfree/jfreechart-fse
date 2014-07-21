@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2011, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------
  * Dataset.java
  * ------------
- * (C) Copyright 2000-2008, by Object Refinery Limited.
+ * (C) Copyright 2000-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -55,10 +55,6 @@ package org.jfree.data.general;
  * All datasets are required to support the {@link DatasetChangeEvent}
  * mechanism by allowing listeners to register and receive notification of any
  * changes to the dataset.
- * <P>
- * In addition, all datasets must belong to one (and only one)
- * {@link DatasetGroup}.  The group object maintains a reader-writer lock
- * which provides synchronised access to the datasets in multi-threaded code.
  */
 public interface Dataset {
 
