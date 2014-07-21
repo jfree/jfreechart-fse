@@ -111,7 +111,7 @@ import org.jfree.data.xy.XYDataset;
  * JFreeChart demo collection:
  * <br><br>
  * <img src="../../../../../images/StackedXYAreaRendererSample.png"
- * alt="StackedXYAreaRendererSample.png" />
+ * alt="StackedXYAreaRendererSample.png">
  * <br><br>
  * SPECIAL NOTE:  This renderer does not currently handle negative data values
  * correctly.  This should get fixed at some point, but the current workaround
