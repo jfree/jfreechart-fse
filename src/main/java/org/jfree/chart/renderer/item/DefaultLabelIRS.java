@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * DefaultLabelIRS.java
  * --------------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   -;
@@ -48,8 +48,6 @@ import org.jfree.chart.renderer.AbstractRenderer;
 /**
  * Implements a per series default item rendering strategy for labels. 
  * {@link DefaultItemRenderingStrategy}
- * 
- * @author zinsmaie
  */
 public class DefaultLabelIRS extends DefaultItemRenderingStrategy 
         implements LabelIRS {
@@ -61,7 +59,7 @@ public class DefaultLabelIRS extends DefaultItemRenderingStrategy
      * Creates a new rendering strategy for the submitted renderer using its 
      * per series properties.
      * 
-     * @param renderer
+     * @param renderer  the renderer.
      */
     public DefaultLabelIRS(AbstractRenderer renderer) {
         super(renderer);
@@ -71,6 +69,7 @@ public class DefaultLabelIRS extends DefaultItemRenderingStrategy
      * @return the label font the renderer defines for the series (or the base 
      *     item label font if no series font is specified)
      */
+    @Override
     public Font getItemLabelFont(int row, int column) {
         Font result = renderer.getSeriesItemLabelFont(row);
         if (result == null) {
