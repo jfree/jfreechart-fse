@@ -8,11 +8,13 @@ JFreeChart 1.0.x series.  Here are some important notes:
    contributors) feel it is ready to be frozen - that may be in 6 months, or
    it may be in 6 years;
 
--  this code is going to require AT LEAST JDK 1.6.0 to compile and, depending 
+-  Maven is used to build this edition of JFreeChart, and the default build
+   requires JDK 1.8 (because we include JavaFX support in the build);
+
+-  there is an Ant script that will build the code without the JavaFX support
+   classes.  This requires AT LEAST JDK 1.6.0 to compile and, depending 
    on how I (and the other contributors) feel, in the future we may even 
    require JDK 1.7 or even a later version;
-
--  Maven is used to build this edition of JFreeChart;
 
 -  JCommon is no longer a dependency (the subset of classes from JCommon that
    are still used have been incorporated directly in the source tree);
