@@ -2141,7 +2141,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable,
      *
      * @return The legend items (possibly <code>null</code>).
      *
-     * @see #setFixedLegendItems(LegendItemCollection)
+     * @see #setFixedLegendItems(List<LegendItem>)
      */
     public List<LegendItem> getFixedLegendItems() {
         return this.fixedLegendItems;
