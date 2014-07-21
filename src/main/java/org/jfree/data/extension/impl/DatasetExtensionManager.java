@@ -98,6 +98,7 @@ public class DatasetExtensionManager implements Serializable {
     }
     
     /**
+     * @param <T> the extension.
      * @param dataset  the dataset.
      * @param interfaceClass  the interface class.
      * @return the implementation of the interfaceClass for the specified 
