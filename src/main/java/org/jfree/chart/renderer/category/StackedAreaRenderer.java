@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------------
  * StackedAreaRenderer.java
  * ------------------------
- * (C) Copyright 2002-2012, by Dan Rivett (d.rivett@ukonline.co.uk) and
+ * (C) Copyright 2002-2014, by Dan Rivett (d.rivett@ukonline.co.uk) and
  *                          Contributors.
  *
  * Original Author:  Dan Rivett (adapted from AreaRenderer);
@@ -413,6 +413,7 @@ public class StackedAreaRenderer extends AreaRenderer
      * @param dataset  the dataset (<code>null</code> not permitted).
      * @param series  the series index.
      * @param index  the item index.
+     * @param validRows  the row numbers to include.
      *
      * @return An array containing the cumulative negative and positive values
      *     for all series values up to but excluding <code>series</code>
