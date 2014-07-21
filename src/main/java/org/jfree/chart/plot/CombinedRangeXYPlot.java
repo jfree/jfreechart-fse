@@ -155,14 +155,11 @@ public class CombinedRangeXYPlot extends XYPlot
      * @param rangeAxis  the shared axis.
      */
     public CombinedRangeXYPlot(ValueAxis rangeAxis) {
-
         super(null, // no data in the parent plot
               null,
               rangeAxis,
               null);
-
         this.subplots = new java.util.ArrayList<XYPlot>();
-
     }
 
     /**
@@ -658,7 +655,6 @@ public class CombinedRangeXYPlot extends XYPlot
      */
     @Override
     public void handleClick(int x, int y, PlotRenderingInfo info) {
-
         Rectangle2D dataArea = info.getDataArea();
         if (dataArea.contains(x, y)) {
             for (int i = 0; i < this.subplots.size(); i++) {
@@ -667,7 +663,6 @@ public class CombinedRangeXYPlot extends XYPlot
                 subplot.handleClick(x, y, subplotInfo);
             }
         }
-
     }
 
     /**

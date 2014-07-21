@@ -156,14 +156,11 @@ public class CombinedDomainXYPlot extends XYPlot
      * @param domainAxis  the shared axis.
      */
     public CombinedDomainXYPlot(ValueAxis domainAxis) {
-
         super(null,        // no data in the parent plot
             domainAxis,
             null,          // no range axis
             null);         // no rendereer
-
         this.subplots = new java.util.ArrayList<XYPlot>();
-
     }
 
     /**
@@ -174,6 +171,30 @@ public class CombinedDomainXYPlot extends XYPlot
     @Override
     public String getPlotType() {
         return "Combined_Domain_XYPlot";
+    }
+
+    /**
+     * Returns the gap between subplots, measured in Java2D units.
+     *
+     * @return The gap (in Java2D units).
+     *
+     * @see #setGap(double)
+     */
+    public double getGap() {
+        return this.gap;
+    }
+
+    /**
+     * Sets the amount of space between subplots and sends a
+     * {@link PlotChangeEvent} to all registered listeners.
+     *
+     * @param gap  the gap between subplots (in Java2D units).
+     *
+     * @see #getGap()
+     */
+    public void setGap(double gap) {
+        this.gap = gap;
+        fireChangeEvent();
     }
 
     /**
@@ -231,30 +252,6 @@ public class CombinedDomainXYPlot extends XYPlot
     }
 
     /**
-     * Returns the gap between subplots, measured in Java2D units.
-     *
-     * @return The gap (in Java2D units).
-     *
-     * @see #setGap(double)
-     */
-    public double getGap() {
-        return this.gap;
-    }
-
-    /**
-     * Sets the amount of space between subplots and sends a
-     * {@link PlotChangeEvent} to all registered listeners.
-     *
-     * @param gap  the gap between subplots (in Java2D units).
-     *
-     * @see #getGap()
-     */
-    public void setGap(double gap) {
-        this.gap = gap;
-        fireChangeEvent();
-    }
-
-    /**
      * Adds a subplot (with a default 'weight' of 1) and sends a
      * {@link PlotChangeEvent} to all registered listeners.
      * <P>
@@ -278,7 +275,7 @@ public class CombinedDomainXYPlot extends XYPlot
      * must ensure that the subplot has a non-null range axis.
      *
      * @param subplot  the subplot (<code>null</code> not permitted).
-     * @param weight  the weight (must be >= 1).
+     * @param weight  the weight (must be &gt;= 1).
      */
     public void add(XYPlot subplot, int weight) {
         ParamChecks.nullNotPermitted(subplot, "subplot");
@@ -339,8 +336,7 @@ public class CombinedDomainXYPlot extends XYPlot
     public List<XYPlot> getSubplots() {
         if (this.subplots != null) {
             return Collections.unmodifiableList(this.subplots);
-        }
-        else {
+        } else {
             return Collections.EMPTY_LIST;
         }
     }
@@ -355,7 +351,7 @@ public class CombinedDomainXYPlot extends XYPlot
      */
     @Override
     protected AxisSpace calculateAxisSpace(Graphics2D g2,
-                                           Rectangle2D plotArea) {
+            Rectangle2D plotArea) {
 
         AxisSpace space = new AxisSpace();
         PlotOrientation orientation = getOrientation();
@@ -366,13 +362,11 @@ public class CombinedDomainXYPlot extends XYPlot
             if (orientation == PlotOrientation.HORIZONTAL) {
                 space.setLeft(fixed.getLeft());
                 space.setRight(fixed.getRight());
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 space.setTop(fixed.getTop());
                 space.setBottom(fixed.getBottom());
             }
-        }
-        else {
+        } else {
             ValueAxis xAxis = getDomainAxis();
             RectangleEdge xEdge = Plot.resolveDomainAxisLocation(
                     getDomainAxisLocation(), orientation);
@@ -395,8 +389,7 @@ public class CombinedDomainXYPlot extends XYPlot
         double usableSize = 0.0;
         if (orientation == PlotOrientation.HORIZONTAL) {
             usableSize = adjustedPlotArea.getWidth() - this.gap * (n - 1);
-        }
-        else if (orientation == PlotOrientation.VERTICAL) {
+        } else if (orientation == PlotOrientation.VERTICAL) {
             usableSize = adjustedPlotArea.getHeight() - this.gap * (n - 1);
         }
 
@@ -574,7 +567,7 @@ public class CombinedDomainXYPlot extends XYPlot
      * specified percentage.
      *
      * @param panRange the distance to pan (as a percentage of the axis length).
-     * @param info the plot info
+     * @param info  the plot info ({@code null} not permitted).
      * @param source the source point where the pan action started.
      *
      * @since 1.0.15

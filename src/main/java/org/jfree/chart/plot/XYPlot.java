@@ -5195,9 +5195,9 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
     /**
      * Returns the fixed legend items, if any.
      *
-     * @return The legend items (possibly <code>null</code>).
+     * @return The legend items (possibly {@code null}).
      *
-     * @see #setFixedLegendItems(LegendItemCollection)
+     * @see #setFixedLegendItems(java.util.List) 
      */
     public List<LegendItem> getFixedLegendItems() {
         return this.fixedLegendItems;
