@@ -31,6 +31,7 @@
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Arnaud Lelievre;
+ *                   Ulrich Voigt (patch #307);
  *
  * Changes
  * -------
@@ -94,6 +95,7 @@ import org.jfree.chart.util.ArrayUtils;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtils;
 import org.jfree.chart.event.PlotChangeEvent;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.ResourceBundleWrapper;
 import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
@@ -193,12 +195,8 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
                            ValueAxis domainAxis, ValueAxis rangeAxis) {
 
         super();
-        if (domainAxis == null) {
-            throw new IllegalArgumentException("Null 'domainAxis' argument.");
-        }
-        if (rangeAxis == null) {
-            throw new IllegalArgumentException("Null 'rangeAxis' argument.");
-        }
+        ParamChecks.nullNotPermitted(domainAxis, "domainAxis");
+        ParamChecks.nullNotPermitted(rangeAxis, "rangeAxis");
 
         this.data = data;
         this.xDataRange = calculateXDataRange(data);
@@ -287,9 +285,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      * @see #getDomainAxis()
      */
     public void setDomainAxis(ValueAxis axis) {
-        if (axis == null) {
-            throw new IllegalArgumentException("Null 'axis' argument.");
-        }
+        ParamChecks.nullNotPermitted(axis, "axis");
         this.domainAxis = axis;
         fireChangeEvent();
     }
@@ -344,9 +340,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      * @see #getPaint()
      */
     public void setPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.paint = paint;
         fireChangeEvent();
     }
@@ -401,9 +395,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      * @see #getDomainGridlineStroke()
      */
     public void setDomainGridlineStroke(Stroke stroke) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         this.domainGridlineStroke = stroke;
         fireChangeEvent();
     }
@@ -485,9 +477,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      * @see #getRangeGridlineStroke()
      */
     public void setRangeGridlineStroke(Stroke stroke) {
-        if (stroke == null) {
-            throw new IllegalArgumentException("Null 'stroke' argument.");
-        }
+        ParamChecks.nullNotPermitted(stroke, "stroke");
         this.rangeGridlineStroke = stroke;
         fireChangeEvent();
     }
@@ -534,8 +524,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      */
     @Override
     public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
-                     PlotState parentState,
-                     PlotRenderingInfo info) {
+            PlotState parentState, PlotRenderingInfo info) {
 
         // set up info collection...
         if (info != null) {
@@ -833,8 +822,8 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      * @param source  the source point.
      */
     @Override
-    public void zoomRangeAxes(double factor,
-                              PlotRenderingInfo info, Point2D source) {
+    public void zoomRangeAxes(double factor, PlotRenderingInfo info, 
+            Point2D source) {
         this.rangeAxis.resizeRange(factor);
     }
 
@@ -970,7 +959,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
             return;
         }
         double length = this.domainAxis.getRange().getLength();
-        double adj = -percent * length;
+        double adj = percent * length;
         if (this.domainAxis.isInverted()) {
             adj = -adj;
         }
