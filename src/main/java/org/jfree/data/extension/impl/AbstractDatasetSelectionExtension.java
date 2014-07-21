@@ -99,7 +99,7 @@ public abstract class AbstractDatasetSelectionExtension<CURSOR extends
     
     /** 
      * {@link DatasetSelectionExtension#addChangeListener(
-     * org.jfree.data.general.SelectionChangeListener)}
+     * java.util.EventListener)}
      */
     @Override
     public void addChangeListener(SelectionChangeListener<CURSOR> listener) {
@@ -137,6 +137,7 @@ public abstract class AbstractDatasetSelectionExtension<CURSOR extends
     /**
      * {@link WithChangeListener#isNotify()}
      */
+    @Override
    public boolean isNotify() {
        return this.notify;
    }
