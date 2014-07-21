@@ -2290,7 +2290,7 @@ public class PiePlot extends Plot implements Cloneable, Serializable {
 
     /**
      * Handles a mouse wheel rotation (this method is intended for use by the
-     * {@link org.jfree.chart.MouseWheelHandler} class).
+     * {@code MouseWheelHandler} class).
      *
      * @param rotateClicks  the number of rotate clicks on the the mouse wheel.
      *
