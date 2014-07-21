@@ -80,7 +80,7 @@ import org.jfree.data.category.CategoryDataset;
  * Demo Collection:
  * <br><br>
  * <img src="../../../../../images/LevelRendererSample.png"
- * alt="LevelRendererSample.png" />
+ * alt="LevelRendererSample.png">
  */
 public class LevelRenderer extends AbstractCategoryItemRenderer
         implements Cloneable, PublicCloneable, Serializable {
