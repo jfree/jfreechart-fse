@@ -164,7 +164,7 @@ public class CombinedRangeCategoryPlot extends CategoryPlot
      * axis for the subplot will be set to <code>null</code>.
      *
      * @param subplot  the subplot (<code>null</code> not permitted).
-     * @param weight  the weight (must be >= 1).
+     * @param weight  the weight (must be &gt;= 1).
      */
     public void add(CategoryPlot subplot, int weight) {
         ParamChecks.nullNotPermitted(subplot, "subplot");
