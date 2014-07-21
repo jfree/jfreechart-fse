@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------------------
  * CircularRegionSelectionHandler.java
  * -----------------------------------
- * (C) Copyright 2013, by Michael Zinsmaier and Contributors.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier and Contributors.
  *
  * Original Author:  Michael Zinsmaier;                 
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -59,8 +59,6 @@ import org.jfree.chart.ChartPanel;
  * is a circle that can be expanded by dragging the mouse away from the starting
  * point. Will only work together with a <code>ChartPanel</code> as the event 
  * source.
- * 
- * @author zinsmaie
  */
 public class CircularRegionSelectionHandler extends RegionSelectionHandler {
 
@@ -117,6 +115,7 @@ public class CircularRegionSelectionHandler extends RegionSelectionHandler {
      * 
      * @param e the event.
      */
+    @Override
     public void mousePressed(MouseEvent e) {
         if (!(e.getSource() instanceof ChartPanel)) {
             return;
@@ -141,6 +140,7 @@ public class CircularRegionSelectionHandler extends RegionSelectionHandler {
      * 
      * @param e the event.
      */
+    @Override
     public void mouseDragged(MouseEvent e) {
         ChartPanel panel = (ChartPanel) e.getSource();
         if (this.startPoint == null) {
@@ -170,8 +170,9 @@ public class CircularRegionSelectionHandler extends RegionSelectionHandler {
      * the event source. The SelectionManager is then responsible for the 
      * processing of the geometric selection.
      * 
-     * @param event  the event.
+     * @param e  the event.
      */
+    @Override
     public void mouseReleased(MouseEvent e) {
         ChartPanel panel = (ChartPanel) e.getSource();
         if (this.startPoint == null) {
