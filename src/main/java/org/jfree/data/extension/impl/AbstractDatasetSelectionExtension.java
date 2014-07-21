@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------------------------
  * AbstractDatasetSelectionExtension.java
  * --------------------------------------
- * (C) Copyright 2013, by Michael Zinsmaier and Contributors.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier and Contributors.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -55,8 +55,6 @@ import org.jfree.data.general.SelectionChangeListener;
 /**
  * Base class for separate selection extension implementations. Provides 
  * notification handling and listener support. 
- *  
- * @author zinsmaie
  */
 public abstract class AbstractDatasetSelectionExtension<CURSOR extends 
         DatasetCursor, DATASET extends Dataset> implements 
@@ -94,21 +92,25 @@ public abstract class AbstractDatasetSelectionExtension<CURSOR extends
     /**
      * {@link DatasetExtension#getDataset}
      */
+    @Override
     public DATASET getDataset() {
         return this.dataset;
     }
     
     /** 
-     * {@link DatasetSelectionExtension#addChangeListener(org.jfree.data.general.SelectionChangeListener)
+     * {@link DatasetSelectionExtension#addChangeListener(
+     * org.jfree.data.general.SelectionChangeListener)}
      */
+    @Override
     public void addChangeListener(SelectionChangeListener<CURSOR> listener) {
         this.notify = true;
            this.listenerList.add(SelectionChangeListener.class, listener);
     }
 
     /**
-     * {@link WithChangeListener#removeChangeListener(EventListener))
+     * {@link WithChangeListener#removeChangeListener(EventListener)}
      */
+    @Override
     public void removeChangeListener(SelectionChangeListener<CURSOR> listener) {
            this.listenerList.remove(SelectionChangeListener.class, listener);
     }
@@ -116,6 +118,7 @@ public abstract class AbstractDatasetSelectionExtension<CURSOR extends
     /**
      * {@link WithChangeListener#setNotify(boolean)}
      */
+    @Override
     public void setNotify(boolean notify) {
         if (this.notify != notify) {
             if (notify == false) {
