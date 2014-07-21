@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------------
  * LabelChangeListener.java
  * ------------------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   -;
@@ -46,9 +46,7 @@ import org.jfree.data.extension.DatasetCursor;
 
 /**
  * A listener that wants to be informed about changes of the label attribute of 
- * data items
- * 
- * @author zinsmaie
+ * data items.
  */
 
 public interface LabelChangeListener<CURSOR extends DatasetCursor> 
@@ -56,7 +54,7 @@ public interface LabelChangeListener<CURSOR extends DatasetCursor>
 
     /**
      * called if at least one label of an observed data item changes
-     * @param event
+     * @param event  event information.
      */
     public void labelChanged(LabelChangeEvent<CURSOR> event);
 
