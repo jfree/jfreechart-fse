@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2009, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------------
  * AbstractMouseHandler.java
  * -------------------------
- * (C) Copyright 2009, by Object Refinery Limited.
+ * (C) Copyright 2009-2014 by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -69,6 +69,8 @@ public abstract class AbstractMouseHandler implements MouseListener,
     
     /**
      * Constructing with modifier.
+     * 
+     * @param modifier  the modifier.
      */
     public AbstractMouseHandler(int modifier) {
         this.modifier = modifier;
