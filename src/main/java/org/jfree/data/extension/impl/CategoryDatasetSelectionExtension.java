@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------------------------
  * CategoryDatasetSelectionExtension.java
  * --------------------------------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   -;
@@ -98,8 +98,8 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends
      * adds an initial selection change listener, e.g. a plot that should be 
      * redrawn on selection changes.
      * 
-     * @param dataset
-     * @param initialListener
+     * @param dataset  the underlying dataset.
+     * @param initialListener  the initial listener.
      */
     public CategoryDatasetSelectionExtension(CategoryDataset dataset, 
             SelectionChangeListener<CategoryCursor<ROW_KEY, COLUMN_KEY>> 
@@ -116,6 +116,7 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends
      * 
      * @return The selection status.
      */
+    @Override
     public boolean isSelected(CategoryCursor<ROW_KEY, COLUMN_KEY> cursor) {
         return (TRUE == this.selectionData.getValue(cursor.rowKey, 
                 cursor.columnKey));
@@ -124,6 +125,7 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends
     /**
      * {@link DatasetSelectionExtension#setSelected(DatasetCursor, boolean)}
      */
+    @Override
     public void setSelected(CategoryCursor<ROW_KEY, COLUMN_KEY> cursor, 
             boolean selected) {
         if (selected) {
@@ -137,6 +139,7 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends
     /**
      * {@link DatasetSelectionExtension#clearSelection()}
      */
+    @Override
     public void clearSelection() {
         initSelection();
     }
@@ -147,6 +150,7 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends
      * 
      * @param event  details of the change event.
      */
+    @Override
     public void datasetChanged(DatasetChangeEvent event) {
         // TODO : we could in fact try to preserve the selection state of
         // items that still remain in the dataset.
@@ -176,6 +180,7 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends
     /**
      * {@link IterableSelection#getIterator()}
      */
+    @Override
     public DatasetIterator<CategoryCursor<ROW_KEY, COLUMN_KEY>> getIterator() {
         return new CategoryDatasetSelectionIterator();
     }
@@ -183,6 +188,7 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends
     /**
      * {@link IterableSelection#getSelectionIterator(boolean)}
      */
+    @Override
     public DatasetIterator<CategoryCursor<ROW_KEY, COLUMN_KEY>> 
             getSelectionIterator(boolean selected) {
         return new CategoryDatasetSelectionIterator(selected);
@@ -238,6 +244,7 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends
         /** 
          * {@link Iterator#hasNext() 
          */
+        @Override
         public boolean hasNext() {
             if (nextPosition()[0] != -1) {
                 return true;
@@ -262,6 +269,7 @@ public class CategoryDatasetSelectionExtension<ROW_KEY extends
         /**
          * Iterator remove operation is not supported.
          */
+        @Override
         public void remove() {
             throw new UnsupportedOperationException();
         }
