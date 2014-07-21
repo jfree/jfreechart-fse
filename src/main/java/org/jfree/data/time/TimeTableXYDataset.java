@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * TimeTableXYDataset.java
  * -----------------------
- * (C) Copyright 2004-2012, by Andreas Schroeder and Contributors.
+ * (C) Copyright 2004-2014, by Andreas Schroeder and Contributors.
  *
  * Original Author:  Andreas Schroeder;
  * Contributor(s):   David Gilbert (for Object Refinery Limited);
@@ -75,8 +75,8 @@ import org.jfree.data.xy.TableXYDataset;
  * A dataset for regular time periods that implements the
  * {@link TableXYDataset} interface.  Note that the {@link TableXYDataset}
  * interface requires all series to share the same set of x-values.  When
- * adding a new item <code>(x, y)</code> to one series, all other series
- * automatically get a new item <code>(x, null)</code> unless a non-null item
+ * adding a new item {@code (x, y)} to one series, all other series
+ * automatically get a new item {@code (x, null)} unless a non-null item
  * has already been specified.
  *
  * @see org.jfree.data.xy.TableXYDataset
@@ -122,7 +122,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
     /**
      * Creates a new dataset with the given time zone.
      *
-     * @param zone  the time zone to use (<code>null</code> not permitted).
+     * @param zone  the time zone to use ({@code null} not permitted).
      */
     public TimeTableXYDataset(TimeZone zone) {
         // defer argument checking
@@ -132,8 +132,8 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
     /**
      * Creates a new dataset with the given time zone and locale.
      *
-     * @param zone  the time zone to use (<code>null</code> not permitted).
-     * @param locale  the locale to use (<code>null</code> not permitted).
+     * @param zone  the time zone to use ({@code null} not permitted).
+     * @param locale  the locale to use ({@code null} not permitted).
      */
     public TimeTableXYDataset(TimeZone zone, Locale locale) {
         if (zone == null) {
@@ -182,7 +182,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * Returns the position within each time period that is used for the X
      * value.
      *
-     * @return The anchor position (never <code>null</code>).
+     * @return The anchor position (never {@code null}).
      *
      * @see #setXPosition(TimePeriodAnchor)
      */
@@ -194,7 +194,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * Sets the position within each time period that is used for the X values,
      * then sends a {@link DatasetChangeEvent} to all registered listeners.
      *
-     * @param anchor  the anchor position (<code>null</code> not permitted).
+     * @param anchor  the anchor position ({@code null} not permitted).
      *
      * @see #getXPosition()
      */
@@ -224,10 +224,10 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * Adds a new data item to the dataset and, if requested, sends a
      * {@link DatasetChangeEvent} to all registered listeners.
      *
-     * @param period  the time period (<code>null</code> not permitted).
-     * @param y  the value for this period (<code>null</code> permitted).
+     * @param period  the time period ({@code null} not permitted).
+     * @param y  the value for this period ({@code null} permitted).
      * @param seriesName  the name of the series to add the value
-     *                    (<code>null</code> not permitted).
+     *                    ({@code null} not permitted).
      * @param notify  whether dataset listener are notified or not.
      *
      * @see #remove(TimePeriod, Comparable, boolean)
@@ -252,9 +252,9 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * Removes an existing data item from the dataset.
      *
      * @param period  the (existing!) time period of the value to remove
-     *                (<code>null</code> not permitted).
+     *                ({@code null} not permitted).
      * @param seriesName  the (existing!) series name to remove the value
-     *                    (<code>null</code> not permitted).
+     *                    ({@code null} not permitted).
      *
      * @see #add(TimePeriod, double, Comparable)
      */
@@ -267,9 +267,9 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * sends a {@link DatasetChangeEvent} to all registered listeners.
      *
      * @param period  the (existing!) time period of the value to remove
-     *                (<code>null</code> not permitted).
+     *                ({@code null} not permitted).
      * @param seriesName  the (existing!) series name to remove the value
-     *                    (<code>null</code> not permitted).
+     *                    ({@code null} not permitted).
      * @param notify  whether dataset listener are notified or not.
      *
      * @see #add(TimePeriod, double, Comparable)
@@ -299,7 +299,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * Returns the time period for the specified item.  Bear in mind that all
      * series share the same set of time periods.
      *
-     * @param item  the item index (0 <= i <= {@link #getItemCount()}).
+     * @param item  the item index (0 &lt;= i &lt;= {@link #getItemCount()}).
      *
      * @return The time period.
      */
@@ -448,7 +448,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
      * @param series  the series (zero-based index).
      * @param item  the item (zero-based index).
      *
-     * @return The y-value (possibly <code>null</code>).
+     * @return The y-value (possibly {@code null}).
      */
     @Override
     public Number getY(int series, int item) {
@@ -570,7 +570,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset
     /**
      * Tests this dataset for equality with an arbitrary object.
      *
-     * @param obj  the object (<code>null</code> permitted).
+     * @param obj  the object ({@code null} permitted).
      *
      * @return A boolean.
      */
