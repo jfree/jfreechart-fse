@@ -96,7 +96,7 @@ import org.jfree.data.statistics.StatisticalCategoryDataset;
  * included in the JFreeChart Demo Collection:
  * <br><br>
  * <img src="../../../../../images/StatisticalLineRendererSample.png"
- * alt="StatisticalLineRendererSample.png" />
+ * alt="StatisticalLineRendererSample.png">
  */
 public class StatisticalLineAndShapeRenderer extends LineAndShapeRenderer
         implements Cloneable, PublicCloneable, Serializable {
