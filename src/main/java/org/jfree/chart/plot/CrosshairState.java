@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------
  * CrosshairState.java
  * -------------------
- * (C) Copyright 2002-2008, by Object Refinery Limited.
+ * (C) Copyright 2002-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -352,7 +352,7 @@ public class CrosshairState {
      *
      * @see #getCrosshairX()
      * @see #setCrosshairY(double)
-     * @see #updateCrosshairPoint(double, double, double, double,
+     * @see #updateCrosshairPoint(double, double, int, int, double, double,
      * PlotOrientation)
      */
     public void setCrosshairX(double x) {
@@ -378,7 +378,7 @@ public class CrosshairState {
      *
      * @see #getCrosshairY()
      * @see #setCrosshairX(double)
-     * @see #updateCrosshairPoint(double, double, double, double,
+     * @see #updateCrosshairPoint(double, double, int, int, double, double,
      * PlotOrientation)
      */
     public void setCrosshairY(double y) {
