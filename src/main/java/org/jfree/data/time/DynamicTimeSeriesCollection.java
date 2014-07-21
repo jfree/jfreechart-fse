@@ -673,7 +673,7 @@ public class DynamicTimeSeriesCollection extends AbstractIntervalXYDataset
      * @param  newData  the data
      * @param  insertionIndex  the index value at which to put it
      * @param  refresh  value of n in "refresh the display on every nth call"
-     *                 (ignored if <= 0 )
+     *                 (ignored if &lt;= 0)
      */
      public void appendData(float[] newData, int insertionIndex, int refresh) {
          int nDataPoints = newData.length;
