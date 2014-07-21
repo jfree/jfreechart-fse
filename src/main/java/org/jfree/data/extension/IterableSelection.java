@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * IterableSelection.java
  * ----------------------
- * (C) Copyright 2013, by Michael Zinsmaier.
+ * (C) Copyright 2013, 2014, by Michael Zinsmaier.
  *
  * Original Author:  Michael Zinsmaier;
  * Contributor(s):   -;
@@ -44,8 +44,6 @@ package org.jfree.data.extension;
  * Marks a {@link DatasetSelectionExtension} that provides iterators over all 
  * data item positions and over the data item position of a all 
  * (selected/unselected) items
- * 
- * @author zinsmaie
  */
 public interface IterableSelection<CURSOR extends DatasetCursor> {
 
@@ -55,7 +53,7 @@ public interface IterableSelection<CURSOR extends DatasetCursor> {
     public DatasetIterator<CURSOR> getIterator();
     
     /**
-     * @param selected
+     * @param selected  selected?
      * @return an iterator over the data item positions of all 
      *     (selected/unselected) items
      */
