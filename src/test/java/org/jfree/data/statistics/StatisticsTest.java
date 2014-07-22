@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------
  * StatisticsTests.java
  * --------------------
- * (C) Copyright 2004-2008, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -416,15 +416,13 @@ public class StatisticsTest  {
      */
     @Test
     public void testGetStdDev() {
-
         // try null argument
-
         try {
             Statistics.getStdDev(null);
             fail("IllegalArgumentException should have been thrown on null key");
         }
         catch (IllegalArgumentException e) {
-            assertEquals("Null 'data' array.", e.getMessage());
+            assertEquals("Null 'data' argument.", e.getMessage());
         }
 
         // try zero length array
