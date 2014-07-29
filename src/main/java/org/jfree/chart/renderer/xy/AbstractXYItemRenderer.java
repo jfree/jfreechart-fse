@@ -131,6 +131,7 @@ import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Paint;
+import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
@@ -171,7 +172,6 @@ import org.jfree.chart.plot.CrosshairState;
 import org.jfree.chart.plot.DrawingSupplier;
 import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.Marker;
-import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.ValueMarker;
@@ -1062,7 +1062,11 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
 
         g2.setPaint(plot.getDomainGridlinePaint());
         g2.setStroke(plot.getDomainGridlineStroke());
+        Object saved = g2.getRenderingHint(RenderingHints.KEY_STROKE_CONTROL);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, 
+                RenderingHints.VALUE_STROKE_NORMALIZE);
         g2.draw(line);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, saved);
     }
 
     /**
@@ -1091,19 +1095,21 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         Line2D line = null;
         double v = axis.valueToJava2D(value, dataArea,
                 plot.getDomainAxisEdge());
-        if (orientation == PlotOrientation.HORIZONTAL) {
+        if (orientation.isHorizontal()) {
             line = new Line2D.Double(dataArea.getMinX(), v, dataArea.getMaxX(),
                     v);
-        }
-        else if (orientation == PlotOrientation.VERTICAL) {
+        } else if (orientation.isVertical()) {
             line = new Line2D.Double(v, dataArea.getMinY(), v,
                     dataArea.getMaxY());
         }
 
         g2.setPaint(paint);
         g2.setStroke(stroke);
+        Object saved = g2.getRenderingHint(RenderingHints.KEY_STROKE_CONTROL);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, 
+                RenderingHints.VALUE_STROKE_NORMALIZE);
         g2.draw(line);
-
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, saved);
     }
 
     /**
@@ -1133,16 +1139,18 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
         if (orientation == PlotOrientation.HORIZONTAL) {
             line = new Line2D.Double(v, dataArea.getMinY(), v,
                     dataArea.getMaxY());
-        }
-        else if (orientation == PlotOrientation.VERTICAL) {
+        } else if (orientation == PlotOrientation.VERTICAL) {
             line = new Line2D.Double(dataArea.getMinX(), v,
                     dataArea.getMaxX(), v);
         }
 
         g2.setPaint(paint);
         g2.setStroke(stroke);
+        Object saved = g2.getRenderingHint(RenderingHints.KEY_STROKE_CONTROL);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, 
+                RenderingHints.VALUE_STROKE_NORMALIZE);
         g2.draw(line);
-
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, saved);
     }
 
     /**
