@@ -115,6 +115,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.font.LineMetrics;
 import java.awt.geom.AffineTransform;
@@ -505,7 +506,7 @@ public abstract class ValueAxis extends Axis
     /**
      * Draws an axis line at the current cursor position and edge.
      *
-     * @param g2  the graphics device.
+     * @param g2  the graphics device ({@code null} not permitted).
      * @param cursor  the cursor position.
      * @param dataArea  the data area.
      * @param edge  the edge.
@@ -514,25 +515,27 @@ public abstract class ValueAxis extends Axis
     protected void drawAxisLine(Graphics2D g2, double cursor,
                                 Rectangle2D dataArea, RectangleEdge edge) {
         Line2D axisLine = null;
+        double c = cursor;
         if (edge == RectangleEdge.TOP) {
-            axisLine = new Line2D.Double(dataArea.getX(), cursor,
-                    dataArea.getMaxX(), cursor);
-        }
-        else if (edge == RectangleEdge.BOTTOM) {
-            axisLine = new Line2D.Double(dataArea.getX(), cursor,
-                    dataArea.getMaxX(), cursor);
-        }
-        else if (edge == RectangleEdge.LEFT) {
-            axisLine = new Line2D.Double(cursor, dataArea.getY(), cursor,
+            axisLine = new Line2D.Double(dataArea.getX(), c, dataArea.getMaxX(),
+                    c);
+        } else if (edge == RectangleEdge.BOTTOM) {
+            axisLine = new Line2D.Double(dataArea.getX(), c, dataArea.getMaxX(),
+                    c);
+        } else if (edge == RectangleEdge.LEFT) {
+            axisLine = new Line2D.Double(c, dataArea.getY(), c, 
                     dataArea.getMaxY());
-        }
-        else if (edge == RectangleEdge.RIGHT) {
-            axisLine = new Line2D.Double(cursor, dataArea.getY(), cursor,
+        } else if (edge == RectangleEdge.RIGHT) {
+            axisLine = new Line2D.Double(c, dataArea.getY(), c,
                     dataArea.getMaxY());
         }
         g2.setPaint(getAxisLinePaint());
         g2.setStroke(getAxisLineStroke());
+        Object saved = g2.getRenderingHint(RenderingHints.KEY_STROKE_CONTROL);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, 
+                RenderingHints.VALUE_STROKE_NORMALIZE);
         g2.draw(axisLine);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, saved);
 
         boolean drawUpOrRight = false;
         boolean drawDownOrLeft = false;
@@ -547,8 +550,7 @@ public abstract class ValueAxis extends Axis
         if (this.negativeArrowVisible) {
             if (this.inverted) {
                 drawUpOrRight = true;
-            }
-            else {
+            } else {
                 drawDownOrLeft = true;
             }
         }
@@ -560,8 +562,7 @@ public abstract class ValueAxis extends Axis
                 x = dataArea.getMaxX();
                 y = cursor;
                 arrow = this.rightArrow;
-            }
-            else if (edge == RectangleEdge.LEFT
+            } else if (edge == RectangleEdge.LEFT
                     || edge == RectangleEdge.RIGHT) {
                 x = cursor;
                 y = dataArea.getMinY();
@@ -659,6 +660,9 @@ public abstract class ValueAxis extends Axis
         List<ValueTick> ticks = refreshTicks(g2, state, dataArea, edge);
         state.setTicks(ticks);
         g2.setFont(getTickLabelFont());
+        Object saved = g2.getRenderingHint(RenderingHints.KEY_STROKE_CONTROL);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, 
+                RenderingHints.VALUE_STROKE_NORMALIZE);
         for (ValueTick tick : ticks) {
             if (isTickLabelsVisible()) {
                 g2.setPaint(getTickLabelPaint());
@@ -713,6 +717,7 @@ public abstract class ValueAxis extends Axis
                 g2.draw(mark);
             }
         }
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, saved);
 
         // need to work out the space used by the tick labels...
         // so we can update the cursor...
@@ -722,18 +727,15 @@ public abstract class ValueAxis extends Axis
                 used += findMaximumTickLabelWidth(ticks, g2, plotArea,
                         isVerticalTickLabels());
                 state.cursorLeft(used);
-            }
-            else if (edge == RectangleEdge.RIGHT) {
+            } else if (edge == RectangleEdge.RIGHT) {
                 used = findMaximumTickLabelWidth(ticks, g2, plotArea,
                         isVerticalTickLabels());
                 state.cursorRight(used);
-            }
-            else if (edge == RectangleEdge.TOP) {
+            } else if (edge == RectangleEdge.TOP) {
                 used = findMaximumTickLabelHeight(ticks, g2, plotArea,
                         isVerticalTickLabels());
                 state.cursorUp(used);
-            }
-            else if (edge == RectangleEdge.BOTTOM) {
+            } else if (edge == RectangleEdge.BOTTOM) {
                 used = findMaximumTickLabelHeight(ticks, g2, plotArea,
                         isVerticalTickLabels());
                 state.cursorDown(used);
@@ -1569,16 +1571,18 @@ public abstract class ValueAxis extends Axis
     public void zoomRange(double lowerPercent, double upperPercent) {
         double start = this.range.getLowerBound();
         double length = this.range.getLength();
-        Range adjusted;
+        double r0, r1;
         if (isInverted()) {
-            adjusted = new Range(start + (length * (1 - upperPercent)),
-                                 start + (length * (1 - lowerPercent)));
+            r0 = start + (length * (1 - upperPercent));
+            r1 = start + (length * (1 - lowerPercent));
         }
         else {
-            adjusted = new Range(start + length * lowerPercent,
-                    start + length * upperPercent);
+            r0 = start + length * lowerPercent;
+            r1 = start + length * upperPercent;
         }
-        setRange(adjusted);
+        if ((r1 > r0) && !Double.isInfinite(r1 - r0)) {
+            setRange(new Range(r0, r1));
+        }
     }
 
     /**
