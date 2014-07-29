@@ -242,6 +242,7 @@ import java.awt.Composite;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Line2D;
@@ -624,9 +625,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      */
     public XYPlot(XYDataset dataset, ValueAxis domainAxis, ValueAxis rangeAxis,
             XYItemRenderer renderer) {
-
         super();
-
         this.orientation = PlotOrientation.VERTICAL;
         this.weight = 1;  // only relevant when this is a subplot
         this.axisOffset = RectangleInsets.ZERO_INSETS;
@@ -1352,7 +1351,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * Returns the dataset with the specified index, or {@code null} if there
      * is no dataset with that index.
      *
-     * @param index  the dataset index.
+     * @param index  the dataset index (must be &gt;= 0).
      *
      * @return The dataset (possibly {@code null}).
      *
@@ -1366,7 +1365,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * Sets the primary dataset for the plot, replacing the existing dataset if
      * there is one.
      *
-     * @param dataset  the dataset (<code>null</code> permitted).
+     * @param dataset  the dataset ({@code null} permitted).
      *
      * @see #getDataset()
      * @see #setDataset(int, XYDataset)
@@ -1376,9 +1375,10 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
     }
 
     /**
-     * Sets a dataset for the plot.
+     * Sets a dataset for the plot and sends a change event to all registered
+     * listeners.
      *
-     * @param index  the dataset index.
+     * @param index  the dataset index (must be &gt;= 0).
      * @param dataset  the dataset (<code>null</code> permitted).
      *
      * @see #getDataset(int)
@@ -1544,11 +1544,11 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
     }
 
     /**
-     * Returns the renderer for a dataset, or <code>null</code>.
+     * Returns the renderer with the specified index, or {@code null}.
      *
-     * @param index  the renderer index.
+     * @param index  the renderer index (must be &gt;= 0).
      *
-     * @return The renderer (possibly <code>null</code>).
+     * @return The renderer (possibly {@code null}).
      *
      * @see #setRenderer(int, XYItemRenderer)
      */
@@ -1561,7 +1561,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * all registered listeners.  If the renderer is set to <code>null</code>, 
      * no data will be displayed.
      *
-     * @param renderer  the renderer (<code>null</code> permitted).
+     * @param renderer  the renderer ({@code null} permitted).
      *
      * @see #getRenderer()
      */
@@ -1575,7 +1575,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * have its own renderer, you should not use one renderer for multiple 
      * datasets.
      *
-     * @param index  the index.
+     * @param index  the index (must be &gt;= 0).
      * @param renderer  the renderer.
      *
      * @see #getRenderer(int)
@@ -1590,7 +1590,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * each dataset should have its own renderer, you should not use one 
      * renderer for multiple datasets.
      *
-     * @param index  the index.
+     * @param index  the index (must be &gt;= 0).
      * @param renderer  the renderer.
      * @param notify  notify listeners?
      *
@@ -4129,25 +4129,28 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
             PlotOrientation orientation, double value, ValueAxis axis,
             Stroke stroke, Paint paint) {
 
-        if (axis.getRange().contains(value)) {
-            Line2D line;
-            if (orientation == PlotOrientation.VERTICAL) {
-                double xx = axis.valueToJava2D(value, dataArea,
-                        RectangleEdge.BOTTOM);
-                line = new Line2D.Double(xx, dataArea.getMinY(), xx,
-                        dataArea.getMaxY());
-            }
-            else {
-                double yy = axis.valueToJava2D(value, dataArea,
-                        RectangleEdge.LEFT);
-                line = new Line2D.Double(dataArea.getMinX(), yy,
-                        dataArea.getMaxX(), yy);
-            }
-            g2.setStroke(stroke);
-            g2.setPaint(paint);
-            g2.draw(line);
+        if (!axis.getRange().contains(value)) {
+            return;
         }
-
+        Line2D line;
+        if (orientation == PlotOrientation.VERTICAL) {
+            double xx = axis.valueToJava2D(value, dataArea,
+                    RectangleEdge.BOTTOM);
+            line = new Line2D.Double(xx, dataArea.getMinY(), xx,
+                   dataArea.getMaxY());
+        } else {
+            double yy = axis.valueToJava2D(value, dataArea,
+                    RectangleEdge.LEFT);
+            line = new Line2D.Double(dataArea.getMinX(), yy,
+                    dataArea.getMaxX(), yy);
+        }
+        Object saved = g2.getRenderingHint(RenderingHints.KEY_STROKE_CONTROL);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, 
+                RenderingHints.VALUE_STROKE_NORMALIZE);
+        g2.setStroke(stroke);
+        g2.setPaint(paint);
+        g2.draw(line);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, saved);
     }
 
     /**
@@ -4195,25 +4198,28 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
             PlotOrientation orientation, double value, ValueAxis axis,
             Stroke stroke, Paint paint) {
 
-        if (axis.getRange().contains(value)) {
-            Line2D line;
-            if (orientation == PlotOrientation.HORIZONTAL) {
-                double xx = axis.valueToJava2D(value, dataArea,
-                        RectangleEdge.BOTTOM);
-                line = new Line2D.Double(xx, dataArea.getMinY(), xx,
-                        dataArea.getMaxY());
-            }
-            else {
-                double yy = axis.valueToJava2D(value, dataArea,
-                        RectangleEdge.LEFT);
-                line = new Line2D.Double(dataArea.getMinX(), yy,
-                        dataArea.getMaxX(), yy);
-            }
-            g2.setStroke(stroke);
-            g2.setPaint(paint);
-            g2.draw(line);
+        if (!axis.getRange().contains(value)) {
+            return;
         }
-
+        Object saved = g2.getRenderingHint(RenderingHints.KEY_STROKE_CONTROL);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, 
+                RenderingHints.VALUE_STROKE_NORMALIZE);
+        Line2D line;
+        if (orientation == PlotOrientation.HORIZONTAL) {
+            double xx = axis.valueToJava2D(value, dataArea,
+                    RectangleEdge.BOTTOM);
+            line = new Line2D.Double(xx, dataArea.getMinY(), xx,
+                    dataArea.getMaxY());
+        } else {
+            double yy = axis.valueToJava2D(value, dataArea,
+                    RectangleEdge.LEFT);
+            line = new Line2D.Double(dataArea.getMinX(), yy,
+                    dataArea.getMaxX(), yy);
+        }
+        g2.setStroke(stroke);
+        g2.setPaint(paint);
+        g2.draw(line);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, saved);
     }
 
     /**
@@ -4807,9 +4813,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      * @see #getRangeCrosshairPaint()
      */
     public void setRangeCrosshairPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.rangeCrosshairPaint = paint;
         fireChangeEvent();
     }
@@ -4922,8 +4926,8 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
     }
 
     /**
-     * Returns <code>true</code> if panning is enabled for the range axes,
-     * and <code>false</code> otherwise.
+     * Returns {@code true} if panning is enabled for the range axis/axes,
+     * and {@code false} otherwise.  The default value is {@code false}.
      *
      * @return A boolean.
      *
@@ -4936,7 +4940,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
 
     /**
      * Sets the flag that enables or disables panning of the plot along
-     * the range axes.
+     * the range axis/axes.
      *
      * @param pannable  the new flag value.
      *
@@ -5197,7 +5201,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Zoomable,
      *
      * @return The legend items (possibly {@code null}).
      *
-     * @see #setFixedLegendItems(java.util.List) 
+     * @see #setFixedLegendItems(java.util.List)
      */
     public List<LegendItem> getFixedLegendItems() {
         return this.fixedLegendItems;
