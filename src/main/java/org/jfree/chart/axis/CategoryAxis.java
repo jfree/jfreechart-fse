@@ -103,6 +103,7 @@ package org.jfree.chart.axis;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Paint;
+import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -708,10 +709,8 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      */
     public double getCategoryEnd(int category, int categoryCount,
             Rectangle2D area, RectangleEdge edge) {
-
         return getCategoryStart(category, categoryCount, area, edge)
                + calculateCategorySize(categoryCount, area, edge);
-
     }
 
     /**
@@ -818,7 +817,6 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      */
     protected double calculateCategorySize(int categoryCount, Rectangle2D area,
             RectangleEdge edge) {
-
         double result;
         double available = 0.0;
 
@@ -838,7 +836,6 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
             result = available * (1 - getLowerMargin() - getUpperMargin());
         }
         return result;
-
     }
 
     /**
@@ -868,9 +865,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         if (categoryCount > 1) {
             result = available * getCategoryMargin() / (categoryCount - 1);
         }
-
         return result;
-
     }
 
     /**
@@ -934,7 +929,6 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
                     + this.categoryLabelPositionOffset, edge);
         }
         return space;
-
     }
 
     /**
@@ -1198,6 +1192,9 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         List<Comparable> categories = plot.getCategoriesForAxis(this);
         g2.setPaint(getTickMarkPaint());
         g2.setStroke(getTickMarkStroke());
+        Object saved = g2.getRenderingHint(RenderingHints.KEY_STROKE_CONTROL);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, 
+                RenderingHints.VALUE_STROKE_NORMALIZE);
         if (edge.equals(RectangleEdge.TOP)) {
             for (Comparable key : categories) {
                 double x = getCategoryMiddle(key, categories, dataArea, edge);
@@ -1238,6 +1235,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
             }
             state.cursorRight(ol);
         }
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, saved);
     }
 
     /**
@@ -1269,7 +1267,6 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      */
     protected double calculateTextBlockWidth(TextBlock block,
             CategoryLabelPosition position, Graphics2D g2) {
-
         RectangleInsets insets = getTickLabelInsets();
         Size2D size = block.calculateDimensions(g2);
         Rectangle2D box = new Rectangle2D.Double(0.0, 0.0, size.getWidth(),
@@ -1279,7 +1276,6 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         double w = rotatedBox.getBounds2D().getWidth() + insets.getLeft()
                 + insets.getRight();
         return w;
-
     }
 
     /**
@@ -1293,7 +1289,6 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
      */
     protected double calculateTextBlockHeight(TextBlock block,
             CategoryLabelPosition position, Graphics2D g2) {
-
         RectangleInsets insets = getTickLabelInsets();
         Size2D size = block.calculateDimensions(g2);
         Rectangle2D box = new Rectangle2D.Double(0.0, 0.0, size.getWidth(),
@@ -1303,7 +1298,6 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         double h = rotatedBox.getBounds2D().getHeight()
                    + insets.getTop() + insets.getBottom();
         return h;
-
     }
 
     /**
@@ -1382,6 +1376,11 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
         return true;
     }
 
+    /**
+     * Returns a hash code for this object.
+     *
+     * @return A hash code.
+     */
     @Override
     public int hashCode() {
         return super.hashCode();
