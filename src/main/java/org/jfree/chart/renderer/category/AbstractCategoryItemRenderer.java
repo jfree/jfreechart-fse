@@ -116,6 +116,7 @@ import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Paint;
+import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
@@ -136,7 +137,6 @@ import org.jfree.chart.ui.LengthAdjustmentType;
 import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.util.ObjectList;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SortOrder;
@@ -838,7 +838,6 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
         g2.setStroke(stroke);
 
         g2.draw(line);
-
     }
 
     /**
@@ -922,16 +921,18 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
         if (orientation == PlotOrientation.HORIZONTAL) {
             line = new Line2D.Double(v, dataArea.getMinY(), v,
                     dataArea.getMaxY());
-        }
-        else if (orientation == PlotOrientation.VERTICAL) {
+        } else if (orientation == PlotOrientation.VERTICAL) {
             line = new Line2D.Double(dataArea.getMinX(), v,
                     dataArea.getMaxX(), v);
         }
 
         g2.setPaint(paint);
         g2.setStroke(stroke);
+        Object saved = g2.getRenderingHint(RenderingHints.KEY_STROKE_CONTROL);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, 
+                RenderingHints.VALUE_STROKE_NORMALIZE);
         g2.draw(line);
-
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, saved);
     }
 
     /**
@@ -1080,7 +1081,13 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
                         g2, orientation, dataArea, line.getBounds2D(),
                         marker.getLabelOffset(), LengthAdjustmentType.EXPAND,
                         anchor);
-                TextUtilities.drawAlignedString(label, g2,
+                Rectangle2D rect = TextUtilities.calcAlignedStringBounds(label, g2, 
+                        (float) coordinates.getX(), (float) coordinates.getY(),
+                        marker.getLabelTextAnchor());
+                g2.setPaint(marker.getLabelBackgroundColor());
+                g2.fill(rect);
+                g2.setPaint(marker.getLabelPaint());
+                TextUtilities.drawAlignedString(label, g2, 
                         (float) coordinates.getX(), (float) coordinates.getY(),
                         marker.getLabelTextAnchor());
             }
@@ -1205,12 +1212,9 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @return The coordinates for drawing the marker label.
      */
     protected Point2D calculateDomainMarkerTextAnchorPoint(Graphics2D g2,
-                                      PlotOrientation orientation,
-                                      Rectangle2D dataArea,
-                                      Rectangle2D markerArea,
-                                      RectangleInsets markerOffset,
-                                      LengthAdjustmentType labelOffsetType,
-                                      RectangleAnchor anchor) {
+            PlotOrientation orientation, Rectangle2D dataArea,
+            Rectangle2D markerArea, RectangleInsets markerOffset,
+            LengthAdjustmentType labelOffsetType, RectangleAnchor anchor) {
 
         Rectangle2D anchorRect = null;
         if (orientation == PlotOrientation.HORIZONTAL) {
@@ -1239,12 +1243,9 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @return The coordinates for drawing the marker label.
      */
     protected Point2D calculateRangeMarkerTextAnchorPoint(Graphics2D g2,
-                                      PlotOrientation orientation,
-                                      Rectangle2D dataArea,
-                                      Rectangle2D markerArea,
-                                      RectangleInsets markerOffset,
-                                      LengthAdjustmentType labelOffsetType,
-                                      RectangleAnchor anchor) {
+            PlotOrientation orientation, Rectangle2D dataArea,
+            Rectangle2D markerArea, RectangleInsets markerOffset,
+            LengthAdjustmentType labelOffsetType, RectangleAnchor anchor) {
 
         Rectangle2D anchorRect = null;
         if (orientation == PlotOrientation.HORIZONTAL) {
@@ -1326,7 +1327,6 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      */
     @Override
     public boolean equals(Object obj) {
-
         if (obj == this) {
             return true;
         }
@@ -1423,9 +1423,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             int datasetIndex,
             double transX, double transY, PlotOrientation orientation) {
 
-        if (orientation == null) {
-            throw new IllegalArgumentException("Null 'orientation' argument.");
-        }
+        ParamChecks.nullNotPermitted(orientation, "orientation");
 
         if (crosshairState != null) {
             if (this.plot.isRangeCrosshairLockedOnData()) {
@@ -1721,8 +1719,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @param hotspot  the hotspot (<code>null</code> not permitted).
      */
     protected void addItemEntity(EntityCollection entities,
-                                 CategoryDataset dataset, int row, int column,
-                                 Shape hotspot) {
+            CategoryDataset dataset, int row, int column, Shape hotspot) {
         ParamChecks.nullNotPermitted(hotspot, "hotspot");
         if (!getItemCreateEntity(row, column)) {
             return;
