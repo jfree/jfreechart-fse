@@ -72,6 +72,7 @@ import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Graphics2D;
 import java.awt.Paint;
+import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Line2D;
@@ -91,10 +92,10 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.axis.ValueTick;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.util.ArrayUtils;
 import org.jfree.chart.util.ObjectUtils;
 import org.jfree.chart.util.PaintUtils;
-import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.ResourceBundleWrapper;
 import org.jfree.chart.util.SerialUtils;
@@ -312,9 +313,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      * @see #getRangeAxis()
      */
     public void setRangeAxis(ValueAxis axis) {
-        if (axis == null) {
-            throw new IllegalArgumentException("Null 'axis' argument.");
-        }
+        ParamChecks.nullNotPermitted(axis, "axis");
         this.rangeAxis = axis;
         fireChangeEvent();
     }
@@ -503,9 +502,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
      * @see #getRangeGridlinePaint()
      */
     public void setRangeGridlinePaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.rangeGridlinePaint = paint;
         fireChangeEvent();
     }
@@ -617,10 +614,6 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
                 g2.fillRect(transX, transY, 1, 1);
             }
         }
-        //long finish = System.currentTimeMillis();
-        //System.out.println("Finish: " + finish);
-        //System.out.println("Time: " + (finish - start));
-
     }
 
     /**
@@ -634,17 +627,22 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
                                        List<ValueTick> ticks) {
 
         // draw the domain grid lines, if the flag says they're visible...
-        if (isDomainGridlinesVisible()) {
-            for (ValueTick tick : ticks) {
-                double v = this.domainAxis.valueToJava2D(tick.getValue(),
-                        dataArea, RectangleEdge.BOTTOM);
-                Line2D line = new Line2D.Double(v, dataArea.getMinY(), v,
-                        dataArea.getMaxY());
-                g2.setPaint(getDomainGridlinePaint());
-                g2.setStroke(getDomainGridlineStroke());
-                g2.draw(line);
-            }
+        if (!isDomainGridlinesVisible()) {
+            return;
         }
+        Object saved = g2.getRenderingHint(RenderingHints.KEY_STROKE_CONTROL);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, 
+                RenderingHints.VALUE_STROKE_NORMALIZE);
+        for (ValueTick tick : ticks) {
+            double v = this.domainAxis.valueToJava2D(tick.getValue(),
+                    dataArea, RectangleEdge.BOTTOM);
+            Line2D line = new Line2D.Double(v, dataArea.getMinY(), v,
+                    dataArea.getMaxY());
+            g2.setPaint(getDomainGridlinePaint());
+            g2.setStroke(getDomainGridlineStroke());
+            g2.draw(line);
+        }
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, saved);
     }
 
     /**
@@ -657,19 +655,23 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable,
     protected void drawRangeGridlines(Graphics2D g2, Rectangle2D dataArea,
                                       List<ValueTick> ticks) {
 
-        // draw the range grid lines, if the flag says they're visible...
-        if (isRangeGridlinesVisible()) {
-            for (ValueTick tick : ticks) {
-                double v = this.rangeAxis.valueToJava2D(tick.getValue(),
-                        dataArea, RectangleEdge.LEFT);
-                Line2D line = new Line2D.Double(dataArea.getMinX(), v,
-                        dataArea.getMaxX(), v);
-                g2.setPaint(getRangeGridlinePaint());
-                g2.setStroke(getRangeGridlineStroke());
-                g2.draw(line);
-            }
+        if (!isRangeGridlinesVisible()) {
+            return;
         }
+        Object saved = g2.getRenderingHint(RenderingHints.KEY_STROKE_CONTROL);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, 
+                RenderingHints.VALUE_STROKE_NORMALIZE);
 
+        for (ValueTick tick : ticks) {
+            double v = this.rangeAxis.valueToJava2D(tick.getValue(),
+                    dataArea, RectangleEdge.LEFT);
+            Line2D line = new Line2D.Double(dataArea.getMinX(), v,
+                    dataArea.getMaxX(), v);
+            g2.setPaint(getRangeGridlinePaint());
+            g2.setStroke(getRangeGridlineStroke());
+            g2.draw(line);
+        }
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, saved);
     }
 
     /**
