@@ -24,9 +24,9 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates.
  * Other names may be trademarks of their respective owners.]
  *
- * --------------------
- * JFreeChartTests.java
- * --------------------
+ * -------------------
+ * JFreeChartTest.java
+ * -------------------
  * (C) Copyright 2002-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
@@ -470,6 +470,13 @@ public class JFreeChartTest  implements ChartChangeListener {
         t.setFont(new Font("Dialog", Font.BOLD, 9));
         assertNull(this.lastChartChangeEvent);
         this.lastChartChangeEvent = null;
+    }
+
+    @Test
+    public void testBug942() throws Exception {
+        final String title = "Pie Chart Demo 1\n\n\ntestnew line";
+        assertEquals(title, ChartFactory.createPieChart(title, 
+                new DefaultPieDataset()).getTitle().getText());
     }
 
     /** The last ChartChangeEvent received. */
