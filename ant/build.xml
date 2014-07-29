@@ -94,6 +94,28 @@
     </target>
 
 
+    <!-- Generate the JFreeChart source code jar -->
+    <target name="source-jar" depends="initialise"
+            description="Package the JFreeChart source code in a jar">
+
+        <!-- create a temp build directory -->
+        <mkdir dir="${basedir}/source-jar"/>
+
+        <!-- copy source code -->
+        <copy todir="${basedir}/source-jar/">
+            <fileset dir="${basedir}/src/main/java"/>
+        </copy>
+
+        <!-- make the jar -->
+        <jar jarfile="${basedir}/lib/${jfreechart.name}-${jfreechart.version}-src.jar"
+             basedir="${basedir}/source-jar">
+        </jar>
+
+        <!-- delete the temp directory -->
+        <delete dir="${basedir}/source-jar"/>
+
+    </target>
+
     <!-- Generate the JFreeChart API HTML pages -->
     <target name="javadoc"
             description="Generate the Javadoc HTML pages."
@@ -259,7 +281,7 @@
 
     <!-- ALL -->
     <target name="all"
-            depends="compile,zip-javadocs,zip"
+            depends="compile,zip-javadocs,zip,source-jar"
             description="Compiles JFreeChart, builds the jar files, generates the Javadoc HTML pages and creates distribution file (.zip).">
 
         <!-- delete the temporary distribution directory -->
