@@ -24,19 +24,11 @@
         <property name="jfreesvg.version" value="1.9" />
         <property name="orsonpdf.name" value="orsonpdf" />
         <property name="orsonpdf.version" value="1.6-eval" />
-        <property name="orsoncharts.version" value="1.4-eval-nofx" />
         <property name="builddir" value="${basedir}/build" />
-        <property name="servlet.jar" value="${basedir}/lib/servlet.jar"/>
         <property name="junit.jar" value="${basedir}/lib/junit-4.11.jar"/>
         <property name="hamcrest.jar" value="${basedir}/lib/hamcrest-core-1.3.jar"/>
         <property name="src.version" value="1.6"/>
         <property name="target.version" value="1.6"/>
-        <path id="build.classpath">
-            <fileset dir="${basedir}/lib/">
-                <include name="servlet.jar"/>
-            </fileset>
-        </path>
-
     </target>
 
     <!-- Compile the JFreeChart classes -->
@@ -52,8 +44,8 @@
                debug="on"
                deprecation="false"
                source="${src.version}"
-               target="${target.version}">
-            <classpath refid="build.classpath" />
+               target="${target.version}"
+               includeantruntime="false">
             <include name="org/jfree/**"/>
             <exclude name="org/jfree/chart/fx/**"/>
         </javac>
@@ -128,7 +120,6 @@
                  use="yes"
                  linksource="yes"
                  splitindex="yes">
-            <classpath refid="build.classpath" />
             <packageset dir="${basedir}/src/main/java" defaultexcludes="yes">
                 <include name="org/jfree/**"/>
                 <exclude name="org/jfree/chart/fx/**"/>
@@ -171,9 +162,8 @@
         <!-- copy across LICENCE -->
         <copy file="${basedir}/licence-LGPL.txt" tofile="${basedir}/distribution/licence-LGPL.txt" />
 
-        <!-- copy across runtime jar file and demo jar file -->
+        <!-- copy across runtime jar file -->
         <copy file="${basedir}/lib/${jfreechart.name}-${jfreechart.version}.jar" tofile="${basedir}/distribution/lib/${jfreechart.name}-${jfreechart.version}.jar" />
-        <copy file="${basedir}/${jfreechart.name}-${jfreechart.version}-demo.jar" tofile="${basedir}/distribution/${jfreechart.name}-${jfreechart.version}-demo.jar" failonerror="false" />
 
         <!-- copy across source files -->
         <copy todir="${basedir}/distribution/src/">
@@ -192,12 +182,10 @@
         </copy>
 
         <!-- copy across lib files -->
-        <copy file="${servlet.jar}" tofile="${basedir}/distribution/lib/servlet.jar" />
         <copy file="${junit.jar}" tofile="${basedir}/distribution/lib/junit-4.11.jar" />
         <copy file="${hamcrest.jar}" tofile="${basedir}/distribution/lib/hamcrest-core-1.3.jar" />
         <copy file="${basedir}/lib/${jfreesvg.name}-${jfreesvg.version}.jar" tofile="${basedir}/distribution/lib/${jfreesvg.name}-${jfreesvg.version}.jar" />
         <copy file="${basedir}/lib/${orsonpdf.name}-${orsonpdf.version}.jar" tofile="${basedir}/distribution/lib/${orsonpdf.name}-${orsonpdf.version}.jar" />
-        <copy file="${basedir}/lib/orsoncharts-${orsoncharts.version}.jar" tofile="${basedir}/distribution/lib/orsoncharts-${orsoncharts.version}.jar" failonerror="false" />
 
         <!-- copy across ant build files -->
         <copy file="${basedir}/ant/build.xml" tofile="${basedir}/distribution/ant/build.xml" />
