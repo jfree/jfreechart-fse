@@ -13,7 +13,7 @@ JFreeChart 1.0.x series.  Here are some important notes:
 
 -  there is an Ant script that will build the code without the JavaFX support
    classes.  This requires AT LEAST JDK 1.6.0 to compile and, depending 
-   on how I (and the other contributors) feel, in the future we may even 
+   on how I (and the other contributors) feel, in the future we may 
    require JDK 1.7 or even a later version;
 
 -  JCommon is no longer a dependency (the subset of classes from JCommon that
