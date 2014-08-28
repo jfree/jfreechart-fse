@@ -132,13 +132,13 @@ public class CombinedDomainXYPlot extends XYPlot
     private static final long serialVersionUID = -7765545541261907383L;
 
     /** Storage for the subplot references. */
-    private List<XYPlot> subplots;
+    protected List<XYPlot> subplots;
 
     /** The gap between subplots. */
-    private double gap = 5.0;
+    protected double gap = 5.0;
 
     /** Temporary storage for the subplot areas. */
-    private transient Rectangle2D[] subplotAreas;
+    protected transient Rectangle2D[] subplotAreas;
     // TODO:  the subplot areas needs to be moved out of the plot into the plot
     //        state
 
@@ -451,15 +451,11 @@ public class CombinedDomainXYPlot extends XYPlot
         // set the width and height of non-shared axis of all sub-plots
         setFixedRangeAxisSpaceForSubplots(space);
 
-        // draw the shared axis
-        ValueAxis axis = getDomainAxis();
-        RectangleEdge edge = getDomainAxisEdge();
-        double cursor = RectangleEdge.coordinate(dataArea, edge);
-        AxisState axisState = axis.draw(g2, cursor, area, dataArea, edge, info);
         if (parentState == null) {
             parentState = new PlotState();
         }
-        parentState.getSharedAxisStates().put(axis, axisState);
+
+        this.drawSharedAxis(g2, area, parentState, info, dataArea);
 
         // draw all the subplots
         for (int i = 0; i < this.subplots.size(); i++) {
@@ -477,6 +473,17 @@ public class CombinedDomainXYPlot extends XYPlot
             info.setDataArea(dataArea);
         }
 
+    }
+
+    protected void drawSharedAxis(Graphics2D g2, Rectangle2D area,
+            PlotState parentState, PlotRenderingInfo info, Rectangle2D dataArea) {
+        final ValueAxis axis = getDomainAxis();
+        final RectangleEdge edge = getDomainAxisEdge();
+        if (axis != null && edge != null) {
+            final double cursor = RectangleEdge.coordinate(dataArea, edge);
+            final AxisState axisState = axis.draw(g2, cursor, area, dataArea, edge, info);
+            parentState.getSharedAxisStates().put(axis, axisState);
+        }
     }
 
     /**
