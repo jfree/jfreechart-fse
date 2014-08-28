@@ -532,7 +532,7 @@ public class CombinedDomainXYPlot extends XYPlot
             // if the source point doesn't fall within a subplot, we do the
             // zoom on all subplots...
             for (XYPlot subPlot : getSubplots()) {
-                subplot.zoomRangeAxes(factor, state, source, useAnchor);
+                subPlot.zoomRangeAxes(factor, state, source, useAnchor);
             }
         }
     }
