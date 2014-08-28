@@ -45,6 +45,7 @@
  *                   Alessandro Borges - patch 1460845;
  *                   Martin Hoeller;
  *                   Michael Zinsmaier;
+ *                   Simon Legner - patch from bug 1129;
  *
  * Changes (from 28-Jun-2001)
  * --------------------------
@@ -167,6 +168,7 @@
  * 06-Jul-2009 : Clear off-screen buffer to fully transparent (DG);
  * 10-Oct-2011 : localization fix: bug #3353913 (MH);
  * 15-Jun-2012 : Removed JCommon dependencies (DG);
+ * 29-Aug-2014 : Localisation updates from patch attached to bug 1129 (SL);
  *
  */
 
@@ -1314,9 +1316,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
     /**
      * Enables or disables mouse wheel support for the panel.
-     * Note that this method does nothing when running JFreeChart on JRE 1.3.1,
-     * because that older version of the Java runtime does not support
-     * mouse wheel events.
      *
      * @param flag  a boolean.
      *
@@ -1606,8 +1605,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                     this.chart.draw(bufferG2, chartArea, this.anchor,
                             this.info);
                     bufferG2.setTransform(saved);
-                }
-                else {
+                } else {
                     this.chart.draw(bufferG2, bufferArea, this.anchor,
                             this.info);
                 }
@@ -1617,11 +1615,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             // zap the buffer onto the panel...
             g2.drawImage(this.chartBuffer, insets.left, insets.top, this);
 
-        }
-
-        // or redrawing the chart every time...
-        else {
-
+        } else { // redrawing the chart every time...
             AffineTransform saved = g2.getTransform();
             g2.translate(insets.left, insets.top);
             if (scale) {
@@ -1648,7 +1642,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         this.anchor = null;
         this.verticalTraceLine = null;
         this.horizontalTraceLine = null;
-
     }
 
     /**
@@ -1709,7 +1702,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
             }
             catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "I/O error occurred.", 
-                        "Save As PNG", JOptionPane.WARNING_MESSAGE);
+                        localizationResources.getString("Save_as_PNG"),
+                        JOptionPane.WARNING_MESSAGE);
             }
         }
         else if (command.equals(SAVE_AS_SVG_COMMAND)) {
@@ -1717,7 +1711,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                 saveAsSVG(null);
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "I/O error occurred.", 
-                        "Save As SVG", JOptionPane.WARNING_MESSAGE);
+                        localizationResources.getString("Save_as_SVG"),
+                        JOptionPane.WARNING_MESSAGE);
             }
         }
         else if (command.equals(SAVE_AS_PDF_COMMAND)) {
@@ -2465,16 +2460,13 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
         }
     }
 
-     
      /**
       * Draws zoom rectangle (if present). The drawing is performed in XOR mode,
       * therefore when this method is called twice in a row, the second call will
       * completely restore the state of the canvas.
       * 
-      * @param g2
-      *            the graphics device.
-      * @param xor
-      *            use XOR for drawing?
+      * @param g2  the graphics device.
+      * @param xor  use XOR for drawing?
       */
      private void drawSelectionShape(Graphics2D g2, boolean xor) {
           if (this.selectionShape != null) {
@@ -2592,7 +2584,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                     String fileExists = localizationResources.getString(
                             "FILE_EXISTS_CONFIRM_OVERWRITE");
                     int response = JOptionPane.showConfirmDialog(this, 
-                            fileExists, "Save As SVG", 
+                            fileExists,
+                            localizationResources.getString("Save_as_SVG"),
                             JOptionPane.OK_CANCEL_OPTION);
                     if (response == JOptionPane.CANCEL_OPTION) {
                         file = null;
@@ -2711,7 +2704,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                     String fileExists = localizationResources.getString(
                             "FILE_EXISTS_CONFIRM_OVERWRITE");
                     int response = JOptionPane.showConfirmDialog(this, 
-                            fileExists, "Save As PDF", 
+                            fileExists,
+                            localizationResources.getString("Save_as_PDF"),
                             JOptionPane.OK_CANCEL_OPTION);
                     if (response == JOptionPane.CANCEL_OPTION) {
                         file = null;
