@@ -36,6 +36,7 @@
  *                   Kevin Frechette (for ISTI);
  *                   Nicolas Brodu;
  *                   Petr Kubanek (bug 1606205);
+ *                   Vladimir Shirokov (bug 986);
  *
  * Changes:
  * --------
@@ -120,6 +121,8 @@ import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.ShadowGenerator;
 import org.jfree.data.Range;
+import org.jfree.data.general.DatasetChangeEvent;
+import org.jfree.data.xy.XYDataset;
 
 /**
  * An extension of {@link XYPlot} that contains multiple subplots that share a
@@ -131,7 +134,7 @@ public class CombinedDomainXYPlot extends XYPlot
     /** For serialization. */
     private static final long serialVersionUID = -7765545541261907383L;
 
-    /** Storage for the subplot references. */
+    /** Storage for the subplot references (possibly empty but never null). */
     private List<XYPlot> subplots;
 
     /** The gap between subplots. */
@@ -242,11 +245,12 @@ public class CombinedDomainXYPlot extends XYPlot
      */
     @Override
     public Range getDataRange(ValueAxis axis) {
+        if (this.subplots == null) {
+            return null;
+        }
         Range result = null;
-        if (this.subplots != null) {
-            for (XYPlot subplot : this.subplots) {
-                result = Range.combine(result, subplot.getDataRange(axis));
-            }
+        for (XYPlot subplot : this.subplots) {
+            result = Range.combine(result, subplot.getDataRange(axis));
         }
         return result;
     }
@@ -329,16 +333,12 @@ public class CombinedDomainXYPlot extends XYPlot
 
     /**
      * Returns the list of subplots.  The returned list may be empty, but is
-     * never <code>null</code>.
+     * never {@code null}.
      *
      * @return An unmodifiable list of subplots.
      */
     public List<XYPlot> getSubplots() {
-        if (this.subplots != null) {
-            return Collections.unmodifiableList(this.subplots);
-        } else {
-            return Collections.EMPTY_LIST;
-        }
+        return Collections.unmodifiableList(this.subplots);
     }
 
     /**
@@ -552,8 +552,7 @@ public class CombinedDomainXYPlot extends XYPlot
         XYPlot subplot = findSubplot(info, source);
         if (subplot != null) {
             subplot.zoomRangeAxes(lowerPercent, upperPercent, info, source);
-        }
-        else {
+        } else {
             // if the source point doesn't fall within a subplot, we do the
             // zoom on all subplots...
             for (XYPlot sp : getSubplots()) {
@@ -653,7 +652,7 @@ public class CombinedDomainXYPlot extends XYPlot
      * Sets the size (width or height, depending on the orientation of the
      * plot) for the domain axis of each subplot.
      *
-     * @param space  the space (<code>null</code> permitted).
+     * @param space  the space ({@code null} permitted).
      */
     protected void setFixedRangeAxisSpaceForSubplots(AxisSpace space) {
         for (XYPlot subplot : this.subplots) {
@@ -664,8 +663,8 @@ public class CombinedDomainXYPlot extends XYPlot
     /**
      * Handles a 'click' on the plot by updating the anchor values.
      *
-     * @param x  x-coordinate, where the click occured.
-     * @param y  y-coordinate, where the click occured.
+     * @param x  x-coordinate, where the click occurred.
+     * @param y  y-coordinate, where the click occurred.
      * @param info  object containing information about the plot dimensions.
      */
     @Override
@@ -676,6 +675,30 @@ public class CombinedDomainXYPlot extends XYPlot
                 XYPlot subplot = this.subplots.get(i);
                 PlotRenderingInfo subplotInfo = info.getSubplotInfo(i);
                 subplot.handleClick(x, y, subplotInfo);
+            }
+        }
+    }
+
+    /**
+     * Receives notification of a change to the plot's dataset.
+     * <P>
+     * The axis ranges are updated if necessary.
+     *
+     * @param event  information about the event (not used here).
+     */
+    @Override
+    public void datasetChanged(DatasetChangeEvent event) {
+        super.datasetChanged(event);
+        if (this.subplots == null) {
+            return;  // this can happen during plot construction
+        }
+        XYDataset dataset = null;
+        if (event.getDataset() instanceof XYDataset) {
+            dataset = (XYDataset) event.getDataset();
+        }
+        for (XYPlot subplot : this.subplots) {
+            if (subplot.indexOf(dataset) >= 0) {
+                subplot.configureRangeAxes();
             }
         }
     }
