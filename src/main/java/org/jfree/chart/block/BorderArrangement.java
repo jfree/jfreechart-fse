@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2013, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------------
  * BorderArrangement.java
  * ----------------------
- * (C) Copyright 2004-2013, by Object Refinery Limited.
+ * (C) Copyright 2004-2014, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -42,6 +42,7 @@
  * 08-Apr-2008 : Fixed bug in arrangeFF() method where width is too small for
  *               left and right blocks (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 09-Sep-2014 : Manually merge fix from amishwins at GitHub (DG);
  *
  */
 
@@ -87,32 +88,30 @@ public class BorderArrangement implements Arrangement, Serializable {
     }
 
     /**
-     * Adds a block to the arrangement manager at the specified edge.
-     * If the key is not an instance of {@link RectangleEdge} the block will
-     * be added in the center.
+     * Adds a block to the arrangement manager at the specified edge.  If the
+     * specified object is not an edge (or {@code null}), the method throws an
+     * {@code IllegalArgumentException}.     
      *
-     * @param block  the block (<code>null</code> permitted).
+     * @param block  the block ({@code null} permitted).
      * @param key  the edge (an instance of {@link RectangleEdge}) or
-     *             <code>null</code> for the center block.
+     *             {@code null} for the center block.
      */
     @Override
     public void add(Block block, Object key) {
-
-        if (!(key instanceof RectangleEdge)) { // catches null also
+        if (key == null) {
             this.centerBlock = block;
-        }
-        else {
+        } else if (!(key instanceof RectangleEdge)) {
+            throw new IllegalArgumentException("The 'key' must be an instance " 
+                    + "of RectangleEdge or null.");
+        } else {
             RectangleEdge edge = (RectangleEdge) key;
             if (edge == RectangleEdge.TOP) {
                 this.topBlock = block;
-            }
-            else if (edge == RectangleEdge.BOTTOM) {
+            } else if (edge == RectangleEdge.BOTTOM) {
                 this.bottomBlock = block;
-            }
-            else if (edge == RectangleEdge.LEFT) {
+            } else if (edge == RectangleEdge.LEFT) {
                 this.leftBlock = block;
-            }
-            else if (edge == RectangleEdge.RIGHT) {
+            } else if (edge == RectangleEdge.RIGHT) {
                 this.rightBlock = block;
             }
         }
@@ -139,33 +138,25 @@ public class BorderArrangement implements Arrangement, Serializable {
         if (w == LengthConstraintType.NONE) {
             if (h == LengthConstraintType.NONE) {
                 contentSize = arrangeNN(container, g2);
-            }
-            else if (h == LengthConstraintType.FIXED) {
+            } else if (h == LengthConstraintType.FIXED) {
+                throw new RuntimeException("Not implemented.");
+            } else if (h == LengthConstraintType.RANGE) {
                 throw new RuntimeException("Not implemented.");
             }
-            else if (h == LengthConstraintType.RANGE) {
-                throw new RuntimeException("Not implemented.");
-            }
-        }
-        else if (w == LengthConstraintType.FIXED) {
+        } else if (w == LengthConstraintType.FIXED) {
             if (h == LengthConstraintType.NONE) {
                 contentSize = arrangeFN(container, g2, constraint.getWidth());
-            }
-            else if (h == LengthConstraintType.FIXED) {
+            } else if (h == LengthConstraintType.FIXED) {
                 contentSize = arrangeFF(container, g2, constraint);
-            }
-            else if (h == LengthConstraintType.RANGE) {
+            } else if (h == LengthConstraintType.RANGE) {
                 contentSize = arrangeFR(container, g2, constraint);
             }
-        }
-        else if (w == LengthConstraintType.RANGE) {
+        } else if (w == LengthConstraintType.RANGE) {
             if (h == LengthConstraintType.NONE) {
                 throw new RuntimeException("Not implemented.");
-            }
-            else if (h == LengthConstraintType.FIXED) {
+            } else if (h == LengthConstraintType.FIXED) {
                 throw new RuntimeException("Not implemented.");
-            }
-            else if (h == LengthConstraintType.RANGE) {
+            } else if (h == LengthConstraintType.RANGE) {
                 contentSize = arrangeRR(container, constraint.getWidthRange(),
                         constraint.getHeightRange(), g2);
             }
@@ -257,8 +248,7 @@ public class BorderArrangement implements Arrangement, Serializable {
         Size2D size1 = arrangeFN(container, g2, constraint.getWidth());
         if (constraint.getHeightRange().contains(size1.getHeight())) {
             return size1;
-        }
-        else {
+        } else {
             double h = constraint.getHeightRange().constrain(size1.getHeight());
             RectangleConstraint c2 = constraint.toFixedHeight(h);
             return arrange(container, g2, c2);
@@ -337,9 +327,8 @@ public class BorderArrangement implements Arrangement, Serializable {
      *
      * @return The container size.
      */
-    protected Size2D arrangeRR(BlockContainer container,
-                               Range widthRange, Range heightRange,
-                               Graphics2D g2) {
+    protected Size2D arrangeRR(BlockContainer container, Range widthRange, 
+            Range heightRange, Graphics2D g2) {
         double[] w = new double[5];
         double[] h = new double[5];
         if (this.topBlock != null) {

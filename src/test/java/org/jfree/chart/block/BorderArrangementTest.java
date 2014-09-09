@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------
  * BorderArrangementTests.java
  * ---------------------------
- * (C) Copyright 2004-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2014, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -66,11 +66,32 @@ public class BorderArrangementTest  {
 
     private static final double EPSILON = 0.0000000001;
 
-
-
-
+    /**
+     * Test the contract that adding the wrong object type throws an
+     * <tt>IllegalArgumentException</tt>
+     */
+    @Test(expected=IllegalArgumentException.class)
+    public void testAddWrongEdgeType() {
+    	BorderArrangement b1 = new BorderArrangement();
+    	b1.add(new EmptyBlock(1.0, 1.0), "Hello");
+    }
 
     /**
+     * Test the contract that adding the correct object type (any
+     * one of the RectangleEdge enumerations) works and does not
+      * throw an exception
+      */
+    @Test
+    public void testAddCorrectEdgeType() {
+    	BorderArrangement b1 = new BorderArrangement();
+    	b1.add(new EmptyBlock(1.0, 1.0), RectangleEdge.TOP);
+    	b1.add(new EmptyBlock(1.0, 1.0), RectangleEdge.BOTTOM);
+    	b1.add(new EmptyBlock(1.0, 1.0), RectangleEdge.LEFT);
+    	b1.add(new EmptyBlock(1.0, 1.0), RectangleEdge.RIGHT);
+    	b1.add(new EmptyBlock(1.0, 1.0), null);
+    }
+
+/**
      * Confirm that the equals() method can distinguish all the required fields.
      */
     @Test
