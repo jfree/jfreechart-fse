@@ -321,7 +321,10 @@ public class XYSeries extends Series implements Cloneable, Serializable {
 
     /**
      * Returns a flag that controls whether duplicate x-values are allowed.
-     * This flag can only be set in the constructor.
+     * The default value is {@code true}.  This flag can only be set in the 
+     * constructor.  When it is set to {@code false}, an exception will be
+     * thrown if you attempt to add an item with an x-value that already exists
+     * in the series.
      *
      * @return A boolean.
      */
