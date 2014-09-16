@@ -556,8 +556,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
     /**
      * The mouse handlers that are available to deal with mouse events.
-     * 
-     * @since 1.0.14
      */
     private List<AbstractMouseHandler> availableLiveMouseHandlers;
 
@@ -565,8 +563,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * The current "live" mouse handler. One of the handlers from the
      * 'availableMouseHandlers' list will be selected (typically in the
      * mousePressed() method) to be the live handler.
-     * 
-     * @since 1.0.14
      */
     private AbstractMouseHandler liveMouseHandler;
 
@@ -578,8 +574,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
     /**
      * The zoom handler that is installed by default.
-     * 
-     * @since 1.0.14
      */
     private ZoomHandler zoomHandler;
 
@@ -3174,8 +3168,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * constructor.
      * 
      * @return A boolean.
-     * 
-     * @since 1.0.14
      */
     public boolean getUseBuffer() {
         return this.useBuffer;
@@ -3313,8 +3305,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * Returns the zoom rectangle.
      * 
      * @return The zoom rectangle (possibly <code>null</code>).
-     * 
-     * @since 1.0.14
      */
     public Rectangle2D getZoomRectangle() {
         return this.zoomRectangle;
@@ -3324,8 +3314,6 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * Sets the zoom rectangle for the panel.
      * 
      * @param rect  the rectangle (<code>null</code> permitted).
-     * 
-     * @since 1.0.14
      */
     public void setZoomRectangle(Rectangle2D rect) {
         this.zoomRectangle = rect;
