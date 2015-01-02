@@ -46,6 +46,7 @@
  *               corrected clone() (DG);
  * 01-Aug-2007 : Updated API docs (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jan-2015 : Replaced deprecated call to coordinates with getAnchorPoint (TLH)
  *
  */
 
@@ -574,8 +575,7 @@ public class LegendGraphic extends AbstractBlock implements Block,
         area = trimPadding(area);
 
         if (this.lineVisible) {
-            Point2D location = RectangleAnchor.coordinates(area,
-                    this.shapeLocation);
+            Point2D location = shapeLocation.getAnchorPoint(area);
             Shape aLine = ShapeUtils.createTranslatedShape(getLine(),
                     this.shapeAnchor, location.getX(), location.getY());
             g2.setPaint(this.linePaint);
@@ -584,8 +584,7 @@ public class LegendGraphic extends AbstractBlock implements Block,
         }
 
         if (this.shapeVisible) {
-            Point2D location = RectangleAnchor.coordinates(area,
-                    this.shapeLocation);
+            Point2D location = shapeLocation.getAnchorPoint(area);
 
             Shape s = ShapeUtils.createTranslatedShape(this.shape,
                     this.shapeAnchor, location.getX(), location.getY());

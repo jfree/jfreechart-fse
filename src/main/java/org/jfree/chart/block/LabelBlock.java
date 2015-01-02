@@ -46,6 +46,8 @@
  * 16-Mar-2007 : Fixed serialization when using GradientPaint (DG);
  * 10-Feb-2009 : Added alignment fields (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jan-2015 : Replaced deprecated call to coordinates with getAnchorPoint.
+ *               Also generated missing hashCode function. (TLH)
  *
  */
 
@@ -61,6 +63,7 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Objects;
 
 import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.Size2D;
@@ -360,7 +363,7 @@ public class LabelBlock extends AbstractBlock
         }
         g2.setPaint(this.paint);
         g2.setFont(this.font);
-        Point2D pt = RectangleAnchor.coordinates(area, this.textAnchor);
+        Point2D pt = textAnchor.getAnchorPoint(area);
         this.label.draw(g2, (float) pt.getX(), (float) pt.getY(),
                 this.contentAlignmentPoint);
         BlockResult result = null;
@@ -412,6 +415,21 @@ public class LabelBlock extends AbstractBlock
             return false;
         }
         return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 5;
+        hash = 67 * hash + Objects.hashCode( this.text );
+        hash = 67 * hash + Objects.hashCode( this.label );
+        hash = 67 * hash + Objects.hashCode( this.font );
+        hash = 67 * hash + Objects.hashCode( this.toolTipText );
+        hash = 67 * hash + Objects.hashCode( this.urlText );
+        hash = 67 * hash + Objects.hashCode( this.paint );
+        hash = 67 * hash + Objects.hashCode( this.contentAlignmentPoint );
+        hash = 67 * hash + Objects.hashCode( this.textAnchor );
+        return hash;
     }
 
     /**

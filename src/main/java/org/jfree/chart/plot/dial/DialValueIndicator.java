@@ -39,6 +39,7 @@
  * 24-Oct-2007 : Added default constructor and missing event notification (DG);
  * 09-Jun-2009 : Improved indicator resizing, fixes bug 2802014 (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jan-2015 : Replaced deprecated call to coordinates with getAnchorPoint (TLH)
  *
  */
 
@@ -639,7 +640,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer,
         Shape savedClip = g2.getClip();
         g2.clip(fb);
 
-        Point2D pt2 = RectangleAnchor.coordinates(bounds, this.valueAnchor);
+        Point2D pt2 = valueAnchor.getAnchorPoint(bounds);
         g2.setPaint(this.paint);
         g2.setFont(this.font);
         TextUtilities.drawAlignedString(valueStr, g2, (float) pt2.getX(),

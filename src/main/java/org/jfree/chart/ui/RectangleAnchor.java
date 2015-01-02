@@ -39,6 +39,7 @@
  *               because of JDK bug 4976448 which persists on JDK 1.3.1 (DG);
  * 21-Jan-2005 : Changed return type of coordinates() method (DG);
  * 16-Jun-2012 : Moved from JCommon to JFreeChart (DG);
+ * 02-Jan-2015 : Replaced deprecated coordinates function. (TLH)
  *
  */
 
@@ -132,21 +133,6 @@ public enum RectangleAnchor {
     @Override
     public String toString() {
         return this.name;
-    }
-
-    /**
-     * Returns the (x, y) coordinates of the specified anchor.
-     *
-     * @param rectangle  the rectangle.
-     * @param anchor  the anchor.
-     *
-     * @return The (x, y) coordinates.
-     * 
-     * @deprecated Use {@link #getAnchorPoint(java.awt.geom.Rectangle2D)}.
-     */
-    public static Point2D coordinates(Rectangle2D rectangle, 
-            RectangleAnchor anchor) {
-        return anchor.getAnchorPoint(rectangle);
     }
 
     /**

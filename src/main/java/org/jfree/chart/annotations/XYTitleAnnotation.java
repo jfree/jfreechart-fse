@@ -42,6 +42,7 @@
  * 03-Sep-2008 : Moved from experimental to main (DG);
  * 24-Jun-2009 : Fire change events (see patch 2809117 by PK) (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jan-2015 : Replaced deprecated call to coordinates with getAnchorPoint (TLH)
  */
 
 package org.jfree.chart.annotations;
@@ -305,8 +306,7 @@ public class XYTitleAnnotation extends AbstractXYAnnotation
         Size2D size = this.title.arrange(g2, rc);
         Rectangle2D titleRect = new Rectangle2D.Double(0, 0, size.width,
                 size.height);
-        Point2D anchorPoint = RectangleAnchor.coordinates(titleRect,
-                this.anchor);
+        Point2D anchorPoint = anchor.getAnchorPoint(titleRect);
         xx = xx - (float) anchorPoint.getX();
         yy = yy - (float) anchorPoint.getY();
         titleRect.setRect(xx, yy, titleRect.getWidth(), titleRect.getHeight());

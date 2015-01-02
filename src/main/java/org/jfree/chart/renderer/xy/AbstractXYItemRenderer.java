@@ -120,6 +120,8 @@
  * 06-Oct-2011 : Add utility methods to work with 1.4 API in GeneralPath (MK);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
  * 10-Mar-2014 : Remove LegendItemCollection (DG);
+ * 02-Jan-2015 : Replaced deprecated call to coordinates with getAnchorPoint.
+ *               Also generated missing hashCode function. (TLH)
  * 
  */
 
@@ -146,6 +148,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.annotations.Annotation;
@@ -1346,7 +1349,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             anchorRect = markerOffset.createAdjustedRectangle(markerArea,
                     labelOffsetType, LengthAdjustmentType.CONTRACT);
         }
-        return RectangleAnchor.coordinates(anchorRect, anchor);
+        return anchor.getAnchorPoint(anchorRect);
 
     }
 
@@ -1541,7 +1544,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             anchorRect = markerOffset.createAdjustedRectangle(markerArea,
                     LengthAdjustmentType.CONTRACT, labelOffsetForRange);
         }
-        return RectangleAnchor.coordinates(anchorRect, anchor);
+        return anchor.getAnchorPoint(anchorRect);
 
     }
     
@@ -1644,6 +1647,23 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             return false;
         }
         return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode( this.itemLabelGeneratorList );
+        hash = 59 * hash + Objects.hashCode( this.baseItemLabelGenerator );
+        hash = 59 * hash + Objects.hashCode( this.toolTipGeneratorList );
+        hash = 59 * hash + Objects.hashCode( this.baseToolTipGenerator );
+        hash = 59 * hash + Objects.hashCode( this.urlGenerator );
+        hash = 59 * hash + Objects.hashCode( this.backgroundAnnotations );
+        hash = 59 * hash + Objects.hashCode( this.foregroundAnnotations );
+        hash = 59 * hash + Objects.hashCode( this.legendItemLabelGenerator );
+        hash = 59 * hash + Objects.hashCode( this.legendItemToolTipGenerator );
+        hash = 59 * hash + Objects.hashCode( this.legendItemURLGenerator );
+        return hash;
     }
 
     /**
