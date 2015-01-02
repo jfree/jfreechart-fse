@@ -95,6 +95,7 @@
  * 16-Apr-2009 : Added tick mark drawing (DG);
  * 29-Jun-2009 : Fixed bug where axis entity is hiding label entities (DG);
  * 16-Jun-2012 : Removed JCommon dependencies, deprecated method (DG);
+ * 01-Jan-2014 : Replaced deprecated call to coordinates with getAnchorPoint (TLH)
  *
  */
 
@@ -1052,8 +1053,8 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
             }
             Rectangle2D area = new Rectangle2D.Double(x0, y0, (x1 - x0),
                     (y1 - y0));
-            Point2D anchorPoint = RectangleAnchor.coordinates(area,
-                    position.getCategoryAnchor());
+            RectangleAnchor categoryAnchor = position.getCategoryAnchor();
+            Point2D anchorPoint = categoryAnchor.getAnchorPoint(area);
             TextBlock block = tick.getLabel();
             block.draw(g2, (float) anchorPoint.getX(),
                     (float) anchorPoint.getY(), position.getLabelAnchor(),

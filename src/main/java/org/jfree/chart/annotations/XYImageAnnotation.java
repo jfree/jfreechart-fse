@@ -44,6 +44,7 @@
  * 01-Dec-2006 : Added anchor attribute (see patch 1584860 from
  *               Mike Harris) (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 02-Jan-2015 : Replaced deprecated call to coordinates with getAnchorPoint (TLH)
  * 
  */
 
@@ -224,8 +225,7 @@ public class XYImageAnnotation extends AbstractXYAnnotation
         int h = this.image.getHeight(null);
 
         Rectangle2D imageRect = new Rectangle2D.Double(0, 0, w, h);
-        Point2D anchorPoint = RectangleAnchor.coordinates(imageRect,
-                this.anchor);
+        Point2D anchorPoint = anchor.getAnchorPoint(imageRect);
         xx = xx - (float) anchorPoint.getX();
         yy = yy - (float) anchorPoint.getY();
         g2.drawImage(this.image, (int) xx, (int) yy, null);

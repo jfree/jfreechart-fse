@@ -105,6 +105,7 @@
  * 09-Feb-2010 : Fixed bug 2947660 (DG);
  * 15-Jun-2012 : Removed JCommon dependencies (DG);
  * 10-Mar-2014 : Removed LegendItemCollection (DG);
+ * 02-Jan-2015 : Replaced deprecated call to coordinates with getAnchorPoint (TLH)
  *
  */
 
@@ -1225,7 +1226,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             anchorRect = markerOffset.createAdjustedRectangle(markerArea,
                     labelOffsetType, LengthAdjustmentType.CONTRACT);
         }
-        return RectangleAnchor.coordinates(anchorRect, anchor);
+        return anchor.getAnchorPoint(anchorRect);
 
     }
 
@@ -1256,7 +1257,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             anchorRect = markerOffset.createAdjustedRectangle(markerArea,
                     LengthAdjustmentType.CONTRACT, labelOffsetType);
         }
-        return RectangleAnchor.coordinates(anchorRect, anchor);
+        return anchor.getAnchorPoint(anchorRect);
 
     }
 

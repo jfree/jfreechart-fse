@@ -55,6 +55,7 @@
  *               instances (DG);
  * 01-Jun-2008 : Fixed bug in equal(GeneralPath, GeneralPath) method (DG);
  * 16-Jun-2012 : Moved from JCommon to JFreeChart (DG);
+ * 02-Jan-2015 : Replaced deprecated call to coordinates with getAnchorPoint (TLH)
  *
  */
 
@@ -332,8 +333,7 @@ public class ShapeUtils {
             RectangleAnchor anchor, double locationX, double locationY) {
         ParamChecks.nullNotPermitted(shape, "shape");
         ParamChecks.nullNotPermitted(anchor, "anchor");
-        Point2D anchorPoint = RectangleAnchor.coordinates(
-                shape.getBounds2D(), anchor);
+        Point2D anchorPoint = anchor.getAnchorPoint(shape.getBounds2D());
         AffineTransform transform = AffineTransform.getTranslateInstance(
                 locationX - anchorPoint.getX(), locationY - anchorPoint.getY());
         return transform.createTransformedShape(shape);
