@@ -80,6 +80,30 @@ public class MatrixSeriesCollectionTest  {
         assertEquals(c1, c2);
     }
 
+    @Test
+    public void testUpdateAll() {
+        // Test happy case
+        double[][] data = { {1.0,1.1,1.2},{2.0,2.1,2.2}};
+        MatrixSeries s1 = new MatrixSeries("Series", data);
+        assertEquals(2,s1.getRowCount());
+        assertEquals(3,s1.getColumnsCount());
+        assertEquals(2.2,s1.get(1,2), 1e-8);
+        MatrixSeriesCollection c1 = new MatrixSeriesCollection();
+        c1.addSeries(s1);
+
+        // Test differing lengths
+        try {
+            double[][] data2 = { {1.0,1.1,1,2},{2.0,2.1,2.2}};
+            MatrixSeries ss = new MatrixSeries("Series", data);
+            throw new IllegalArgumentException("Did not detect differing array lengths");
+        } catch (IllegalArgumentException ie) {}
+
+        // Test null array
+        MatrixSeries s2 = new MatrixSeries("Empty Series", null);
+        assertEquals(s2.getRowCount(),0);
+        assertEquals(s2.getColumnsCount(),0);
+    }
+
     /**
      * Confirm that cloning works.
      */

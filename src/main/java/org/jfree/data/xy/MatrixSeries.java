@@ -80,12 +80,40 @@ public class MatrixSeries extends Series implements Serializable {
     }
 
     /**
+     * Constructs a new matrix series.
+     * <p>
+     * By default, all matrix items are initialzed to 0.
+     * </p>
+     *
+     * @param name  series name (<code>null</code> not permitted).
+     * @param data  array of doubles - possibly multidimensional -
+     *              representing the input data
+     *              The arrays must all have the same length.
+     */
+    public MatrixSeries(String name,double[][] data) {
+        super(name);
+        if (data == null) {
+            data = new double[][]{};
+        } else {
+            int ncols = data[0].length;
+            for (int i = 1; i < data.length; i++) {
+                if (data[i].length != ncols) {
+                    throw new IllegalArgumentException(
+                      "Row " + i + "has different length " + data[i].length
+                              + " than the first row " + ncols);
+                }
+            }
+        }
+        this.data = data;
+    }
+
+    /**
      * Returns the number of columns in this matrix series.
      *
      * @return The number of columns in this matrix series.
      */
     public int getColumnsCount() {
-        return this.data[0].length;
+        return this.data.length > 0 ? this.data[0].length : 0;
     }
 
 
@@ -186,6 +214,10 @@ public class MatrixSeries extends Series implements Serializable {
         fireSeriesChanged();
     }
 
+    public void updateAll(double [][] data) {
+        this.data = data;
+        fireSeriesChanged();
+    }
 
     /**
      * Sets all matrix values to zero and sends a
