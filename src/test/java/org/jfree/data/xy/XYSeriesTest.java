@@ -87,6 +87,45 @@ public class XYSeriesTest {
         assertEquals(s1, s2);
     }
 
+    @Test
+    public void testAddEntireArray() {
+        // Test happy case with autosort =true
+        // The first element should be pushed to the end
+        // since autosort is set to true
+        XYSeries s1 = new XYSeries("Series",true);
+        double[] x= {1.4,1.0,1.1,1.2,1.3};
+        double[] y = { 32.0,2.0,4.0,8.0,16.0};
+        s1.add(x,y, true);
+        double [][] sarr = s1.toArray();
+        assert sarr[0].length == x.length;
+        assert sarr[1].length == y.length;
+
+        double[] xexpect= {1.0,1.1,1.2,1.3, 1.4};
+        double[] yexpect = { 2.0,4.0,8.0,16.0, 32.0};
+        for (int i=0;i< x.length; i++) {
+            assertEquals(xexpect[i],sarr[0][i], 1e-8);
+            assertEquals(yexpect[i],sarr[1][i], 1e-8);
+        }
+        assertEquals(1.4, s1.getX(x.length - 1).doubleValue(),1e-8);
+        assertEquals(32.0,s1.getY(x.length - 1).doubleValue(),1e-8);
+
+        // Test differing lengths
+        try {
+            double[] x2= {1.4,1.0,1.1,1.2,1.3};
+            double[] y2 = { 32.0,2.0,4.0,8.0,16.0};
+            s1.add(x2,y2, true);
+            throw new IllegalArgumentException("Did not detect differing array lengths");
+        } catch (IllegalArgumentException ie) {}
+
+        // Test null array
+        try {
+            double[] x3= null;
+            double[] y3 = {};
+            s1.add(x3,y3, true);
+            throw new IllegalArgumentException("Did not detect null array(s)");
+        } catch (IllegalArgumentException ie) {}
+    }
+
     /**
      * Some simple checks for the hashCode() method.
      */

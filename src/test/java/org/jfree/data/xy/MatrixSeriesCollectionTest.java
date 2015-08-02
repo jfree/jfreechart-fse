@@ -81,7 +81,7 @@ public class MatrixSeriesCollectionTest  {
     }
 
     @Test
-    public void testUpdateAll() {
+    public void testAddEntireArray() {
         // Test happy case
         double[][] data = { {1.0,1.1,1.2},{2.0,2.1,2.2}};
         MatrixSeries s1 = new MatrixSeries("Series", data);
