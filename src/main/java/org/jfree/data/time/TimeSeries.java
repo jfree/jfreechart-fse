@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2015, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * TimeSeries.java
  * ---------------
- * (C) Copyright 2001-2014, by Object Refinery Limited.
+ * (C) Copyright 2001-2015, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Bryan Scott;
@@ -85,6 +85,7 @@
  * 03-Dec-2011 : Fixed bug 3446965 which affects the y-range calculation for
  *               the series (DG);
  * 16-Jun-2012 : Removed JCommon dependencies (DG);
+ * 06-Sep-2015 : Fix for findRangeBounds() with Double.NaN values (DG);
  *
  */
 
@@ -333,10 +334,10 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     }
 
     /**
-     * Returns the range of y-values in the time series.  Any {@code null} 
-     * data values in the series will be ignored (except for the special case 
-     * where all data values are {@code null}, in which case the return 
-     * value is {@code Range(Double.NaN, Double.NaN)}).  If the time 
+     * Returns the range of y-values in the time series.  Any {@code null} or 
+     * {@code Double.NaN} data values in the series will be ignored (except for
+     * the special case where all data values are {@code null}, in which case 
+     * the return value is {@code Range(Double.NaN, Double.NaN)}).  If the time 
      * series contains no items, this method will return {@code null}.
      * 
      * @return The range of y-values in the time series (possibly {@code null}).
@@ -401,8 +402,8 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
                 Number n = item.getValue();
                 if (n != null) {
                     double v = n.doubleValue();
-                    lowY = Math.min(lowY, v);
-                    highY = Math.max(highY, v);
+                    lowY = minIgnoreNaN(lowY, v);
+                    highY = maxIgnoreNaN(highY, v);
                 }
             }
         }
