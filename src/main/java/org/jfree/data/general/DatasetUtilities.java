@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2015, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -156,7 +156,6 @@ import org.jfree.data.xy.XYRangeInfo;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.data.xy.XYZDataset;
-
 
 /**
  * A collection of useful static methods relating to datasets.
@@ -1333,8 +1332,13 @@ public final class DatasetUtilities {
                 int series = dataset.indexOf(seriesKey);
                 int itemCount = dataset.getItemCount(series);
                 for (int item = 0; item < itemCount; item++) {
+                    double xvalue = ixyd.getXValue(series, item);
                     double lvalue = ixyd.getStartXValue(series, item);
                     double uvalue = ixyd.getEndXValue(series, item);
+                    if (!Double.isNaN(xvalue)) {
+                        minimum = Math.min(minimum, xvalue);
+                        maximum = Math.max(maximum, xvalue);
+                    }
                     if (!Double.isNaN(lvalue)) {
                         minimum = Math.min(minimum, lvalue);
                     }
@@ -1445,8 +1449,13 @@ public final class DatasetUtilities {
                 for (int item = 0; item < itemCount; item++) {
                     double x = ixyd.getXValue(series, item);
                     if (xRange.contains(x)) {
+                        double yvalue = ixyd.getYValue(series, item);
                         double lvalue = ixyd.getStartYValue(series, item);
                         double uvalue = ixyd.getEndYValue(series, item);
+                        if (!Double.isNaN(yvalue)) {
+                            minimum = Math.min(minimum, yvalue);
+                            maximum = Math.max(maximum, yvalue);
+                        }
                         if (!Double.isNaN(lvalue)) {
                             minimum = Math.min(minimum, lvalue);
                         }
@@ -1456,8 +1465,7 @@ public final class DatasetUtilities {
                     }
                 }
             }
-        }
-        else {
+        } else {
             // standard case - plain XYDataset
             for (Comparable seriesKey : visibleSeriesKeys) {
                 int series = dataset.indexOf(seriesKey);
@@ -1476,8 +1484,7 @@ public final class DatasetUtilities {
         }
         if (minimum == Double.POSITIVE_INFINITY) {
             return null;
-        }
-        else {
+        } else {
             return new Range(minimum, maximum);
         }
     }
@@ -1525,8 +1532,7 @@ public final class DatasetUtilities {
 
         if (minimum == Double.POSITIVE_INFINITY) {
             return null;
-        }
-        else {
+        } else {
             return new Range(minimum, maximum);
         }
     }
