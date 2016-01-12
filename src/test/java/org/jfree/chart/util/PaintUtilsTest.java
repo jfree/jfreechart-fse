@@ -36,7 +36,7 @@
  * -------
  * 08-Feb-2008 : Version 1 (DG);
  * 14-Jan-2009 : Updated testEquals() for new field (DG);
- * 11-Jan-2016 : Copied from JCommon (DG);
+ * 11-Jan-2016 : Copied from JCommon plus new tests (DG);
  *
  */
 
@@ -44,7 +44,11 @@ package org.jfree.chart.util;
 
 import java.awt.Color;
 import java.awt.GradientPaint;
+import java.awt.LinearGradientPaint;
+import java.awt.MultipleGradientPaint;
 import java.awt.Paint;
+import java.awt.RadialGradientPaint;
+import java.awt.geom.Point2D;
 
 import org.junit.Test;
 import static org.junit.Assert.assertFalse;
@@ -60,19 +64,16 @@ public class PaintUtilsTest {
      */
     @Test
     public void testEqual() {
-        Paint p1 = Color.red;
-        Paint p2 = Color.blue;
+        Paint p1 = Color.RED;
+        Paint p2 = Color.BLUE;
         Paint p3 = new Color(1, 2, 3, 4);
         Paint p4 = new Color(1, 2, 3, 4);
-        Paint p5 = new GradientPaint(
-            1.0f, 2.0f, Color.red, 3.0f, 4.0f, Color.yellow
-        );
-        Paint p6 = new GradientPaint(
-            1.0f, 2.0f, Color.red, 3.0f, 4.0f, Color.yellow
-        );
-        Paint p7 = new GradientPaint(
-            1.0f, 2.0f, Color.red, 3.0f, 4.0f, Color.blue
-        );
+        Paint p5 = new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f, 
+                Color.YELLOW);
+        Paint p6 = new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f, 
+                Color.YELLOW);
+        Paint p7 = new GradientPaint(1.0f, 2.0f, Color.RED, 3.0f, 4.0f, 
+                Color.BLUE);
         assertTrue(PaintUtils.equal(null, null));
         assertFalse(PaintUtils.equal(p1, null));
         assertFalse(PaintUtils.equal(null, p1));
@@ -83,4 +84,105 @@ public class PaintUtilsTest {
         assertFalse(PaintUtils.equal(p5, p7));
     }
 
+    @Test
+    public void testLinearGradientPaint() {
+        Point2D start1 = new Point2D.Float(0, 0);
+        Point2D end1 = new Point2D.Float(50, 50);
+        float[] dist1 = {0.0f, 0.2f, 1.0f};
+        Color[] colors1 = {Color.RED, Color.WHITE, Color.BLUE};
+        LinearGradientPaint p1 = new LinearGradientPaint(start1, end1, dist1, 
+                colors1);    
+
+        Point2D start2 = new Point2D.Float(0, 0);
+        Point2D end2 = new Point2D.Float(50, 50);
+        float[] dist2 = {0.0f, 0.2f, 1.0f};
+        Color[] colors2 = {Color.RED, Color.WHITE, Color.BLUE};
+        LinearGradientPaint p2 = new LinearGradientPaint(start2, end2, dist2, 
+                colors2);
+        assertTrue(PaintUtils.equal(p1, p2));
+        assertFalse(PaintUtils.equal(p1, Color.RED));
+        assertFalse(PaintUtils.equal(p1, null));
+        assertFalse(PaintUtils.equal(null, p1));
+    }
+    
+    @Test
+    public void testRadialGradientPaint() {
+        RadialGradientPaint p1 = new RadialGradientPaint(1.0f, 2.0f, 3.0f, 
+                new float[] {0.0f, 0.4f, 1.0f}, 
+                new Color[] {Color.RED, Color.GREEN, Color.BLUE});
+        RadialGradientPaint p2 = new RadialGradientPaint(1.0f, 2.0f, 3.0f, 
+                new float[] {0.0f, 0.4f, 1.0f}, 
+                new Color[] {Color.RED, Color.GREEN, Color.BLUE});
+        assertTrue(PaintUtils.equal(p1, p2));
+        assertFalse(PaintUtils.equal(p1, Color.RED));
+        assertFalse(PaintUtils.equal(p1, null));
+        assertFalse(PaintUtils.equal(null, p1));
+
+        p1 = new RadialGradientPaint(1.1f, 2.0f, 3.0f, 
+                new float[] {0.0f, 0.4f, 1.0f}, 
+                new Color[] {Color.RED, Color.GREEN, Color.BLUE});
+        assertFalse(PaintUtils.equal(p1, p2));
+        p2 = new RadialGradientPaint(1.1f, 2.0f, 3.0f, 
+                new float[] {0.0f, 0.4f, 1.0f}, 
+                new Color[] {Color.RED, Color.GREEN, Color.BLUE});
+        assertTrue(PaintUtils.equal(p1, p2));
+
+        p1 = new RadialGradientPaint(1.1f, 2.2f, 3.0f, 
+                new float[] {0.0f, 0.4f, 1.0f}, 
+                new Color[] {Color.RED, Color.GREEN, Color.BLUE});
+        assertFalse(PaintUtils.equal(p1, p2));
+        p2 = new RadialGradientPaint(1.1f, 2.2f, 3.0f, 
+                new float[] {0.0f, 0.4f, 1.0f}, 
+                new Color[] {Color.RED, Color.GREEN, Color.BLUE});
+        assertTrue(PaintUtils.equal(p1, p2));
+
+        p1 = new RadialGradientPaint(1.1f, 2.2f, 3.3f, 
+                new float[] {0.0f, 0.4f, 1.0f}, 
+                new Color[] {Color.RED, Color.GREEN, Color.BLUE});
+        assertFalse(PaintUtils.equal(p1, p2));
+        p2 = new RadialGradientPaint(1.1f, 2.2f, 3.3f, 
+                new float[] {0.0f, 0.4f, 1.0f}, 
+                new Color[] {Color.RED, Color.GREEN, Color.BLUE});
+        assertTrue(PaintUtils.equal(p1, p2));
+
+        p1 = new RadialGradientPaint(1.1f, 2.2f, 3.3f, 
+                new float[] {0.0f, 0.6f, 1.0f}, 
+                new Color[] {Color.RED, Color.GREEN, Color.BLUE});
+        assertFalse(PaintUtils.equal(p1, p2));
+        p2 = new RadialGradientPaint(1.1f, 2.2f, 3.3f, 
+                new float[] {0.0f, 0.6f, 1.0f}, 
+                new Color[] {Color.RED, Color.GREEN, Color.BLUE});
+        assertTrue(PaintUtils.equal(p1, p2));
+    
+        p1 = new RadialGradientPaint(1.1f, 2.2f, 3.3f, 
+                new float[] {0.0f, 0.6f, 1.0f}, 
+                new Color[] {Color.RED, Color.YELLOW, Color.BLUE});
+        assertFalse(PaintUtils.equal(p1, p2));
+        p2 = new RadialGradientPaint(1.1f, 2.2f, 3.3f, 
+                new float[] {0.0f, 0.6f, 1.0f}, 
+                new Color[] {Color.RED, Color.YELLOW, Color.BLUE});
+        assertTrue(PaintUtils.equal(p1, p2));
+        
+        p1 = new RadialGradientPaint(1.1f, 2.2f, 3.3f,
+                new float[] {0.0f, 0.6f, 1.0f}, 
+                new Color[] {Color.RED, Color.YELLOW, Color.BLUE}, 
+                MultipleGradientPaint.CycleMethod.REPEAT);
+        assertFalse(PaintUtils.equal(p1, p2));
+        p2 = new RadialGradientPaint(1.1f, 2.2f, 3.3f,
+                new float[] {0.0f, 0.6f, 1.0f}, 
+                new Color[] {Color.RED, Color.YELLOW, Color.BLUE},
+                MultipleGradientPaint.CycleMethod.REPEAT);
+        assertTrue(PaintUtils.equal(p1, p2));
+        
+        p1 = new RadialGradientPaint(1.1f, 2.2f, 3.3f, 4.4f, 5.5f,
+                new float[] {0.0f, 0.6f, 1.0f}, 
+                new Color[] {Color.RED, Color.YELLOW, Color.BLUE}, 
+                MultipleGradientPaint.CycleMethod.REPEAT);
+        assertFalse(PaintUtils.equal(p1, p2));
+        p2 = new RadialGradientPaint(1.1f, 2.2f, 3.3f, 4.4f, 5.5f,
+                new float[] {0.0f, 0.6f, 1.0f}, 
+                new Color[] {Color.RED, Color.YELLOW, Color.BLUE},
+                MultipleGradientPaint.CycleMethod.REPEAT);
+        assertTrue(PaintUtils.equal(p1, p2));
+    }
 }
