@@ -57,16 +57,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 
-
-
 /**
  * Tests for the {@link LogFormat} class.
  */
 public class LogFormatTest  {
-
-
-
-
 
     /**
      * Check that the equals() method distinguishes all fields.
@@ -117,9 +111,7 @@ public class LogFormatTest  {
     @Test
     public void testCloning() throws CloneNotSupportedException {
         LogFormat f1 = new LogFormat(10.0, "10", true);
-
         LogFormat f2 = (LogFormat) f1.clone();
-
         assertNotSame(f1, f2);
         assertSame(f1.getClass(), f2.getClass());
         assertEquals(f1, f2);
@@ -131,16 +123,15 @@ public class LogFormatTest  {
     @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
         LogFormat f1 = new LogFormat(10.0, "10", true);
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(buffer);
+        out.writeObject(f1);
+        out.close();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutput out = new ObjectOutputStream(buffer);
-            out.writeObject(f1);
-            out.close();
-
-            ObjectInput in = new ObjectInputStream(
-                    new ByteArrayInputStream(buffer.toByteArray()));
+        ObjectInput in = new ObjectInputStream(
+                new ByteArrayInputStream(buffer.toByteArray()));
         LogFormat f2 = (LogFormat) in.readObject();
-            in.close();
+        in.close();
 
         assertEquals(f1, f2);
     }
