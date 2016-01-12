@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2016, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -------------------
  * PaintUtils.java
  * -------------------
- * (C) Copyright 2003-2012, by Object Refinery Limited.
+ * (C) Copyright 2003-2016, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -40,17 +40,22 @@
  * 04-Oct-2004 : Renamed PaintUtils --> PaintUtils (DG);
  * 23-Feb-2005 : Rewrote equal() method with less indenting required (DG);
  * 16-Jun-2012 : Moved from JCommon to JFreeChart (DG);
+ * 12-Jan-2016 : Add handling for LinearGradientPaint and 
+ *               RadialGradientPaint (DG);
  *
  */
 
 package org.jfree.chart.util;
 
 import java.awt.GradientPaint;
+import java.awt.LinearGradientPaint;
 import java.awt.Paint;
+import java.awt.RadialGradientPaint;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
- * Utility code that relates to <code>Paint</code> objects.
+ * Utility code that relates to {@code Paint} objects.
  */
 public class PaintUtils {
 
@@ -61,12 +66,12 @@ public class PaintUtils {
     }
 
     /**
-     * Returns <code>true</code> if the two <code>Paint</code> objects are equal 
-     * OR both <code>null</code>.  This method handles
-     * <code>GradientPaint</code> as a special case.
+     * Returns {@code true} if the two {@code Paint} objects are equal 
+     * OR both {@code null}.  This method handles
+     * {@code GradientPaint} as a special case.
      *
-     * @param p1  paint 1 (<code>null</code> permitted).
-     * @param p2  paint 2 (<code>null</code> permitted).
+     * @param p1  paint 1 ({@code null} permitted).
+     * @param p2  paint 2 ({@code null} permitted).
      *
      * @return A boolean.
      */
@@ -78,31 +83,47 @@ public class PaintUtils {
         if (p2 == null) {
             return false;   
         }
-        
-        boolean result;
+
         // handle GradientPaint as a special case...
         if (p1 instanceof GradientPaint && p2 instanceof GradientPaint) {
             GradientPaint gp1 = (GradientPaint) p1;
             GradientPaint gp2 = (GradientPaint) p2;
-            result = gp1.getColor1().equals(gp2.getColor1()) 
-                && gp1.getColor2().equals(gp2.getColor2())
-                && gp1.getPoint1().equals(gp2.getPoint1())    
-                && gp1.getPoint2().equals(gp2.getPoint2())
-                && gp1.isCyclic() == gp2.isCyclic()
-                && gp1.getTransparency() == gp1.getTransparency(); 
+            return gp1.getColor1().equals(gp2.getColor1()) 
+                    && gp1.getColor2().equals(gp2.getColor2())
+                    && gp1.getPoint1().equals(gp2.getPoint1())    
+                    && gp1.getPoint2().equals(gp2.getPoint2())
+                    && gp1.isCyclic() == gp2.isCyclic()
+                    && gp1.getTransparency() == gp1.getTransparency(); 
+        } else if (p1 instanceof LinearGradientPaint 
+                && p2 instanceof LinearGradientPaint) {
+            LinearGradientPaint lgp1 = (LinearGradientPaint) p1;
+            LinearGradientPaint lgp2 = (LinearGradientPaint) p2;
+            return lgp1.getStartPoint().equals(lgp2.getStartPoint())
+                    && lgp1.getEndPoint().equals(lgp2.getEndPoint()) 
+                    && Arrays.equals(lgp1.getFractions(), lgp2.getFractions())
+                    && Arrays.equals(lgp1.getColors(), lgp2.getColors())
+                    && lgp1.getCycleMethod() == lgp2.getCycleMethod();
+        } else if (p1 instanceof RadialGradientPaint 
+                && p2 instanceof RadialGradientPaint) {
+            RadialGradientPaint rgp1 = (RadialGradientPaint) p1;
+            RadialGradientPaint rgp2 = (RadialGradientPaint) p2;
+            return rgp1.getCenterPoint().equals(rgp2.getCenterPoint())
+                    && rgp1.getRadius() == rgp2.getRadius() 
+                    && rgp1.getFocusPoint().equals(rgp2.getFocusPoint())
+                    && Arrays.equals(rgp1.getFractions(), rgp2.getFractions())
+                    && Arrays.equals(rgp1.getColors(), rgp2.getColors())
+                    && rgp1.getCycleMethod() == rgp2.getCycleMethod();
+        } else {
+            return p1.equals(p2);
         }
-        else {
-            result = p1.equals(p2);
-        }
-        return result;
     }
 
     /**
-     * Returns <code>true</code> if the maps contain the same keys and 
-     * {@link Paint} values, and <code>false</code> otherwise.
+     * Returns {@code true} if the maps contain the same keys and 
+     * {@link Paint} values, and {@code false} otherwise.
      * 
-     * @param m1  map 1 (<code>null</code> not permitted).
-     * @param m2  map 2 (<code>null</code> not permitted).
+     * @param m1  map 1 ({@code null} not permitted).
+     * @param m2  map 2 ({@code null} not permitted).
      * 
      * @return A boolean. 
      */
