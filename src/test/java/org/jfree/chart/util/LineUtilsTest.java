@@ -40,11 +40,10 @@
 
 package org.jfree.chart.util;
 
-import org.junit.Test;
-
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
+import org.junit.Test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
