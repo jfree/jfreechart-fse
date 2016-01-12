@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2016, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * -----------------------
  * LineUtilitiesTests.java
  * -----------------------
- * (C) Copyright 2008, 2014, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2008-2016, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -66,7 +66,6 @@ public class LineUtilsTest  {
     }
 
     @Test
-
     public void testClipLine() {
         Rectangle2D rect = new Rectangle2D.Double(1.0, 1.0, 1.0, 1.0);
         Line2D line = new Line2D.Double();
