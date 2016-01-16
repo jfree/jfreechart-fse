@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2016, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------------------
  * AbstractCategoryItemRenderer.java
  * ---------------------------------
- * (C) Copyright 2002-2014, by Object Refinery Limited.
+ * (C) Copyright 2002-2016, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Richard Atkinson;
@@ -243,7 +243,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
 
     /**
      * Returns the number of passes through the dataset required by the
-     * renderer.  This method returns <code>1</code>, subclasses should
+     * renderer.  This method returns {@code 1}, subclasses should
      * override if they need more passes.
      *
      * @return The pass count.
@@ -255,10 +255,10 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
 
     /**
      * Returns the plot that the renderer has been assigned to (where
-     * <code>null</code> indicates that the renderer is not currently assigned
+     * {@code null} indicates that the renderer is not currently assigned
      * to a plot).
      *
-     * @return The plot (possibly <code>null</code>).
+     * @return The plot (possibly {@code null}).
      *
      * @see #setPlot(CategoryPlot)
      */
@@ -272,7 +272,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * usually called by the {@link CategoryPlot}, in normal usage you
      * shouldn't need to call this method directly.
      *
-     * @param plot  the plot (<code>null</code> not permitted).
+     * @param plot  the plot ({@code null} not permitted).
      *
      * @see #getPlot()
      */
@@ -293,7 +293,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @param row  the row index (zero based).
      * @param column  the column index (zero based).
      *
-     * @return The generator (possibly <code>null</code>).
+     * @return The generator (possibly {@code null}).
      */
     @Override
     public CategoryItemLabelGenerator getItemLabelGenerator(int row,
@@ -306,7 +306,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      *
      * @param series  the series index (zero based).
      *
-     * @return The generator (possibly <code>null</code>).
+     * @return The generator (possibly {@code null}).
      *
      * @see #setSeriesItemLabelGenerator(int, CategoryItemLabelGenerator)
      */
@@ -324,7 +324,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param series  the series index (zero based).
-     * @param generator  the generator (<code>null</code> permitted).
+     * @param generator  the generator ({@code null} permitted).
      *
      * @see #getSeriesItemLabelGenerator(int)
      */
@@ -339,7 +339,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param series  the series index (zero based).
-     * @param generator  the generator (<code>null</code> permitted).
+     * @param generator  the generator ({@code null} permitted).
      * @param notify  notify listeners?
      *
      * @see #getSeriesItemLabelGenerator(int)
@@ -356,7 +356,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     /**
      * Returns the default item label generator.
      *
-     * @return The generator (possibly <code>null</code>).
+     * @return The generator (possibly {@code null}).
      *
      * @see #setDefaultItemLabelGenerator(CategoryItemLabelGenerator)
      */
@@ -369,7 +369,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * Sets the default item label generator and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param generator  the generator (<code>null</code> permitted).
+     * @param generator  the generator ({@code null} permitted).
      *
      * @see #getDefaultItemLabelGenerator()
      */
@@ -383,7 +383,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * Sets the default item label generator and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param generator  the generator (<code>null</code> permitted).
+     * @param generator  the generator ({@code null} permitted).
      * @param notify  notify listeners?
      *
      * @see #getDefaultItemLabelGenerator()
@@ -409,7 +409,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @param row  the row index (zero-based).
      * @param column  the column index (zero-based).
      *
-     * @return The generator (possibly <code>null</code>).
+     * @return The generator (possibly {@code null}).
      */
     @Override
     public CategoryToolTipGenerator getToolTipGenerator(int row, int column) {
@@ -427,7 +427,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      *
      * @param series  the series index (zero-based).
      *
-     * @return The tool tip generator (possibly <code>null</code>).
+     * @return The tool tip generator (possibly {@code null}).
      *
      * @see #setSeriesToolTipGenerator(int, CategoryToolTipGenerator)
      */
@@ -441,7 +441,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param series  the series index (zero-based).
-     * @param generator  the generator (<code>null</code> permitted).
+     * @param generator  the generator ({@code null} permitted).
      *
      * @see #getSeriesToolTipGenerator(int)
      */
@@ -456,7 +456,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * {@link RendererChangeEvent} to all registered listeners.
      *
      * @param series  the series index (zero-based).
-     * @param generator  the generator (<code>null</code> permitted).
+     * @param generator  the generator ({@code null} permitted).
      * @param notify  notify listeners?
      *
      * @see #getSeriesToolTipGenerator(int)
@@ -473,7 +473,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     /**
      * Returns the default tool tip generator.
      *
-     * @return The tool tip generator (possibly <code>null</code>).
+     * @return The tool tip generator (possibly {@code null}).
      *
      * @see #setDefaultToolTipGenerator(CategoryToolTipGenerator)
      */
@@ -486,7 +486,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * Sets the default tool tip generator and sends a {@link RendererChangeEvent}
      * to all registered listeners.
      *
-     * @param generator  the generator (<code>null</code> permitted).
+     * @param generator  the generator ({@code null} permitted).
      *
      * @see #getDefaultToolTipGenerator()
      */
@@ -499,7 +499,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * Sets the default tool tip generator and sends a change event to all 
      * registered listeners.
      *
-     * @param generator  the generator (<code>null</code> permitted).
+     * @param generator  the generator ({@code null} permitted).
      * @param notify  notify listeners?
      *
      * @see #getDefaultToolTipGenerator()
@@ -598,7 +598,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * Sets the default URL generator and sends a change event to all 
      * registered listeners.
      *
-     * @param generator  the URL generator (<code>null</code> permitted).
+     * @param generator  the URL generator ({@code null} permitted).
      *
      * @see #getDefaultURLGenerator()
      */
@@ -611,7 +611,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * Sets the default URL generator and sends a change event to all 
      * registered listeners.
      *
-     * @param generator  the item URL generator (<code>null</code> permitted).
+     * @param generator  the item URL generator ({@code null} permitted).
      * @param notify  notify listeners?
      *
      * @see #getDefaultURLGenerator()
@@ -651,9 +651,9 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * PlotRenderingInfo)} method.  Subclasses can override this method if
      * they need to use a subclass of {@link CategoryItemRendererState}.
      *
-     * @param info  collects plot rendering info (<code>null</code> permitted).
+     * @param info  collects plot rendering info ({@code null} permitted).
      *
-     * @return The new state instance (never <code>null</code>).
+     * @return The new state instance (never {@code null}).
      *
      * @since 1.0.5
      */
@@ -672,7 +672,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @param plot  the plot.
      * @param rendererIndex  the renderer index.
      * @param info  an object for returning information about the structure of
-     *              the plot (<code>null</code> permitted).
+     *              the plot ({@code null} permitted).
      *
      * @return The renderer state.
      */
@@ -711,10 +711,10 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * Returns the range of values the renderer requires to display all the
      * items from the specified dataset.
      *
-     * @param dataset  the dataset (<code>null</code> permitted).
+     * @param dataset  the dataset ({@code null} permitted).
      *
-     * @return The range (or <code>null</code> if the dataset is
-     *         <code>null</code> or empty).
+     * @return The range (or {@code null} if the dataset is
+     *         {@code null} or empty).
      */
     @Override
     public Range findRangeBounds(CategoryDataset dataset) {
@@ -725,10 +725,10 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * Returns the range of values the renderer requires to display all the
      * items from the specified dataset.
      *
-     * @param dataset  the dataset (<code>null</code> permitted).
+     * @param dataset  the dataset ({@code null} permitted).
      * @param includeInterval  include the y-interval if the dataset has one.
      *
-     * @return The range (<code>null</code> if the dataset is <code>null</code>
+     * @return The range ({@code null} if the dataset is {@code null}
      *         or empty).
      *
      * @since 1.0.13
@@ -898,8 +898,8 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @param dataArea  the area for plotting data (not yet adjusted for any 3D
      *                  effect).
      * @param value  the value at which the grid line should be drawn.
-     * @param paint  the paint (<code>null</code> not permitted).
-     * @param stroke  the stroke (<code>null</code> not permitted).
+     * @param paint  the paint ({@code null} not permitted).
+     * @param stroke  the stroke ({@code null} not permitted).
      *
      * @see #drawRangeGridline
      *
@@ -938,11 +938,11 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     /**
      * Draws a marker for the domain axis.
      *
-     * @param g2  the graphics device (not <code>null</code>).
-     * @param plot  the plot (not <code>null</code>).
-     * @param axis  the range axis (not <code>null</code>).
-     * @param marker  the marker to be drawn (not <code>null</code>).
-     * @param dataArea  the area inside the axes (not <code>null</code>).
+     * @param g2  the graphics device (not {@code null}).
+     * @param plot  the plot (not {@code null}).
+     * @param axis  the range axis (not {@code null}).
+     * @param marker  the marker to be drawn (not {@code null}).
+     * @param dataArea  the area inside the axes (not {@code null}).
      *
      * @see #drawRangeMarker(Graphics2D, CategoryPlot, ValueAxis, Marker,
      *     Rectangle2D)
@@ -1025,11 +1025,11 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     /**
      * Draws a marker for the range axis.
      *
-     * @param g2  the graphics device (not <code>null</code>).
-     * @param plot  the plot (not <code>null</code>).
-     * @param axis  the range axis (not <code>null</code>).
-     * @param marker  the marker to be drawn (not <code>null</code>).
-     * @param dataArea  the area inside the axes (not <code>null</code>).
+     * @param g2  the graphics device (not {@code null}).
+     * @param plot  the plot (not {@code null}).
+     * @param axis  the range axis (not {@code null}).
+     * @param marker  the marker to be drawn (not {@code null}).
+     * @param dataArea  the area inside the axes (not {@code null}).
      *
      * @see #drawDomainMarker(Graphics2D, CategoryPlot, CategoryAxis,
      *     CategoryMarker, Rectangle2D)
@@ -1262,13 +1262,13 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
 
     /**
      * Returns a legend item for a series.  This default implementation will
-     * return <code>null</code> if {@link #isSeriesVisible(int)} or
-     * {@link #isSeriesVisibleInLegend(int)} returns <code>false</code>.
+     * return {@code null} if {@link #isSeriesVisible(int)} or
+     * {@link #isSeriesVisibleInLegend(int)} returns {@code false}.
      *
      * @param datasetIndex  the dataset index (zero-based).
      * @param series  the series index (zero-based).
      *
-     * @return The legend item (possibly <code>null</code>).
+     * @return The legend item (possibly {@code null}).
      *
      * @see #getLegendItems()
      */
@@ -1323,7 +1323,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      *
      * @param obj  the object.
      *
-     * @return <code>true</code> or <code>false</code>.
+     * @return {@code true} or {@code false}.
      */
     @Override
     public boolean equals(Object obj) {
@@ -1388,7 +1388,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     /**
      * Returns the drawing supplier from the plot.
      *
-     * @return The drawing supplier (possibly <code>null</code>).
+     * @return The drawing supplier (possibly {@code null}).
      */
     @Override
     public DrawingSupplier getDrawingSupplier() {
@@ -1405,7 +1405,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * if it meets the criteria (usually means the (x, y) coordinate is the
      * closest to the anchor point so far).
      *
-     * @param crosshairState  the crosshair state (<code>null</code> permitted,
+     * @param crosshairState  the crosshair state ({@code null} permitted,
      *                        but the method does nothing in that case).
      * @param rowKey  the row key.
      * @param columnKey  the column key.
@@ -1413,7 +1413,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @param datasetIndex  the dataset index.
      * @param transX  the x-value translated to Java2D space.
      * @param transY  the y-value translated to Java2D space.
-     * @param orientation  the plot orientation (<code>null</code> not
+     * @param orientation  the plot orientation ({@code null} not
      *                     permitted).
      *
      * @since 1.0.11
@@ -1481,7 +1481,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     }
 
     /**
-     * Returns an independent copy of the renderer.  The <code>plot</code>
+     * Returns an independent copy of the renderer.  The {@code plot}
      * reference is shallow copied.
      *
      * @return A clone.
@@ -1594,7 +1594,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * Returns a (possibly empty) collection of legend items for the series
      * that this renderer is responsible for drawing.
      *
-     * @return The legend item collection (never <code>null</code>).
+     * @return The legend item collection (never {@code null}).
      *
      * @see #getLegendItem(int, int)
      */
@@ -1636,7 +1636,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     /**
      * Returns the legend item label generator.
      *
-     * @return The label generator (never <code>null</code>).
+     * @return The label generator (never {@code null}).
      *
      * @see #setLegendItemLabelGenerator(CategorySeriesLabelGenerator)
      */
@@ -1648,7 +1648,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * Sets the legend item label generator and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param generator  the generator (<code>null</code> not permitted).
+     * @param generator  the generator ({@code null} not permitted).
      *
      * @see #getLegendItemLabelGenerator()
      */
@@ -1662,7 +1662,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     /**
      * Returns the legend item tool tip generator.
      *
-     * @return The tool tip generator (possibly <code>null</code>).
+     * @return The tool tip generator (possibly {@code null}).
      *
      * @see #setLegendItemToolTipGenerator(CategorySeriesLabelGenerator)
      */
@@ -1674,7 +1674,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * Sets the legend item tool tip generator and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param generator  the generator (<code>null</code> permitted).
+     * @param generator  the generator ({@code null} permitted).
      *
      * @see #setLegendItemToolTipGenerator(CategorySeriesLabelGenerator)
      */
@@ -1687,7 +1687,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     /**
      * Returns the legend item URL generator.
      *
-     * @return The URL generator (possibly <code>null</code>).
+     * @return The URL generator (possibly {@code null}).
      *
      * @see #setLegendItemURLGenerator(CategorySeriesLabelGenerator)
      */
@@ -1699,7 +1699,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * Sets the legend item URL generator and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param generator  the generator (<code>null</code> permitted).
+     * @param generator  the generator ({@code null} permitted).
      *
      * @see #getLegendItemURLGenerator()
      */
@@ -1716,7 +1716,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * @param dataset  the dataset.
      * @param row  the row index.
      * @param column  the column index.
-     * @param hotspot  the hotspot (<code>null</code> not permitted).
+     * @param hotspot  the hotspot ({@code null} not permitted).
      */
     protected void addItemEntity(EntityCollection entities,
             CategoryDataset dataset, int row, int column, Shape hotspot) {
@@ -1743,15 +1743,15 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
      * Adds an entity to the collection.
      *
      * @param entities  the entity collection being populated.
-     * @param hotspot  the entity area (if <code>null</code> a default will be
+     * @param hotspot  the entity area (if {@code null} a default will be
      *              used).
      * @param dataset  the dataset.
      * @param row  the series.
      * @param column  the item.
      * @param entityX  the entity's center x-coordinate in user space (only
-     *                 used if <code>area</code> is <code>null</code>).
+     *                 used if {@code area} is {@code null}).
      * @param entityY  the entity's center y-coordinate in user space (only
-     *                 used if <code>area</code> is <code>null</code>).
+     *                 used if {@code area} is {@code null}).
      *
      * @since 1.0.13
      */
