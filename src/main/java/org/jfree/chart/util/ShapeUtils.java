@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2016, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------
  * ShapeUtils.java
  * ---------------
- * (C)opyright 2003-2014, by Object Refinery Limited and Contributors.
+ * (C)opyright 2003-2016, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -87,19 +87,18 @@ public class ShapeUtils {
     }
 
     /**
-     * Returns a clone of the specified shape, or <code>null</code>.  At the
+     * Returns a clone of the specified shape, or {@code null}.  At the
      * current time, this method supports cloning for instances of
-     * <code>Line2D</code>, <code>RectangularShape</code>, <code>Area</code>
-     * and <code>GeneralPath</code>.
+     * {@code Line2D}, {@code RectangularShape}, {@code Area}
+     * and {@code GeneralPath}.
      * <p>
-     * <code>RectangularShape</code> includes <code>Arc2D</code>,
-     * <code>Ellipse2D</code>, <code>Rectangle2D</code>,
-     * <code>RoundRectangle2D</code>.
+     * {@code RectangularShape} includes {@code Arc2D},
+     * {@code Ellipse2D}, {@code Rectangle2D}, {@code RoundRectangle2D}.
      *
-     * @param shape  the shape to clone (<code>null</code> permitted,
-     *               returns <code>null</code>).
+     * @param shape  the shape to clone ({@code null} permitted,
+     *               returns {@code null}).
      *
-     * @return A clone or <code>null</code>.
+     * @return A clone or {@code null}.
      */
     public static Shape clone(Shape shape) {
         if (shape instanceof Cloneable) {
@@ -114,15 +113,15 @@ public class ShapeUtils {
     }
 
     /**
-     * Tests two shapes for equality.  If both shapes are <code>null</code>,
-     * this method will return <code>true</code>.
+     * Tests two shapes for equality.  If both shapes are {@code null},
+     * this method will return {@code true}.
      * <p>
      * In the current implementation, the following shapes are supported:
-     * <code>Ellipse2D</code>, <code>Line2D</code> and <code>Rectangle2D</code>
+     * {@code Ellipse2D}, {@code Line2D} and {@code Rectangle2D}
      * (implicit).
      *
-     * @param s1  the first shape (<code>null</code> permitted).
-     * @param s2  the second shape (<code>null</code> permitted).
+     * @param s1  the first shape ({@code null} permitted).
+     * @param s2  the second shape ({@code null} permitted).
      *
      * @return A boolean.
      */
@@ -149,11 +148,11 @@ public class ShapeUtils {
     }
 
     /**
-     * Compares two lines are returns <code>true</code> if they are equal or
-     * both <code>null</code>.
+     * Compares two lines are returns {@code true} if they are equal or
+     * both {@code null}.
      *
-     * @param l1  the first line (<code>null</code> permitted).
-     * @param l2  the second line (<code>null</code> permitted).
+     * @param l1  the first line ({@code null} permitted).
+     * @param l2  the second line ({@code null} permitted).
      *
      * @return A boolean.
      */
@@ -174,11 +173,11 @@ public class ShapeUtils {
     }
 
     /**
-     * Compares two ellipses and returns <code>true</code> if they are equal or
-     * both <code>null</code>.
+     * Compares two ellipses and returns {@code true} if they are equal or
+     * both {@code null}.
      *
-     * @param e1  the first ellipse (<code>null</code> permitted).
-     * @param e2  the second ellipse (<code>null</code> permitted).
+     * @param e1  the first ellipse ({@code null} permitted).
+     * @param e2  the second ellipse ({@code null} permitted).
      *
      * @return A boolean.
      */
@@ -196,11 +195,11 @@ public class ShapeUtils {
     }
 
     /**
-     * Compares two arcs and returns <code>true</code> if they are equal or
-     * both <code>null</code>.
+     * Compares two arcs and returns {@code true} if they are equal or
+     * both {@code null}.
      *
-     * @param a1  the first arc (<code>null</code> permitted).
-     * @param a2  the second arc (<code>null</code> permitted).
+     * @param a1  the first arc ({@code null} permitted).
+     * @param a2  the second arc ({@code null} permitted).
      *
      * @return A boolean.
      */
@@ -227,11 +226,11 @@ public class ShapeUtils {
     }
 
     /**
-     * Tests two polygons for equality.  If both are <code>null</code> this
-     * method returns <code>true</code>.
+     * Tests two polygons for equality.  If both are {@code null} this
+     * method returns {@code true}.
      *
-     * @param p1  polygon 1 (<code>null</code> permitted).
-     * @param p2  polygon 2 (<code>null</code> permitted).
+     * @param p1  polygon 1 ({@code null} permitted).
+     * @param p2  polygon 2 ({@code null} permitted).
      *
      * @return A boolean.
      */
@@ -255,11 +254,11 @@ public class ShapeUtils {
     }
 
     /**
-     * Tests two polygons for equality.  If both are <code>null</code> this
-     * method returns <code>true</code>.
+     * Tests two polygons for equality.  If both are {@code null} this
+     * method returns {@code true}.
      *
-     * @param p1  path 1 (<code>null</code> permitted).
-     * @param p2  path 2 (<code>null</code> permitted).
+     * @param p1  path 1 ({@code null} permitted).
+     * @param p2  path 2 ({@code null} permitted).
      *
      * @return A boolean.
      */
@@ -300,7 +299,7 @@ public class ShapeUtils {
     /**
      * Creates and returns a translated shape.
      *
-     * @param shape  the shape (<code>null</code> not permitted).
+     * @param shape  the shape ({@code null} not permitted).
      * @param transX  the x translation (in Java2D space).
      * @param transY  the y translation (in Java2D space).
      *
@@ -321,8 +320,8 @@ public class ShapeUtils {
      * (relative to the rectangular bounds of the shape) aligns with the
      * specified (x, y) coordinate in Java2D space.
      *
-     * @param shape  the shape (<code>null</code> not permitted).
-     * @param anchor  the anchor (<code>null</code> not permitted).
+     * @param shape  the shape ({@code null} not permitted).
+     * @param anchor  the anchor ({@code null} not permitted).
      * @param locationX  the x-coordinate (in Java2D space).
      * @param locationY  the y-coordinate (in Java2D space).
      *
@@ -342,8 +341,8 @@ public class ShapeUtils {
     /**
      * Rotates a shape about the specified coordinates.
      *
-     * @param base  the shape (<code>null</code> permitted, returns
-     *              <code>null</code>).
+     * @param base  the shape ({@code null} permitted, returns
+     *              {@code null}).
      * @param angle  the angle (in radians).
      * @param x  the x coordinate for the rotation point (in Java2D space).
      * @param y  the y coordinate for the rotation point (in Java2D space).
@@ -361,10 +360,10 @@ public class ShapeUtils {
     }
 
     /**
-     * Draws a shape with the specified rotation about <code>(x, y)</code>.
+     * Draws a shape with the specified rotation about {@code (x, y)}.
      *
-     * @param g2  the graphics device (<code>null</code> not permitted).
-     * @param shape  the shape (<code>null</code> not permitted).
+     * @param g2  the graphics device ({@code null} not permitted).
+     * @param shape  the shape ({@code null} not permitted).
      * @param angle  the angle (in radians).
      * @param x  the x coordinate for the rotation point.
      * @param y  the y coordinate for the rotation point.
@@ -487,7 +486,7 @@ public class ShapeUtils {
      * segment.  A typical use for this method is the creation of a
      * 'clickable' region for a line that is displayed on-screen.
      *
-     * @param line  the line (<code>null</code> not permitted).
+     * @param line  the line ({@code null} not permitted).
      * @param width  the width of the region.
      *
      * @return A region that surrounds the line.
@@ -524,12 +523,12 @@ public class ShapeUtils {
      *
      * @param x  the x-coordinate.
      * @param y  the y-coordinate.
-     * @param area  the constraining rectangle (<code>null</code> not
+     * @param area  the constraining rectangle ({@code null} not
      *              permitted).
      *
      * @return A point within the rectangle.
      *
-     * @throws NullPointerException if <code>area</code> is <code>null</code>.
+     * @throws NullPointerException if {@code area} is {@code null}.
      */
     public static Point2D getPointInRectangle(double x, double y,
             Rectangle2D area) {
