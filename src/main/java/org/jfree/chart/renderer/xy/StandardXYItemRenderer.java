@@ -929,7 +929,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer
                 rangeAxisIndex, transX1, transY1, orientation);
 
         // add an entity for the item...
-        if (entities != null && isPointInRect(dataArea, xx, yy)) {
+        if (entities != null && ShapeUtils.isPointInRect(dataArea, xx, yy)) {
             addEntity(entities, entityArea, dataset, series, item, xx, yy);
         }
 
