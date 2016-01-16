@@ -48,6 +48,7 @@ import java.awt.LinearGradientPaint;
 import java.awt.MultipleGradientPaint;
 import java.awt.Paint;
 import java.awt.RadialGradientPaint;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import org.junit.Test;
@@ -103,6 +104,34 @@ public class PaintUtilsTest {
         assertFalse(PaintUtils.equal(p1, Color.RED));
         assertFalse(PaintUtils.equal(p1, null));
         assertFalse(PaintUtils.equal(null, p1));
+        
+        // check ColorSpaceType
+        p1 = new LinearGradientPaint(start1, end1, dist1, colors1, 
+                MultipleGradientPaint.CycleMethod.NO_CYCLE, 
+                MultipleGradientPaint.ColorSpaceType.LINEAR_RGB, 
+                new AffineTransform());
+        p2 = new LinearGradientPaint(start1, end1, dist1, colors1, 
+                MultipleGradientPaint.CycleMethod.NO_CYCLE, 
+                MultipleGradientPaint.ColorSpaceType.SRGB, 
+                new AffineTransform());
+        assertFalse(PaintUtils.equal(p1, p2));
+        p2 = new LinearGradientPaint(start1, end1, dist1, colors1, 
+                MultipleGradientPaint.CycleMethod.NO_CYCLE, 
+                MultipleGradientPaint.ColorSpaceType.LINEAR_RGB, 
+                new AffineTransform());
+        assertTrue(PaintUtils.equal(p1, p2));
+
+        // check transform
+        p1 = new LinearGradientPaint(start1, end1, dist1, colors1, 
+                MultipleGradientPaint.CycleMethod.NO_CYCLE, 
+                MultipleGradientPaint.ColorSpaceType.LINEAR_RGB, 
+                AffineTransform.getTranslateInstance(1.0, 2.0));
+        assertFalse(PaintUtils.equal(p1, p2));
+        p2 = new LinearGradientPaint(start1, end1, dist1, colors1, 
+                MultipleGradientPaint.CycleMethod.NO_CYCLE, 
+                MultipleGradientPaint.ColorSpaceType.LINEAR_RGB, 
+                AffineTransform.getTranslateInstance(1.0, 2.0));
+        assertTrue(PaintUtils.equal(p1, p2));
     }
     
     @Test
@@ -183,6 +212,47 @@ public class PaintUtilsTest {
                 new float[] {0.0f, 0.6f, 1.0f}, 
                 new Color[] {Color.RED, Color.YELLOW, Color.BLUE},
                 MultipleGradientPaint.CycleMethod.REPEAT);
+        assertTrue(PaintUtils.equal(p1, p2));
+
+        // check ColorSpaceType
+        Point2D center = new Point2D.Float(1.1f, 2.2f);
+        float radius = 3.3f;
+        Point2D focus = new Point2D.Float(4.4f, 5.5f);
+        p1 = new RadialGradientPaint(center, radius, focus,
+                new float[] {0.0f, 0.6f, 1.0f}, 
+                new Color[] {Color.RED, Color.YELLOW, Color.BLUE}, 
+                MultipleGradientPaint.CycleMethod.REPEAT,
+                MultipleGradientPaint.ColorSpaceType.SRGB, 
+                new AffineTransform());
+        p2 = new RadialGradientPaint(center, radius, focus,
+                new float[] {0.0f, 0.6f, 1.0f}, 
+                new Color[] {Color.RED, Color.YELLOW, Color.BLUE}, 
+                MultipleGradientPaint.CycleMethod.REPEAT,
+                MultipleGradientPaint.ColorSpaceType.LINEAR_RGB,
+                new AffineTransform());
+        assertFalse(PaintUtils.equal(p1, p2));
+        p2 = new RadialGradientPaint(center, radius, focus,
+                new float[] {0.0f, 0.6f, 1.0f}, 
+                new Color[] {Color.RED, Color.YELLOW, Color.BLUE}, 
+                MultipleGradientPaint.CycleMethod.REPEAT,
+                MultipleGradientPaint.ColorSpaceType.SRGB,
+                new AffineTransform());        
+        assertTrue(PaintUtils.equal(p1, p2));
+
+        // check transform
+        p1 = new RadialGradientPaint(center, radius, focus,
+                new float[] {0.0f, 0.6f, 1.0f}, 
+                new Color[] {Color.RED, Color.YELLOW, Color.BLUE}, 
+                MultipleGradientPaint.CycleMethod.REPEAT,
+                MultipleGradientPaint.ColorSpaceType.SRGB, 
+                AffineTransform.getTranslateInstance(1.0, 2.0));
+        assertFalse(PaintUtils.equal(p1, p2));
+        p2 = new RadialGradientPaint(center, radius, focus,
+                new float[] {0.0f, 0.6f, 1.0f}, 
+                new Color[] {Color.RED, Color.YELLOW, Color.BLUE}, 
+                MultipleGradientPaint.CycleMethod.REPEAT,
+                MultipleGradientPaint.ColorSpaceType.SRGB, 
+                AffineTransform.getTranslateInstance(1.0, 2.0));
         assertTrue(PaintUtils.equal(p1, p2));
     }
 }
