@@ -1154,7 +1154,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     }
 
     /**
-     * Draws a vertical line on the chart to represent a 'range marker'.
+     * Draws a line on the chart perpendicular to the x-axis to mark
+     * a value or range of values.
      *
      * @param g2  the graphics device.
      * @param plot  the plot.
@@ -1176,18 +1177,16 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
 
             double v = domainAxis.valueToJava2D(value, dataArea,
                     plot.getDomainAxisEdge());
-
             PlotOrientation orientation = plot.getOrientation();
             Line2D line = null;
             if (orientation == PlotOrientation.HORIZONTAL) {
                 line = new Line2D.Double(dataArea.getMinX(), v,
                         dataArea.getMaxX(), v);
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 line = new Line2D.Double(v, dataArea.getMinY(), v,
                         dataArea.getMaxY());
             } else {
-                throw new IllegalStateException();
+                throw new IllegalStateException("Unrecognised orientation.");
             }
 
             final Composite originalComposite = g2.getComposite();
@@ -1198,22 +1197,26 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             g2.draw(line);
 
             String label = marker.getLabel();
-            RectangleAnchor anchor = marker.getLabelAnchor();
             if (label != null) {
+                RectangleAnchor anchor = marker.getLabelAnchor();
                 Font labelFont = marker.getLabelFont();
                 g2.setFont(labelFont);
-                g2.setPaint(marker.getLabelPaint());
-                Point2D coordinates = calculateDomainMarkerTextAnchorPoint(
+                Point2D coords = calculateDomainMarkerTextAnchorPoint(
                         g2, orientation, dataArea, line.getBounds2D(),
                         marker.getLabelOffset(),
                         LengthAdjustmentType.EXPAND, anchor);
+                Rectangle2D r = TextUtilities.calcAlignedStringBounds(label, 
+                        g2, (float) coords.getX(), (float) coords.getY(), 
+                        marker.getLabelTextAnchor());
+                g2.setPaint(marker.getLabelBackgroundColor());
+                g2.fill(r);
+                g2.setPaint(marker.getLabelPaint());
                 TextUtilities.drawAlignedString(label, g2,
-                        (float) coordinates.getX(), (float) coordinates.getY(),
+                        (float) coords.getX(), (float) coords.getY(),
                         marker.getLabelTextAnchor());
             }
             g2.setComposite(originalComposite);
-        }
-        else if (marker instanceof IntervalMarker) {
+        } else if (marker instanceof IntervalMarker) {
             IntervalMarker im = (IntervalMarker) marker;
             double start = im.getStartValue();
             double end = im.getEndValue();
@@ -1238,8 +1241,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
                 rect = new Rectangle2D.Double(dataArea.getMinX(),
                         low, dataArea.getWidth(),
                         high - low);
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 // clip left and right bounds to data area
                 low = Math.max(low, dataArea.getMinX());
                 high = Math.min(high, dataArea.getMaxX());
@@ -1259,8 +1261,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
                     gp = t.transform(gp, rect);
                 }
                 g2.setPaint(gp);
-            }
-            else {
+            } else {
                 g2.setPaint(p);
             }
             g2.fill(rect);
@@ -1281,8 +1282,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
                         line.setLine(end2d, y0, end2d, y1);
                         g2.draw(line);
                     }
-                }
-                else { // PlotOrientation.HORIZONTAL
+                } else { // PlotOrientation.HORIZONTAL
                     Line2D line = new Line2D.Double();
                     double x0 = dataArea.getMinX();
                     double x1 = dataArea.getMaxX();
@@ -1304,23 +1304,26 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             if (label != null) {
                 Font labelFont = marker.getLabelFont();
                 g2.setFont(labelFont);
-                g2.setPaint(marker.getLabelPaint());
-                Point2D coordinates = calculateDomainMarkerTextAnchorPoint(
+                Point2D coords = calculateDomainMarkerTextAnchorPoint(
                         g2, orientation, dataArea, rect,
                         marker.getLabelOffset(), marker.getLabelOffsetType(),
                         anchor);
+                Rectangle2D r = TextUtilities.calcAlignedStringBounds(label, 
+                        g2, (float) coords.getX(), (float) coords.getY(), 
+                        marker.getLabelTextAnchor());
+                g2.setPaint(marker.getLabelBackgroundColor());
+                g2.fill(r);
+                g2.setPaint(marker.getLabelPaint());
                 TextUtilities.drawAlignedString(label, g2,
-                        (float) coordinates.getX(), (float) coordinates.getY(),
+                        (float) coords.getX(), (float) coords.getY(),
                         marker.getLabelTextAnchor());
             }
             g2.setComposite(originalComposite);
-
         }
-
     }
 
     /**
-     * Calculates the (x, y) coordinates for drawing a marker label.
+     * Calculates the {@code (x, y)} coordinates for drawing a marker label.
      *
      * @param g2  the graphics device.
      * @param orientation  the plot orientation.
@@ -1351,7 +1354,8 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
     }
 
     /**
-     * Draws a horizontal line across the chart to represent a 'range marker'.
+     * Draws a line on the chart perpendicular to the y-axis to mark a value
+     * or range of values.
      *
      * @param g2  the graphics device.
      * @param plot  the plot.
@@ -1378,13 +1382,11 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             if (orientation == PlotOrientation.HORIZONTAL) {
                 line = new Line2D.Double(v, dataArea.getMinY(), v,
                         dataArea.getMaxY());
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 line = new Line2D.Double(dataArea.getMinX(), v,
                         dataArea.getMaxX(), v);
-            }
-            else {
-                throw new IllegalStateException("Unknown orientation.");
+            } else {
+                throw new IllegalStateException("Unrecognised orientation.");
             }
 
             final Composite originalComposite = g2.getComposite();
@@ -1399,18 +1401,22 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             if (label != null) {
                 Font labelFont = marker.getLabelFont();
                 g2.setFont(labelFont);
-                g2.setPaint(marker.getLabelPaint());
-                Point2D coordinates = calculateRangeMarkerTextAnchorPoint(
+                Point2D coords = calculateRangeMarkerTextAnchorPoint(
                         g2, orientation, dataArea, line.getBounds2D(),
                         marker.getLabelOffset(),
                         LengthAdjustmentType.EXPAND, anchor);
+                Rectangle2D r = TextUtilities.calcAlignedStringBounds(label, 
+                        g2, (float) coords.getX(), (float) coords.getY(), 
+                        marker.getLabelTextAnchor());
+                g2.setPaint(marker.getLabelBackgroundColor());
+                g2.fill(r);
+                g2.setPaint(marker.getLabelPaint());
                 TextUtilities.drawAlignedString(label, g2,
-                        (float) coordinates.getX(), (float) coordinates.getY(),
+                        (float) coords.getX(), (float) coords.getY(),
                         marker.getLabelTextAnchor());
             }
             g2.setComposite(originalComposite);
-        }
-        else if (marker instanceof IntervalMarker) {
+        } else if (marker instanceof IntervalMarker) {
             IntervalMarker im = (IntervalMarker) marker;
             double start = im.getStartValue();
             double end = im.getEndValue();
@@ -1435,8 +1441,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
                 rect = new Rectangle2D.Double(low,
                         dataArea.getMinY(), high - low,
                         dataArea.getHeight());
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 // clip top and bottom bounds to data area
                 low = Math.max(low, dataArea.getMinY());
                 high = Math.min(high, dataArea.getMaxY());
@@ -1456,8 +1461,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
                     gp = t.transform(gp, rect);
                 }
                 g2.setPaint(gp);
-            }
-            else {
+            } else {
                 g2.setPaint(p);
             }
             g2.fill(rect);
@@ -1478,8 +1482,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
                         line.setLine(x0, end2d, x1, end2d);
                         g2.draw(line);
                     }
-                }
-                else { // PlotOrientation.HORIZONTAL
+                } else { // PlotOrientation.HORIZONTAL
                     Line2D line = new Line2D.Double();
                     double y0 = dataArea.getMinY();
                     double y1 = dataArea.getMaxY();
@@ -1501,13 +1504,18 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer
             if (label != null) {
                 Font labelFont = marker.getLabelFont();
                 g2.setFont(labelFont);
-                g2.setPaint(marker.getLabelPaint());
-                Point2D coordinates = calculateRangeMarkerTextAnchorPoint(
+                Point2D coords = calculateRangeMarkerTextAnchorPoint(
                         g2, orientation, dataArea, rect,
                         marker.getLabelOffset(), marker.getLabelOffsetType(),
                         anchor);
+                Rectangle2D r = TextUtilities.calcAlignedStringBounds(label, 
+                        g2, (float) coords.getX(), (float) coords.getY(), 
+                        marker.getLabelTextAnchor());
+                g2.setPaint(marker.getLabelBackgroundColor());
+                g2.fill(r);
+                g2.setPaint(marker.getLabelPaint());
                 TextUtilities.drawAlignedString(label, g2,
-                        (float) coordinates.getX(), (float) coordinates.getY(),
+                        (float) coords.getX(), (float) coords.getY(),
                         marker.getLabelTextAnchor());
             }
             g2.setComposite(originalComposite);

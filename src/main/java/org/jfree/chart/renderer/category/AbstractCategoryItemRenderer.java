@@ -972,8 +972,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             if (orientation == PlotOrientation.HORIZONTAL) {
                 line = new Line2D.Double(dataArea.getMinX(), v,
                         dataArea.getMaxX(), v);
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 line = new Line2D.Double(v, dataArea.getMinY(), v,
                         dataArea.getMaxY());
             } else {
@@ -984,8 +983,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             g2.setStroke(marker.getStroke());
             g2.draw(line);
             bounds = line.getBounds2D();
-        }
-        else {
+        } else {
             double v0 = axis.getCategoryStart(columnIndex,
                     dataset.getColumnCount(), dataArea,
                     plot.getDomainAxisEdge());
@@ -1012,11 +1010,11 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             Font labelFont = marker.getLabelFont();
             g2.setFont(labelFont);
             g2.setPaint(marker.getLabelPaint());
-            Point2D coordinates = calculateDomainMarkerTextAnchorPoint(
+            Point2D coords = calculateDomainMarkerTextAnchorPoint(
                     g2, orientation, dataArea, bounds, marker.getLabelOffset(),
                     marker.getLabelOffsetType(), anchor);
             TextUtilities.drawAlignedString(label, g2,
-                    (float) coordinates.getX(), (float) coordinates.getY(),
+                    (float) coords.getX(), (float) coords.getY(),
                     marker.getLabelTextAnchor());
         }
         g2.setComposite(savedComposite);
@@ -1042,7 +1040,6 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             ValueMarker vm = (ValueMarker) marker;
             double value = vm.getValue();
             Range range = axis.getRange();
-
             if (!range.contains(value)) {
                 return;
             }
@@ -1058,8 +1055,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             if (orientation == PlotOrientation.HORIZONTAL) {
                 line = new Line2D.Double(v, dataArea.getMinY(), v,
                         dataArea.getMaxY());
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 line = new Line2D.Double(dataArea.getMinX(), v,
                         dataArea.getMaxX(), v);
             } else {
@@ -1072,28 +1068,26 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             g2.draw(line);
 
             String label = marker.getLabel();
-            RectangleAnchor anchor = marker.getLabelAnchor();
             if (label != null) {
+                RectangleAnchor anchor = marker.getLabelAnchor();
                 Font labelFont = marker.getLabelFont();
                 g2.setFont(labelFont);
-                g2.setPaint(marker.getLabelPaint());
-                Point2D coordinates = calculateRangeMarkerTextAnchorPoint(
+                Point2D coords = calculateRangeMarkerTextAnchorPoint(
                         g2, orientation, dataArea, line.getBounds2D(),
                         marker.getLabelOffset(), LengthAdjustmentType.EXPAND,
                         anchor);
-                Rectangle2D rect = TextUtilities.calcAlignedStringBounds(label, g2, 
-                        (float) coordinates.getX(), (float) coordinates.getY(),
+                Rectangle2D rect = TextUtilities.calcAlignedStringBounds(label, 
+                        g2, (float) coords.getX(), (float) coords.getY(), 
                         marker.getLabelTextAnchor());
                 g2.setPaint(marker.getLabelBackgroundColor());
                 g2.fill(rect);
                 g2.setPaint(marker.getLabelPaint());
                 TextUtilities.drawAlignedString(label, g2, 
-                        (float) coordinates.getX(), (float) coordinates.getY(),
+                        (float) coords.getX(), (float) coords.getY(),
                         marker.getLabelTextAnchor());
             }
             g2.setComposite(savedComposite);
-        }
-        else if (marker instanceof IntervalMarker) {
+        } else if (marker instanceof IntervalMarker) {
             IntervalMarker im = (IntervalMarker) marker;
             double start = im.getStartValue();
             double end = im.getEndValue();
@@ -1122,8 +1116,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
                 rect = new Rectangle2D.Double(low,
                         dataArea.getMinY(), high - low,
                         dataArea.getHeight());
-            }
-            else if (orientation == PlotOrientation.VERTICAL) {
+            } else if (orientation == PlotOrientation.VERTICAL) {
                 // clip top and bottom bounds to data area
                 low = Math.max(low, dataArea.getMinY());
                 high = Math.min(high, dataArea.getMaxY());
@@ -1139,8 +1132,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
                     gp = t.transform(gp, rect);
                 }
                 g2.setPaint(gp);
-            }
-            else {
+            } else {
                 g2.setPaint(p);
             }
             g2.fill(rect);
@@ -1161,8 +1153,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
                         line.setLine(x0, end2d, x1, end2d);
                         g2.draw(line);
                     }
-                }
-                else { // PlotOrientation.HORIZONTAL
+                } else { // PlotOrientation.HORIZONTAL
                     Line2D line = new Line2D.Double();
                     double y0 = dataArea.getMinY();
                     double y1 = dataArea.getMaxY();
@@ -1180,17 +1171,21 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             }
 
             String label = marker.getLabel();
-            RectangleAnchor anchor = marker.getLabelAnchor();
             if (label != null) {
+                RectangleAnchor anchor = marker.getLabelAnchor();
                 Font labelFont = marker.getLabelFont();
                 g2.setFont(labelFont);
+                Point2D coords = calculateRangeMarkerTextAnchorPoint(g2, 
+                        orientation, dataArea, rect, marker.getLabelOffset(), 
+                        marker.getLabelOffsetType(), anchor);
+                Rectangle2D r = TextUtilities.calcAlignedStringBounds(label, 
+                        g2, (float) coords.getX(), (float) coords.getY(), 
+                        marker.getLabelTextAnchor());
+                g2.setPaint(marker.getLabelBackgroundColor());
+                g2.fill(r);
                 g2.setPaint(marker.getLabelPaint());
-                Point2D coordinates = calculateRangeMarkerTextAnchorPoint(
-                        g2, orientation, dataArea, rect,
-                        marker.getLabelOffset(), marker.getLabelOffsetType(),
-                        anchor);
                 TextUtilities.drawAlignedString(label, g2,
-                        (float) coordinates.getX(), (float) coordinates.getY(),
+                        (float) coords.getX(), (float) coords.getY(),
                         marker.getLabelTextAnchor());
             }
             g2.setComposite(savedComposite);
@@ -1198,8 +1193,8 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     }
 
     /**
-     * Calculates the (x, y) coordinates for drawing the label for a marker on
-     * the range axis.
+     * Calculates the {@code (x, y)} coordinates for drawing the label for a 
+     * marker on the range axis.
      *
      * @param g2  the graphics device.
      * @param orientation  the plot orientation.
@@ -1220,13 +1215,11 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
         if (orientation == PlotOrientation.HORIZONTAL) {
             anchorRect = markerOffset.createAdjustedRectangle(markerArea,
                     LengthAdjustmentType.CONTRACT, labelOffsetType);
-        }
-        else if (orientation == PlotOrientation.VERTICAL) {
+        } else if (orientation == PlotOrientation.VERTICAL) {
             anchorRect = markerOffset.createAdjustedRectangle(markerArea,
                     labelOffsetType, LengthAdjustmentType.CONTRACT);
         }
         return RectangleAnchor.coordinates(anchorRect, anchor);
-
     }
 
     /**
@@ -1246,18 +1239,15 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             PlotOrientation orientation, Rectangle2D dataArea,
             Rectangle2D markerArea, RectangleInsets markerOffset,
             LengthAdjustmentType labelOffsetType, RectangleAnchor anchor) {
-
         Rectangle2D anchorRect = null;
         if (orientation == PlotOrientation.HORIZONTAL) {
             anchorRect = markerOffset.createAdjustedRectangle(markerArea,
                     labelOffsetType, LengthAdjustmentType.CONTRACT);
-        }
-        else if (orientation == PlotOrientation.VERTICAL) {
+        } else if (orientation == PlotOrientation.VERTICAL) {
             anchorRect = markerOffset.createAdjustedRectangle(markerArea,
                     LengthAdjustmentType.CONTRACT, labelOffsetType);
         }
-        return RectangleAnchor.coordinates(anchorRect, anchor);
-
+        return anchor.getAnchorPoint(anchorRect);
     }
 
     /**
