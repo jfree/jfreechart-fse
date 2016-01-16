@@ -528,8 +528,6 @@ public class ShapeUtils {
      * @return A boolean.
      */
     public static boolean isPointInRect(Rectangle2D rect, double x, double y) {
-        // TODO: For JFreeChart 1.2.0, this method should go in the
-        //       ShapeUtilities class
         return (x >= rect.getMinX() && x <= rect.getMaxX()
                 && y >= rect.getMinY() && y <= rect.getMaxY());
     }
