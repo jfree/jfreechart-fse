@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2016, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------
  * ChartCanvas.java
  * ----------------
- * (C) Copyright 2014, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2014-2016, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -47,17 +47,22 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.text.FontSmoothingType;
 import org.jfree.chart.ChartMouseEvent;
 import org.jfree.chart.ChartRenderingInfo;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.entity.ChartEntity;
 import org.jfree.chart.event.ChartChangeEvent;
 import org.jfree.chart.event.ChartChangeListener;
+import org.jfree.chart.event.OverlayChangeEvent;
+import org.jfree.chart.event.OverlayChangeListener;
 import org.jfree.chart.fx.interaction.AnchorHandlerFX;
 import org.jfree.chart.fx.interaction.DispatchHandlerFX;
 import org.jfree.chart.fx.interaction.ChartMouseEventFX;
@@ -66,8 +71,10 @@ import org.jfree.chart.fx.interaction.TooltipHandlerFX;
 import org.jfree.chart.fx.interaction.ScrollHandlerFX;
 import org.jfree.chart.fx.interaction.PanHandlerFX;
 import org.jfree.chart.fx.interaction.MouseHandlerFX;
+import org.jfree.chart.fx.overlay.OverlayFX;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.util.ParamChecks;
+import org.jfree.fx.FXGraphics2D;
 
 /**
  * A canvas for displaying a {@link JFreeChart} in JavaFX.  You can use the
@@ -77,7 +84,12 @@ import org.jfree.chart.util.ParamChecks;
  * The canvas installs several default mouse handlers, if you don't like the
  * behaviour provided by these you can retrieve the handler by ID and
  * disable or remove it (the IDs are "tooltip", "scroll", "anchor", "pan" and 
- * "dispatch").
+ * "dispatch").</p>
+ * <p>
+ * The {@code FontSmoothingType} for the underlying {@code GraphicsContext} is
+ * set to {@code FontSmoothingType.LCD} as this gives better results on the 
+ * systems we've tested on.  You can modify this using 
+ * {@code getGraphicsContext().setFontSmoothingType(yourValue)}.</p>
  * 
  * <p>THE API FOR THIS CLASS IS SUBJECT TO CHANGE IN FUTURE RELEASES.  This is
  * so that we can incorporate feedback on the (new) JavaFX support in 
@@ -85,7 +97,8 @@ import org.jfree.chart.util.ParamChecks;
  * 
  * @since 1.0.18
  */
-public class ChartCanvas extends Canvas implements ChartChangeListener {
+public class ChartCanvas extends Canvas implements ChartChangeListener,
+        OverlayChangeListener {
     
     /** The chart being displayed in the canvas (never null). */
     private JFreeChart chart;
@@ -128,22 +141,41 @@ public class ChartCanvas extends Canvas implements ChartChangeListener {
     /** The auxiliary mouse handlers (can be empty but not null). */
     private List<MouseHandlerFX> auxiliaryMouseHandlers;
     
+    private ObservableList<OverlayFX> overlays;
+    
     /**
-     * Creates a new canvas to display the supplied chart in JavaFX.
+     * A flag that can be used to override the plot setting for domain (x) axis
+     * zooming. 
+     */
+    private boolean domainZoomable;
+    
+    /** 
+     * A flag that can be used to override the plot setting for range (y) axis
+     * zooming. 
+     */
+    private boolean rangeZoomable;
+    
+    /**
+     * Creates a new canvas to display the supplied chart in JavaFX.  If
+     * {@code chart} is null, a blank canvas will be displayed.
      * 
-     * @param chart  the chart ({@code null} not permitted). 
+     * @param chart  the chart. 
      */
     public ChartCanvas(JFreeChart chart) {
-        ParamChecks.nullNotPermitted(chart, "chart");
         this.chart = chart;
-        this.chart.addChangeListener(this);
+        if (this.chart != null) {
+            this.chart.addChangeListener(this);
+        }
         this.tooltip = null;
         this.tooltipEnabled = true;
         this.chartMouseListeners = new ArrayList<ChartMouseListenerFX>();
         
-        widthProperty().addListener(evt -> draw());
-        heightProperty().addListener(evt -> draw());
-        this.g2 = new FXGraphics2D(getGraphicsContext2D());
+        widthProperty().addListener(e -> draw());
+        heightProperty().addListener(e -> draw());
+        // change the default font smoothing for better results
+        GraphicsContext gc = getGraphicsContext2D();
+        gc.setFontSmoothingType(FontSmoothingType.LCD);
+        this.g2 = new FXGraphics2D(gc);
         this.liveHandler = null;
         this.availableMouseHandlers = new ArrayList<MouseHandlerFX>();
         
@@ -156,18 +188,20 @@ public class ChartCanvas extends Canvas implements ChartChangeListener {
         this.auxiliaryMouseHandlers.add(new AnchorHandlerFX("anchor"));
         this.auxiliaryMouseHandlers.add(new DispatchHandlerFX("dispatch"));
         
-        setOnMouseMoved((MouseEvent e) -> { handleMouseMoved(e); });
-        setOnMouseClicked((MouseEvent e) -> { handleMouseClicked(e); });
-        setOnMousePressed((MouseEvent e) -> { handleMousePressed(e); });
-        setOnMouseDragged((MouseEvent e) -> { handleMouseDragged(e); });
-        setOnMouseReleased((MouseEvent e) -> { handleMouseReleased(e); });
-        setOnScroll((ScrollEvent event) -> { handleScroll(event); });
+        this.overlays = FXCollections.observableArrayList();
+
+        setOnMouseMoved(e -> handleMouseMoved(e));
+        setOnMouseClicked(e -> handleMouseClicked(e));
+        setOnMousePressed(e -> handleMousePressed(e));
+        setOnMouseDragged(e -> handleMouseDragged(e));
+        setOnMouseReleased(e -> handleMouseReleased(e));
+        setOnScroll(e -> handleScroll(e));
     }
     
     /**
      * Returns the chart that is being displayed by this node.
      * 
-     * @return The chart (never {@code null}). 
+     * @return The chart (possibly {@code null}). 
      */
     public JFreeChart getChart() {
         return this.chart;
@@ -176,16 +210,69 @@ public class ChartCanvas extends Canvas implements ChartChangeListener {
     /**
      * Sets the chart to be displayed by this node.
      * 
-     * @param chart  the chart ({@code null} not permitted). 
+     * @param chart  the chart ({@code null} permitted). 
      */
     public void setChart(JFreeChart chart) {
-        ParamChecks.nullNotPermitted(chart, "chart");
-        this.chart.removeChangeListener(this);
+        if (this.chart != null) {
+            this.chart.removeChangeListener(this);
+        }
         this.chart = chart;
-        this.chart.addChangeListener(this);
+        if (this.chart != null) {
+            this.chart.addChangeListener(this);
+        }
         draw();
     }
     
+    /**
+     * Returns the flag that determines whether or not zooming is enabled for
+     * the domain axis.
+     *
+     * @return A boolean.
+     * 
+     * @since 1.0.20
+     */
+    public boolean isDomainZoomable() {
+        return this.domainZoomable;
+    }
+    
+    /**
+     * Sets the flag that controls whether or not domain axis zooming is 
+     * enabled.  If the underlying plot does not support domain axis zooming,
+     * then setting this flag to {@code true} will have no effect.
+     * 
+     * @param zoomable
+     * 
+     * @since 1.0.20
+     */
+    public void setDomainZoomable(boolean zoomable) {
+        this.domainZoomable = zoomable;
+    }
+    
+    /**
+     * Returns the flag that determines whether or not zooming is enabled for
+     * the range axis.
+     *
+     * @return A boolean.
+     * 
+     * @since 1.0.20
+     */
+    public boolean isRangeZoomable() {
+        return this.rangeZoomable;
+    }
+
+    /**
+     * Sets the flag that controls whether or not range axis zooming is 
+     * enabled.  If the underlying plot does not support range axis zooming,
+     * then setting this flag to {@code true} will have no effect.
+     * 
+     * @param zoomable
+     * 
+     * @since 1.0.20
+     */
+    public void setRangeZoomable(boolean zoomable) {
+        this.rangeZoomable = zoomable;
+    }
+
     /**
      * Returns the rendering info from the most recent drawing of the chart.
      * 
@@ -225,7 +312,51 @@ public class ChartCanvas extends Canvas implements ChartChangeListener {
      */
     public void setAnchor(Point2D anchor) {
         this.anchor = anchor;
-        this.chart.setNotify(true);  // force a redraw
+        if (this.chart != null) {
+            this.chart.setNotify(true);  // force a redraw
+        }
+    }
+
+    /**
+     * Add an overlay to the canvas.
+     *
+     * @param overlay  the overlay ({@code null} not permitted).
+     *
+     * @since 1.0.20
+     */
+    public void addOverlay(OverlayFX overlay) {
+        ParamChecks.nullNotPermitted(overlay, "overlay");
+        this.overlays.add(overlay);
+        overlay.addChangeListener(this);
+        draw();
+    }
+
+    /**
+     * Removes an overlay from the canvas.
+     *
+     * @param overlay  the overlay to remove ({@code null} not permitted).
+     *
+     * @since 1.0.20
+     */
+    public void removeOverlay(OverlayFX overlay) {
+        ParamChecks.nullNotPermitted(overlay, "overlay");
+        boolean removed = this.overlays.remove(overlay);
+        if (removed) {
+            overlay.removeChangeListener(this);
+            draw();
+        }
+    }
+
+    /**
+     * Handles a change to an overlay by repainting the chart canvas.
+     *
+     * @param event  the event.
+     *
+     * @since 1.0.20
+     */
+    @Override
+    public void overlayChanged(OverlayChangeEvent event) {
+        draw();
     }
 
     /**
@@ -340,10 +471,15 @@ public class ChartCanvas extends Canvas implements ChartChangeListener {
         if (width > 0 && height > 0) {
             ctx.clearRect(0, 0, width, height);
             this.info = new ChartRenderingInfo();
-            this.chart.draw(this.g2, new Rectangle((int) width, (int) height), 
-                    this.anchor, this.info);
+            if (this.chart != null) {
+                this.chart.draw(this.g2, new Rectangle((int) width, 
+                        (int) height), this.anchor, this.info);
+            }
         }
         ctx.restore();
+        for (OverlayFX overlay : this.overlays) {
+            overlay.paintOverlay(g2, this);
+        }
         this.anchor = null;
     }
  
@@ -359,8 +495,7 @@ public class ChartCanvas extends Canvas implements ChartChangeListener {
         Rectangle2D result;
         if (plotInfo.getSubplotCount() == 0) {
             result = plotInfo.getDataArea();
-        }
-        else {
+        } else {
             int subplotIndex = plotInfo.getSubplotIndex(point);
             if (subplotIndex == -1) {
                 return null;
