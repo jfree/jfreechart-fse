@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2012, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2016, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ---------------------
  * CrosshairOverlay.java
  * ---------------------
- * (C) Copyright 2011, 2012, by Object Refinery Limited.
+ * (C) Copyright 2011-2016, by Object Refinery Limited.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -37,6 +37,7 @@
  * 09-Apr-2009 : Version 1 (DG);
  * 19-May-2009 : Fixed FindBugs warnings, patch by Michal Wozniak (DG);
  * 17-Jun-2012 : Removed JCommon dependencies (DG);
+ * 05-Mar-2016 : Fix label outline stroke (DG);
  *
  */
 
@@ -69,6 +70,7 @@ import org.jfree.chart.plot.Crosshair;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.text.TextUtilities;
+import org.jfree.chart.util.ParamChecks;
 
 /**
  * An overlay for a {@link ChartPanel} that draws crosshairs on a plot.
@@ -97,15 +99,13 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      * Adds a crosshair against the domain axis and sends an
      * {@link OverlayChangeEvent} to all registered listeners.
      *
-     * @param crosshair  the crosshair (<code>null</code> not permitted).
+     * @param crosshair  the crosshair ({@code null} not permitted).
      *
      * @see #removeDomainCrosshair(org.jfree.chart.plot.Crosshair)
      * @see #addRangeCrosshair(org.jfree.chart.plot.Crosshair)
      */
     public void addDomainCrosshair(Crosshair crosshair) {
-        if (crosshair == null) {
-            throw new IllegalArgumentException("Null 'crosshair' argument.");
-        }
+        ParamChecks.nullNotPermitted(crosshair, "crosshair");
         this.xCrosshairs.add(crosshair);
         crosshair.addPropertyChangeListener(this);
         fireOverlayChanged();
@@ -115,14 +115,12 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      * Removes a domain axis crosshair and sends an {@link OverlayChangeEvent}
      * to all registered listeners.
      *
-     * @param crosshair  the crosshair (<code>null</code> not permitted).
+     * @param crosshair  the crosshair ({@code null} not permitted).
      *
      * @see #addDomainCrosshair(org.jfree.chart.plot.Crosshair)
      */
     public void removeDomainCrosshair(Crosshair crosshair) {
-        if (crosshair == null) {
-            throw new IllegalArgumentException("Null 'crosshair' argument.");
-        }
+        ParamChecks.nullNotPermitted(crosshair, "crosshair");
         if (this.xCrosshairs.remove(crosshair)) {
             crosshair.removePropertyChangeListener(this);
             fireOverlayChanged();
@@ -159,12 +157,10 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      * Adds a crosshair against the range axis and sends an
      * {@link OverlayChangeEvent} to all registered listeners.
      *
-     * @param crosshair  the crosshair (<code>null</code> not permitted).
+     * @param crosshair  the crosshair ({@code null} not permitted).
      */
     public void addRangeCrosshair(Crosshair crosshair) {
-        if (crosshair == null) {
-            throw new IllegalArgumentException("Null 'crosshair' argument.");
-        }
+        ParamChecks.nullNotPermitted(crosshair, "crosshair");
         this.yCrosshairs.add(crosshair);
         crosshair.addPropertyChangeListener(this);
         fireOverlayChanged();
@@ -174,14 +170,12 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      * Removes a range axis crosshair and sends an {@link OverlayChangeEvent}
      * to all registered listeners.
      *
-     * @param crosshair  the crosshair (<code>null</code> not permitted).
+     * @param crosshair  the crosshair ({@code null} not permitted).
      *
      * @see #addRangeCrosshair(org.jfree.chart.plot.Crosshair)
      */
     public void removeRangeCrosshair(Crosshair crosshair) {
-        if (crosshair == null) {
-            throw new IllegalArgumentException("Null 'crosshair' argument.");
-        }
+        ParamChecks.nullNotPermitted(crosshair, "crosshair");
         if (this.yCrosshairs.remove(crosshair)) {
             crosshair.removePropertyChangeListener(this);
             fireOverlayChanged();
@@ -309,6 +303,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
                 g2.setPaint(crosshair.getLabelBackgroundPaint());
                 g2.fill(hotspot);
                 g2.setPaint(crosshair.getLabelOutlinePaint());
+                g2.setStroke(crosshair.getLabelOutlineStroke());
                 g2.draw(hotspot);
                 TextUtilities.drawAlignedString(label, g2, xx, yy, alignPt);
             }
@@ -358,6 +353,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
                 g2.setPaint(crosshair.getLabelBackgroundPaint());
                 g2.fill(hotspot);
                 g2.setPaint(crosshair.getLabelOutlinePaint());
+                g2.setStroke(crosshair.getLabelOutlineStroke());
                 g2.draw(hotspot);
                 TextUtilities.drawAlignedString(label, g2, xx, yy, alignPt);
             }
@@ -378,8 +374,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
      */
     private Point2D calculateLabelPoint(Line2D line, RectangleAnchor anchor,
             double deltaX, double deltaY) {
-        double x = 0.0;
-        double y = 0.0;
+        double x, y;
         boolean left = (anchor == RectangleAnchor.BOTTOM_LEFT
                 || anchor == RectangleAnchor.LEFT
                 || anchor == RectangleAnchor.TOP_LEFT);
@@ -553,7 +548,7 @@ public class CrosshairOverlay extends AbstractOverlay implements Overlay,
     /**
      * Tests this overlay for equality with an arbitrary object.
      *
-     * @param obj  the object (<code>null</code> permitted).
+     * @param obj  the object ({@code null} permitted).
      *
      * @return A boolean.
      */
