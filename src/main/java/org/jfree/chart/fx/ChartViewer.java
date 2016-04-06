@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2016, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ----------------
  * ChartViewer.java
  * ----------------
- * (C) Copyright 2014, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2014-2016, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -44,14 +44,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.event.ActionEvent;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Control;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Skinnable;
 import javafx.stage.FileChooser;
-import javafx.stage.WindowEvent;
+import javafx.stage.FileChooser.ExtensionFilter;
 import org.jfree.chart.ChartMouseEvent;
 import org.jfree.chart.ChartRenderingInfo;
 import org.jfree.chart.JFreeChart;
@@ -63,7 +62,7 @@ import org.jfree.chart.util.ParamChecks;
 /**
  * A control for displaying a {@link JFreeChart} in JavaFX (embeds a 
  * {@link ChartCanvas}, adds drag zooming and provides a popup menu for export
- * to PNG/JPG/SVG and PDF formats).  Many behaviours(tooltips, zooming etc) are 
+ * to PNG/JPG/SVG and PDF formats).  Many behaviours (tooltips, zooming etc) are 
  * provided directly by the canvas.
  * 
  * <p>THE API FOR THIS CLASS IS SUBJECT TO CHANGE IN FUTURE RELEASES.  This is
@@ -78,8 +77,10 @@ public class ChartViewer extends Control implements Skinnable,
     /** The chart to display. */
     private JFreeChart chart;
     
-    /** The context menu that will be attached to the canvas. */
-    private ContextMenu contextMenu;
+    /** 
+     * A reference (for convenience) to the canvas used to display the chart. 
+     */
+    private ChartCanvas canvas;
 
     /** Does the viewer show tooltips from the chart? */
     private boolean tooltipEnabled;
@@ -88,9 +89,20 @@ public class ChartViewer extends Control implements Skinnable,
     private transient List<ChartMouseListenerFX> chartMouseListeners;
 
     /**
+     * Creates a new instance, initially with no chart to display.  This 
+     * constructor is required so that this control can be used within
+     * FXML.
+     * 
+     * @since 1.0.20
+     */
+    public ChartViewer() {
+        this(null);
+    }
+
+    /**
      * Creates a new viewer to display the supplied chart in JavaFX.
      * 
-     * @param chart  the chart ({@code null} not permitted). 
+     * @param chart  the chart ({@code null} permitted). 
      */
     public ChartViewer(JFreeChart chart) {
         this(chart, true);
@@ -99,23 +111,19 @@ public class ChartViewer extends Control implements Skinnable,
     /**
      * Creates a new viewer instance.
      * 
-     * @param chart  the chart ({@code null} not permitted).
+     * @param chart  the chart ({@code null} permitted).
      * @param contextMenuEnabled  enable the context menu?
      */
     public ChartViewer(JFreeChart chart, boolean contextMenuEnabled) {
-        ParamChecks.nullNotPermitted(chart, "chart");
         this.chart = chart;
         getStyleClass().add("chart-control");
-        this.contextMenu = createContextMenu();
-        this.contextMenu.setOnShowing((WindowEvent event) -> {
-            ChartViewer.this.setTooltipEnabled(false);
-        });
-        this.contextMenu.setOnHiding((WindowEvent event) -> {
-            ChartViewer.this.setTooltipEnabled(true);
-        });
-        setContextMenu(this.contextMenu);
+        setContextMenu(createContextMenu());
+        getContextMenu().setOnShowing(
+                e -> ChartViewer.this.setTooltipEnabled(false));
+        getContextMenu().setOnHiding(
+                e -> ChartViewer.this.setTooltipEnabled(true));
         this.tooltipEnabled = true;
-        this.chartMouseListeners = new ArrayList<ChartMouseListenerFX>();
+        this.chartMouseListeners = new ArrayList<>();
     }
     
     @Override
@@ -127,7 +135,7 @@ public class ChartViewer extends Control implements Skinnable,
     /**
      * Returns the chart that is being displayed by this node.
      * 
-     * @return The chart (never {@code null}). 
+     * @return The chart (possibly {@code null}). 
      */
     public JFreeChart getChart() {
         return this.chart;
@@ -145,6 +153,18 @@ public class ChartViewer extends Control implements Skinnable,
         skin.setChart(chart);
     }
     
+    /**
+     * Returns the canvas used within this control to display the chart.
+     * 
+     * @return The canvas (never {@code null}).
+     * 
+     * @since 1.0.20
+     */
+    public ChartCanvas getCanvas() {
+        ChartViewerSkin skin = (ChartViewerSkin) getSkin();
+        return skin.getCanvas();
+    }
+
     /**
      * Returns the flag that controls whether or not tooltips are displayed
      * for the chart.
@@ -239,25 +259,21 @@ public class ChartViewer extends Control implements Skinnable,
         Menu export = new Menu("Export As");
         
         MenuItem pngItem = new MenuItem("PNG...");
-        pngItem.setOnAction((ActionEvent e) -> { handleExportToPNG(); });        
+        pngItem.setOnAction(e -> handleExportToPNG());        
         export.getItems().add(pngItem);
         
         MenuItem jpegItem = new MenuItem("JPEG...");
-        jpegItem.setOnAction((ActionEvent e) -> { handleExportToJPEG(); });        
+        jpegItem.setOnAction(e -> handleExportToJPEG());        
         export.getItems().add(jpegItem);
         
         if (ExportUtils.isOrsonPDFAvailable()) {
             MenuItem pdfItem = new MenuItem("PDF...");
-            pdfItem.setOnAction((ActionEvent e) -> {
-                handleExportToPDF();
-            });
+            pdfItem.setOnAction(e -> handleExportToPDF());
             export.getItems().add(pdfItem);
         }
         if (ExportUtils.isJFreeSVGAvailable()) {
             MenuItem svgItem = new MenuItem("SVG...");
-            svgItem.setOnAction((ActionEvent e) -> {
-                handleExportToSVG();
-            });
+            svgItem.setOnAction(e -> handleExportToSVG());
             export.getItems().add(svgItem);        
         }
         menu.getItems().add(export);
@@ -268,11 +284,12 @@ public class ChartViewer extends Control implements Skinnable,
      * A handler for the export to PDF option in the context menu.
      */
     private void handleExportToPDF() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter(
-                "Portable Document Format (PDF)", "pdf"));
-        fileChooser.setTitle("Export to PDF");
-        File file = fileChooser.showSaveDialog(this.getScene().getWindow());
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Export to PDF");
+        ExtensionFilter filter = new FileChooser.ExtensionFilter(
+                "Portable Document Format (PDF)", "pdf");
+        chooser.getExtensionFilters().add(filter);
+        File file = chooser.showSaveDialog(getScene().getWindow());
         if (file != null) {
             ExportUtils.writeAsPDF(this.chart, (int) getWidth(), 
                     (int) getHeight(), file);
@@ -283,11 +300,12 @@ public class ChartViewer extends Control implements Skinnable,
      * A handler for the export to SVG option in the context menu.
      */
     private void handleExportToSVG() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Export to SVG");
-        fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter(
-                "Scalable Vector Graphics (SVG)", "svg"));
-        File file = fileChooser.showSaveDialog(this.getScene().getWindow());
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Export to SVG");
+        ExtensionFilter filter = new FileChooser.ExtensionFilter(
+                "Scalable Vector Graphics (SVG)", "svg");
+        chooser.getExtensionFilters().add(filter);
+        File file = chooser.showSaveDialog(getScene().getWindow());
         if (file != null) {
             ExportUtils.writeAsSVG(this.chart, (int) getWidth(), 
                     (int) getHeight(), file);
@@ -298,11 +316,12 @@ public class ChartViewer extends Control implements Skinnable,
      * A handler for the export to PNG option in the context menu.
      */
     private void handleExportToPNG() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Export to PNG");
-        fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter(
-                "Portable Network Graphics (PNG)", "png"));
-        File file = fileChooser.showSaveDialog(this.getScene().getWindow());
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Export to PNG");
+        ExtensionFilter filter = new FileChooser.ExtensionFilter(
+                "Portable Network Graphics (PNG)", "png");
+        chooser.getExtensionFilters().add(filter);
+        File file = chooser.showSaveDialog(getScene().getWindow());
         if (file != null) {
             try {
                 ExportUtils.writeAsPNG(this.chart, (int) getWidth(),
@@ -317,11 +336,11 @@ public class ChartViewer extends Control implements Skinnable,
      * A handler for the export to JPEG option in the context menu.
      */
     private void handleExportToJPEG() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Export to JPEG");
-        fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter(
-                "JPEG", "jpg"));
-        File file = fileChooser.showSaveDialog(this.getScene().getWindow());
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Export to JPEG");
+        ExtensionFilter filter = new FileChooser.ExtensionFilter("JPEG", "jpg");
+        chooser.getExtensionFilters().add(filter);
+        File file = chooser.showSaveDialog(getScene().getWindow());
         if (file != null) {
             try {
                 ExportUtils.writeAsJPEG(this.chart, (int) getWidth(),
