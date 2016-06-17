@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2016, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------
  * TickUnitsTest.java
  * ------------------
- * (C) Copyright 2007-2014, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2007-2016, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
@@ -35,6 +35,7 @@
  * Changes
  * -------
  * 02-Aug-2007 : Version 1 (DG);
+ * 17-Jun-2016 : Fix failing tests (DG);
  *
  */
 
@@ -58,7 +59,7 @@ public class TickUnitsTest  {
      */
     @Test
     public void testSerialization() {
-        TickUnits t1 = (TickUnits) NumberAxis.createIntegerTickUnits();
+        TickUnits t1 = createTickUnitsInstance();
         TickUnits t2 = TestUtils.serialised(t1);
         assertEquals(t1, t2);
     }
@@ -68,7 +69,7 @@ public class TickUnitsTest  {
      */
     @Test
     public void testCloning() throws CloneNotSupportedException {
-        TickUnits t1 = (TickUnits) NumberAxis.createIntegerTickUnits();
+        TickUnits t1 = createTickUnitsInstance();
         TickUnits t2 = (TickUnits) t1.clone();
         assertNotSame(t1, t2);
         assertSame(t1.getClass(), t2.getClass());
@@ -80,10 +81,16 @@ public class TickUnitsTest  {
      */
     @Test
     public void testEquals() {
-        TickUnits t1 = (TickUnits) NumberAxis.createIntegerTickUnits();
-        TickUnits t2 = (TickUnits) NumberAxis.createIntegerTickUnits();
+        TickUnits t1 = createTickUnitsInstance();
+        TickUnits t2 = createTickUnitsInstance();
         assertEquals(t1, t2);
         assertEquals(t2, t1);
     }
 
+    private TickUnits createTickUnitsInstance() {
+        TickUnits tu = new TickUnits();
+        tu.add(new NumberTickUnit(10.0));
+        tu.add(new NumberTickUnit(100.0));
+        return tu;
+    }
 }

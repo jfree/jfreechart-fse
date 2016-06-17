@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2016, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -24,10 +24,10 @@
  * [Oracle and Java are registered trademarks of Oracle and/or its affiliates. 
  * Other names may be trademarks of their respective owners.]
  *
- * -----------------
- * LogAxisTests.java
- * -----------------
- * (C) Copyright 2007-2014, by Object Refinery Limited and Contributors.
+ * ----------------
+ * LogAxisTest.java
+ * ----------------
+ * (C) Copyright 2007-2016, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   -;
