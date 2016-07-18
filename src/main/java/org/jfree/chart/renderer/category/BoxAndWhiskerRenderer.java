@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2016, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * --------------------------
  * BoxAndWhiskerRenderer.java
  * --------------------------
- * (C) Copyright 2003-2014, by David Browning and Contributors.
+ * (C) Copyright 2003-2016, by David Browning and Contributors.
  *
  * Original Author:  David Browning (for the Australian Institute of Marine
  *                   Science);
@@ -37,6 +37,7 @@
  *                   Peter Becker (patches 2868585 and 2868608);
  *                   Martin Krauskopf (patch 3421088);
  *                   Martin Hoeller;
+ *                   John Matthews;
  *
  * Changes
  * -------
@@ -120,6 +121,7 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.renderer.Outlier;
 import org.jfree.chart.renderer.OutlierList;
 import org.jfree.chart.renderer.OutlierListCollection;
+import org.jfree.chart.util.ParamChecks;
 import org.jfree.chart.util.SerialUtils;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
@@ -129,7 +131,7 @@ import org.jfree.data.statistics.BoxAndWhiskerCategoryDataset;
  * A box-and-whisker renderer.  This renderer requires a
  * {@link BoxAndWhiskerCategoryDataset} and is for use with the
  * {@link CategoryPlot} class.  The example shown here is generated
- * by the <code>BoxAndWhiskerChartDemo1.java</code> program included in the
+ * by the {@code BoxAndWhiskerChartDemo1.java} program included in the
  * JFreeChart Demo Collection:
  * <br><br>
  * <img src="../../../../../images/BoxAndWhiskerRendererSample.png"
@@ -171,9 +173,9 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
     private boolean meanVisible;
 
     /**
-     * A flag that, if <code>true</code>, causes the whiskers to be drawn
+     * A flag that, if {@code true}, causes the whiskers to be drawn
      * using the outline paint for the series.  The default value is
-     * <code>false</code> and in that case the regular series paint is used.
+     * {@code false} and in that case the regular series paint is used.
      *
      * @since 1.0.14
      */
@@ -205,7 +207,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      * Returns the paint used to color the median and average markers.
      *
      * @return The paint used to draw the median and average markers (never
-     *     <code>null</code>).
+     *     {@code null}).
      *
      * @see #setArtifactPaint(Paint)
      */
@@ -217,14 +219,12 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      * Sets the paint used to color the median and average markers and sends
      * a {@link RendererChangeEvent} to all registered listeners.
      *
-     * @param paint  the paint (<code>null</code> not permitted).
+     * @param paint  the paint ({@code null} not permitted).
      *
      * @see #getArtifactPaint()
      */
     public void setArtifactPaint(Paint paint) {
-        if (paint == null) {
-            throw new IllegalArgumentException("Null 'paint' argument.");
-        }
+        ParamChecks.nullNotPermitted(paint, "paint");
         this.artifactPaint = paint;
         fireChangeEvent();
     }
@@ -376,7 +376,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
     }
 
     /**
-     * Returns the flag that, if <code>true</code>, causes the whiskers to
+     * Returns the flag that, if {@code true}, causes the whiskers to
      * be drawn using the series outline paint.
      *
      * @return A boolean.
@@ -388,7 +388,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
     }
 
     /**
-     * Sets the flag that, if <code>true</code>, causes the whiskers to
+     * Sets the flag that, if {@code true}, causes the whiskers to
      * be drawn using the series outline paint, and sends a
      * {@link RendererChangeEvent} to all registered listeners.
      *
@@ -446,7 +446,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      * @param datasetIndex  the dataset index (zero-based).
      * @param series  the series index (zero-based).
      *
-     * @return The legend item (possibly <code>null</code>).
+     * @return The legend item (possibly {@code null}).
      */
     @Override
     public LegendItem getLegendItem(int datasetIndex, int series) {
@@ -521,10 +521,8 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
      */
     @Override
     public CategoryItemRendererState initialise(Graphics2D g2,
-                                                Rectangle2D dataArea,
-                                                CategoryPlot plot,
-                                                int rendererIndex,
-                                                PlotRenderingInfo info) {
+            Rectangle2D dataArea, CategoryPlot plot, int rendererIndex,
+            PlotRenderingInfo info) {
 
         CategoryItemRendererState state = super.initialise(g2, dataArea, plot,
                 rendererIndex, info);
@@ -706,7 +704,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
             // draw the lower shadow...
             g2.draw(new Line2D.Double(xxMin, yymid, xxQ1, yymid));
             g2.draw(new Line2D.Double(xxMin, yymid - halfW, xxMin,
-                    yy + halfW));
+                    yymid + halfW));
 
             g2.setStroke(getItemOutlineStroke(row, column));
             g2.setPaint(outlinePaint);
@@ -1041,9 +1039,9 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer
     /**
      * Tests this renderer for equality with an arbitrary object.
      *
-     * @param obj  the object (<code>null</code> permitted).
+     * @param obj  the object ({@code null} permitted).
      *
-     * @return <code>true</code> or <code>false</code>.
+     * @return {@code true} or {@code false}.
      */
     @Override
     public boolean equals(Object obj) {
