@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2016, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -27,7 +27,7 @@
  * ------------------
  * TextUtilities.java
  * ------------------
- * (C) Copyright 2004-2014, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2004-2016, by Object Refinery Limited and Contributors.
  *
  * Original Author:  David Gilbert (for Object Refinery Limited);
  * Contributor(s):   Brian Fischer;
@@ -53,6 +53,7 @@
  * 27-Apr-2009 : Fix text wrapping with new lines (DG);
  * 27-Jul-2009 : Use AttributedString in drawRotatedString() (DG);
  * 16-Jun-2012 : Moved from JCommon to JFreeChart (DG);
+ * 24-Sep-2016 : Fix bug in drawRotatedString() (DG);
  *
  */
 
@@ -473,7 +474,7 @@ public class TextUtilities {
 
         ParamChecks.nullNotPermitted(text, "text");
         if (angle == 0.0) {
-            drawAlignedString(text, g2, textY, textY, TextAnchor.BASELINE_LEFT);
+            drawAlignedString(text, g2, textX, textY, TextAnchor.BASELINE_LEFT);
             return;
         }
         AffineTransform saved = g2.getTransform();
