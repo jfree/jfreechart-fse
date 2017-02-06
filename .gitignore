@@ -1,12 +1,9 @@
 # Eclipse Files
-bin
 .project
 .classpath
 .settings
 
-
-#IntelliJ IDEA Files
+# IntelliJ IDEA Files
 .idea
 *.iml
 target
-
