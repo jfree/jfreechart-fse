@@ -2,7 +2,7 @@
  * JFreeChart : a free chart library for the Java(tm) platform
  * ===========================================================
  *
- * (C) Copyright 2000-2014, by Object Refinery Limited and Contributors.
+ * (C) Copyright 2000-2017, by Object Refinery Limited and Contributors.
  *
  * Project Info:  http://www.jfree.org/jfreechart/index.html
  *
@@ -169,7 +169,7 @@
  * 10-Oct-2011 : localization fix: bug #3353913 (MH);
  * 15-Jun-2012 : Removed JCommon dependencies (DG);
  * 29-Aug-2014 : Localisation updates from patch attached to bug 1129 (SL);
- *
+ * 06-Feb-2017 : Add dispose() call for graphics object, see issue #38 (DG);
  */
 
 package org.jfree.chart;
@@ -274,7 +274,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
     /**
      * Default setting for buffer usage.  The default has been changed to
-     * <code>true</code> from version 1.0.13 onwards, because of a severe
+     * {@code true} from version 1.0.13 onwards, because of a severe
      * performance problem with drawing the zoom rectangle using XOR (which
      * now happens only when the buffer is NOT used).
      */
@@ -625,12 +625,12 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     }
 
     /**
-     * Constructs a panel containing a chart.  The <code>useBuffer</code> flag
-     * controls whether or not an offscreen <code>BufferedImage</code> is
+     * Constructs a panel containing a chart.  The {@code useBuffer} flag
+     * controls whether or not an offscreen {@code BufferedImage} is
      * maintained for the chart.  If the buffer is used, more memory is
      * consumed, but panel repaints will be a lot quicker in cases where the
      * chart itself hasn't changed (for example, when another frame is moved
-     * to reveal the panel).  WARNING: If you set the <code>useBuffer</code>
+     * to reveal the panel).  WARNING: If you set the {@code useBuffer}
      * flag to false, note that the mouse zooming rectangle will (in that case)
      * be drawn using XOR, and there is a SEVERE performance problem with that
      * on JRE6 on Windows.
@@ -638,7 +638,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @param chart  the chart.
      * @param useBuffer  a flag controlling whether or not an off-screen buffer
      *                   is used (read the warning above before setting this
-     *                   to <code>false</code>).
+     *                   to {@code false}).
      */
     public ChartPanel(JFreeChart chart, boolean useBuffer) {
 
@@ -822,7 +822,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /**
      * Returns the chart contained in the panel.
      *
-     * @return The chart (possibly <code>null</code>).
+     * @return The chart (possibly {@code null}).
      */
     public JFreeChart getChart() {
         return this.chart;
@@ -831,7 +831,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /**
      * Sets the chart that is displayed in the panel.
      *
-     * @param chart  the chart (<code>null</code> permitted).
+     * @param chart  the chart ({@code null} permitted).
      */
     public void setChart(JFreeChart chart) {
 
@@ -990,7 +990,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /**
      * Returns the anchor point.
      *
-     * @return The anchor point (possibly <code>null</code>).
+     * @return The anchor point (possibly {@code null}).
      */
     public Point2D getAnchor() {
         return this.anchor;
@@ -1000,7 +1000,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * Sets the anchor point.  This method is provided for the use of
      * subclasses, not end users.
      *
-     * @param anchor  the anchor point (<code>null</code> permitted).
+     * @param anchor  the anchor point ({@code null} permitted).
      */
     protected void setAnchor(Point2D anchor) {
         this.anchor = anchor;
@@ -1018,7 +1018,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /**
      * Sets the popup menu for the panel.
      *
-     * @param popup  the popup menu (<code>null</code> permitted).
+     * @param popup  the popup menu ({@code null} permitted).
      */
     public void setPopupMenu(JPopupMenu popup) {
         this.popup = popup;
@@ -1036,7 +1036,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /**
      * A convenience method that switches on mouse-based zooming.
      *
-     * @param flag  <code>true</code> enables zooming and rectangle fill on
+     * @param flag  {@code true} enables zooming and rectangle fill on
      *              zoom.
      */
     public void setMouseZoomable(boolean flag) {
@@ -1046,8 +1046,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /**
      * A convenience method that switches on mouse-based zooming.
      *
-     * @param flag  <code>true</code> if zooming enabled
-     * @param fillRectangle  <code>true</code> if zoom rectangle is filled,
+     * @param flag  {@code true} if zooming enabled
+     * @param fillRectangle  {@code true} if zoom rectangle is filled,
      *                       false if rectangle is shown as outline only.
      */
     public void setMouseZoomable(boolean flag, boolean fillRectangle) {
@@ -1067,18 +1067,18 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     }
 
     /**
-     * Sets the flag that controls whether or not zooming is enable for the
+     * Sets the flag that controls whether or not zooming is enabled for the
      * domain axis.  A check is made to ensure that the current plot supports
      * zooming for the domain values.
      *
-     * @param flag  <code>true</code> enables zooming if possible.
+     * @param flag  {@code true} enables zooming if possible.
      */
     public void setDomainZoomable(boolean flag) {
         if (flag) {
             Plot plot = this.chart.getPlot();
             if (plot instanceof Zoomable) {
                 Zoomable z = (Zoomable) plot;
-                this.domainZoomable = z.isDomainZoomable();
+                this.domainZoomable = flag && (z.isDomainZoomable());
             }
         }
         else {
@@ -1099,14 +1099,14 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /**
      * A flag that controls mouse-based zooming on the vertical axis.
      *
-     * @param flag  <code>true</code> enables zooming.
+     * @param flag  {@code true} enables zooming.
      */
     public void setRangeZoomable(boolean flag) {
         if (flag) {
             Plot plot = this.chart.getPlot();
             if (plot instanceof Zoomable) {
                 Zoomable z = (Zoomable) plot;
-                this.rangeZoomable = z.isRangeZoomable();
+                this.rangeZoomable = flag && (z.isRangeZoomable());
             }
         }
         else {
@@ -1127,7 +1127,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /**
      * A flag that controls how the zoom rectangle is drawn.
      *
-     * @param flag  <code>true</code> instructs to fill the rectangle on
+     * @param flag  {@code true} instructs to fill the rectangle on
      *              zoom, otherwise it will be outlined.
      */
     public void setFillZoomRectangle(boolean flag) {
@@ -1157,7 +1157,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /**
      * Returns the default directory for the "save as" option.
      *
-     * @return The default directory (possibly <code>null</code>).
+     * @return The default directory (possibly {@code null}).
      *
      * @since 1.0.7
      */
@@ -1167,9 +1167,9 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
 
     /**
      * Sets the default directory for the "save as" option.  If you set this
-     * to <code>null</code>, the user's default directory will be used.
+     * to {@code null}, the user's default directory will be used.
      *
-     * @param directory  the directory (<code>null</code> permitted).
+     * @param directory  the directory ({@code null} permitted).
      *
      * @since 1.0.7
      */
@@ -1184,8 +1184,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     }
 
     /**
-     * Returns <code>true</code> if file extensions should be enforced, and
-     * <code>false</code> otherwise.
+     * Returns {@code true} if file extensions should be enforced, and
+     * {@code false} otherwise.
      *
      * @return The flag.
      *
@@ -1237,7 +1237,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /**
      * Returns the zoom rectangle fill paint.
      *
-     * @return The zoom rectangle fill paint (never <code>null</code>).
+     * @return The zoom rectangle fill paint (never {@code null}).
      *
      * @see #setZoomFillPaint(java.awt.Paint)
      * @see #setFillZoomRectangle(boolean)
@@ -1251,7 +1251,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /**
      * Sets the zoom rectangle fill paint.
      *
-     * @param paint  the paint (<code>null</code> not permitted).
+     * @param paint  the paint ({@code null} not permitted).
      *
      * @see #getZoomFillPaint()
      * @see #getFillZoomRectangle()
@@ -1266,7 +1266,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /**
      * Returns the zoom rectangle outline paint.
      *
-     * @return The zoom rectangle outline paint (never <code>null</code>).
+     * @return The zoom rectangle outline paint (never {@code null}).
      *
      * @see #setZoomOutlinePaint(java.awt.Paint)
      * @see #setFillZoomRectangle(boolean)
@@ -1280,7 +1280,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /**
      * Sets the zoom rectangle outline paint.
      *
-     * @param paint  the paint (<code>null</code> not permitted).
+     * @param paint  the paint ({@code null} not permitted).
      *
      * @see #getZoomOutlinePaint()
      * @see #getFillZoomRectangle()
@@ -1297,8 +1297,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     private MouseWheelHandler mouseWheelHandler;
 
     /**
-     * Returns <code>true</code> if the mouse wheel handler is enabled, and
-     * <code>false</code> otherwise.
+     * Returns {@code true} if the mouse wheel handler is enabled, and
+     * {@code false} otherwise.
      *
      * @return A boolean.
      *
@@ -1328,7 +1328,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /**
      * Add an overlay to the panel.
      *
-     * @param overlay  the overlay (<code>null</code> not permitted).
+     * @param overlay  the overlay ({@code null} not permitted).
      *
      * @since 1.0.13
      */
@@ -1342,7 +1342,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /**
      * Removes an overlay from the panel.
      *
-     * @param overlay  the overlay to remove (<code>null</code> not permitted).
+     * @param overlay  the overlay to remove ({@code null} not permitted).
      *
      * @since 1.0.13
      */
@@ -1372,7 +1372,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * tooltips can only be displayed if the chart has been configured to
      * generate tooltip items.
      *
-     * @param flag  <code>true</code> to enable tooltips, <code>false</code> to
+     * @param flag  {@code true} to enable tooltips, {@code false} to
      *              disable tooltips.
      */
     public void setDisplayToolTips(boolean flag) {
@@ -1389,7 +1389,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      *
      * @param e  the mouse event.
      *
-     * @return A tool tip or <code>null</code> if no tooltip is available.
+     * @return A tool tip or {@code null} if no tooltip is available.
      */
     @Override
     public String getToolTipText(MouseEvent e) {
@@ -1426,7 +1426,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /**
      * Translates a panel (component) location to a Java2D point.
      *
-     * @param screenPoint  the screen location (<code>null</code> not
+     * @param screenPoint  the screen location ({@code null} not
      *                     permitted).
      *
      * @return The Java2D coordinates.
@@ -1442,7 +1442,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * Applies any scaling that is in effect for the chart drawing to the
      * given rectangle.
      *
-     * @param rect  the rectangle (<code>null</code> not permitted).
+     * @param rect  the rectangle ({@code null} not permitted).
      *
      * @return A new scaled rectangle.
      */
@@ -1464,7 +1464,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * @param viewX  the x-coordinate.
      * @param viewY  the y-coordinate.
      *
-     * @return The chart entity (possibly <code>null</code>).
+     * @return The chart entity (possibly {@code null}).
      */
     public ChartEntity getEntityForPoint(int viewX, int viewY) {
 
@@ -1494,7 +1494,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * Sets the refresh buffer flag.  This flag is used to avoid unnecessary
      * redrawing of the chart when the offscreen image buffer is used.
      *
-     * @param flag  <code>true</code> indicates that the buffer should be
+     * @param flag  {@code true} indicates that the buffer should be
      *              refreshed.
      */
     public void setRefreshBuffer(boolean flag) {
@@ -1603,7 +1603,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
                     this.chart.draw(bufferG2, bufferArea, this.anchor,
                             this.info);
                 }
-
+                bufferG2.dispose();
             }
 
             // zap the buffer onto the panel...
@@ -2616,7 +2616,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * the classpath.
      * 
      * @return A string containing an SVG element for the current chart, or 
-     *     <code>null</code> if there is a problem with the method invocation
+     *     {@code null} if there is a problem with the method invocation
      *     by reflection.
      */
     private String generateSVG(int width, int height) {
@@ -2714,8 +2714,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     }
 
     /**
-     * Returns <code>true</code> if OrsonPDF is on the classpath, and 
-     * <code>false</code> otherwise.  The OrsonPDF library can be found at
+     * Returns {@code true} if OrsonPDF is on the classpath, and 
+     * {@code false} otherwise.  The OrsonPDF library can be found at
      * http://www.object-refinery.com/pdf/
      * 
      * @return A boolean.
@@ -2736,7 +2736,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      * Reflection is used to ensure there is no compile-time dependency on
      * OrsonPDF (which is non-free software).
      * 
-     * @param file  the output file (<code>null</code> not permitted).
+     * @param file  the output file ({@code null} not permitted).
      * @param w  the chart width.
      * @param h  the chart height.
      */
@@ -2803,8 +2803,8 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
      *
      * @param g  the graphics context.
      * @param pf  the page format to use.
-     * @param pageIndex  the index of the page. If not <code>0</code>, nothing
-     *                   gets print.
+     * @param pageIndex  the index of the page. If not {@code 0}, nothing
+     *                   gets printed.
      *
      * @return The result of printing.
      */
@@ -2828,7 +2828,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener,
     /**
      * Adds a listener to the list of objects listening for chart mouse events.
      *
-     * @param listener  the listener (<code>null</code> not permitted).
+     * @param listener  the listener ({@code null} not permitted).
      */
     public void addChartMouseListener(ChartMouseListener listener) {
         ParamChecks.nullNotPermitted(listener, "listener");
