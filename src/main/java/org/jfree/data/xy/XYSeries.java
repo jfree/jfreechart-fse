@@ -492,6 +492,39 @@ public class XYSeries extends Series implements Cloneable, Serializable {
     }
 
     /**
+     * Adds array of new data to the series and, if requested, sends a
+     * {@link SeriesChangeEvent} to all registered listeners. The
+     * x and y arrays must be not null and of the same length.
+     * <P>
+     * Throws an exception if the x-value is a duplicate AND the
+     * allowDuplicateXValues flag is false.
+     *
+     * @param xarr  array of x values (<code>null</code> not permitted).
+     * @param yarr  array of y values (<code>null</code> permitted).
+     * @param notify  a flag the controls whether or not a
+     *                {@link SeriesChangeEvent} is sent to all registered
+     *                listeners.
+     */
+    public void add(double[] xarr, double[] yarr, boolean notify) {
+        if (xarr == null) {
+            throw new IllegalArgumentException("x array  may not be null");
+        }
+        if (yarr == null) {
+            throw new IllegalArgumentException("y array may not be null");
+        }
+        if (xarr.length != yarr.length) {
+            throw new IllegalArgumentException("x arraty and y array must be same lengths");
+        }
+        for (int i=0;i<xarr.length;i++) {
+            add(new XYDataItem(xarr[i], yarr[i]), false);
+        }
+        if (notify) {
+            fireSeriesChanged();
+        }
+
+    }
+
+    /**
      * Adds a data item to the series and, if requested, sends a
      * {@link SeriesChangeEvent} to all registered listeners.
      *
