@@ -63,6 +63,7 @@ import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  *  An abstract class that defines our requirements for manipulating dates,
@@ -91,7 +92,7 @@ public abstract class SerialDate implements Comparable,
 
     /** Date format symbols. */
     public static final DateFormatSymbols
-        DATE_FORMAT_SYMBOLS = new SimpleDateFormat().getDateFormatSymbols();
+        DATE_FORMAT_SYMBOLS = createDateSymbols();
 
     /** The serial number for 1 January 1900. */
     public static final int SERIAL_LOWER_BOUND = 2;
@@ -1032,4 +1033,14 @@ public abstract class SerialDate implements Comparable,
         return getNearestDayOfWeek(targetDOW, this);
     }
 
+    /**
+      * Creates the date format symbols.
+      *
+      * @return the list of english date format symbols.
+      */
+    private static DateFormatSymbols createDateSymbols() {
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat format = new SimpleDateFormat(pattern, new Locale("en"));
+        return format.getDateFormatSymbols();
+    }
 }
