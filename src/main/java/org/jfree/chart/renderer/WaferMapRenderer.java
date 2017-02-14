@@ -40,9 +40,7 @@
  * ------------- JFREECHART 1.0.x ---------------------------------------------
  * 02-Feb-2007 : Removed author tags from all over JFreeChart sources (DG);
  * 10-Mar-2014 : Removed LegendItemCollection (DG);
- * 
  */
-
 package org.jfree.chart.renderer;
 
 import java.awt.Color;
@@ -56,36 +54,49 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.plot.DrawingSupplier;
 import org.jfree.chart.plot.WaferMapPlot;
 import org.jfree.data.general.WaferMapDataset;
 
 /**
- * A renderer for wafer map plots.  Provides color management facilities.
+ * A renderer for wafer map plots. Provides color management facilities.
  */
 public class WaferMapRenderer extends AbstractRenderer {
 
-    /** paint index */
+    /**
+     * paint index
+     */
     private Map<Number, Integer> paintIndex;
 
-    /** plot */
+    /**
+     * plot
+     */
     private WaferMapPlot plot;
 
-    /** paint limit */
+    /**
+     * paint limit
+     */
     private int paintLimit;
 
-    /** default paint limit */
+    /**
+     * default paint limit
+     */
     private static final int DEFAULT_PAINT_LIMIT = 35;
 
-    /** default multivalue paint calculation */
+    /**
+     * default multivalue paint calculation
+     */
     public static final int POSITION_INDEX = 0;
 
-    /** The default value index. */
+    /**
+     * The default value index.
+     */
     public static final int VALUE_INDEX = 1;
 
-    /** paint index method */
+    /**
+     * paint index method
+     */
     private int paintIndexMethod;
 
     /**
@@ -98,8 +109,8 @@ public class WaferMapRenderer extends AbstractRenderer {
     /**
      * Creates a new renderer.
      *
-     * @param paintLimit  the paint limit.
-     * @param paintIndexMethod  the paint index method.
+     * @param paintLimit the paint limit.
+     * @param paintIndexMethod the paint index method.
      */
     public WaferMapRenderer(Integer paintLimit, Integer paintIndexMethod) {
 
@@ -108,8 +119,7 @@ public class WaferMapRenderer extends AbstractRenderer {
 
         if (paintLimit == null) {
             this.paintLimit = DEFAULT_PAINT_LIMIT;
-        }
-        else {
+        } else {
             this.paintLimit = paintLimit;
         }
 
@@ -124,15 +134,18 @@ public class WaferMapRenderer extends AbstractRenderer {
     /**
      * Verifies that the passed paint index method is valid.
      *
-     * @param method  the method.
+     * @param method the method.
      *
      * @return <code>true</code> or </code>false</code>.
      */
     private boolean isMethodValid(int method) {
         switch (method) {
-            case POSITION_INDEX: return true;
-            case VALUE_INDEX:    return true;
-            default: return false;
+            case POSITION_INDEX:
+                return true;
+            case VALUE_INDEX:
+                return true;
+            default:
+                return false;
         }
     }
 
@@ -163,7 +176,7 @@ public class WaferMapRenderer extends AbstractRenderer {
     /**
      * Sets the plot and build the paint index.
      *
-     * @param plot  the plot.
+     * @param plot the plot.
      */
     public void setPlot(WaferMapPlot plot) {
         this.plot = plot;
@@ -173,7 +186,7 @@ public class WaferMapRenderer extends AbstractRenderer {
     /**
      * Returns the paint for a given chip value.
      *
-     * @param value  the value.
+     * @param value the value.
      *
      * @return The paint.
      */
@@ -184,7 +197,7 @@ public class WaferMapRenderer extends AbstractRenderer {
     /**
      * Returns the paint index for a given chip value.
      *
-     * @param value  the value.
+     * @param value the value.
      *
      * @return The paint index.
      */
@@ -193,8 +206,8 @@ public class WaferMapRenderer extends AbstractRenderer {
     }
 
     /**
-     * Builds a map of chip values to paint colors.
-     * paintlimit is the maximum allowed number of colors.
+     * Builds a map of chip values to paint colors. paintlimit is the maximum
+     * allowed number of colors.
      */
     private void makePaintIndex() {
         if (this.plot == null) {
@@ -209,8 +222,7 @@ public class WaferMapRenderer extends AbstractRenderer {
             for (Number uniqueValue : uniqueValues) {
                 this.paintIndex.put(uniqueValue, count++);
             }
-        }
-        else {
+        } else {
             // more values than paints so map
             // multiple values to the same color
             switch (this.paintIndexMethod) {
@@ -227,14 +239,14 @@ public class WaferMapRenderer extends AbstractRenderer {
     }
 
     /**
-     * Builds the paintindex by assigning colors based on the number
-     * of unique values: totalvalues/totalcolors.
+     * Builds the paintindex by assigning colors based on the number of unique
+     * values: totalvalues/totalcolors.
      *
-     * @param uniqueValues  the set of unique values.
+     * @param uniqueValues the set of unique values.
      */
     private void makePositionIndex(Set<Number> uniqueValues) {
         int valuesPerColor = (int) Math.ceil(
-            (double) uniqueValues.size() / this.paintLimit
+                (double) uniqueValues.size() / this.paintLimit
         );
         int count = 0; // assign a color for each unique value
         int paint = 0;
@@ -250,12 +262,12 @@ public class WaferMapRenderer extends AbstractRenderer {
     }
 
     /**
-     * Builds the paintindex by assigning colors evenly across the range
-     * of values:  maxValue-minValue/totalcolors
+     * Builds the paintindex by assigning colors evenly across the range of
+     * values: maxValue-minValue/totalcolors
      *
-     * @param max  the maximum value.
-     * @param min  the minumum value.
-     * @param uniqueValues  the unique values.
+     * @param max the maximum value.
+     * @param min the minumum value.
+     * @param uniqueValues the unique values.
      */
     private void makeValueIndex(Number max, Number min, Set<Number> uniqueValues) {
         double valueRange = max.doubleValue() - min.doubleValue();
@@ -275,7 +287,7 @@ public class WaferMapRenderer extends AbstractRenderer {
     }
 
     /**
-     * Builds the list of legend entries.  called by getLegendItems in
+     * Builds the list of legend entries. called by getLegendItems in
      * WaferMapPlot to populate the plot legend.
      *
      * @return The legend items.
@@ -298,8 +310,7 @@ public class WaferMapRenderer extends AbstractRenderer {
                             null, shape, paint, outlineStroke, outlinePaint));
 
                 }
-            }
-            else {
+            } else {
                 // in this case, every color has a range of values
                 Set<Integer> unique = new HashSet<Integer>();
                 for (Map.Entry<Number, Integer> entry : this.paintIndex.entrySet()) {
@@ -307,7 +318,7 @@ public class WaferMapRenderer extends AbstractRenderer {
                         String label = getMinPaintValue(
                                 entry.getValue()).toString()
                                 + " - " + getMaxPaintValue(
-                                entry.getValue()).toString();
+                                        entry.getValue()).toString();
                         String description = label;
                         Shape shape = new Rectangle2D.Double(1d, 1d, 1d, 1d);
                         Paint paint = getSeriesPaint(
@@ -327,10 +338,9 @@ public class WaferMapRenderer extends AbstractRenderer {
     }
 
     /**
-     * Returns the minimum chip value assigned to a color
-     * in the paintIndex
+     * Returns the minimum chip value assigned to a color in the paintIndex
      *
-     * @param index  the index.
+     * @param index the index.
      *
      * @return The value.
      */
@@ -347,10 +357,9 @@ public class WaferMapRenderer extends AbstractRenderer {
     }
 
     /**
-     * Returns the maximum chip value assigned to a color
-     * in the paintIndex
+     * Returns the maximum chip value assigned to a color in the paintIndex
      *
-     * @param index  the index.
+     * @param index the index.
      *
      * @return The value
      */
@@ -365,6 +374,5 @@ public class WaferMapRenderer extends AbstractRenderer {
         }
         return maxValue;
     }
-
 
 } // end class wafermaprenderer
