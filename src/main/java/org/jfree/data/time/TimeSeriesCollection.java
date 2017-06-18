@@ -757,8 +757,6 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset
     public int hashCode() {
         int result;
         result = this.data.hashCode();
-        result = 29 * result + (this.workingCalendar != null
-                ? this.workingCalendar.hashCode() : 0);
         result = 29 * result + (this.xPosition != null
                 ? this.xPosition.hashCode() : 0);
         return result;
